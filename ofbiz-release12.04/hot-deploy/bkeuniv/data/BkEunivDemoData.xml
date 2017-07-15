@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
 
+<University universityId="HUST" universityName="Đại học Bách Khoa Hà Nội" />
+<University universityId="VNU" universityName="Đại học Quốc Gia Hà Nội" />
+
+<Gender genderId="male" genderName="Nam" />
+<Gender genderId="female" genderName="Nữ" />
+
 <Faculty facultyId="GDQP" facultyName="Khoa Giáo dục Quốc phòng" universityId="HUST"/>
 <Faculty facultyId="GDTC" facultyName="Khoa Giáo dục Thể chất" universityId="HUST"/>
 <Faculty facultyId="LLCT" facultyName="Khoa Lý luận chính trị" universityId="HUST"/>
