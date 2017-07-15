@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+
+    <description>Transportations Component Site Configuration File</description>
+
+    <!-- Events to run on every request before security (chains exempt) -->
+    <!--
+    <preprocessor>
+    </preprocessor>
+    -->
+    <!-- Events to run on every request after all other processing (chains exempt) -->
+    <!--
+    <postprocessor>
+        <event name="test" type="java" path="org.ofbiz.webapp.event.TestEvent" invoke="test"/>
+    </postprocessor>
+    -->
+
+    <!-- Request Mappings -->
+    <request-map uri="main">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="main"/>
+    </request-map>
+    
+    <request-map uri="routes-management">
+		<security https="true" auth="true"/>
+        <response name="success" type="view" value="RoutesView"/>
+	</request-map>
+    
+    
+    <request-map uri="createARoute">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createARoute"></event>
+        <response name="success" type="view" value="RoutesView"/>
+        <response name="error" type="view" value="RoutesView"/>
+	</request-map>
+   
+   
+   	<request-map uri="shipper-management">
+		<security https="true" auth="true"/>
+        <response name="success" type="view" value="ShippersView"/>
+	</request-map>
+
+    <request-map uri="upload-file">
+		<security https="true" auth="true"/>
+        <response name="success" type="view" value="UploadFile"/>
+	</request-map>
+
+	<request-map uri="uploadAttachFile">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.routes.RouteService" invoke="uploadFile"/>
+            <response name="AttachementSuccess" type="view" value="UploadFile"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+    <request-map uri="export-excel">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.routes.RouteService" invoke="exportRouteExcel"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+    
+    <request-map uri="download-file">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.routes.RouteService" invoke="downloadFile"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+    
+    <request-map uri="routes-pdf">
+    	<security auth="true" https="true"/>
+    	<response name="success" type="view" value="routesPDF"></response>
+    </request-map>
+    
+    <request-map uri="google-maps">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="GoogleMaps" />
+	</request-map>
+    
+    <request-map uri="checkAccount">
+		<security auth="true" https="true"/>
+		<event type="java" invoke="checkAccount" path="org.ofbiz.routes.RouteService"/>
+		<response name="success" type="none"></response>
+		<response name="error" type="none"></response>
+	</request-map>
+
+    <!-- View Mappings -->
+    <view-map name="main" type="screen" page="component://transportations/widget/TransportationsScreens.xml#main"/>
+    <view-map name="ShippersView" type="screen" page="component://party/widget/partymgr/PartyScreens.xml#pageShippersView"/>
+	<view-map name="RoutesView" type="screen" page="component://transportations/widget/TransportationsScreens.xml#pageRoutesView"/>
+	<view-map name="UploadFile" type="screen" page="component://transportations/widget/TransportationsScreens.xml#pageUploadFile"/>
+	<view-map name="GoogleMaps" type="screen" page="component://transportations/widget/TransportationsScreens.xml#pageGoogleMaps"/>
+	<view-map name="routesPDF" type="screenfop" page="component://transportations/widget/TransportationsScreens.xml#pageRoutesPDF" content-type="application/pdf" encoding="none"/>
+	
+	
+	<!-- <view-map name="AttachmentError" type="ftl" page="file_attach_error.ftl"/>
+	<view-map name="AttachementException" type="ftl" page="file_attach_error.ftl"/>
+	 -->
+	 <!-- <view-map name="AttachementSuccess" type="screen" page="AttachementSuccess.ftl"/>
+ -->
+    
+</site-conf>

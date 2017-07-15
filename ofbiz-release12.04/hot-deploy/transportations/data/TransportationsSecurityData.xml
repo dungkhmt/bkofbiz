@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Transportations Component." permissionId="TRANSPORTATION_VIEW"/>
+    <SecurityPermission description="Create operations in the Transportations Component." permissionId="TRANSPORTATION_CREATE"/>
+    <SecurityPermission description="Update operations in the Transportations Component." permissionId="TRANSPORTATION_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Transportations Component." permissionId="TRANSPORTATION_DELETE"/>
+    <SecurityPermission description="ALL operations in the Transportations Component." permissionId="TRANSPORTATION_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="TRANSPORTATION_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="TRANSPORTATION_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="TRANSPORTATION_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="TRANSPORTATION_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="TRANSPORTATION_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="TRANSPORTATION_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="TRANSPORTATION_ADMIN"/>
+</entity-engine-xml>

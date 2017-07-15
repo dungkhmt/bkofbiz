@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <screen name="main-decorator">
+        <section>
+            <actions>
+                <property-map resource="TransportationsUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+
+                <set field="layoutSettings.companyName" from-field="uiLabelMap.TransportationsCompanyName" global="true"/>
+                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.TransportationsCompanySubtitle" global="true"/>
+
+                <set field="activeApp" value="transportations" global="true"/>
+                <set field="applicationMenuName" value="MainAppBar" global="true"/>
+                <set field="applicationMenuLocation" value="component://transportations/widget/TransportationsMenus.xml" global="true"/>
+                <set field="applicationTitle" value="${uiLabelMap.TransportationsApplication}" global="true"/>
+            </actions>
+            <widgets>
+                <include-screen name="ApplicationDecorator" location="component://commonext/widget/CommonScreens.xml"/>
+            </widgets>
+        </section>
+    </screen>
+
+	<screen name="transportation-global-decorator">
+		<section>
+			<widgets>
+				<platform-specific>
+					<html>
+						<html-template location="component://transportations/webapp/transportations/transportation-global-decorator-header.ftl"/>
+					</html>
+				</platform-specific>
+				
+				<decorator-section-include name="body"/>
+				
+				<platform-specific>
+					<html>
+						<html-template location="component://transportations/webapp/transportations/transportation-global-decorator-footer.ftl"/>
+					</html>
+				</platform-specific>
+				
+			</widgets>
+		</section>
+	</screen>
+	
+    <screen name="TransportationsCommonDecorator">
+        <section>
+            <actions>
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <if-has-permission permission="TRANSPORTATION" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.TransportationsViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!-- fo decorator for pdf documents (invoices, sales orders, purchase orders etc...). -->
+    <screen name="FoReportDecorator">
+        <section>
+            <actions>
+                
+            </actions>
+            <widgets>
+                <platform-specific>
+                	<xsl-fo>
+                		<html-template location="component://transportations/webapp/transportations/reportTemplate.fo.ftl"/>
+                	</xsl-fo>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+    
+</screens>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of BkEuniv Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+
+	<entity entity-name="University" package-name="???">
+		<field name="universityId" type="id-ne"></field>
+		<field name="universityName" type="very-long"></field>
+		<prim-key field="universityId"/>
+	</entity>
+	
+	<entity entity-name="Faculty" package-name="???">
+		<field name="facultyId" type="id-ne"></field>
+		<field name="facultyName" type="very-long"></field>
+		<field name="universityId" type="id"></field>
+		<prim-key field="facultyId"/>
+		<relation rel-entity-name="University" type="one">
+			<key-map field-name="universityId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="Department" package-name="?????">
+		<field name="departmentId" type="id-vlong"></field>
+		<field name="departmentName" type="very-long"></field>
+		<field name="facultyId" type="id"></field>
+		<prim-key field="departmentId"/>
+		<relation rel-entity-name="Faculty" type="one">
+			<key-map field-name="facultyId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="Gender" package-name="???">
+		<field name="genderId" type="id-ne"></field>
+		<field name="genderName" type="name"></field>
+		<prim-key field="genderId"/>
+	</entity>
+	
+	<entity entity-name="Staff" package-name="???">
+		<field name="staffId" type="id-vlong"></field>
+		<field name="staffUserLoginId" type="id-vlong"></field>
+		<field name="staffName" type="name"></field>
+		<field name="staffEmail" type="email"></field>
+		<field name="departmentId" type="id-vlong"></field>
+		<field name="staffGenderId" type="id"></field>
+		<field name="staffDateOfBirth" type="date"></field>
+		<field name="staffPhone" type="tel-number"></field>
+		<prim-key field="staffId"/>
+		<relation rel-entity-name="Department" type="one">
+			<key-map field-name="departmentId"/>
+		</relation>
+		<relation rel-entity-name="Gender" type="one">
+			<key-map field-name="genderId"/>
+		</relation>
+	</entity>
+	
+	
+	<entity entity-name="PaperCategory" package-name="???">
+		<field name="paperCategoryId" type="id-ne"></field>
+		<field name="paperCategoryName" type="very-long"></field>
+		<field name="paperCategoryCode" type="id"></field>
+		<prim-key field="paperCategoryId"/>
+	</entity>
+	
+	<entity entity-name="AcademicYear" package-name="???">
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="academicYearName" type="id"></field>
+		<prim-key field="academicId"/>
+	</entity>
+	
+	<entity entity-name="PaperDeclaration" package-name="???">
+		<field name="paperId" type="id-vlong"></field>
+		<field name="paperCode" type="id-vlong"></field>
+		<field name="paperCategoryId" type="id"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="paperName" type="very-long"></field>
+		<field name="journalConferenceName" type="very-long"></field>
+		<field name="volumn" type="value"></field>
+		<field name="year" type="numeric"></field>
+		<field name="month" type="numeric"></field>
+		<field name="sourcePath" type="very-long"></field>
+		<field name="ISSN" type="value"></field>
+		<field name="authors" type="very-long"></field>
+		<field name="academicYearId" type="id"></field>
+		<prim-key field="paperId"/>
+		
+	</entity>
+</entitymodel>

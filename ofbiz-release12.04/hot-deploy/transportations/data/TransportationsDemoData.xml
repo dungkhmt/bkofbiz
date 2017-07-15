@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+	<Vehicle vehicleId="34A-04703" vehicleCode="34A-04703" description="toyota fortuner" weight="1.7 tan"/>
+	<Vehicle vehicleId="34A-43256" vehicleCode="34A-43256" description="toyota camry" weight="1.5 tan"/>
+	<Vehicle vehicleId="34A-04209" vehicleCode="34A-04209" description="ford ranger" weight="1.8 tan"/>
+	
+	<Driver driverId="PQD" driverName="Pham Quang Dung"/>
+	<Driver driverId="DTH" driverName="Dong thi Huyen"/>
+	<Driver driverId="TTHT" driverName="Tran Thi Hong Thu"/>
+	<Driver driverId="LVD" driverName="Le Van Duc"/>
+	
+	<DriverVehicle vehicleId="34A-04703" driverId="PQD" fromDate="2/2/2014"/>
+	<DriverVehicle vehicleId="34A-43256" driverId="LVD" fromDate="1/5/2014"/>
+	<DriverVehicle vehicleId="34A-04209" driverId="TTHT" fromDate="13/9/2015"/>
+</entity-engine-xml>

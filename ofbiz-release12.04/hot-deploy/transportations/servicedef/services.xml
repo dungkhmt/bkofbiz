@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Transportations Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+     <service name="createARoute" engine="java"
+            location="org.ofbiz.routes.RouteService" invoke="createARoute">
+       <attribute name="shipper" mode="IN" type="String"></attribute>
+       <attribute name="date" mode="IN" type="String"></attribute>
+       <attribute name="seq" mode="IN" type="Integer"></attribute>
+       <attribute name="routeid" mode="OUT" type="String" optional="false"></attribute>       
+    </service>
+    
+</services>

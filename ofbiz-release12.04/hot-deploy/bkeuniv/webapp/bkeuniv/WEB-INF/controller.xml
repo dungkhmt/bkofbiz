@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+
+    <description>BkEuniv Component Site Configuration File</description>
+	
+    <!-- Events to run on every request before security (chains exempt) -->
+    <!--
+    <preprocessor>
+    </preprocessor>
+    -->
+    <!-- Events to run on every request after all other processing (chains exempt) -->
+    <!--
+    <postprocessor>
+        <event name="test" type="java" path="org.ofbiz.webapp.event.TestEvent" invoke="test"/>
+    </postprocessor>
+    -->
+
+    <!-- Request Mappings -->
+    <request-map uri="main"><security https="true" auth="true"/><response name="success" type="view" value="main"/></request-map>
+    
+    <request-map uri="paper-declaration">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-paper-declaration"/>
+    </request-map>
+ 
+    <request-map uri="staff-management">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-staff-management"/>
+    </request-map>
+    
+    <!-- View Mappings -->
+    <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
+    <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
+    <view-map name="view-staff-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffManagement"/>
+    
+    
+</site-conf>

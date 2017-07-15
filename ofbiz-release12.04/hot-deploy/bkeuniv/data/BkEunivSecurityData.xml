@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the BkEuniv Component." permissionId="BKEUNIV_VIEW"/>
+    <SecurityPermission description="Create operations in the BkEuniv Component." permissionId="BKEUNIV_CREATE"/>
+    <SecurityPermission description="Update operations in the BkEuniv Component." permissionId="BKEUNIV_UPDATE"/>
+    <SecurityPermission description="Delete operations in the BkEuniv Component." permissionId="BKEUNIV_DELETE"/>
+    <SecurityPermission description="ALL operations in the BkEuniv Component." permissionId="BKEUNIV_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="BKEUNIV_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BKEUNIV_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BKEUNIV_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BKEUNIV_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BKEUNIV_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="BKEUNIV_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="BKEUNIV_ADMIN"/>
+</entity-engine-xml>

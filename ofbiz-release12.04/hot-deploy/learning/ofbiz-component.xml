@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ofbiz-component name="learning"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/ofbiz-component.xsd">
+	
+	<resource-loader name="main" type="component"/>
+	<classpath type="dir" location="config"/>
+	<classpath type="jar" location="build/lib/*"/>
+	<service-resource type="model" loader="main" location="servicedef/services.xml"/>
+	
+	<webapp name="learning"
+        title="learning"
+        description="bodi"
+        server="default-server"
+        location="webapp/learningmgr"
+        mount-point="/learning"/>
+        
+</ofbiz-component>
