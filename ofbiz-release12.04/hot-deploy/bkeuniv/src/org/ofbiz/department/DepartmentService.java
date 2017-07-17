@@ -1,12 +1,17 @@
 package src.org.ofbiz.department;
 
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityExpr;
+import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
@@ -24,6 +29,7 @@ public class DepartmentService {
 		
 		try{
 			GenericValue gv = delegator.findOne("Department", false, UtilMisc.toMap("departmentId",deptId));
+			
 			if(gv != null){
 				delegator.removeValue(gv);
 			}else{
@@ -62,6 +68,35 @@ public class DepartmentService {
 	public static String name(){
 		return "DepartmentService";
 	}
+	
+	public static Map<String, Object> getListDepartments(DispatchContext ctx, Map<String, ? extends Object> context){
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		
+		//Map params = UtilMisc.toMap("facultyId","SOICT");
+		String facultyId = (String)context.get("facultyId");
+		
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		try{
+			EntityCondition cond = EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS, facultyId);
+			
+			EntityFindOptions fo = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_SENSITIVE, 
+					EntityFindOptions.CONCUR_READ_ONLY, true);
+			List<GenericValue> lst = delegator.findList("Department", cond,null,null,fo,false );
+			
+			for(GenericValue d: lst){
+				System.out.println(name() + "::getListDepartments, get department (" + d.get("departmentName") + ")");
+			}
+			
+			retSucc.put("departments", lst);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 	public static Map<String, Object> createADepartment(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 
@@ -73,6 +108,8 @@ public class DepartmentService {
 
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
+		
+		
 		String departmentName = (String) context.get("departmentName");
 		String facultyId = (String) context.get("facultyId");
 
@@ -89,7 +126,14 @@ public class DepartmentService {
 			
 			delegator.create(gv);
 			
-
+			Map<String, Object> input = UtilMisc.toMap("facultyId","SOICT");
+			Map<String, Object> rs = dispatcher.runSync("getListDepartments", input);
+			
+			List<GenericValue> lst = (List<GenericValue>)rs.get("departments");
+			for(GenericValue d: lst){
+				System.out.println(name() + "::createADepartment, get department (" + d.get("departmentName") + ")");
+			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

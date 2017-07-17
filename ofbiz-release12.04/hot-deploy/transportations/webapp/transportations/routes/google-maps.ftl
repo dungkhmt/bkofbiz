@@ -41,6 +41,7 @@ function checkAccount(){
 		type: "post",
 		url: "<@ofbizUrl>checkAccount</@ofbizUrl>", 
 		data: "accountId="+$("#accountId").val(),
+		//data: {"k1":"v1","k2":"v2"},
 		success: function (rs) {
 			//alert(rs); 
 			//if(data.status && data.status == "success"){
