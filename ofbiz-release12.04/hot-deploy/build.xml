@@ -22,7 +22,7 @@ under the License.
     <import file="../macros.xml"/>
 
     <filelist id="hot-deploy-builds" dir="."
-        files="learning/build.xml, transportations/build.xml"/>
+        files="learning/build.xml, transportations/build.xml, bkeuniv/build.xml"/>
 
     <!-- ================================================================== -->
     <!-- Removes all created files and directories                          -->

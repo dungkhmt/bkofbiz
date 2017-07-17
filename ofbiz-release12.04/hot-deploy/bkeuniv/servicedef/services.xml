@@ -11,4 +11,23 @@
         </description>
     </service> 
     
+    <service name="createADepartment" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="createADepartment">
+       <attribute name="departmentName" mode="IN" type="String"></attribute>
+       <attribute name="facultyId" mode="IN" type="String"></attribute>
+    </service>
+    
+    <service name="svrUpdateADepartment" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="updateADepartment">
+       <attribute name="departmentName" mode="IN" type="String"></attribute>
+       <attribute name="facultyId" mode="IN" type="String"></attribute>
+       <attribute name="department-id" mode="IN" type="String"></attribute>
+    </service>
+    
+    <service name="svrDeleteADepartment" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="deleteADepartment">
+       <attribute name="idofdepartment" mode="IN" type="String"></attribute>
+       
+    </service>
+    
 </services>
