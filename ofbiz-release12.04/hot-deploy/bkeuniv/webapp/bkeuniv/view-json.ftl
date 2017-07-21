@@ -1,0 +1,1 @@
+{<#list attrMap.keySet() as key>"${key}":"${attrMap[key]?if_exists}"</#list>}

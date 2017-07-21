@@ -35,4 +35,16 @@
        <attribute name="idofdepartment" mode="IN" type="String"></attribute>       
     </service>
     
+    <service name="getDepartmentsByFacultyId" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartmentByFacultyId">
+    	<attribute name="facultyId" mode="IN" type="String"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getDepartments" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
+    	<attribute name="facultyId" mode="IN" type="String"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
+    </service>
+    
 </services>

@@ -38,4 +38,6 @@
         location="webapp/bkeuniv"
         base-permission="OFBTOOLS"
         mount-point="/bkeuniv"/>
+        
+   	<webapp name="asset" server="default-server" location="webapp/resource" mount-point="/resource/bkeuniv"></webapp>
 </ofbiz-component>

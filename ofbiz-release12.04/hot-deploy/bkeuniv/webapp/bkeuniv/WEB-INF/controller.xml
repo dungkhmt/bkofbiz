@@ -68,6 +68,11 @@
         <response name="error" type="view" value="view-department-management"/>
 	</request-map>
 	
+	<request-map uri="get-department">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getDepartments"></event>
+		<response name="success" type="request" value="json"/>
+	</request-map>
     
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -76,6 +81,5 @@
     <view-map name="view-department-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDepartmentManagement"/>
     <view-map name="view-add-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageAddDepartment"/>
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
-    
     
 </site-conf>
