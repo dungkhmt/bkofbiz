@@ -5,9 +5,9 @@
 	<screen name="bkeuniv-global-decorator">
 		<section>
 			<widgets>
-				<!-- <platform-specific>
+				<platform-specific>
 					<html>
-						<html-template location="component://bkeuniv/webapp/bkeuniv/bkeuniv-global-decorator-header.ftl"/>
+						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/header.ftl"/>
 					</html>
 				</platform-specific>
 				
@@ -15,13 +15,13 @@
 				
 				<platform-specific>
 					<html>
-						<html-template location="component://bkeuniv/webapp/bkeuniv/bkeuniv-global-decorator-footer.ftl"/>
+						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/navBar.ftl"/>
 					</html>
-				</platform-specific> -->
+				</platform-specific>
 				
 				<platform-specific>
 					<html>
-						<html-template location="component://bkeuniv/webapp/bkeuniv/bkeuniv-global-decorator.ftl"/>
+						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/footer.ftl"/>
 					</html>
 				</platform-specific>
 				

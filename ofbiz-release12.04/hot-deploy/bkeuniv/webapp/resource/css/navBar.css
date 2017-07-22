@@ -1,0 +1,118 @@
+.nav {
+	position: fixed;
+	width: 100%;
+	
+	left: 0;
+    right: 0;
+    top: 0;
+	
+	display: flex;
+	align-items: stretch;
+	
+	background: #f5f5f5;
+	border-bottom: 1px solid #ddd;
+
+    height: 60px;
+
+    z-index: 100;
+}
+
+.nav  .app-name {
+	display: flex;
+	align-items: certer;
+	width: min-content;
+	
+	padding-left: 20px;
+	padding-right: 20px;
+	
+	border-right: 1px solid #ddd;
+}
+
+.nav  .app-name  h1 {
+	margin: auto;
+}
+
+.nav  .action {
+	display: flex;
+	align-items: stretch;
+	flex: 1 1 auto;
+}
+
+.nav  .action  .user {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	
+	margin-right: 10px;
+	flex: 1 1 auto;
+}
+
+.nav  .action  .user  .user-name  .dropdown-content {
+	right: 0;
+	margin-top: 10px;
+	margin-right: 5px;
+	
+	position: absolute;
+	align-items: left;
+	outline: none;
+	
+	box-sizing: border-box;
+	
+	background-color: #fff;
+	background-clip: padding-box;
+	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+	transition: opacity 0.8s, height 0.8s;
+	opacity: 0;
+	overflow: visible;
+	z-index: -1;
+}
+
+.nav  .action  .user  .user-name  .open {
+	background-color: #fff;
+    z-index: 100;
+	opacity: 1;
+	transition: 0s;
+}
+
+.nav  .action  .user  .user-name  .dropdown-content::after{
+	top: -14px;
+    right: 10px;
+    left: auto;
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+    position: absolute;
+    display: inline-block;
+    content: "";
+    
+}
+
+.nav  .action  .user  .user-name  .dropdown-content  .dropdown-item {
+	background-color: transparent;
+	box-sizing: border-box;
+	display: block;
+	padding: 4px 10px 4px 15px;
+	line-height: 1.5;
+	overflow: hidden;
+	color: black;
+	text-decoration: none;
+	
+	box-sizing: border-box;
+}
+
+.nav  .action  .user  .user-name  .dropdown-content  .dropdown-item:hover {
+	color: white;
+	background-color: #0477fb;
+}
+
+.nav  .action  .user  .user-name {
+	cursor: pointer;
+}
+
+.nav  .action  .user  .user-name:focus {
+	outline-color: #f5f5f5;
+}
+
+.hidden {
+	opacity: 0;
+	z-index: -1;
+}
