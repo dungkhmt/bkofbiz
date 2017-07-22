@@ -6,12 +6,12 @@
 	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
 	<script src="/resource/bkeuniv/js/lib/dataTables.bootstrap.min.js"></script>
 	
-	<!-- import css component -->
-	<link rel="stylesheet" href="/resource/bkeuniv/css/departmentmanagement.css">
-		
 	<!-- import js component -->
 	<script src="/resource/bkeuniv/js/departmentmanagement.js"></script>
 	
+	<!-- import css component -->
+	<link rel="stylesheet" href="/resource/bkeuniv/css/departmentmanagement.css">
+		
 
 </head>
 <body>

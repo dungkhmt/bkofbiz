@@ -36,13 +36,12 @@ public class DepartmentService {
 			EntityCondition entity;
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			List<GenericValue> list;
-			if(facultId.equals("all")) {
+			if(facultId.endsWith("all")) {
+				list = delegator.findList("Department", null, null, null, null, true);
+			} else {
 				entity = EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS, facultId);
 				
-				list = delegator.findList("Department", entity, null, null, findOptions, false);
-			} else {
-				
-				list = delegator.findList("Department", null, null, null, null, false);
+				list = delegator.findList("Department", entity, null, null, findOptions, true);				
 			}
 			result.put("departments", list);
 			return result;
