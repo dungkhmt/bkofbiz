@@ -2,6 +2,7 @@ package src.org.ofbiz.bkeuniv.department;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -19,44 +20,35 @@ public class DepartmentService {
 		return "DepartmentService";
 	}
 	
-	public static Map<String, Object> getDepartmentByFacultyId(DispatchContext ctx, Map<String, ? extends Object> context) {
+	public static Map<String, Object> getDepartment(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		String departmentId = (String)context.get("facultyId");
+		String departmentName = (String)context.get("facultyId");
 		String facultId = (String)context.get("facultyId");
+		Set<String> keys = context.keySet();
+		for(String key: keys) {
+			System.out.println(key);
+			System.out.println(context.get(key));
+		}
 		try {
 			Map<String, Object> result = ServiceUtil.returnSuccess();
-			EntityCondition entity = EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS, facultId);
+			EntityCondition entity;
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
-			List<GenericValue> list = delegator.findList("Department", entity, null, null, findOptions, false);
-			
+			List<GenericValue> list;
+			if(facultId.equals("all")) {
+				entity = EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS, facultId);
+				
+				list = delegator.findList("Department", entity, null, null, findOptions, false);
+			} else {
+				
+				list = delegator.findList("Department", null, null, null, null, false);
+			}
 			result.put("departments", list);
 			return result;
 		
 		} catch (Exception e) {
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
-			return rs;
-		}		
-	}
-	
-	public static Map<String, Object> getDepartment(DispatchContext ctx, Map<String, ? extends Object> context) {
-		Delegator delagator = ctx.getDelegator();
-		LocalDispatcher localDispatcher = ctx.getDispatcher();
-		
-		String facultId = (String)context.get("facultyId");
-		Map<String, Object> condition = UtilMisc.toMap("facultyId", facultId);
-		try {
-			Map<String, Object> rs = localDispatcher.runSync("getDepartmentsByFacultyId", condition);
-			List<GenericValue> list = (List<GenericValue>)rs.get("departments");
-			Map<String, Object> result = ServiceUtil.returnSuccess();
-			result.put("departments", list);
-			for(GenericValue d: list){
-				System.out.println(name() + ":: get department (" + d.get("departmentName") + ")");
-			}
-			return result;
-		} catch (GenericServiceException e) {
-			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
-			
-			e.printStackTrace();
 			return rs;
 		}
 	}

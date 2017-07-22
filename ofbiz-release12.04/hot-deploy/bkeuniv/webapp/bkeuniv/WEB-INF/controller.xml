@@ -69,9 +69,10 @@
 	</request-map>
 	
 	<request-map uri="get-department">
-		<security https="true" auth="true"/>
+		<security https="false" auth="false"/>
 		<event type="service" invoke="getDepartments"></event>
-		<response name="success" type="request" value="json"/>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
 	</request-map>
     
     <!-- View Mappings -->
