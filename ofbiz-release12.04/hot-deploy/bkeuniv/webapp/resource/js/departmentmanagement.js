@@ -8,6 +8,7 @@ $(document).ready(function(){
 	    },
 	    complete: function(data, status) {
 	    	departments = JSON.parse(data.responseText.slice(data.responseText.indexOf('{'))).departments;
+	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 155;
 	    	$('#table-department-management').DataTable({
 	   		 data: departments,
 	           columns: [
@@ -15,7 +16,7 @@ $(document).ready(function(){
 	               { "data": "departmentName" },
 	               { "data": "facultyId" }
 	           ],
-	           "scrollY":        "26em",
+	           "scrollY": sizeTable,
 	           "scrollCollapse": true,
 	       });
 	    }

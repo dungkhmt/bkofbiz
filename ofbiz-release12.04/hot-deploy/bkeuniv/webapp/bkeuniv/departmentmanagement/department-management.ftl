@@ -17,7 +17,11 @@
 <body>
 <div class="body">
 	<div class="department-management">
-		<div class="title">Quản lý bộ môn</div>
+		<div class="title">
+			<a href="#" class="title-hyperlink">
+				Quản lý bộ môn
+			</a>
+		</div>
 		
 		<table id="table-department-management" class="table table-striped table-bordered">
 			<thead>
