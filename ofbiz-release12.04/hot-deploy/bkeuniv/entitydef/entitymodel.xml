@@ -9,13 +9,13 @@
     <copyright></copyright>
     <version></version>
 
-	<entity entity-name="University" package-name="???">
+	<entity entity-name="University" package-name="org.ofbiz.bkeuniv">
 		<field name="universityId" type="id-ne"></field>
 		<field name="universityName" type="very-long"></field>
 		<prim-key field="universityId"/>
 	</entity>
 	
-	<entity entity-name="Faculty" package-name="???">
+	<entity entity-name="Faculty" package-name="org.ofbiz.bkeuniv">
 		<field name="facultyId" type="id-ne"></field>
 		<field name="facultyName" type="very-long"></field>
 		<field name="universityId" type="id"></field>
@@ -25,7 +25,7 @@
 		</relation>
 	</entity>
 	
-	<entity entity-name="Department" package-name="?????">
+	<entity entity-name="Department" package-name="org.ofbiz.bkeuniv">
 		<field name="departmentId" type="id-vlong"></field>
 		<field name="departmentName" type="very-long"></field>
 		<field name="facultyId" type="id"></field>
@@ -35,13 +35,13 @@
 		</relation>
 	</entity>
 	
-	<entity entity-name="Gender" package-name="???">
+	<entity entity-name="Gender" package-name="org.ofbiz.bkeuniv">
 		<field name="genderId" type="id-ne"></field>
 		<field name="genderName" type="name"></field>
 		<prim-key field="genderId"/>
 	</entity>
 	
-	<entity entity-name="Staff" package-name="???">
+	<entity entity-name="Staff" package-name="org.ofbiz.bkeuniv">
 		<field name="staffId" type="id-vlong"></field>
 		<field name="staffUserLoginId" type="id-vlong"></field>
 		<field name="staffName" type="name"></field>
@@ -60,20 +60,20 @@
 	</entity>
 	
 	
-	<entity entity-name="PaperCategory" package-name="???">
+	<entity entity-name="PaperCategory" package-name="org.ofbiz.bkeuniv">
 		<field name="paperCategoryId" type="id-ne"></field>
 		<field name="paperCategoryName" type="very-long"></field>
 		<field name="paperCategoryCode" type="id"></field>
 		<prim-key field="paperCategoryId"/>
 	</entity>
 	
-	<entity entity-name="AcademicYear" package-name="???">
+	<entity entity-name="AcademicYear" package-name="org.ofbiz.bkeuniv">
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="academicYearName" type="id"></field>
 		<prim-key field="academicId"/>
 	</entity>
 	
-	<entity entity-name="PaperDeclaration" package-name="???">
+	<entity entity-name="PaperDeclaration" package-name="org.ofbiz.bkeuniv">
 		<field name="paperId" type="id-vlong"></field>
 		<field name="paperCode" type="id-vlong"></field>
 		<field name="paperCategoryId" type="id"></field>
@@ -88,6 +88,25 @@
 		<field name="authors" type="very-long"></field>
 		<field name="academicYearId" type="id"></field>
 		<prim-key field="paperId"/>
-		
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
 	</entity>
+
+	<entity entity-name="EducationProgress" package-name="org.ofbiz.bkeuniv">
+		<field name="educationProgressId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="educationType" type="value"></field>
+		<field name="institution" type="very-long"></field>
+		<field name="speciality" type="very-long"></field>
+		<field name="graduateDate" type="date"></field>
+		
+		<prim-key field="educationProgressId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	
+	
+	
 </entitymodel>

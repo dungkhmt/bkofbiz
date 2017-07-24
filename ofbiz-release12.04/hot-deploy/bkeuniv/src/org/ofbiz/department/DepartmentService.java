@@ -42,7 +42,8 @@ public class DepartmentService {
 		return retSucc;
 	}
 
-	public static Map<String, Object> updateADepartment(DispatchContext ctx, Map<String, ? extends Object> context){
+	public static Map<String, Object> updateADepartment(DispatchContext ctx,
+			Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
@@ -51,7 +52,8 @@ public class DepartmentService {
 		String facultyId = (String)context.get("facultyId");
 		
 		try{
-			GenericValue gv = delegator.findOne("Department", false, UtilMisc.toMap("departmentId",deptId));
+			GenericValue gv = delegator.findOne("Department", false, 
+					UtilMisc.toMap("departmentId",deptId));
 			if(gv != null){
 				gv.put("departmentName", deptName);
 				gv.put("facultyId", facultyId);
@@ -117,6 +119,7 @@ public class DepartmentService {
 
 		gv.put("departmentId", delegator.getNextSeqId("Department"));
 
+		
 		String id = (String) gv.get("id");
 
 
@@ -126,13 +129,13 @@ public class DepartmentService {
 			
 			delegator.create(gv);
 			
-			Map<String, Object> input = UtilMisc.toMap("facultyId","SOICT");
-			Map<String, Object> rs = dispatcher.runSync("getListDepartments", input);
+			//Map<String, Object> input = UtilMisc.toMap("facultyId","SOICT");
+			//Map<String, Object> rs = dispatcher.runSync("getListDepartments", input);
 			
-			List<GenericValue> lst = (List<GenericValue>)rs.get("departments");
-			for(GenericValue d: lst){
-				System.out.println(name() + "::createADepartment, get department (" + d.get("departmentName") + ")");
-			}
+			//List<GenericValue> lst = (List<GenericValue>)rs.get("departments");
+			//for(GenericValue d: lst){
+			//	System.out.println(name() + "::createADepartment, get department (" + d.get("departmentName") + ")");
+			//}
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

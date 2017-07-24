@@ -84,6 +84,11 @@ the location of this file.
                           | 500 | 600 | 700 | 800 | 900
         (normal = 400, bold = 700)
         -->
+		
+		<font kerning="yes" embed-url="ARIAL.TTF">
+               <font-triplet name="Arial" style="normal" weight="normal"/>
+               <font-triplet name="arial" style="normal" weight="normal"/>
+        </font>
 
         <!--
         <font metrics-url="arial.xml" kerning="yes" embed-url="arial.ttf">

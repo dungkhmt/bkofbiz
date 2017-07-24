@@ -35,10 +35,20 @@
        <attribute name="idofdepartment" mode="IN" type="String"></attribute>       
     </service>
     
+
+    <service name="svrTestService" engine="java"
+            location="src.org.ofbiz.utils.BKEunivUtils" invoke="testService">
+       <attribute name="a" mode="IN" type="String"></attribute>
+       <attribute name="b" mode="IN" type="String"></attribute>
+       <attribute name="sum" mode="OUT" type="String"></attribute>
+       <attribute name="prod" mode="OUT" type="String"></attribute>
+       <attribute name="sequence" mode="OUT" type="List"></attribute>
+	</service>
     <service name="getDepartments" engine="java" 
     		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
     	<attribute name="facultyId" mode="IN" type="String"></attribute>
     	<attribute name="departments" mode="OUT" type="List"></attribute>
+
     </service>
     
 </services>

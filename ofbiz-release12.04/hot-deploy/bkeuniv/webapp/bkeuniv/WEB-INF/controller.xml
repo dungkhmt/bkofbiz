@@ -61,6 +61,7 @@
         <response name="success" type="view" value="view-department-management"/>
         <response name="error" type="view" value="view-department-management"/>
 	</request-map>
+	
     <request-map uri="delete-department">
 		<security https="false" auth="true"/>
 		<event type="service" invoke="svrDeleteADepartment"></event>
@@ -68,6 +69,19 @@
         <response name="error" type="view" value="view-department-management"/>
 	</request-map>
 	
+
+    <request-map uri="test-service">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-test-service"></response>
+    </request-map>
+    
+    <request-map uri="testService">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="svrTestService"></event>
+    	<response name="success" type="request" value="json"></response>
+    </request-map>
+    
+    
 	<request-map uri="get-department">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="getDepartments"></event>
@@ -82,5 +96,7 @@
     <view-map name="view-department-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDepartmentManagement"/>
     <view-map name="view-add-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageAddDepartment"/>
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
+    
+    <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
     
 </site-conf>

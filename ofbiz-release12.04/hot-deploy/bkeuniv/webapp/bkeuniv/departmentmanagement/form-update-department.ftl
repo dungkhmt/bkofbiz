@@ -10,7 +10,9 @@
 		<td>
 			<select id="facultyId" name="facultyId" style="width:200px">
         	<#list listFaculty as f>
-        		<option value="${f.facultyId}" <#if (f.facultyId == deptgv.facultyId)> selected="selected"</#if>>${f.facultyName}</option>
+        		<option value="${f.facultyId}" 
+        		<#if (f.facultyId == deptgv.facultyId)> selected="selected"</#if>>${f.facultyName}
+        		</option>
         	</#list>        	
        		</select>
 		</td>
