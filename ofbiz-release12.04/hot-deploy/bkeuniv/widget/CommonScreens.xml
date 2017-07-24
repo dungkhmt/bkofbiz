@@ -21,6 +21,12 @@
 				
 				<platform-specific>
 					<html>
+						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/sideBar.ftl"/>
+					</html>
+				</platform-specific>
+				
+				<platform-specific>
+					<html>
 						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/footer.ftl"/>
 					</html>
 				</platform-specific>

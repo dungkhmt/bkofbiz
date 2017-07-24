@@ -10,10 +10,12 @@
 		<!-- import css -->
 		<link rel="stylesheet" href="/resource/bkeuniv/css/style.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/navBar.css">
+		<link rel="stylesheet" href="/resource/bkeuniv/css/sideBar.css">
 		
 		<!-- import js -->
 		<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
 		<script src="/resource/bkeuniv/js/navBar.js"></script>
+		<script src="/resource/bkeuniv/js/sideBar.js"></script>
 		
 		<title>BKEUNIV</title>
 	</head>

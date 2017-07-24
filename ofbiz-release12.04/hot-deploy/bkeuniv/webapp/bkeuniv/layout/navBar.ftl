@@ -1,4 +1,8 @@
 <div class="nav">
+	<button class="icon-side-bar" onClick="openSideBar()">
+		<span class="glyphicon glyphicon-menu-hamburger"></span>
+	</button>
+
 	<div class="app-name">
 		<h1>BKEUNIV</h1>
 	</div>
