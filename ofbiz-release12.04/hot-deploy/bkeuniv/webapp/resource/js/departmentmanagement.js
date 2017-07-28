@@ -1,4 +1,4 @@
-var a, b, table;
+var table;
 
 $(document).ready(function(){
 	
