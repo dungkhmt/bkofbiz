@@ -1,9 +1,9 @@
 .side-bar {
     position: absolute;
-    top: 61px;
+    top: 60px;
     bottom: 0px;
     left: 0px;
-    width: 25%;
+    width: 20%;
     
     flex-flow: column nowrap;
     align-items: center;
@@ -37,17 +37,64 @@
 
 .side-bar-item-container ul li{
 	display: block;
-	padding: 3px;
+	padding: 5px;
     font-size: 14px;
     cursor: pointer;
 }
 
 .side-bar-item-container ul li:hover{
 	font-size: 15px;
-	color: white;
-	background-color: #404040;
+	background-color: hsla(0, 0%, 93.3%, .4);
 }
 
 .side-bar-item-container ul li span {
     margin-right: 10px;
+}
+
+ul.nav-list li {
+	padding-left: 10px;
+}
+
+.side-bar-selection .side-bar-item-container ul li a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.side-bar-selection .side-bar-item-container ul li a:hover {
+	font-size: 15px;
+	text-decoration: none;
+}
+
+
+.closeSideBar {
+	border: none;
+    outline: none;
+    background: none;
+    
+    color: #4d4d4d;
+    
+    padding: 3px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.closeSideBar:hover {
+	color: #333;
+}
+
+ul li.active {
+	background: #cc181e;
+    color: #fff;
+    font-size: 15px;
+}
+
+ul li.active:hover {
+	background: #cc181e;
+    color: #fff;
+    font-size: 15px;
+}
+
+.side-bar-item-container .nav-header {
+	cursor: pointer;
 }

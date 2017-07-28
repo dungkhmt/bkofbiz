@@ -6,14 +6,23 @@
 		<!-- import lib -->
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
-		
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.default.min.css">
+
 		<!-- import css -->
 		<link rel="stylesheet" href="/resource/bkeuniv/css/style.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/navBar.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/sideBar.css">
+		<link rel="stylesheet" href="/resource/bkeuniv/css/template-modal.css">
 		
 		<!-- import js -->
 		<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/jquery-ui.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/jquery.ui-contextmenu.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+		<script src="/resource/bkeuniv/js/template-modal.js"></script>
+		
 		<script src="/resource/bkeuniv/js/navBar.js"></script>
 		<script src="/resource/bkeuniv/js/sideBar.js"></script>
 		

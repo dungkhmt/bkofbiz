@@ -26,3 +26,61 @@
 	color: #000;
 	cursor: pointer;
 }
+
+#table-department-management tbody tr:hover {
+    background-color: rgba(140, 140, 140, 0.3);
+}
+
+
+.ui-menu-item {
+    list-style: none;
+    padding: 5px 10px 5px 10px;
+    width: 100px;
+    
+    padding-left: 2em;
+    position: relative;
+    
+    cursor: pointer;
+}
+
+.ui-menu-item:hover {
+	background-color: hsla(0, 0%, 93.3%, .4);
+}
+
+.ui-menu {
+	padding: 0;
+	margin: 0;
+	
+	background-color: #fff;
+	border-radius: 2px;
+	border: 1px solid transparent;
+	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+}
+
+.ui-icon {
+	height: 16px;
+    width: 16px;
+    left: 0.4em;
+    top: 0;
+    position: absolute;
+    bottom: 0;
+    margin: auto 0;
+}
+
+#button-add-department{
+    position: relative;
+    width: 70px;
+    padding: 6px;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+    cursor: pointer;
+    margin: 10px 0px;
+    background-color: #53a7df;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #68b2e3;
+}
+
+#button-add-department:hover {
+	background-color: #3d9cdb;
+}

@@ -26,11 +26,7 @@ public class DepartmentService {
 		String departmentId = (String)context.get("facultyId");
 		String departmentName = (String)context.get("facultyId");
 		String facultId = (String)context.get("facultyId");
-		Set<String> keys = context.keySet();
-		for(String key: keys) {
-			System.out.println(key);
-			System.out.println(context.get(key));
-		}
+		
 		try {
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 			EntityCondition entity;

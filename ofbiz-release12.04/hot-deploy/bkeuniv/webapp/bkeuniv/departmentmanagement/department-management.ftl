@@ -22,6 +22,9 @@
 				Quản lý bộ môn
 			</a>
 		</div>
+		<div id="button-add-department" onClick="newDepartment()">
+			Thêm
+		</div>
 		
 		<table id="table-department-management" class="table table-striped table-bordered">
 			<thead>
@@ -34,3 +37,6 @@
 		</table>
 	</div>
 </div>
+
+<div id="add-department"></div>
+<div id="change-department"></div>

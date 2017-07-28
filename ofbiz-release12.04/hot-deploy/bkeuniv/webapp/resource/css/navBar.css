@@ -100,8 +100,7 @@
 }
 
 .nav  .action  .user  .user-name  .dropdown-content  .dropdown-item:hover {
-	color: white;
-	background-color: #0477fb;
+	background-color: hsla(0, 0%, 93.3%, .4);
 }
 
 .nav  .action  .user  .user-name {
@@ -136,3 +135,4 @@
 	opacity: 0;
 	z-index: -1;
 }
+
