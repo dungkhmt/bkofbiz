@@ -102,7 +102,7 @@ function newDepartment() {
 			          title: "Chỉnh sửa bộ môn",
 			          action: {
 			        	  func: "addDepartment",
-			        	  name: "Cập nhật"
+			        	  name: "Thêm mới"
 			          }
 		}).render());
 	}).then(function(val) {

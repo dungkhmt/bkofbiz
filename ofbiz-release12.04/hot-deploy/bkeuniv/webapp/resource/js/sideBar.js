@@ -1,6 +1,19 @@
 $(document).ready(function(){
 
-	$('.tree-toggle').click(function () {$(this).parent().children('.tree').toggle(200);
+	$('.tree-toggle').click(function () {
+		
+		var _ = $(this)[0]
+		var el = $(this).parent().children('.tree');
+		el.toggle(200);
+		setTimeout(function(){
+			if(el[0].style.display==="none"){
+				_.children[0].classList.remove("glyphicon-minus");
+				_.children[0].classList.add("glyphicon-plus");
+			} else {
+				_.children[0].classList.remove("glyphicon-plus");
+				_.children[0].classList.add("glyphicon-minus");
+			}
+		}, 220);
 	});
 
 	$(function(){
