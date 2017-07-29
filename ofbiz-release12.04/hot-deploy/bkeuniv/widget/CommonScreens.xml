@@ -4,6 +4,9 @@
 
 	<screen name="bkeuniv-global-decorator">
 		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
 			<widgets>
 				<platform-specific>
 					<html>

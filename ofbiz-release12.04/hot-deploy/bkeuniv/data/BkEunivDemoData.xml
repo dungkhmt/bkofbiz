@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
 
+<AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
+<AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
+<AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
+<AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
+<AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
+
+
 <University universityId="HUST" universityName="Đại học Bách Khoa Hà Nội" />
 <University universityId="VNU" universityName="Đại học Quốc Gia Hà Nội" />
 

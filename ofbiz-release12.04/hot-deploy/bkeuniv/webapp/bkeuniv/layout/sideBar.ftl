@@ -7,13 +7,13 @@
 			<div class="side-bar-item-container">
 				<ul class="user-link">
 					<li>
-						<a href="main"><span class="glyphicon glyphicon-home"></span>Trang chủ</a>
+						<a href="main"><span class="glyphicon glyphicon-home"></span>${uiLabelMap.BkEunivHomePage}</a>
 					</li>
 					<li>
-						<a href="user"><span class="glyphicon glyphicon-user"></span>Thông tin cá nhân</a>
+						<a href="user"><span class="glyphicon glyphicon-user"></span>Thong tin ca nhan</a>
 					</li>
 					<li>
-						<a href="404"><span class="glyphicon glyphicon-list-alt"></span>Lý lịch khoa học</a>
+						<a href="404"><span class="glyphicon glyphicon-list-alt"></span>Li lich khoa hoc</a>
 					</li>
 				</ul>
 			</div>
@@ -22,7 +22,7 @@
 		<div class="side-bar-selection">
 			<div class="side-bar-item-container">
 				<label class="tree-toggle nav-header">
-					Báo cáo khoa học
+					Bao cao khoa hoc
 				</label>
 				<ul class="researchdeclaration nav-list tree">
 					<li>
