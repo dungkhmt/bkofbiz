@@ -16,4 +16,16 @@
         <value xml:lang="en">You are not allowed to view this page.</value>
         <value xml:lang="zh">不允许你浏览这个页面。</value>
     </property>
+    
+    <property key="BkEunivHomePage">
+        <value xml:lang="en">Home Page</value>
+        <value xml:lang="vi">Trang chủ</value>
+    </property>
+    
+    <property key="BkEunivHomePage">
+        <value xml:lang="en">Home Page</value>
+        <value xml:lang="vi">Trang chủ</value>
+    </property>
+    
+    
 </resource>

@@ -107,6 +107,65 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="WorkProgress" package-name="org.ofbiz.bkeuniv">
+		<field name="workProgressId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="period" type="very-long"></field>
+		<field name="position" type="very-long"></field>
+		<field name="specialization" type="very-long"></field>
+		<field name="institution" type="very-long"></field>
+		<prim-key field="workProgressId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+
+	<entity entity-name="ForeignLanguage" package-name="org.ofbiz.bkeuniv">
+		<field name="foreignLanguageId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="listen" type="value"></field>
+		<field name="speaking" type="value"></field>
+		<field name="reading" type="value"></field>
+		<field name="writing" type="value"></field>
+		<prim-key field="foreignLanguageId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>	
+	
+	<entity entity-name="AppliedResearchProject" package-name="org.ofbiz.bkeuniv">
+		<field name="appliedResearchProjectId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="name" type="very-long"></field>
+		<field name="description" type="very-long"></field>
+		<field name="period" type="very-long"></field>
+		<prim-key field="appliedResearchProjectId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="Award" package-name="org.ofbiz.bkeuniv">
+		<field name="awardId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="description" type="very-long"></field>
+		<field name="year" type="numeric"></field>
+		<prim-key field="awardId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="ScientificServiceExperience" package-name="org.ofbiz.bkeuniv">
+		<field name="scientificServiceExperienceId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="description" type="very-long"></field>
+		<field name="quantity" type="numeric"></field>
+		<prim-key field="scientificServiceExperienceId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
 	
 	
 </entitymodel>
