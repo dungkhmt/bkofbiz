@@ -142,7 +142,7 @@ function saveEducationProgress(educationProgress) {
 
 function deleteEducationProgress(educationProgress) {
 
-	alertify.confirm("Delete department", "Bạn muốn xoá bộ môn " + department.departmentName,
+	alertify.confirm("Delete department", "Bạn muốn xoá bộ môn " + educationProgress.departmentName,
 	  function(){
 	    alertify.success('Ok');
 	  },
@@ -152,6 +152,7 @@ function deleteEducationProgress(educationProgress) {
 }
 
 function addEducationProgress(){
+	openLoader();
 	var newEducationProgress = {
 		"educationType": $("#educationtype").val().trim(),
 		"institution": $("#institution").val().trim(),
@@ -167,11 +168,29 @@ function addEducationProgress(){
 	    datatype:"json",
 	    success: function(data) {
 	    	table.row.add(data.educationProgress).draw();
+	    	closeLoader();
 	    	$("#educationtype").val("");
 			$("#institution").val("");
 			$("#speciality").val("");
 			$("#graduatedate").val("");
 			$("#staffid").val("");
+			alertify.success('Created new row');
+	    },
+	    error: function(err) {
+	    	console.log(err);
+	    	alertify.success(err);
 	    }
 	})
+}
+
+function openLoader() {
+	if($(".loader").hasClass("hidden-loading")) {
+		$(".loader").removeClass("hidden-loading");
+	}
+}
+
+function closeLoader() {
+	if(!$(".loader").hasClass("hidden-loading")) {
+		$(".loader").addClass("hidden-loading");
+	}
 }

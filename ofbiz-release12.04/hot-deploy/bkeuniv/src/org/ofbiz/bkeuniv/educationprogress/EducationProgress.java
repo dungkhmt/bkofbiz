@@ -29,7 +29,6 @@ public class EducationProgress {
 		String institution = (String)context.get("institution");
 		String speciality = (String)context.get("speciality");
 		String graduateDate = (String)context.get("graduateDate");
-		System.out.print("get parameter");
 		try {
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 			EntityCondition entity;
@@ -37,7 +36,6 @@ public class EducationProgress {
 			List<GenericValue> list;
 			if(educationProgressId == null) {
 				list = delegator.findList("EducationProgress", null, null, null, findOptions, true);
-				System.out.print("all");
 			} else {				
 				entity = EntityCondition.makeCondition("educationProgressId", EntityOperator.EQUALS, educationProgressId);				
 				list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	

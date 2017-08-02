@@ -55,5 +55,6 @@ var titleNewEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleNewEd
 	</div>
 </div>
 
+<div class="loader hidden-loading"></div>
 <div id="add-education-progress"></div>
 <div id="change-education-progress"></div>
