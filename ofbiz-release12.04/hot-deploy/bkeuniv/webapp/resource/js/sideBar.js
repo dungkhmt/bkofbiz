@@ -17,7 +17,7 @@ $(document).ready(function(){
 	});
 
 	$(function(){
-	$('.tree-toggle').parent().children('.tree').toggle(200);
+		var el = $('.tree-toggle').parent().children('.tree');
 	})
 	
 	var href = window.location.href;
@@ -40,7 +40,7 @@ function openSessionSideBar(el) {
 	for(var i = 0, len = els.length; i < len; ++i ) {
 		if(els[i].className.indexOf("nav-header")!==-1) {
 			els[i].click();
-			openSideBar();
+			//openSideBar();
 			return;
 		}
 	}

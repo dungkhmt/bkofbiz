@@ -5,8 +5,16 @@
 .modal-body .container-fluid .inline-box {
     position: relative;
     display: -webkit-box;
+    padding: 5px;
 }
 
+.modal-body .container-fluid .inline-box:hover {
+    background-color: (0, 0%, 93.3%, .4);
+    border-radius: 5px;
+}
+
+    background-color: #Aaa;
+    border-radius: 5px;
 .modal-body {
 	max-height: 50vh;
     overflow-y: auto;

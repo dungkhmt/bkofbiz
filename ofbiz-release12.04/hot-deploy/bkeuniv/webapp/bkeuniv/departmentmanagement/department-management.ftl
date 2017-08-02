@@ -36,7 +36,7 @@
 			</tbody>
 		</table>
 	</div>
-</div>
 
-<div id="add-department"></div>
-<div id="change-department"></div>
+	<div id="add-department"></div>
+	<div id="change-department"></div>
+</div>

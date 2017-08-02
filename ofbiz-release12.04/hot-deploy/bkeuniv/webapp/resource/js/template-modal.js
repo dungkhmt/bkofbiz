@@ -19,7 +19,7 @@ modal.prototype.setting = function(option) {
 		var el = 
 			'<div class="row inline-box">'+
 			'<label id="title-modal-input">'+name+'</label>'+
-			(edit?'<input type="'+type+'" class="form-control" id="'+name.replace(/\s/g, '-').toLowerCase()+'" value="'+(_['data'][value]||"")+'">':
+			(edit?'<input type="'+type+'" class="form-control" id="'+value.replace(/\s/g, '-').toLowerCase()+'" value="'+(_['data'][value]||"")+'">':
 			'<div id="title-modal-value">'+_['data'][value]+'</div>')+
 			'</div>';
 		els.push(el);
