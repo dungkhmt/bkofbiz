@@ -142,7 +142,7 @@ function saveEducationProgress(educationProgressOld) {
 		"educationType": $("#educationtype").val().trim(),
 		"institution": $("#institution").val().trim(),
 		"speciality": $("#speciality").val().trim(),
-		"graduateDate": $.datepicker.formatDate('yy-mm-dd', new Date($("#graduatedate").val())).trim(),
+		"graduateDate": getDate("#graduatedate","yy-mm-dd"),
 		"staffId": $("#staffid").val().trim()
 	}
 
@@ -173,8 +173,11 @@ function saveEducationProgress(educationProgressOld) {
 	    	}, 500);
 	    },
 	    error: function(err) {
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		alertify.success(err.result);
+	    	}, 500);
 	    	console.log(err);
-	    	alertify.success(err.result);
 	    }
 	})
 }
@@ -206,8 +209,12 @@ function deleteEducationProgress(educationProgress) {
 		    	}, 500);
 		    },
 		    error: function(err) {
+		    	setTimeout(function() {
+		    		closeLoader();
+		    		alertify.success(err.result);
+		    	}, 500);
 		    	console.log(err);
-		    	alertify.success(err.result);
+		    	
 		    }
 		})
 	},
@@ -221,7 +228,7 @@ function addEducationProgress(){
 		"educationType": $("#educationtype").val().trim(),
 		"institution": $("#institution").val().trim(),
 		"speciality": $("#speciality").val().trim(),
-		"graduateDate": $.datepicker.formatDate('yy-mm-dd', new Date($("#graduatedate").val())).trim(),
+		"graduateDate": getDate("#graduatedate","yy-mm-dd"),
 		"staffId": $("#staffid").val().trim()
 	}
 
@@ -242,8 +249,11 @@ function addEducationProgress(){
 			alertify.success('Created new row');
 	    },
 	    error: function(err) {
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		alertify.success(err);
+	    	}, 500);
 	    	console.log(err);
-	    	alertify.success(err);
 	    }
 	})
 }

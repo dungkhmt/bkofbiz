@@ -26,6 +26,7 @@
 		<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
 		<script src="/resource/bkeuniv/js/lib/moment-with-locales.js"></script>
 		<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
+		<script src="/resource/bkeuniv/js/app.js"></script>
 		<script src="/resource/bkeuniv/js/template-modal.js"></script>
 		
 		
