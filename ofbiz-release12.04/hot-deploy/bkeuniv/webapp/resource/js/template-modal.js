@@ -5,7 +5,7 @@ var modal = function (id) {
 modal.prototype._date = function(value, edit, id){
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
-					(edit?"":"disabled") +
+					(edit?"":"disabled ") +
 					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value||Date.now())) + '"'+
 					'placeholder="dd/mm/yyyy"'+
 					'>' +
@@ -19,8 +19,8 @@ modal.prototype._date = function(value, edit, id){
 modal.prototype._text = function(value, edit, id){
 	return '<input type="text" class="form-control"' +
 					'id="' + id + '"' +
-					(edit?"":"disabled") +
-					'value=' + value +
+					(edit?"":"disabled ") +
+					'value="' + value + '"'+
 					'>';
 }
 

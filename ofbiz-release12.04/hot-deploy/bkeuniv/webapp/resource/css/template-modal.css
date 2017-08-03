@@ -31,3 +31,12 @@ label#title-modal-input {
 .inline-box .form-control {
 	width: 70%;
 }
+
+input.form-control:disabled {
+	background: none;
+    border: none;
+    outline: none;
+    color: #000;
+    cursor: inherit;
+    box-shadow: none;
+}
