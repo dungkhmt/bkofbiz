@@ -2,6 +2,28 @@ var modal = function (id) {
 	this.id = id;
 }
 
+modal.prototype._date = function(value, edit, id){
+	return '<input type="text" class=" date form-control"' +
+					'id="' + id+'"' +
+					(edit?"":"disabled") +
+					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value||Date.now())) + '"'+
+					'placeholder="dd/mm/yyyy"'+
+					'>' +
+    			'<script type="text/javascript">'+
+    				'$(function () {'+
+    					'$("#'+id+'").datepicker({format: "dd/mm/yyyy"});'+
+        		'});'+
+        		'</script>'
+}
+
+modal.prototype._text = function(value, edit, id){
+	return '<input type="text" class="form-control"' +
+					'id="' + id + '"' +
+					(edit?"":"disabled") +
+					'value=' + value +
+					'>';
+}
+
 modal.prototype.setting = function(option) {
 	this.option = option;
 	this.data = option.data;
@@ -12,15 +34,21 @@ modal.prototype.setting = function(option) {
 	
 	this.columns.forEach(function(column) {
 		var name = column.name;
-		var value = column.value;
-		var type = column.type||"text";
+		var value = _['data'][column.value]||"";
 		var edit = column.hasOwnProperty("edit")?column.edit:true;
-		
+		var id = column.value.replace(/\s/g, '-').toLowerCase();
+		var input;
+		switch(column.type) {
+		    case "date":
+		    	input = _._date(value, edit, id);
+		    	break;
+		    default:
+		        input = _._text(value, edit, id);
+		}
 		var el = 
 			'<div class="row inline-box">'+
 			'<label id="title-modal-input">'+name+'</label>'+
-			(edit?'<input type="'+type+'" class="form-control" id="'+name.replace(/\s/g, '-').toLowerCase()+'" value="'+(_['data'][value]||"")+'">':
-			'<div id="title-modal-value">'+_['data'][value]+'</div>')+
+			input+
 			'</div>';
 		els.push(el);
 	})

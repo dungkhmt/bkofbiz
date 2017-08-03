@@ -6,6 +6,7 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="languages" value="${uiLabelMap.BkEunivLanguages}"/>
 			</actions>
 			<widgets>
 				<platform-specific>

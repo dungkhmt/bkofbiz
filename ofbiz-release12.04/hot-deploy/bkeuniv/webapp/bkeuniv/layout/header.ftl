@@ -8,6 +8,8 @@
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.default.min.css">
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/selectize.default.css">
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
 
 		<!-- import css -->
 		<link rel="stylesheet" href="/resource/bkeuniv/css/style.css">
@@ -21,10 +23,15 @@
 		<script src="/resource/bkeuniv/js/lib/jquery-ui.min.js"></script>
 		<script src="/resource/bkeuniv/js/lib/jquery.ui-contextmenu.min.js"></script>
 		<script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
+		<script src="/resource/bkeuniv/js/lib/moment-with-locales.js"></script>
+		<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
 		<script src="/resource/bkeuniv/js/template-modal.js"></script>
+		
 		
 		<script src="/resource/bkeuniv/js/navBar.js"></script>
 		<script src="/resource/bkeuniv/js/sideBar.js"></script>
+		<script src="/resource/bkeuniv/js/footer.js"></script>
 		
 		<title>BKEUNIV</title>
 	</head>

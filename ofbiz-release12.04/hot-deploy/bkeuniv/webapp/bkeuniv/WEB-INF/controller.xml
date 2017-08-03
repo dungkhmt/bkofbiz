@@ -88,6 +88,45 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
+	<request-map uri="education-progress">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-manage-education-progress"/>
+    </request-map>
+    
+    <request-map uri="get-education-progress">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-education-progress">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-education-progress">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-education-progress">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="setSessionLocale">
+        <security https="true" auth="false"/>
+        <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
+        <response name="success" type="view" value="main"/>
+    </request-map>
     
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -98,5 +137,6 @@
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
     
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
+    <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     
 </site-conf>
