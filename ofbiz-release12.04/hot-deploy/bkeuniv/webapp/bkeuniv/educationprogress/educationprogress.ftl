@@ -25,7 +25,7 @@ var titleEditEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleEdit
 var add = '${uiLabelMap.BkEunivAddRow}';
 var update = '${uiLabelMap.BkEunivUpdate}';
 var titleNewEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleNewEducationProgress}';
-
+var BkEunivTitleDeleteEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleDeleteEducationProgress}';
 </script>
 <!-- import js component -->
 <script src="/resource/bkeuniv/js/education-progress.js"></script>

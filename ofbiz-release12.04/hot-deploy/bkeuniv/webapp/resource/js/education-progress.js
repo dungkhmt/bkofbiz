@@ -1,4 +1,4 @@
-var table;
+var table, test, temp;
 
 $(document).ready(function(){
 	
@@ -33,7 +33,6 @@ $(document).ready(function(){
 			select: function(event, ui) {
 				var el = ui.target.parent();
 				var educationProgress = table.row( el ).data();
-				educationProgress.el = el;
 				switch(ui.cmd){
 					case "edit":
 						changeEducationProgress(educationProgress)
@@ -78,7 +77,8 @@ function changeEducationProgress(educationProgress) {
 			          },
 			          {
 			        	  name: graduateDate,
-			        	  value: "graduateDate"
+			        	  value: "graduateDate",
+			        	  type: "date"
 			          },
 			          {
 			        	  name: staffId,
@@ -135,20 +135,84 @@ function newEducationProgress() {
 	})
 }
 
-function saveEducationProgress(educationProgress) {
-	console.log(table.row( educationProgress.el ).data());
-	alertify.success('Success message');
+function saveEducationProgress(educationProgressOld) {
+	openLoader();
+	var educationProgress = {
+		"educationProgressId": educationProgressOld["educationProgressId"],
+		"educationType": $("#educationtype").val().trim(),
+		"institution": $("#institution").val().trim(),
+		"speciality": $("#speciality").val().trim(),
+		"graduateDate": $.datepicker.formatDate('yy-mm-dd', new Date($("#graduatedate").val())).trim(),
+		"staffId": $("#staffid").val().trim()
+	}
+
+	$.ajax({
+	    url: "/bkeuniv/control/update-education-progress",
+	    type: 'post',
+	    data: educationProgress,
+	    datatype:"json",
+	    success: function(data) {
+	    	table.rows().indexes().data().filter(function(e, index) {
+	    		if(e.educationProgressId == educationProgress.educationProgressId) {
+	    			e.index = index;
+	    			return true;
+	    		}
+	    	}).map(function(el, index){
+	    		el.educationType = educationProgress.educationType;
+	    		el.institution = educationProgress.institution;
+	    		el.speciality = educationProgress.speciality;
+	    		el.graduateDate = educationProgress.graduateDate;
+	    		el.staffId = educationProgress.staffId;
+	    		table.row(el.index).data(el);
+	    	})
+    		
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		$("#change-education-progress #modal-template").modal('hide');
+				alertify.success(data.result);
+	    	}, 500);
+	    },
+	    error: function(err) {
+	    	console.log(err);
+	    	alertify.success(err.result);
+	    }
+	})
 }
 
 function deleteEducationProgress(educationProgress) {
+	alertify.confirm("Confirm", BkEunivTitleDeleteEducationProgress + " ID = " + educationProgress.educationProgressId,
+	function(){
+		openLoader();
 
-	alertify.confirm("Delete department", "Bạn muốn xoá bộ môn " + educationProgress.departmentName,
-	  function(){
-	    alertify.success('Ok');
-	  },
-	  function(){
-	    alertify.error('Cancel');
-	  });
+		$.ajax({
+		    url: "/bkeuniv/control/delete-education-progress",
+		    type: 'post',
+		    data: educationProgress,
+		    datatype:"json",
+		    success: function(data) {
+		    	table.rows().indexes().data().filter(function(e, index) {
+		    		if(e.educationProgressId == educationProgress.educationProgressId) {
+		    			e.index = index;
+		    			return true;
+		    		}
+		    	}).map(function(el, index){
+		    		table.row(el.index).remove().draw();
+		    	})
+
+		    	setTimeout(function() {
+		    		closeLoader();
+		    		$("#change-education-progress #modal-template").modal('hide');
+					alertify.success(data.result);
+		    	}, 500);
+		    },
+		    error: function(err) {
+		    	console.log(err);
+		    	alertify.success(err.result);
+		    }
+		})
+	},
+	function(){
+	});
 }
 
 function addEducationProgress(){
@@ -157,7 +221,7 @@ function addEducationProgress(){
 		"educationType": $("#educationtype").val().trim(),
 		"institution": $("#institution").val().trim(),
 		"speciality": $("#speciality").val().trim(),
-		"graduateDate": $("#graduatedate").val().trim(),
+		"graduateDate": $.datepicker.formatDate('yy-mm-dd', new Date($("#graduatedate").val())).trim(),
 		"staffId": $("#staffid").val().trim()
 	}
 
@@ -168,7 +232,8 @@ function addEducationProgress(){
 	    datatype:"json",
 	    success: function(data) {
 	    	table.row.add(data.educationProgress).draw();
-	    	closeLoader();
+	    	setTimeout(closeLoader(), 500);
+	    	
 	    	$("#educationtype").val("");
 			$("#institution").val("");
 			$("#speciality").val("");

@@ -40,4 +40,9 @@
         <value xml:lang="vi">Thêm mới quá trình đào tạo</value>
     </property>
     
+    <property key="BkEunivTitleDeleteEducationProgress">
+        <value xml:lang="en">You want delete row</value>
+        <value xml:lang="vi">Bạn muốn xoá hàng</value>
+    </property>
+    
 </resource>

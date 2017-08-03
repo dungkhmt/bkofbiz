@@ -108,6 +108,20 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="update-education-progress">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-education-progress">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="setSessionLocale">
         <security https="true" auth="false"/>
         <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>

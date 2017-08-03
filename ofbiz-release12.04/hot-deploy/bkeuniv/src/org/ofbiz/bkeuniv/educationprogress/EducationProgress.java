@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -40,8 +41,6 @@ public class EducationProgress {
 				entity = EntityCondition.makeCondition("educationProgressId", EntityOperator.EQUALS, educationProgressId);				
 				list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	
 			}
-			//List<EntityCondition> entities = new ArrayList<EntityCondition>();
-			
 			
 			List<Map> listEducationProgress = FastList.newInstance();
 			for(GenericValue el: list) {
@@ -94,7 +93,6 @@ public class EducationProgress {
 
 			delegator.create(gv);
 		} catch (Exception ex) {
-			System.out.println("RouteService::createARoute, EXCEPTION");
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
@@ -110,6 +108,68 @@ public class EducationProgress {
 		
 		retSucc.put("educationProgress", mapEducationProgress);
 
+		return retSucc;
+	}
+	
+	public static Map<String, Object> deleteEducationProgress(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Delegator delegator = ctx.getDelegator();
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+        
+        GenericValue userLogin = (GenericValue) context.get("userLogin");
+        Locale locale = (Locale) context.get("locale");        
+        
+        Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+        
+        String educationProgressId = (String)context.get("educationProgressId");
+        try{
+        	GenericValue gv = delegator.findOne("EducationProgress", UtilMisc.toMap("educationProgressId",educationProgressId), false);
+        	if(gv != null){
+        		delegator.removeValue(gv);
+        		retSucc.put("result", "deleted record with id: " + educationProgressId);
+        	} else {
+        		retSucc.put("result", "not found record with id: " + educationProgressId);
+        	}
+        	
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        }
+        return retSucc;
+	}
+	
+	public static Map<String, Object> updateEducationProgress(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatch = ctx.getDispatcher();
+		
+		String staffId = (String) context.get("staffId");
+		String educationType = (String) context.get("educationType");
+		String institution = (String) context.get("institution");
+		String speciality = (String) context.get("speciality");
+		String graduateDate = (String) context.get("graduateDate");
+		String educationProgressId = (String) context.get("educationProgressId");
+		
+		try{
+			GenericValue gv = delegator.findOne("EducationProgress", false, UtilMisc.toMap("educationProgressId",educationProgressId));
+			if(gv != null){
+				gv.put("staffId", staffId);
+				gv.put("educationType", educationType);
+				gv.put("institution", institution);
+				gv.put("speciality", speciality);
+				gv.put("graduateDate", Date.valueOf(graduateDate));
+				
+				delegator.store(gv);	
+        		retSucc.put("result", "updated record with id: " + educationProgressId);
+        	} else {
+        		retSucc.put("result", "not found record with id: " + educationProgressId);
+        	}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        
+		}
 		return retSucc;
 	}
 }
