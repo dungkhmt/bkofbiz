@@ -6,7 +6,7 @@ modal.prototype._date = function(value, edit, id){
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled") +
-					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value)) + '"'+
+					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value||Date.now())) + '"'+
 					'placeholder="dd/mm/yyyy"'+
 					'>' +
     			'<script type="text/javascript">'+
