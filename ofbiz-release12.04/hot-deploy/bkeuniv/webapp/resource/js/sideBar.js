@@ -28,9 +28,7 @@ $(document).ready(function(){
 			return;
 		}
 	}) 
-	
 });
-
 function openSessionSideBar(el) {
 	if(el.className.indexOf("side-bar")!==-1) {
 		return;
@@ -39,7 +37,6 @@ function openSessionSideBar(el) {
 	var els = el.parentNode.children;
 	for(var i = 0, len = els.length; i < len; ++i ) {
 		if(els[i].className.indexOf("nav-header")!==-1) {
-			els[i].click();
 			//openSideBar();
 			return;
 		}

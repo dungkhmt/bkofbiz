@@ -125,7 +125,8 @@
 	<request-map uri="setSessionLocale">
         <security https="true" auth="false"/>
         <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
-        <response name="success" type="view" value="main"/>
+        <response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
     </request-map>
     
     <!-- View Mappings -->

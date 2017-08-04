@@ -31,6 +31,7 @@ var BkEunivTitleDeleteEducationProgress = '${educationProgressUiLabelMap.BkEuniv
 <script src="/resource/bkeuniv/js/education-progress.js"></script>
 <body>
 <div class="body">
+
 	<div class="education-progress">
 		<div class="title">
 			<a href="#" class="title-hyperlink">

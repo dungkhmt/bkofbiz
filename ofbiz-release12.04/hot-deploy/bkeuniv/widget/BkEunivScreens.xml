@@ -183,6 +183,7 @@
 	<screen name="educationProgress">
 		<section>
 			<actions>
+				<entity-condition list="listStaffs" entity-name="EducationProgress"></entity-condition>
 				<property-map resource="BkEunivEducationProgressUiLabels" map-name="educationProgressUiLabelMap" global="true"/>
 			</actions>
 			<widgets>
