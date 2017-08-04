@@ -1,8 +1,11 @@
 package src.org.ofbiz.bkeuniv.educationprogress;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -14,6 +17,7 @@ import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
+import java.net.URL;
 import java.sql.Date;
 
 import javolution.util.FastList;
@@ -24,23 +28,27 @@ public class EducationProgress {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
-		String educationProgressId = (String)context.get("educationProgressId");
-		String staffId = (String)context.get("staffId");
-		String educationType = (String)context.get("educationType");
-		String institution = (String)context.get("institution");
-		String speciality = (String)context.get("speciality");
-		String graduateDate = (String)context.get("graduateDate");
+		String[] keys = {"educationProgressId", "staffId", "educationType", "institution", "speciality", "graduateDate"};
+		
 		try {
-			Map<String, Object> result = ServiceUtil.returnSuccess();
-			EntityCondition entity;
+			
+			EntityCondition entity = null;
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
-			List<GenericValue> list;
-			if(educationProgressId == null) {
-				list = delegator.findList("EducationProgress", null, null, null, findOptions, true);
-			} else {				
-				entity = EntityCondition.makeCondition("educationProgressId", EntityOperator.EQUALS, educationProgressId);				
-				list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	
+			Map<String, Object> fields = new HashMap<String, Object>();;
+			for(String key: keys) {
+				Object el = context.get(key);
+				if(!(el == null||el==(""))) {
+					if(key=="graduateDate") {
+						fields.put(key, Date.valueOf((String) el));
+					} else {
+						fields.put(key, el);
+					}
+				}
 			}
+			
+			//List<GenericValue> list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	
+			List<GenericValue> list = delegator.findByAnd("EducationProgress", fields);
+			Map<String, Object> result = ServiceUtil.returnSuccess();
 			
 			List<Map> listEducationProgress = FastList.newInstance();
 			for(GenericValue el: list) {
