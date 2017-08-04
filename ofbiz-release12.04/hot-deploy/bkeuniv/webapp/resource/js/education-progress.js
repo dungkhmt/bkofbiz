@@ -152,25 +152,32 @@ function saveEducationProgress(educationProgressOld) {
 	    data: educationProgress,
 	    datatype:"json",
 	    success: function(data) {
-	    	table.rows().indexes().data().filter(function(e, index) {
-	    		if(e.educationProgressId == educationProgress.educationProgressId) {
-	    			e.index = index;
-	    			return true;
-	    		}
-	    	}).map(function(el, index){
-	    		el.educationType = educationProgress.educationType;
-	    		el.institution = educationProgress.institution;
-	    		el.speciality = educationProgress.speciality;
-	    		el.graduateDate = educationProgress.graduateDate;
-	    		el.staffId = educationProgress.staffId;
-	    		table.row(el.index).data(el);
-	    	})
-    		
-	    	setTimeout(function() {
-	    		closeLoader();
-	    		$("#change-education-progress #modal-template").modal('hide');
-				alertify.success(data.result);
-	    	}, 500);
+	    	if(!!data.result) {
+	    		table.rows().indexes().data().filter(function(e, index) {
+	    			if(e.educationProgressId == educationProgress.educationProgressId) {
+	    				e.index = index;
+	    				return true;
+	    			}
+	    		}).map(function(el, index){
+	    			el.educationType = educationProgress.educationType;
+	    			el.institution = educationProgress.institution;
+	    			el.speciality = educationProgress.speciality;
+	    			el.graduateDate = educationProgress.graduateDate;
+	    			el.staffId = educationProgress.staffId;
+	    			table.row(el.index).data(el);
+	    		})
+	    		
+	    		setTimeout(function() {
+	    			closeLoader();
+	    			$("#change-education-progress #modal-template").modal('hide');
+	    			alertify.success(data.result);
+	    		}, 500);
+	    	} else {
+	    		setTimeout(function() {
+	    			closeLoader();
+	    			alertify.success(JSON.stringify(data._ERROR_MESSAGE_));
+	    		}, 500);
+	    	}
 	    },
 	    error: function(err) {
 	    	setTimeout(function() {
@@ -193,20 +200,26 @@ function deleteEducationProgress(educationProgress) {
 		    data: educationProgress,
 		    datatype:"json",
 		    success: function(data) {
-		    	table.rows().indexes().data().filter(function(e, index) {
-		    		if(e.educationProgressId == educationProgress.educationProgressId) {
-		    			e.index = index;
-		    			return true;
-		    		}
-		    	}).map(function(el, index){
-		    		table.row(el.index).remove().draw();
-		    	})
-
-		    	setTimeout(function() {
-		    		closeLoader();
-		    		$("#change-education-progress #modal-template").modal('hide');
-					alertify.success(data.result);
-		    	}, 500);
+		    	if(!!data.result) {
+		    		table.rows().indexes().data().filter(function(e, index) {
+		    			if(e.educationProgressId == educationProgress.educationProgressId) {
+		    				e.index = index;
+		    				return true;
+		    			}
+		    		}).map(function(el, index){
+		    			table.row(el.index).remove().draw();
+		    		})
+		    		
+		    		setTimeout(function() {
+		    			closeLoader();
+		    			alertify.success(data.result);
+		    		}, 500);
+		    	} else {
+		    		setTimeout(function() {
+		    			closeLoader();
+		    			alertify.success(JSON.stringify(data.result));
+		    		}, 500);
+		    	}
 		    },
 		    error: function(err) {
 		    	setTimeout(function() {
@@ -238,15 +251,23 @@ function addEducationProgress(){
 	    data: newEducationProgress,
 	    datatype:"json",
 	    success: function(data) {
-	    	table.row.add(data.educationProgress).draw();
-	    	setTimeout(closeLoader(), 500);
+	    	if(!!data.educationProgress) {
+	    		table.row.add(data.educationProgress).draw();
+		    	setTimeout(closeLoader(), 500);
+		    	
+		    	$("#add-education-progress #educationtype").val("");
+				$("#add-education-progress #institution").val("");
+				$("#add-education-progress #speciality").val("");
+				$("#add-education-progress #graduatedate").val("");
+				$("#add-education-progress #staffid").val("");
+				alertify.success('Created new row');
+	    	} else {
+	    		setTimeout(function() {
+		    		closeLoader();
+		    		alertify.success(JSON.stringify(data._ERROR_MESSAGE_LIST_));
+		    	}, 500);
+	    	}
 	    	
-	    	$("#add-education-progress #educationtype").val("");
-			$("#add-education-progress #institution").val("");
-			$("#add-education-progress #speciality").val("");
-			$("#add-education-progress #graduatedate").val("");
-			$("#add-education-progress #staffid").val("");
-			alertify.success('Created new row');
 	    },
 	    error: function(err) {
 	    	setTimeout(function() {
