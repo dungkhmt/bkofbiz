@@ -139,11 +139,11 @@ function saveEducationProgress(educationProgressOld) {
 	openLoader();
 	var educationProgress = {
 		"educationProgressId": educationProgressOld["educationProgressId"],
-		"educationType": $("#educationtype").val().trim(),
-		"institution": $("#institution").val().trim(),
-		"speciality": $("#speciality").val().trim(),
-		"graduateDate": getDate("#graduatedate","yy-mm-dd"),
-		"staffId": $("#staffid").val().trim()
+		"educationType": $("#change-education-progress #educationtype").val().trim(),
+		"institution": $("#change-education-progress #institution").val().trim(),
+		"speciality": $("#change-education-progress #speciality").val().trim(),
+		"graduateDate": getDate("#change-education-progress #graduatedate","yy-mm-dd"),
+		"staffId": $("#change-education-progress #staffid").val().trim()
 	}
 
 	$.ajax({
@@ -225,11 +225,11 @@ function deleteEducationProgress(educationProgress) {
 function addEducationProgress(){
 	openLoader();
 	var newEducationProgress = {
-		"educationType": $("#educationtype").val().trim(),
-		"institution": $("#institution").val().trim(),
-		"speciality": $("#speciality").val().trim(),
-		"graduateDate": getDate("#graduatedate","yy-mm-dd"),
-		"staffId": $("#staffid").val().trim()
+		"educationType": $("#add-education-progress #educationtype").val().trim(),
+		"institution": $("#add-education-progress #institution").val().trim(),
+		"speciality": $("#add-education-progress #speciality").val().trim(),
+		"graduateDate": getDate("#add-education-progress #graduatedate","yy-mm-dd"),
+		"staffId": $("#add-education-progress #staffid").val().trim()
 	}
 
 	$.ajax({
@@ -241,11 +241,11 @@ function addEducationProgress(){
 	    	table.row.add(data.educationProgress).draw();
 	    	setTimeout(closeLoader(), 500);
 	    	
-	    	$("#educationtype").val("");
-			$("#institution").val("");
-			$("#speciality").val("");
-			$("#graduatedate").val("");
-			$("#staffid").val("");
+	    	$("#add-education-progress #educationtype").val("");
+			$("#add-education-progress #institution").val("");
+			$("#add-education-progress #speciality").val("");
+			$("#add-education-progress #graduatedate").val("");
+			$("#add-education-progress #staffid").val("");
 			alertify.success('Created new row');
 	    },
 	    error: function(err) {
