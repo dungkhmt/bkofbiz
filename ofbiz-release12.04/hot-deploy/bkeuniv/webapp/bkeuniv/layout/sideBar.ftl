@@ -32,6 +32,9 @@
 					<li>
 						<a href="department-management">Quan ly bo  mon</a>
 					</li>
+					<li>
+						<a href="award">${uiLabelMap.BkEunivAward}</a>
+					</li>
 				</ul>
 			</div>
 			<hr class="side-bar-separator">

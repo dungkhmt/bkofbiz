@@ -48,7 +48,16 @@
     		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
     	<attribute name="facultyId" mode="IN" type="String"></attribute>
     	<attribute name="departments" mode="OUT" type="List"></attribute>
-
+    </service>
+    
+    <service name="getAward" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.award.Award" invoke="getAward">
+    	<attribute name="awardId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="year" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="award" mode="OUT" type="List"></attribute>
     </service>
     
 </services>
