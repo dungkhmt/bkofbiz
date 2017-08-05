@@ -34,6 +34,21 @@ modal.prototype._text = function(value, edit, id){
 					'>';
 }
 
+modal.prototype._select = function(value, edit, id, option) {
+	var _id = "#"+id;
+	var script = '<script>'+
+					'$('+id+').selectize({'+
+						'create: true,'+
+						'sortField: "text"'+
+					'});'+
+				'</script>';
+	var _selected = op[option.value]==option.selected?"selected":"";
+	var option = value.map(function(op, index) {
+		return '<option value="'+op[option.value]+'" '+_selected+'>'+op[option.name]+'</option>';
+	})
+	return '<select id="'+id+'">'+option.join("")+'</select>'+script;
+}
+
 modal.prototype.setting = function(option) {
 	this.option = option;
 	this._data = option.data;
@@ -53,6 +68,9 @@ modal.prototype.setting = function(option) {
 		    case "text":
 		    	el = this._text(column._data, column.edit, column.id);
 		        break;
+		    case "select":
+		    	el = this._select(column._data, column.edit, column.id, column.option);
+		    	break;
 		}
 		column.html = '<div class="row inline-box">'+
 						'<label id="title-modal-input">'+column.name+'</label>'+el+
