@@ -87,11 +87,73 @@
 		<field name="ISSN" type="value"></field>
 		<field name="authors" type="very-long"></field>
 		<field name="academicYearId" type="id"></field>
+		<field name="approverStaffId" type="id-vlong"></field>
+		
 		<prim-key field="paperId"/>
+		
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="PaperCategory" type="one">
+			<key-map field-name="paperCategoryId"/>
+		</relation>
+		<relation type="one" fk-name="APPROVER_STAFF" rel-entity-name="Staff">
+            <key-map field-name="approverStaffId" rel-field-name="staffId"/>
+        </relation>
 	</entity>
+	
+	<entity entity-name="ProjectCategory" package-name="org.ofbiz.bkeuniv">
+		<field name="projectCategoryId" type="id-vlong"></field>
+		<field name="projectCategoryName" type="very-long"></field>
+		<field name="projectCategoryCode" type="id"></field>
+		<prim-key field="projectCategoryId"/>
+	</entity>
+	<entity entity-name="ProjectStatus" package-name="org.ofbiz.bkeuniv">
+		<field name="projectStatusId" type="id-vlong"></field>
+		<field name="projectStatusName" type="very-long"></field>
+		<prim-key field="projectStatusId"/>
+	</entity>
+	<entity entity-name="ProjectParticipationRole" package-name="">
+		<field name="projectParticipationRoleId" type="id-vlong"></field>
+		<field name="projectParticipationRoleName" type="very-long"></field>
+		<prim-key field="projectParticipationRoleId"/>
+	</entity>
+	
+	<entity entity-name="ProjectDeclaration" package-name="org.ofbiz.bkeuniv">
+		<field name="projectDeclarationId" type="id-ne"></field>
+		<field name="projectCategoryId" type="id-vlong"></field>
+		<field name="projectName" type="very-long"></field>
+		<field name="startDate" type="date"></field>
+		<field name="endDate" type="date"></field>
+		<field name="projectStatusId" type="id-vlong"></field>
+		<field name="researchProgram" type="very-long"></field>
+		<field name="declarationStaffId" type="id-vlong"></field>
+		<field name="projectParticipationRoleId" type="id-vlong"></field>
+		<field name="approverStaffId" type="id-vlong"></field>
+		<prim-key field="projectDeclarationId"/>
+		
+		<relation rel-entity-name="ProjectCategory" type="one">
+			<key-map field-name="projectCategoryId"/>
+		</relation>
+		<relation rel-entity-name="ProjectStatus" type="one">
+			<key-map field-name="projectStatusId"/>
+		</relation>
+		
+		<relation type="one" fk-name="DECLARATION_STAFF" rel-entity-name="Staff">
+            <key-map field-name="declarationStaffId" rel-field-name="staffId"/>
+        </relation>
+		<relation type="one" fk-name="APPROVER_STAFF" rel-entity-name="Staff">
+            <key-map field-name="approverStaffId" rel-field-name="staffId"/>
+        </relation>
+        
+         <relation rel-entity-name="ProjectParticipationRole" type="one">
+         	<key-map field-name="projectParticipationRoleId"/>
+         </relation>
+	</entity>
+	
 
 	<entity entity-name="EducationProgress" package-name="org.ofbiz.bkeuniv">
 		<field name="educationProgressId" type="id-ne"></field>
