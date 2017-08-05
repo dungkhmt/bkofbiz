@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
 
+<ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+
 <AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
 <AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
 <AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
