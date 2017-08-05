@@ -6,9 +6,8 @@ $(document).ready(function(){
 	
 	$.ajax({
 	    url: "/bkeuniv/control/get-education-progress",
-	    method: 'POST',
+	    type: 'post',
 	    dataType: "json",
-	    contentType: 'application/json; charset=utf-8',
 	    success: function(data) {
 	    	var educationProgress = data.educationProgress;
 	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
