@@ -4,44 +4,41 @@ $(document).ready(function(){
 	
 	$.ajax({
 	    url: "/bkeuniv/control/get-scientificserviceexperience",
-	    method: 'POST',
+	    type: 'post',
 	    dataType: "json",
 	    data:"",
 	    contentType: 'application/json; charset=utf-8',
 	    success: function(data) {
-	        console.log("success");
-	    },
-	    complete: function(data, status) {
-	    	console.log(data);
-	    	/*departments = JSON.parse(data.responseText.slice(data.responseText.indexOf('{'))).departments;
-	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 100;
-	    	table = $('#table-department-management').DataTable({
-	   		 data: departments,
-	           columns: [
-	               { "data": "departmentId" },
-	               { "data": "departmentName" },
-	               { "data": "facultyId" }
-	           ],
-	           "scrollY": sizeTable,
-	           "scrollCollapse": true,
-	           "bJQueryUI": true
-	       });
-			$(document).contextmenu({
-			    delegate: "#table-department-management td",
+	        console.log(data.listScientificServiceExperience);
+	        var scientificServiceExperience=data.listScientificServiceExperience;
+	        var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
+	        table = $('#table-scientificserviceexperience-management').DataTable({
+		   		 data: scientificServiceExperience,
+		           columns: [
+		               { "data": "scientificServiceExperienceId" },
+		               { "data": "staffId" },
+		               { "data": "description" },
+		               { "data": "quantity" }
+		           ],
+		           "scrollY": sizeTable,
+		           "scrollCollapse": true,
+		           "bJQueryUI": true
+		       });
+	        $(document).contextmenu({
+			    delegate: "#table-scientificserviceexperience-management td",
 			menu: [
-			  {title: "Edit", cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  {title: "Delete", cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+			  {title: edit, cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  {title: remove, cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 			],
 			select: function(event, ui) {
 				var el = ui.target.parent();
-				var department = table.row( el ).data();
-				department.el = el;
+				var e = table.row( el ).data();
 				switch(ui.cmd){
 					case "edit":
-						changeDepartment(department)
+						changeScientificServiceExperience(e)
 						break;
 					case "delete":
-						deleteDepartment(department);
+						deleteScientificServiceExperience(e);
 						break;
 					}
 				},
@@ -51,19 +48,20 @@ $(document).ready(function(){
 						extraData = ui.extraData;
 					ui.menu.zIndex(9999);
 			    }
-			  });*/
+			  });
 	    }
 	});
 });
 
 function changeScientificServiceExperience(scientificserviceexperience) {
+	console.log("changeScientificServiceExperience");
 	new Promise(function(resolve, reject) {
-		resolve(new modal("#change-department").setting({
+		resolve(new modal("#change-scientificserviceexperience").setting({
 			data: scientificserviceexperience,
 			columns: [
 			          {
 			        	  name: "ID",
-			        	  value: "departmentId",
+			        	  value: "scientificServiceExperienceId",
 			        	  edit: false
 			          },
 			          {
@@ -79,14 +77,14 @@ function changeScientificServiceExperience(scientificserviceexperience) {
 			        	  value: "quantity"
 			          }
 			          ],
-			          title: "Chỉnh sửa bộ môn",
+			          title: updateTitle,
 			          action: {
-			        	  func: "saveDepartment",
-			        	  name: "Cập nhật"
+			        	  func: "saveScientificServiceExperience()",
+			        	  name: updateCaption
 			          }
 		}).render());
 	}).then(function(val) {
-		$("#change-department #modal-template").modal('show');
+		$("#change-scientificserviceexperience #modal-template").modal('show');
 	})
 	
 }
@@ -99,21 +97,21 @@ function newScientificServiceExperience() {
 			columns: [
 			          {
 			        	  name: SID,
-			        	  value: "departmentName"
+			        	  value: "staffId"
 			          },
 			          {
 			        	  name: Description,
-			        	  value: "facultyId"
+			        	  value: "description"
 			          },
 			          {
 			        	  name: Quantity,
-			        	  value: "facultyId"
+			        	  value: "quantity"
 			          }
 			          ],
-			          title: "Chỉnh sửa bộ môn",
+			          title: addTitle,
 			          action: {
-			        	  func: "addScientificServiceExperience",
-			        	  name: "Thêm mới"
+			        	  func: "addScientificServiceExperience()",
+			        	  name: addCaption
 			          }
 		}).render());
 	}).then(function(val) {
@@ -121,33 +119,151 @@ function newScientificServiceExperience() {
 	})
 }
 
-function saveDepartment(department) {
-	console.log(table.row( department.el ).data());
-	alertify.success('Success message');
+function saveScientificServiceExperience() {
+	//cosole.log("hereeee");
+	openLoader();
+	var json={
+			"scientificServiceExperienceId":$('#scientificserviceexperienceid').val(),
+			"staffId":$('#staffid').val(),
+			"description":$('#description').val(),
+			"quantity":$('#quantity').val()
+	}
+	console.log(json);
+	$.ajax({
+	    url: "/bkeuniv/control/update-scientificserviceexperience",
+	    type: 'post',
+	    data: json,
+	    datatype:"json",
+	    success: function(data) {
+	    	console.log(data);
+	    	if(data.object!=null) {
+	    		table.rows().indexes().data().filter(function(e, index) {
+	    			if(e.scientificServiceExperienceId == json.scientificServiceExperienceId) {
+	    				e.index = index;
+	    				return true;
+	    			}
+	    		}).map(function(el, index){
+	    			el.staffId = json.staffId;
+	    			el.description = json.description;
+	    			el.quantity = json.quantity;
+	    			table.row(el.index).data(el);
+	    		})
+	    		
+	    		setTimeout(function() {
+	    			closeLoader();
+	    			$("#change-scientificserviceexperience #modal-template").modal('hide');
+	    			alertify.success(data.json);
+	    		}, 500);
+	    	} else {
+	    		setTimeout(function() {
+	    			closeLoader();
+	    			alertify.success(JSON.stringify(data._ERROR_MESSAGE_));
+	    		}, 500);
+	    	}
+	    },
+	    error: function(err) {
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		alertify.success(err.result);
+	    	}, 500);
+	    	console.log(err);
+	    }
+	})
 }
 
-function deleteDepartment(department) {
-	alertify.confirm("Delete department", "Bạn muốn xoá bộ môn " + department.departmentName,
-	  function(){
-	    alertify.success('Ok');
-	  },
-	  function(){
-	    alertify.error('Cancel');
-	  });
+function deleteScientificServiceExperience(se) {
+	alertify.confirm("Confirm", deleteconfirm  + se.scientificServiceExperienceId,
+			function(){
+				openLoader();
+				$.ajax({
+				    url: "/bkeuniv/control/delete-scientificserviceexperience",
+				    type: 'post',
+				    data: se,
+				    datatype:"json",
+				    success: function(data) {
+				    	if(data.id!=null) {
+				    		table.rows().indexes().data().filter(function(e, index) {
+				    			if(e.scientificServiceExperienceId == se.scientificServiceExperienceId) {
+				    				e.index = index;
+				    				return true;
+				    			}
+				    		}).map(function(el, index){
+				    			table.row(el.index).remove().draw();
+				    		})
+				    		
+				    		setTimeout(function() {
+				    			closeLoader();
+				    			alertify.success(remove + " "+data.id);
+				    		}, 500);
+				    	} else {
+				    		setTimeout(function() {
+				    			closeLoader();
+				    			alertify.success(failStr+remove+" "+ JSON.stringify(data.id));
+				    		}, 500);
+				    	}
+				    },
+				    error: function(err) {
+				    	setTimeout(function() {
+				    		closeLoader();
+				    		alertify.success(err.result);
+				    	}, 500);
+				    	console.log(err);
+				    	
+				    }
+				})
+			},
+			function(){
+			});
 }
 
 function addScientificServiceExperience(){
+	
+	var json={
+			
+			"staffId":$('#staffid').val(),
+			"description":$('#description').val(),
+			"quantity":$('#quantity').val()
+	}
+	console.log(json);
 	$.ajax({
-	    url: "/bkeuniv/control/get-scientificserviceexperience",
-	    method: 'POST',
-	    dataType: "json",
-	    data:"",
-	    contentType: 'application/json; charset=utf-8',
+	    url: "/bkeuniv/control/create-scientificserviceexperience",
+	    type: 'post',
+	    datatype: "json",
+	    data:json,
 	    success: function(data) {
-	        console.log("success");
+	        console.log("data",data);
+	        if(data.object != null){
+	    		table.row.add(data.object).draw();
+		    	setTimeout(closeLoader(), 500);
+		    	$('#staffid').val("");
+		    	$('#description').val("");
+		    	$('#quantity').val("");
+		    	alertify.success('Created new row');
+	    	} else{
+	    		setTimeout(function() {
+		    		closeLoader();
+		    		alertify.success(JSON.stringify(data._ERROR_MESSAGE_LIST_));
+		    	}, 500);
+	    	}
 	    },
-	    complete: function(data, status) {
-	    	console.log(data);
+	    error: function(err) {
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		alertify.success(err);
+	    	}, 500);
+	    	console.log(err);
 	    }
 	});
 }
+function openLoader() {
+	if($(".loader").hasClass("hidden-loading")) {
+		$(".loader").removeClass("hidden-loading");
+	}
+}
+
+function closeLoader() {
+	if(!$(".loader").hasClass("hidden-loading")) {
+		$(".loader").addClass("hidden-loading");
+	}
+}
+

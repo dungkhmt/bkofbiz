@@ -1,8 +1,10 @@
 package src.org.ofbiz.bkeuniv.scientificserviceexperience;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -39,5 +41,85 @@ public class ScientificServiceExperience {
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}
+	}
+	public static Map<String, Object> createScientificServiceExperience(DispatchContext ctx, Map<String, ? extends Object> context) {
+		System.out.println("createScientificServiceExperience");
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		String staffId = (String)context.get("staffId");
+		String description = (String)context.get("description");
+		Long quantity = Long.parseLong((String)context.get("quantity"));
+		System.out.println("ScientificServiceExperience"+" "+staffId+" "+description+" "+quantity);
+		try {
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			GenericValue gv=delegator.makeValue("ScientificServiceExperience");
+			gv.put("scientificServiceExperienceId", delegator.getNextSeqId("ScientificServiceExperience"));
+			gv.put("staffId", staffId);
+			gv.put("description", description);
+			gv.put("quantity", quantity);
+			System.out.println(gv);
+			delegator.create(gv);
+			Map<String,Object> map=new HashMap<String, Object>();
+			map.put("scientificServiceExperienceId", gv.get("scientificServiceExperienceId"));
+			map.put("staffId",  gv.get("staffId"));
+			map.put("description", gv.get("description"));
+			map.put("quantity", gv.get("quantity"));
+			result.put("object", map);
+			return result;
+		} catch (Exception e) {
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+		
+	}
+	public static Map<String, Object> updateScientificServiceExperience(DispatchContext ctx, Map<String, ? extends Object> context) {
+		System.out.println("updateScientificServiceExperience");
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		String scientificServiceExperienceId = (String)context.get("scientificServiceExperienceId");
+		String staffId = (String)context.get("staffId");
+		String description = (String)context.get("description");
+		Long quantity = Long.parseLong((String)context.get("quantity"));
+		System.out.println("ScientificServiceExperience update "+" "+staffId+" "+description+" "+quantity+" "+scientificServiceExperienceId);
+		try {
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			GenericValue gv=delegator.findOne("ScientificServiceExperience", false, UtilMisc.toMap("scientificServiceExperienceId",scientificServiceExperienceId));
+			//gv.put("scientificServiceExperienceId", delegator.getNextSeqId("ScientificServiceExperience"));
+			gv.put("staffId", staffId);
+			gv.put("description", description);
+			gv.put("quantity", quantity);
+			System.out.println(gv);
+			delegator.store(gv);
+			Map<String,Object> map=new HashMap<String, Object>();
+			map.put("scientificServiceExperienceId", gv.get("scientificServiceExperienceId"));
+			map.put("staffId",  gv.get("staffId"));
+			map.put("description", gv.get("description"));
+			map.put("quantity", gv.get("quantity"));
+			result.put("object", map);
+			return result;
+		} catch (Exception e) {
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+		
+	}
+	public static Map<String, Object> deleteScientificServiceExperience(DispatchContext ctx, Map<String, ? extends Object> context) {
+		//System.out.println("updateScientificServiceExperience");
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		String scientificServiceExperienceId = (String)context.get("scientificServiceExperienceId");
+		System.out.println("ScientificServiceExperience update "+" "+scientificServiceExperienceId);
+		try {
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			GenericValue gv=delegator.findOne("ScientificServiceExperience", false, UtilMisc.toMap("scientificServiceExperienceId",scientificServiceExperienceId));
+			//gv.put("scientificServiceExperienceId", delegator.getNextSeqId("ScientificServiceExperience"));
+			delegator.removeValue(gv);
+			result.put("id", scientificServiceExperienceId);
+			return result;
+		} catch (Exception e) {
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+		
 	}
 }

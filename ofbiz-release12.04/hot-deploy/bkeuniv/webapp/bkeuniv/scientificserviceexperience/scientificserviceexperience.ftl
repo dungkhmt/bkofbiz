@@ -18,6 +18,14 @@
 var SID='${sseLabels.BkEunivSSESID}';
 var Description='${sseLabels.BkEunivSSESDescription}';
 var Quantity='${sseLabels.BkEunivSSESQuantity}';
+var edit='${uiLabelMap.BkEunivEdit}'
+var remove='${uiLabelMap.BkEunivRemove}'
+var addCaption='${uiLabelMap.BkEunivAddRow}'
+var updateCaption='${uiLabelMap.BkEunivUpdate}'
+var failStr='${uiLabelMap.BkEunivFail}'
+var deleteconfirm='${sseLabels.BkEunivSSESConfirmDelete}'
+var addTitle='${sseLabels.BkEunivSSESAddTitle}';
+var updateTitle='${sseLabels.BkEunivSSESUpdateTitle}';
 </script>
 <script src="/resource/bkeuniv/js/ssEManagement.js"></script>
 <div class="body">
@@ -43,5 +51,6 @@ var Quantity='${sseLabels.BkEunivSSESQuantity}';
 			</tbody>
 		</table>
 	</div></div>
+<div class="loader hidden-loading"></div>
 <div id="add-scientificserviceexperience"></div>
 <div id="change-scientificserviceexperience"></div>

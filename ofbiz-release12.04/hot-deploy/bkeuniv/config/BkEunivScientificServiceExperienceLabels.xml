@@ -20,5 +20,18 @@
         <value xml:lang="en">Quantity</value>
         <value xml:lang="vi">Số lượng</value>
     </property>
+    <property key="BkEunivSSESConfirmDelete">
+        <value xml:lang="en">Are you sure to delete record id </value>
+        <value xml:lang="vi">Bạn có chắc chắn muốn xóa kinh nghiệm </value>
+    </property>
     
+    <property key="BkEunivSSESUpdateTitle">
+        <value xml:lang="en">Update Scientific Service Experience </value>
+        <value xml:lang="vi">Chỉnh sửa kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
+    </property>
+    
+    <property key="BkEunivSSESAddTitle">
+        <value xml:lang="en">Add a Scientific Service Experience </value>
+        <value xml:lang="vi">Thêm kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
+    </property>
 </resource>
