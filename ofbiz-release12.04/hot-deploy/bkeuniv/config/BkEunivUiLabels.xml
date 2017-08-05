@@ -22,10 +22,8 @@
         <value xml:lang="vi">Trang chủ</value>
     </property>
     
-    <property key="BkEunivHomePage">
-        <value xml:lang="en">Home Page</value>
-        <value xml:lang="vi">Trang chủ</value>
+    <property key="BkEunivEMSATA">
+        <value xml:lang="en">Scientific Service Experience</value>
+        <value xml:lang="vi">Kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
     </property>
-    
-    
 </resource>

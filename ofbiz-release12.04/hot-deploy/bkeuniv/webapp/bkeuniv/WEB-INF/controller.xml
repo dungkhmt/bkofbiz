@@ -89,6 +89,18 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
     
+    <request-map uri="scientificserviceexperience">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-scientificserviceexperience"></response>
+    </request-map>
+    
+    <request-map uri="get-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="getscientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -98,5 +110,6 @@
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
     
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
+    <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     
 </site-conf>
