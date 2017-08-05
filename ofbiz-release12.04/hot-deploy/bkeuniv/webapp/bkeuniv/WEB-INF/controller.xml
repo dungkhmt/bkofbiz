@@ -129,6 +129,38 @@
 		<response name="error" type="request" value="json"></response>
     </request-map>
     
+    <request-map uri="scientificserviceexperience">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-scientificserviceexperience"></response>
+    </request-map>
+    
+    <request-map uri="get-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="getscientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createscientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updatescientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deletescientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -136,8 +168,8 @@
     <view-map name="view-department-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDepartmentManagement"/>
     <view-map name="view-add-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageAddDepartment"/>
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
-    
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
+    <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     
 </site-conf>

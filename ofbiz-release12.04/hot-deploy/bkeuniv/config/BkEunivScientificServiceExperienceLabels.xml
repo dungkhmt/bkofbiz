@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivEMSATA">
+        <value xml:lang="en">Scientific Service Experience</value>
+        <value xml:lang="vi">Kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
+    </property>
+    <property key="BkEunivAdd">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm</value>
+    </property>
+    <property key="BkEunivSSESID">
+        <value xml:lang="en">StaffID</value>
+        <value xml:lang="vi">Mã nhân viên</value>
+    </property>
+    <property key="BkEunivSSESDescription">
+        <value xml:lang="en">Description</value>
+        <value xml:lang="vi">Mô tả</value>
+    </property>
+    <property key="BkEunivSSESQuantity">
+        <value xml:lang="en">Quantity</value>
+        <value xml:lang="vi">Số lượng</value>
+    </property>
+    <property key="BkEunivSSESConfirmDelete">
+        <value xml:lang="en">Are you sure to delete record id </value>
+        <value xml:lang="vi">Bạn có chắc chắn muốn xóa kinh nghiệm </value>
+    </property>
+    
+    <property key="BkEunivSSESUpdateTitle">
+        <value xml:lang="en">Update Scientific Service Experience </value>
+        <value xml:lang="vi">Chỉnh sửa kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
+    </property>
+    
+    <property key="BkEunivSSESAddTitle">
+        <value xml:lang="en">Add a Scientific Service Experience </value>
+        <value xml:lang="vi">Thêm kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
+    </property>
+</resource>
