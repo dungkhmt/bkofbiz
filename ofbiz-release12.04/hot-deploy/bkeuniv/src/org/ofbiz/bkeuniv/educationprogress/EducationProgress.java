@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.ofbiz.base.util.UtilMisc;
@@ -45,6 +46,16 @@ public class EducationProgress {
 					}
 				}
 			}
+
+			
+			System.out.println( ">>>>>>>" );
+			for ( Entry<String, ? extends Object> key : context.entrySet()) {
+				Object a = key.getKey();
+			    Object value = key.getValue();
+				System.out.println( a );
+				System.out.println( value );
+			}
+			System.out.println( "<<<<<<<" );
 			
 			//List<GenericValue> list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	
 			List<GenericValue> list = delegator.findByAnd("EducationProgress", fields);
