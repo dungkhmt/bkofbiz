@@ -36,9 +36,11 @@ modal.prototype._text = function(value, edit, id){
 
 modal.prototype._select = function(value, edit, id, option) {
 	var _id = "#"+id;
+	var maxItem = option.maxItem||1;
 	var script = '<script>'+
 					'$('+id+').selectize({'+
 						'create: true,'+
+						'maxItems: ' + maxItem + ', '
 						'sortField: "text"'+
 					'});'+
 				'</script>';
