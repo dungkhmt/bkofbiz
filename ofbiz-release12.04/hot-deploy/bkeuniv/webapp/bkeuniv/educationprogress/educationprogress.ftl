@@ -44,7 +44,6 @@ var BkEunivTitleDeleteEducationProgress = '${educationProgressUiLabelMap.BkEuniv
 		
 		<table id="table-education-progress" class="table table-striped table-bordered">
 			<thead>
-				<td>${educationProgressUiLabelMap.BkEunivEducationProgressId}</td>
 				<td>${educationProgressUiLabelMap.BkEunivEducationType}</td>
 				<td>${educationProgressUiLabelMap.BkEunivInstitution}</td>
 				<td>${educationProgressUiLabelMap.BkEunivSpeciality}</td>

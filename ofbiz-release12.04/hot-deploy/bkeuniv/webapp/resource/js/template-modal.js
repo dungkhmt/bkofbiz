@@ -90,7 +90,7 @@ modal.prototype.render = function() {
 
 modal.prototype.data = function() {
 	var _ = this;
-	var _data = this.columns.reduce(function(acc, column) {
+	var data = this.columns.reduce(function(acc, column) {
 		if(column.edit) {
 			switch(column.type) {
 			    case "date":
@@ -105,5 +105,24 @@ modal.prototype.data = function() {
 		
 		return acc;
 	}, {})
-	return _data;
+	
+	return this._mergeData(this._data, data)
+}
+
+modal.prototype._mergeData = function(base, compare) {
+	if (!compare || typeof compare !== 'object') {
+		return base;
+	}
+
+	var keys = Object.keys(compare);
+	var key;
+	
+	for (var i = 0, len = keys.length; i < len; i++) {
+		key = keys[i];
+		if(compare.hasOwnProperty(key)) {
+			base[key] = compare[key];			
+		}
+	}
+
+	return base
 }

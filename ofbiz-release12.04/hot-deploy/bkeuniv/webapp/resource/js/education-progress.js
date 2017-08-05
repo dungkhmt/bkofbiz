@@ -6,16 +6,14 @@ $(document).ready(function(){
 	
 	$.ajax({
 	    url: "/bkeuniv/control/get-education-progress",
-	    method: 'POST',
+	    type: 'post',
 	    dataType: "json",
-	    contentType: 'application/json; charset=utf-8',
 	    success: function(data) {
 	    	var educationProgress = data.educationProgress;
 	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
 	    	table = $('#table-education-progress').DataTable({
 	   		 data: educationProgress,
 	           columns: [
-	               { "data": "educationProgressId" },
 	               { "data": "educationType" },
 	               { "data": "institution" },
 	               { "data": "speciality" },
@@ -60,11 +58,6 @@ function changeEducationProgress(educationProgress) {
 		resolve(new modal("#change-education-progress").setting({
 			data: educationProgress,
 			columns: [
-			          {
-			        	  name: educationProgressId,
-			        	  value: "educationProgressId",
-			        	  edit: false
-			          },
 			          {
 			        	  name: educationType,
 			        	  value: "educationType"
@@ -179,7 +172,7 @@ function saveEducationProgress() {
 	    error: function(err) {
 	    	setTimeout(function() {
 	    		closeLoader();
-	    		alertify.success(err.result);
+	    		alertify.success(JSON.stringify(err));
 	    	}, 500);
 	    	console.log(err);
 	    }
@@ -221,7 +214,7 @@ function deleteEducationProgress(educationProgress) {
 		    error: function(err) {
 		    	setTimeout(function() {
 		    		closeLoader();
-		    		alertify.success(err.result);
+		    		alertify.success(JSON.stringify(err));
 		    	}, 500);
 		    	console.log(err);
 		    	
@@ -263,7 +256,7 @@ function addEducationProgress(){
 	    error: function(err) {
 	    	setTimeout(function() {
 	    		closeLoader();
-	    		alertify.success(err);
+	    		alertify.success(JSON.stringify(err));
 	    	}, 500);
 	    	console.log(err);
 	    }

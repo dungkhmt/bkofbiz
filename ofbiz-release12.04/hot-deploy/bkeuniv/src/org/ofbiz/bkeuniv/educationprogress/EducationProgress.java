@@ -1,12 +1,10 @@
 package src.org.ofbiz.bkeuniv.educationprogress;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
@@ -18,7 +16,6 @@ import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
-import java.net.URL;
 import java.sql.Date;
 
 import javolution.util.FastList;
@@ -30,35 +27,29 @@ public class EducationProgress {
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
 		String[] keys = {"educationProgressId", "staffId", "educationType", "institution", "speciality", "graduateDate"};
-		
+		String[] search = {"institution"};
 		try {
-			
-			EntityCondition entity = null;
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
-			Map<String, Object> fields = new HashMap<String, Object>();;
 			for(String key: keys) {
 				Object el = context.get(key);
 				if(!(el == null||el==(""))) {
-					if(key=="graduateDate") {
-						fields.put(key, Date.valueOf((String) el));
+					EntityCondition condition;
+					int index = Arrays.asList(search).indexOf(key);
+					if( index == -1) {
+						if(key=="graduateDate") {
+							condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, Date.valueOf((String) el));
+						} else {
+							condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, el);
+						}
 					} else {
-						fields.put(key, el);
+						condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, el);
 					}
+					conditions.add(condition);
 				}
 			}
-
 			
-			System.out.println( ">>>>>>>" );
-			for ( Entry<String, ? extends Object> key : context.entrySet()) {
-				Object a = key.getKey();
-			    Object value = key.getValue();
-				System.out.println( a );
-				System.out.println( value );
-			}
-			System.out.println( "<<<<<<<" );
-			
-			//List<GenericValue> list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	
-			List<GenericValue> list = delegator.findByAnd("EducationProgress", fields);
+			List<GenericValue> list = delegator.findList("EducationProgress", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 			
 			List<Map> listEducationProgress = FastList.newInstance();
