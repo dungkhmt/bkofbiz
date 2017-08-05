@@ -174,7 +174,7 @@ function saveEducationProgress() {
 	    error: function(err) {
 	    	setTimeout(function() {
 	    		closeLoader();
-	    		alertify.success(err.result);
+	    		alertify.success(JSON.stringify(err));
 	    	}, 500);
 	    	console.log(err);
 	    }
@@ -216,7 +216,7 @@ function deleteEducationProgress(educationProgress) {
 		    error: function(err) {
 		    	setTimeout(function() {
 		    		closeLoader();
-		    		alertify.success(err.result);
+		    		alertify.success(JSON.stringify(err));
 		    	}, 500);
 		    	console.log(err);
 		    	
@@ -258,7 +258,7 @@ function addEducationProgress(){
 	    error: function(err) {
 	    	setTimeout(function() {
 	    		closeLoader();
-	    		alertify.success(err);
+	    		alertify.success(JSON.stringify(err));
 	    	}, 500);
 	    	console.log(err);
 	    }
