@@ -15,7 +15,6 @@ $(document).ready(function(){
 	    	table = $('#table-education-progress').DataTable({
 	   		 data: educationProgress,
 	           columns: [
-	               { "data": "educationProgressId" },
 	               { "data": "educationType" },
 	               { "data": "institution" },
 	               { "data": "speciality" },
