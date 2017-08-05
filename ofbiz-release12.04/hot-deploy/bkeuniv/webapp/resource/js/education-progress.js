@@ -61,11 +61,6 @@ function changeEducationProgress(educationProgress) {
 			data: educationProgress,
 			columns: [
 			          {
-			        	  name: educationProgressId,
-			        	  value: "educationProgressId",
-			        	  edit: false
-			          },
-			          {
 			        	  name: educationType,
 			        	  value: "educationType"
 			          },
