@@ -40,7 +40,6 @@ modal.prototype._select = function(value, edit, id, option) {
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
 						'$("'+_id+'").selectize({'+
-							'create: true,'+
 							'maxItems: ' + maxItem + ', '+
 							'sortField: "text"'+
 						'});'+
