@@ -1,4 +1,6 @@
 var table, test, temp;
+var modalAdd;
+var modalChange;
 
 $(document).ready(function(){
 	
@@ -87,11 +89,12 @@ function changeEducationProgress(educationProgress) {
 			          ],
 			          title: titleEditEducationProgress,
 			          action: {
-			        	  func: "saveEducationProgress",
+			        	  func: "saveEducationProgress()",
 			        	  name: update
 			          }
 		}).render());
-	}).then(function(val) {
+	}).then(function(modal) {
+		modalChange = modal;
 		$("#change-education-progress #modal-template").modal('show');
 	})
 	
@@ -126,25 +129,19 @@ function newEducationProgress() {
 			          ],
 			          title: titleNewEducationProgress,
 			          action: {
-			        	  func: "addEducationProgress",
+			        	  func: "addEducationProgress()",
 			        	  name: add
 			          }
 		}).render());
-	}).then(function(val) {
+	}).then(function(modal) {
+		modalAdd = modal
 		$("#add-education-progress #modal-template").modal('show');
 	})
 }
 
-function saveEducationProgress(educationProgressOld) {
+function saveEducationProgress() {
 	openLoader();
-	var educationProgress = {
-		"educationProgressId": educationProgressOld["educationProgressId"],
-		"educationType": $("#change-education-progress #educationtype").val().trim(),
-		"institution": $("#change-education-progress #institution").val().trim(),
-		"speciality": $("#change-education-progress #speciality").val().trim(),
-		"graduateDate": getDate("#change-education-progress #graduatedate","yy-mm-dd"),
-		"staffId": $("#change-education-progress #staffid").val().trim()
-	}
+	var educationProgress = modalChange.data();
 
 	$.ajax({
 	    url: "/bkeuniv/control/update-education-progress",
@@ -237,13 +234,7 @@ function deleteEducationProgress(educationProgress) {
 
 function addEducationProgress(){
 	openLoader();
-	var newEducationProgress = {
-		"educationType": $("#add-education-progress #educationtype").val().trim(),
-		"institution": $("#add-education-progress #institution").val().trim(),
-		"speciality": $("#add-education-progress #speciality").val().trim(),
-		"graduateDate": getDate("#add-education-progress #graduatedate","yy-mm-dd"),
-		"staffId": $("#add-education-progress #staffid").val().trim()
-	}
+	var newEducationProgress = modalAdd.data();
 
 	$.ajax({
 	    url: "/bkeuniv/control/create-education-progress",
