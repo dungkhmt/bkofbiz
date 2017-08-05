@@ -12,7 +12,7 @@ $(document).ready(function(){
 	    },
 	    complete: function(data, status) {
 	    	departments = JSON.parse(data.responseText.slice(data.responseText.indexOf('{'))).departments;
-	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 100;
+	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
 	    	table = $('#table-department-management').DataTable({
 	   		 data: departments,
 	           columns: [

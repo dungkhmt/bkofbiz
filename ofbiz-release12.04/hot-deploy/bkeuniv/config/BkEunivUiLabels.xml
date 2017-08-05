@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<property key="BkEunivLanguages">
+        <value xml:lang="en">English</value>
+        <value xml:lang="vi">Tiếng Việt</value>
+    </property>
     <property key="BkEunivApplication">
         <value xml:lang="en">BkEuniv Application</value>
         <value xml:lang="zh">BkEuniv应用程序</value>
@@ -22,8 +26,40 @@
         <value xml:lang="vi">Trang chủ</value>
     </property>
     
+<<<<<<< HEAD
     <property key="BkEunivEMSATA">
         <value xml:lang="en">Scientific Service Experience</value>
         <value xml:lang="vi">Kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
     </property>
+=======
+    <property key="BkEunivEducationProgress">
+        <value xml:lang="en">Manage Education Progress</value>
+        <value xml:lang="vi">Quản lý quá trình đào tạo</value>
+    </property>
+    
+    <property key="BkEunivAdd">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm</value>
+    </property>
+    
+    <property key="BkEunivEdit">
+        <value xml:lang="en">Edit</value>
+        <value xml:lang="vi">Sửa</value>
+    </property>
+    
+    <property key="BkEunivRemove">
+        <value xml:lang="en">Remove</value>
+        <value xml:lang="vi">Xoá</value>
+    </property>
+    
+    <property key="BkEunivUpdate">
+        <value xml:lang="en">Update</value>
+        <value xml:lang="vi">Cập nhật</value>
+    </property>
+    
+    <property key="BkEunivAddRow">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm mới</value>
+    </property>
+>>>>>>> ee7eafceef64bd3b65f28ae6df2b10218cb3b110
 </resource>
