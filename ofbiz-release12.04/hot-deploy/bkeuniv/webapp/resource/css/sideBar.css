@@ -43,7 +43,10 @@
 }
 
 .side-bar-item-container ul li:hover{
-	font-size: 15px;
+	background-color: hsla(0, 0%, 93.3%, .4);
+}
+
+.side-bar-item-container .nav-header:hover{
 	background-color: hsla(0, 0%, 93.3%, .4);
 }
 
@@ -60,8 +63,7 @@ ul.nav-list li {
 	color: inherit;
 }
 
-.side-bar-selection .side-bar-item-container ul li a:hover {
-	font-size: 15px;
+.side-bar-selection .side-bar-item-container ul li :hover {
 	text-decoration: none;
 }
 
@@ -86,15 +88,21 @@ ul.nav-list li {
 ul li.active {
 	background: #cc181e;
     color: #fff;
-    font-size: 15px;
 }
 
 ul li.active:hover {
 	background: #cc181e;
     color: #fff;
-    font-size: 15px;
 }
 
 .side-bar-item-container .nav-header {
+	width: 100%;
+    position: inherit;
+    padding: 5px 0px 5px 0px;
 	cursor: pointer;
+}
+
+.side-bar-item-container .nav-header .glyphicon{
+    margin-right: 5px;
+    font-size: 12px;
 }

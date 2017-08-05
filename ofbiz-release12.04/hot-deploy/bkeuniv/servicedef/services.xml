@@ -35,20 +35,53 @@
        <attribute name="idofdepartment" mode="IN" type="String"></attribute>       
     </service>
     
-
-    <service name="svrTestService" engine="java"
-            location="src.org.ofbiz.utils.BKEunivUtils" invoke="testService">
-       <attribute name="a" mode="IN" type="String"></attribute>
-       <attribute name="b" mode="IN" type="String"></attribute>
-       <attribute name="sum" mode="OUT" type="String"></attribute>
-       <attribute name="prod" mode="OUT" type="String"></attribute>
-       <attribute name="sequence" mode="OUT" type="List"></attribute>
-	</service>
     <service name="getDepartments" engine="java" 
     		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
     	<attribute name="facultyId" mode="IN" type="String"></attribute>
     	<attribute name="departments" mode="OUT" type="List"></attribute>
 
+    </service>
+    
+    <service name="getEducationProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="getEducationProgress">
+    	<attribute name="educationProgressId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="educationType" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="institution" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="speciality" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="graduateDate" mode="IN" type="String" optional="true"></attribute>
+    	
+    	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="createEducationProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="createEducationProgress">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="institution" mode="IN" type="String"></attribute>
+    	<attribute name="speciality" mode="IN" type="String"></attribute>
+    	<attribute name="educationType" mode="IN" type="String"></attribute>
+    	<attribute name="graduateDate" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="educationProgress" mode="OUT" type="Map"></attribute>
+    </service>
+    
+    <service name="updateEducationProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="updateEducationProgress">
+    	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="institution" mode="IN" type="String"></attribute>
+    	<attribute name="speciality" mode="IN" type="String"></attribute>
+    	<attribute name="educationType" mode="IN" type="String"></attribute>
+    	<attribute name="graduateDate" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteEducationProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="deleteEducationProgress">
+    	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
     
 </services>

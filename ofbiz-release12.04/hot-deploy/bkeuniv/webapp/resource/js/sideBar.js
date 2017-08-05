@@ -1,10 +1,23 @@
 $(document).ready(function(){
 
-	$('.tree-toggle').click(function () {$(this).parent().children('.tree').toggle(200);
+	$('.tree-toggle').click(function () {
+		
+		var _ = $(this)[0]
+		var el = $(this).parent().children('.tree');
+		el.toggle(200);
+		setTimeout(function(){
+			if(el[0].style.display==="none"){
+				_.children[0].classList.remove("glyphicon-minus");
+				_.children[0].classList.add("glyphicon-plus");
+			} else {
+				_.children[0].classList.remove("glyphicon-plus");
+				_.children[0].classList.add("glyphicon-minus");
+			}
+		}, 220);
 	});
 
 	$(function(){
-	$('.tree-toggle').parent().children('.tree').toggle(200);
+		var el = $('.tree-toggle').parent().children('.tree');
 	})
 	
 	var href = window.location.href;
@@ -15,9 +28,7 @@ $(document).ready(function(){
 			return;
 		}
 	}) 
-	
 });
-
 function openSessionSideBar(el) {
 	if(el.className.indexOf("side-bar")!==-1) {
 		return;
@@ -26,8 +37,7 @@ function openSessionSideBar(el) {
 	var els = el.parentNode.children;
 	for(var i = 0, len = els.length; i < len; ++i ) {
 		if(els[i].className.indexOf("nav-header")!==-1) {
-			els[i].click();
-			openSideBar();
+			//openSideBar();
 			return;
 		}
 	}
