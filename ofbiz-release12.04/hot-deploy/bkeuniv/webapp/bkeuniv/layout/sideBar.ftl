@@ -35,6 +35,9 @@
 					<li>
 						<a href="education-progress">${uiLabelMap.BkEunivEducationProgress}</a>
 					</li>
+					<li>
+						<a href="work-progress">${uiLabelMap.BkEunivWorkProgress}</a>
+					</li>
 				</ul>
 			</div>
 			<hr class="side-bar-separator">
