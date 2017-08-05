@@ -37,18 +37,20 @@ modal.prototype._text = function(value, edit, id){
 modal.prototype._select = function(value, edit, id, option) {
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
-	var script = '<script>'+
-					'$('+id+').selectize({'+
-						'create: true,'+
-						'maxItems: ' + maxItem + ', '
-						'sortField: "text"'+
+	var script = '<script type="text/javascript">'+
+					'$(function () {'+
+						'$("'+_id+'").selectize({'+
+							'create: true,'+
+							'maxItems: ' + maxItem + ', '+
+							'sortField: "text"'+
+						'});'+
 					'});'+
-				'</script>';
-	var _selected = op[option.value]==option.selected?"selected":"";
+				'</script>'
 	var option = value.map(function(op, index) {
+		var _selected = op[option.value]==option.selected?"selected":"";
 		return '<option value="'+op[option.value]+'" '+_selected+'>'+op[option.name]+'</option>';
 	})
-	return '<select id="'+id+'">'+option.join("")+'</select>'+script;
+	return '<select style="width: 70%" id="'+id+'">'+option.join("")+'</select>'+script;
 }
 
 modal.prototype.setting = function(option) {
