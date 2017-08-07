@@ -103,7 +103,11 @@
 	
 	<request-map uri="create-education-progress">
 		<security https="true" auth="true"/>
+		<!-- 
 		<event type="service" invoke="createEducationProgress"></event>
+		 -->
+		<event type="java" invoke="createEducationProgressRequestResponse" path="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress"></event>
+		 
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
