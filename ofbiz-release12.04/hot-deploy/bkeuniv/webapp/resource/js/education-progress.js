@@ -54,21 +54,6 @@ $(document).ready(function(){
 });
 
 function changeEducationProgress(educationProgress) {
-	var example = [
-	               {
-	            	   id: "chinese",
-	            	   name: "Tieng Trung"
-	               },
-	               {
-	            	   id: "en",
-	            	   name: "Tiếng Anh"
-	               },
-	               {
-	            	   id: "vi",
-	            	   name: "Tiếng Việt"
-	               }
-	    		];
-	    		educationProgress.speciality = example;
 	new Promise(function(resolve, reject) {
 		
 		resolve(new modal("#change-education-progress").setting({
@@ -84,14 +69,7 @@ function changeEducationProgress(educationProgress) {
 			          },
 			          {
 			        	  name: speciality,
-			        	  value: "speciality",
-			        	  type: "select",
-			        	  option: {
-			        		  name: "name",
-			        		  value: "id",
-			        		  selected: "vi",
-			        		  maxItem: 1
-			        	  }
+			        	  value: "speciality"
 			          },
 			          {
 			        	  name: graduateDate,

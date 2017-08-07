@@ -12,6 +12,10 @@ modal.prototype._getText = function (selector) {
     return $([this.id,selector].join(" ")).val();
 }
 
+modal.prototype._getSelect = function (selector) {
+    return $([this.id,selector].join(" ")).val();
+}
+
 modal.prototype._date = function(value, edit, id){
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
@@ -46,10 +50,10 @@ modal.prototype._select = function(value, edit, id, option) {
 					'});'+
 				'</script>'
 	var option = value.map(function(op, index) {
-		var _selected = op[option.value]==option.selected?"selected":"";
+		var _selected = option.selected.indexOf(op[option.value])!== -1?"selected":"";
 		return '<option value="'+op[option.value]+'" '+_selected+'>'+op[option.name]+'</option>';
 	})
-	return '<select style="width: 70%" id="'+id+'">'+option.join("")+'</select>'+script;
+	return '<select style="width: 70%" id="'+id+'" multiple>'+option.join("")+'</select>'+script;
 }
 
 modal.prototype.setting = function(option) {
@@ -74,6 +78,10 @@ modal.prototype.setting = function(option) {
 		    case "select":
 		    	el = this._select(column._data, column.edit, column.id, column.option);
 		    	break;
+		    case "custom":
+		    	el = column.el;
+		    	break;
+		    	
 		}
 		column.html = '<div class="row inline-box">'+
 						'<label id="title-modal-input">'+column.name+'</label>'+el+
@@ -120,6 +128,14 @@ modal.prototype.data = function() {
 			    case "text":
 			    	column._data = _._getText("#"+column.id);
 			        break;
+			    case "select":
+			    	column.option.selected = _._getSelect("#"+column.id);
+			    	acc[column.value] = column.option.selected;
+			    	return acc;
+			    case "custom":
+			    	acc = _._mergeData(acc, column._data);
+			    	return acc;
+			    
 			}
 		}
 		acc[column.value] = column._data
