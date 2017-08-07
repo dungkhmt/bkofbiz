@@ -55,6 +55,7 @@ $(document).ready(function(){
 
 function changeEducationProgress(educationProgress) {
 	new Promise(function(resolve, reject) {
+		
 		resolve(new modal("#change-education-progress").setting({
 			data: educationProgress,
 			columns: [
