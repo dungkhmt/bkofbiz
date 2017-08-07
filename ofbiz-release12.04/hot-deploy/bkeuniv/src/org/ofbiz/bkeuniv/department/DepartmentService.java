@@ -99,7 +99,7 @@ public class DepartmentService {
 	
 	public static Map<String, Object> createADepartment(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
-
+		
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
 

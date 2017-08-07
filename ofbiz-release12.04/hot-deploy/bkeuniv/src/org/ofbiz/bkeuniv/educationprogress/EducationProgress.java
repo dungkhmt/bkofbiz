@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilHttp;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -21,13 +23,50 @@ import org.ofbiz.service.ServiceUtil;
 import java.net.URL;
 import java.sql.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
 public class EducationProgress {
+	public final static String module = EducationProgress.class.getName();
+	
+	public static String createEducationProgressRequestResponse(HttpServletRequest request, HttpServletResponse response){
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Locale locale = UtilHttp.getLocale(request);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
+		System.out.println("EducationProgress::createEducatinoProgressRequestResponse, Staff = " + staff.get("staffEmail"));
+		Map<String, Object> context = FastMap.newInstance();
+		context.put("userLogin", userLogin);
+		context.put("staffId",request.getParameter("staffId"));
+		context.put("institution",request.getParameter("institution"));
+		context.put("speciality",request.getParameter("speciality"));
+		context.put("educationType",request.getParameter("educationType"));
+		context.put("graduateDate",request.getParameter("graduateDate"));
+		try{
+			dispatcher.runSync("createEducationProgress", context);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return "success";
+	}
+	
 	public static Map<String, Object> getEducationProgress(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		
+		String u1 = (String)ctx.getAttribute("userLoginId");
+		String u2 = (String)context.get("userLoginId");
+		
+		if(u1 == null) u1 = "NULL";
+		if(u2 == null) u2 = "NULL";
+		
+		System.out.println(module + "::getEducationProgress, System.out.println u1 = " + u1 + ", u2 = " + u2);
+		Debug.log(module + "::getEducationProgress, Debug.log u1 = " + u1 + ", u2 = " + u2);
+		
 		
 		String[] keys = {"educationProgressId", "staffId", "educationType", "institution", "speciality", "graduateDate"};
 		
@@ -98,6 +137,9 @@ public class EducationProgress {
 		String institution = (String) context.get("institution");
 		String speciality = (String) context.get("speciality");
 		String graduateDate = (String) context.get("graduateDate");
+		
+		System.out.println("EducationProgress::createEducationProgress, staffId = " + staffId + 
+				", educationType = " + educationType + ", institution = " + institution + ", speciality = " + speciality);
 		
 		GenericValue gv = delegator.makeValue("EducationProgress");
 
