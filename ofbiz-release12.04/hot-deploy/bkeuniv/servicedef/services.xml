@@ -85,6 +85,19 @@
     	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getWorkProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="getWorkProgress">
+    	<attribute name="workProgressId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="period" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="position" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="specialization" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="institution" mode="IN" type="String" optional="true"></attribute>
+    	
+    	<attribute name="workProgress" mode="OUT" type="List"></attribute>
+    </service>
+    
+    
     <service name="createEducationProgress" engine="java" 
     		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="createEducationProgress">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
@@ -93,6 +106,17 @@
     	<attribute name="educationType" mode="IN" type="String"></attribute>
     	<attribute name="graduateDate" mode="IN" type="String"></attribute>
     	<attribute name="educationProgress" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+    </service>
+    
+    <service name="createWorkProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="createWorkProgress">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="period" mode="IN" type="String"></attribute>
+    	<attribute name="position" mode="IN" type="String"></attribute>
+    	<attribute name="specialization" mode="IN" type="String"></attribute>
+    	<attribute name="institution" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="workProgress" mode="OUT" type="Map"></attribute>
     </service>
     
     <service name="updateEducationProgress" engine="java" 
@@ -106,9 +130,29 @@
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
     
+    <service name="updateWorkProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="updateWorkProgress">
+    	<attribute name="workProgressId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="period" mode="IN" type="String"></attribute>
+    	<attribute name="position" mode="IN" type="String"></attribute>
+    	<attribute name="specialization" mode="IN" type="String"></attribute>
+    	<attribute name="institution" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
     <service name="deleteEducationProgress" engine="java" 
     		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="deleteEducationProgress">
     	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteWorkProgress" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="deleteWorkProgress">
+    	<attribute name="workProgressId" mode="IN" type="String"></attribute>
     	
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>

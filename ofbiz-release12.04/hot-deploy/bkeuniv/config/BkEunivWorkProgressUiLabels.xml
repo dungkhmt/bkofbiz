@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<property key="BkEunivWorkProgressId">
+        <value xml:lang="en">ID</value>
+        <value xml:lang="vi">Mã CT</value>
+    </property>
+    
+    <property key="BkEunivStaffId">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">Mã cán bộ</value>
+    </property>
+    
+    <property key="BkEunivPeriod">
+        <value xml:lang="en">Period</value>
+        <value xml:lang="vi">Giai đoạn</value>
+    </property>
+    
+    <property key="BkEunivPosition">
+        <value xml:lang="en">Position</value>
+        <value xml:lang="vi">Chức vụ</value>
+    </property>
+    
+    <property key="BkEunivSpecialization">
+        <value xml:lang="en">Specialization</value>
+        <value xml:lang="vi">Chuyên ngành</value>
+    </property>
+    
+    <property key="BkEunivInstitution">
+        <value xml:lang="en">Institution</value>
+        <value xml:lang="vi">Tổ chức</value>
+    </property>
+    
+    <property key="BkEunivTitleNewWorkProgress">
+        <value xml:lang="en">New Work Progress</value>
+        <value xml:lang="vi">Thêm mới quá trình công tác</value>
+    </property>
+    
+    <property key="BkEunivTitleEditWorkProgress">
+        <value xml:lang="en">Edit Work Progress</value>
+        <value xml:lang="vi">Chỉnh sửa quá trình công tác</value>
+    </property>
+    
+    <property key="BkEunivTitleDeleteWorkProgress">
+        <value xml:lang="en">You want delete row</value>
+        <value xml:lang="vi">Bạn muốn xoá hàng</value>
+    </property>
+    
+</resource>

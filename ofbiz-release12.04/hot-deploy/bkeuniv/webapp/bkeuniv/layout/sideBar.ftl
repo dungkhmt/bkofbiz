@@ -36,6 +36,9 @@
 						<a href="education-progress">${uiLabelMap.BkEunivEducationProgress}</a>
 					</li>
 					<li>
+						<a href="work-progress">${uiLabelMap.BkEunivWorkProgress}</a>
+					</li>
+					<li>
 						<a href="scientificserviceexperience">${uiLabelMap.BkEunivEMSATA}</a>
 					</li>
 				</ul>

@@ -35,6 +35,11 @@
         <value xml:lang="vi">Quản lý quá trình đào tạo</value>
     </property>
     
+    <property key="BkEunivWorkProgress">
+        <value xml:lang="en">Manage Work Progress</value>
+        <value xml:lang="vi">Quản lý quá trình công tác</value>
+    </property>
+    
     <property key="BkEunivAdd">
         <value xml:lang="en">Add</value>
         <value xml:lang="vi">Thêm</value>
