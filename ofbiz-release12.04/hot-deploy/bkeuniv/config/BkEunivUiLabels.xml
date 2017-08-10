@@ -64,4 +64,9 @@
         <value xml:lang="en">Fail</value>
         <value xml:lang="vi">Thất bại</value>
     </property>
+    
+    <property key="BkEunivLogout">
+        <value xml:lang="en">Logout</value>
+        <value xml:lang="vi">Đăng xuất</value>
+    </property>
 </resource>

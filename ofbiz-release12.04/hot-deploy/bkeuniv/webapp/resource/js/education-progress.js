@@ -75,10 +75,6 @@ function changeEducationProgress(educationProgress) {
 			        	  name: graduateDate,
 			        	  value: "graduateDate",
 			        	  type: "date"
-			          },
-			          {
-			        	  name: staffId,
-			        	  value: "staffId"
 			          }
 			          ],
 			          title: titleEditEducationProgress,
@@ -115,10 +111,6 @@ function newEducationProgress() {
 			        	  name: graduateDate,
 			        	  value: "graduateDate",
 			        	  type: "date"
-			          },
-			          {
-			        	  name: staffId,
-			        	  value: "staffId"
 			          }
 			          ],
 			          title: titleNewEducationProgress,

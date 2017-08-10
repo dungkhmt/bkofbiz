@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import src.org.ofbiz.utils.BKEunivUtils;
+
 public class EducationProgress {
 	public final static String module = EducationProgress.class.getName();
 	
@@ -37,14 +39,14 @@ public class EducationProgress {
 		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
 		System.out.println("EducationProgress::createEducatinoProgressRequestResponse, Staff = " + staff.get("staffEmail"));
 		Map<String, Object> context = FastMap.newInstance();
-		context.put("userLogin", userLogin);
-		context.put("staffId",request.getParameter("staffId"));
+		context.put("staffId",staff.get("staffId"));
 		context.put("institution",request.getParameter("institution"));
 		context.put("speciality",request.getParameter("speciality"));
 		context.put("educationType",request.getParameter("educationType"));
 		context.put("graduateDate",request.getParameter("graduateDate"));
 		try{
-			dispatcher.runSync("createEducationProgress", context);
+			Map<String, Object> resultNewEducationProgress = dispatcher.runSync("createEducationProgress", context);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(resultNewEducationProgress), response, 200);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -149,16 +151,8 @@ public class EducationProgress {
 			return ServiceUtil.returnError(ex.getMessage());
 		}
 		
-		Map<String, Object> mapEducationProgress = FastMap.newInstance();
-		mapEducationProgress.put("educationProgressId", gv.getString("educationProgressId"));
-		mapEducationProgress.put("staffId", staffId);
-		mapEducationProgress.put("educationType", educationType);
-		mapEducationProgress.put("institution", institution);
-		mapEducationProgress.put("speciality", speciality);
-		mapEducationProgress.put("graduateDate", graduateDate);
 		
-		
-		retSucc.put("educationProgress", mapEducationProgress);
+		retSucc.put("educationProgress", gv);
 
 		return retSucc;
 	}
