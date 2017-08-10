@@ -12,7 +12,7 @@
 		</div>
 		<div class="user">
 			<div class="user-name" onClick="openDropdownUser()" onBlur="closeDropdownUser()" tabIndex="0">
-				${userLogin}
+				${userLogin.userLoginId}
 				<div class="dropdown-information glyphicon glyphicon-chevron-down">         
 				</div>
 				<div class="dropdown-content hidden">

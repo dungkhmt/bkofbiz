@@ -3,6 +3,7 @@ package src.org.ofbiz.utils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +24,9 @@ public class BKEunivUtils {
 	public static JSONObject parseJSONObject(Map<String, Object> map) {
 		JSONObject result = new JSONObject();
 		Set<String> keys = map.keySet();
-		System.out.print(module);
+		System.out.println(module);
 		for(String key: keys) {
-			System.out.print(key);
+			System.out.println(key);
 			Object value = map.get(key);
 			if(value instanceof Map) {
 				result.put(key, parseJSONObject((Map<String, Object>) value));
@@ -36,7 +37,7 @@ public class BKEunivUtils {
 					if(value instanceof List) {
 						result.put(key, parseJSONArray((List<Object>) value));
 					} else {
-						result.put(key, value);
+						result.put(key, value.toString());
 					}	
 				}				
 			}
