@@ -14,20 +14,20 @@
 
 <script>
 
-	var remove = ${uiLabelMap.BkEunivRemove};
-	var edit = ${uiLabelMap.BkEunivEdit};
+	var remove = '${uiLabelMap.BkEunivRemove}';
+	var edit = '${uiLabelMap.BkEunivEdit}';
 	
-	var awardId = ${uiAwardLabelMap.BkEunivAwardId};
-	var description = ${uiAwardLabelMap.BkEunivDescription};
-	var year = ${uiAwardLabelMap.BkEunivYear};
-	var staffId = ${uiAwardLabelMap.BkEunivStaffId};
-	var titleEditAward = ${uiAwardLabelMap.BkEunivTitleEditAward};
-	var add = ${uiAwardLabelMap.BkEunivAddRow};
-	var update = ${uiAwardLabelMap.BkEunivUpdate};
-	var titleAddAward = ${uiAwardLabelMap.BkEunivTitleNewAward};
+	var awardId = '${uiAwardLabelMap.BkEunivAwardId}';
+	var description = '${uiAwardLabelMap.BkEunivDescription}';
+	var year = '${uiAwardLabelMap.BkEunivYear}';
+	var staffId = '${uiAwardLabelMap.BkEunivStaffId}';
+	var titleEditAward = '${uiAwardLabelMap.BkEunivTitleEditAward}';
+	var add = '${uiAwardLabelMap.BkEunivAddRow}';
+	var update = '${uiAwardLabelMap.BkEunivUpdate}';
+	var titleAddAward = '${uiAwardLabelMap.BkEunivTitleNewAward}';
 <!-- import js component -->
-<script src="/resource/bkeuniv/js/award.js"></script>
 </script>
+<script src="/resource/bkeuniv/js/award.js"></script>
 <body>
 <div class="body">
 	<div class="award">
@@ -50,7 +50,7 @@
 			</tbody>
 		</table>
 	</div>
-	
-	<div id="add-award"></div>
-	<div id="change-award"></div>
 </div>
+
+<div id="add-award"></div>
+<div id="change-award"></div>

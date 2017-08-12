@@ -12,9 +12,6 @@
 					<li>
 						<a href="user"><span class="glyphicon glyphicon-user"></span>Thong tin ca nhan</a>
 					</li>
-					<li>
-						<a href="404"></a>
-					</li>
 				</ul>
 			</div>
 			<hr class="side-bar-separator">
@@ -22,7 +19,7 @@
 		<div class="side-bar-selection">
 			<div class="side-bar-item-container">
 				<label class="tree-toggle nav-header">
-					<span class="glyphicon glyphicon-plus"></span>
+					<span class="glyphicon glyphicon-minus"></span>
 					Li lich khoa hoc
 				</label>
 				<ul class="researchdeclaration nav-list tree">
@@ -34,6 +31,9 @@
 					</li>
 					<li>
 						<a href="award">${uiLabelMap.BkEunivAward}</a>
+					</li>
+					<li>
+						<a href="education-progress">${uiLabelMap.BkEunivEducationProgress}</a>
 					</li>
 				</ul>
 			</div>

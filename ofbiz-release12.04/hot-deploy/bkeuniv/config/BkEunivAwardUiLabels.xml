@@ -25,8 +25,20 @@
         <value xml:lang="vi">Chỉnh sửa giải thưởng</value>
     </property>
     
-       <property key="BkEunivTitleNewAward">
-        <value xml:lang="en">Add Award</value>
+    <property key="BkEunivAddRow">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm</value>
+    </property>
+    
+    <property key="BkEunivTitleNewAward">
+        <value xml:lang="en">Add a new Award</value>
         <value xml:lang="vi">Thêm mới giải thưởng</value>
     </property>
+    
+    <property key="BkEunivTitleDeleteAward">
+        <value xml:lang="en">Do you want to delete Award?</value>
+        <value xml:lang="vi">Xoá giải thưởng</value>
+    </property>
+    
+    
 </resource>

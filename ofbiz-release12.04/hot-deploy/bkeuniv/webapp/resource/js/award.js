@@ -18,7 +18,7 @@ $(document).ready(function(){
 	           columns: [
 	               { "data": "awardId" },
 	               { "data": "staffId" },
-	               { "data": "description" }
+	               { "data": "description" },
 	               { "data": "year"}
 	           ],
 	           "scrollY": sizeTable,
@@ -108,7 +108,6 @@ function newAward() {
 						  value: "staffId"
 					  }
 					],
-			          ],
 			          title: titleAddAward,
 			          action: {
 			        	  func: "addAward",
@@ -116,26 +115,152 @@ function newAward() {
 			          }
 		}).render());
 	}).then(function(val) {
-		$("#add-department #modal-template").modal('show');
+		$("#add-award #modal-template").modal('show');
 	})
 }
 
-function saveDepartment(department) {
-	console.log(table.row( department.el ).data());
-	alertify.success('Success message');
+function saveAward(award) {
+	openLoader();
+	var award = {
+			"awardId": award["awardId"],
+			"description": $("#change-award #description").val().trim(),
+			"year": getDate("#change-award #year","yy-mm-dd"),
+			"staffId": $("#change-award #staffid").val().trim()
+		}
+	$.ajax({
+	    url: "/bkeuniv/control/update-award",
+	    type: 'post',
+	    data: award,
+	    datatype:"json",
+	    success: function(data) {
+	    	if(!!data.result) {
+	    		table.rows().indexes().data().filter(function(e, index) {
+	    			if(e.awardId == award.awardId) {
+	    				e.index = index;
+	    				return true;
+	    			}
+	    		}).map(function(el, index){
+	    			el.description = award.description;
+	    			el.year = award.year;
+	    			el.staffId = award.staffId;
+	    			table.row(el.index).data(el);
+	    		})
+	    		
+	    		setTimeout(function() {
+	    			closeLoader();
+	    			$("#change-award #modal-template").modal('hide');
+	    			alertify.success(data.result);
+	    		}, 500);
+	    	} else {
+	    		setTimeout(function() {
+	    			closeLoader();
+	    			alertify.success(JSON.stringify(data._ERROR_MESSAGE_));
+	    		}, 500);
+	    	}
+	    },
+	    error: function(err) {
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		alertify.success(err.result);
+	    	}, 500);
+	    	console.log(err);
+	    }
+	})
 }
 
-function deleteDepartment(department) {
+function deleteAward(award) {
+	alertify.confirm("Confirm", BkEunivTitleDeleteAward + " ID = " + award.awardId,
+			function(){
+				openLoader();
 
-	alertify.confirm("Delete department", "Bạn muốn xoá bộ môn " + department.departmentName,
-	  function(){
-	    alertify.success('Ok');
-	  },
-	  function(){
-	    alertify.error('Cancel');
-	  });
+				$.ajax({
+				    url: "/bkeuniv/control/delete-award",
+				    type: 'post',
+				    data: award,
+				    datatype:"json",
+				    success: function(data) {
+				    	if(!!data.result) {
+				    		table.rows().indexes().data().filter(function(e, index) {
+				    			if(e.awardId == award.awardId) {
+				    				e.index = index;
+				    				return true;
+				    			}
+				    		}).map(function(el, index){
+				    			table.row(el.index).remove().draw();
+				    		})
+				    		
+				    		setTimeout(function() {
+				    			closeLoader();
+				    			alertify.success(data.result);
+				    		}, 500);
+				    	} else {
+				    		setTimeout(function() {
+				    			closeLoader();
+				    			alertify.success(JSON.stringify(data.result));
+				    		}, 500);
+				    	}
+				    },
+				    error: function(err) {
+				    	setTimeout(function() {
+				    		closeLoader();
+				    		alertify.success(err.result);
+				    	}, 500);
+				    	console.log(err);
+				    	
+				    }
+				})
+			},
+			function(){
+			});
 }
 
-function addDepartment(){
-	
+function addAward(){
+	openLoader();
+	var newAward = {
+		"description": $("#add-award #description").val().trim(),
+		"year": getDate("#add-award #year","yy-mm-dd"),
+		"staffId": $("#add-award #staffid").val().trim()
+	}
+
+	$.ajax({
+	    url: "/bkeuniv/control/create-award",
+	    type: 'post',
+	    data: newAward,
+	    datatype:"json",
+	    success: function(data) {
+	    	if(!!data.educationProgress) {
+	    		table.row.add(data.educationProgress).draw();
+		    	setTimeout(closeLoader(), 500);
+		    	
+		    	$("#add-award #description").val("");
+				$("#add-award #year").val("");
+				$("##add-award #staffid").val("");
+				alertify.success('Created a new row');
+	    	} else {
+	    		setTimeout(function() {
+		    		closeLoader();
+		    		alertify.success(JSON.stringify(data._ERROR_MESSAGE_LIST_));
+		    	}, 500);
+	    	}
+	    	
+	    },
+	    error: function(err) {
+	    	setTimeout(function() {
+	    		closeLoader();
+	    		alertify.success(err);
+	    	}, 500);
+	    	console.log(err);
+	    }
+	})
+}
+function openLoader() {
+	if($(".loader").hasClass("hidden-loading")) {
+		$(".loader").removeClass("hidden-loading");
+	}
+}
+
+function closeLoader() {
+	if(!$(".loader").hasClass("hidden-loading")) {
+		$(".loader").addClass("hidden-loading");
+	}
 }

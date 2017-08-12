@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<property key="BkEunivLanguages">
+        <value xml:lang="en">English</value>
+        <value xml:lang="vi">Tiếng Việt</value>
+    </property>
     <property key="BkEunivApplication">
         <value xml:lang="en">BkEuniv Application</value>
         <value xml:lang="zh">BkEuniv应用程序</value>
@@ -12,7 +16,7 @@
         <value xml:lang="it">Un modulo della famiglia di software open source Open For Business</value>
         <value xml:lang="zh">开源软件OFBiz的组成部分</value>
     </property>
-    <property key="BkEunivViewPermissionError">
+    <property key="BkEunivViewPermissioneditError">
         <value xml:lang="en">You are not allowed to view this page.</value>
         <value xml:lang="zh">不允许你浏览这个页面。</value>
     </property>
@@ -26,6 +30,11 @@
     <property key="BkEunivAward">
         <value xml:lang="en">Awards</value>
         <value xml:lang="vi">Quản lý giải thưởng</value>
+    </property>
+   
+    <property key="BkEunivEducationProgress">
+        <value xml:lang="en">Manage Education Progress</value>
+        <value xml:lang="vi">Quản lý quá trình đào tạo</value>
     </property>
     
     <property key="BkEunivAdd">

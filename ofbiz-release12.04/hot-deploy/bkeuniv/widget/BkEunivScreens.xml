@@ -179,7 +179,7 @@
 			</widgets>
 		</section>
 	</screen>
-	
+
 	<screen name="award">
 		<section>
 			<actions>
@@ -189,11 +189,35 @@
 				<decorator-screen name="bkeuniv-global-decorator"
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<decorator-section name="body">
-
+	
 						<platform-specific>
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/award/award.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="educationProgress">
+		<section>
+			<actions>
+				<property-map resource="BkEunivEducationProgressUiLabels" map-name="educationProgressUiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/educationprogress/educationprogress.ftl" />
 							</html>
 						</platform-specific>
 
