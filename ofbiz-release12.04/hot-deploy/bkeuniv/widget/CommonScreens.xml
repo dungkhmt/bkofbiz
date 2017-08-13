@@ -7,6 +7,9 @@
 			<actions>
 				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
 				<set field="languages" value="${uiLabelMap.BkEunivLanguages}"/>
+				<service service-name="getPermissionFunctions" result-map="functions">
+					<field-map field-name="userId" value="--"/>
+				</service>
 			</actions>
 			<widgets>
 				<platform-specific>

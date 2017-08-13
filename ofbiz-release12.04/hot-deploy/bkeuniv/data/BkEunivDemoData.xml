@@ -1,22 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
+<SecurityGroup groupId="BIZSTAFF" description="ordinary staffs"/>
+<SecurityGroupPermission groupId="BIZSTAFF" permissionId="OFBTOOLS_VIEW"/>
 
-<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
-<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+<!-- Quan ly li lich khoa hoc -->
+<Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
+<Function functionId="EDUCATION_PROGRESS" uiLabelId="education_progress" vnLabel="Quá trình đạo tạo" enLabel="educations" target="education-progress" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
+<Function functionId="SCIENTIFIC_SERVICES" uiLabelId="scientific_services" vnLabel="Kinh nghiệm quản lý đánh giá khoa học công nghệ" enLabel="scientific services" target="scientificserviceexperience" parentFunctionId="PROFILE_MANAGEMENT" index="2"/>
+<Function functionId="WORK_PROGRESS" uiLabelId="work_progress" vnLabel="Quá trình công tác" enLabel="works" target="work-progress" parentFunctionId="PROFILE_MANAGEMENT" index="3"/>
+<Function functionId="RESEARCH_SPECIALITY_STAFF" uiLabelId="research_speciality_staff" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-staff" parentFunctionId="PROFILE_MANAGEMENT" index="4"/>
+<Function functionId="FOREIGN_LANGUAGE_STAFF" uiLabelId="foreign_language_staff" vnLabel="Trình độ ngoại ngữ" enLabel="foreign language" target="foreign-language-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
+<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
+<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
+<Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
+<Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
 
-<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
-<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
-<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
-<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
-<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
 
-<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
-<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
-<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
-<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
-<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
-<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
+<!-- Quan ly danh muc -->
+<Function functionId="MISCELLANEOUS_MANAGEMENT" uiLabelId="miscellaneous_management" vnLabel="Quản lý danh mục" enLabel="miscellaneous" parentFunctionId="NULL" index="2"/>
+<Function functionId="DEPARTMENT_MANAGEMENT" uiLabelId="department_management" vnLabel="Quản lí bộ môn" enLabel="department" target="department-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="1"/>
+<Function functionId="RESEARCH_SPECIALITY_MANAGEMENT" uiLabelId="research_speciality_management" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="2"/>
+
+<!-- Quan ly can bo -->
+<Function functionId="STAFF_MANAGEMENT" uiLabelId="staff_management" vnLabel="Quản lý cán bộ" enLabel="Staffs" parentFunctionId="NULL" index="3"/>
+<Function functionId="STAFF_LIST" uiLabelId="staff_list" vnLabel="Danh sách cán bộ" enLabel="list of staffs" target="staff-management" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
+
+<!-- BIZADMIN -->
+<GroupFunction groupFunctionId="BIZADMIN_PROFILE_MANAGEMENT" securityGroupId="BIZADMIN" functionId="PROFILE_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_EDUCATION_PROGRESS" securityGroupId="BIZADMIN" functionId="EDUCATION_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZADMIN_SCIENTIFIC_SERVICES" securityGroupId="BIZADMIN" functionId="SCIENTIFIC_SERVICES"/>
+<GroupFunction groupFunctionId="BIZADMIN_MISCELLANEOUS_MANAGEMENT" securityGroupId="BIZADMIN" functionId="MISCELLANEOUS_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_DEPARTMENT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="DEPARTMENT_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_STAFF_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STAFF_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_STAFF_LIST" securityGroupId="BIZADMIN" functionId="STAFF_LIST"/>
+<GroupFunction groupFunctionId="BIZADMIN_WORK_PROGRESS" securityGroupId="BIZADMIN" functionId="WORK_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_FOREIGN_LANGUAGE_STAFF" securityGroupId="BIZADMIN" functionId="FOREIGN_LANGUAGE_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_PATENT_STAFF" securityGroupId="BIZADMIN" functionId="PATENT_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_PAPER_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="PAPER_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_PROJECT_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="PROJECT_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="APPLIED_PROJECT_DECLARATION_STAFF"/>
+
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_MANAGEMENT"/>
+
+
+<!-- BIZSTAFF -->
+<GroupFunction groupFunctionId="BIZSTAFF_PROFILE_MANAGEMENT" securityGroupId="BIZSTAFF" functionId="PROFILE_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZSTAFF_EDUCATION_PROGRESS" securityGroupId="BIZSTAFF" functionId="EDUCATION_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZSTAFF_SCIENTIFIC_SERVICES" securityGroupId="BIZSTAFF" functionId="SCIENTIFIC_SERVICES"/>
+<GroupFunction groupFunctionId="BIZSTAFF_WORK_PROGRESS" securityGroupId="BIZSTAFF" functionId="WORK_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZSTAFF" functionId="RESEARCH_SPECIALITY_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_FOREIGN_LANGUAGE_STAFF" securityGroupId="BIZSTAFF" functionId="FOREIGN_LANGUAGE_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_PATENT_STAFF" securityGroupId="BIZSTAFF" functionId="PATENT_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_PAPER_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PAPER_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PROJECT_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="APPLIED_PROJECT_DECLARATION_STAFF"/>
+
+
 
 
 </entity-engine-xml>
