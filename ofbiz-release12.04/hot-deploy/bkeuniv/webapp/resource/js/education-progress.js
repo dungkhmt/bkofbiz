@@ -54,39 +54,39 @@ $(document).ready(function(){
 });
 
 function changeEducationProgress(educationProgress) {
-	new Promise(function(resolve, reject) {
-		
-		resolve(new modal("#change-education-progress").setting({
-			data: educationProgress,
-			columns: [
-			          {
-			        	  name: educationType,
-			        	  value: "educationType"
-			          },
-			          {
-			        	  name: institution,
-			        	  value: "institution"
-			          },
-			          {
-			        	  name: speciality,
-			        	  value: "speciality"
-			          },
-			          {
-			        	  name: graduateDate,
-			        	  value: "graduateDate",
-			        	  type: "date"
-			          }
-			          ],
-			          title: titleEditEducationProgress,
-			          action: {
-			        	  func: "saveEducationProgress()",
-			        	  name: update
-			          }
-		}).render());
-	}).then(function(modal) {
-		modalChange = modal;
-		$("#change-education-progress #modal-template").modal('show');
-	})
+//	new Promise(function(resolve, reject) {
+//		
+//		resolve(new modal("#change-education-progress").setting({
+//			data: educationProgress,
+//			columns: [
+//			          {
+//			        	  name: educationType,
+//			        	  value: "educationType"
+//			          },
+//			          {
+//			        	  name: institution,
+//			        	  value: "institution"
+//			          },
+//			          {
+//			        	  name: speciality,
+//			        	  value: "speciality"
+//			          },
+//			          {
+//			        	  name: graduateDate,
+//			        	  value: "graduateDate",
+//			        	  type: "date"
+//			          }
+//			          ],
+//			          title: titleEditEducationProgress,
+//			          action: {
+//			        	  func: "saveEducationProgress()",
+//			        	  name: update
+//			          }
+//		}).render());
+//	}).then(function(modal) {
+//		modalChange = modal;
+//		$("#change-education-progress #modal-template").modal('show');
+//	})
 	
 }
 
@@ -113,11 +113,14 @@ function newEducationProgress() {
 			        	  type: "date"
 			          }
 			          ],
-			          title: titleNewEducationProgress,
-			          action: {
-			        	  func: "addEducationProgress()",
-			        	  name: add
-			          }
+			title: titleNewEducationProgress,
+			action: {
+				name: add,
+				url: "/bkeuniv/control/create-education-progress",
+				dataTable: table,
+				keys:["educationProgressId"],
+				fieldDataResult: "educationProgress"
+			}
 		}).render());
 	}).then(function(modal) {
 		modalAdd = modal
