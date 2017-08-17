@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="main">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" /><!-- this highlights the selected 
+					menu-item with name "main" -->
+			</actions>
+			<widgets>
+				<decorator-screen name="SlpCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template location="component://slp/webapp/slp/home.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<!-- View for TspD Home -->
+	<screen name="tspdhome">
+		<section>
+			<widgets>
+				<decorator-screen name="tspd-decorator">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template location="component://slp/webapp/slp/tspd/tspdhome.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="footer">
+		<section>
+			<widgets>
+				<platform-specific>
+					<html>
+						<html-template location="component://slp/webapp/slp/layout/footer.ftl" />
+					</html>
+				</platform-specific>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="header">
+		<section>
+			<widgets>
+				<platform-specific>
+					<html>
+						<html-template location="component://slp/webapp/slp/layout/header.ftl" />
+					</html>
+				</platform-specific>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="tspd-decorator">
+		<section>
+			<widgets>
+
+				<include-screen name="header" />
+				<decorator-section-include name="body" />
+				<include-screen name="footer" />
+			</widgets>
+		</section>
+	</screen>
+</screens>

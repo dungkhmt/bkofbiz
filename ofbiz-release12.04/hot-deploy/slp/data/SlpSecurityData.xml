@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Slp Component." permissionId="SLP_VIEW"/>
+    <SecurityPermission description="Create operations in the Slp Component." permissionId="SLP_CREATE"/>
+    <SecurityPermission description="Update operations in the Slp Component." permissionId="SLP_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Slp Component." permissionId="SLP_DELETE"/>
+    <SecurityPermission description="ALL operations in the Slp Component." permissionId="SLP_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="SLP_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SLP_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SLP_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SLP_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="SLP_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="SLP_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="SLP_ADMIN"/>
+</entity-engine-xml>
