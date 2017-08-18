@@ -2,6 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!--style -->
+<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
+
+<!--js -->
+<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
+<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
+
 <title>OFBiz XHTML Document</title>
 </head>
 <body>
