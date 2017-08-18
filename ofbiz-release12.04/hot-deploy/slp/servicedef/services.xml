@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
-    <description>Slp Services</description>
-    <vendor></vendor>
-    <version>1.0</version>
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+	<description>Slp Services</description>
+	<vendor></vendor>
+	<version>1.0</version>
 
-    <service name="noSyntaxError" engine="interface">
-        <description>
+	<service name="noSyntaxError" engine="interface">
+		<description>
             Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
         </description>
-    </service> 
-    
+	</service>
+
+	<service name="tspdsolve" engine="java"
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve">
+		<description>
+            Build Route! 
+        </description>
+		<attribute name="truckSpeed" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="droneSpeed" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="truckCost" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="droneCost" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="delta" type="String" mode="IN" optional="false"></attribute>
+		<attribute name="endurance" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="listPoints" type="String" mode="IN" optional="false"></attribute>
+		<attribute name="sol" type="String" mode="OUT" optional="false"></attribute>
+	</service>
+
+
+
 </services>

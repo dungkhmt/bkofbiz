@@ -24,6 +24,11 @@
 		<response name="success" type="view" value="tspdhome" />
 	</request-map>
 	
+	<request-map uri="tspd-solve">
+		<security https="true" auth="true" />
+		<event type="service" invoke="tspdsolve"></event>
+		<response name="success" type="view" value="tspdhome" />
+	</request-map>
 		
 	<!-- View Mappings -->
 	<view-map name="main" type="screen"

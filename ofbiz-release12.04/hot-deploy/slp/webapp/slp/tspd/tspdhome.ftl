@@ -12,7 +12,7 @@
 			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >Upload Solution</a>
 		</form>
 		<div id="GoogleMap" style="width:100%;height:500px"></div>
-		<form action="tsp-drone/tspd-solve" method="POST" commandName="tspd" role="form" class="form-horizontal">
+		<form action="tspd-solve" method="POST" commandName="tspd" role="form" class="form-horizontal">
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="row">
@@ -72,6 +72,7 @@ function initialize(){
 	var mapProp = {
 		center: {lat: 21.033333, lng: 105.849998},
 		zoom: 12,
+		scrollwheel: false,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	console.log("log 1");
@@ -188,12 +189,10 @@ function uploadSolution(){
     document.getElementById('file-tsp-data').addEventListener('change', onChange);
 }());
 (function(){
-    
     function onChange(event) {
     	console.log("input-solution");
         $("#tspdsolution").submit();
     }
-    
     document.getElementById('input-solution').addEventListener('change', onChange);
 }());
 /*
