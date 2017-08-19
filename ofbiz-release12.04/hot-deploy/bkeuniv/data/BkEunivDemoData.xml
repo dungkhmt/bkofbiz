@@ -1,22 +1,299 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
+<SecurityGroup groupId="BIZSTAFF" description="ordinary staffs"/>
+<SecurityGroupPermission groupId="BIZSTAFF" permissionId="OFBTOOLS_VIEW"/>
 
-<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
-<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+<!-- Quan ly li lich khoa hoc -->
+<Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
+<Function functionId="EDUCATION_PROGRESS" uiLabelId="education_progress" vnLabel="Quá trình đạo tạo" enLabel="educations" target="education-progress" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
+<Function functionId="SCIENTIFIC_SERVICES" uiLabelId="scientific_services" vnLabel="Kinh nghiệm quản lý đánh giá khoa học công nghệ" enLabel="scientific services" target="scientificserviceexperience" parentFunctionId="PROFILE_MANAGEMENT" index="2"/>
+<Function functionId="WORK_PROGRESS" uiLabelId="work_progress" vnLabel="Quá trình công tác" enLabel="works" target="work-progress" parentFunctionId="PROFILE_MANAGEMENT" index="3"/>
+<Function functionId="RESEARCH_SPECIALITY_STAFF" uiLabelId="research_speciality_staff" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-staff" parentFunctionId="PROFILE_MANAGEMENT" index="4"/>
+<Function functionId="FOREIGN_LANGUAGE_STAFF" uiLabelId="foreign_language_staff" vnLabel="Trình độ ngoại ngữ" enLabel="foreign language" target="foreign-language-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
+<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
+<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
+<Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
+<Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
 
-<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
-<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
-<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
-<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
-<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
 
-<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
-<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
-<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
-<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
-<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
-<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
+<!-- Quan ly danh muc -->
+<Function functionId="MISCELLANEOUS_MANAGEMENT" uiLabelId="miscellaneous_management" vnLabel="Quản lý danh mục" enLabel="miscellaneous" parentFunctionId="NULL" index="2"/>
+<Function functionId="DEPARTMENT_MANAGEMENT" uiLabelId="department_management" vnLabel="Quản lí bộ môn" enLabel="department" target="department-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="1"/>
+<Function functionId="RESEARCH_SPECIALITY_MANAGEMENT" uiLabelId="research_speciality_management" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="2"/>
+
+<!-- Quan ly can bo -->
+<Function functionId="STAFF_MANAGEMENT" uiLabelId="staff_management" vnLabel="Quản lý cán bộ" enLabel="Staffs" parentFunctionId="NULL" index="3"/>
+<Function functionId="STAFF_LIST" uiLabelId="staff_list" vnLabel="Danh sách cán bộ" enLabel="list of staffs" target="staff-management" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
+
+<!-- BIZADMIN -->
+<GroupFunction groupFunctionId="BIZADMIN_PROFILE_MANAGEMENT" securityGroupId="BIZADMIN" functionId="PROFILE_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_EDUCATION_PROGRESS" securityGroupId="BIZADMIN" functionId="EDUCATION_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZADMIN_SCIENTIFIC_SERVICES" securityGroupId="BIZADMIN" functionId="SCIENTIFIC_SERVICES"/>
+<GroupFunction groupFunctionId="BIZADMIN_MISCELLANEOUS_MANAGEMENT" securityGroupId="BIZADMIN" functionId="MISCELLANEOUS_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_DEPARTMENT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="DEPARTMENT_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_STAFF_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STAFF_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_STAFF_LIST" securityGroupId="BIZADMIN" functionId="STAFF_LIST"/>
+<GroupFunction groupFunctionId="BIZADMIN_WORK_PROGRESS" securityGroupId="BIZADMIN" functionId="WORK_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_FOREIGN_LANGUAGE_STAFF" securityGroupId="BIZADMIN" functionId="FOREIGN_LANGUAGE_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_PATENT_STAFF" securityGroupId="BIZADMIN" functionId="PATENT_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_PAPER_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="PAPER_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_PROJECT_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="PROJECT_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="APPLIED_PROJECT_DECLARATION_STAFF"/>
+
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_MANAGEMENT"/>
+
+
+<!-- BIZSTAFF -->
+<GroupFunction groupFunctionId="BIZSTAFF_PROFILE_MANAGEMENT" securityGroupId="BIZSTAFF" functionId="PROFILE_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZSTAFF_EDUCATION_PROGRESS" securityGroupId="BIZSTAFF" functionId="EDUCATION_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZSTAFF_SCIENTIFIC_SERVICES" securityGroupId="BIZSTAFF" functionId="SCIENTIFIC_SERVICES"/>
+<GroupFunction groupFunctionId="BIZSTAFF_WORK_PROGRESS" securityGroupId="BIZSTAFF" functionId="WORK_PROGRESS"/>
+<GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZSTAFF" functionId="RESEARCH_SPECIALITY_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_FOREIGN_LANGUAGE_STAFF" securityGroupId="BIZSTAFF" functionId="FOREIGN_LANGUAGE_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_PATENT_STAFF" securityGroupId="BIZSTAFF" functionId="PATENT_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_PAPER_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PAPER_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PROJECT_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="APPLIED_PROJECT_DECLARATION_STAFF"/>
+
+
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn199" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn199" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn200" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn200" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn201" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn201" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn202" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn202" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn204" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn204" />
+<StaffPaperDeclaration staffPaperDeclarationId="khang.trandinh@hust.edu.vnkhang.trandinh@hust.edu.vn206" staffId="khang.trandinh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn206" />
+<StaffPaperDeclaration staffPaperDeclarationId="khang.trandinh@hust.edu.vnkhang.trandinh@hust.edu.vn207" staffId="khang.trandinh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn207" />
+<StaffPaperDeclaration staffPaperDeclarationId="khang.trandinh@hust.edu.vnkhang.trandinh@hust.edu.vn208" staffId="khang.trandinh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn208" />
+<StaffPaperDeclaration staffPaperDeclarationId="khang.trandinh@hust.edu.vnkhang.trandinh@hust.edu.vn209" staffId="khang.trandinh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn209" />
+<StaffPaperDeclaration staffPaperDeclarationId="huong.lethanh@hust.edu.vnkhang.trandinh@hust.edu.vn209" staffId="huong.lethanh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn209" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnsang.dinhviet@hust.edu.vn212" staffId="sang.dinhviet@hust.edu.vn" paperId="sang.dinhviet@hust.edu.vn212" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.dophan@hust.edu.vnthuan.dophan@hust.edu.vn218" staffId="thuan.dophan@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn218" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.dophan@hust.edu.vnthuan.dophan@hust.edu.vn217" staffId="thuan.dophan@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn217" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.phamquang@hust.edu.vndung.phamquang@hust.edu.vn192" staffId="dung.phamquang@hust.edu.vn" paperId="dung.phamquang@hust.edu.vn192" />
+<StaffPaperDeclaration staffPaperDeclarationId="oanh.nguyenthi@hust.edu.vnoanh.nguyenthi@hust.edu.vn223" staffId="oanh.nguyenthi@hust.edu.vn" paperId="oanh.nguyenthi@hust.edu.vn223" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vndung.caotuan@hust.edu.vn224" staffId="dung.caotuan@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn224" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vndung.caotuan@hust.edu.vn225" staffId="dung.caotuan@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn225" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vndung.caotuan@hust.edu.vn226" staffId="dung.caotuan@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn226" />
+<StaffPaperDeclaration staffPaperDeclarationId="nga.nguyenthithanh@hust.edu.vnnga.nguyenthithanh@hust.edu.vn232" staffId="nga.nguyenthithanh@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn232" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnnga.nguyenthithanh@hust.edu.vn232" staffId="khanh.nguyenkim@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn232" />
+<StaffPaperDeclaration staffPaperDeclarationId="son.ngohong@hust.edu.vnnga.nguyenthithanh@hust.edu.vn232" staffId="son.ngohong@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn232" />
+<StaffPaperDeclaration staffPaperDeclarationId="son.ngohong@hust.edu.vnnga.nguyenthithanh@hust.edu.vn233" staffId="son.ngohong@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn233" />
+<StaffPaperDeclaration staffPaperDeclarationId="nga.nguyenthithanh@hust.edu.vnnga.nguyenthithanh@hust.edu.vn233" staffId="nga.nguyenthithanh@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn233" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnnga.nguyenthithanh@hust.edu.vn233" staffId="khanh.nguyenkim@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn233" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn237" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn237" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn237" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn237" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn236" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn236" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn236" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn236" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn240" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn240" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn240" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn240" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn241" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn241" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn241" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn241" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.truongthidieu@hust.edu.vnlinh.truongthidieu@hust.edu.vn243" staffId="linh.truongthidieu@hust.edu.vn" paperId="linh.truongthidieu@hust.edu.vn243" />
+<StaffPaperDeclaration staffPaperDeclarationId="vinh.lathe@hust.edu.vnvinh.lathe@hust.edu.vn246" staffId="vinh.lathe@hust.edu.vn" paperId="vinh.lathe@hust.edu.vn246" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.nguyenlinh@hust.edu.vngiang.nguyenlinh@hust.edu.vn247" staffId="giang.nguyenlinh@hust.edu.vn" paperId="giang.nguyenlinh@hust.edu.vn247" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vngiang.nguyenlinh@hust.edu.vn247" staffId="dung.caotuan@hust.edu.vn" paperId="giang.nguyenlinh@hust.edu.vn247" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn255" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn255" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn258" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn258" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn259" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn259" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn259" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn259" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn261" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn261" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn261" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn261" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn264" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn264" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn267" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn267" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn268" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn268" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn269" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn269" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn270" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn270" />
+<StaffPaperDeclaration staffPaperDeclarationId="duc.nguyenhuu@hust.edu.vnduc.nguyenhuu@hust.edu.vn271" staffId="duc.nguyenhuu@hust.edu.vn" paperId="duc.nguyenhuu@hust.edu.vn271" />
+<StaffPaperDeclaration staffPaperDeclarationId="duc.nguyenhuu@hust.edu.vnduc.nguyenhuu@hust.edu.vn272" staffId="duc.nguyenhuu@hust.edu.vn" paperId="duc.nguyenhuu@hust.edu.vn272" />
+<StaffPaperDeclaration staffPaperDeclarationId="duc.nguyenhuu@hust.edu.vnduc.nguyenhuu@hust.edu.vn273" staffId="duc.nguyenhuu@hust.edu.vn" paperId="duc.nguyenhuu@hust.edu.vn273" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnsang.dinhviet@hust.edu.vn211" staffId="sang.dinhviet@hust.edu.vn" paperId="sang.dinhviet@hust.edu.vn211" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn274" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn274" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn278" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn278" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnbinh.huynhthithanh@hust.edu.vn278" staffId="sang.dinhviet@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn278" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn279" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn279" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnbinh.huynhthithanh@hust.edu.vn279" staffId="sang.dinhviet@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn279" />
+<StaffPaperDeclaration staffPaperDeclarationId="nghia.nguyenduc@hust.edu.vnbinh.huynhthithanh@hust.edu.vn277" staffId="nghia.nguyenduc@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn277" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn277" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn277" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnbinh.huynhthithanh@hust.edu.vn275" staffId="sang.dinhviet@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn275" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn275" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn275" />
+<StaffPaperDeclaration staffPaperDeclarationId="huong.lethanh@hust.edu.vnhuong.lethanh@hust.edu.vn220" staffId="huong.lethanh@hust.edu.vn" paperId="huong.lethanh@hust.edu.vn220" />
+<StaffPaperDeclaration staffPaperDeclarationId="hiep.hoangvan@hust.edu.vnhiep.hoangvan@hust.edu.vn282" staffId="hiep.hoangvan@hust.edu.vn" paperId="hiep.hoangvan@hust.edu.vn282" />
+<StaffPaperDeclaration staffPaperDeclarationId="vinh.lathe@hust.edu.vnhiep.hoangvan@hust.edu.vn282" staffId="vinh.lathe@hust.edu.vn" paperId="hiep.hoangvan@hust.edu.vn282" />
+<StaffPaperDeclaration staffPaperDeclarationId="thanh.lexuan@hust.edu.vnthanh.lexuan@hust.edu.vn262" staffId="thanh.lexuan@hust.edu.vn" paperId="thanh.lexuan@hust.edu.vn262" />
+<StaffPaperDeclaration staffPaperDeclarationId="tung.tahai@hust.edu.vnthuan.nguyendinh@hust.edu.vn280" staffId="tung.tahai@hust.edu.vn" paperId="thuan.nguyendinh@hust.edu.vn280" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.nguyendinh@hust.edu.vnthuan.nguyendinh@hust.edu.vn280" staffId="thuan.nguyendinh@hust.edu.vn" paperId="thuan.nguyendinh@hust.edu.vn280" />
+<StaffPaperDeclaration staffPaperDeclarationId="tung.tahai@hust.edu.vnthuan.nguyendinh@hust.edu.vn244" staffId="tung.tahai@hust.edu.vn" paperId="thuan.nguyendinh@hust.edu.vn244" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.nguyendinh@hust.edu.vnthuan.nguyendinh@hust.edu.vn244" staffId="thuan.nguyendinh@hust.edu.vn" paperId="thuan.nguyendinh@hust.edu.vn244" />
+<StaffPaperDeclaration staffPaperDeclarationId="tung.tahai@hust.edu.vnthuan.nguyendinh@hust.edu.vn242" staffId="tung.tahai@hust.edu.vn" paperId="thuan.nguyendinh@hust.edu.vn242" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.nguyendinh@hust.edu.vnthuan.nguyendinh@hust.edu.vn242" staffId="thuan.nguyendinh@hust.edu.vn" paperId="thuan.nguyendinh@hust.edu.vn242" />
+<StaffPaperDeclaration staffPaperDeclarationId="thu.ngoquynh@hust.edu.vnthu.ngoquynh@hust.edu.vn283" staffId="thu.ngoquynh@hust.edu.vn" paperId="thu.ngoquynh@hust.edu.vn283" />
+<StaffPaperDeclaration staffPaperDeclarationId="thu.ngoquynh@hust.edu.vnthu.ngoquynh@hust.edu.vn284" staffId="thu.ngoquynh@hust.edu.vn" paperId="thu.ngoquynh@hust.edu.vn284" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn288" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn288" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn288" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn288" />
+<StaffPaperDeclaration staffPaperDeclarationId="trung.tranviet@hust.edu.vntrung.tranviet@hust.edu.vn266" staffId="trung.tranviet@hust.edu.vn" paperId="trung.tranviet@hust.edu.vn266" />
+<StaffPaperDeclaration staffPaperDeclarationId="thu.ngoquynh@hust.edu.vnthu.ngoquynh@hust.edu.vn286" staffId="thu.ngoquynh@hust.edu.vn" paperId="thu.ngoquynh@hust.edu.vn286" />
+<StaffPaperDeclaration staffPaperDeclarationId="khoat.thanquang@hust.edu.vnkhoat.thanquang@hust.edu.vn228" staffId="khoat.thanquang@hust.edu.vn" paperId="khoat.thanquang@hust.edu.vn228" />
+<StaffPaperDeclaration staffPaperDeclarationId="anh.nguyenthikim@hust.edu.vnkhoat.thanquang@hust.edu.vn228" staffId="anh.nguyenthikim@hust.edu.vn" paperId="khoat.thanquang@hust.edu.vn228" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.ngovan@hust.edu.vnkhoat.thanquang@hust.edu.vn228" staffId="linh.ngovan@hust.edu.vn" paperId="khoat.thanquang@hust.edu.vn228" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.truongthidieu@hust.edu.vnlinh.truongthidieu@hust.edu.vn245" staffId="linh.truongthidieu@hust.edu.vn" paperId="linh.truongthidieu@hust.edu.vn245" />
+<StaffPaperDeclaration staffPaperDeclarationId="mai.banhthiquynh@hust.edu.vnmai.banhthiquynh@hust.edu.vn289" staffId="mai.banhthiquynh@hust.edu.vn" paperId="mai.banhthiquynh@hust.edu.vn289" />
+<StaffPaperDeclaration staffPaperDeclarationId="mai.banhthiquynh@hust.edu.vnmai.banhthiquynh@hust.edu.vn290" staffId="mai.banhthiquynh@hust.edu.vn" paperId="mai.banhthiquynh@hust.edu.vn290" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn291" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn291" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn292" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn292" />
+<StaffPaperDeclaration staffPaperDeclarationId="le.nguyenphi@hust.edu.vnvan.nguyenkhanh@hust.edu.vn292" staffId="le.nguyenphi@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn292" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn293" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn293" />
+<StaffPaperDeclaration staffPaperDeclarationId="le.nguyenphi@hust.edu.vnvan.nguyenkhanh@hust.edu.vn293" staffId="le.nguyenphi@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn293" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn294" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn294" />
+<StaffPaperDeclaration staffPaperDeclarationId="hoang.phamhuy@hust.edu.vnhoang.phamhuy@hust.edu.vn297" staffId="hoang.phamhuy@hust.edu.vn" paperId="hoang.phamhuy@hust.edu.vn297" />
+<StaffPaperDeclaration staffPaperDeclarationId="hoang.phamhuy@hust.edu.vnhoang.phamhuy@hust.edu.vn296" staffId="hoang.phamhuy@hust.edu.vn" paperId="hoang.phamhuy@hust.edu.vn296" />
+<StaffPaperDeclaration staffPaperDeclarationId="hoang.phamhuy@hust.edu.vnhoang.phamhuy@hust.edu.vn298" staffId="hoang.phamhuy@hust.edu.vn" paperId="hoang.phamhuy@hust.edu.vn298" />
+<StaffPaperDeclaration staffPaperDeclarationId="hieu.nguyenkiem@hust.edu.vnhieu.nguyenkiem@hust.edu.vn222" staffId="hieu.nguyenkiem@hust.edu.vn" paperId="hieu.nguyenkiem@hust.edu.vn222" />
+<StaffPaperDeclaration staffPaperDeclarationId="thang.huynhquyet@hust.edu.vnthang.huynhquyet@hust.edu.vn299" staffId="thang.huynhquyet@hust.edu.vn" paperId="thang.huynhquyet@hust.edu.vn299" />
+<StaffPaperDeclaration staffPaperDeclarationId="thang.huynhquyet@hust.edu.vnthang.huynhquyet@hust.edu.vn300" staffId="thang.huynhquyet@hust.edu.vn" paperId="thang.huynhquyet@hust.edu.vn300" />
+<StaffPaperDeclaration staffPaperDeclarationId="hung.nguyenthanh2@hust.edu.vnthang.huynhquyet@hust.edu.vn300" staffId="hung.nguyenthanh2@hust.edu.vn" paperId="thang.huynhquyet@hust.edu.vn300" />
+<StaffPaperDeclaration staffPaperDeclarationId="thang.huynhquyet@hust.edu.vnthang.huynhquyet@hust.edu.vn301" staffId="thang.huynhquyet@hust.edu.vn" paperId="thang.huynhquyet@hust.edu.vn301" />
+<StaffPaperDeclaration staffPaperDeclarationId="thang.huynhquyet@hust.edu.vnthang.huynhquyet@hust.edu.vn302" staffId="thang.huynhquyet@hust.edu.vn" paperId="thang.huynhquyet@hust.edu.vn302" />
+<StaffPaperDeclaration staffPaperDeclarationId="thanh.lexuan@hust.edu.vnthanh.lexuan@hust.edu.vn263" staffId="thanh.lexuan@hust.edu.vn" paperId="thanh.lexuan@hust.edu.vn263" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnthanh.lexuan@hust.edu.vn263" staffId="quang.nguyenhong@hust.edu.vn" paperId="thanh.lexuan@hust.edu.vn263" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnthanh.lexuan@hust.edu.vn263" staffId="loan.trinhvan@hust.edu.vn" paperId="thanh.lexuan@hust.edu.vn263" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn253" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn253" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn253" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn253" />
+<StaffPaperDeclaration staffPaperDeclarationId="thanh.lexuan@hust.edu.vnquang.nguyenhong@hust.edu.vn253" staffId="thanh.lexuan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn253" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.tranhoang@hust.edu.vnhai.tranhoang@hust.edu.vn303" staffId="hai.tranhoang@hust.edu.vn" paperId="hai.tranhoang@hust.edu.vn303" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.tranhoang@hust.edu.vnhai.tranhoang@hust.edu.vn304" staffId="hai.tranhoang@hust.edu.vn" paperId="hai.tranhoang@hust.edu.vn304" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamdang@hust.edu.vnhai.phamdang@hust.edu.vn221" staffId="hai.phamdang@hust.edu.vn" paperId="hai.phamdang@hust.edu.vn221" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.phamquang@hust.edu.vndung.phamquang@hust.edu.vn193" staffId="dung.phamquang@hust.edu.vn" paperId="dung.phamquang@hust.edu.vn193" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.phamquang@hust.edu.vndung.phamquang@hust.edu.vn307" staffId="dung.phamquang@hust.edu.vn" paperId="dung.phamquang@hust.edu.vn307" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.phamquang@hust.edu.vndung.phamquang@hust.edu.vn306" staffId="dung.phamquang@hust.edu.vn" paperId="dung.phamquang@hust.edu.vn306" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.ngovan@hust.edu.vnlinh.ngovan@hust.edu.vn313" staffId="linh.ngovan@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn313" />
+<StaffPaperDeclaration staffPaperDeclarationId="anh.nguyenthikim@hust.edu.vnlinh.ngovan@hust.edu.vn313" staffId="anh.nguyenthikim@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn313" />
+<StaffPaperDeclaration staffPaperDeclarationId="khoat.thanquang@hust.edu.vnlinh.ngovan@hust.edu.vn313" staffId="khoat.thanquang@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn313" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.ngovan@hust.edu.vnlinh.ngovan@hust.edu.vn314" staffId="linh.ngovan@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn314" />
+<StaffPaperDeclaration staffPaperDeclarationId="khoat.thanquang@hust.edu.vnlinh.ngovan@hust.edu.vn314" staffId="khoat.thanquang@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn314" />
+<StaffPaperDeclaration staffPaperDeclarationId="anh.nguyenthikim@hust.edu.vnlinh.ngovan@hust.edu.vn314" staffId="anh.nguyenthikim@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn314" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.ngovan@hust.edu.vnlinh.ngovan@hust.edu.vn315" staffId="linh.ngovan@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn315" />
+<StaffPaperDeclaration staffPaperDeclarationId="khoat.thanquang@hust.edu.vnlinh.ngovan@hust.edu.vn315" staffId="khoat.thanquang@hust.edu.vn" paperId="linh.ngovan@hust.edu.vn315" />
+<StaffPaperDeclaration staffPaperDeclarationId="khoat.thanquang@hust.edu.vnkhoat.thanquang@hust.edu.vn316" staffId="khoat.thanquang@hust.edu.vn" paperId="khoat.thanquang@hust.edu.vn316" />
+<StaffPaperDeclaration staffPaperDeclarationId="khoat.thanquang@hust.edu.vnkhoat.thanquang@hust.edu.vn317" staffId="khoat.thanquang@hust.edu.vn" paperId="khoat.thanquang@hust.edu.vn317" />
+<StaffPaperDeclaration staffPaperDeclarationId="khang.trandinh@hust.edu.vnkhang.trandinh@hust.edu.vn318" staffId="khang.trandinh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn318" />
+<StaffPaperDeclaration staffPaperDeclarationId="khang.trandinh@hust.edu.vnkhang.trandinh@hust.edu.vn319" staffId="khang.trandinh@hust.edu.vn" paperId="khang.trandinh@hust.edu.vn319" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn332" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn332" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn333" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn333" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn334" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn334" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn336" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn336" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn337" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn337" />
+<StaffPaperDeclaration staffPaperDeclarationId="trinh.vutuyet@hust.edu.vnminh.nguyenbinh@hust.edu.vn338" staffId="trinh.vutuyet@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn338" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn338" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn338" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn339" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn339" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenbinh@hust.edu.vnminh.nguyenbinh@hust.edu.vn335" staffId="minh.nguyenbinh@hust.edu.vn" paperId="minh.nguyenbinh@hust.edu.vn335" />
+<StaffPaperDeclaration staffPaperDeclarationId="oanh.nguyenthi@hust.edu.vnoanh.nguyenthi@hust.edu.vn342" staffId="oanh.nguyenthi@hust.edu.vn" paperId="oanh.nguyenthi@hust.edu.vn342" />
+<StaffPaperDeclaration staffPaperDeclarationId="oanh.nguyenthi@hust.edu.vnoanh.nguyenthi@hust.edu.vn343" staffId="oanh.nguyenthi@hust.edu.vn" paperId="oanh.nguyenthi@hust.edu.vn343" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn344" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn344" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn344" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn344" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.vuthihuong@hust.edu.vngiang.vuthihuong@hust.edu.vn345" staffId="giang.vuthihuong@hust.edu.vn" paperId="giang.vuthihuong@hust.edu.vn345" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn346" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn346" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn346" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn346" />
+<StaffPaperDeclaration staffPaperDeclarationId="thanh.lexuan@hust.edu.vnquang.nguyenhong@hust.edu.vn347" staffId="thanh.lexuan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn347" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn347" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn347" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn347" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn347" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn348" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn348" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn348" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn348" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn349" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn349" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn349" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn349" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnquang.nguyenhong@hust.edu.vn349" staffId="khanh.nguyenkim@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn349" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.vuthihuong@hust.edu.vngiang.vuthihuong@hust.edu.vn350" staffId="giang.vuthihuong@hust.edu.vn" paperId="giang.vuthihuong@hust.edu.vn350" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vndung.caotuan@hust.edu.vn351" staffId="dung.caotuan@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn351" />
+<StaffPaperDeclaration staffPaperDeclarationId="minh.nguyenquang@hust.edu.vndung.caotuan@hust.edu.vn351" staffId="minh.nguyenquang@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn351" />
+<StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vndung.caotuan@hust.edu.vn352" staffId="dung.caotuan@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn352" />
+<StaffPaperDeclaration staffPaperDeclarationId="trang.nguyenthithu@hust.edu.vndung.caotuan@hust.edu.vn352" staffId="trang.nguyenthithu@hust.edu.vn" paperId="dung.caotuan@hust.edu.vn352" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn353" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn353" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn353" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn353" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn354" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn354" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn354" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn354" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnquang.nguyenhong@hust.edu.vn355" staffId="quang.nguyenhong@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn355" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnquang.nguyenhong@hust.edu.vn355" staffId="loan.trinhvan@hust.edu.vn" paperId="quang.nguyenhong@hust.edu.vn355" />
+<StaffPaperDeclaration staffPaperDeclarationId="linh.truongthidieu@hust.edu.vnlinh.truongthidieu@hust.edu.vn331" staffId="linh.truongthidieu@hust.edu.vn" paperId="linh.truongthidieu@hust.edu.vn331" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn361" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn361" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.dophan@hust.edu.vnthuan.dophan@hust.edu.vn362" staffId="thuan.dophan@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn362" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.dophan@hust.edu.vnthuan.dophan@hust.edu.vn363" staffId="thuan.dophan@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn363" />
+<StaffPaperDeclaration staffPaperDeclarationId="nghia.nguyenduc@hust.edu.vnthuan.dophan@hust.edu.vn363" staffId="nghia.nguyenduc@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn363" />
+<StaffPaperDeclaration staffPaperDeclarationId="thuan.dophan@hust.edu.vnthuan.dophan@hust.edu.vn364" staffId="thuan.dophan@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn364" />
+<StaffPaperDeclaration staffPaperDeclarationId="thieu.vuvan@hust.edu.vnthuan.dophan@hust.edu.vn364" staffId="thieu.vuvan@hust.edu.vn" paperId="thuan.dophan@hust.edu.vn364" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn365" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn365" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnbinh.huynhthithanh@hust.edu.vn365" staffId="sang.dinhviet@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn365" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn366" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn366" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn367" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn367" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn369" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn369" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn370" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn370" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn371" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn371" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn373" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn373" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn374" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn374" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn375" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn375" />
+<StaffPaperDeclaration staffPaperDeclarationId="son.ngohong@hust.edu.vnbinh.huynhthithanh@hust.edu.vn375" staffId="son.ngohong@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn375" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn376" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn376" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn368" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn368" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnbinh.huynhthithanh@hust.edu.vn372" staffId="binh.huynhthithanh@hust.edu.vn" paperId="binh.huynhthithanh@hust.edu.vn372" />
+<StaffPaperDeclaration staffPaperDeclarationId="thieu.vuvan@hust.edu.vnthieu.vuvan@hust.edu.vn377" staffId="thieu.vuvan@hust.edu.vn" paperId="thieu.vuvan@hust.edu.vn377" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn378" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn378" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn358" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn358" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn330" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn330" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnloan.trinhvan@hust.edu.vn330" staffId="khanh.nguyenkim@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn330" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn329" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn329" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn329" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn329" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn328" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn328" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn328" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn328" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn325" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn325" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnloan.trinhvan@hust.edu.vn325" staffId="khanh.nguyenkim@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn325" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn325" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn325" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn324" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn324" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn324" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn324" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn323" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn323" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn323" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn323" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn322" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn322" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn322" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn322" />
+<StaffPaperDeclaration staffPaperDeclarationId="thanh.lexuan@hust.edu.vnloan.trinhvan@hust.edu.vn322" staffId="thanh.lexuan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn322" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn321" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn321" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn321" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn321" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn327" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn327" />
+<StaffPaperDeclaration staffPaperDeclarationId="thanh.lexuan@hust.edu.vnloan.trinhvan@hust.edu.vn327" staffId="thanh.lexuan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn327" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn327" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn327" />
+<StaffPaperDeclaration staffPaperDeclarationId="loan.trinhvan@hust.edu.vnloan.trinhvan@hust.edu.vn326" staffId="loan.trinhvan@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn326" />
+<StaffPaperDeclaration staffPaperDeclarationId="quang.nguyenhong@hust.edu.vnloan.trinhvan@hust.edu.vn326" staffId="quang.nguyenhong@hust.edu.vn" paperId="loan.trinhvan@hust.edu.vn326" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn359" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn359" />
+<StaffPaperDeclaration staffPaperDeclarationId="hai.phamvan@hust.edu.vnhai.phamvan@hust.edu.vn360" staffId="hai.phamvan@hust.edu.vn" paperId="hai.phamvan@hust.edu.vn360" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn379" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn379" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn380" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn380" />
+<StaffPaperDeclaration staffPaperDeclarationId="le.nguyenphi@hust.edu.vnvan.nguyenkhanh@hust.edu.vn380" staffId="le.nguyenphi@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn380" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn381" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn381" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn382" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn382" />
+<StaffPaperDeclaration staffPaperDeclarationId="le.nguyenphi@hust.edu.vnvan.nguyenkhanh@hust.edu.vn382" staffId="le.nguyenphi@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn382" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn383" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn383" />
+<StaffPaperDeclaration staffPaperDeclarationId="van.nguyenkhanh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn384" staffId="van.nguyenkhanh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn384" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.nguyenlinh@hust.edu.vnvan.nguyenkhanh@hust.edu.vn384" staffId="giang.nguyenlinh@hust.edu.vn" paperId="van.nguyenkhanh@hust.edu.vn384" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnsang.dinhviet@hust.edu.vn385" staffId="sang.dinhviet@hust.edu.vn" paperId="sang.dinhviet@hust.edu.vn385" />
+<StaffPaperDeclaration staffPaperDeclarationId="sang.dinhviet@hust.edu.vnsang.dinhviet@hust.edu.vn386" staffId="sang.dinhviet@hust.edu.vn" paperId="sang.dinhviet@hust.edu.vn386" />
+<StaffPaperDeclaration staffPaperDeclarationId="binh.huynhthithanh@hust.edu.vnsang.dinhviet@hust.edu.vn386" staffId="binh.huynhthithanh@hust.edu.vn" paperId="sang.dinhviet@hust.edu.vn386" />
+<StaffPaperDeclaration staffPaperDeclarationId="hieu.nguyenkiem@hust.edu.vntrung.tranviet@hust.edu.vn387" staffId="hieu.nguyenkiem@hust.edu.vn" paperId="trung.tranviet@hust.edu.vn387" />
+<StaffPaperDeclaration staffPaperDeclarationId="trung.tranviet@hust.edu.vntrung.tranviet@hust.edu.vn388" staffId="trung.tranviet@hust.edu.vn" paperId="trung.tranviet@hust.edu.vn388" />
+<StaffPaperDeclaration staffPaperDeclarationId="trung.tranviet@hust.edu.vntrung.tranviet@hust.edu.vn389" staffId="trung.tranviet@hust.edu.vn" paperId="trung.tranviet@hust.edu.vn389" />
+<StaffPaperDeclaration staffPaperDeclarationId="hieu.nguyenkiem@hust.edu.vntrung.tranviet@hust.edu.vn389" staffId="hieu.nguyenkiem@hust.edu.vn" paperId="trung.tranviet@hust.edu.vn389" />
+<StaffPaperDeclaration staffPaperDeclarationId="thu.ngoquynh@hust.edu.vnthu.ngoquynh@hust.edu.vn390" staffId="thu.ngoquynh@hust.edu.vn" paperId="thu.ngoquynh@hust.edu.vn390" />
+<StaffPaperDeclaration staffPaperDeclarationId="thu.ngoquynh@hust.edu.vnthu.ngoquynh@hust.edu.vn391" staffId="thu.ngoquynh@hust.edu.vn" paperId="thu.ngoquynh@hust.edu.vn391" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.nguyenlinh@hust.edu.vngiang.nguyenlinh@hust.edu.vn392" staffId="giang.nguyenlinh@hust.edu.vn" paperId="giang.nguyenlinh@hust.edu.vn392" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.nguyenlinh@hust.edu.vngiang.nguyenlinh@hust.edu.vn394" staffId="giang.nguyenlinh@hust.edu.vn" paperId="giang.nguyenlinh@hust.edu.vn394" />
+<StaffPaperDeclaration staffPaperDeclarationId="duc.tranquang@hust.edu.vngiang.nguyenlinh@hust.edu.vn394" staffId="duc.tranquang@hust.edu.vn" paperId="giang.nguyenlinh@hust.edu.vn394" />
+<StaffPaperDeclaration staffPaperDeclarationId="giang.nguyenlinh@hust.edu.vngiang.nguyenlinh@hust.edu.vn393" staffId="giang.nguyenlinh@hust.edu.vn" paperId="giang.nguyenlinh@hust.edu.vn393" />
+<StaffPaperDeclaration staffPaperDeclarationId="thu.ngoquynh@hust.edu.vnnga.nguyenthithanh@hust.edu.vn396" staffId="thu.ngoquynh@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn396" />
+<StaffPaperDeclaration staffPaperDeclarationId="son.ngohong@hust.edu.vnnga.nguyenthithanh@hust.edu.vn396" staffId="son.ngohong@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn396" />
+<StaffPaperDeclaration staffPaperDeclarationId="nga.nguyenthithanh@hust.edu.vnnga.nguyenthithanh@hust.edu.vn396" staffId="nga.nguyenthithanh@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn396" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnnga.nguyenthithanh@hust.edu.vn396" staffId="khanh.nguyenkim@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn396" />
+<StaffPaperDeclaration staffPaperDeclarationId="son.ngohong@hust.edu.vnnga.nguyenthithanh@hust.edu.vn395" staffId="son.ngohong@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn395" />
+<StaffPaperDeclaration staffPaperDeclarationId="nga.nguyenthithanh@hust.edu.vnnga.nguyenthithanh@hust.edu.vn395" staffId="nga.nguyenthithanh@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn395" />
+<StaffPaperDeclaration staffPaperDeclarationId="khanh.nguyenkim@hust.edu.vnnga.nguyenthithanh@hust.edu.vn395" staffId="khanh.nguyenkim@hust.edu.vn" paperId="nga.nguyenthithanh@hust.edu.vn395" />
+
+
 
 
 </entity-engine-xml>
