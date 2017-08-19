@@ -183,6 +183,45 @@
         
 	</entity>
 	
+	<entity entity-name="StaffPaperDeclaration" package-name="org.ofbiz.bkeuniv">
+		<field name="staffPaperDeclarationId" type="id-vlong"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="paperId" type="id-vlong"></field>
+		<prim-key field="staffPaperDeclarationId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId"/>
+		</relation>
+	</entity>
+	
+	<view-entity entity-name="PapersStaffView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
+		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
+		<alias-all entity-alias="PD"></alias-all>
+		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
+		<alias name="authorStaffId" entity-alias="ST" field="staffId"></alias>
+		<view-link rel-entity-alias="ST" entity-alias="SPD">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="PD" entity-alias="SPD">
+			<key-map field-name="paperId" rel-field-name="paperId"/>
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="PapersView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
+		<alias-all entity-alias="PD"></alias-all>
+		<alias name="staffName" entity-alias="ST"></alias>
+		<view-link rel-entity-alias="ST" entity-alias="PD">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+	</view-entity>
+	
+	
 	<!-- project declaration -->
 	<entity entity-name="ProjectCategory" package-name="org.ofbiz.bkeuniv">
 		<field name="projectCategoryId" type="id-vlong"></field>

@@ -2,6 +2,7 @@ package src.org.ofbiz.permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,8 @@ public class BKEunivPermissionService {
 					null, null, null, false);
 			Debug.log(module + "::getPermissionFunctions, groups.sz = " + userLoginSecurityGroup.size());
 			
+			HashSet<String> set_function_id = new HashSet<String>();
+			
 			for(GenericValue gv: userLoginSecurityGroup){
 				String securityGroupId = (String)gv.get("groupId");
 				List<GenericValue> funcs = delegator.findList("GroupFunction", 
@@ -43,9 +46,15 @@ public class BKEunivPermissionService {
 						null, null, null, false);
 				for(GenericValue f: funcs){
 					String functionId = (String)f.get("functionId");
-					GenericValue aFunction = delegator.findOne("Function", false, UtilMisc.toMap("functionId",functionId));
-					tmp_functions.add(aFunction);
+					set_function_id.add(functionId);
+					//GenericValue aFunction = delegator.findOne("Function", false, UtilMisc.toMap("functionId",functionId));
+					//tmp_functions.add(aFunction);
 				}
+			}
+			
+			for(String functionId: set_function_id){
+				GenericValue aFunction = delegator.findOne("Function", false, UtilMisc.toMap("functionId",functionId));
+				tmp_functions.add(aFunction);
 			}
 			
 			Debug.log(module + "::getPermissionFunctions, functions.sz = " + tmp_functions.size());
