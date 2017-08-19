@@ -27,9 +27,7 @@
 	<classpathentry kind="lib" path="framework/base/lib/hamcrest-all-1.2.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/fop-1.0.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/freemarker-2.3.19.jar"/>
-	<classpathentry kind="lib" path="framework/base/lib/httpclient-4.1.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpclient-cache-4.1.1.jar"/>
-	<classpathentry kind="lib" path="framework/base/lib/httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpmime-4.1.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpunit-1.7.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/ical4j-1.0-rc2.jar"/>
@@ -219,8 +217,10 @@
 	<classpathentry kind="src" path="specialpurpose/webpos/src"/>
 	<classpathentry kind="src" path="specialpurpose/workflow/src"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
-	<classpathentry kind="lib" path="hot-deploy/slp/lib/httpclient-4.5.3.jar"/>
-	<classpathentry kind="lib" path="hot-deploy/slp/lib/httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="hot-deploy/slp/lib/gson-2.8.1.jar"/>
+	<classpathentry kind="lib" path="framework/base/lib/httpclient-4.1.1.jar"/>
+	<classpathentry kind="lib" path="framework/base/lib/httpcore-4.1.jar"/>
+	<classpathentry kind="lib" path="hot-deploy/slp/lib/okhttp-2.7.5.jar"/>
+	<classpathentry kind="lib" path="hot-deploy/slp/lib/okio-1.13.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
