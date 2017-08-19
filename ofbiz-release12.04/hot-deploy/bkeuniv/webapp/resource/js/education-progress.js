@@ -119,7 +119,8 @@ function newEducationProgress() {
 				url: "/bkeuniv/control/create-education-progress",
 				dataTable: table,
 				keys:["educationProgressId"],
-				fieldDataResult: "educationProgress"
+				fieldDataResult: "educationProgress",
+				hidden: "auto"
 			}
 		}).render());
 	}).then(function(modal) {

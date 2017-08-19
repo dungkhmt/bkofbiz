@@ -1,0 +1,360 @@
+<#macro jqMinimumLib >
+	<!-- import jqMinimumLib lib css-->
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.default.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/selectize.default.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/template-modal.css">
+
+	<!-- import jqMinimumLib lib js -->
+	<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/jquery-ui.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/jquery.ui-contextmenu.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
+	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
+	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/dataTables.bootstrap.min.js"></script>
+	<script src="/resource/bkeuniv/js/template-modal.js"></script>
+</#macro>
+
+<#macro printArrayObject array>
+	[
+	<#list array as object>
+		{<#list object?keys as k>
+			'${k}':'${object[k]}', 
+		</#list>
+		},
+	</#list>
+	]
+</#macro>
+
+<#macro printArray array>
+	[
+	<#list array as a>
+		'${a}',
+	</#list>
+	]
+</#macro>
+
+<#macro jqDataTable urlData columns dataFields columnsChange columnsNew urlUpdate urlAdd urlDelete keysId 
+		id="jqDataTable" 
+		sizeTable="500"
+		bJQueryUI="true"
+		fieldDataResult="result"
+		titleChange=""
+		titleNew=""
+		titleDelete=""
+		jqTitle=""
+	>
+	<@jqMinimumLib />
+	
+	<style>
+		#${id} {
+			width: 96%;
+			top: 0;
+			bottom: 0;
+			left: 2%;
+			right: 2%;
+			
+			position: absolute;
+		}
+		
+		#{id} .jqDataTable-title {
+			padding: 30px 0px 30px 0px;
+		}
+		
+		#{id} .jqDataTable-title .jqDataTable-title-hyperlink {
+			font-size: 24px;
+		    line-height: 1.35;
+		    font-weight: normal;
+		    margin-bottom: .5em;
+		    padding: 0;
+		    border: 0;
+		    font: Helvetica, Arial, sans-serif;
+		    vertical-align: baseline;
+		    
+			text-decoration: none;
+			color: #000;
+			cursor: pointer;
+		}
+		
+		#${id}-content tbody tr:hover {
+		    background-color: rgba(140, 140, 140, 0.3);
+		}
+		
+		
+		.ui-menu-item {
+		    list-style: none;
+		    padding: 5px 10px 5px 10px;
+		    width: 100px;
+		    
+		    padding-left: 2em;
+		    position: relative;
+		    
+		    cursor: pointer;
+		}
+		
+		.ui-menu-item:hover {
+			background-color: hsla(0, 0%, 93.3%, .4);
+		}
+		
+		.ui-menu {
+			padding: 0;
+			margin: 0;
+			
+			background-color: #fff;
+			border-radius: 2px;
+			border: 1px solid transparent;
+			box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+		}
+		
+		.ui-icon {
+			height: 16px;
+		    width: 16px;
+		    left: 0.4em;
+		    top: 0;
+		    position: absolute;
+		    bottom: 0;
+		    margin: auto 0;
+		}
+		
+		#jqDataTable-button-add{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #53a7df;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
+		
+		#jqDataTable-button-add:hover {
+			background-color: #3d9cdb;
+		}
+		
+		.loader {
+			background: url('../image/rolling.gif') 48% 43% no-repeat;
+			background-color: rgba(255, 255, 255, 0.7);
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+		}
+		
+		.hidden-loading {
+			background: transparent;
+			visibility: hidden;
+		}
+	
+	</style>
+	<script type="text/javascript">
+		var jqDataTable = new Object();
+		jqDataTable.columns = [];
+		<#assign index=0 />
+		<#list columns as column>
+			<#assign index=index+1>
+			var c${index} = {
+				name: '${column.name}',
+				value: '${column.value}'
+			}
+			jqDataTable.columns.push(c${index});
+		</#list>
+		
+		$(document).ready(function(){
+			$.ajax({
+			    url: "${urlData}",
+			    type: 'post',
+			    dataType: "json",
+			    success: function(data) {
+			    	jqDataTable.data = data.${fieldDataResult}.map(function(d) {
+			    		var r = new Object();
+				    	<#list dataFields as field>
+				    		r.${field} = d.${field}||"";
+				    	</#list>	    		
+				    	return r;
+			    	})
+			    	<#assign columnsValues = [] />
+			    	<#list columns as column>
+			    		<#assign columnsValues = columnsValues + [column.value] />
+			    	</#list>
+			    	
+			    	jqDataTable.table = $('#${id}-content').DataTable({
+			   		 data: jqDataTable.data,
+			           columns: [
+							{"data": "educationType" },
+			               { "data": "institution" },
+			               { "data": "speciality" },
+			               { "data": "graduateDate" }
+						]
+			       });
+			       
+			       $(document).contextmenu({
+					    delegate: "#${id}-content td",
+					menu: [
+					  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+					  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+					],
+					select: function(event, ui) {
+						var el = ui.target.parent();
+						var data = table.row( el ).data();
+						switch(ui.cmd){
+							case "edit":
+								jqChange(data)
+								break;
+							case "delete":
+								jqDelete(data);
+								break;
+							}
+						},
+						beforeOpen: function(event, ui) {
+							var $menu = ui.menu,
+								$target = ui.target,
+								extraData = ui.extraData;
+							ui.menu.zIndex(9999);
+					    }
+					  });
+			    	
+					
+			    }
+			});
+		});
+		
+		function jqChange(data) {
+			new Promise(function(resolve, reject) {
+				resolve(new modal("#jqModalChange").setting({
+					data: data,
+					columns: <@printArrayObject array=columnsChange />,
+			        title: '${titleChange}',
+			        action: {
+						name: '${uiLabelMap.BkEunivUpdate}',
+						url: '${urlUpdate}',
+						dataTable: jqDataTable.table,
+						keys:[],
+						fieldDataResult: '${fieldDataResult}',
+						hidden: "auto"
+					}
+				}).render());
+			}).then(function(modal) {
+				jqDataTable.jqModalChange = modal;
+				$("#${id} #modal-template").modal('show');
+			})
+			
+		}
+		
+		function jqNew() {
+			new Promise(function(resolve, reject) {
+				//TODO select
+				resolve(new modal("#jqModalAdd").setting({
+					data: {},
+					columns: <@printArrayObject array=columnsNew />,
+					
+			        title: '${titleNew}',
+			        action: {
+						name: '${uiLabelMap.BkEunivAddRow}',
+						url: '${urlAdd}',
+						dataTable: jqDataTable.table,
+						keys:[],
+						fieldDataResult: '${fieldDataResult}',
+						hidden: "show"
+					}
+				}).render());
+			}).then(function(modal) {
+				jqDataTable.jqModalAdd = modal;
+				$("#${id} #modal-template").modal('show');
+			})
+		}
+		
+		function jqDelete(data) {
+			alertify.confirm("Confirm", '${titleDelete}',
+			function(){
+				openLoader();
+				$.ajax({
+				    url: '${urlDelete}',
+				    type: 'post',
+				    data: data,
+				    datatype:"json",
+				    success: function(d) {
+				    	var table = jqDataTable.table;
+				    	if(!!d.result) {
+				    		table.rows().indexes().data().filter(function(e, index) {
+				    			<#assign conditions = [] />
+				    			<#list keysId as key>
+				    				<#assign conditions = conditions + ["e." + key + "==" + "data." + key] />
+				    			</#list>
+				    			if(1) {
+				    				e.index = index;
+				    				return true;
+				    			}
+				    		}).map(function(el, index){
+				    			table.row(el.index).remove().draw();
+				    		})
+				    		setTimeout(function() {
+				    			closeLoader();
+				    			alertify.success(d.result);
+				    		}, 500);
+				    	} else {
+				    		setTimeout(function() {
+				    			closeLoader();
+				    			alertify.success(JSON.stringify(d));
+				    		}, 500);
+				    	}
+				    },
+				    error: function(err) {
+				    	setTimeout(function() {
+				    		closeLoader();
+				    		alertify.success(JSON.stringify(err));
+				    	}, 500);
+				    	console.log(err);
+				    	
+				    }
+				})
+			},
+			function(){
+			});
+		}
+		
+		function openLoader() {
+			if($(".loader").hasClass("hidden-loading")) {
+				$(".loader").removeClass("hidden-loading");
+			}
+		}
+		
+		function closeLoader() {
+			if(!$(".loader").hasClass("hidden-loading")) {
+				$(".loader").addClass("hidden-loading");
+			}
+		}
+	
+	</script>
+	<!-- html -->
+	<div id="${id}">
+		<div class="jqDataTable-title">
+			<a href="#" class="jqDataTable-title-hyperlink">
+				${jqTitle}
+			</a>
+		</div>
+		<div id="jqDataTable-button-add" onClick="jqNew()">
+			${uiLabelMap.BkEunivAdd}
+		</div>
+		
+		<table id="${id}-content" class="table table-striped table-bordered">
+			<thead>
+				<#list columns as column>
+					<td>${column.name}</td>
+				</#list>
+			</thead>
+		</table>
+	</div>
+	
+</#macro>

@@ -19,6 +19,7 @@
 			</div>
 			<hr class="side-bar-separator">
 		</div>
+		
 		<div class="side-bar-selection">
 			<div class="side-bar-item-container">
 				<label class="tree-toggle nav-header">
