@@ -1,7 +1,4 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
-<script>
-var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
-</script>
 <body>
 <div class="body">
 
@@ -29,7 +26,8 @@ var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").
 		"educationType",
 		"institution",
 		"speciality",
-		"graduateDate"
+		"graduateDate",
+		"staffId"
 	] />
 	
 	<#assign columnsChange=[
@@ -70,11 +68,13 @@ var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").
 		} 
 	] />
 	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	
 	<@jqDataTable
 		urlData="/bkeuniv/control/get-education-progress" 
 		columns=columns 
 		dataFields=fields 
-		sizeTable="sizeTable" 
+		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-education-progress" 
@@ -88,7 +88,3 @@ var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").
 		jqTitle="test"
 	/>
 </div>
-
-<div class="loader hidden-loading"></div>
-<div id="add-education-progress"></div>
-<div id="change-education-progress"></div>

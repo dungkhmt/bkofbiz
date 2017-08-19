@@ -64,11 +64,11 @@
 			position: absolute;
 		}
 		
-		#{id} .jqDataTable-title {
+		#${id} .jqDataTable-title {
 			padding: 30px 0px 30px 0px;
 		}
 		
-		#{id} .jqDataTable-title .jqDataTable-title-hyperlink {
+		#${id} .jqDataTable-title .jqDataTable-title-hyperlink {
 			font-size: 24px;
 		    line-height: 1.35;
 		    font-weight: normal;
@@ -142,7 +142,7 @@
 		}
 		
 		.loader {
-			background: url('../image/rolling.gif') 48% 43% no-repeat;
+			background: url('/resource/bkeuniv/image/rolling.gif') 48% 43% no-repeat;
 			background-color: rgba(255, 255, 255, 0.7);
 			position: fixed;
 			left: 0px;
@@ -190,15 +190,17 @@
 			    	</#list>
 			    	
 			    	jqDataTable.table = $('#${id}-content').DataTable({
-			   		 data: jqDataTable.data,
-			           columns: [
-							{"data": "educationType" },
-			               { "data": "institution" },
-			               { "data": "speciality" },
-			               { "data": "graduateDate" }
-						]
+			   		data: jqDataTable.data,
+					columns: [
+						{"data": "educationType" },
+						{ "data": "institution" },
+						{ "data": "speciality" },
+						{ "data": "graduateDate" }
+					],
+						"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
+						"scrollCollapse": true,
+						"bJQueryUI": true
 			       });
-			       
 			       $(document).contextmenu({
 					    delegate: "#${id}-content td",
 					menu: [
@@ -207,7 +209,7 @@
 					],
 					select: function(event, ui) {
 						var el = ui.target.parent();
-						var data = table.row( el ).data();
+						var data = jqDataTable.table.row( el ).data();
 						switch(ui.cmd){
 							case "edit":
 								jqChange(data)
@@ -224,8 +226,6 @@
 							ui.menu.zIndex(9999);
 					    }
 					  });
-			    	
-					
 			    }
 			});
 		});
@@ -240,14 +240,14 @@
 						name: '${uiLabelMap.BkEunivUpdate}',
 						url: '${urlUpdate}',
 						dataTable: jqDataTable.table,
-						keys:[],
+						keys:["educationProgressId"],
 						fieldDataResult: '${fieldDataResult}',
 						hidden: "auto"
 					}
 				}).render());
 			}).then(function(modal) {
 				jqDataTable.jqModalChange = modal;
-				$("#${id} #modal-template").modal('show');
+				$("#jqModalChange #modal-template").modal('show');
 			})
 			
 		}
@@ -264,14 +264,14 @@
 						name: '${uiLabelMap.BkEunivAddRow}',
 						url: '${urlAdd}',
 						dataTable: jqDataTable.table,
-						keys:[],
+						keys:["educationProgressId"],
 						fieldDataResult: '${fieldDataResult}',
 						hidden: "show"
 					}
 				}).render());
 			}).then(function(modal) {
 				jqDataTable.jqModalAdd = modal;
-				$("#${id} #modal-template").modal('show');
+				$("#jqModalAdd #modal-template").modal('show');
 			})
 		}
 		
@@ -356,5 +356,9 @@
 			</thead>
 		</table>
 	</div>
+	
+	<div class="loader hidden-loading"></div>
+	<div id="jqModalAdd"></div>
+	<div id="jqModalChange"></div>
 	
 </#macro>

@@ -95,7 +95,7 @@ modal.prototype.setting = function(option) {
 
 modal.prototype.action = function() {
 	var _ = this;
-	
+	openLoader();
 	$.ajax({
 	    url: _._action.url,
 	    type: 'post',
@@ -105,25 +105,23 @@ modal.prototype.action = function() {
 	    	if(!!_._action.update && typeof _._action.update === "function") {
 	    		_._action.update(data)
 	    	} else {
-	    		_._updateDefault(data[_._action.fieldDataResult]);
+	    		_._updateDefault(data[_._action.fieldDataResult], data.message);
 	    	}
 	    }, error: function(err) {
 			setTimeout(function() {
 				closeLoader();
-				alertify.success(JSON.stringify(err));
+				alertify.error(JSON.stringify(err));
 			}, 500);
 			console.log(err);
 		}
 	})
 }
 	
-modal.prototype._updateDefault = function(data) {
-	console.log(this._action)
+modal.prototype._updateDefault = function(data, message) {
 	if(!!this._action.dataTable) {
 		var table = this._action.dataTable;
 		var _ = this;
 		var keys = this._action.keys||[];
-		console.log(table.rows().indexes().data());
 		var element = table.rows().indexes().data().filter(function(e, index) {
 			var check = keys.reduce(function(acc, curr) {
 				return acc&&(e[curr]==data[curr]);
@@ -134,34 +132,37 @@ modal.prototype._updateDefault = function(data) {
 				return true;
 			}
 		})[0]
-		
+		console.log(element)
 		if(!!element&&(typeof element == "object")) {
 			Object.keys(element).forEach(function(key, index){
 				element[key] = element[key];
 			})
 			table.row(element.index).data(element);
-			setTimeout(function() {
+			$([_.id, "#modal-template"].join(" ")).modal('hide');
+
+	    	setTimeout(function() {
 				closeLoader();
-				$([_.id, "#modal-template"].join(" ")).modal('hide');
+				alertify.success(message);
 			}, 500);
-			
 		} else {
-			console.log(data)
 			table.row.add(data).draw();
 	    	
 			this.columns.forEach(function(column, index) {
 				$([_.id,"#"+column.id].join(" ")).val("");
 			})
-			
-			alertify.success('Created new row');
 			setTimeout(function() {
 				closeLoader();
+				alertify.success(message);
 			}, 500);
+			
 		}
 			
 		
 	} else {
-		alertify.error('No found data table');
+		setTimeout(function() {
+			closeLoader();
+			alertify.error('No found data table');
+		}, 500);
 	}
 }
 
@@ -188,7 +189,7 @@ modal.prototype.render = function() {
 	$(this.id).children().remove()
 	$(this.id).append(html);
 	var _ = this;
-	$( "#modal-action" ).click(function() {
+	$( this.id +" #modal-action" ).click(function() {
 	  _.action();
 	});
 	return this;

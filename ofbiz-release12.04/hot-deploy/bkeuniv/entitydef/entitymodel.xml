@@ -9,6 +9,63 @@
     <copyright></copyright>
     <version></version>
 
+	<!-- Lĩnh vực nghiên cứu-->
+	<entity entity-name="ResearchDomain" title="Lĩnh vực nghiên cứu" package-name="org.ofbiz.bkeuniv">
+		<field name="researchDomainId" type="id-ne"></field>
+		<field name="researchDomainName" type="very-long"></field>
+		<prim-key field="researchDomainId"/>
+	</entity>
+	
+	<entity entity-name="ResearchSpeciality" title="Chuyên ngành nghiên cứu" package-name="org.ofbiz.bkeuniv">
+		<field name="researchSpecialityId" type="id-ne"></field>
+		<field name="researchSpecialityName" type="very-long"></field>
+		<field name="researchDomainId" type="id"></field>
+		<prim-key field="researchSpecialityId"/>
+		<relation rel-entity-name="ResearchDomain" type="one">
+			<key-map field-name="researchDomainId"/>
+		</relation>
+	</entity>
+
+	<entity entity-name="StaffResearchSpeciality" package-name="org.ofbiz.bkeuniv">
+		<field name="staffResearchSpecialityId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="researchSpecialityId" type="id"></field>
+		<field name="fromDate" type="date"></field>
+		<field name="thruDate" type="date"></field>
+		<prim-key field="staffResearchSpecialityId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	<!-- end lĩnh vực nghiên cứu -->
+
+	<!-- Chức danh nghiên cứu -->
+	<entity entity-name="Research" package-name=""></entity>
+	
+	<entity entity-name="Function" package-name="org.ofbiz.bkeuniv">
+		<field name="functionId" type="id-vlong"></field>
+		<field name="uiLabelId" type="very-long"></field>
+		<field name="vnLabel" type="very-long"></field>
+		<field name="enLabel" type="very-long"></field>
+		<field name="target" type="very-long"></field>
+		<field name="parentFunctionId" type="id-vlong"></field>
+		<field name="index" type="numeric"></field>
+		<prim-key field="functionId"/>
+	</entity>
+	<entity entity-name="GroupFunction" package-name="org.ofbiz.bkeuniv">
+		<field name="groupFunctionId" type="id-long"></field>
+		<field name="securityGroupId" type="id"></field>
+		<field name="functionId" type="id-vlong"></field>
+		<prim-key field="groupFunctionId"/>
+		<relation type="one" fk-name="MAP_FUNCTION" rel-entity-name="Function">
+            <key-map field-name="functionId" rel-field-name="functionId"/>
+        </relation>
+        <relation type="one" fk-name="MAP_GROUP" rel-entity-name="SecurityGroup">
+            <key-map field-name="securityGroupId" rel-field-name="groupId"/>
+        </relation>    
+    </entity>
+	
+	
 	<entity entity-name="University" package-name="org.ofbiz.bkeuniv">
 		<field name="universityId" type="id-ne"></field>
 		<field name="universityName" type="very-long"></field>
@@ -41,6 +98,13 @@
 		<prim-key field="genderId"/>
 	</entity>
 	
+	<entity entity-name="AcademicYear" package-name="org.ofbiz.bkeuniv">
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="academicYearName" type="id"></field>
+		<prim-key field="academicId"/>
+	</entity>
+	
+	
 	<entity entity-name="Staff" package-name="org.ofbiz.bkeuniv">
 		<field name="staffId" type="id-vlong"></field>
 		<field name="staffUserLoginId" type="id-vlong"></field>
@@ -59,18 +123,27 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="JournalIndex" package-name="org.ofbiz.bkeuniv">
+		<field name="journalIndexId" type="id-ne"></field>
+		<field name="journalIndexName" type="very-long"></field>
+		<prim-key field="journalIndexId"/>
+	</entity>
 	
 	<entity entity-name="PaperCategory" package-name="org.ofbiz.bkeuniv">
 		<field name="paperCategoryId" type="id-ne"></field>
 		<field name="paperCategoryName" type="very-long"></field>
 		<field name="paperCategoryCode" type="id"></field>
+		<field name="journalIndexId" type="id"></field>
 		<prim-key field="paperCategoryId"/>
+		<relation rel-entity-name="JournalIndex" type="one">
+			<key-map field-name="journalIndexId"/>
+		</relation>
 	</entity>
 	
-	<entity entity-name="AcademicYear" package-name="org.ofbiz.bkeuniv">
-		<field name="academicYearId" type="id-ne"></field>
-		<field name="academicYearName" type="id"></field>
-		<prim-key field="academicId"/>
+	<entity entity-name="PaperDeclarationStatus" package-name="org.ofbiz.bkeuniv">
+		<field name="paperDeclarationStatusId" type="id-ne"></field>
+		<field name="paperDeclarationStatusName" type="very-long"></field>
+		<prim-key field="paperDeclarationStatusId"/>
 	</entity>
 	
 	<entity entity-name="PaperDeclaration" package-name="org.ofbiz.bkeuniv">
@@ -88,6 +161,7 @@
 		<field name="authors" type="very-long"></field>
 		<field name="academicYearId" type="id"></field>
 		<field name="approverStaffId" type="id-vlong"></field>
+		<field name="approveStatusId" type="id"></field>
 		
 		<prim-key field="paperId"/>
 		
@@ -103,8 +177,52 @@
 		<relation type="one" fk-name="APPROVER_STAFF" rel-entity-name="Staff">
             <key-map field-name="approverStaffId" rel-field-name="staffId"/>
         </relation>
+        <relation type="one" fk-name="APPROVER_STATUS" rel-entity-name="PaperDeclarationStatus">
+            <key-map field-name="approveStatusId" rel-field-name="paperDeclarationStatusId"/>
+        </relation>
+        
 	</entity>
 	
+	<entity entity-name="StaffPaperDeclaration" package-name="org.ofbiz.bkeuniv">
+		<field name="staffPaperDeclarationId" type="id-vlong"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="paperId" type="id-vlong"></field>
+		<prim-key field="staffPaperDeclarationId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId"/>
+		</relation>
+	</entity>
+	
+	<view-entity entity-name="PapersStaffView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
+		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
+		<alias-all entity-alias="PD"></alias-all>
+		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
+		<alias name="authorStaffId" entity-alias="ST" field="staffId"></alias>
+		<view-link rel-entity-alias="ST" entity-alias="SPD">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="PD" entity-alias="SPD">
+			<key-map field-name="paperId" rel-field-name="paperId"/>
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="PapersView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
+		<alias-all entity-alias="PD"></alias-all>
+		<alias name="staffName" entity-alias="ST"></alias>
+		<view-link rel-entity-alias="ST" entity-alias="PD">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+	</view-entity>
+	
+	
+	<!-- project declaration -->
 	<entity entity-name="ProjectCategory" package-name="org.ofbiz.bkeuniv">
 		<field name="projectCategoryId" type="id-vlong"></field>
 		<field name="projectCategoryName" type="very-long"></field>
@@ -236,6 +354,17 @@
 		<prim-key field="scientificServiceExperienceId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="Patent" package-name="org.ofbiz.bkeuniv">
+		<field name="patentId" type=""></field>
+		<field name="patentName" type="very-long"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="year" type="numeric"></field>
+		<prim-key field="patentId"/>
+		<relation rel-entity-name="Staff" type="one">
+		<key-map field-name="staffId"/>
 		</relation>
 	</entity>
 	
