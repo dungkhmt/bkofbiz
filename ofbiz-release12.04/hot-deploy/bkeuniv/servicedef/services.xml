@@ -13,9 +13,19 @@
     
 	<service name="getPapersOfStaff" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
+		<!-- 
 		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
+		 -->
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
+
+	<service name="updatePaper" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+    
     
     <service name="getPermissionFunctions" engine="java"
             location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
