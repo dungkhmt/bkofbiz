@@ -17,6 +17,7 @@ modal.prototype._getSelect = function (selector) {
 }
 
 modal.prototype._date = function(value, edit, id){
+	var _id = "#"+id;
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled ") +
@@ -25,7 +26,7 @@ modal.prototype._date = function(value, edit, id){
 					'>' +
     			'<script type="text/javascript">'+
     				'$(function () {'+
-    					'$("#'+id+'").datepicker({format: "dd/mm/yyyy"});'+
+    					'$("'+[this.id, _id].join(" ")+'").datepicker({format: "dd/mm/yyyy"});'+
         		'});'+
         		'</script>'
 }
@@ -43,7 +44,7 @@ modal.prototype._select = function(value, edit, id, option) {
 	var maxItem = option.maxItem||1;
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
-						'$("'+_id+'").selectize({'+
+						'$("'+[this.id, _id].join(" ")+'").selectize({'+
 							'maxItems: ' + maxItem + ', '+
 							'sortField: "text"'+
 						'});'+
@@ -132,10 +133,9 @@ modal.prototype._updateDefault = function(data, message) {
 				return true;
 			}
 		})[0]
-		console.log(element)
 		if(!!element&&(typeof element == "object")) {
 			Object.keys(element).forEach(function(key, index){
-				element[key] = element[key];
+				element[key] = data[key];
 			})
 			table.row(element.index).data(element);
 			$([_.id, "#modal-template"].join(" ")).modal('hide');

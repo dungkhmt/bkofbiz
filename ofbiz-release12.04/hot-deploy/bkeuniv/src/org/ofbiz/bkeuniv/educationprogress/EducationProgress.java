@@ -212,6 +212,7 @@ public class EducationProgress {
 				rs.put("institution", institution);
 				rs.put("speciality", speciality);
 				rs.put("graduateDate", graduateDate);
+				rs.put("educationProgressId", educationProgressId);
 				
 				retSucc.put("educationProgress", rs);
         		retSucc.put("message", "updated record with id: " + educationProgressId);

@@ -22,26 +22,41 @@
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
 
-<#macro printArrayObject array>
-	[
-	<#list array as object>
-		{<#list object?keys as k>
-			'${k}':'${object[k]}', 
-		</#list>
-		},
-	</#list>
-	]
-</#macro>
-
-<#macro printArray array>
+<#macro pfArray array>
 	[
 	<#list array as a>
-		'${a}',
+		<#if a?is_hash_ex>
+			<@pfObject object=a />,
+		<#elseif a?is_sequence>
+			<@pfArray array=a />,
+		<#else>
+			'${a}',
+		</#if>
 	</#list>
 	]
 </#macro>
 
-<#macro jqDataTable urlData columns dataFields columnsChange columnsNew urlUpdate urlAdd urlDelete keysId 
+<#macro pfObject object>
+	{
+	<#list object?keys as k>
+		<#if object[k]?is_hash_ex>
+			'${k}': <@pfObject object=object[k] />,
+		<#elseif object[k]?is_sequence>
+			'${k}': <@pfArray array=object[k] />,
+		<#else>
+			'${k}': '${object[k]}',
+		</#if>
+	</#list>
+	}
+</#macro>
+
+
+
+<#macro jqDataTable urlData urlUpdate urlAdd urlDelete keysId 
+		dataFields=[]
+		columns=""
+		columnsChange = []
+		columnsNew=[]
 		id="jqDataTable" 
 		sizeTable="500"
 		bJQueryUI="true"
@@ -166,7 +181,7 @@
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
-				value: '${column.value}'
+				value: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
@@ -184,22 +199,13 @@
 				    	</#list>	    		
 				    	return r;
 			    	})
-			    	<#assign columnsValues = [] />
-			    	<#list columns as column>
-			    		<#assign columnsValues = columnsValues + [column.value] />
-			    	</#list>
 			    	
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
-					columns: [
-						{"data": "educationType" },
-						{ "data": "institution" },
-						{ "data": "speciality" },
-						{ "data": "graduateDate" }
-					],
-						"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
-						"scrollCollapse": true,
-						"bJQueryUI": true
+					columns: <@pfArray array=columns />,
+					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
+					"scrollCollapse": true,
+					"bJQueryUI": true
 			       });
 			       $(document).contextmenu({
 					    delegate: "#${id}-content td",
@@ -234,13 +240,13 @@
 			new Promise(function(resolve, reject) {
 				resolve(new modal("#jqModalChange").setting({
 					data: data,
-					columns: <@printArrayObject array=columnsChange />,
+					columns: <@pfArray array=columnsChange />,
 			        title: '${titleChange}',
 			        action: {
 						name: '${uiLabelMap.BkEunivUpdate}',
 						url: '${urlUpdate}',
 						dataTable: jqDataTable.table,
-						keys:["educationProgressId"],
+						keys: <@pfArray array=keysId />,
 						fieldDataResult: '${fieldDataResult}',
 						hidden: "auto"
 					}
@@ -249,7 +255,6 @@
 				jqDataTable.jqModalChange = modal;
 				$("#jqModalChange #modal-template").modal('show');
 			})
-			
 		}
 		
 		function jqNew() {
@@ -257,14 +262,14 @@
 				//TODO select
 				resolve(new modal("#jqModalAdd").setting({
 					data: {},
-					columns: <@printArrayObject array=columnsNew />,
+					columns: <@pfArray array=columnsNew />,
 					
 			        title: '${titleNew}',
 			        action: {
 						name: '${uiLabelMap.BkEunivAddRow}',
 						url: '${urlAdd}',
 						dataTable: jqDataTable.table,
-						keys:["educationProgressId"],
+						keys: <@pfArray array=keysId />,
 						fieldDataResult: '${fieldDataResult}',
 						hidden: "show"
 					}
@@ -286,19 +291,23 @@
 				    datatype:"json",
 				    success: function(d) {
 				    	var table = jqDataTable.table;
-				    	if(!!d.result) {
-				    		table.rows().indexes().data().filter(function(e, index) {
-				    			<#assign conditions = [] />
-				    			<#list keysId as key>
-				    				<#assign conditions = conditions + ["e." + key + "==" + "data." + key] />
-				    			</#list>
-				    			if(1) {
-				    				e.index = index;
-				    				return true;
-				    			}
-				    		}).map(function(el, index){
-				    			table.row(el.index).remove().draw();
-				    		})
+				    	if(!!d) {
+				    		var element = table.rows().indexes().data().filter(function(e, index) {
+								
+								var check = <@pfArray array=keysId />.reduce(function(acc, curr) {
+									return acc&&(e[curr]==data[curr]);
+								}, true);
+								
+								if(check) {
+									e.index = index;
+									return true;
+								}
+							})[0]
+							
+							if(!!element) {
+								table.row(element.index).remove().draw();
+							}
+							
 				    		setTimeout(function() {
 				    			closeLoader();
 				    			alertify.success(d.result);

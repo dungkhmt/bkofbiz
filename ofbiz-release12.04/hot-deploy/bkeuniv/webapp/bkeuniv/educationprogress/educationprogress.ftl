@@ -4,20 +4,20 @@
 
 	<#assign columns=[
 		{
-			"name": educationProgressUiLabelMap.BkEunivInstitution,
-			"value": "institution"
+			"name": educationProgressUiLabelMap.BkEunivInstitution?j_string,
+			"data": "institution"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivEducationType,
-			"value": "educationType"
+			"name": educationProgressUiLabelMap.BkEunivEducationType?j_string,
+			"data": "educationType"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivSpeciality,
-			"value": "speciality"
+			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
+			"data": "speciality"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivGraduateDate,
-			"value": "graduateDate"
+			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
+			"data": "graduateDate"
 		} 
 	] />
 	
@@ -32,38 +32,38 @@
 	
 	<#assign columnsChange=[
 		{
-			"name": educationProgressUiLabelMap.BkEunivInstitution,
+			"name": educationProgressUiLabelMap.BkEunivInstitution?j_string,
 			"value": "institution"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivEducationType,
+			"name": educationProgressUiLabelMap.BkEunivEducationType?j_string,
 			"value": "educationType"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivSpeciality,
+			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
 			"value": "speciality"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivGraduateDate,
+			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
 			"value": "graduateDate"
 		} 
 	] />
 	
 	<#assign columnsNew=[
 		{
-			"name": educationProgressUiLabelMap.BkEunivInstitution,
+			"name": educationProgressUiLabelMap.BkEunivInstitution?j_string,
 			"value": "institution"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivEducationType,
+			"name": educationProgressUiLabelMap.BkEunivEducationType?j_string,
 			"value": "educationType"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivSpeciality,
+			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
 			"value": "speciality"
 		},
 		{
-			"name": educationProgressUiLabelMap.BkEunivGraduateDate,
+			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
 			"value": "graduateDate"
 		} 
 	] />
