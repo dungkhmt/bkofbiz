@@ -1,12 +1,14 @@
 package src.org.ofbiz.bkeuniv.educationprogress;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
+import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilHttp;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -17,37 +19,78 @@ import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
-import java.net.URL;
 import java.sql.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import src.org.ofbiz.utils.BKEunivUtils;
 
 public class EducationProgress {
+	public final static String module = EducationProgress.class.getName();
+	
+	public static String createEducationProgressRequestResponse(HttpServletRequest request, HttpServletResponse response){
+		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Locale locale = UtilHttp.getLocale(request);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
+		System.out.println("EducationProgress::createEducatinoProgressRequestResponse, Staff = " + staff.get("staffEmail"));
+		Map<String, Object> context = FastMap.newInstance();
+		context.put("staffId",staff.get("staffId"));
+		context.put("institution",request.getParameter("institution"));
+		context.put("speciality",request.getParameter("speciality"));
+		context.put("educationType",request.getParameter("educationType"));
+		context.put("graduateDate",request.getParameter("graduateDate"));
+		try{
+			Map<String, Object> resultNewEducationProgress = dispatcher.runSync("createEducationProgress", context);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(resultNewEducationProgress), response, 200);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return "success";
+	}
+	
 	public static Map<String, Object> getEducationProgress(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
-		String[] keys = {"educationProgressId", "staffId", "educationType", "institution", "speciality", "graduateDate"};
+		String u1 = (String)ctx.getAttribute("userLoginId");
+		String u2 = (String)context.get("userLoginId");
 		
+		if(u1 == null) u1 = "NULL";
+		if(u2 == null) u2 = "NULL";
+		
+		System.out.println(module + "::getEducationProgress, System.out.println u1 = " + u1 + ", u2 = " + u2);
+		Debug.log(module + "::getEducationProgress, Debug.log u1 = " + u1 + ", u2 = " + u2);
+		
+		
+		String[] keys = {"educationProgressId", "staffId", "educationType", "institution", "speciality", "graduateDate"};
+		String[] search = {"institution"};
 		try {
-			
-			EntityCondition entity = null;
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
-			Map<String, Object> fields = new HashMap<String, Object>();;
 			for(String key: keys) {
 				Object el = context.get(key);
 				if(!(el == null||el==(""))) {
-					if(key=="graduateDate") {
-						fields.put(key, Date.valueOf((String) el));
+					EntityCondition condition;
+					int index = Arrays.asList(search).indexOf(key);
+					if( index == -1) {
+						if(key=="graduateDate") {
+							condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, Date.valueOf((String) el));
+						} else {
+							condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, el);
+						}
 					} else {
-						fields.put(key, el);
+						condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, el);
 					}
+					conditions.add(condition);
 				}
 			}
 			
-			//List<GenericValue> list = delegator.findList("EducationProgress", entity, null, null, findOptions, true);	
-			List<GenericValue> list = delegator.findByAnd("EducationProgress", fields);
+			List<GenericValue> list = delegator.findList("EducationProgress", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 			
 			List<Map> listEducationProgress = FastList.newInstance();
@@ -88,6 +131,9 @@ public class EducationProgress {
 		String speciality = (String) context.get("speciality");
 		String graduateDate = (String) context.get("graduateDate");
 		
+		System.out.println("EducationProgress::createEducationProgress, staffId = " + staffId + 
+				", educationType = " + educationType + ", institution = " + institution + ", speciality = " + speciality);
+		
 		GenericValue gv = delegator.makeValue("EducationProgress");
 
 		gv.put("educationProgressId", delegator.getNextSeqId("EducationProgress"));
@@ -105,17 +151,8 @@ public class EducationProgress {
 			return ServiceUtil.returnError(ex.getMessage());
 		}
 		
-		Map<String, Object> mapEducationProgress = FastMap.newInstance();
-		mapEducationProgress.put("educationProgressId", gv.getString("educationProgressId"));
-		mapEducationProgress.put("staffId", staffId);
-		mapEducationProgress.put("educationType", educationType);
-		mapEducationProgress.put("institution", institution);
-		mapEducationProgress.put("speciality", speciality);
-		mapEducationProgress.put("graduateDate", graduateDate);
-		
-		
-		retSucc.put("educationProgress", mapEducationProgress);
-
+		retSucc.put("educationProgress", gv);
+		retSucc.put("message", "Create new row");
 		return retSucc;
 	}
 	
@@ -167,10 +204,20 @@ public class EducationProgress {
 				gv.put("speciality", speciality);
 				gv.put("graduateDate", Date.valueOf(graduateDate));
 				
-				delegator.store(gv);	
-        		retSucc.put("result", "updated record with id: " + educationProgressId);
+				delegator.store(gv);
+				
+				Map<String, Object> rs = new HashMap<String, Object>();
+				rs.put("staffId", staffId);
+				rs.put("educationType", educationType);
+				rs.put("institution", institution);
+				rs.put("speciality", speciality);
+				rs.put("graduateDate", graduateDate);
+				rs.put("educationProgressId", educationProgressId);
+				
+				retSucc.put("educationProgress", rs);
+        		retSucc.put("message", "updated record with id: " + educationProgressId);
         	} else {
-        		retSucc.put("result", "not found record with id: " + educationProgressId);
+        		retSucc.put("message", "not found record with id: " + educationProgressId);
         	}
 			
 		}catch(Exception ex){

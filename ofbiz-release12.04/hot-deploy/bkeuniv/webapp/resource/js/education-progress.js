@@ -1,19 +1,19 @@
 var table, test, temp;
+var modalAdd;
+var modalChange;
 
 $(document).ready(function(){
 	
 	$.ajax({
 	    url: "/bkeuniv/control/get-education-progress",
-	    method: 'POST',
+	    type: 'post',
 	    dataType: "json",
-	    contentType: 'application/json; charset=utf-8',
 	    success: function(data) {
 	    	var educationProgress = data.educationProgress;
 	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
 	    	table = $('#table-education-progress').DataTable({
 	   		 data: educationProgress,
 	           columns: [
-	               { "data": "educationProgressId" },
 	               { "data": "educationType" },
 	               { "data": "institution" },
 	               { "data": "speciality" },
@@ -54,46 +54,39 @@ $(document).ready(function(){
 });
 
 function changeEducationProgress(educationProgress) {
-	new Promise(function(resolve, reject) {
-		resolve(new modal("#change-education-progress").setting({
-			data: educationProgress,
-			columns: [
-			          {
-			        	  name: educationProgressId,
-			        	  value: "educationProgressId",
-			        	  edit: false
-			          },
-			          {
-			        	  name: educationType,
-			        	  value: "educationType"
-			          },
-			          {
-			        	  name: institution,
-			        	  value: "institution"
-			          },
-			          {
-			        	  name: speciality,
-			        	  value: "speciality"
-			          },
-			          {
-			        	  name: graduateDate,
-			        	  value: "graduateDate",
-			        	  type: "date"
-			          },
-			          {
-			        	  name: staffId,
-			        	  value: "staffId"
-			          }
-			          ],
-			          title: titleEditEducationProgress,
-			          action: {
-			        	  func: "saveEducationProgress",
-			        	  name: update
-			          }
-		}).render());
-	}).then(function(val) {
-		$("#change-education-progress #modal-template").modal('show');
-	})
+//	new Promise(function(resolve, reject) {
+//		
+//		resolve(new modal("#change-education-progress").setting({
+//			data: educationProgress,
+//			columns: [
+//			          {
+//			        	  name: educationType,
+//			        	  value: "educationType"
+//			          },
+//			          {
+//			        	  name: institution,
+//			        	  value: "institution"
+//			          },
+//			          {
+//			        	  name: speciality,
+//			        	  value: "speciality"
+//			          },
+//			          {
+//			        	  name: graduateDate,
+//			        	  value: "graduateDate",
+//			        	  type: "date"
+//			          }
+//			          ],
+//			          title: titleEditEducationProgress,
+//			          action: {
+//			        	  func: "saveEducationProgress()",
+//			        	  name: update
+//			          }
+//		}).render());
+//	}).then(function(modal) {
+//		modalChange = modal;
+//		$("#change-education-progress #modal-template").modal('show');
+//	})
 	
 }
 
@@ -118,33 +111,27 @@ function newEducationProgress() {
 			        	  name: graduateDate,
 			        	  value: "graduateDate",
 			        	  type: "date"
-			          },
-			          {
-			        	  name: staffId,
-			        	  value: "staffId"
 			          }
 			          ],
-			          title: titleNewEducationProgress,
-			          action: {
-			        	  func: "addEducationProgress",
-			        	  name: add
-			          }
+			title: titleNewEducationProgress,
+			action: {
+				name: add,
+				url: "/bkeuniv/control/create-education-progress",
+				dataTable: table,
+				keys:["educationProgressId"],
+				fieldDataResult: "educationProgress",
+				hidden: "auto"
+			}
 		}).render());
-	}).then(function(val) {
+	}).then(function(modal) {
+		modalAdd = modal
 		$("#add-education-progress #modal-template").modal('show');
 	})
 }
 
-function saveEducationProgress(educationProgressOld) {
+function saveEducationProgress() {
 	openLoader();
-	var educationProgress = {
-		"educationProgressId": educationProgressOld["educationProgressId"],
-		"educationType": $("#change-education-progress #educationtype").val().trim(),
-		"institution": $("#change-education-progress #institution").val().trim(),
-		"speciality": $("#change-education-progress #speciality").val().trim(),
-		"graduateDate": getDate("#change-education-progress #graduatedate","yy-mm-dd"),
-		"staffId": $("#change-education-progress #staffid").val().trim()
-	}
+	var educationProgress = modalChange.data();
 
 	$.ajax({
 	    url: "/bkeuniv/control/update-education-progress",
@@ -182,7 +169,7 @@ function saveEducationProgress(educationProgressOld) {
 	    error: function(err) {
 	    	setTimeout(function() {
 	    		closeLoader();
-	    		alertify.success(err.result);
+	    		alertify.success(JSON.stringify(err));
 	    	}, 500);
 	    	console.log(err);
 	    }
@@ -224,7 +211,7 @@ function deleteEducationProgress(educationProgress) {
 		    error: function(err) {
 		    	setTimeout(function() {
 		    		closeLoader();
-		    		alertify.success(err.result);
+		    		alertify.success(JSON.stringify(err));
 		    	}, 500);
 		    	console.log(err);
 		    	
@@ -237,13 +224,7 @@ function deleteEducationProgress(educationProgress) {
 
 function addEducationProgress(){
 	openLoader();
-	var newEducationProgress = {
-		"educationType": $("#add-education-progress #educationtype").val().trim(),
-		"institution": $("#add-education-progress #institution").val().trim(),
-		"speciality": $("#add-education-progress #speciality").val().trim(),
-		"graduateDate": getDate("#add-education-progress #graduatedate","yy-mm-dd"),
-		"staffId": $("#add-education-progress #staffid").val().trim()
-	}
+	var newEducationProgress = modalAdd.data();
 
 	$.ajax({
 	    url: "/bkeuniv/control/create-education-progress",
@@ -272,7 +253,7 @@ function addEducationProgress(){
 	    error: function(err) {
 	    	setTimeout(function() {
 	    		closeLoader();
-	    		alertify.success(err);
+	    		alertify.success(JSON.stringify(err));
 	    	}, 500);
 	    	console.log(err);
 	    }

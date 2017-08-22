@@ -12,12 +12,12 @@
 		</div>
 		<div class="user">
 			<div class="user-name" onClick="openDropdownUser()" onBlur="closeDropdownUser()" tabIndex="0">
-				DucDungDan
+				${userLogin.userLoginId}
 				<div class="dropdown-information glyphicon glyphicon-chevron-down">         
 				</div>
 				<div class="dropdown-content hidden">
 					<a class="dropdown-item" href="/bkeuniv/control/user">Thông tin cá nhân</a>
-					<a class="dropdown-item" href="/bkeuniv/control/logout">Đăng xuất</a>
+					<a class="dropdown-item" onClick="logout()">${uiLabelMap.BkEunivLogout}</a>
 				</div>
 			</div>
 		</div>

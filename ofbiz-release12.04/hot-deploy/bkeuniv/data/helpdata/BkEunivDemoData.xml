@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+
+<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
+<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+
+
+<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
+<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
+<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
+<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
+<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
+
+<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
+<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
+<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
+<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
+<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
+<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
+
+
+</entity-engine-xml>
