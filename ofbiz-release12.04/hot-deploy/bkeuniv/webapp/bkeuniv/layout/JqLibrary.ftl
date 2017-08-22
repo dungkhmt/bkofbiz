@@ -29,6 +29,8 @@
 			<@pfObject object=a />,
 		<#elseif a?is_sequence>
 			<@pfArray array=a />,
+		<#elseif (a?string)?index_of("function")==0>
+			${a},
 		<#else>
 			'${a}',
 		</#if>
@@ -43,13 +45,14 @@
 			'${k}': <@pfObject object=object[k] />,
 		<#elseif object[k]?is_sequence>
 			'${k}': <@pfArray array=object[k] />,
+		<#elseif (object[k]?string)?index_of("function") == 0>
+			'${k}': ${object[k]},
 		<#else>
 			'${k}': '${object[k]}',
 		</#if>
 	</#list>
 	}
 </#macro>
-
 
 
 <#macro jqDataTable urlData urlUpdate urlAdd urlDelete keysId 

@@ -45,7 +45,8 @@
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
-			"value": "graduateDate"
+			"value": "graduateDate",
+			"type": "date"
 		} 
 	] />
 	
@@ -56,15 +57,28 @@
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivEducationType?j_string,
-			"value": "educationType"
+			"value": "educationType",
+			"type": "render",
+			"render": "function(value, name, dataColumns, id) {
+				return \"aaaa\";
+			}"
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
-			"value": "speciality"
+			"value": "speciality",
+			"type": "date"
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
-			"value": "graduateDate"
+			"value": "graduateDate",
+			"type": "select",
+			"option": {
+				"source": [{
+					"name": "Tieeng Anh",
+					"value": "en"
+				}],
+				"maxItem": 1
+			}
 		} 
 	] />
 	
