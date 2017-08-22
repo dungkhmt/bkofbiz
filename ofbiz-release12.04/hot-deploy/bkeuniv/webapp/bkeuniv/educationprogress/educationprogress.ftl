@@ -57,34 +57,23 @@
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivEducationType?j_string,
-			"value": "educationType",
-			"type": "render",
-			"render": "function(value, name, dataColumns, id) {
-				return \"aaaa\";
-			}"
+			"value": "educationType"
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
 			"value": "speciality",
-			"type": "date"
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
 			"value": "graduateDate",
-			"type": "select",
-			"option": {
-				"source": [{
-					"name": "Tieeng Anh",
-					"value": "en"
-				}],
-				"maxItem": 1
-			}
+			"type": "date"
 		} 
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
 	
 	<@jqDataTable
+		id="DataTable-EducationProgress"
 		urlData="/bkeuniv/control/get-education-progress" 
 		columns=columns 
 		dataFields=fields 
@@ -100,5 +89,6 @@
 		titleNew="test"
 		titleDelete="test"
 		jqTitle="test"
+		contextmenu=true
 	/>
 </div>

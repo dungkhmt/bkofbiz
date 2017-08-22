@@ -1,7 +1,6 @@
 var modal = function (id) {
 	this.id = id;
 }
-var test;
 
 modal.prototype._getDate = function (selector, format) {
     const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
@@ -222,6 +221,13 @@ modal.prototype.data = function() {
 			    case "custom":
 			    	acc = _._mergeData(acc, column._data);
 			    	return acc;
+			    case "render":
+			    	if(typeof column.getData == "function") {
+			    		column._data = column.getData("#"+column.id);
+			    	} else {
+			    		column._data = _._getText("#"+column.id);
+			    	}
+			    	break;
 			    
 			}
 		}

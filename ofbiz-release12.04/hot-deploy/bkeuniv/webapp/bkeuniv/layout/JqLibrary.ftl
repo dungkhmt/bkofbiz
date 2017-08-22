@@ -30,7 +30,9 @@
 		<#elseif a?is_sequence>
 			<@pfArray array=a />,
 		<#elseif (a?string)?index_of("function")==0>
-			${a},
+			${a?replace("\n|\t", "", "r")},
+		<#elseif a?is_string>
+			'${a?replace("\n|\t", "", "r")}',
 		<#else>
 			'${a}',
 		</#if>
@@ -46,7 +48,9 @@
 		<#elseif object[k]?is_sequence>
 			'${k}': <@pfArray array=object[k] />,
 		<#elseif (object[k]?string)?index_of("function") == 0>
-			'${k}': ${object[k]},
+			'${k}': ${object[k]?replace("\n|\t", "", "r")},
+		<#elseif object[k]?is_string>
+			'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
 		<#else>
 			'${k}': '${object[k]}',
 		</#if>
@@ -68,6 +72,7 @@
 		titleNew=""
 		titleDelete=""
 		jqTitle=""
+		contextmenu=true
 	>
 	<@jqMinimumLib />
 	
@@ -210,31 +215,33 @@
 					"scrollCollapse": true,
 					"bJQueryUI": true
 			       });
-			       $(document).contextmenu({
-					    delegate: "#${id}-content td",
-					menu: [
-					  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-					  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
-					],
-					select: function(event, ui) {
-						var el = ui.target.parent();
-						var data = jqDataTable.table.row( el ).data();
-						switch(ui.cmd){
-							case "edit":
-								jqChange(data)
-								break;
-							case "delete":
-								jqDelete(data);
-								break;
-							}
-						},
-						beforeOpen: function(event, ui) {
-							var $menu = ui.menu,
-								$target = ui.target,
-								extraData = ui.extraData;
-							ui.menu.zIndex(9999);
-					    }
-					  });
+			       <#if contextmenu>
+				       $(document).contextmenu({
+						    delegate: "#${id}-content td",
+						menu: [
+						  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+						  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+						],
+						select: function(event, ui) {
+							var el = ui.target.parent();
+							var data = jqDataTable.table.row( el ).data();
+							switch(ui.cmd){
+								case "edit":
+									jqChange(data)
+									break;
+								case "delete":
+									jqDelete(data);
+									break;
+								}
+							},
+							beforeOpen: function(event, ui) {
+								var $menu = ui.menu,
+									$target = ui.target,
+									extraData = ui.extraData;
+								ui.menu.zIndex(9999);
+						    }
+						  });
+					</#if>
 			    }
 			});
 		});
