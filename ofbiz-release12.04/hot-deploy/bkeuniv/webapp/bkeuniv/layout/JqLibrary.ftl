@@ -59,7 +59,8 @@
 </#macro>
 
 
-<#macro jqDataTable urlData urlUpdate urlAdd urlDelete keysId 
+<#macro jqDataTable urlData urlUpdate urlAdd urlDelete keysId
+		fnInfoCallback=""
 		dataFields=[]
 		columns=""
 		columnsChange = []
@@ -214,16 +215,28 @@
 					"columnDefs": [
 					<#assign index = 0 />
 					<#list columns as column>
+						<#assign c = {} />
+						
 						<#if column.render?has_content>
-				                // The `data` parameter refers to the data for the cell (defined by the
-				                // `data` option, which defaults to the column being worked with, in
-				                <@pfObject object={"render": column.render, "targets": index} />,
+				             <#assign c = c + {"render": column.render} />
 						</#if>
+						<#if column.width?has_content>
+				             <#assign c = c + {"width": column.width} />
+						</#if>
+						
+						<#if c?has_content>
+				             <#assign c = c + {"targets": index} />
+				             <@pfObject object=c />,
+						</#if>
+						
 						<#assign index = index + 1 />
 					</#list>
 					],
 					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
 					"scrollCollapse": true,
+					<#if fnInfoCallback?has_content>
+						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
+					</#if>
 					"bJQueryUI": true
 			       });
 			       <#if contextmenu>
