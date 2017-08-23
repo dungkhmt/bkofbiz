@@ -21,9 +21,10 @@ var institution = '${educationProgressUiLabelMap.BkEunivInstitution}';
 var speciality = '${educationProgressUiLabelMap.BkEunivSpeciality}';
 var graduateDate = '${educationProgressUiLabelMap.BkEunivGraduateDate}';
 var staffId = '${educationProgressUiLabelMap.BkEunivStaffId}';
+var update = '${uiLabelMap.BkEunivUpdate}';
+
 var titleEditEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleEditEducationProgress}';
 var add = '${uiLabelMap.BkEunivAddRow}';
-var update = '${uiLabelMap.BkEunivUpdate}';
 var titleNewEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleNewEducationProgress}';
 var BkEunivTitleDeleteEducationProgress = '${educationProgressUiLabelMap.BkEunivTitleDeleteEducationProgress}';
 </script>
@@ -31,6 +32,7 @@ var BkEunivTitleDeleteEducationProgress = '${educationProgressUiLabelMap.BkEuniv
 <script src="/resource/bkeuniv/js/education-progress.js"></script>
 <body>
 <div class="body">
+
 	<div class="education-progress">
 		<div class="title">
 			<a href="#" class="title-hyperlink">
@@ -43,7 +45,6 @@ var BkEunivTitleDeleteEducationProgress = '${educationProgressUiLabelMap.BkEuniv
 		
 		<table id="table-education-progress" class="table table-striped table-bordered">
 			<thead>
-				<td>${educationProgressUiLabelMap.BkEunivEducationProgressId}</td>
 				<td>${educationProgressUiLabelMap.BkEunivEducationType}</td>
 				<td>${educationProgressUiLabelMap.BkEunivInstitution}</td>
 				<td>${educationProgressUiLabelMap.BkEunivSpeciality}</td>

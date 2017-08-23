@@ -1,6 +1,20 @@
 var modal = function (id) {
 	this.id = id;
 }
+var test;
+
+modal.prototype._getDate = function (selector, format) {
+    const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
+    return $.datepicker.formatDate(format, new Date(year, month - 1, day))
+}
+
+modal.prototype._getText = function (selector) {
+    return $([this.id,selector].join(" ")).val();
+}
+
+modal.prototype._getSelect = function (selector) {
+    return $([this.id,selector].join(" ")).val();
+}
 
 modal.prototype._date = function(value, edit, id){
 	return '<input type="text" class=" date form-control"' +
@@ -24,35 +38,56 @@ modal.prototype._text = function(value, edit, id){
 					'>';
 }
 
+modal.prototype._select = function(value, edit, id, option) {
+	var _id = "#"+id;
+	var maxItem = option.maxItem||1;
+	var script = '<script type="text/javascript">'+
+					'$(function () {'+
+						'$("'+_id+'").selectize({'+
+							'maxItems: ' + maxItem + ', '+
+							'sortField: "text"'+
+						'});'+
+					'});'+
+				'</script>'
+	var option = value.map(function(op, index) {
+		var _selected = option.selected.indexOf(op[option.value])!== -1?"selected":"";
+		return '<option value="'+op[option.value]+'" '+_selected+'>'+op[option.name]+'</option>';
+	})
+	return '<select style="width: 70%" id="'+id+'" multiple>'+option.join("")+'</select>'+script;
+}
+
 modal.prototype.setting = function(option) {
 	this.option = option;
-	this.data = option.data;
+	this._data = option.data;
 	this.columns = option.columns;
-
-	var _ = this;
-	var els = [];
 	
-	this.columns.forEach(function(column) {
-		var name = column.name;
-		var value = _['data'][column.value]||"";
-		var edit = column.hasOwnProperty("edit")?column.edit:true;
-		var id = column.value.replace(/\s/g, '-').toLowerCase();
-		var input;
+	for(var i = 0, len = this.columns.length; i < len; ++i) {
+		var column = this.columns[i];
+		column.id = column.value.replace(/\s/g, '-').toLowerCase();
+		column.edit = column.hasOwnProperty("edit")?column.edit:true;
+		column.type = column.hasOwnProperty("type")?column.type:"text";
+		column._data = this._data[column.value]||"";
+		var el;
 		switch(column.type) {
 		    case "date":
-		    	input = _._date(value, edit, id);
+		    	el = this._date(column._data, column.edit, column.id);
 		    	break;
-		    default:
-		        input = _._text(value, edit, id);
+		    case "text":
+		    	el = this._text(column._data, column.edit, column.id);
+		        break;
+		    case "select":
+		    	el = this._select(column._data, column.edit, column.id, column.option);
+		    	break;
+		    case "custom":
+		    	el = column.el;
+		    	break;
+		    	
 		}
-		var el = 
-			'<div class="row inline-box">'+
-			'<label id="title-modal-input">'+name+'</label>'+
-			input+
-			'</div>';
-		els.push(el);
-	})
-	this.els = els.join("");
+		column.html = '<div class="row inline-box">'+
+						'<label id="title-modal-input">'+column.name+'</label>'+el+
+				      '</div>';
+	}
+	test = this.columns;
 	return this;
 }
 
@@ -68,10 +103,10 @@ modal.prototype.render = function() {
 		        	'<h4 class="modal-title">'+this.option.title+'</h4>'+
 		      '</div>'+
 		      '<div class="modal-body">'+
-		      	'<div class="container-fluid">'+this.els+'</div>'+
+		      	'<div class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'</div>'+
 		      '</div>'+
 		      '<div class="modal-footer">'+
-		      	'<button type="button" class="btn btn-success" onclick=\''+this.option.action.func +'(' + JSON.stringify(this.data) +')\' >'+this.option.action.name+'</button>'+
+		      	'<button type="button" class="btn btn-success" onclick="'+this.option.action.func+'" >'+this.option.action.name+'</button>'+
 		   		'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+
 		      '</div>'+
 		    '</div>'+
@@ -82,3 +117,49 @@ modal.prototype.render = function() {
 	return this;
 }
 
+modal.prototype.data = function() {
+	var _ = this;
+	var data = this.columns.reduce(function(acc, column) {
+		if(column.edit) {
+			switch(column.type) {
+			    case "date":
+			    	column._data = _._getDate("#"+column.id, "yy-mm-dd");
+			    	break;
+			    case "text":
+			    	column._data = _._getText("#"+column.id);
+			        break;
+			    case "select":
+			    	column.option.selected = _._getSelect("#"+column.id);
+			    	acc[column.value] = column.option.selected;
+			    	return acc;
+			    case "custom":
+			    	acc = _._mergeData(acc, column._data);
+			    	return acc;
+			    
+			}
+		}
+		acc[column.value] = column._data
+		
+		return acc;
+	}, {})
+	
+	return this._mergeData(this._data, data)
+}
+
+modal.prototype._mergeData = function(base, compare) {
+	if (!compare || typeof compare !== 'object') {
+		return base;
+	}
+
+	var keys = Object.keys(compare);
+	var key;
+	
+	for (var i = 0, len = keys.length; i < len; i++) {
+		key = keys[i];
+		if(compare.hasOwnProperty(key)) {
+			base[key] = compare[key];			
+		}
+	}
+
+	return base
+}

@@ -1,4 +1,6 @@
 var table;
+var addmodal;
+var changeModal;
 
 $(document).ready(function(){
 	
@@ -8,16 +10,13 @@ $(document).ready(function(){
 	    dataType: "json",
 	    contentType: 'application/json; charset=utf-8',
 	    success: function(data) {
-	        console.log("success");
-	    },
-	    complete: function(data, status) {
-	    	award = JSON.parse(data.responseText.slice(data.responseText.indexOf('{'))).award;
+	    	var award = data.award;
 	    	var sizeTable = $(window).innerHeight() - $(".title").innerHeight() - $(".nav").innerHeight() - $(".footer").innerHeight() - 165;
+	    	
 	    	table = $('#table-award').DataTable({
 	   		 data: award,
 	           columns: [
 	               { "data": "awardId" },
-	               { "data": "staffId" },
 	               { "data": "description" },
 	               { "data": "year"}
 	           ],
@@ -27,14 +26,13 @@ $(document).ready(function(){
 	       });
 			$(document).contextmenu({
 			    delegate: "#table-award td",
-			menu: [
-			  {title: "Edit", cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  {title: "Delete", cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+			    menu: [
+			  {title: edit, cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  {title: remove, cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 			],
-			select: function(event, ui) {
+				select: function(event, ui) {
 				var el = ui.target.parent();
 				var award = table.row( el ).data();
-				award.el = el;
 				switch(ui.cmd){
 					case "edit":
 						changeAward(award)
@@ -51,6 +49,9 @@ $(document).ready(function(){
 					ui.menu.zIndex(9999);
 			    }
 			  });
+	    },
+	    error: function(err){
+	    	console.log(err);
 	    }
 	});
 });
@@ -80,11 +81,12 @@ function changeAward(award) {
 			          ],
 			          title: titleEditAward,
 			          action: {
-			        	  func: "saveAward",
+			        	  func: "saveAward()",
 			        	  name: update
 			          }
 		}).render());
 	}).then(function(val) {
+		modalChange = val;
 		$("#change-award #modal-template").modal('show');
 	})
 	
@@ -110,23 +112,20 @@ function newAward() {
 					],
 			          title: titleAddAward,
 			          action: {
-			        	  func: "addAward",
+			        	  func: "addAward()",
 			        	  name: add
 			          }
 		}).render());
 	}).then(function(val) {
+		addmodal = val;
 		$("#add-award #modal-template").modal('show');
 	})
 }
 
-function saveAward(award) {
+function saveAward() {
+	console.log("a");
 	openLoader();
-	var award = {
-			"awardId": award["awardId"],
-			"description": $("#change-award #description").val().trim(),
-			"year": getDate("#change-award #year","yy-mm-dd"),
-			"staffId": $("#change-award #staffid").val().trim()
-		}
+	var award = modalChange.data();
 	$.ajax({
 	    url: "/bkeuniv/control/update-award",
 	    type: 'post',
@@ -140,10 +139,10 @@ function saveAward(award) {
 	    				return true;
 	    			}
 	    		}).map(function(el, index){
-	    			el.description = award.description;
-	    			el.year = award.year;
-	    			el.staffId = award.staffId;
-	    			table.row(el.index).data(el);
+	    				el.year = award.year;
+		    			el.description = award.description;
+		    			el.staffId = award.staffId;
+		    			table.row(el.index).data(el);
 	    		})
 	    		
 	    		setTimeout(function() {
@@ -154,7 +153,7 @@ function saveAward(award) {
 	    	} else {
 	    		setTimeout(function() {
 	    			closeLoader();
-	    			alertify.success(JSON.stringify(data._ERROR_MESSAGE_));
+	    			alertify.success(JSON.stringify(data.result));
 	    		}, 500);
 	    	}
 	    },
@@ -169,7 +168,7 @@ function saveAward(award) {
 }
 
 function deleteAward(award) {
-	alertify.confirm("Confirm", BkEunivTitleDeleteAward + " ID = " + award.awardId,
+	alertify.confirm("Confirm", remove + " ID = " + award.awardId,
 			function(){
 				openLoader();
 
@@ -216,25 +215,21 @@ function deleteAward(award) {
 
 function addAward(){
 	openLoader();
-	var newAward = {
-		"description": $("#add-award #description").val().trim(),
-		"year": getDate("#add-award #year","yy-mm-dd"),
-		"staffId": $("#add-award #staffid").val().trim()
-	}
+	var newAward = addmodal.data();
 
 	$.ajax({
 	    url: "/bkeuniv/control/create-award",
 	    type: 'post',
 	    data: newAward,
-	    datatype:"json",
+	    datatype:"json",  //gui len server
 	    success: function(data) {
-	    	if(!!data.educationProgress) {
-	    		table.row.add(data.educationProgress).draw();
+	    	if(!!data.award) {
+	    		table.row.add(data.award).draw(); //cap nhat data
 		    	setTimeout(closeLoader(), 500);
 		    	
 		    	$("#add-award #description").val("");
 				$("#add-award #year").val("");
-				$("##add-award #staffid").val("");
+				$("#add-award #staffid").val("");
 				alertify.success('Created a new row');
 	    	} else {
 	    		setTimeout(function() {

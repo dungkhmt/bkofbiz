@@ -26,6 +26,22 @@
 	    <response name="success" type="view" value="main"/>
     </request-map>
     
+    <request-map uri="logout">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="logout"/>
+        <response name="success" type="request-redirect" value="main"/>
+        <response name="error" type="view" value="main"/>
+    </request-map>
+    
+    
+    <!-- <request-map uri="login">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="login"/>
+        <response name="success" type="view" value="main"/>
+        <response name="requirePasswordChange" type="view" value="requirePasswordChange"/>
+        <response name="error" type="view" value="login"/>
+    </request-map> -->
+    
     <request-map uri="paper-declaration">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-paper-declaration"/>
@@ -106,7 +122,11 @@
 	
 	<request-map uri="create-education-progress">
 		<security https="true" auth="true"/>
+		<!-- 
 		<event type="service" invoke="createEducationProgress"></event>
+		 -->
+		<event type="java" invoke="createEducationProgressRequestResponse" path="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress"></event>
+		 
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -128,9 +148,11 @@
 	<request-map uri="setSessionLocale">
         <security https="true" auth="false"/>
         <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
-        <response name="success" type="view" value="main"/>
+        <response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
     </request-map>
     
+
 	<request-map uri="award">
 	    <security https="true" auth="true"/>
 	    <response name="success" type="view" value="view-award"/>
@@ -143,16 +165,43 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+    <request-map uri="scientificserviceexperience">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-scientificserviceexperience"></response>
+    </request-map>
+    
+    <request-map uri="get-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="getscientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="create-award">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="createAward"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+
+	<request-map uri="create-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createscientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 	
+
 	<request-map uri="update-award">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="updateAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="update-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updatescientificserviceexperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -167,9 +216,16 @@
 	<request-map uri="setSessionLocale">
         <security https="true" auth="false"/>
         <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
-        <response name="success" type="view" value="main"/>
+        <response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
     </request-map>
-    
+	
+	<request-map uri="delete-scientificserviceexperience">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deletescientificserviceexperience"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -178,9 +234,9 @@
     <view-map name="view-department-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDepartmentManagement"/>
     <view-map name="view-add-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageAddDepartment"/>
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
-    
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
     <view-map name="view-award" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#award"/>
+    <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     
 </site-conf>

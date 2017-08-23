@@ -1,12 +1,20 @@
 package src.org.ofbiz.bkeuniv.award;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilHttp;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -17,46 +25,66 @@ import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
+import src.org.ofbiz.bkeuniv.educationprogress.EducationProgress;
+import src.org.ofbiz.utils.BKEunivUtils;
+
 public class Award {
-	public static Map<String, Object> getAward(DispatchContext ctx, Map<String, ? extends Object> context){
+	
+	public static Map<String, Object> getAward(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
-		LocalDispatcher dispatcher = ctx.getDispatcher();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
-		String awardId = (String)context.get("awardId");
-		String staffId = (String)context.get("staffId");
-		String description = (String)context.get("description");
-		String year = (String)context.get("year");
+		String u1 = (String)ctx.getAttribute("userLoginId");
+		String u2 = (String)context.get("userLoginId");
 		
+		if(u1 == null) u1 = "NULL";
+		if(u2 == null) u2 = "NULL";
+		
+		String[] keys = {"awardId", "description", "year", "staffId"};
+		String[] search = {""};
 		try {
-			Map<String, Object> result = ServiceUtil.returnSuccess();
-			EntityCondition entity;
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
-			List<GenericValue> list;
-			if(awardId==null) {
-				System.out.println("aaa");
-				list = delegator.findList("Award", null, null, null, findOptions, true);				
-			} else{
-				entity = EntityCondition.makeCondition("awardId", EntityOperator.EQUALS, awardId);
-				list = delegator.findList("Award", entity, null, null, findOptions, true);			
+			for(String key: keys) {
+				Object el = context.get(key);
+				if(!(el == null||el==(""))) {
+					EntityCondition condition;
+					int index = Arrays.asList(search).indexOf(key);
+					if( index == -1) {
+					
+						condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, el);
+						
+					} else {
+						condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, el);
+					}
+					conditions.add(condition);
+				}
 			}
 			
-			List<Map> lstAward = FastList.newInstance();
-			for(GenericValue el: list){
+			List<GenericValue> list = delegator.findList("Award", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			
+			List<Map<String, Object>> listAward = FastList.newInstance();
+			System.out.print(list.size());
+			for(GenericValue el: list) {
 				Map<String, Object> mapAward = FastMap.newInstance();
 				mapAward.put("awardId", el.getString("awardId"));
+				mapAward.put("year", el.getString("year"));
 				mapAward.put("staffId", el.getString("staffId"));
 				mapAward.put("description", el.getString("description"));
-				mapAward.put("year", el.getString("year"));
-				lstAward.add(mapAward);
+				listAward.add(mapAward);
 			}
-			result.put("award", lstAward);
+			System.out.print(listAward.size());
+			result.put("award", listAward);
 			return result;
 		
 		} catch (Exception e) {
+			System.out.print("Error");
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}
 	}
+	
 	public static Map<String, Object> createAward(DispatchContext ctx, Map<String, ? extends Object> context){
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
@@ -71,23 +99,79 @@ public class Award {
 		String year = (String) context.get("year");
 		
 		GenericValue gv = delegator.makeValue("Award");
+		gv.put("awardId",delegator.getNextSeqId("Award"));
 		try{
-			gv.put("staffId", staffId);
 			gv.put("description", description);
-			gv.put("year", year);
+			gv.put("year", Long.valueOf(year));
+			gv.put("staffId", staffId);
+			
+			delegator.create(gv);
 		}catch(Exception ex){
 			System.out.println("aaa");
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
-		Map<String, Object> mapAward = FastMap.newInstance();
-		mapAward.put("awardId", gv.getString("awardId"));
-		mapAward.put("staffId", staffId);
-		mapAward.put("description", description);
-		mapAward.put("year", year);
 		
-		retSucc.put("award", mapAward);
+		retSucc.put("award", gv);
 		return retSucc;
 		
+	}
+	
+	public static Map<String, Object> deleteAward(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Delegator delegator = ctx.getDelegator();
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+        
+        GenericValue userLogin = (GenericValue) context.get("userLogin");
+        Locale locale = (Locale) context.get("locale");        
+        
+        Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+        
+        String awardId = (String)context.get("awardId");
+        try{
+        	GenericValue gv = delegator.findOne("Award", UtilMisc.toMap("awardId",awardId), false);
+        	if(gv != null){
+        		delegator.removeValue(gv);
+        		retSucc.put("result", "deleted record with id: " + awardId);
+        	} else {
+        		retSucc.put("result", "not found record with id: " + awardId);
+        	}
+        	
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        }
+        return retSucc;
+	}
+	
+	public static Map<String, Object> updateAward(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatch = ctx.getDispatcher();
+		
+		String description = (String) context.get("description");
+		String year = (String) context.get("year");
+		String staffId = (String) context.get("staffId");
+		String awardId = (String) context.get("awardId");
+		
+		try{
+			GenericValue gv = delegator.findOne("Award", false, UtilMisc.toMap("awardId",awardId));
+			if(gv != null){
+				gv.put("description", description);
+				gv.put("year", Long.valueOf(year));
+				gv.put("staffId", staffId);
+				
+				delegator.store(gv);	
+        		retSucc.put("result", "updated record with id: " + awardId);
+        	} else {
+        		retSucc.put("result", "not found record with id: " + awardId);
+        	}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        
+		}
+		return retSucc;
 	}
 }

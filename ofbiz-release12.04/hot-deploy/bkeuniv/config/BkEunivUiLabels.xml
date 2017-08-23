@@ -31,7 +31,12 @@
         <value xml:lang="en">Awards</value>
         <value xml:lang="vi">Quản lý giải thưởng</value>
     </property>
-   
+    
+    <property key="BkEunivEMSATA">
+        <value xml:lang="en">Scientific Service Experience</value>
+        <value xml:lang="vi">Kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
+    </property>
+    
     <property key="BkEunivEducationProgress">
         <value xml:lang="en">Manage Education Progress</value>
         <value xml:lang="vi">Quản lý quá trình đào tạo</value>
@@ -60,5 +65,15 @@
     <property key="BkEunivAddRow">
         <value xml:lang="en">Add</value>
         <value xml:lang="vi">Thêm mới</value>
+    </property>
+    
+    <property key="BkEunivFail">
+        <value xml:lang="en">Fail</value>
+        <value xml:lang="vi">Thất bại</value>
+    </property>
+    
+    <property key="BkEunivLogout">
+        <value xml:lang="en">Logout</value>
+        <value xml:lang="vi">Đăng xuất</value>
     </property>
 </resource>

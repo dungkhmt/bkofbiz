@@ -1,10 +1,12 @@
 package src.org.ofbiz.department;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.xmlgraphics.xmp.merge.ArrayAddPropertyMerger;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -82,10 +84,11 @@ public class DepartmentService {
 		
 		try{
 			EntityCondition cond = EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS, facultyId);
-			
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			conditions.add(cond);
 			EntityFindOptions fo = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_SENSITIVE, 
 					EntityFindOptions.CONCUR_READ_ONLY, true);
-			List<GenericValue> lst = delegator.findList("Department", cond,null,null,fo,false );
+			List<GenericValue> lst = delegator.findList("Department", EntityCondition.makeCondition(conditions),null,null,fo,false );
 			
 			for(GenericValue d: lst){
 				System.out.println(name() + "::getListDepartments, get department (" + d.get("departmentName") + ")");

@@ -36,9 +36,8 @@
     </property>
     
     <property key="BkEunivTitleDeleteAward">
-        <value xml:lang="en">Do you want to delete Award?</value>
-        <value xml:lang="vi">Xoá giải thưởng</value>
+        <value xml:lang="en">Delete</value>
+        <value xml:lang="vi">Xoá</value>
     </property>
-    
     
 </resource>

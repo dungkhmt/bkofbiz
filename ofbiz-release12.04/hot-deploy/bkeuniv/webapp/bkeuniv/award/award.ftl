@@ -21,10 +21,12 @@
 	var description = '${uiAwardLabelMap.BkEunivDescription}';
 	var year = '${uiAwardLabelMap.BkEunivYear}';
 	var staffId = '${uiAwardLabelMap.BkEunivStaffId}';
+	
 	var titleEditAward = '${uiAwardLabelMap.BkEunivTitleEditAward}';
 	var add = '${uiAwardLabelMap.BkEunivAddRow}';
-	var update = '${uiAwardLabelMap.BkEunivUpdate}';
+	var remove = '${uiAwardLabelMap.BkEunivTitleDeleteAward}';
 	var titleAddAward = '${uiAwardLabelMap.BkEunivTitleNewAward}';
+	var update = '${uiLabelMap.BkEunivUpdate}';
 <!-- import js component -->
 </script>
 <script src="/resource/bkeuniv/js/award.js"></script>
@@ -52,5 +54,6 @@
 	</div>
 </div>
 
+<div class="loader hidden-loading"></div>
 <div id="add-award"></div>
 <div id="change-award"></div>

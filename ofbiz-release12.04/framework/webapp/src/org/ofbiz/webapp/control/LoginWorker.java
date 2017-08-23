@@ -295,6 +295,11 @@ public class LoginWorker {
         String username = request.getParameter("USERNAME");
         String password = request.getParameter("PASSWORD");
 
+        //PQD
+        System.out.println(module + "::login, username = " + username + ", password = " + password);
+        Debug.log(module + "::login, username = " + username + ", password = " + password);
+        
+        
         if (username == null) username = (String) session.getAttribute("USERNAME");
         if (password == null) password = (String) session.getAttribute("PASSWORD");
 
@@ -323,6 +328,26 @@ public class LoginWorker {
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         Delegator delegator = (Delegator) request.getAttribute("delegator");
 
+        //BEGIN PQD
+        try{
+        	EntityCondition cond = EntityCondition.makeCondition("staffUserLoginId", EntityOperator.EQUALS, username);
+        	List<GenericValue> staffs = delegator.findList("Staff", cond, null, null, null, false);
+        	for(GenericValue gv: staffs){
+        		System.out.println(module + "::login, staff " + gv.get("staffName") + ", email = " + gv.get("staffEmail"));
+        		Debug.log(module + "::login, staff " + gv.get("staffName") + ", email = " + gv.get("staffEmail"));
+        	}
+        	if(staffs == null | staffs.size() == 0)
+        		session.setAttribute("staff", null);
+        	else
+        		session.setAttribute("staff", staffs.get(0));
+        	
+        	session.setAttribute("userLoginId", username);
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        }
+        
+        // END PQD
+        
         // if a tenantId was passed in, see if the userLoginId is associated with that tenantId (can use any delegator for this, entity is not tenant-specific)
         String tenantId = request.getParameter("tenantId");
         if (UtilValidate.isNotEmpty(tenantId)) {
@@ -512,6 +537,9 @@ public class LoginWorker {
 
     public static String doMainLogin(HttpServletRequest request, HttpServletResponse response, GenericValue userLogin, Map<String, Object> userLoginSession) {
         HttpSession session = request.getSession();
+        System.out.println(module + "::doMainLogin");
+        Debug.log(module + "::doMainLogin");
+        
         if (userLogin != null && hasBasePermission(userLogin, request)) {
             doBasicLogin(userLogin, request);
         } else {
@@ -537,7 +565,10 @@ public class LoginWorker {
     public static void doBasicLogin(GenericValue userLogin, HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("userLogin", userLogin);
-
+      
+        System.out.println(module + "::doBasicLogin");
+        Debug.log(module + "::doBasicLogin");
+    	
         String javaScriptEnabled = null;
         try {
             LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
@@ -999,11 +1030,17 @@ public class LoginWorker {
 
         String serverId = (String) context.getAttribute("_serverId");
         String contextPath = request.getContextPath();
-
+        System.out.println(module + "::hasBasePermission, serverId = " + serverId + 
+        		", contextPath = " + contextPath);
+        Debug.log(module + "::hasBasePermission, serverId = " + serverId + 
+        		", contextPath = " + contextPath);
         ComponentConfig.WebappInfo info = ComponentConfig.getWebAppInfo(serverId, contextPath);
         if (security != null) {
             if (info != null) {
                 for (String permission: info.getBasePermission()) {
+                	System.out.println(module + "::hasBasePermission, permission = " + permission);
+                	Debug.log(module + "::hasBasePermission, permission = " + permission);
+                	
                     if (!"NONE".equals(permission) && !security.hasEntityPermission(permission, "_VIEW", userLogin) &&
                             !authz.hasPermission(userLogin.getString("userLoginId"), permission, null)) {
                         return false;
