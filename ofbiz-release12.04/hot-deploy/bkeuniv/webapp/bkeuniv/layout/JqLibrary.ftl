@@ -211,6 +211,17 @@
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
 					columns: <@pfArray array=columns />,
+					"columnDefs": [
+					<#assign index = 0 />
+					<#list columns as column>
+						<#if column.render?has_content>
+				                // The `data` parameter refers to the data for the cell (defined by the
+				                // `data` option, which defaults to the column being worked with, in
+				                <@pfObject object={"render": column.render, "targets": index} />,
+						</#if>
+						<#assign index = index + 1 />
+					</#list>
+					],
 					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
 					"scrollCollapse": true,
 					"bJQueryUI": true

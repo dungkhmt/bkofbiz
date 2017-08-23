@@ -5,7 +5,10 @@
 	<#assign columns=[
 		{
 			"name": educationProgressUiLabelMap.BkEunivInstitution?j_string,
-			"data": "institution"
+			"data": "institution",
+			"render": 'function(data, type, row) {
+				return data +" ("+ row.graduateDate+")";
+			}'
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivEducationType?j_string,
@@ -61,7 +64,7 @@
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
-			"value": "speciality",
+			"value": "speciality"
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,
