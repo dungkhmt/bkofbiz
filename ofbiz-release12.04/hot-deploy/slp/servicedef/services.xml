@@ -11,8 +11,8 @@
         </description>
 	</service>
 
-	<service name="tspdsolve" engine="java"
-		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve">
+	<service name="storeData2Solve" engine="java"
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="storeData2Cache">
 		<description>
             Build Route! 
         </description>
@@ -27,8 +27,17 @@
 		<attribute name="delta" type="String" mode="IN" optional="false"></attribute>
 		<attribute name="endurance" type="String" mode="IN"
 			optional="false"></attribute>
-		<attribute name="listPoints" type="String" mode="IN" optional="false"></attribute>
-		<attribute name="sol" type="String" mode="OUT" optional="false"></attribute>
+		<attribute name="listPoints" type="String" mode="IN"
+			optional="false"></attribute>
+	</service>
+
+	<service name="tspdsolve" engine="java"
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve">
+		<description>
+            Build Route! 
+        </description>
+		<attribute name="sol" type="Map" mode="OUT"
+			optional="false"></attribute>
 	</service>
 
 

@@ -53,6 +53,7 @@
 				</div>
 				<div class="row" style="margin-top:10px">
 					<input path="listPoints" name="listPoints" id="listPoints" type="hidden"/>
+					<input path="inputjson" name="inputjson" id="inputjson" type="hidden"/>
 					<button class="btn btn-primary col-lg-offset-5" onclick="run_algorithm();" type="submit">Run</button>
 					<a class="btn btn-primary" onclick="save_file(this);">Save</a>
 					<a class="btn btn-primary" onclick="upload_file();">Upload</a>
@@ -66,6 +67,18 @@
 </div>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdyNiBOdg6ikZli6MhG3ivZRw2fKdW-5I&libraries=places&callback=initialize" async defer></script>
 <script type="text/javascript">
+function makeJson(){
+	var json={};
+	json.truckSpeed=$("#truckSpeed").val();
+	json.droneSpeed=$("#droneSpeed").val();
+	json.truckCost=$("#truckCost").val();
+	json.droneCost=$("#droneCost").val();
+	json.delta=$("#delta").val();
+	json.endurance=$("#endurance").val();
+	json.listPoints=$("#listPoints").val();
+	console.log(json);
+	$("#inputjson").val(json);
+}
 var map;
 var listMarker = [];
 function initialize(){
@@ -108,6 +121,7 @@ function run_algorithm(){
 		});
 	}
 	$('#listPoints').val(JSON.stringify(listPoints));		
+	makeJson();
 }
 function save_file(el){
 	var listPoints = [];

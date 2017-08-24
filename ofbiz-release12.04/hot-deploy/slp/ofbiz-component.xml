@@ -35,4 +35,5 @@
         server="default-server"
         location="webapp/slp"
         mount-point="/slp"/>
+    <webapp name="asset" server="default-server" location="webapp/resource" mount-point="/resource/slp"></webapp>
 </ofbiz-component>
