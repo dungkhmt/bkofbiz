@@ -8,8 +8,8 @@
 		<button class="btn btn-primary col-sm-1" onclick="view_tspdls_solution();">TSPD-LS</button>
 		<button class="btn btn-primary col-sm-1" onclick="view_grasp_solution();">GRASP</button>
 		<button class="btn btn-warning col-sm-1" id="buttonChangePolyline" onclick="hireNormalPolyline();">Hide</button>
-		<a class="btn btn-primary"  onclick="saveSolution(this);">Save Solution</a>
-		<div id="loading">Please Waiting<img src="/resource/slp/image/rolling.gif"/></div>
+		<button class="btn btn-primary"  onclick="saveSolution(this);">Save Solution</button>
+		<div  class="col-sm-7" id="loading">Please Waiting<img style="width: 35px; height: 35px" src="/resource/slp/image/rolling.gif"/></div>
 	</div>
 	<div class="row">
 		<div id="map" style="height:500px"></div>
@@ -47,6 +47,7 @@ $( document ).ready(function() {
 			console.log(data);
 			dataResponse=data.sol;
 			tours=dataResponse.tours;
+			$('#loading').html('Done<img style="width: 35px; height: 35px" src="/resource/slp/image/icon/ticker.png"/>')
 		}
 	});
 });

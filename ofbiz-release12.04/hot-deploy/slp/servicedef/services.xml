@@ -32,12 +32,13 @@
 	</service>
 
 	<service name="tspdsolve" engine="java"
-		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve">
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve" transaction-timeout="1000000">
 		<description>
             Build Route! 
         </description>
 		<attribute name="sol" type="Map" mode="OUT"
 			optional="false"></attribute>
+		
 	</service>
 
 
