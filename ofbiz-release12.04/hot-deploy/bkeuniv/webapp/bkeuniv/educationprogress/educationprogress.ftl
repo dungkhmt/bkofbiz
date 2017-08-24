@@ -61,7 +61,7 @@
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivSpeciality?j_string,
-			"value": "speciality",
+			"value": "speciality"
 		},
 		{
 			"name": educationProgressUiLabelMap.BkEunivGraduateDate?j_string,

@@ -140,17 +140,14 @@
 				<decorator-screen name="bkeuniv-global-decorator"
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<decorator-section name="body">
-
 						<platform-specific>
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/paper-declaration.ftl" />
 							</html>
 						</platform-specific>
-
 					</decorator-section>
 				</decorator-screen>
-
 			</widgets>
 		</section>
 	</screen>
@@ -231,6 +228,7 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<service service-name="getPaperCategory" result-map="paperCategory"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

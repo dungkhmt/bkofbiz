@@ -59,7 +59,13 @@
 </#macro>
 
 
-<#macro jqDataTable urlData urlUpdate urlAdd urlDelete keysId 
+<#macro jqDataTable 
+		urlData="" 
+		urlUpdate="" 
+		urlAdd="" 
+		urlDelete="" 
+		keysId=[]
+		fnInfoCallback=""
 		dataFields=[]
 		columns=""
 		columnsChange = []
@@ -107,7 +113,7 @@
 		}
 		
 		#${id}-content tbody tr:hover {
-		    background-color: rgba(140, 140, 140, 0.3);
+		    background-color: #b3b3b3;
 		}
 		
 		
@@ -211,8 +217,31 @@
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
 					columns: <@pfArray array=columns />,
+					"columnDefs": [
+					<#assign index = 0 />
+					<#list columns as column>
+						<#assign c = {} />
+						
+						<#if column.render?has_content>
+				             <#assign c = c + {"render": column.render} />
+						</#if>
+						<#if column.width?has_content>
+				             <#assign c = c + {"width": column.width} />
+						</#if>
+						
+						<#if c?has_content>
+				             <#assign c = c + {"targets": index} />
+				             <@pfObject object=c />,
+						</#if>
+						
+						<#assign index = index + 1 />
+					</#list>
+					],
 					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
 					"scrollCollapse": true,
+					<#if fnInfoCallback?has_content>
+						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
+					</#if>
 					"bJQueryUI": true
 			       });
 			       <#if contextmenu>

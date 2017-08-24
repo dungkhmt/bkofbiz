@@ -29,7 +29,6 @@
     
     <service name="getPermissionFunctions" engine="java"
             location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
-       <attribute name="userId" mode="IN" type="String"></attribute>
        <attribute name="permissionFunctions" mode="OUT" type="List"></attribute>
     </service>
     
@@ -137,6 +136,17 @@
     	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
     	
     	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="getPaperCategory" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperCategory">
+    	<attribute name="paperCategoryId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="paperCategoryName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="paperCategoryCode" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="journalIndexId" mode="IN" type="String" optional="true"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="List"></attribute>
+    	<attribute name="count" mode="OUT" type="String"></attribute>
     </service>
     
 </services>
