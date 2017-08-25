@@ -68,6 +68,41 @@ public class TSPDService {
 		suc.put("sol", map);
 		return suc;
 	}
+	
+	public static Map<String, Object> tspkdSolve(DispatchContext dctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> suc = ServiceUtil.returnSuccess();
+		/**
+		 * Call HTTP to ezRouting
+		 */
+		Debug.logInfo(dataJson,MODULE_NAME);
+		if(dataJson.isEmpty()) ServiceUtil.returnError("No data in cache!");
+		OkHttpClient client = new OkHttpClient();
+		client.setConnectTimeout(180, TimeUnit.SECONDS);
+		client.setReadTimeout(180, TimeUnit.SECONDS);
+		client.setWriteTimeout(180, TimeUnit.SECONDS);
+		RequestBody body = RequestBody.create(JSON_HEADER,
+				dataJson);
+		Request request = new Request.Builder()
+				.url("http://localhost:8088/ezRoutingAPI/tsp-with-kdrone")
+				.post(body).build();
+		Response response = null;
+		String resultString = null;
+		try {
+			response = client.newCall(request).execute();
+			resultString = response.body().string();
+			Debug.logInfo(resultString, MODULE_NAME);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!response.isSuccessful()) {
+			return ServiceUtil.returnError("Request didn't compete!!");
+		}
+		Map<String,Object> map =JsonMapUtils.json2MapStrObject(resultString);
+		suc.put("sol", map);
+		return suc;
+	}
 	/** Store data to cache
 	 * 
 	 * @param dctx

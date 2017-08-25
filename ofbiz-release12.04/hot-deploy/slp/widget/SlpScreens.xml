@@ -41,7 +41,7 @@
 			</widgets>
 		</section>
 	</screen>
-	
+
 	<!-- View for select module -->
 	<screen name="tspdselectmodule">
 		<section>
@@ -50,7 +50,8 @@
 					<decorator-section name="body">
 						<platform-specific>
 							<html>
-								<html-template location="component://slp/webapp/slp/tspd/tspdselectmodule.ftl" />
+								<html-template
+									location="component://slp/webapp/slp/tspd/tspdselectmodule.ftl" />
 							</html>
 						</platform-specific>
 					</decorator-section>
@@ -69,7 +70,25 @@
 						<platform-specific>
 							<html>
 								<html-template
-									location="component://slp/webapp/slp/tspd/viewSolution.ftl" />
+									location="component://slp/webapp/slp/tspd/viewadronesolution.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<!-- View for tspd k drone solution -->
+	<screen name="tspkdsolution">
+		<section>
+			<widgets>
+				<decorator-screen name="tspd-decorator">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://slp/webapp/slp/tspd/viewkdronesolution.ftl" />
 							</html>
 						</platform-specific>
 					</decorator-section>

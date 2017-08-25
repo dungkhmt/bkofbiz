@@ -1,15 +1,15 @@
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">TSPD Solution</h1>
+			<h1 class="page-header">${slplabel.solutiontspd}</h1>
 		</div>
 	</div>
 	<div class="row"> 
 		<button class="btn btn-primary col-sm-1" onclick="view_tspdls_solution();">TSPD-LS</button>
 		<button class="btn btn-primary col-sm-1" onclick="view_grasp_solution();">GRASP</button>
-		<button class="btn btn-warning col-sm-1" id="buttonChangePolyline" onclick="hireNormalPolyline();">Hide</button>
-		<button class="btn btn-primary"  onclick="saveSolution(this);">Save Solution</button>
-		<div  class="col-sm-7" id="loading">Please Waiting<img style="width: 35px; height: 35px" src="/resource/slp/image/rolling.gif"/></div>
+		<button class="btn btn-warning col-sm-1" id="buttonChangePolyline" onclick="hireNormalPolyline();">${slplabel.hire}</button>
+		<button class="btn btn-primary"  onclick="saveSolution(this);">${slplabel.savesolution}</button>
+		<div  class="col-sm-7" id="loading">${slplabel.pleasewait}<img style="width: 35px; height: 35px" src="/resource/slp/image/rolling.gif"/></div>
 	</div>
 	<div class="row">
 		<div id="map" style="height:500px"></div>
@@ -39,7 +39,7 @@ function saveSolution(view){
 $( document ).ready(function() {
 	
     $.ajax({
-		url: "/slp/control/tspd-get-route",
+		url: "/slp/control/tspd-get-route-a-drone",
 		type: 'post',
 	    dataType: "json",
 		contentType: 'application/json; charset=utf-8',
@@ -47,7 +47,7 @@ $( document ).ready(function() {
 			console.log(data);
 			dataResponse=data.sol;
 			tours=dataResponse.tours;
-			$('#loading').html('Done<img style="width: 35px; height: 35px" src="/resource/slp/image/icon/ticker.png"/>')
+			$('#loading').html('${slplabel.done}<img style="width: 35px; height: 35px" src="/resource/slp/image/icon/ticker.png"/>')
 		}
 	});
 });
@@ -56,12 +56,12 @@ function hireNormalPolyline(){
 	if(stateBotNormalPolyline==0) {
 		$( "#buttonChangePolyline" ).removeClass( "btn-warning" );
 		$( "#buttonChangePolyline" ).addClass( "btn-error" );
-        $("#buttonChangePolyline").text("View");
+        $("#buttonChangePolyline").text("${slplabel.view}");
 		polylineNormal.setMap(null);
 	} else {
 		$( "#buttonChangePolyline" ).removeClass( "btn-error" );
 		$( "#buttonChangePolyline" ).addClass( "btn-warning" );
-		$("#buttonChangePolyline").text("Hide");
+		$("#buttonChangePolyline").text("${slplabel.hire}");
 		polylineNormal.setMap(map);
 	}
 	stateBotNormalPolyline=(stateBotNormalPolyline+1)%2;

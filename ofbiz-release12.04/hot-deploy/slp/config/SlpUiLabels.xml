@@ -70,4 +70,39 @@
         <value xml:lang="en">Upload</value>
         <value xml:lang="vi">Tải lên</value>
     </property>
+	
+	<property key="hire">
+        <value xml:lang="en">Hire</value>
+        <value xml:lang="vi">Ẩn</value>
+    </property>
+	
+	<property key="view">
+        <value xml:lang="en">View</value>
+        <value xml:lang="vi">Hiện</value>
+    </property>
+	
+	<property key="savesolution">
+        <value xml:lang="en">Save Solution</value>
+        <value xml:lang="vi">Lưu lại kết quả</value>
+    </property>
+	
+	<property key="pleasewait">
+        <value xml:lang="en">Please Wait..</value>
+        <value xml:lang="vi">Xin đợi giây lát..</value>
+    </property>
+	
+	<property key="done">
+        <value xml:lang="en">Done</value>
+        <value xml:lang="vi">Hoàn thành</value>
+    </property>
+	
+	<property key="solutiontspd">
+        <value xml:lang="en">Solution Traveling Saleman Problem with A Drone</value>
+        <value xml:lang="vi">Kết quả bài toán người du lịch sử dụng một drone</value>
+    </property>
+	
+	<property key="solutiontspkd">
+        <value xml:lang="en">Solution Traveling Saleman Problem with multi Drone</value>
+        <value xml:lang="vi">Kết quả bài toán người du lịch sử dụng nhiều drone</value>
+    </property>
 </resource>

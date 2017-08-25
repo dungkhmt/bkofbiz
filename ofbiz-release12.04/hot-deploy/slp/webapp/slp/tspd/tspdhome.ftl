@@ -12,7 +12,7 @@
 			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a>
 		</form>
 		<div id="GoogleMap" style="width:100%;height:500px"></div>
-		<form action="tspd-solve" method="POST" commandName="tspd" role="form" class="form-horizontal">
+		<form action="tspd-select-module" method="POST" commandName="tspd" role="form" class="form-horizontal">
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="row">
