@@ -17,7 +17,57 @@
         <value xml:lang="zh">不允许你浏览这个页面。</value>
     </property>
     <property key="SlpNameComponent">
-        <value xml:lang="vi">Traveling Saleman Problem with Drone</value>
-        <value xml:lang="en">Bài toán người du lịch sử dụng drone</value>
+        <value xml:lang="en">Traveling Saleman Problem with Drone</value>
+        <value xml:lang="vi">Bài toán người du lịch sử dụng drone</value>
+    </property>
+	
+	<property key="uploadsolution">
+        <value xml:lang="en">Upload Solution</value>
+        <value xml:lang="vi">Hiển thị kết quả có sẵn</value>
+    </property>
+	
+	<property key="truckspeed">
+        <value xml:lang="en">Truck speed</value>
+        <value xml:lang="vi">Tốc độ của xe tải</value>
+    </property>
+	
+	<property key="dronespeed">
+        <value xml:lang="en">Drone Speed</value>
+        <value xml:lang="vi">Tốc độ của drone</value>
+    </property>
+	
+	<property key="costtruck">
+        <value xml:lang="en">Cost per unit(km) of truck</value>
+        <value xml:lang="vi">Chi phí của xe tải/(1 km)</value>
+    </property>
+	
+	<property key="costdrone">
+        <value xml:lang="en">Cost per unit (km) of drone</value>
+        <value xml:lang="vi">Chi phí của drone/(1 km)</value>
+    </property>
+	
+	<property key="delta">
+        <value xml:lang="en">Wait time(Delta)</value>
+        <value xml:lang="vi">Thời gian chờ đợi lớn nhất</value>
+    </property>
+	
+	<property key="droneendurance">
+        <value xml:lang="en">Drone endurance</value>
+        <value xml:lang="vi">Giới hạn bay của drone</value>
+    </property>
+	
+	<property key="start">
+        <value xml:lang="en">Start</value>
+        <value xml:lang="vi">Bắt đầu</value>
+    </property>
+	
+	<property key="saveinput">
+        <value xml:lang="en">Save</value>
+        <value xml:lang="vi">Lưu lại</value>
+    </property>
+	
+	<property key="uploadinput">
+        <value xml:lang="en">Upload</value>
+        <value xml:lang="vi">Tải lên</value>
     </property>
 </resource>

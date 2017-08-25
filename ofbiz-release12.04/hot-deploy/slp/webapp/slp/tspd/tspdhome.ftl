@@ -9,7 +9,7 @@
 	<div class="row">
 		<form action="tspd/uploadSolution" method="POST" id="tspdsolution" commandName="tspdsolution" enctype="multipart/form-data" role="form" class="form-horizontal">
 			<input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" />
-			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >Upload Solution</a>
+			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a>
 		</form>
 		<div id="GoogleMap" style="width:100%;height:500px"></div>
 		<form action="tspd-solve" method="POST" commandName="tspd" role="form" class="form-horizontal">
@@ -17,46 +17,46 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="form-group">
-						<label class="control-label col-lg-3">Truck speed (km/h)</label>
+						<label class="control-label col-lg-3">${slplabel.truckspeed}</label>
 						<div class="col-lg-3">
-							<input path="truckSpeed" name="truckSpeed" id="truckSpeed" class="form-control" placeholder="Truck speed"/>
+							<input path="truckSpeed" name="truckSpeed" id="truckSpeed" class="form-control" placeholder="${slplabel.truckspeed}"/>
 						</div>
-						<label class="control-label col-lg-3">Drone speed (km/h)</label>
+						<label class="control-label col-lg-3">${slplabel.dronespeed}</label>
 						<div class="col-lg-3">
-							<input path="droneSpeed" name="droneSpeed" id="droneSpeed" class="form-control" placeholder="Drone speed"/>
-						</div>
-					</div>
-				</div>
-				<div class="row" style="margin-top:10px">
-					<div class="form-group">
-						<label class="control-label col-lg-3">Cost per unit (km) of truck</label>
-						<div class="col-lg-3">
-							<input path="truckCost" name="truckCost" id="truckCost" class="form-control" placeholder="Cost per unit of truck"/>
-						</div>
-						<label class="control-label col-lg-3">Cost per unit (km) of drone</label>
-						<div class="col-lg-3">
-							<input path="droneCost" name="droneCost" id="droneCost" class="form-control" placeholder="Cost per unit of drone"/>
+							<input path="droneSpeed" name="droneSpeed" id="droneSpeed" class="form-control" placeholder="${slplabel.dronespeed}"/>
 						</div>
 					</div>
 				</div>
 				<div class="row" style="margin-top:10px">
 					<div class="form-group">
-						<label class="control-label col-lg-3">Wait time (Delta) (minute)</label>
+						<label class="control-label col-lg-3">${slplabel.costtruck}</label>
 						<div class="col-lg-3">
-							<input path="delta" name="delta" id="delta" class="form-control" placeholder="Wait time" />
+							<input path="truckCost" name="truckCost" id="truckCost" class="form-control" placeholder="${slplabel.costtruck}"/>
 						</div>
-						<label class="control-label col-lg-3">Drone endurance (e) (km)</label>
+						<label class="control-label col-lg-3">${slplabel.costdrone}</label>
 						<div class="col-lg-3">
-							<input path="endurance" name="endurance" id="endurance" class="form-control" placeholder="endurance"/>
+							<input path="droneCost" name="droneCost" id="droneCost" class="form-control" placeholder="${slplabel.costdrone}"/>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px">
+					<div class="form-group">
+						<label class="control-label col-lg-3">${slplabel.delta}</label>
+						<div class="col-lg-3">
+							<input path="delta" name="delta" id="delta" class="form-control" placeholder="${slplabel.delta}" />
+						</div>
+						<label class="control-label col-lg-3">${slplabel.droneendurance}</label>
+						<div class="col-lg-3">
+							<input path="endurance" name="endurance" id="endurance" class="form-control" placeholder="${slplabel.droneendurance}"/>
 						</div>
 					</div>
 				</div>
 				<div class="row" style="margin-top:10px">
 					<input path="listPoints" name="listPoints" id="listPoints" type="hidden"/>
 					<input path="inputjson" name="inputjson" id="inputjson" type="hidden"/>
-					<button class="btn btn-primary col-lg-offset-5" onclick="run_algorithm();" type="submit">Run</button>
-					<a class="btn btn-primary" onclick="save_file(this);">Save</a>
-					<a class="btn btn-primary" onclick="upload_file();">Upload</a>
+					<button class="btn btn-primary col-lg-offset-5" onclick="run_algorithm();" type="submit">${slplabel.start}</button>
+					<a class="btn btn-primary" onclick="save_file(this);">${slplabel.saveinput}</a>
+					<a class="btn btn-primary" onclick="upload_file();">${slplabel.uploadinput}</a>
 					<input id="file-tsp-data" class="file file-loading" type="file" style="display:none"/>	
 				</div>
 			</div>		
