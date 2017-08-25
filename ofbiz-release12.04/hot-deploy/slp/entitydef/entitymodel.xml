@@ -8,5 +8,23 @@
     <description>None</description>
     <copyright></copyright>
     <version></version>
-
+	 <entity entity-name="DataSet" package-name="org.bkofbiz.slp.tspd" title="Data Set">
+        <field name="DS_Id" type="id"><description>id</description></field>
+        <field name="DS_Description" type="description"></field>
+        <field name="DS_Name" type="name"></field>
+        <prim-key field="DS_Id"/>
+    </entity>
+     <entity entity-name="Direction" package-name="org.bkofbiz.slp.tspd" title="Direction">
+        <field name="D_Id" type="id"><description>id</description></field>
+        <field name="D_StartPoint" type="value"></field>
+        <field name="D_EndPoint" type="value"></field>
+        <field name="D_Distance" type="floating-point"></field>
+        <field name="D_Time" type="floating-point"></field>
+        <field name="DS_Id" type="id"></field>
+        <field name="DS_Path" type="very-long"></field>
+        <prim-key field="id"/>
+        <relation type="one" fk-name="DRCTION_REL" rel-entity-name="DataSet">
+            <key-map field-name="DS_Id"/>
+        </relation>
+    </entity>
 </entitymodel>

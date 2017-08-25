@@ -15,7 +15,7 @@
 						</h4>
 					</div>
 
-					<img class="card-img" style="height:200px;width:348px" src="/resource/slp/image/tspdimg.png"/>
+					<img class="card-img" style="height:200px;width:348px" src="/resource/slp/image/tspkdimg.png"/>
 				</div>
 			</a>
 		</div> 

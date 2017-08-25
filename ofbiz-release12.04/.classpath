@@ -223,5 +223,6 @@
 	<classpathentry kind="lib" path="hot-deploy/slp/lib/okhttp-2.7.5.jar"/>
 	<classpathentry kind="lib" path="hot-deploy/slp/lib/okio-1.13.0.jar"/>
 	<classpathentry kind="lib" path="hot-deploy/slp/lib/guava-19.0.jar"/>
+	<classpathentry kind="lib" path="hot-deploy/slp/lib/google-maps-services-0.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
