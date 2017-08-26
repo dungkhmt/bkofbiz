@@ -12,12 +12,13 @@
 		},
 		
 		{
-			"name": staffManagementUiLabelMap.BkEunivStaffId?j_string,
+			"name": staffManagementUiLabelMap.BkEunivGender?j_string,
 			"data": "genderName"
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivBirthDate?j_string,
-			"data": "staffDateOfBirth"
+			"data": "staffDateOfBirth",
+			"type": "date"
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivPhone?j_string,
@@ -29,40 +30,71 @@
 		}
 	] />
 	
+	<#assign sourceDepartment = [] />
+	<#list resultDepartments.departments as dept>
+		<#if dept?has_content>
+             <#assign op = { "name": "${dept.departmentName}" ,"value": "${dept.departmentId}" } />
+						<#assign sourceDepartment = sourceDepartment + [op] />
+		</#if>
+	</#list>
+	
+	<#assign sourceGender = [] />
+	<#list resultGenders.genders as g>
+		<#if g?has_content>
+             <#assign op = { "name": "${g.genderName}" ,"value": "${g.genderId}" } />
+						<#assign sourceGender = sourceGender + [op] />
+		</#if>
+	</#list>
+	
+	
 	<#assign fields=[
+		"staffId",
 		"staffName",
 		"staffEmail",
 		"genderName",
+		"staffGenderId",
 		"staffDateOfBirth",
 		"staffPhone",
-		"departmentName"
+		"departmentName",
+		"departmentId"
 	] />
 
 	<#assign columnsChange=[
 		{
 			"name": staffManagementUiLabelMap.BkEunivStaffId?j_string,
-			"data": "staffName"
+			"value": "staffName"
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivEmail?j_string,
-			"data": "staffEmail"
+			"value": "staffEmail"
 		},
 		
 		{
-			"name": staffManagementUiLabelMap.BkEunivStaffId?j_string,
-			"data": "genderName"
+			"name": staffManagementUiLabelMap.BkEunivGender?j_string,
+			"value": "staffGenderId",
+			"type": "select",
+			"option": {
+				"source": sourceGender,
+				"maxItem": 1
+			}
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivBirthDate?j_string,
-			"data": "staffDateOfBirth"
+			"value": "staffDateOfBirth",
+			"type": "date"
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivPhone?j_string,
-			"data": "staffPhone"
+			"value": "staffPhone"
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivDepartment?j_string,
-			"data": "departmentName"
+			"value": "departmentId",
+			"type": "select",
+			"option": {
+				"source": sourceDepartment,
+				"maxItem": 1
+			}
 		}
 	] />
 
@@ -76,14 +108,14 @@
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="/bkeuniv/control/update-paper" 
-		urlAdd="/bkeuniv/control/create-education-progress" 
-		urlDelete="/bkeuniv/control/delete-education-progress" 
+		urlUpdate="/bkeuniv/control/update-a-staff" 
+		urlAdd="abc" 
+		urlDelete="abc" 
 		keysId=["staffId"] 
 		fieldDataResult = "staffs" 
-		titleChange="test"
-		titleNew="test"
-		titleDelete="test"
-		jqTitle="test"
+		titleChange=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		titleNew=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		titleDelete=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		jqTitle=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
 	/>
 </div>

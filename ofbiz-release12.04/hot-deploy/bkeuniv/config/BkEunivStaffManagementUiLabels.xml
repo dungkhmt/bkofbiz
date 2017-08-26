@@ -15,6 +15,11 @@
         <value xml:lang="vi">Họ và tên</value>
     </property>
     
+    <property key="BkEunivGender">
+        <value xml:lang="en">Gender</value>
+        <value xml:lang="vi">Giới tính</value>
+    </property>
+
     <property key="BkEunivEmail">
         <value xml:lang="en">Email</value>
         <value xml:lang="vi">Email</value>
@@ -40,5 +45,8 @@
         <value xml:lang="vi">Khoa/viện</value>
     </property>
     
-    
+    <property key="BkEunivStaffHeaderScreen">
+        <value xml:lang="en">Staff Management</value>
+        <value xml:lang="vi">Quản lý cán bộ</value>
+    </property>    
 </resource>
