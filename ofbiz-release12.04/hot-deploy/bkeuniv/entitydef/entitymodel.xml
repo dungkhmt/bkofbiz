@@ -40,7 +40,7 @@
 	<!-- end lĩnh vực nghiên cứu -->
 
 	<!-- Chức danh nghiên cứu -->
-	<entity entity-name="Research" package-name=""></entity>
+	
 	
 	<entity entity-name="Function" package-name="org.ofbiz.bkeuniv">
 		<field name="functionId" type="id-vlong"></field>
@@ -101,7 +101,7 @@
 	<entity entity-name="AcademicYear" package-name="org.ofbiz.bkeuniv">
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="academicYearName" type="id"></field>
-		<prim-key field="academicId"/>
+		<prim-key field="academicYearId"/>
 	</entity>
 	
 	
