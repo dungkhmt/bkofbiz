@@ -123,6 +123,21 @@
 		</relation>
 	</entity>
 	
+	<view-entity entity-name="StaffView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="D" entity-name="Department"></member-entity>
+		<member-entity entity-alias="G" entity-name="Gender"></member-entity>
+		<alias-all entity-alias="ST"></alias-all>
+		<alias name="departmentName" entity-alias="D"></alias>
+		<alias name="genderName" entity-alias="G"></alias>
+		<view-link rel-entity-alias="D" entity-alias="ST" rel-optional="true">
+			<key-map field-name="departmentId" rel-field-name="departmentId"/>
+		</view-link>
+		<view-link rel-entity-alias="G" entity-alias="ST" rel-optional="true">
+			<key-map field-name="staffGenderId" rel-field-name="genderId"/>
+		</view-link>
+	</view-entity>
+	
 	<entity entity-name="JournalIndex" package-name="org.ofbiz.bkeuniv">
 		<field name="journalIndexId" type="id-ne"></field>
 		<field name="journalIndexName" type="very-long"></field>
