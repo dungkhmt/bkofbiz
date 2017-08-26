@@ -123,6 +123,14 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
+
+    <request-map uri="get-staffs">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getStaffs"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
     <request-map uri="get-papers-of-staff">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getPapersOfStaff"></event>
