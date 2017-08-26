@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>BkEuniv Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+    <service name="getStaffs" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
+    	<attribute name="staffs" mode="OUT" type="List"></attribute>
+    </service>
+	
+</services>
