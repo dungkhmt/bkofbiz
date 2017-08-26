@@ -3,6 +3,17 @@
 <SecurityGroup groupId="BIZSTAFF" description="ordinary staffs"/>
 <SecurityGroupPermission groupId="BIZSTAFF" permissionId="OFBTOOLS_VIEW"/>
 
+<ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+
+<AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
+<AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
+<AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
+<AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
+<AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
 <Function functionId="EDUCATION_PROGRESS" uiLabelId="education_progress" vnLabel="Quá trình đạo tạo" enLabel="educations" target="education-progress" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
