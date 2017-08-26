@@ -22,39 +22,43 @@
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
 
-<#macro pfArray array>
+<#macro pfArray array depth=0 maxDepth=10>
 	[
-	<#list array as a>
-		<#if a?is_hash_ex>
-			<@pfObject object=a />,
-		<#elseif a?is_sequence>
-			<@pfArray array=a />,
-		<#elseif (a?string)?index_of("function")==0>
-			${a?replace("\n|\t", "", "r")},
-		<#elseif a?is_string>
-			'${a?replace("\n|\t", "", "r")}',
-		<#else>
-			'${a}',
+		<#if depth < maxDepth>
+			<#list array as a>
+				<#if a?is_hash_ex>
+					<@pfObject object=a depth=depth+1/>,
+				<#elseif a?is_sequence>
+					<@pfArray array=a depth=depth+1/>,
+				<#elseif (a?string)?index_of("function")==0>
+					${a?replace("\n|\t", "", "r")},
+				<#elseif a?is_string>
+					'${a?replace("\n|\t", "", "r")}',
+				<#else>
+					'${a}',
+				</#if>
+			</#list>
 		</#if>
-	</#list>
 	]
 </#macro>
 
-<#macro pfObject object>
+<#macro pfObject object depth=0 maxDepth=10>
 	{
-	<#list object?keys as k>
-		<#if object[k]?is_hash_ex>
-			'${k}': <@pfObject object=object[k] />,
-		<#elseif object[k]?is_sequence>
-			'${k}': <@pfArray array=object[k] />,
-		<#elseif (object[k]?string)?index_of("function") == 0>
-			'${k}': ${object[k]?replace("\n|\t", "", "r")},
-		<#elseif object[k]?is_string>
-			'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
-		<#else>
-			'${k}': '${object[k]}',
+		<#if depth < maxDepth>
+			<#list object?keys as k>
+				<#if object[k]?is_hash_ex>
+					'${k}': <@pfObject object=object[k] depth=depth+1/>,
+				<#elseif object[k]?is_sequence>
+					'${k}': <@pfArray array=object[k] depth=depth+1/>,
+				<#elseif (object[k]?string)?index_of("function") == 0>
+					'${k}': ${object[k]?replace("\n|\t", "", "r")},
+				<#elseif object[k]?is_string>
+					'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
+				<#else>
+					'${k}': '${object[k]}',
+				</#if>
+			</#list>
 		</#if>
-	</#list>
 	}
 </#macro>
 
@@ -113,7 +117,7 @@
 		}
 		
 		#${id}-content tbody tr:hover {
-		    background-color: #b3b3b3;
+		    box-shadow: 2px 3px 12px rgba(27,31,35,0.15);
 		}
 		
 		

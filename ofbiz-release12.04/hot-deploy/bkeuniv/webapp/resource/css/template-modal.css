@@ -5,7 +5,24 @@
 .modal-body .container-fluid .inline-box {
     position: relative;
     display: -webkit-box;
-    padding: 5px;
+    padding: 10px 5px 10px 5px;
+}
+
+.modal-body {
+	padding: 30px;	
+}
+
+.modal {
+	overflow: hidden!important;
+}
+
+.modal-dialog {
+	width: 50%!important; /* respsonsive width */
+    margin-left:25%!important; /* width/2) */ 
+}
+
+.drag-over {
+	border: 2px dashed gray;
 }
 
 .modal-body .container-fluid .inline-box:hover {
@@ -13,10 +30,7 @@
     border-radius: 5px;
 }
 
-    background-color: #Aaa;
-    border-radius: 5px;
 .modal-body {
-	max-height: 50vh;
     overflow-y: auto;
 }
 
