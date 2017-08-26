@@ -109,8 +109,8 @@
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-a-staff" 
-		urlAdd="abc" 
-		urlDelete="abc" 
+		urlAdd="not-yet" 
+		urlDelete="not-yet" 
 		keysId=["staffId"] 
 		fieldDataResult = "staffs" 
 		titleChange=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
