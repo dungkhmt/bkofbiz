@@ -2,6 +2,7 @@ package src.org.ofbiz.bkeuniv.educationprogress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -25,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
-
 import src.org.ofbiz.utils.BKEunivUtils;
 
 public class EducationProgress {
@@ -152,9 +152,8 @@ public class EducationProgress {
 			return ServiceUtil.returnError(ex.getMessage());
 		}
 		
-		
 		retSucc.put("educationProgress", gv);
-
+		retSucc.put("message", "Create new row");
 		return retSucc;
 	}
 	
@@ -206,10 +205,20 @@ public class EducationProgress {
 				gv.put("speciality", speciality);
 				gv.put("graduateDate", Date.valueOf(graduateDate));
 				
-				delegator.store(gv);	
-        		retSucc.put("result", "updated record with id: " + educationProgressId);
+				delegator.store(gv);
+				
+				Map<String, Object> rs = new HashMap<String, Object>();
+				rs.put("staffId", staffId);
+				rs.put("educationType", educationType);
+				rs.put("institution", institution);
+				rs.put("speciality", speciality);
+				rs.put("graduateDate", graduateDate);
+				rs.put("educationProgressId", educationProgressId);
+				
+				retSucc.put("educationProgress", rs);
+        		retSucc.put("message", "updated record with id: " + educationProgressId);
         	} else {
-        		retSucc.put("result", "not found record with id: " + educationProgressId);
+        		retSucc.put("message", "not found record with id: " + educationProgressId);
         	}
 			
 		}catch(Exception ex){

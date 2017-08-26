@@ -11,6 +11,29 @@
         </description>
     </service> 
     
+	<service name="getPapersOfStaff" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
+		<!-- 
+		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
+		 -->
+		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+
+	<service name="updatePaper" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+    
+    
+    <service name="getPermissionFunctions" engine="java"
+            location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
+       <attribute name="userId" mode="IN" type="String"></attribute>
+       <attribute name="permissionFunctions" mode="OUT" type="List"></attribute>
+    </service>
+    
+    
     <service name="createADepartment" engine="java"
             location="src.org.ofbiz.department.DepartmentService" invoke="createADepartment">
        <attribute name="departmentName" mode="IN" type="String"></attribute>
@@ -128,6 +151,7 @@
     	<attribute name="educationType" mode="IN" type="String"></attribute>
     	<attribute name="graduateDate" mode="IN" type="String"></attribute>
     	<attribute name="educationProgress" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     
     <service name="updateEducationProgress" engine="java" 
@@ -138,7 +162,9 @@
     	<attribute name="speciality" mode="IN" type="String"></attribute>
     	<attribute name="educationType" mode="IN" type="String"></attribute>
     	<attribute name="graduateDate" mode="IN" type="String"></attribute>
-    	<attribute name="result" mode="OUT" type="String"></attribute>
+    	
+    	<attribute name="educationProgress" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     
     <service name="deleteEducationProgress" engine="java" 

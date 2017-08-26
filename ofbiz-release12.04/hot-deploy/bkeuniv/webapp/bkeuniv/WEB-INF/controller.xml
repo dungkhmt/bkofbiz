@@ -111,11 +111,30 @@
 	<request-map uri="education-progress">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-manage-education-progress"/>
+    
     </request-map>
+    
+    <request-map uri="paper-declaration-staff">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-paper-declaration-staff"></response>	
+	</request-map>
     
     <request-map uri="get-education-progress">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+    <request-map uri="get-papers-of-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getPapersOfStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    <request-map uri="update-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updatePaper"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -226,7 +245,14 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
-	
+
+    <request-map uri="get-permission-functions">
+		<security https="true" auth="false"/>
+		<event type="service" invoke="getPermissionFunctions"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -238,5 +264,6 @@
     <view-map name="view-award" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#award"/>
     <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
+    <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
     
 </site-conf>

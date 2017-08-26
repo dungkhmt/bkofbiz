@@ -1,4 +1,5 @@
 <div class="side-bar hide-side-bar">
+
 	<button class="closeSideBar" onClick="closeSideBar()">
 		<span class="glyphicon glyphicon-remove"></span>
 	</button>
@@ -16,6 +17,7 @@
 			</div>
 			<hr class="side-bar-separator">
 		</div>
+		
 		<div class="side-bar-selection">
 			<div class="side-bar-item-container">
 				<label class="tree-toggle nav-header">
@@ -39,8 +41,25 @@
 						<a href="scientificserviceexperience">${uiLabelMap.BkEunivEMSATA}</a>
 					</li>
 				</ul>
+				<#list functions.permissionFunctions as f>
+					<label class="tree-toggle nav-header">
+						<span class="glyphicon glyphicon-minus"></span>
+						${f.function.vnLabel}
+					</label>
+					<ul class="researchdeclaration nav-list tree">
+					
+					<#list f.children as cf>
+						<li>
+						<a href="${cf.target}">${cf.vnLabel}</a>
+						</li>							
+					</#list>
+					
+					</ul>
+					
+				</#list>
 			</div>
 			<hr class="side-bar-separator">
 		</div>
+		
 	</div>
 </div>
