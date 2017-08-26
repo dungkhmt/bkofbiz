@@ -24,9 +24,7 @@ public class BKEunivUtils {
 	public static JSONObject parseJSONObject(Map<String, Object> map) {
 		JSONObject result = new JSONObject();
 		Set<String> keys = map.keySet();
-		System.out.println(module);
 		for(String key: keys) {
-			System.out.println(key);
 			Object value = map.get(key);
 			if(value instanceof Map) {
 				result.put(key, parseJSONObject((Map<String, Object>) value));
@@ -79,11 +77,12 @@ public class BKEunivUtils {
         String jsonStr = json.toString();
         if (jsonStr == null) {
             Debug.logError("JSON Object was empty; fatal error!", module);
+            response.setStatus(500);
             return;
         }
-        response.setStatus(statusCode);
+        
         // set the X-JSON content type
-        response.setContentType("application/x-json");
+        response.setContentType("application/json");
         // jsonStr.length is not reliable for unicode characters
         try {
             response.setContentLength(jsonStr.getBytes("UTF8").length);
@@ -94,11 +93,13 @@ public class BKEunivUtils {
         // return the JSON String
         Writer out;
         try {
+        	response.setStatus(statusCode);
             out = response.getWriter();
             out.write(jsonStr);
             out.flush();
         } catch (IOException e) {
-            Debug.logError(e, module);
+        	response.setStatus(500);
+        	Debug.logError(e, module);
         }
     }
 	
