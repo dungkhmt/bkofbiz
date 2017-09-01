@@ -220,9 +220,8 @@
 	<classpathentry kind="lib" path="hot-deploy/slp/lib/gson-2.8.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpclient-4.1.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpcore-4.1.jar"/>
-	<classpathentry kind="lib" path="hot-deploy/slp/lib/okhttp-2.7.5.jar"/>
-	<classpathentry kind="lib" path="hot-deploy/slp/lib/okio-1.13.0.jar"/>
 	<classpathentry kind="lib" path="hot-deploy/slp/lib/guava-19.0.jar"/>
-	<classpathentry kind="lib" path="hot-deploy/slp/lib/google-maps-services-0.2.2.jar"/>
+	<classpathentry kind="lib" path="hot-deploy/slp/lib/google-map-query-data-utils-0.0.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="hot-deploy/slp/lib/okhttp-2.7.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
