@@ -14,6 +14,24 @@
 <AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
 <AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
 <AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
+
+<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
+<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+
+
+<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
+<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
+<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
+<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
+<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
+
+<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
+<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
+<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
+<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
+<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
+<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
+
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
 <Function functionId="EDUCATION_PROGRESS" uiLabelId="education_progress" vnLabel="Quá trình đạo tạo" enLabel="educations" target="education-progress" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
