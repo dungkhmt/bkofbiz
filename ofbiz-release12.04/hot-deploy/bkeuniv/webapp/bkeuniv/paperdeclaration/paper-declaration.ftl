@@ -6,6 +6,11 @@
 		box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
 	    margin-top: 20px;
         padding: 5px;
+        z-index: 9999;
+	}
+	
+	.upload.drag-over {
+		border: 2px dashed gray;
 	}
 	
 	.upload .upload-file {
@@ -68,48 +73,48 @@
 			background-color: #3d9cdb;
 		}
 </style>
-<script>
+<script type="text/javascript">
+	var dataFilePaper = {};
 	function createUploadFile(data, name, dataRow, id) {
-		var script = 'let filedrag = this.filedrag;
-		filedrag.addEventListener('dragleave', (e) => { this.fileDragLeave(e) }, false);
-		filedrag.addEventListener('drop', (e) => { this.fileSelectHandler(e) }, false);
-		filedrag.addEventListener('dragenter', (e) => { this.fileOndragenter(e) }, false);
-		filedrag.addEventListener('dragover', (e) => { this.fileDragHover(e) }, false);
-	
 		return '<div class="upload" id="'+id+'">'+
 					'<div class="upload-file" >'+
                     	'<i class="fa fa-cloud-upload" aria-hidden="false"></i>'+
-						'<input class="input" type="file" onChange="fileSelectHandler(e)">'+
+						'<input class="input" id="input-file" type="file">'+
 					'</div>'+
 					'<div class="drop-file">'+
                     	'Drop file here'+
 					'</div>'+
-				'</div>';
+					'<script type="text/javascript">'+
+						'$(function () {componentDidMount("'+id+'")});'+
+					"<\/script>"+
+			'</div>';
 	};
 
-	function componentDidMount() {
-		
-
+	function componentDidMount(id) {
+		var filedrag = document.getElementById(id);
+		filedrag.addEventListener('dragleave', (e) => { this.fileDragLeave(e, filedrag) }, false);
+		filedrag.addEventListener('drop', (e) => { this.fileSelectHandler(e, filedrag) }, false);
+		filedrag.addEventListener('dragenter', (e) => { this.fileOndragenter(e, filedrag) }, false);
+		filedrag.addEventListener('dragover', (e) => { this.fileDragHover(e, filedrag) }, false);
+		document.getElementById("input-file").addEventListener('change', (e) => { this.fileSelectHandler(e, filedrag) }, false);
 	}
-
-	fileOndragenter(e) {
-		let filedrag = this.filedrag;
-		let childrens = Array.from(filedrag.children);
+	function fileOndragenter(e, filedrag) {
+		var childrens = Array.from(filedrag.children);
 		for (let children of childrens) {
-			children.style.zIndex = -2; 
+			children.style.zIndex = 1049; 
 		}
 		e.target.classList.add('drag-over');
+		
 	}
 
-	fileDragHover(e) {
+	function fileDragHover(e) {
 		e.stopPropagation();
 		e.preventDefault();
 	}
 
-	fileDragLeave(e) {
+	function fileDragLeave(e, filedrag) {
 		e.target.classList.remove('drag-over');
-		let filedrag = this.filedrag;
-		let childrens = Array.from(filedrag.children);
+		var childrens = Array.from(filedrag.children);
 		for (let children of childrens) {
 			children.style.zIndex = ''; 
 		}
@@ -117,25 +122,30 @@
 		e.preventDefault();
 	}
 
-	fileSelectHandler(e) {
-		let file = e.target.files || e.dataTransfer.files;
+	function fileSelectHandler(e, filedrag) {
+		console.log(e)
+		var file = e.target.files || e.dataTransfer.files;
         
 		e.preventDefault();
-		let reader = new FileReader();
+		var reader = new FileReader();
 
 		reader.readAsText(file[0], 'utf-8');
 		reader.onload = (event) => {
-			let data = event.target.result
-			let fileName = file[0].name
-			let lastModified = file[0].lastModified;
-			this.props.dispatch(name(assignFunc({
-				data, fileName, lastModified
-			}), 'ON_DROP_JSON_FILE'))
+			var data = event.target.result
+			var fileName = file[0].name
+			var lastModified = file[0].lastModified;
+			dataFilePaper.fileName = fileName;
+			dataFilePaper.data = data;			
 		}
 
 		reader.onerror = (event) => {
 			this.props.onError(event);
 		}
+		filedrag.classList.remove('drag-over');
+	}
+	
+	function getDataFile(id) {
+		return dataFilePaper||{};
 	}
 
 </script>
@@ -224,7 +234,6 @@
 		{
 			"name": "authors",
 			"value": "authors"
-			
 		},
 		{
 			"name": "paperCategoryId",
@@ -238,7 +247,6 @@
 		{
 			"name": "journalConferenceName",
 			"value": "journalConferenceName"
-			
 		},
 		{
 			"name": "volumn",
@@ -280,8 +288,8 @@
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-paper" 
-		urlAdd="/bkeuniv/control/create-education-progress" 
-		urlDelete="/bkeuniv/control/delete-education-progress" 
+		urlAdd="/bkeuniv/control/create-paper-declaration" 
+		urlDelete="" 
 		keysId=["paperId"] 
 		fieldDataResult = "papers" 
 		titleChange="test"

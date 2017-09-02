@@ -136,6 +136,13 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="create-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createPaperDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="create-education-progress">
 		<security https="true" auth="true"/>
 		<!-- 

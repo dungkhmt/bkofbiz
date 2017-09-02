@@ -116,8 +116,8 @@
 			cursor: pointer;
 		}
 		
-		#${id}-content tbody tr:hover {
-		    box-shadow: 2px 3px 12px rgba(27,31,35,0.15);
+		#${id}-content tbody tr:hover td:first-child {
+		     border-left: 2px #0014ff solid;			
 		}
 		
 		
