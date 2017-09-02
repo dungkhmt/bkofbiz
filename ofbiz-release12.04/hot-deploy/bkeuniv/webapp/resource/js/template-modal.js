@@ -199,7 +199,11 @@ modal.prototype.render = function() {
 	$(this.id).append(html);
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
-	  _.action();
+	  if(!!_._action.type&&_._action.type=="custom") {
+		  _._action.update(_.data());
+	  } else {
+		  _.action();		  
+	  }
 	});
 	return this;
 }
@@ -219,8 +223,12 @@ modal.prototype.data = function() {
 			    	column._data = _._getSelect("#"+column.id);
 			    	break;
 			    case "custom":
-			    	acc = _._mergeData(acc, column._data);
-			    	return acc;
+			    	if(typeof column.getData == "function") {
+			    		column._data = column.getData("#"+column.id);
+			    	} else {
+			    		column._data = _._getText("#"+column.id);
+			    	}
+			    	break;
 			    case "render":
 			    	if(typeof column.getData == "function") {
 			    		column._data = column.getData("#"+column.id);

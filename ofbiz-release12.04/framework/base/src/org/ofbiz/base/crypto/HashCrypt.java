@@ -45,6 +45,7 @@ public class HashCrypt {
         try {
             if (crypted.startsWith("{")) {
                 int typeEnd = crypted.indexOf("}");
+                
                 String hashType = crypted.substring(1, typeEnd);
                 String hashed = crypted.substring(typeEnd + 1);
                 MessageDigest messagedigest = MessageDigest.getInstance(hashType);
@@ -52,6 +53,12 @@ public class HashCrypt {
                 messagedigest.update(password.getBytes());
                 byte[] digestBytes = messagedigest.digest();
                 char[] digestChars = Hex.encodeHex(digestBytes);
+                
+                //String hashedPassword = new String(digestChars);
+                //Debug.log(module + "::comparePassword, crypted pass = " + crypted + 
+                //		", input password = " + password + ", hashType = " + hashType + 
+                //		", hased = " + hashed + ", hasedPassword = " + hashedPassword);
+                
                 if (hashed.equals(new String(digestChars))) {
                     return true;
                 }
