@@ -182,7 +182,7 @@
 			"width": "5%",
 			"render": 'function(data, type, row) {
 				if(!!data) {
-					return "<div id=\\"download-papger\\"><span class=\\"glyphicon glyphicon-download-alt\\"></span>Tải xuống</div>";
+					return "<div id=\\"download-papger\\"><span class=\\"glyphicon glyphicon-download-alt\\"></span>paperDeclarationUiLabelMap.BkEunivDownloadPaper?j_string</div>";
 				} else {
 					return "";
 				}
@@ -198,6 +198,14 @@
 		</#if>
 	</#list>
 	
+	<#assign sourceAcademicYear = [] />
+	<#list result.academicYears as y>
+		<#if y?has_content>
+             <#assign opy = { "name": y.academicYearName?j_string ,"value": y.academicYearId?j_string } />
+						<#assign sourceAcademicYear = sourceAcademicYear + [opy] />
+		</#if>
+	</#list>
+	
 	<#assign fields=[
 		"paperId",
 		"staffName",
@@ -206,6 +214,7 @@
 		"journalConferenceName",
 		"paperCategoryId",
 		"paperName",
+		"academicYearId",
 		"sourcePath"
 	] />
 	
@@ -232,11 +241,11 @@
 			"value": "paperName"
 		},
 		{
-			"name": "authors",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
 			"value": "authors"
 		},
 		{
-			"name": "paperCategoryId",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,
 			"value": "paperCategoryId",
 			"type": "select",
 			"option": {
@@ -244,26 +253,36 @@
 				"maxItem": 1
 			}
 		},
+		
 		{
-			"name": "journalConferenceName",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"value": "journalConferenceName"
 		},
 		{
-			"name": "volumn",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
 		},
 		{
-			"name": "month",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
 			"value": "month"
 			
 		},
 		{
-			"name": "year",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
 			"value": "year"
 		},
 		{
-			"name": "ISSN",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
 			"value": "ISSN"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
+			"value": "academicYearId",
+			"type": "select",
+			"option": {
+				"source": sourceAcademicYear,
+				"maxItem": 1
+			}
 		},
 		{
 			"name": "Up load file",

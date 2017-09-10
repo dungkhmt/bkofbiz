@@ -121,4 +121,31 @@
     	<attribute name="count" mode="OUT" type="String"></attribute>
     </service>
     
+    <service name="createPaperDeclaration" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
+		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="paperCategoryId[]" mode="IN" type="List"></attribute>
+		<attribute name="journalConferenceName" mode="IN" type="String"></attribute>
+		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="year" mode="IN" type="String"></attribute>
+		<attribute name="month" mode="IN" type="String"></attribute>
+		<attribute name="ISSN" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="authors" mode="IN" type="String"></attribute>
+		<attribute name="academicYearId[]" mode="IN" type="List"></attribute>
+		<attribute name="papers" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+	</service>
+
+    <service name="createStaffPaperDeclaration" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createStaffPaperDeclaration">
+		<attribute name="staffId" mode="IN" type="String"></attribute>
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="message" mode="OUT" type="String"></attribute>
+		
+	</service>
+		
+    <service name="getListAcademicYears" engine="java" 
+		location="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" invoke="getListAcademicYears">
+		<attribute name="academicYears" mode="OUT" type="List"></attribute>
+	</service>
 </services>
