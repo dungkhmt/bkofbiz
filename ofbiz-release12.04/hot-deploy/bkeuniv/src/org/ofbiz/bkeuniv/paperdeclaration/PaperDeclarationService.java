@@ -1,6 +1,10 @@
 package src.org.ofbiz.bkeuniv.paperdeclaration;
 
 import java.awt.print.Paper;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +23,9 @@ import org.ofbiz.entity.util.EntityFindOptions;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
@@ -27,6 +34,40 @@ public class PaperDeclarationService {
 	public static final String STATUS_DISABLED = "DISABLED";
 	
 	public static String module = PaperDeclarationService.class.getName();
+
+	@SuppressWarnings({ "unchecked" })
+	public static void downloadFile(HttpServletRequest request,
+			HttpServletResponse response) {
+		// GenericDelegator delegator = (GenericDelegator)
+		// DelegatorFactory.getDelegator("default");
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Debug.log(module + "::downloadFile");
+		
+		String filename = "HDSD.pdf";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			File f = new File("C:/DungPQ/olbius/tmp/" + filename);
+			FileInputStream fi = new FileInputStream(f);
+			byte[] bytes = new byte[(int) f.length()];
+			fi.read(bytes);
+
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename);
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	public static Map<String, Object> getPapersOfStaff(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();

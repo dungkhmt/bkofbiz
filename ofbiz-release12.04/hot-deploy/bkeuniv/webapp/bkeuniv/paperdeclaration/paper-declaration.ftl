@@ -73,8 +73,60 @@
 			background-color: #3d9cdb;
 		}
 </style>
+
+
+<script>
+	
+	function createContextMenu(id) {
+	
+		$(document).contextmenu({
+			    delegate: "#"+id+"-content td",
+			menu: [
+			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
+			  {title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
+			  
+			],
+			select: function(event, ui) {
+				var el = ui.target.parent();
+				var data = jqDataTable.table.row( el ).data();
+				switch(ui.cmd){
+					case "edit":
+						jqChange(data)
+						break;
+					case "delete":
+						jqDelete(data);
+						break;
+					case "pdf":
+						jqPDF(data);
+						break;
+					case "changepassword":
+						jqChangePassword(data);
+						break;
+					}			
+					
+				},
+				beforeOpen: function(event, ui) {
+					var $menu = ui.menu,
+						$target = ui.target,
+						extraData = ui.extraData;
+					ui.menu.zIndex(9999);
+			    }
+			  });
+	}
+				
+	function jqPDF(data){
+		console.log(data);
+		
+	}				
+	
+</script>
+
 <script type="text/javascript">
 	var dataFilePaper = {};
+	
+	
+	
 	function createUploadFile(data, name, dataRow, id) {
 		return '<div class="upload" id="'+id+'">'+
 					'<div class="upload-file" >'+
@@ -367,5 +419,7 @@
 		titleNew="test"
 		titleDelete="test"
 		jqTitle="test"
+		contextmenu=false
+		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
 	/>
 </div>
