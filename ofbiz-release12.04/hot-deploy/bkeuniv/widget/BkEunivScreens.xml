@@ -230,6 +230,46 @@
 			</widgets>
 		</section>
 	</screen>
+	
+	<screen name="profilePDF">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="FoReportDecorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<!-- at the top left of every page we put the logo and company information -->
+					<decorator-section name="title">
+						<section>
+							<widgets>
+								<platform-specific>
+									<xsl-fo>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/exportPDF/profileTitle.fo.ftl" />
+									</xsl-fo>
+								</platform-specific>
+							</widgets>
+						</section>
+					</decorator-section>
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<platform-specific>
+									<xsl-fo>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/exportPDF/profileScience.fo.ftl" />
+									</xsl-fo>
+								</platform-specific>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+
+
+			</widgets>
+		</section>
+	</screen>
 
 
 </screens>

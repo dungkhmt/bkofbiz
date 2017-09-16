@@ -83,4 +83,19 @@
             </widgets>
         </section>
     </screen>
+    
+     <screen name="FoReportDecorator">
+        <section>
+            <actions>
+                
+            </actions>
+            <widgets>
+                <platform-specific>
+                	<xsl-fo>
+                		<html-template location="component://bkeuniv/webapp/bkeuniv/exportPDF/reportTemplate.fo.ftl"/>
+                	</xsl-fo>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
 </screens>

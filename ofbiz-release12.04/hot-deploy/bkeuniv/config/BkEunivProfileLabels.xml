@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivFullName">
+        <value xml:lang="en">Full name</value>
+        <value xml:lang="vi">Họ và tên</value>
+    </property>
+    
+    <property key="BkEunivBirthday">
+        <value xml:lang="en">Birthday</value>
+        <value xml:lang="vi">Ngày sinh</value>
+    </property>
+    
+    <property key="BkEunivGender">
+        <value xml:lang="en">Gender</value>
+        <value xml:lang="vi">Giới tính</value>
+    </property>
+    
+    <property key="BkEunivAcademic">
+        <value xml:lang="en">Academic</value>
+        <value xml:lang="vi">Học hàm</value>
+    </property>
+    
+    <property key="BkEunivYearAcademic">
+        <value xml:lang="en">Year academic</value>
+        <value xml:lang="vi">Năm được phong</value>
+    </property>
+    
+    <property key="BkEunivDegree">
+        <value xml:lang="en">Degree</value>
+        <value xml:lang="vi">Học vị</value>
+    </property>
+    
+    <property key="BkEunivYearDegree">
+        <value xml:lang="en">Year degree</value>
+        <value xml:lang="vi">Năm đạt học vị</value>
+    </property>
+    
+    
+</resource>
