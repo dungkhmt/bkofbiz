@@ -20,6 +20,8 @@
 <ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
 
 
+
+
 <ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
 <ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
 <ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>

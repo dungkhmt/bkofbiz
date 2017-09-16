@@ -161,21 +161,35 @@
 			"data": "paperName"
 		},
 		{
-			"name": "volumn",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"data": "volumn"
 		},
 		{
-			"name": "paperCategoryId",
-			"data": "paperCategoryId"
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,
+			"data": "categoryName"
 		},
 		{
-			"name": "authors",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
 			"data": "authors"
 		},
 		{
-			"name": "journalConferenceName",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"data": "journalConferenceName"
 		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
+			"data": "month"
+			
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
+			"data": "year"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
+			"data": "academicYearId"
+		},
+		
 		{
 			"name": "File",
 			"data": "sourcePath",
@@ -213,7 +227,10 @@
 		"authors",
 		"journalConferenceName",
 		"paperCategoryId",
+		"categoryName",
 		"paperName",
+		"month",
+		"year",
 		"academicYearId",
 		"sourcePath"
 	] />
@@ -222,17 +239,52 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
 			"value": "paperName"
-			
 		},
 		{
-			"name": "paperCategoryId",
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
+			"value": "authors"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,
 			"value": "paperCategoryId",
 			"type": "select",
 			"option": {
 				"source": source,
 				"maxItem": 1
 			}
+		},
+		
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
+			"value": "journalConferenceName"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
+			"value": "volumn"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
+			"value": "month"
+			
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
+			"value": "year"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
+			"value": "ISSN"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
+			"value": "academicYearId",
+			"type": "select",
+			"option": {
+				"source": sourceAcademicYear,
+				"maxItem": 1
+			}
 		}
+
 	] />
 	
 	<#assign columnsNew=[
@@ -308,7 +360,7 @@
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-paper" 
 		urlAdd="/bkeuniv/control/create-paper-declaration" 
-		urlDelete="" 
+		urlDelete="/bkeuniv/control/delete-paper-declaration" 
 		keysId=["paperId"] 
 		fieldDataResult = "papers" 
 		titleChange="test"

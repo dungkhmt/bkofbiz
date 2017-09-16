@@ -135,6 +135,16 @@
 		<attribute name="papers" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="message" mode="OUT" type="String"></attribute>	
 	</service>
+    <service name="deletePaperDeclaration" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deletePaperDeclaration">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+	</service>
+	
+    <service name="deleteStaffPaperDeclaration" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deleteStaffPaperDeclaration">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="staffId" mode="IN" type="String"></attribute>
+	</service>
 
     <service name="createStaffPaperDeclaration" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createStaffPaperDeclaration">
