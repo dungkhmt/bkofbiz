@@ -23,9 +23,19 @@
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="paperCategoryId" mode="IN" type="String"></attribute>
+		<attribute name="journalConferenceName" mode="IN" type="String"></attribute>
+		<attribute name="volumn" mode="IN" type="String"></attribute>
+		<attribute name="year" mode="IN" type="String"></attribute>
+		<attribute name="month" mode="IN" type="String"></attribute>
+		<attribute name="ISSN" mode="IN" type="String"></attribute>
+		<attribute name="authors" mode="IN" type="String"></attribute>
+		<attribute name="academicYearId" mode="IN" type="String"></attribute>
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
     
+	
+
     
     <service name="getPermissionFunctions" engine="java"
             location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
@@ -33,8 +43,36 @@
     </service>
     
     
+    <service name="createADepartment" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="createADepartment">
+       <attribute name="departmentName" mode="IN" type="String"></attribute>
+       <attribute name="facultyId" mode="IN" type="String"></attribute>
+    </service>
+ 
+    <service name="getListDepartments" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="getListDepartments">
+       <attribute name="facultyId" mode="IN" type="String"></attribute>
+       <attribute name="departments" mode="OUT" type="List"></attribute>
+    </service>
     
+    <service name="svrUpdateADepartment" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="updateADepartment">
+       <attribute name="departmentName" mode="IN" type="String"></attribute>
+       <attribute name="facultyId" mode="IN" type="String"></attribute>
+       <attribute name="department-id" mode="IN" type="String"></attribute>
+    </service>
+    
+    <service name="svrDeleteADepartment" engine="java"
+            location="src.org.ofbiz.department.DepartmentService" invoke="deleteADepartment">
+       <attribute name="idofdepartment" mode="IN" type="String"></attribute>       
+    </service>
+    
+    <service name="getDepartments" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
+    	<attribute name="facultyId" mode="IN" type="String"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
 
+    </service>
     <service name="getscientificserviceexperience" engine="java" 
     		location="src.org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="getScientificServiceExperience">
     	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
@@ -121,41 +159,4 @@
     	<attribute name="count" mode="OUT" type="String"></attribute>
     </service>
     
-    <service name="createPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
-		<attribute name="paperName" mode="IN" type="String"></attribute>
-		<attribute name="paperCategoryId[]" mode="IN" type="List"></attribute>
-		<attribute name="journalConferenceName" mode="IN" type="String"></attribute>
-		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
-		<attribute name="year" mode="IN" type="String"></attribute>
-		<attribute name="month" mode="IN" type="String"></attribute>
-		<attribute name="ISSN" mode="IN" type="String" optional="true"></attribute>
-		<attribute name="authors" mode="IN" type="String"></attribute>
-		<attribute name="academicYearId[]" mode="IN" type="List"></attribute>
-		<attribute name="papers" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
-		<attribute name="message" mode="OUT" type="String"></attribute>	
-	</service>
-    <service name="deletePaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deletePaperDeclaration">
-		<attribute name="paperId" mode="IN" type="String"></attribute>
-	</service>
-	
-    <service name="deleteStaffPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deleteStaffPaperDeclaration">
-		<attribute name="paperId" mode="IN" type="String"></attribute>
-		<attribute name="staffId" mode="IN" type="String"></attribute>
-	</service>
-
-    <service name="createStaffPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createStaffPaperDeclaration">
-		<attribute name="staffId" mode="IN" type="String"></attribute>
-		<attribute name="paperId" mode="IN" type="String"></attribute>
-		<attribute name="message" mode="OUT" type="String"></attribute>
-		
-	</service>
-		
-    <service name="getListAcademicYears" engine="java" 
-		location="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" invoke="getListAcademicYears">
-		<attribute name="academicYears" mode="OUT" type="List"></attribute>
-	</service>
 </services>

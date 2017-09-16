@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>BkEuniv Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+    <service name="getStaffs" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
+    	<attribute name="staffs" mode="OUT" type="List"></attribute>
+    </service>
+    <service name="getGenders" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getGenders">
+    	<attribute name="genders" mode="OUT" type="List"></attribute>
+    </service>
+	
+    <service name="updateStaff" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="updateStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="staffDateOfBirth" mode="IN" type="String"></attribute>
+    	<attribute name="staffPhone" mode="IN" type="String"></attribute>
+    	<attribute name="departmentId[]" mode="IN" type="List"></attribute>
+    	<attribute name="staffGenderId[]" mode="IN" type="List"></attribute>
+    	<!-- 
+    	<attribute name="staffId" mode="OUT" type="String"></attribute>
+    	<attribute name="staffName" mode="OUT" type="String"></attribute>
+    	<attribute name="staffEmail" mode="OUT" type="String"></attribute>
+    	<attribute name="staffGenderId" mode="OUT" type="String"></attribute>
+    	<attribute name="staffDateOfBirth" mode="OUT" type="Date"></attribute>
+    	<attribute name="staffPhone" mode="OUT" type="String"></attribute>
+    	<attribute name="departmentId" mode="OUT" type="String"></attribute>
+    	 -->
+    	<attribute name="staffs" mode="OUT" type="Map"></attribute> 
+    </service>
+
+    
+    <service name="getDepartments" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartments">
+    	<attribute name="facultyId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
+    </service>
+	
+
+	
+</services>

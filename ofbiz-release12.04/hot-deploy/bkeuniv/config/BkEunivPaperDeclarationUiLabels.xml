@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivEducationProgressId">
+        <value xml:lang="en">EP ID</value>
+        <value xml:lang="vi">Mã EP</value>
+    </property>
+    
+    <property key="BkEunivStaffId">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">Người kê khai</value>
+    </property>
+    
+    <property key="BkEunivPaperName">
+        <value xml:lang="en">Paper name</value>
+        <value xml:lang="vi">Tên bài báo</value>
+    </property>
+    
+    <property key="BkEunivPaperAuthors">
+        <value xml:lang="en">Authors</value>
+        <value xml:lang="vi">Tác giả</value>
+    </property>
+    
+    <property key="BkEunivPaperCategory">
+        <value xml:lang="en">Category</value>
+        <value xml:lang="vi">Loại bài báo</value>
+    </property>
+    
+    <property key="BkEunivPaperJournalConference">
+        <value xml:lang="en">Journal/Conference</value>
+        <value xml:lang="vi">Tên tại chí, hội nghị</value>
+    </property>
+   
+    <property key="BkEunivPaperVolumn">
+        <value xml:lang="en">Volumn</value>
+        <value xml:lang="vi">Số</value>
+    </property>
+   
+    <property key="BkEunivPaperISSN">
+        <value xml:lang="en">ISSN</value>
+        <value xml:lang="vi">ISSN</value>
+    </property>
+
+    <property key="BkEunivPaperMonth">
+        <value xml:lang="en">Published Month</value>
+        <value xml:lang="vi">Tháng xuất bản</value>
+    </property>
+   
+    <property key="BkEunivPaperYear">
+        <value xml:lang="en">Published Year</value>
+        <value xml:lang="vi">Năm xuất bản</value>
+    </property>
+   
+    <property key="BkEunivPaperAcademicYear">
+        <value xml:lang="en">Academic Year</value>
+        <value xml:lang="vi">Năm kê khai</value>
+    </property>
+
+    <property key="BkEunivDownloadPaper">
+        <value xml:lang="en">Download</value>
+        <value xml:lang="vi">Tải bài báo</value>
+    </property>
+   
+</resource>

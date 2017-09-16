@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivEducationProgressId">
+        <value xml:lang="en">EP ID</value>
+        <value xml:lang="vi">Mã EP</value>
+    </property>
+    
+    <property key="BkEunivStaffId">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">ID cán bộ</value>
+    </property>
+    
+    <property key="BkEunivFullName">
+        <value xml:lang="en">Full name</value>
+        <value xml:lang="vi">Họ và tên</value>
+    </property>
+    
+    <property key="BkEunivGender">
+        <value xml:lang="en">Gender</value>
+        <value xml:lang="vi">Giới tính</value>
+    </property>
+
+    <property key="BkEunivEmail">
+        <value xml:lang="en">Email</value>
+        <value xml:lang="vi">Email</value>
+    </property>
+    
+    <property key="BkEunivBirthDate">
+        <value xml:lang="en">Birth date</value>
+        <value xml:lang="vi">Ngày sinh</value>
+    </property>
+    
+    <property key="BkEunivPhone">
+        <value xml:lang="en">Phone</value>
+        <value xml:lang="vi">Số điện thoại</value>
+    </property>
+  
+    <property key="BkEunivDepartment">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="vi">Bộ môn</value>
+    </property>
+    
+    <property key="BkEunivFaculty">
+        <value xml:lang="en">Faculty</value>
+        <value xml:lang="vi">Khoa/viện</value>
+    </property>
+    
+    <property key="BkEunivStaffHeaderScreen">
+        <value xml:lang="en">Staff Management</value>
+        <value xml:lang="vi">Quản lý cán bộ</value>
+    </property>    
+</resource>

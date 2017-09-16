@@ -109,7 +109,10 @@
 			<actions>
 				<set field="headerItem" value="main" /><!-- this highlights the selected 
 					menu-item with name "main" -->
-				<entity-condition list="listStaffs" entity-name="Staff"></entity-condition>	
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
+				
+				<service service-name="getDepartments" result-map="resultDepartments"></service>
+				<service service-name="getGenders" result-map="resultGenders"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -130,30 +133,6 @@
 		</section>
 	</screen>
 
-	<screen name="pagePaperDeclaration">
-		<section>
-			<actions>
-				<set field="headerItem" value="main" /><!-- this highlights the selected 
-					menu-item with name "main" -->
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-
-						<platform-specific>
-							<html>
-								<html-template
-									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/paper-declaration.ftl" />
-							</html>
-						</platform-specific>
-
-					</decorator-section>
-				</decorator-screen>
-
-			</widgets>
-		</section>
-	</screen>
 	<screen name="scientificserviceexperience">
 		<section>
 			<actions>
@@ -226,5 +205,32 @@
 			</widgets>
 		</section>
 	</screen>
+
+	<screen name="paperDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListAcademicYears" result-map="result"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/paper-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
 
 </screens>
