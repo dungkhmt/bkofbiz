@@ -257,6 +257,12 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
     
+    <request-map uri="download-file-paper">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="downloadFile"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+    
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
