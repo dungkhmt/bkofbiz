@@ -24,22 +24,39 @@
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="updateStaff">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="staffEmail" mode="IN" type="String"></attribute>
     	<attribute name="staffDateOfBirth" mode="IN" type="String"></attribute>
     	<attribute name="staffPhone" mode="IN" type="String"></attribute>
     	<attribute name="departmentId[]" mode="IN" type="List"></attribute>
     	<attribute name="staffGenderId[]" mode="IN" type="List"></attribute>
-    	<!-- 
-    	<attribute name="staffId" mode="OUT" type="String"></attribute>
-    	<attribute name="staffName" mode="OUT" type="String"></attribute>
-    	<attribute name="staffEmail" mode="OUT" type="String"></attribute>
-    	<attribute name="staffGenderId" mode="OUT" type="String"></attribute>
-    	<attribute name="staffDateOfBirth" mode="OUT" type="Date"></attribute>
-    	<attribute name="staffPhone" mode="OUT" type="String"></attribute>
-    	<attribute name="departmentId" mode="OUT" type="String"></attribute>
-    	 -->
+    	
     	<attribute name="staffs" mode="OUT" type="Map"></attribute> 
     </service>
+    <service name="removeAStaff" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="removeAStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
 
+    <service name="createAStaff" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="createAStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="password" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="staffDateOfBirth" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="departmentId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="staffGenderId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="groupId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="staffs" mode="OUT" type="Map"></attribute> 
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    <service name="addPermissionGroupStaff" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="addPermissionGroupStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="groupId" mode="IN" type="String"></attribute>
+    </service>
     
     <service name="getDepartments" engine="java" 
     		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartments">
@@ -48,5 +65,11 @@
     </service>
 	
 
+	<service name="updatePassword" engine="java"
+		location="org.ofbiz.common.login.LoginServices" invoke="directUpdatePassword">
+		<attribute name="staffId" mode="IN" type="String"></attribute>
+		<attribute name="password" mode="IN" type="String"></attribute>
+		<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
 	
 </services>
