@@ -46,12 +46,24 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
-	
+
 	<request-map uri="tspd-get-route-k-drone">
 		<security https="false" auth="false" />
 		<event type="service" invoke="tspkdsolve"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<!-- Create Sample Data -->
+	<request-map uri="create-sample-data">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="createsampledata" />
+	</request-map>
+	
+	<request-map uri="save-sample-data">
+		<security https="false" auth="false" />
+		<event type="service" invoke="savesampledata"></event>
+		<response name="success" type="request" value="json" />
 	</request-map>
 
 	<!-- View Mappings -->
@@ -65,4 +77,7 @@
 		page="component://slp/widget/SlpScreens.xml#tspkdsolution" />
 	<view-map name="tspdselectmodule" type="screen"
 		page="component://slp/widget/SlpScreens.xml#tspdselectmodule" />
+	<view-map name="createsampledata" type="screen"
+		page="component://slp/widget/SlpScreens.xml#createsampledata" />
+		
 </site-conf>

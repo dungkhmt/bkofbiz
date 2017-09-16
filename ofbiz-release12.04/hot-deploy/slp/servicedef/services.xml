@@ -14,7 +14,7 @@
 	<service name="storeData2Solve" engine="java"
 		location="org.bkofbiz.slp.tspd.TSPDService" invoke="storeData2Cache">
 		<description>
-            Build Route! 
+            Store data to cache! 
         </description>
 		<attribute name="truckSpeed" type="String" mode="IN"
 			optional="false"></attribute>
@@ -32,25 +32,36 @@
 	</service>
 
 	<service name="tspdsolve" engine="java"
-		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve" transaction-timeout="1000000">
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve"
+		transaction-timeout="1000000">
 		<description>
-            Build Route! 
+            Build Route a drone! 
         </description>
-		<attribute name="sol" type="Map" mode="OUT"
-			optional="false"></attribute>
-		
+		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
+
 	</service>
-	
+
 	<service name="tspkdsolve" engine="java"
-		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspkdSolve" transaction-timeout="1000000">
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspkdSolve"
+		transaction-timeout="1000000">
 		<description>
-            Build Route! 
+            Build Route k drone! 
         </description>
-		<attribute name="sol" type="Map" mode="OUT"
+		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
+	</service>
+
+	<!-- savesampledata -->
+	<service name="savesampledata" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="saveData" transaction-timeout="1000000">
+		<description>
+           Save sample data
+        </description>
+		<attribute name="description" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="name" type="String" mode="IN" optional="false"></attribute>
+		<attribute name="listPoints" type="String" mode="IN"
 			optional="false"></attribute>
 		
 	</service>
-
-
 
 </services>

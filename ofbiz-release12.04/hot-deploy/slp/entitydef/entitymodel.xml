@@ -15,19 +15,33 @@
         <field name="DS_NumPoints" type="numeric"></field>
         <prim-key field="DS_Id"/>
     </entity>
+    <entity entity-name="PointDS" package-name="org.bkofbiz.slp.tspd" title="Point for DataSet">
+        <field name="P_Id" type="id"><description>id</description></field>
+        <field name="P_Lat" type="value"></field>
+        <field name="P_Lng" type="value"></field>
+        <field name="DS_Id" type="id"></field>
+        <prim-key field="P_Id"/>
+        <relation type="one" fk-name="POINT_DS" rel-entity-name="DataSet">
+            <key-map field-name="DS_Id" rel-field-name="DS_Id"/>
+        </relation>
+    </entity>
      <entity entity-name="Direction" package-name="org.bkofbiz.slp.tspd" title="Direction">
         <field name="D_Id" type="id"><description>id</description></field>
-        <field name="D_StartPoint" type="value"></field>
-        <field name="D_StartPointId" type="numeric"></field>
-        <field name="D_EndPoint" type="value"></field>
-        <field name="D_EndPointId" type="numeric"></field>
+        <field name="D_StartPointId" type="id"></field>
+        <field name="D_EndPointId" type="id"></field>
         <field name="D_Distance" type="floating-point"></field>
-        <field name="D_Time" type="floating-point"></field>
+        <field name="D_Time" type="numeric"></field>
         <field name="DS_Id" type="id"></field>
-        <field name="DS_Path" type="very-long"></field>
-        <prim-key field="id"/>
+        <field name="D_Path" type="very-long"></field>
+        <prim-key field="D_Id"/>
         <relation type="one" fk-name="DRCTION_REL" rel-entity-name="DataSet">
-            <key-map field-name="DS_Id"/>
+            <key-map field-name="DS_Id" rel-field-name="DS_Id"/>
+        </relation>
+        <relation type="one" fk-name="DRCTION_POINT_STR" rel-entity-name="PointDS">
+            <key-map field-name="D_StartPointId" rel-field-name="P_Id"/>
+        </relation>
+         <relation type="one" fk-name="DRCTION_POINT_END" rel-entity-name="PointDS">
+            <key-map field-name="D_EndPointId" rel-field-name="P_Id"/>
         </relation>
     </entity>
 </entitymodel>

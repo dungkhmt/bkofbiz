@@ -11,6 +11,7 @@
 			<input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" />
 			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a>
 		</form>
+			<a class="btn btn-primary " href="create-sample-data" >Create new Sample Data</a>
 		<div id="GoogleMap" style="width:100%;height:500px"></div>
 		<form action="tspd-select-module" method="POST" commandName="tspd" role="form" class="form-horizontal">
 		<div class="panel panel-default">
