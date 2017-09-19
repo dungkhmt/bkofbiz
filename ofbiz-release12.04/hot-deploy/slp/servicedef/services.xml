@@ -38,7 +38,6 @@
             Build Route a drone! 
         </description>
 		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
-
 	</service>
 
 	<service name="tspkdsolve" engine="java"
@@ -57,11 +56,43 @@
            Save sample data
         </description>
 		<attribute name="description" type="String" mode="IN"
-			optional="false"></attribute>
-		<attribute name="name" type="String" mode="IN" optional="false"></attribute>
+			optional="true"></attribute>
+		<attribute name="name" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="datasetid" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="listPoints" type="String" mode="IN"
 			optional="false"></attribute>
 		
 	</service>
-
+	
+	<!--  Get all data set -->
+	<service name="getdatasets" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getDataSets"
+		transaction-timeout="1000000">
+		<description>
+           Get all data set
+        </description>
+		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
+	</service>
+	
+	<!-- Get all direction in a DataSet -->
+	<service name="getdirections" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getDirections"
+		transaction-timeout="1000000">
+		<description>
+           Get all direction in a DataSet
+        </description>
+        <attribute name="DS_Id" type="String" mode="IN" ></attribute>
+		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
+	</service>
+	
+	<!-- Get all Point in a DataSet -->
+	<service name="getpoints" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getPoints"
+		transaction-timeout="1000000">
+		<description>
+           Get all direction in a DataSet
+        </description>
+        <attribute name="DS_Id" type="String" mode="IN" ></attribute>
+		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
+	</service>
 </services>

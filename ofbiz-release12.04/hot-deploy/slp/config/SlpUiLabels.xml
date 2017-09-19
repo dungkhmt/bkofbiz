@@ -117,7 +117,7 @@
     </property>
     
     <property key="sampledataheader">
-        <value xml:lang="en">Crete data sample</value>
+        <value xml:lang="en">Create data sample</value>
         <value xml:lang="vi">Tạo bộ dữ liệu mẫu</value>
     </property>
 </resource>
