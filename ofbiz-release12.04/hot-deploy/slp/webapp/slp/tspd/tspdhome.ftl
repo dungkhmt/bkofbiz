@@ -11,18 +11,20 @@
 			<input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" />
 			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a>
 		</form>
-		<div class="row">
-		<div class="col-lg-3">
-			<select id="data-sample">
-			</select>
-		</div>
-		<div class="col-lg-3">
-		<a class="btn btn-primary " href="create-sample-data" >Create new Sample Data</a>
-		</div>
-		</div>
-		
-		<div id="GoogleMap" style="width:100%;height:500px"></div>
 		<form action="tspd-select-module" method="POST" commandName="tspd" role="form" class="form-horizontal">
+			<div class="row">
+				<div class="col-lg-10">
+					<label class="control-label col-lg-1">DataSet</label>
+					<select id="data-sample" name="datasetid" class="col-lg-2">
+					</select>
+				</div>
+				<div class="col-lg-2">
+					<a class="btn btn-primary " href="create-sample-data" >Create new Sample Data</a>
+				</div>
+			</div>
+
+			<div id="GoogleMap" style="width:100%;height:500px"></div>
+
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="row">
@@ -78,7 +80,7 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdyNiBOdg6ikZli6MhG3ivZRw2fKdW-5I&libraries=places&callback=initialize" async defer></script>
 <script type="text/javascript">
 $(function() {
-    
+
 	$.ajax({
 		url: "/slp/control/get-data-set",
 		type: 'post',
@@ -296,5 +298,5 @@ function tspd_solve(){
 	});
 }*/
 
-								</script>
-								
+												</script>
+												

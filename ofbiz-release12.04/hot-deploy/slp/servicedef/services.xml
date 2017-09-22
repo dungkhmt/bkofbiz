@@ -16,6 +16,8 @@
 		<description>
             Store data to cache! 
         </description>
+        <attribute name=datasetid type="String" mode="IN"
+			optional="true"></attribute>
 		<attribute name="truckSpeed" type="String" mode="IN"
 			optional="false"></attribute>
 		<attribute name="droneSpeed" type="String" mode="IN"

@@ -302,12 +302,9 @@ public class DataSampleService {
 			Map<String, ? extends Object> context) {
 		String DS_Id = (String) context.get("DS_Id");
 		Delegator delegator = dctx.getDelegator();
-		EntityCondition entity = EntityCondition.makeCondition("DS_Id",
-				EntityOperator.EQUALS, DS_Id);
-		List<GenericValue> list = null;
+		List<Map<String,Object>> listRes = FastList.newInstance();
 		try {
-			list = delegator.findList("Direction", entity, null, null, null,
-					false);
+			listRes = getDirectionbyDataSet(delegator, DS_Id);
 		} catch (GenericEntityException e) {
 			// TODO Auto-generated catch block
 
@@ -315,7 +312,21 @@ public class DataSampleService {
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}
-		List<Map> listRes = FastList.newInstance();
+		
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+		result.put("sol", listRes);
+		return result;
+
+	}
+
+	public static List<Map<String, Object>> getDirectionbyDataSet(
+			Delegator delegator, String DS_Id) throws GenericEntityException {
+		EntityCondition entity = EntityCondition.makeCondition("DS_Id",
+				EntityOperator.EQUALS, DS_Id);
+		List<GenericValue> list = null;
+
+		list = delegator.findList("Direction", entity, null, null, null, false);
+		List<Map<String, Object>> listRes = FastList.newInstance();
 		for (GenericValue el : list) {
 			Map<String, Object> map = FastMap.newInstance();
 			map.put("D_Id", el.getString("D_Id"));
@@ -326,10 +337,7 @@ public class DataSampleService {
 			map.put("D_Path", el.getString("D_Path"));
 			listRes.add(map);
 		}
-		Map<String, Object> result = ServiceUtil.returnSuccess();
-		result.put("sol", listRes);
-		return result;
-
+		return listRes;
 	}
 
 	/**
@@ -343,12 +351,9 @@ public class DataSampleService {
 			Map<String, ? extends Object> context) {
 		String DS_Id = (String) context.get("DS_Id");
 		Delegator delegator = dctx.getDelegator();
-		EntityCondition entity = EntityCondition.makeCondition("DS_Id",
-				EntityOperator.EQUALS, DS_Id);
-		List<GenericValue> list = null;
+		List<Map<String,Object>> listRes = FastList.newInstance();
 		try {
-			list = delegator.findList("PointDS", entity, null, null, null,
-					false);
+			listRes = getPointbyDataSet(delegator,DS_Id);
 		} catch (GenericEntityException e) {
 			// TODO Auto-generated catch block
 
@@ -356,7 +361,24 @@ public class DataSampleService {
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}
-		List<Map> listRes = FastList.newInstance();
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+		result.put("sol", listRes);
+		return result;
+	}
+	
+	/**
+	 * Get point by datasetid
+	 * @param delegator
+	 * @param DS_Id
+	 * @return
+	 * @throws GenericEntityException
+	 */
+	public static List<Map<String, Object>> getPointbyDataSet(Delegator delegator,String DS_Id) throws GenericEntityException{
+		EntityCondition entity = EntityCondition.makeCondition("DS_Id",
+				EntityOperator.EQUALS, DS_Id);
+		List<GenericValue> list = delegator.findList("PointDS", entity, null, null, null,
+				false);
+		List<Map<String,Object>> listRes = FastList.newInstance();
 		for (GenericValue el : list) {
 			Map<String, Object> map = FastMap.newInstance();
 			map.put("P_Id", el.getString("P_Id"));
@@ -365,9 +387,6 @@ public class DataSampleService {
 			map.put("DS_Id", el.getString("DS_Id"));
 			listRes.add(map);
 		}
-		Map<String, Object> result = ServiceUtil.returnSuccess();
-		result.put("sol", listRes);
-		return result;
-
+		return listRes;
 	}
 }
