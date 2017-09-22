@@ -158,7 +158,7 @@ public class DataSampleService {
 							+ listNP.get(j).getID();
 					try {
 						addADirection(delegator, "" + listNP.get(i).getID(),
-								listNP.get(j).getID(), distances.get(key),
+								listNP.get(j).getID(), distances.get(key)/1000,
 								timedurations.get(key), ds_id,
 								gson.toJson(mapPath.get(key)));
 					} catch (GenericEntityException e) {
@@ -331,6 +331,7 @@ public class DataSampleService {
 			Map<String, Object> map = FastMap.newInstance();
 			map.put("D_Id", el.getString("D_Id"));
 			map.put("D_StartPointId", el.getString("D_StartPointId"));
+			map.put("D_EndPointId", el.getString("D_EndPointId"));
 			map.put("D_Distance", el.getString("D_Distance"));
 			map.put("D_Time", el.getString("D_Time"));
 			map.put("DS_Id", el.getString("DS_Id"));

@@ -68,7 +68,7 @@
 	
 	<!-- Get all data set -->
 	<request-map uri="get-data-set">
-		<security https="true" auth="true" />
+		<security https="false" auth="false" />
 		<event type="service" invoke="getdatasets"></event>
 		<response name="success" type="request" value="json" />
 	</request-map>

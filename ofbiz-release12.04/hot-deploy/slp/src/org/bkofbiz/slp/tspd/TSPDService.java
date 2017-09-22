@@ -2,6 +2,7 @@ package org.bkofbiz.slp.tspd;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,26 +68,31 @@ public class TSPDService {
 		/**
 		 * RE-mapping with new ID
 		 */
+		List<Map<String,String>> listPointMaped=new ArrayList<Map<String,String>>();
 		Map<String,Integer> mapId= new HashMap<String, Integer>();
 		for(int i=0;i<listPoint.size();i++){
 			Map<String ,Object> point= listPoint.get(i);
 			mapId.put((String) point.get("P_Id"), i);
-			point.put((String) point.get("P_Id"), i);
-			listPoint.set(i, point);
+			Map<String ,String> pointMaped= new HashMap<String, String>();
+			pointMaped.put("id",""+ i);
+			pointMaped.put("lat",(String) point.get("P_Lat"));
+			pointMaped.put("lng",(String) point.get("P_Lng"));
+			listPointMaped.add(pointMaped);
 		}
 		
 		Map<String,Object> map=FastMap.newInstance();
 		for(int i=0;i<listDirection.size();i++){
 			Map<String,Object> direction= listDirection.get(i);
 			String key=mapId.get(direction.get("D_StartPointId"))+"_"+mapId.get(direction.get("D_EndPointId"));
-			map.put("key", direction);
+			map.put(key, direction.get("D_Distance"));
 		}
 		/**
 		 * Build json data
 		 */
 		JsonParser jsonParser= new JsonParser();
 		JsonObject jsonObject= jsonParser.parse(dataJson).getAsJsonObject();
-		jsonObject.add("listPoints", gson.toJsonTree(listPoint));
+		jsonObject.remove("datasetid");
+		jsonObject.add("listPoints", gson.toJsonTree(listPointMaped));
 		jsonObject.add("map",gson.toJsonTree(map));
 		/**
 		 * Call HTTP to ezRouting
@@ -96,8 +102,8 @@ public class TSPDService {
 		client.setReadTimeout(180, TimeUnit.SECONDS);
 		client.setWriteTimeout(180, TimeUnit.SECONDS);
 		RequestBody body = RequestBody.create(JSON_HEADER,
-				jsonObject.getAsString());
-		Debug.log(jsonObject.getAsString(),MODULE_NAME);
+				jsonObject.toString());
+		Debug.log(jsonObject.toString(),MODULE_NAME);
 		Request request = new Request.Builder()
 				.url("http://localhost:8088/ezRoutingAPI/tsp-with-drone-input-distance")
 				.post(body).build();
@@ -122,7 +128,53 @@ public class TSPDService {
 	
 	public static Map<String, Object> tspkdSolve(DispatchContext dctx,
 			Map<String, ? extends Object> context) {
+		Delegator delegator=dctx.getDelegator();
+		Debug.logInfo(dataJson,MODULE_NAME);
+		/**
+		 * Load data
+		 */
 		Map<String, Object> suc = ServiceUtil.returnSuccess();
+		Gson gson = new Gson();
+		String datasetid= new JsonParser().parse(dataJson).getAsJsonObject().getAsJsonPrimitive("datasetid").getAsString();
+		List<Map<String,Object>> listDirection=null;
+		List<Map<String,Object>> listPoint=null;
+		try {
+			listDirection=DataSampleService.getDirectionbyDataSet(delegator, datasetid);
+			listPoint=DataSampleService.getPointbyDataSet(delegator, datasetid);
+		} catch (GenericEntityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return ServiceUtil.returnError(e1.getMessage());
+		}
+		/**
+		 * RE-mapping with new ID
+		 */
+		List<Map<String,String>> listPointMaped=new ArrayList<Map<String,String>>();
+		Map<String,Integer> mapId= new HashMap<String, Integer>();
+		for(int i=0;i<listPoint.size();i++){
+			Map<String ,Object> point= listPoint.get(i);
+			mapId.put((String) point.get("P_Id"), i);
+			Map<String ,String> pointMaped= new HashMap<String, String>();
+			pointMaped.put("id",""+ i);
+			pointMaped.put("lat",(String) point.get("P_Lat"));
+			pointMaped.put("lng",(String) point.get("P_Lng"));
+			listPointMaped.add(pointMaped);
+		}
+		
+		Map<String,Object> map=FastMap.newInstance();
+		for(int i=0;i<listDirection.size();i++){
+			Map<String,Object> direction= listDirection.get(i);
+			String key=mapId.get(direction.get("D_StartPointId"))+"_"+mapId.get(direction.get("D_EndPointId"));
+			map.put(key, direction.get("D_Distance"));
+		}
+		/**
+		 * Build json data
+		 */
+		JsonParser jsonParser= new JsonParser();
+		JsonObject jsonObject= jsonParser.parse(dataJson).getAsJsonObject();
+		jsonObject.remove("datasetid");
+		jsonObject.add("listPoints", gson.toJsonTree(listPointMaped));
+		jsonObject.add("map",gson.toJsonTree(map));
 		/**
 		 * Call HTTP to ezRouting
 		 */
@@ -133,9 +185,10 @@ public class TSPDService {
 		client.setReadTimeout(180, TimeUnit.SECONDS);
 		client.setWriteTimeout(180, TimeUnit.SECONDS);
 		RequestBody body = RequestBody.create(JSON_HEADER,
-				dataJson);
+				jsonObject.toString());
+		Debug.log(jsonObject.toString(),MODULE_NAME);
 		Request request = new Request.Builder()
-				.url("http://localhost:8088/ezRoutingAPI/tsp-with-kdrone")
+				.url("http://localhost:8088/ezRoutingAPI/tsp-with-kdrone-input-distance")
 				.post(body).build();
 		Response response = null;
 		String resultString = null;
@@ -151,8 +204,8 @@ public class TSPDService {
 		if (!response.isSuccessful()) {
 			return ServiceUtil.returnError("Request didn't compete!!");
 		}
-		Map<String,Object> map =JsonMapUtils.json2MapStrObject(resultString);
-		suc.put("sol", map);
+		//Map<String,Object> map =JsonMapUtils.json2MapStrObject(resultString);
+		suc.put("sol", JsonMapUtils.json2MapStrObject(resultString));
 		return suc;
 	}
 	/** Store data to cache

@@ -16,7 +16,7 @@
 		<description>
             Store data to cache! 
         </description>
-        <attribute name=datasetid type="String" mode="IN"
+        <attribute name="datasetid" type="String" mode="IN"
 			optional="true"></attribute>
 		<attribute name="truckSpeed" type="String" mode="IN"
 			optional="false"></attribute>
@@ -92,7 +92,7 @@
 		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getPoints"
 		transaction-timeout="1000000">
 		<description>
-           Get all direction in a DataSet
+           	Get all Point in a DataSet 
         </description>
         <attribute name="DS_Id" type="String" mode="IN" ></attribute>
 		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
