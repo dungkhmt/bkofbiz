@@ -14,8 +14,10 @@
 	<service name="storeData2Solve" engine="java"
 		location="org.bkofbiz.slp.tspd.TSPDService" invoke="storeData2Cache">
 		<description>
-            Build Route! 
+            Store data to cache! 
         </description>
+        <attribute name="datasetid" type="String" mode="IN"
+			optional="true"></attribute>
 		<attribute name="truckSpeed" type="String" mode="IN"
 			optional="false"></attribute>
 		<attribute name="droneSpeed" type="String" mode="IN"
@@ -32,21 +34,34 @@
 	</service>
 
 	<service name="tspdsolve" engine="java"
-		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve" transaction-timeout="1000000">
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve"
+		transaction-timeout="1000000">
 		<description>
-            Build Route! 
+            Build Route a drone! 
         </description>
-		<attribute name="sol" type="Map" mode="OUT"
-			optional="false"></attribute>
-		
+		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
 	</service>
-	
+
 	<service name="tspkdsolve" engine="java"
-		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspkdSolve" transaction-timeout="1000000">
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspkdSolve"
+		transaction-timeout="1000000">
 		<description>
-            Build Route! 
+            Build Route k drone! 
         </description>
-		<attribute name="sol" type="Map" mode="OUT"
+		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
+	</service>
+
+	<!-- savesampledata -->
+	<service name="savesampledata" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="saveData" transaction-timeout="1000000">
+		<description>
+           Save sample data
+        </description>
+		<attribute name="description" type="String" mode="IN"
+			optional="true"></attribute>
+		<attribute name="name" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="datasetid" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="listPoints" type="String" mode="IN"
 			optional="false"></attribute>
 	</service>
 	
@@ -59,5 +74,35 @@
 			optional="false"></attribute>
 	</service>
 
-
+	<!--  Get all data set -->
+	<service name="getdatasets" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getDataSets"
+		transaction-timeout="1000000">
+		<description>
+           Get all data set
+        </description>
+		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
+	</service>
+	
+	<!-- Get all direction in a DataSet -->
+	<service name="getdirections" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getDirections"
+		transaction-timeout="1000000">
+		<description>
+           Get all direction in a DataSet
+        </description>
+        <attribute name="DS_Id" type="String" mode="IN" ></attribute>
+		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
+	</service>
+	
+	<!-- Get all Point in a DataSet -->
+	<service name="getpoints" engine="java"
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getPoints"
+		transaction-timeout="1000000">
+		<description>
+           	Get all Point in a DataSet 
+        </description>
+        <attribute name="DS_Id" type="String" mode="IN" ></attribute>
+		<attribute name="sol" type="List" mode="OUT" optional="false"></attribute>
+	</service>
 </services>

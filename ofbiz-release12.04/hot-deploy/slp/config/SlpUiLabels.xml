@@ -105,4 +105,19 @@
         <value xml:lang="en">Solution Traveling Saleman Problem with multi Drone</value>
         <value xml:lang="vi">Kết quả bài toán người du lịch sử dụng nhiều drone</value>
     </property>
+    
+    <property key="name">
+        <value xml:lang="en">Name</value>
+        <value xml:lang="vi">Tên bộ dữ liệu</value>
+    </property>
+    
+    <property key="description">
+        <value xml:lang="en">Description</value>
+        <value xml:lang="vi">Mô tả bộ dữ liệu</value>
+    </property>
+    
+    <property key="sampledataheader">
+        <value xml:lang="en">Create data sample</value>
+        <value xml:lang="vi">Tạo bộ dữ liệu mẫu</value>
+    </property>
 </resource>
