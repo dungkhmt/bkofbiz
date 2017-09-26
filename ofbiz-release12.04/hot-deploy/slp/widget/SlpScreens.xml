@@ -115,6 +115,38 @@
 		</section>
 	</screen>
 	
+	<screen name="viewVrp3dSolution">
+		<section>
+			<widgets>
+				<decorator-screen name="tspd-decorator">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template location="component://slp/webapp/slp/tspd/viewvrp3dsolution.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="uploadvrp3d">
+		<section>
+			<widgets>
+				<decorator-screen name="tspd-decorator">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template location="component://slp/webapp/slp/tspd/uploadvrp3d.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<!-- describe decorator -->
 	<!-- describe footer -->
 	<screen name="footer">

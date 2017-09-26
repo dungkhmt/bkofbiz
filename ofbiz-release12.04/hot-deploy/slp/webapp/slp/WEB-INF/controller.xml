@@ -53,6 +53,23 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
+	<request-map uri="vrp3d">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="uploadvrp3d" />
+	</request-map>
+	
+	<request-map uri="upload-file-vrp3d">
+		<security https="true" auth="true" />
+		<event type="java" path="org.bkofbiz.slp.tspd.VRP3DService" invoke="computevrp3d"></event>
+		<response name="AttachementSuccess" type="view" value="viewVrp3dSolution" />
+	</request-map>
+	
+	<request-map uri="compute-vrp3d-solution">
+		<security https="true" auth="true" />
+		<event type="service" invoke="returnsolution"></event>
+		<response name="success" type="request" value="json" />
+	</request-map>
 
 	<!-- Create Sample Data -->
 	<request-map uri="create-sample-data">
@@ -98,6 +115,10 @@
 		page="component://slp/widget/SlpScreens.xml#tspkdsolution" />
 	<view-map name="tspdselectmodule" type="screen"
 		page="component://slp/widget/SlpScreens.xml#tspdselectmodule" />
+	<view-map name="uploadvrp3d" type="screen"
+		page="component://slp/widget/SlpScreens.xml#uploadvrp3d" />
+	<view-map name="viewVrp3dSolution" type="screen"
+		page="component://slp/widget/SlpScreens.xml#viewVrp3dSolution" />
 	<view-map name="createsampledata" type="screen"
 		page="component://slp/widget/SlpScreens.xml#createsampledata" />
 		

@@ -64,9 +64,17 @@
 		<attribute name="datasetid" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="listPoints" type="String" mode="IN"
 			optional="false"></attribute>
-		
 	</service>
 	
+	<service name="returnsolution" engine="java"
+		location="org.bkofbiz.slp.tspd.VRP3DService" invoke="returnsolution" transaction-timeout="1000000">
+		<description>
+            Return VRP3D solution! 
+        </description>
+		<attribute name="sol" type="Map" mode="OUT"
+			optional="false"></attribute>
+	</service>
+
 	<!--  Get all data set -->
 	<service name="getdatasets" engine="java"
 		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="getDataSets"
