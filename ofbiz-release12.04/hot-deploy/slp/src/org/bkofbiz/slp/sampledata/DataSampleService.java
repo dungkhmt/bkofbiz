@@ -340,7 +340,36 @@ public class DataSampleService {
 		}
 		return listRes;
 	}
-
+	/**
+	 * Get Direction by point
+	 * @param delegator
+	 * @param startPointId
+	 * @param endPointId
+	 * @return
+	 * @throws GenericEntityException
+	 */
+	
+	public static List<Map<String, Object>> getDirectiobyPoint(Delegator delegator,String startPointId,String endPointId) throws GenericEntityException{
+		List<EntityCondition> conditions=new ArrayList<EntityCondition>();
+		conditions.add(EntityCondition.makeCondition("D_StartPointId",EntityOperator.EQUALS,startPointId));
+		conditions.add(EntityCondition.makeCondition("D_EndPointId",EntityOperator.EQUALS,endPointId));
+		EntityCondition entity = EntityCondition.makeCondition(conditions);
+		List<GenericValue> list = null;
+		list = delegator.findList("Direction", entity, null, null, null, false);
+		List<Map<String, Object>> listRes = FastList.newInstance();
+		for (GenericValue el : list) {
+			Map<String, Object> map = FastMap.newInstance();
+			map.put("D_Id", el.getString("D_Id"));
+			map.put("D_StartPointId", el.getString("D_StartPointId"));
+			map.put("D_EndPointId", el.getString("D_EndPointId"));
+			map.put("D_Distance", el.getString("D_Distance"));
+			map.put("D_Time", el.getString("D_Time"));
+			map.put("DS_Id", el.getString("DS_Id"));
+			map.put("D_Path", el.getString("D_Path"));
+			listRes.add(map);
+		}
+		return listRes;
+	}
 	/**
 	 * Get all Point in a DataSet
 	 * 

@@ -1,4 +1,4 @@
-package org.bkofbiz.slp.tspd;
+package org.bkofbiz.slp.tspd.model;
 
 import java.io.Serializable;
 

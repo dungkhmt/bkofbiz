@@ -40,6 +40,7 @@
             Build Route a drone! 
         </description>
 		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
+		<attribute name="directionPath" type="Map" mode="OUT" optional="false"></attribute>
 	</service>
 
 	<service name="tspkdsolve" engine="java"

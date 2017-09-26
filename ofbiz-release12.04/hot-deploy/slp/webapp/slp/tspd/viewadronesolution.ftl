@@ -21,13 +21,14 @@
 <script>
 var map;
 var dataResponse;
-var baseUrl="/resource/slp/image/icon/"
+var baseUrl="/resource/slp/image/icon/";
 var tours;
 var makerDrone;
 var makerTruck;
 var algo=0;
 var directionsService ;
 var stateBotNormalPolyline=0;
+var zzzzzz=null;
 function saveSolution(view){
 	console.log("here");
 	save_data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataResponse));
@@ -44,6 +45,7 @@ $( document ).ready(function() {
 	    dataType: "json",
 		contentType: 'application/json; charset=utf-8',
 		success: function (data) {
+			zzzzzz=data;
 			console.log(data);
 			dataResponse=data.sol;
 			tours=dataResponse.tours;
@@ -207,7 +209,6 @@ function view_tour(data){
 		dl[i]=0;
 	}
 	runTruck(new google.maps.LatLng(truckTour[0].lat,truckTour[0].lng),new google.maps.LatLng(truckTour[truckTour.length-1].lat,truckTour[truckTour.length-1].lng));
-	
 }
 
 function runTruck(start,end){
@@ -245,14 +246,12 @@ function set(start,end,marker){
 	marker.setPosition(start);
 	marker.setMap(map);
 	var waypoints=[]
-	
 	var polyLine = new google.maps.Polyline({
 		path: [],
 		strokeColor: '#1A9D51',
 		strokeOpacity: 0.7,
 	    strokeWeight: 3
 	});	
-	
 	calculateAndDisplay(1,start,end,marker,polyLine,waypoints);
 }
 var sucQDir=false;
@@ -262,7 +261,7 @@ function storeResponce(request,polyLine){
 			var legs = rep.routes[0].legs;   
 			for(var h=0; h<legs.length; h++){			
 				var steps = legs[h].steps;
-				polylineNormal.getPath().push(legs[h].start_location)
+				polylineNormal.getPath().push(legs[h].start_location);
 				var marker_z = new google.maps.Marker({
 					position : legs[h].start_location,
 					label:labels[markerTruckTour.length % labels.length],
@@ -280,6 +279,8 @@ function storeResponce(request,polyLine){
 					}
 				}
 			}
+		} else {
+			alert("Query not complete!!!");
 		}
 		sucQDir=true;
 	};
@@ -326,38 +327,38 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function calculateAndDisplay(i,start, end, marker,polyLine,waypoints){
 	if(i %22==0 || i>=truckTour.length-1){
-			var request = {
-				origin: start,
-				destination: new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
-				waypoints:waypoints,	
-				travelMode: google.maps.DirectionsTravelMode.DRIVING
-			};
-			sucQDir=false;	
-			if(i>=truckTour.length-1){
-				lastReq(marker,end,request,polyLine);
-				return;
-			}
-			storeResponce(request,polyLine);
-			move = function( wait,i) {
-        		if(sucQDir==false) {
-	          		setTimeout(function() { 
-	            		move(wait,i); 
-	          		}, wait);
-        		} else{
-        			start= new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng);
-        			waypoints=[];
-        			calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
-        			return
-        		}
-			}
-			move(10,i);
-		} else {
-			waypoints.push({
-	            location:new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
-	            stopover: true
-	  		});
-			calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
+		var request = {
+			origin: start,
+			destination: new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
+			waypoints:waypoints,	
+			travelMode: google.maps.DirectionsTravelMode.DRIVING
+		};
+		sucQDir=false;	
+		if(i>=truckTour.length-1){
+			lastReq(marker,end,request,polyLine);
+			return;
 		}
+		storeResponce(request,polyLine);
+		move = function( wait,i) {
+			if(sucQDir==false) {
+				setTimeout(function() { 
+					move(wait,i); 
+				}, wait);
+			} else{
+				start= new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng);
+				waypoints=[];
+				calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
+				return
+			}
+		}
+		move(10,i);
+	} else {
+		waypoints.push({
+			location:new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
+			stopover: true
+		});
+		calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
+	}
 		
 }
 
