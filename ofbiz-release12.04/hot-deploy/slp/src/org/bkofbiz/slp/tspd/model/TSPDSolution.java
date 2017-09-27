@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class TSPDSolution {
 	Tour[] tours;
-	private double truckspeed; //Speed of truck
-	private double dronespeed; //Speed of drone
-	private int truckcost;//cost per unit of trunk
-	private int dronecost; //cost per unit of drone
+	private double truckSpeed; //Speed of truck
+	private double droneSpeed; //Speed of drone
+	private int truckCost;//cost per unit of trunk
+	private int droneCost; //cost per unit of drone
 	private double delta;
 	private double endurance;
 
@@ -15,10 +15,10 @@ public class TSPDSolution {
 			int truckCost, int droneCost, double delta, double endurance) {
 		super();
 		this.tours = tours;
-		this.truckspeed = truckSpeed;
-		this.dronespeed = droneSpeed;
-		this.truckcost = truckCost;
-		this.dronecost = droneCost;
+		this.truckSpeed = truckSpeed;
+		this.droneSpeed = droneSpeed;
+		this.truckCost = truckCost;
+		this.droneCost = droneCost;
 		this.delta = delta;
 		this.endurance = endurance;
 	}
@@ -32,35 +32,35 @@ public class TSPDSolution {
 	}
 
 	public double getTruckSpeed() {
-		return truckspeed;
+		return truckSpeed;
 	}
 
 	public void setTruckSpeed(double truckSpeed) {
-		this.truckspeed = truckSpeed;
+		this.truckSpeed = truckSpeed;
 	}
 
 	public double getDroneSpeed() {
-		return dronespeed;
+		return droneSpeed;
 	}
 
 	public void setDroneSpeed(double droneSpeed) {
-		this.dronespeed = droneSpeed;
+		this.droneSpeed = droneSpeed;
 	}
 
 	public int getTruckCost() {
-		return truckcost;
+		return truckCost;
 	}
 
 	public void setTruckCost(int truckCost) {
-		this.truckcost = truckCost;
+		this.truckCost = truckCost;
 	}
 
 	public int getDroneCost() {
-		return dronecost;
+		return droneCost;
 	}
 
 	public void setDroneCost(int droneCost) {
-		this.dronecost = droneCost;
+		this.droneCost = droneCost;
 	}
 
 	public double getDelta() {
@@ -82,8 +82,8 @@ public class TSPDSolution {
 	@Override
 	public String toString() {
 		return "TSPDSolution [tours=" + Arrays.toString(tours)
-				+ ", truckSpeed=" + truckspeed + ", droneSpeed=" + dronespeed
-				+ ", truckCost=" + truckcost + ", droneCost=" + dronecost
+				+ ", truckSpeed=" + truckSpeed + ", droneSpeed=" + droneSpeed
+				+ ", truckCost=" + truckCost + ", droneCost=" + droneCost
 				+ ", delta=" + delta + ", endurance=" + endurance + "]";
 	}
 	

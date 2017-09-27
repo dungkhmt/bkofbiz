@@ -149,6 +149,11 @@ public class TSPDService {
 					/**
 					 * check point last tour
 					 */
+					if (Integer.parseInt(p.getID()) >= listPoint.size()) {
+						p.setID(mapValue.get("0"));
+					} else {
+						p.setID(mapValue.get(p.getID()));
+					}
 					dd.setRendezvous_node(p);
 
 					p = dd.getLauch_node();
@@ -200,7 +205,7 @@ public class TSPDService {
 				}
 			}
 		Debug.log(solution.toString(), MODULE_NAME);
-		suc.put("sol", res);
+		suc.put("sol", JsonMapUtils.json2MapStrObject(gson.toJson(solution)));
 		suc.put("directionPath", mapDirectionPath);
 		return suc;
 	}
