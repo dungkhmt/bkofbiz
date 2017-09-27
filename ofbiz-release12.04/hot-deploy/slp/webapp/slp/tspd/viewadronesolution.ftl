@@ -30,9 +30,7 @@ var directionsService ;
 var stateBotNormalPolyline=0;
 var directionPath=null;
 function saveSolution(view){
-	console.log("here");
 	save_data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataResponse));
-	console.log(save_data);
 	view.setAttribute("href", "data:"+save_data);
     view.setAttribute("download", "solution.json");
     //window.location = baseUrl + "/tsp-drone/tspd-solve-home";
@@ -254,75 +252,7 @@ function set(start,end,marker){
 	});	
 	calculateAndDisplay(1,start,end,marker,polyLine,waypoints);
 }
-var sucQDir=false;
-function storeResponce(request,polyLine){
-	var display=function(rep, status){
-		if(status == google.maps.DirectionsStatus.OK){
-			var legs = rep.routes[0].legs;   
-			for(var h=0; h<legs.length; h++){			
-				var steps = legs[h].steps;
-				polylineNormal.getPath().push(legs[h].start_location);
-				var marker_z = new google.maps.Marker({
-					position : legs[h].start_location,
-					label:labels[markerTruckTour.length % labels.length],
-					map: map
-				});
-				markerTruckTour.push(marker_z);
-				legs[h].start_location.isWayPoint=markerTruckTour.length-1;
-				polyLine.getPath().push(legs[h].start_location);
-				for(var j = 0; j < steps.length; j++){
-					var nextPoint = steps[j].path;  			
-					for(var k = 0; k < nextPoint.length; k++){
-						if(j==0&& k==0) continue;
-						nextPoint[k].isWayPoint=markerTruckTour.length-1;
-						polyLine.getPath().push(nextPoint[k]); 		
-					}
-				}
-			}
-		} else {
-			alert("Query not complete!!!");
-		}
-		sucQDir=true;
-	};
-	directionsService.route(request, display);	
-}
 
-function lastReq(marker,end,request,polyLine){
-	
-	var display=function(rep, status){
-		if(status == google.maps.DirectionsStatus.OK){
-	
-			var legs = rep.routes[0].legs;   
-			for(var h=0; h<legs.length; h++){
-				
-				var steps = legs[h].steps;
-				polylineNormal.getPath().push(legs[h].start_location)
-				var marker_z = new google.maps.Marker({
-					position : legs[h].start_location,
-					label:labels[markerTruckTour.length % labels.length],
-					map: map
-				});
-				markerTruckTour.push(marker_z);
-				legs[h].start_location.isWayPoint=markerTruckTour.length-1;
-				polyLine.getPath().push(legs[h].start_location);
-				for(var j = 0; j < steps.length; j++){
-					var nextPoint = steps[j].path;  			
-					for(var k = 0; k < nextPoint.length; k++){
-						if(j==0&& k==0) continue;
-						nextPoint[k].isWayPoint=markerTruckTour.length-1;
-						polyLine.getPath().push(nextPoint[k]); 		
-					}
-				}
-			}
-		}
-		//polyLine.setMap(map);
-		polylineNormal.getPath().push(end);
-		polylineNormal.setMap(map);
-		startAnimation(marker,polyLine,end,algo);	
-	};
-	
-	directionsService.route(request, display);
-}
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function calculateAndDisplay(i,start, end, marker,polyLine,waypoints){
@@ -333,8 +263,6 @@ function calculateAndDisplay(i,start, end, marker,polyLine,waypoints){
 					map: map
 				});
 		var key=truckTour[i].id+"_"+truckTour[i+1].id;
-		//console.log(key);
-		//console.log(directionPath[key]);
 		var lp=directionPath[key];
 		markerTruckTour.push(marker_z);
 		polylineNormal.getPath().push(new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng));
@@ -343,49 +271,11 @@ function calculateAndDisplay(i,start, end, marker,polyLine,waypoints){
 				pp.isWayPoint=markerTruckTour.length-1;
 				polyLine.getPath().push(pp); 		
 		}
-		console.log(i);
 	}
-	console.log("done");
 	polylineNormal.getPath().push(new google.maps.LatLng(truckTour[truckTour.length-1].lat,truckTour[truckTour.length-1].lng));
 	polylineNormal.setMap(map);
-	console.log(polyLine.getPath());
 	polyLine.setMap(map);
-	
 	startAnimation(marker,polyLine,end,algo);	
-	/*if(i %22==0 || i>=truckTour.length-1){
-		var request = {
-			origin: start,
-			destination: new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
-			waypoints:waypoints,	
-			travelMode: google.maps.DirectionsTravelMode.DRIVING
-		};
-		sucQDir=false;	
-		if(i>=truckTour.length-1){
-			lastReq(marker,end,request,polyLine);
-			return;
-		}
-		storeResponce(request,polyLine);
-		move = function( wait,i) {
-			if(sucQDir==false) {
-				setTimeout(function() { 
-					move(wait,i); 
-				}, wait);
-			} else{
-				start= new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng);
-				waypoints=[];
-				calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
-				return
-			}
-		}
-		move(10,i);
-	} else {
-		waypoints.push({
-			location:new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
-			stopover: true
-		});
-		calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
-	}*/
-		
 }
 
 function startAnimation(marker,polyLine,end,malgo){

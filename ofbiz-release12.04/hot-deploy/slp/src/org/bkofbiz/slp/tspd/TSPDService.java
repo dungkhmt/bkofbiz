@@ -196,11 +196,9 @@ public class TSPDService {
 					}
 					Map<String, Object> tmp = qres.get(0);
 					String str = (String) tmp.get("D_Path");
-					Debug.log(str,MODULE_NAME);
 					Type listType = new TypeToken<List<LatLng>>() {
 					}.getType();
 					List<LatLng> path = gson.fromJson(str, listType);
-					Debug.log(path.toString(),MODULE_NAME);
 					mapDirectionPath.put(key, path);
 				}
 			}
@@ -356,11 +354,9 @@ public class TSPDService {
 					}
 					Map<String, Object> tmp = qres.get(0);
 					String str = (String) tmp.get("D_Path");
-					Debug.log(str,MODULE_NAME);
 					Type listType = new TypeToken<List<LatLng>>() {
 					}.getType();
 					List<LatLng> path = gson.fromJson(str, listType);
-					Debug.log(path.toString(),MODULE_NAME);
 					mapDirectionPath.put(key, path);
 				}
 			}
