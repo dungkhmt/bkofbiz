@@ -238,9 +238,11 @@ public class TSPDService {
 		 */
 		List<Map<String, String>> listPointMaped = new ArrayList<Map<String, String>>();
 		Map<String, Integer> mapId = new HashMap<String, Integer>();
+		Map<String, String> mapValue = new HashMap<String, String>();
 		for (int i = 0; i < listPoint.size(); i++) {
 			Map<String, Object> point = listPoint.get(i);
 			mapId.put((String) point.get("P_Id"), i);
+			mapValue.put(i + "", (String) point.get("P_Id"));
 			Map<String, String> pointMaped = new HashMap<String, String>();
 			pointMaped.put("id", "" + i);
 			pointMaped.put("lat", (String) point.get("P_Lat"));
@@ -293,8 +295,78 @@ public class TSPDService {
 		if (!response.isSuccessful()) {
 			return ServiceUtil.returnError("Request didn't compete!!");
 		}
-		// Map<String,Object> map =JsonMapUtils.json2MapStrObject(resultString);
-		suc.put("sol", JsonMapUtils.json2MapStrObject(resultString));
+		Map<String, Object> res = JsonMapUtils.json2MapStrObject(resultString);
+		TSPDSolution solution = gson.fromJson(resultString, TSPDSolution.class);
+		Tour tours[] = solution.getTours();
+		Map<String, List<LatLng>> mapDirectionPath = new HashMap<String, List<LatLng>>();
+		for (int i = 0; i < tours.length; i++)
+			if (tours[i] != null) {
+				ArrayList<DroneDelivery> dds = tours[i].getDD();
+				for (int j = 0; j < dds.size(); j++) {
+
+					DroneDelivery dd = dds.get(j);
+					Point p = dd.getRendezvous_node();
+					/**
+					 * check point last tour
+					 */
+					if (Integer.parseInt(p.getID()) >= listPoint.size()) {
+						p.setID(mapValue.get("0"));
+					} else {
+						p.setID(mapValue.get(p.getID()));
+					}
+					dd.setRendezvous_node(p);
+
+					p = dd.getLauch_node();
+					p.setID(mapValue.get(p.getID()));
+					dd.setLauch_node(p);
+
+					p = dd.getDrone_node();
+					p.setID(mapValue.get(p.getID()));
+					dd.setDrone_node(p);
+					dds.set(j, dd);
+				}
+
+				ArrayList<Point> truckTour = tours[i].getTD().getTruck_tour();
+				for (int j = 0; j < truckTour.size(); j++) {
+					Point p = truckTour.get(j);
+					/**
+					 * check point last tour
+					 */
+					if (Integer.parseInt(p.getID()) >= listPoint.size()) {
+						p.setID(mapValue.get("0"));
+					} else {
+						p.setID(mapValue.get(p.getID()));
+					}
+					truckTour.set(j, p);
+				}
+				for (int j = 1; j < truckTour.size(); j++) {
+					Point p2 = truckTour.get(j);
+					Point p1 = truckTour.get(j - 1);
+					String key = p1.getID() + "_" + p2.getID();
+					if (mapDirectionPath.containsKey(key))
+						continue;
+					List<Map<String, Object>> qres = null;
+					try {
+						qres = DataSampleService.getDirectiobyPoint(delegator,
+								p1.getID(), p2.getID());
+					} catch (GenericEntityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return ServiceUtil.returnError(e.getMessage());
+					}
+					Map<String, Object> tmp = qres.get(0);
+					String str = (String) tmp.get("D_Path");
+					Debug.log(str,MODULE_NAME);
+					Type listType = new TypeToken<List<LatLng>>() {
+					}.getType();
+					List<LatLng> path = gson.fromJson(str, listType);
+					Debug.log(path.toString(),MODULE_NAME);
+					mapDirectionPath.put(key, path);
+				}
+			}
+		Debug.log(solution.toString(), MODULE_NAME);
+		suc.put("sol", JsonMapUtils.json2MapStrObject(gson.toJson(solution)));
+		suc.put("directionPath", mapDirectionPath);
 		return suc;
 	}
 

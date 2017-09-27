@@ -22,7 +22,6 @@
 var map;
 var dataResponse ;
 var tours;
-console.log(tours);
 var markerDrone=[];
 var makerTruck;
 var algo=0;
@@ -30,7 +29,6 @@ var baseUrl="/resource/slp/image/icon/"
 var directionsService ;
 var stateBotNormalPolyline=0;
 $( document ).ready(function() {
-	
     $.ajax({
 		url: "/slp/control/tspd-get-route-k-drone",
 		type: 'post',
@@ -40,6 +38,7 @@ $( document ).ready(function() {
 			console.log(data);
 			dataResponse=data.sol;
 			tours=dataResponse.tours;
+			directionPath=data.directionPath;
 			$('#loading').html('${slplabel.done}<img style="width: 35px; height: 35px" src="/resource/slp/image/icon/ticker.png"/>')
 		}
 	});
@@ -139,6 +138,7 @@ var dr=[];
 var dl=[];
 var markerTruckTour=[];
 var polylineNormal;
+var directionPath=null;
 function view_tour(data){
 	markerTruckTour=[];
 	truckTour = data.td.truck_tour;
@@ -324,7 +324,34 @@ function lastReq(marker,end,request,polyLine){
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function calculateAndDisplay(i,start, end, marker,polyLine,waypoints){
-	if(i %22==0 || i>=truckTour.length-1){
+	for(var i=0;i<truckTour.length-1;i++){
+		var marker_z = new google.maps.Marker({
+					position : new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng) ,
+					label:labels[markerTruckTour.length % labels.length],
+					map: map
+				});
+		var key=truckTour[i].id+"_"+truckTour[i+1].id;
+		//console.log(key);
+		//console.log(directionPath[key]);
+		var lp=directionPath[key];
+		markerTruckTour.push(marker_z);
+		polylineNormal.getPath().push(new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng));
+		for(var j = 0; j < lp.length; j++){
+				var pp=new google.maps.LatLng(lp[j].lat,lp[j].lng);
+				pp.isWayPoint=markerTruckTour.length-1;
+				polyLine.getPath().push(pp); 		
+		}
+		console.log(i);
+	}
+	console.log("done");
+	polylineNormal.getPath().push(new google.maps.LatLng(truckTour[truckTour.length-1].lat,truckTour[truckTour.length-1].lng));
+	polylineNormal.setMap(map);
+	console.log(polyLine.getPath());
+	polyLine.setMap(map);
+	
+	startAnimation(marker,polyLine,end,algo);	
+	
+	/* if(i %22==0 || i>=truckTour.length-1){
 			var request = {
 				origin: start,
 				destination: new google.maps.LatLng(truckTour[i].lat,truckTour[i].lng),
@@ -356,7 +383,7 @@ function calculateAndDisplay(i,start, end, marker,polyLine,waypoints){
 	            stopover: true
 	  		});
 			calculateAndDisplay(i+1,start, end, marker,polyLine,waypoints);
-		}
+		} */
 		
 }
 

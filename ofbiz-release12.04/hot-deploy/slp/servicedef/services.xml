@@ -50,6 +50,7 @@
             Build Route k drone! 
         </description>
 		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
+		<attribute name="directionPath" type="Map" mode="OUT" optional="false"></attribute>
 	</service>
 
 	<!-- savesampledata -->
