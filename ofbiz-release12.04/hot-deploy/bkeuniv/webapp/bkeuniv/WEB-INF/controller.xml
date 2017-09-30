@@ -192,9 +192,26 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="get-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getPatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <request-map uri="scientificserviceexperience">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-scientificserviceexperience"></response>
+    </request-map>
+    
+    <request-map uri="patent-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-patent-staff"></response>
+    </request-map>
+    
+    <request-map uri="applied-project-declaration-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-applied-project-declaration-staff"></response>
     </request-map>
     
     <request-map uri="get-scientificserviceexperience">
@@ -204,9 +221,30 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="get-applied-project-declaration-staff">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="getProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="create-award">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="createAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-applied-project-declaration-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createPatent"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -225,6 +263,20 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
+	<request-map uri="update-applied-project-declaration-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updatePatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 
 	<request-map uri="update-scientificserviceexperience">
 		<security https="false" auth="false"/>
@@ -236,6 +288,20 @@
 	<request-map uri="delete-award">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="deleteAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deletePatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-applied-project-declaration-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteProject"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -270,8 +336,9 @@
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
     <view-map name="view-award" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#award"/>
+    <view-map name="view-patent-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#patentStaff"/>
     <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
-    
+    <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
 </site-conf>

@@ -126,7 +126,9 @@ public class EducationProgress {
 
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
-		String staffId = (String) context.get("staffId");
+		//String staffId = (String) context.get("staffId");
+		String staffId = (String)userLogin.get("userLoginId");
+		
 		String educationType = (String) context.get("educationType");
 		String institution = (String) context.get("institution");
 		String speciality = (String) context.get("speciality");

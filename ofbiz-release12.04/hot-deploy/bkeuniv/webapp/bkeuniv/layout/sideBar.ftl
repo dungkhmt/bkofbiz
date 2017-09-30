@@ -20,27 +20,6 @@
 		
 		<div class="side-bar-selection">
 			<div class="side-bar-item-container">
-				<label class="tree-toggle nav-header">
-					<span class="glyphicon glyphicon-minus"></span>
-					Li lich khoa hoc
-				</label>
-				<ul class="researchdeclaration nav-list tree">
-					<li>
-						<a href="staff-management">Danh sach can bo</a>
-					</li>
-					<li>
-						<a href="department-management">Quan ly bo  mon</a>
-					</li>
-					<li>
-						<a href="award">${uiLabelMap.BkEunivAward}</a>
-					</li>
-					<li>
-						<a href="education-progress">${uiLabelMap.BkEunivEducationProgress}</a>
-					</li>
-					<li>
-						<a href="scientificserviceexperience">${uiLabelMap.BkEunivEMSATA}</a>
-					</li>
-				</ul>
 				<#list functions.permissionFunctions as f>
 					<label class="tree-toggle nav-header">
 						<span class="glyphicon glyphicon-minus"></span>

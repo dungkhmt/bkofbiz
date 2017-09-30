@@ -3,6 +3,7 @@ package src.org.ofbiz.bkeuniv.award;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -29,6 +30,39 @@ import src.org.ofbiz.bkeuniv.educationprogress.EducationProgress;
 import src.org.ofbiz.utils.BKEunivUtils;
 
 public class Award {
+	
+	public final static String module = Award.class.getName();
+	public static Map<String, Object> createAward(DispatchContext ctx, Map<String, ? extends Object> context){
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		Locale locale = (Locale) context.get("locale");
+		
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		String staffId = (String) context.get("staffId");
+		String description = (String) context.get("description");
+		String year = (String) context.get("year");
+		
+		GenericValue gv = delegator.makeValue("Award");
+		gv.put("awardId",delegator.getNextSeqId("Award"));
+		try{
+			gv.put("description", description);
+			gv.put("year", Long.valueOf(year));
+			gv.put("staffId", staffId);
+			
+			delegator.create(gv);
+		}catch(Exception ex){
+			System.out.println("aaa");
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		
+		retSucc.put("award", gv);
+		return retSucc;
+		
+	}
 	
 	public static Map<String, Object> getAward(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
@@ -85,38 +119,6 @@ public class Award {
 		}
 	}
 	
-	public static Map<String, Object> createAward(DispatchContext ctx, Map<String, ? extends Object> context){
-		Delegator delegator = ctx.getDelegator();
-		LocalDispatcher dispatcher = ctx.getDispatcher();
-		
-		GenericValue userLogin = (GenericValue) context.get("userLogin");
-		Locale locale = (Locale) context.get("locale");
-		
-		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
-		
-		String staffId = (String) context.get("staffId");
-		String description = (String) context.get("description");
-		String year = (String) context.get("year");
-		
-		GenericValue gv = delegator.makeValue("Award");
-		gv.put("awardId",delegator.getNextSeqId("Award"));
-		try{
-			gv.put("description", description);
-			gv.put("year", Long.valueOf(year));
-			gv.put("staffId", staffId);
-			
-			delegator.create(gv);
-		}catch(Exception ex){
-			System.out.println("aaa");
-			ex.printStackTrace();
-			return ServiceUtil.returnError(ex.getMessage());
-		}
-		
-		retSucc.put("award", gv);
-		return retSucc;
-		
-	}
-	
 	public static Map<String, Object> deleteAward(DispatchContext ctx, Map<String, ? extends Object> context) {
         Delegator delegator = ctx.getDelegator();
         LocalDispatcher dispatcher = ctx.getDispatcher();
@@ -161,16 +163,23 @@ public class Award {
 				gv.put("year", Long.valueOf(year));
 				gv.put("staffId", staffId);
 				
-				delegator.store(gv);	
-        		retSucc.put("result", "updated record with id: " + awardId);
+				delegator.store(gv);
+				
+				Map<String, Object> rs = new HashMap<String, Object>();
+				rs.put("awardId", awardId);
+				rs.put("description", description);
+				rs.put("staffId", staffId);
+				rs.put("year", year);
+				
+				retSucc.put("award", rs);
+        		retSucc.put("message", "updated record with id: " + awardId);
         	} else {
-        		retSucc.put("result", "not found record with id: " + awardId);
+        		retSucc.put("message", "not found record with id: " + awardId);
         	}
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
         	return ServiceUtil.returnError(ex.getMessage());
-        
 		}
 		return retSucc;
 	}

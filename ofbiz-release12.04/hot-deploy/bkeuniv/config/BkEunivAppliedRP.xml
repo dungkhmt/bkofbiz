@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<property key="BkEunivARP">
+        <value xml:lang="en">List ARP</value>
+        <value xml:lang="vi">Danh sách đề tài đã được ứng dụng thực tế</value>
+    </property>
+	
+	<property key="BkEunivARPId">
+        <value xml:lang="en">ID</value>
+        <value xml:lang="vi">Mã đề tài</value>
+    </property>
+    
+    <property key="BkEunivARPStaff">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">Mã nhân viên</value>
+    </property>
+    
+    <property key="BkEunivARPName">
+        <value xml:lang="en">Name</value>
+        <value xml:lang="vi">Tên đề tài</value>
+    </property>
+    
+    <property key="BkEunivARPDescription">
+        <value xml:lang="en">Description</value>
+        <value xml:lang="vi">Mô tả</value>
+    </property>
+    
+    <property key="BkEunivARPPeriod">
+        <value xml:lang="en">Period</value>
+        <value xml:lang="vi">Thời kỳ</value>
+    </property>
+    
+    <property key="BkEunivARPAdd">
+        <value xml:lang="en">Add a new Project</value>
+        <value xml:lang="vi">Thêm mới một đề tài</value>
+    </property>
+    
+    <property key="BkEunivARPEdit">
+        <value xml:lang="en">Edit a new Project</value>
+        <value xml:lang="vi">Chỉnh sửa đề tài</value>
+    </property>
+    
+    <property key="BkEunivARPDelete">
+        <value xml:lang="en">Delete a project?</value>
+        <value xml:lang="vi">Xóa một đề tài?</value>
+    </property>
+</resource>

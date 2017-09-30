@@ -373,13 +373,13 @@
 	</entity>
 	
 	<entity entity-name="Patent" package-name="org.ofbiz.bkeuniv">
-		<field name="patentId" type=""></field>
+		<field name="patentId" type="id-ne"></field>
 		<field name="patentName" type="very-long"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="year" type="numeric"></field>
 		<prim-key field="patentId"/>
 		<relation rel-entity-name="Staff" type="one">
-		<key-map field-name="staffId"/>
+			<key-map field-name="staffId"/>
 		</relation>
 	</entity>
 	

@@ -12,7 +12,7 @@
     </service> 
     
 	<service name="getPapersOfStaff" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDecalarationService" invoke="getPapersOfStaff">
 		<!-- 
 		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
 		 -->
@@ -80,6 +80,7 @@
     	<attribute name="year" mode="IN" type="String"></attribute>
     	
     	<attribute name="award" mode="OUT" type="Map"></attribute>
+    	
     </service>
     
     <service name="updateAward" engine="java" 
@@ -89,7 +90,8 @@
     	<attribute name="description" mode="IN" type="String"></attribute>
     	<attribute name="year" mode="IN" type="String"></attribute>
     	
-    	<attribute name="result" mode="OUT" type="String"></attribute>
+    	<attribute name="award" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     
     <service name="deleteAward" engine="java" 

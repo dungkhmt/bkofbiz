@@ -5,6 +5,11 @@
         <value xml:lang="vi">Mã giải thưởng</value>
     </property>
    
+   <property key="BkEunivAward">
+        <value xml:lang="en">Awards</value>
+        <value xml:lang="vi">Danh sách giải thưởng</value>
+    </property>
+   
    <property key="BkEunivStaffId">
         <value xml:lang="en">Staff ID</value>
         <value xml:lang="vi">Mã nhân viên</value>
@@ -21,13 +26,13 @@
     </property>
     
     <property key="BkEunivTitleEditAward">
-        <value xml:lang="en">Edit Award</value>
+        <value xml:lang="en">Edit a Award</value>
         <value xml:lang="vi">Chỉnh sửa giải thưởng</value>
     </property>
     
     <property key="BkEunivAddRow">
-        <value xml:lang="en">Add</value>
-        <value xml:lang="vi">Thêm</value>
+        <value xml:lang="en">Add a new Adward</value>
+        <value xml:lang="vi">Thêm mới giải thưởng</value>
     </property>
     
     <property key="BkEunivTitleNewAward">
@@ -36,8 +41,8 @@
     </property>
     
     <property key="BkEunivTitleDeleteAward">
-        <value xml:lang="en">Delete</value>
-        <value xml:lang="vi">Xoá</value>
+        <value xml:lang="en">Delete a Award</value>
+        <value xml:lang="vi">Xoá một giải thưởng?</value>
     </property>
     
 </resource>
