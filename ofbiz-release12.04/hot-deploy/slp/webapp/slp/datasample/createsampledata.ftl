@@ -11,6 +11,7 @@
 			<label class="control-label col-lg-1">DataSet</label>
 			<select name="datasetid" class="col-lg-3" id="data-sample">
 			</select>
+			<label id="numpoints" class="control-label col-lg-3">NUM POINTS </label>
 		</div>
 	</div>
 	<div class="row">
@@ -104,7 +105,9 @@ function loaddirectionandpoint(DS_Id){
 					this.setMap(null);
 					var indexMarker = listMarker.indexOf(this);
 					listMarker.splice(indexMarker,1);
+					$('#numpoints').html("NUM POINTS : "+listMarker.length);
 				});
+				$('#numpoints').html("NUM POINTS : "+listMarker.length);
 			}
 		}
 	});
@@ -114,7 +117,7 @@ function initialize(){
 	var mapProp = {
 		center: {lat: 21.033333, lng: 105.849998},
 		zoom: 12,
-		scrollwheel: false,
+		scrollwheel: true,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	map=new google.maps.Map(document.getElementById("GoogleMap"),mapProp);
@@ -132,7 +135,9 @@ function initialize(){
 			this.setMap(null);
 			var indexMarker = listMarker.indexOf(this);
 			listMarker.splice(indexMarker,1);
+			$('#numpoints').html("NUM POINTS : "+listMarker.length);
 		});
+		$('#numpoints').html("NUM POINTS : "+listMarker.length);
 	});
 }
 

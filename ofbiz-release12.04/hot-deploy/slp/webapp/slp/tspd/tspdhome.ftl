@@ -7,10 +7,10 @@
 	</div>
 
 	<div class="row">
-		<form action="tspd/uploadSolution" method="POST" id="tspdsolution" commandName="tspdsolution" enctype="multipart/form-data" role="form" class="form-horizontal">
-			<input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" />
-			<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a>
-		</form>
+		<!-- <form action="tspd/uploadSolution" method="POST" id="tspdsolution" commandName="tspdsolution" enctype="multipart/form-data" role="form" class="form-horizontal"> -->
+			<!-- <input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" /> -->
+			<!-- <a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a> -->
+		<!-- </form> -->
 		<form action="tspd-select-module" method="POST" commandName="tspd" role="form" class="form-horizontal">
 			<div class="row">
 				<div class="col-lg-10">
@@ -67,9 +67,9 @@
 						<input name="listPoints" id="listPoints" type="hidden"/>
 						<input name="inputjson" id="inputjson" type="hidden"/>
 						<button class="btn btn-primary col-lg-offset-5" onclick="run_algorithm();" type="submit">${slplabel.start}</button>
-						<a class="btn btn-primary" onclick="save_file(this);">${slplabel.saveinput}</a>
-						<a class="btn btn-primary" onclick="upload_file();">${slplabel.uploadinput}</a>
-						<input id="file-tsp-data" class="file file-loading" type="file" style="display:none"/>	
+						<!-- <a class="btn btn-primary" onclick="save_file(this);">${slplabel.saveinput}</a> -->
+						<!-- <a class="btn btn-primary" onclick="upload_file();">${slplabel.uploadinput}</a> -->
+						<!-- <input id="file-tsp-data" class="file file-loading" type="file" style="display:none"/>	 -->
 					</div>
 				</div>		
 			</div>
@@ -166,7 +166,7 @@ function initialize(){
 	var mapProp = {
 		center: {lat: 21.033333, lng: 105.849998},
 		zoom: 12,
-		scrollwheel: false,
+		scrollwheel: true,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	console.log("log 1");
