@@ -52,7 +52,30 @@
 		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
 		<attribute name="directionPath" type="Map" mode="OUT" optional="false"></attribute>
 	</service>
-
+	
+	<service name="tspkdsolve-datasetid" engine="java"
+		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolveLS"
+		transaction-timeout="1000000">
+		<description>
+            Build Route k drone! 
+        </description>
+       <attribute name="datasetid" type="String" mode="IN"
+			optional="true"></attribute>
+		<attribute name="truckSpeed" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="droneSpeed" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="truckCost" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="droneCost" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="delta" type="String" mode="IN" optional="false"></attribute>
+		<attribute name="endurance" type="String" mode="IN"
+			optional="false"></attribute>
+		<attribute name="sol" type="Map" mode="OUT" optional="false"></attribute>
+		<attribute name="directionPath" type="Map" mode="OUT" optional="false"></attribute>
+	</service>
+	
 	<!-- savesampledata -->
 	<service name="savesampledata" engine="java"
 		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="saveData" transaction-timeout="1000000">

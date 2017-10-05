@@ -54,6 +54,18 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="tspd-get-route-k-drone-datasetid">
+		<security https="false" auth="false" />
+		<event type="service" invoke="tspkdsolve-datasetid"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="tspd-solve-ls">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="tspkdsolutionls" />
+	</request-map>
+	
 	<request-map uri="vrp3d">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="uploadvrp3d" />
@@ -113,6 +125,8 @@
 		page="component://slp/widget/SlpScreens.xml#tspdsolution" />
 	<view-map name="tspkdsolution" type="screen"
 		page="component://slp/widget/SlpScreens.xml#tspkdsolution" />
+	<view-map name="tspkdsolutionls" type="screen"
+		page="component://slp/widget/SlpScreens.xml#tspkdsolutionls" />
 	<view-map name="tspdselectmodule" type="screen"
 		page="component://slp/widget/SlpScreens.xml#tspdselectmodule" />
 	<view-map name="uploadvrp3d" type="screen"

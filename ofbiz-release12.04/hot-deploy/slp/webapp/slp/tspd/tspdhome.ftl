@@ -11,7 +11,7 @@
 			<!-- <input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" /> -->
 			<!-- <a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a> -->
 		<!-- </form> -->
-		<form action="tspd-select-module" method="POST" commandName="tspd" role="form" class="form-horizontal">
+		<form action="tspd-solve-ls" method="POST" commandName="tspd" role="form" class="form-horizontal">
 			<div class="row">
 				<div class="col-lg-10">
 					<label class="control-label col-lg-1">DataSet</label>
