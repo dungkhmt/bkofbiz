@@ -59,7 +59,12 @@
 </#macro>
 
 
-<#macro jqDataTable urlData urlUpdate urlAdd urlDelete keysId
+<#macro jqDataTable 
+		urlData="" 
+		urlUpdate="" 
+		urlAdd="" 
+		urlDelete="" 
+		keysId=[]
 		fnInfoCallback=""
 		dataFields=[]
 		columns=""
@@ -108,7 +113,7 @@
 		}
 		
 		#${id}-content tbody tr:hover {
-		    background-color: rgba(140, 140, 140, 0.3);
+		    background-color: #b3b3b3;
 		}
 		
 		

@@ -40,7 +40,7 @@
 	<!-- end lĩnh vực nghiên cứu -->
 
 	<!-- Chức danh nghiên cứu -->
-	<entity entity-name="Research" package-name=""></entity>
+	
 	
 	<entity entity-name="Function" package-name="org.ofbiz.bkeuniv">
 		<field name="functionId" type="id-vlong"></field>
@@ -101,7 +101,7 @@
 	<entity entity-name="AcademicYear" package-name="org.ofbiz.bkeuniv">
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="academicYearName" type="id"></field>
-		<prim-key field="academicId"/>
+		<prim-key field="academicYearId"/>
 	</entity>
 	
 	
@@ -114,6 +114,8 @@
 		<field name="staffGenderId" type="id"></field>
 		<field name="staffDateOfBirth" type="date"></field>
 		<field name="staffPhone" type="tel-number"></field>
+		<field name="fromDate" type="date"></field>
+		<field name="thruDate" type="date"></field>
 		<prim-key field="staffId"/>
 		<relation rel-entity-name="Department" type="one">
 			<key-map field-name="departmentId"/>
@@ -122,6 +124,34 @@
 			<key-map field-name="genderId"/>
 		</relation>
 	</entity>
+	
+	<view-entity entity-name="StaffView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="D" entity-name="Department"></member-entity>
+		<member-entity entity-alias="G" entity-name="Gender"></member-entity>
+		<member-entity entity-alias="F" entity-name="Faculty"></member-entity>
+		<alias-all entity-alias="ST"></alias-all>
+		<alias name="departmentName" entity-alias="D"></alias>
+		<alias name="genderName" entity-alias="G"></alias>
+		<alias name="facultyName" entity-alias="F"></alias>
+		<alias name="facultyId" entity-alias="F"></alias>
+		<view-link rel-entity-alias="D" entity-alias="ST" rel-optional="true">
+			<key-map field-name="departmentId" rel-field-name="departmentId"/>
+		</view-link>
+		<view-link rel-entity-alias="G" entity-alias="ST" rel-optional="true">
+			<key-map field-name="staffGenderId" rel-field-name="genderId"/>
+		</view-link>
+		<view-link rel-entity-alias="F" entity-alias="D" rel-optional="true">
+			<key-map field-name="facultyId" rel-field-name="facultyId"/>
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-list>
+					<condition-expr field-name="thruDate" entity-alias="ST" value=""/>
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
 	
 	<entity entity-name="JournalIndex" package-name="org.ofbiz.bkeuniv">
 		<field name="journalIndexId" type="id-ne"></field>

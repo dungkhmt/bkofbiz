@@ -48,6 +48,25 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-staff-management"/>
     </request-map>
+	<request-map uri="update-a-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="create-a-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="remove-a-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="removeAStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     
     <request-map uri="department-management">
     	<security https="true" auth="true"/>
@@ -98,7 +117,7 @@
     </request-map>
     
     
-	<request-map uri="get-department">
+	<request-map uri="get-departments">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="getDepartments"></event>
 		<response name="success" type="request" value="json"></response>
@@ -119,6 +138,14 @@
     <request-map uri="get-education-progress">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getEducationProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+
+    <request-map uri="get-staffs">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getStaffs"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -209,6 +236,12 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
+    <request-map uri="update-password">
+		<security https="true" auth="false"/>
+		<event type="service" invoke="updatePassword"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
     
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
