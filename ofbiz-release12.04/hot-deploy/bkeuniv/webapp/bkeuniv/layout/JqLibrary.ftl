@@ -226,7 +226,7 @@
 					{
 						"targets": 0,
 						"render": function ( data, type, row, meta ) {
-							console.log(data, type, row, meta);
+							
 							var row = meta.row;
 							if( Object.prototype.toString.call( row ) === '[object Array]' ) {
 								if(row.length > 0) {
