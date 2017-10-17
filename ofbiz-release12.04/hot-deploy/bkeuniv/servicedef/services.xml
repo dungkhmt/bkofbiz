@@ -153,9 +153,12 @@
 		<attribute name="message" mode="OUT" type="String"></attribute>
 		
 	</service>
+	
 		
     <service name="getListAcademicYears" engine="java" 
 		location="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" invoke="getListAcademicYears">
 		<attribute name="academicYears" mode="OUT" type="List"></attribute>
 	</service>
+	
+	
 </services>

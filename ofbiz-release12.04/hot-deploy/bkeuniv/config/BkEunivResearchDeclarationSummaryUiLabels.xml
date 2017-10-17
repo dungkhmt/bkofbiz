@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivEducationProgressId">
+        <value xml:lang="en">EP ID</value>
+        <value xml:lang="vi">Mã EP</value>
+    </property>
+    
+ 
+</resource>

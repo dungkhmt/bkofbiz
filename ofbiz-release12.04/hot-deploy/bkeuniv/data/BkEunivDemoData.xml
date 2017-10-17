@@ -4,42 +4,13 @@
 <SecurityGroup groupId="BIZSTAFF" description="ordinary staffs"/>
 <SecurityGroupPermission groupId="BIZSTAFF" permissionId="OFBTOOLS_VIEW"/>
 
-<ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
-
-<AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
-<AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
-<AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
-<AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
-<AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
-
-<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
-<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
-
-
-
-
-<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
-<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
-<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
-<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
-<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
-
-<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
-<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
-<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
-<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
-<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
-<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
 
 <!-- Tong hop ke khai KL NCKH -->
 <Function functionId="RESEARCH_DECLARATION_MANAGEMENT" uiLabelId="research_declaration_management" vnLabel="Quản lý kê khai khối lượng nghiên cứu khoa học" enLabel="research declaration management" parentFunctionId="NULL" index="1"/>
 
 <Function functionId="RESEARCH_SUMMARY_KV01" uiLabelId="research_summary_kv01" vnLabel="Tổng hợp mẫu KV01" enLabel="summary KV01" target="research-summary-kv01" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="1"/>
 
+<Function functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL" uiLabelId="research_summary_template_excel" vnLabel="Tổng hợp mẫu Excel" enLabel="summary Excel" target="research-summary-excel" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="2"/>
 
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
@@ -71,6 +42,11 @@
 
 
 <!-- BIZADMIN -->
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_DECLARATION_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_DECLARATION_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_KV01" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_KV01"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_TEMPLATE_EXCEL" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL"/>
+
+
 <GroupFunction groupFunctionId="BIZADMIN_PROFILE_MANAGEMENT" securityGroupId="BIZADMIN" functionId="PROFILE_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_EDUCATION_PROGRESS" securityGroupId="BIZADMIN" functionId="EDUCATION_PROGRESS"/>
 <GroupFunction groupFunctionId="BIZADMIN_SCIENTIFIC_SERVICES" securityGroupId="BIZADMIN" functionId="SCIENTIFIC_SERVICES"/>
@@ -3964,6 +3940,38 @@
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="minh.nguyenbinh@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="khoat.thanquang@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hai.phamvan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
+
+
+<ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+
+<AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
+<AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
+<AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
+<AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
+<AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
+
+<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
+<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+
+
+
+
+<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
+<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
+<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
+<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
+<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
+
+<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
+<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
+<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
+<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
+<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
+<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
 
 <University universityId="HUST" universityName="Trường Đại học Bách Khoa Hà Nội"/>
 
