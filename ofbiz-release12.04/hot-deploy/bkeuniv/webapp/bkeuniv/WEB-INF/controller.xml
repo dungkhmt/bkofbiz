@@ -396,14 +396,15 @@
            
     </request-map>    
 	
+	<!-- 
 	<request-map uri="get-staffs">
             <security https="true" auth="true"/>
            <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
            invoke="getStaffs"/>
             <response name="AttachementSuccess" type="view" value="STAFFS"/>
-            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+            
     </request-map>    
-	
+	 -->
 	<request-map uri="get-staffs-of-paper">
             <security https="true" auth="true"/>
            <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
