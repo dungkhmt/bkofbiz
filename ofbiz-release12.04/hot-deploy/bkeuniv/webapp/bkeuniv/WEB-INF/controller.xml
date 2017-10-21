@@ -435,6 +435,57 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="project-declaration-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-declaration-staff"></response>
+    </request-map>
+    
+    <request-map uri="get-project-declaration">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getProjectDeclaration"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="create-project-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-project-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateProjectDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-project-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteProjectDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-staff-select">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getStaffs"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="dowload-pdf">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-dowload-pdf"></response>
+    </request-map>
+    
+    <request-map uri="export-excel-project-declaration">
+		<security auth="true" https="true" />
+		<event type="java" path="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="exportExcel"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -450,5 +501,8 @@
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
+   	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
    
+   <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
+    
 </site-conf>
