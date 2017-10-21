@@ -15,9 +15,11 @@
 		<field name="projectCallId" type="id-vlong"></field>
 		<field name="projectCallName" type="very-long"></field>
 		<field name="year" type="id-vlong"></field>
-		
+		<field name="projectCategoryId" type="id-vlong"></field>
 		<prim-key field="projectCallId"/>
-		
+		<relation rel-entity-name="ProjectCategory" type="one">
+			<key-map field-name="projectCategoryId"/>
+		</relation>
 	</entity>
 	
 	<entity entity-name="ProjectCategory" package-name="org.ofbiz.bkeuniv">
@@ -256,6 +258,17 @@
 			</condition-list>
 		</entity-condition>
 	</view-entity>
+	
+	<entity entity-name="PaperCategoryHourBudget" package-name="org.ofbiz.bkeuniv">
+		<!-- <field name="paperCategoryHourBudgetId" type="id-ne"></field>
+		 -->
+		<field name="paperCategoryId" type="id-ne"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="hour" type="numeric"></field>
+		<field name="budget" type="numeric"></field>
+		<prim-key field="paperCategoryId"/>
+		<prim-key field="academicYearId"/>
+	</entity>
 	
 	<entity entity-name="JournalIndex" package-name="org.ofbiz.bkeuniv">
 		<field name="journalIndexId" type="id-ne"></field>
