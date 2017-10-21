@@ -17,12 +17,8 @@
 }
 
 .modal-dialog {
-	width: 50%!important; /* respsonsive width */
-    margin-left:25%!important; /* width/2) */ 
-}
-
-.drag-over {
-	border: 2px dashed gray;
+	width: 60%!important; /* respsonsive width */
+    margin-left:20%!important; /* width/2) */ 
 }
 
 .modal-body .container-fluid .inline-box:hover {

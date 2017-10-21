@@ -22,6 +22,12 @@
         <param-value>component://bkeuniv/widget/CommonScreens.xml</param-value>
         <description>The location of the main-decorator screen to use for this webapp; referred to as a context variable in screen def XML files.</description>
     </context-param>
+    <context-param>
+        <param-name>dataFolder</param-name>
+        <param-value>C:/euniv-deploy</param-value>
+        <description>The location of the uploaded files.</description>
+    </context-param>
+    
     <!--
     <context-param>
         <param-name>widgetVerbose</param-name>

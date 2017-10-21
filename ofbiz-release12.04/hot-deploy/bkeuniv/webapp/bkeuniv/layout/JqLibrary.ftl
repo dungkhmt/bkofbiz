@@ -116,8 +116,8 @@
 			cursor: pointer;
 		}
 		
-		#${id}-content tbody tr:hover {
-		    box-shadow: 2px 3px 12px rgba(27,31,35,0.15);
+		#${id}-content tbody tr:hover td:first-child {
+		     border-left: 2px #0014ff solid;			
 		}
 		
 		
@@ -169,7 +169,32 @@
 		    text-align: center;
 		    border: 1px solid #68b2e3;
 		}
-		
+		#jqDataTable-button-update{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #53a7df;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
+		#jqDataTable-button-remove{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #FF0000;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
 		#jqDataTable-button-add:hover {
 			background-color: #3d9cdb;
 		}
