@@ -4,42 +4,20 @@
 <SecurityGroup groupId="BIZSTAFF" description="ordinary staffs"/>
 <SecurityGroupPermission groupId="BIZSTAFF" permissionId="OFBTOOLS_VIEW"/>
 
-<ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
-<ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+<!-- Quan ly thuc hien de tai NCKH -->
+<Function functionId="RESEARCH_PROJECT_MANAGEMENT" uiLabelId="research_project_management" vnLabel="Quản lý thực hiện đề tài nghiên cứu khoa học" enLabel="research project management" parentFunctionId="NULL" index="1"/>
 
-<AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
-<AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
-<AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
-<AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
-<AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
-
-<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
-<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+<Function functionId="RESEARCH_PROJECT_CALL_MANAGEMENT" uiLabelId="research_project_call_management" vnLabel="Quản lý đợt gọi đề tài" enLabel="research project call management" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
+<Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
 
 
-
-
-<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
-<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
-<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
-<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
-<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
-
-<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
-<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
-<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
-<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
-<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
-<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
 
 <!-- Tong hop ke khai KL NCKH -->
 <Function functionId="RESEARCH_DECLARATION_MANAGEMENT" uiLabelId="research_declaration_management" vnLabel="Quản lý kê khai khối lượng nghiên cứu khoa học" enLabel="research declaration management" parentFunctionId="NULL" index="1"/>
 
 <Function functionId="RESEARCH_SUMMARY_KV01" uiLabelId="research_summary_kv01" vnLabel="Tổng hợp mẫu KV01" enLabel="summary KV01" target="research-summary-kv01" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="1"/>
 
+<Function functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL" uiLabelId="research_summary_template_excel" vnLabel="Tổng hợp mẫu Excel" enLabel="summary Excel" target="research-summary-excel" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="2"/>
 
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
@@ -58,6 +36,7 @@
 <!-- Quan ly danh muc -->
 <Function functionId="MISCELLANEOUS_MANAGEMENT" uiLabelId="miscellaneous_management" vnLabel="Quản lý danh mục" enLabel="miscellaneous" parentFunctionId="NULL" index="2"/>
 <Function functionId="DEPARTMENT_MANAGEMENT" uiLabelId="department_management" vnLabel="Quản lí bộ môn" enLabel="department" target="department-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="1"/>
+<Function functionId="FACULTY_MANAGEMENT" uiLabelId="faculty_management" vnLabel="Quản lí khoa/viện" enLabel="faculty" target="faculty-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="2"/>
 
 <Function functionId="RESEARCH_DOMAIN_MANAGEMENT" uiLabelId="research_domain_management" vnLabel="Lĩnh vực nghiên cứu" enLabel="research domain" target="research-domain-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="2"/>
 
@@ -69,13 +48,25 @@
 <Function functionId="STAFF_RESEARCH_SPECIALITY" uiLabelId="staff_research_speciality" vnLabel="Lĩnh vực và Chuyên ngành nghiên cứu" enLabel="research speciality of staffs" target="staff-research-speciality" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
 
 
-
 <!-- BIZADMIN -->
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_CALL_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_CALL_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_SUBMIT_PROPOSAL" securityGroupId="BIZADMIN" functionId="SUBMIT_PROPOSAL"/>
+
+
+
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_DECLARATION_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_DECLARATION_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_KV01" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_KV01"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_TEMPLATE_EXCEL" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL"/>
+
+
 <GroupFunction groupFunctionId="BIZADMIN_PROFILE_MANAGEMENT" securityGroupId="BIZADMIN" functionId="PROFILE_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_EDUCATION_PROGRESS" securityGroupId="BIZADMIN" functionId="EDUCATION_PROGRESS"/>
 <GroupFunction groupFunctionId="BIZADMIN_SCIENTIFIC_SERVICES" securityGroupId="BIZADMIN" functionId="SCIENTIFIC_SERVICES"/>
 <GroupFunction groupFunctionId="BIZADMIN_MISCELLANEOUS_MANAGEMENT" securityGroupId="BIZADMIN" functionId="MISCELLANEOUS_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_DEPARTMENT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="DEPARTMENT_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_FACULTY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="FACULTY_MANAGEMENT"/>
+
 <GroupFunction groupFunctionId="BIZADMIN_STAFF_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STAFF_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_STAFF_LIST" securityGroupId="BIZADMIN" functionId="STAFF_LIST"/>
 <GroupFunction groupFunctionId="BIZADMIN_WORK_PROGRESS" securityGroupId="BIZADMIN" functionId="WORK_PROGRESS"/>
@@ -94,6 +85,9 @@
 
 
 <!-- BIZSTAFF -->
+<GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_PROJECT_MANAGEMENT" securityGroupId="BIZSTAFF" functionId="RESEARCH_PROJECT_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZSTAFF_SUBMIT_PROPOSAL" securityGroupId="BIZSTAFF" functionId="SUBMIT_PROPOSAL"/>
+
 <GroupFunction groupFunctionId="BIZSTAFF_PROFILE_MANAGEMENT" securityGroupId="BIZSTAFF" functionId="PROFILE_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZSTAFF_EDUCATION_PROGRESS" securityGroupId="BIZSTAFF" functionId="EDUCATION_PROGRESS"/>
 <GroupFunction groupFunctionId="BIZSTAFF_SCIENTIFIC_SERVICES" securityGroupId="BIZSTAFF" functionId="SCIENTIFIC_SERVICES"/>
@@ -3965,6 +3959,38 @@
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="khoat.thanquang@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hai.phamvan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 
+
+<ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+
+<AcademicYear academicYearId="2015-2016" academicYearName="2015-2016"/>
+<AcademicYear academicYearId="2016-2017" academicYearName="2016-2017"/>
+<AcademicYear academicYearId="2017-2018" academicYearName="2017-2018"/>
+<AcademicYear academicYearId="2018-2019" academicYearName="2018-2019"/>
+<AcademicYear academicYearId="2019-2020" academicYearName="2019-2020"/>
+
+<ProjectParticipationRole projectParticipationRoleId="DIRECTOR" projectParticipationRoleName="Chủ nhiệm"/>
+<ProjectParticipationRole projectParticipationRoleId="MEMBER" projectParticipationRoleName="Thành viên"/>
+
+
+
+
+<ProjectCategory projectCategoryId="INST_PROJ" projectCategoryName="Đề tài cấp cơ sở phân cấp" projectCategoryCode="INST_PROJ"/>
+<ProjectCategory projectCategoryId="INST_MIX_PROJ" projectCategoryName="Đề tài cấp cơ sở liên ngành" projectCategoryCode="INST_MIX_PROJ"/>
+<ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
+<ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
+<ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
+
+<ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
+<ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
+<ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
+<ProjectStatus projectStatusId="PROCESS" projectStatusName="Đang thực hiện"/>
+<ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
+<ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
+
 <University universityId="HUST" universityName="Trường Đại học Bách Khoa Hà Nội"/>
 
 <Faculty facultyId="GDQP" facultyName="Khoa Giáo dục Quốc phòng" universityId="HUST"/>
@@ -4041,14 +4067,14 @@
 <Department departmentId="LLCT-BMDLCMDCS"  departmentName="Bm Đường lối cách mạng của Đảng Cộng sản Việt Nam"  facultyId="LLCT"/>
 <Department departmentId="LLCT-VPKLLCT"  departmentName="Văn phòng khoa Lý luận chính trị"  facultyId="LLCT"/>
 <Department departmentId="CK-BMCNCTM"  departmentName="Bm CN Chế tạo máy"  facultyId="CK"/>
-<Department departmentId="CK-BMCKCXQH"  departmentName="Bm Cơ khí chính xác & Quang học"  facultyId="CK"/>
+<Department departmentId="CK-BMCKCXQH"  departmentName="Bm Cơ khí chính xác và Quang học"  facultyId="CK"/>
 <Department departmentId="CK-BMCSTKMRB"  departmentName="Bm Cơ sở thiết kế máy và Rôbốt"  facultyId="CK"/>
 <Department departmentId="CK-BMCUD"  departmentName="Bm Cơ ứng dụng"  facultyId="CK"/>
-<Department departmentId="CK-BMGCVLDCCN"  departmentName="Bm GCVL & Dụng cụ CN"  facultyId="CK"/>
+<Department departmentId="CK-BMGCVLDCCN"  departmentName="Bm GCVL và Dụng cụ CN"  facultyId="CK"/>
 <Department departmentId="CK-BMGCAL"  departmentName="Bm Gia công áp lực"  facultyId="CK"/>
 <Department departmentId="CK-BMHCNKL"  departmentName="Bm Hàn và công nghệ kim loại"  facultyId="CK"/>
 <Department departmentId="CK-BMHHVKT"  departmentName="Bm Hình hoạ - VKT"  facultyId="CK"/>
-<Department departmentId="CK-BMMMSH"  departmentName="Bm Máy & Ma sát học"  facultyId="CK"/>
+<Department departmentId="CK-BMMMSH"  departmentName="Bm Máy và Ma sát học"  facultyId="CK"/>
 <Department departmentId="CK-TTTHCNCK"  departmentName="Trung tâm Thực hành Công nghệ Cơ khí"  facultyId="CK"/>
 <Department departmentId="CK-TTDTNCPTCNC"  departmentName="Trung tâm Đào tạo và Nghiên cứu phát triển công nghệ CNC"  facultyId="CK"/>
 <Department departmentId="CK-VPVCK"  departmentName="Văn phòng Viện Cơ khí"  facultyId="CK"/>
@@ -4073,42 +4099,42 @@
 <Department departmentId="SOICT-BMHTTT"  departmentName="Bm Hệ thống thông tin"  facultyId="SOICT"/>
 <Department departmentId="SOICT-BMKHMT"  departmentName="Bm Khoa học máy tính"  facultyId="SOICT"/>
 <Department departmentId="SOICT-BMKTMT"  departmentName="Bm Kỹ thuật máy tính"  facultyId="SOICT"/>
-<Department departmentId="SOICT-BMTTMMT"  departmentName="Bm Truyền thông & mạng MT"  facultyId="SOICT"/>
+<Department departmentId="SOICT-BMTTMMT"  departmentName="Bm Truyền thông và mạng MT"  facultyId="SOICT"/>
 <Department departmentId="SOICT-PTNHTTT"  departmentName="Phòng thí nghiệm Hệ thống máy tính"  facultyId="SOICT"/>
 <Department departmentId="SOICT-TTMT"  departmentName="Trung tâm máy tính"  facultyId="SOICT"/>
 <Department departmentId="SOICT-VPVSOICT"  departmentName="Văn phòng Viện CN Thông tin và TT"  facultyId="SOICT"/>
-<Department departmentId="DMDGTT-BMCNMTT"  departmentName="Bm CN May & thời trang"  facultyId="DMDGTT"/>
+<Department departmentId="DMDGTT-BMCNMTT"  departmentName="Bm CN May và thời trang"  facultyId="DMDGTT"/>
 <Department departmentId="DMDGTT-BMCND"  departmentName="Bm Công nghệ Dệt"  facultyId="DMDGTT"/>
-<Department departmentId="DMDGTT-BMVLCNHD"  departmentName="Bm VL&CN hoá dệt"  facultyId="DMDGTT"/>
+<Department departmentId="DMDGTT-BMVLCNHD"  departmentName="Bm VLvàCN hoá dệt"  facultyId="DMDGTT"/>
 <Department departmentId="DMDGTT-VPVDMDGTT"  departmentName="Văn phòng Viện Dệt may- Da giầy và Thời trang"  facultyId="DMDGTT"/>
 <Department departmentId="CNMT-BMCNMTT"  departmentName="Bm Công nghệ môi trường"  facultyId="CNMT"/>
 <Department departmentId="CNMT-BMQLMT"  departmentName="Bm Quản lý môi trường"  facultyId="CNMT"/>
-<Department departmentId="CNMT-PTNRNDCNMT"  departmentName="Phòng Thí nghiệm R&D Công nghệ Môi trường"  facultyId="CNMT"/>
-<Department departmentId="CNMT-PTNNCPTCNMT"  departmentName="Phòng TNNC&PTCN môi trường"  facultyId="CNMT"/>
-<Department departmentId="CNMT-TTQTMTKSONCN"  departmentName="TT Quan trắc MT & kiểm soát ô nhiễm CN"  facultyId="CNMT"/>
+<Department departmentId="CNMT-PTNRNDCNMT"  departmentName="Phòng Thí nghiệm RvàD Công nghệ Môi trường"  facultyId="CNMT"/>
+<Department departmentId="CNMT-PTNNCPTCNMT"  departmentName="Phòng TNNCvàPTCN môi trường"  facultyId="CNMT"/>
+<Department departmentId="CNMT-TTQTMTKSONCN"  departmentName="TT Quan trắc MT và kiểm soát ô nhiễm CN"  facultyId="CNMT"/>
 <Department departmentId="CNMT-TTSXS"  departmentName="TT Sản xuất sạch"  facultyId="CNMT"/>
-<Department departmentId="CNMT-VPVKHCNMT"  departmentName="Văn phòng Viện KH&CN Môi trường"  facultyId="CNMT"/>
+<Department departmentId="CNMT-VPVKHCNMT"  departmentName="Văn phòng Viện KHvàCN Môi trường"  facultyId="CNMT"/>
 <Department departmentId="CNNL-BMHTNLN"  departmentName="Bm Hệ thống năng lượng nhiệt"  facultyId="CNNL"/>
 <Department departmentId="CNNL-BMHTTDHQTN"  departmentName="Bm Hệ thống và Tự động hoá quá trình nhiệt"  facultyId="CNNL"/>
-<Department departmentId="CNNL-BMKTLDHKK"  departmentName="Bm KT lạnh & điều hoà không khí"  facultyId="CNNL"/>
+<Department departmentId="CNNL-BMKTLDHKK"  departmentName="Bm KT lạnh và điều hoà không khí"  facultyId="CNNL"/>
 <Department departmentId="CNNL-BMKTN"  departmentName="Bm Kỹ thuật nhiệt"  facultyId="CNNL"/>
 <Department departmentId="CNNL-PTNQTTBNL"  departmentName="PTN Quá trình và Thiết bị Nhiệt - Lạnh"  facultyId="CNNL"/>
 <Department departmentId="CNNL-TTNCUD"  departmentName="TT Nghiên cứu ứng dụng"  facultyId="CNNL"/>
 <Department departmentId="CNNL-TTTKNLCGCN"  departmentName="TT Tiết kiệm năng lượng và CGCN"  facultyId="CNNL"/>
-<Department departmentId="CNNL-VPVKHCNNL"  departmentName="Văn phòng Viện KH&CN Nhiệt - Lạnh"  facultyId="CNNL"/>
-<Department departmentId="KHKTVL-BMCHVLCKL"  departmentName="Bm Cơ học vật liệu & cán kim loại"  facultyId="KHKTVL"/>
+<Department departmentId="CNNL-VPVKHCNNL"  departmentName="Văn phòng Viện KHvàCN Nhiệt - Lạnh"  facultyId="CNNL"/>
+<Department departmentId="KHKTVL-BMCHVLCKL"  departmentName="Bm Cơ học vật liệu và cán kim loại"  facultyId="KHKTVL"/>
 <Department departmentId="KHKTVL-BMKTGT"  departmentName="Bm Kỹ thuật gang thép"  facultyId="KHKTVL"/>
-<Department departmentId="KHKTVL-BMVLCND"  departmentName="Bm Vật liệu & Công nghệ đúc"  facultyId="KHKTVL"/>
+<Department departmentId="KHKTVL-BMVLCND"  departmentName="Bm Vật liệu và Công nghệ đúc"  facultyId="KHKTVL"/>
 <Department departmentId="KHKTVL-BMVLHXLNBM"  departmentName="Bm Vật liệu học, xử lý nhiệt và bề mặt"  facultyId="KHKTVL"/>
 <Department departmentId="KHKTVL-BMVLKLMC"  departmentName="Bm Vật liệu kim loại màu và compozit"  facultyId="KHKTVL"/>
 <Department departmentId="KHKTVL-PTKCNVLKL"  departmentName="Phòng Thí nghiệm Công nghệ Vật liệu kim loại"  facultyId="KHKTVL"/>
-<Department departmentId="KHKTVL-VPVKHKTVL"  departmentName="Văn phòng Viện Khoa học & Kỹ thuật vật liệu"  facultyId="KHKTVL"/>
+<Department departmentId="KHKTVL-VPVKHKTVL"  departmentName="Văn phòng Viện Khoa học và Kỹ thuật vật liệu"  facultyId="KHKTVL"/>
 <Department departmentId="KTQL-BMKTH"  departmentName="Bm Kinh tế học"  facultyId="KTQL"/>
 <Department departmentId="KTQL-BMQLCN"  departmentName="Bm Quản lý Công nghiệp"  facultyId="KTQL"/>
 <Department departmentId="KTQL-BMQLTC"  departmentName="Bm Quản lý tài chính"  facultyId="KTQL"/>
 <Department departmentId="KTQL-BMQTKD"  departmentName="Bm Quản trị kinh doanh"  facultyId="KTQL"/>
 <Department departmentId="KTQL-BMKHTLL"  departmentName="Bm Khoa học Quản lý và Luật"  facultyId="KTQL"/>
-<Department departmentId="KTQL-VPVKTQL"  departmentName="Văn phòng Viện Kinh tế & Quản lý"  facultyId="KTQL"/>
+<Department departmentId="KTQL-VPVKTQL"  departmentName="Văn phòng Viện Kinh tế và Quản lý"  facultyId="KTQL"/>
 <Department departmentId="KTQL-BMKTCN"  departmentName="Bm Kinh tế công nghiệp"  facultyId="KTQL"/>
 <Department departmentId="KTHNVLMT-VKTHNVLMT"  departmentName="Viện Kỹ thuật Hạt nhân và Vật lý Môi trường"  facultyId="KTHNVLMT"/>
 <Department departmentId="KTHH-BMCNHCHD"  departmentName="Bm CN Hữu cơ - Hoá dầu"  facultyId="KTHH"/>
@@ -4121,17 +4147,17 @@
 <Department departmentId="KTHH-BMHHC"  departmentName="Bm Hoá Hữu cơ"  facultyId="KTHH"/>
 <Department departmentId="KTHH-BMHL"  departmentName="Bm Hoá lý"  facultyId="KTHH"/>
 <Department departmentId="KTHH-BMHPT"  departmentName="Bm Hoá Phân tích"  facultyId="KTHH"/>
-<Department departmentId="KTHH-BMHVCDC"  departmentName="Bm Hoá vô cơ & đại cương"  facultyId="KTHH"/>
+<Department departmentId="KTHH-BMHVCDC"  departmentName="Bm Hoá vô cơ và đại cương"  facultyId="KTHH"/>
 <Department departmentId="KTHH-BMMH"  departmentName="Bm Máy hoá"  facultyId="KTHH"/>
-<Department departmentId="KTHH-BMQTTBHH"  departmentName="Bm QT&TB hoá học"  facultyId="KTHH"/>
+<Department departmentId="KTHH-BMQTTBHH"  departmentName="Bm QTvàTB hoá học"  facultyId="KTHH"/>
 <Department departmentId="KTHH-BMXDCN"  departmentName="Bm Xây dựng công nghiệp"  facultyId="KTHH"/>
 <Department departmentId="KTHH-PTNCNLHDVLXT"  departmentName="PTN CN Lọc hoá Dầu và VL Xúc tác, hấp phụ"  facultyId="KTHH"/>
 <Department departmentId="KTHH-VPVKTHH"  departmentName="Văn phòng Viện Kỹ thuật Hoá học"  facultyId="KTHH"/>
 <Department departmentId="KTDKTDH-VKTDKTDH"  departmentName="Viện Kỹ thuật điều khiển và Tự động hóa"  facultyId="KTDKTDH"/>
 <Department departmentId="MICA-VNCQTTTDPT"  departmentName="Viện Nghiên cứu quốc tế về Thông tin đa phương tiện, truyền thông và ứng dụng (MICA)"  facultyId="MICA"/>
 <Department departmentId="NN-VNN"  departmentName="Viện Ngoại ngữ"  facultyId="NN"/>
-<Department departmentId="NN-BMCSNNHVH"  departmentName="Bm CS ngôn ngữ học & Việt học"  facultyId="NN"/>
-<Department departmentId="NN-BMLTTVM"  departmentName="Bm LT tiếng & văn minh A.M"  facultyId="NN"/>
+<Department departmentId="NN-BMCSNNHVH"  departmentName="Bm CS ngôn ngữ học và Việt học"  facultyId="NN"/>
+<Department departmentId="NN-BMLTTVM"  departmentName="Bm LT tiếng và văn minh A.M"  facultyId="NN"/>
 <Department departmentId="NN-BMPV"  departmentName="Bm Pháp văn"  facultyId="NN"/>
 <Department departmentId="NN-VPVNN"  departmentName="Văn phòng Viện Ngoại ngữ"  facultyId="NN"/>
 <Department departmentId="NN-BMTAKKT"  departmentName="Bm Tiếng Anh khối kỹ thuật"  facultyId="NN"/>
@@ -4145,7 +4171,7 @@
 <Department departmentId="AIST-PNCKHCNNN"  departmentName="Phòng Nghiên cứu Khoa học và Công nghệ Nanô"  facultyId="AIST"/>
 <Department departmentId="AIST-PTNNQDT"  departmentName="Phòng Thí nghiệm Nano Quang-Điện tử"  facultyId="AIST"/>
 <Department departmentId="AIST-PTNHVDTPT"  departmentName="Phòng Thí nghiệm Hiển vi điện tử và vi phân tích"  facultyId="AIST"/>
-<Department departmentId="AIST-VPVTTKHCN"  departmentName="Văn phòng Viện Tiên tiến KH&CN (AIST)"  facultyId="AIST"/>
+<Department departmentId="AIST-VPVTTKHCN"  departmentName="Văn phòng Viện Tiên tiến KHvàCN (AIST)"  facultyId="AIST"/>
 <Department departmentId="TTUD-BMTT"  departmentName="Bm Toán - Tin"  facultyId="TTUD"/>
 <Department departmentId="TTUD-BMTCB"  departmentName="Bm Toán cơ bản"  facultyId="TTUD"/>
 <Department departmentId="TTUD-BMTUD"  departmentName="Bm Toán ứng dụng"  facultyId="TTUD"/>
@@ -6567,5 +6593,27 @@
 <StaffPaperDeclaration staffPaperDeclarationId="vinh.lathe@hust.edu.vn162" staffId="vinh.lathe@hust.edu.vn" paperId="162" />
 <StaffPaperDeclaration staffPaperDeclarationId="trang.nguyenthithu@hust.edu.vn116" staffId="trang.nguyenthithu@hust.edu.vn" paperId="116" />
 <StaffPaperDeclaration staffPaperDeclarationId="dung.caotuan@hust.edu.vn116" staffId="dung.caotuan@hust.edu.vn" paperId="116" />
+
+<PaperCategoryHourBudget paperCategoryId="JINT_SCI" academicYearId="2016-2017" hour="900" budget="2000000"/>
+<PaperCategoryHourBudget paperCategoryId="JINT_SCIE" academicYearId="2016-2017" hour="900" budget="2000000"/>
+<PaperCategoryHourBudget paperCategoryId="JDOM_Other" academicYearId="2016-2017" hour="600" budget="1000000"/>
+<PaperCategoryHourBudget paperCategoryId="CINT_Other" academicYearId="2016-2017" hour="600" budget="1000000"/>
+<PaperCategoryHourBudget paperCategoryId="CDOM_Other" academicYearId="2016-2017" hour="400" budget="1000000"/>
+<PaperCategoryHourBudget paperCategoryId="JINT_Other" academicYearId="2016-2017" hour="900" budget="2000000"/>
+<PaperCategoryHourBudget paperCategoryId="JINT_SCOPUS" academicYearId="2016-2017" hour="900" budget="2000000"/>
+
+<ProjectProposalStatus statusId="SUBMITTED" statusName="Đã nộp"/>
+<ProjectProposalStatus statusId="CREATED" statusName="Tạo mới"/>
+<ProjectProposalStatus statusId="REJECTED" statusName="Từ chối"/>
+<ProjectProposalStatus statusId="ACCEPT_REVISE" statusName="Chấp nhận và cần chỉnh sửa"/>
+<ProjectProposalStatus statusId="APPROVED" statusName="Phê duyệt"/>
+
+
+<ResearchProductType ResearchProductTypeId="PAPER_ISI" ResearchProductTypeName="Bài báo ISI"/>
+<ResearchProductType ResearchProductTypeId="PAPER_INTCONF" ResearchProductTypeName="Bài báo hội nghị quốc tế"/>
+
+<ResearchProductType ResearchProductTypeId="SOFTWARE" ResearchProductTypeName="Phần mềm"/>
+<ResearchProductType ResearchProductTypeId="RESEARCH_REPORT" ResearchProductTypeName="Chuyên đề"/>
+
 
 </entity-engine-xml>

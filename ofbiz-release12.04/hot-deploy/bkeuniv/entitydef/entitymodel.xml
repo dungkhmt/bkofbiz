@@ -9,6 +9,112 @@
     <copyright></copyright>
     <version></version>
 
+
+	<!-- Submit đề tài nghiên cứu -->
+	<entity entity-name="ProjectCall" package-name="org.ofbiz.bkeuniv">
+		<field name="projectCallId" type="id-vlong"></field>
+		<field name="projectCallName" type="very-long"></field>
+		<field name="year" type="id-vlong"></field>
+		<field name="projectCategoryId" type="id-vlong"></field>
+		<prim-key field="projectCallId"/>
+		<relation rel-entity-name="ProjectCategory" type="one">
+			<key-map field-name="projectCategoryId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="ProjectCategory" package-name="org.ofbiz.bkeuniv">
+		<field name="projectCategoryId" type="id-vlong"></field>
+		<field name="projectCategoryName" type="very-long"></field>
+		<prim-key field="projectCategoryId"/>
+		
+	</entity>
+	
+	<entity entity-name="ProjectProposalStatus" package-name="org.ofbiz.bkeuniv">
+		<field name="statusId" type="id-vlong"></field>
+		<field name="statusName" type="very-long"></field>
+		<prim-key field="statusId"/>
+	</entity>
+	
+	<entity entity-name="ResearchProjectProposal" title="Thuyết minh đề tài nghiên cứu" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="researchProjectProposalCode" type="id-vlong"></field>
+		<field name="partyId" type="id-ne"></field>
+		<field name="createStaffId" type="id-vlong"></field>
+		<field name="projectCallId" type="id-vlong"></field>
+		<field name="projectCategoryId" type="id-vlong"></field>
+		<field name="researchProjectProposalName" type="very-long"></field>
+		<field name="totalBudget" type="numeric"></field>
+		<field name="statusId" type="id-vlong"></field>
+		<field name="approvedByStaffId" type="id-vlong"></field>
+		<field name="sourceFileUpload" type="very-long"></field>
+		
+		<prim-key field="researchProjectProposalId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="createStaffId" rel-field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="ProjectProposalStatus" type="one">
+			<key-map field-name="statusId" rel-field-name="statusId"/>
+		</relation>
+		<relation rel-entity-name="Party" type="one">
+			<key-map field-name="partyId"/>
+		</relation>
+		<relation rel-entity-name="ProjectCall" type="one">
+			<key-map field-name="projectCallId"/>
+		</relation>
+		<relation rel-entity-name="ProjectCategory" type="one">
+			<key-map field-name="projectCategoryId"/>
+		</relation>
+	</entity>
+	<entity entity-name="ResearchProjectProposalRoleType" package-name="org.ofbiz.bkeuniv">
+		<field name="roleTypeId" type="id-vlong"></field>
+		<field name="roleTypeName" type="very-long"></field>
+		<prim-key field="roleTypeId"/>
+	</entity>
+	
+	<entity entity-name="ResearchProductType" package-name="org.ofbiz.bkeuniv">
+		<field name="ResearchProductTypeId" type="id-vlong"></field>
+		<field name="ResearchProductTypeName" type="very-long"></field>
+		<prim-key field="ResearchProductTypeId"/>
+	</entity>
+	
+	<entity entity-name="ResearchProduct" package-name="org.ofbiz.bkeuniv">
+		<field name="ResearchProductId" type="id-ne"></field>
+		<field name="ResearchProductTypeId" type="id-vlong"></field>
+		<field name="ResearchProductName" type="very-long"></field>
+		<field name="sourcePathUpload" type="very-long"></field>
+		
+		<prim-key field="ResearchProductId"/>
+		
+		<relation rel-entity-name="ResearchProductType" type="one">
+			<key-map field-name="ResearchProductTypeId"/>
+		</relation>
+		<relation rel-entity-name="Party" type="one">
+			<key-map field-name="ResearchProductId" rel-field-name="partyId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="ResearchProjectProposalRole" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectProposalId" type="id-ne"></field>	
+		<field name="partyId" type="id-ne"></field>
+		<field name="roleTypeId" type="id-vlong"></field>
+		<field name="fromDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
+		<prim-key field="researchProjectProposalId"/>
+		<prim-key field="partyId"/>
+		<prim-key field="fromDate"/>
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId" rel-field-name="researchProjectProposalId"/>
+		</relation>
+		<relation rel-entity-name="Party" type="one">
+			<key-map field-name="partyId"/>
+		</relation>
+		<relation rel-entity-name="ResearchProjectProposalRoleType" type="one">
+			<key-map field-name="roleTypeId"/>
+		</relation>
+	</entity>
+	
+	<!-- end of submit đề tài nghiên cứu -->
+	
 	<!-- Lĩnh vực nghiên cứu-->
 	<entity entity-name="ResearchDomain" title="Lĩnh vực nghiên cứu" package-name="org.ofbiz.bkeuniv">
 		<field name="researchDomainId" type="id-ne"></field>
@@ -152,6 +258,17 @@
 			</condition-list>
 		</entity-condition>
 	</view-entity>
+	
+	<entity entity-name="PaperCategoryHourBudget" package-name="org.ofbiz.bkeuniv">
+		<!-- <field name="paperCategoryHourBudgetId" type="id-ne"></field>
+		 -->
+		<field name="paperCategoryId" type="id-ne"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="hour" type="numeric"></field>
+		<field name="budget" type="numeric"></field>
+		<prim-key field="paperCategoryId"/>
+		<prim-key field="academicYearId"/>
+	</entity>
 	
 	<entity entity-name="JournalIndex" package-name="org.ofbiz.bkeuniv">
 		<field name="journalIndexId" type="id-ne"></field>

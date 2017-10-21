@@ -60,4 +60,9 @@
         <value xml:lang="vi">Tải bài báo</value>
     </property>
    
+    <property key="BkEunivPaperMembers">
+        <value xml:lang="en">Member of papers</value>
+        <value xml:lang="vi">Thành viên bài báo</value>
+    </property>
+   
 </resource>

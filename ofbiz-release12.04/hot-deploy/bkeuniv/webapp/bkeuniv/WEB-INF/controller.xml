@@ -43,6 +43,12 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-paper-declaration"/>
     </request-map>
+    
+    <request-map uri="research-summary-excel">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-research-summary-excel"/>
+    </request-map>
+    
  
     <request-map uri="staff-management">
     	<security https="true" auth="true"/>
@@ -156,6 +162,7 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
     <request-map uri="update-paper">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="updatePaper"></event>
@@ -259,10 +266,64 @@
     
     <request-map uri="download-file-paper">
 		<security auth="true" https="true" />
-		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="downloadFile"></event>
+		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+		invoke="downloadFile"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
+	<request-map uri="upload-file-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="uploadFile"/>
+            <response name="AttachementSuccess" type="view" value="UploadFile"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+	<request-map uri="get-academic-years">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+                     invoke="getListAcademicYears"/>
+            <response name="AttachementSuccess" type="view" value="YEARS"/>
+           
+    </request-map>    
+	
+	<request-map uri="get-staffs">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="getStaffs"/>
+            <response name="AttachementSuccess" type="view" value="STAFFS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+	
+	<request-map uri="get-staffs-of-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="getStaffsOfPaper"/>
+            <response name="AttachementSuccess" type="view" value="STAFFS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
+	<request-map uri="update-staffs-of-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="updateStaffsOfPaper"/>
+            <response name="AttachementSuccess" type="view" value="STAFFS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
     
+	<request-map uri="create-staffs-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="createStaffPaperDeclaration"/>
+            <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+    <request-map uri="export-excel-kv01">
+		<security auth="true" https="true" />
+		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV01"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -274,5 +335,7 @@
     <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
+    <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
+    
     
 </site-conf>
