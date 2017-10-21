@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <property key="BkEunivResearchDomainId">
+        <value xml:lang="en">researchDomainId</value>
+        <value xml:lang="vi">Mã lĩnh vực nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivResearchDomainName">
+        <value xml:lang="en">researchDomainName</value>
+        <value xml:lang="vi">Tên lĩnh vực nghiên cứu</value>
+    </property>
+    
+    
+     <property key="BkEunivEditResearchDomain">
+        <value xml:lang="en">Edit Research Domain</value>
+        <value xml:lang="vi">Chỉnh sửa lĩnh vực nghiên cứu </value>
+    </property>
+    
+     <property key="BkEunivNewResearchDomain">
+        <value xml:lang="en">New Research Domain </value>
+        <value xml:lang="vi">Thêm mới lĩnh vực nghiên cứu</value>
+    </property>
+    
+    
+     <property key="BkEunivTitleDeleteResearchDomain">
+        <value xml:lang="en">You want delete row</value>
+        <value xml:lang="vi">Bạn muốn xoá hàng</value>
+    </property>
+    
+</resource>

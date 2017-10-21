@@ -435,6 +435,39 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="research-domain-management">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-research-domain-management"/>    
+    </request-map>
+    
+    <request-map uri="get-research-domain-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    
+    <request-map uri="create-research-domain-management">
+		<security https="true" auth="true"/>		
+		<event type="service" invoke="createResearchDomain"></event>		 
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-research-domain-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-research-domain-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -450,5 +483,6 @@
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
+    <view-map name="view-research-domain-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#researchDomain"/>
    
 </site-conf>
