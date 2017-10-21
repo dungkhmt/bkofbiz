@@ -7,8 +7,8 @@
 <!-- Quan ly thuc hien de tai NCKH -->
 <Function functionId="RESEARCH_PROJECT_MANAGEMENT" uiLabelId="research_project_management" vnLabel="Quản lý thực hiện đề tài nghiên cứu khoa học" enLabel="research project management" parentFunctionId="NULL" index="1"/>
 
-<Function functionId="RESEARCH_PROJECT_CALL_MANAGEMENT" uiLabelId="research_project_call_management" vnLabel="Quản lý đợt gọi đề tài" enLabel="research project call management" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
-<Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
+<Function functionId="RESEARCH_PROJECT_CALL_MANAGEMENT" uiLabelId="research_project_call_management" target="project-call-management" vnLabel="Quản lý đợt gọi đề tài" enLabel="research project call management" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
+<Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" target="submit-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
 
 
 
