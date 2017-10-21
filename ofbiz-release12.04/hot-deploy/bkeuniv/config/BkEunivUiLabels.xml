@@ -16,20 +16,27 @@
         <value xml:lang="it">Un modulo della famiglia di software open source Open For Business</value>
         <value xml:lang="zh">开源软件OFBiz的组成部分</value>
     </property>
-    <property key="BkEunivViewPermissionError">
+    <property key="BkEunivViewPermissioneditError">
         <value xml:lang="en">You are not allowed to view this page.</value>
         <value xml:lang="zh">不允许你浏览这个页面。</value>
     </property>
     
+    
     <property key="BkEunivHomePage">
         <value xml:lang="en">Home Page</value>
         <value xml:lang="vi">Trang chủ</value>
+    </property>
+      
+    <property key="BkEunivAward">
+        <value xml:lang="en">Awards</value>
+        <value xml:lang="vi">Quản lý giải thưởng</value>
     </property>
     
     <property key="BkEunivEMSATA">
         <value xml:lang="en">Scientific Service Experience</value>
         <value xml:lang="vi">Kinh nghiệm quản lý đánh giá khoa học công nghệ</value>
     </property>
+    
     <property key="BkEunivEducationProgress">
         <value xml:lang="en">Manage Education Progress</value>
         <value xml:lang="vi">Quản lý quá trình đào tạo</value>
@@ -47,7 +54,7 @@
     
     <property key="BkEunivRemove">
         <value xml:lang="en">Remove</value>
-        <value xml:lang="vi">Xoá</value>
+        <value xml:lang="vi">Xóa</value>
     </property>
     
     <property key="BkEunivUpdate">

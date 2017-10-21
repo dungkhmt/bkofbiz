@@ -181,7 +181,79 @@
 			</widgets>
 		</section>
 	</screen>
+
+	<screen name="award">
+		<section>
+			<actions>
+				<property-map resource="BkEunivAwardUiLabels" map-name="uiAwardLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
 	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/award/award.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="patentStaff">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPatentUiLabels" map-name="uiPatentLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/patentstaff/patent.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="appliedResearchProject">
+		<section>
+			<actions>
+				<property-map resource="BkEunivAppliedRP" map-name="uiApplied" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/appliedresearchproject/applied.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="educationProgress">
 		<section>
 			<actions>

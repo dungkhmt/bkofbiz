@@ -26,10 +26,11 @@
 <Function functionId="WORK_PROGRESS" uiLabelId="work_progress" vnLabel="Quá trình công tác" enLabel="works" target="work-progress" parentFunctionId="PROFILE_MANAGEMENT" index="3"/>
 <Function functionId="RESEARCH_SPECIALITY_STAFF" uiLabelId="research_speciality_staff" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-staff" parentFunctionId="PROFILE_MANAGEMENT" index="4"/>
 <Function functionId="FOREIGN_LANGUAGE_STAFF" uiLabelId="foreign_language_staff" vnLabel="Trình độ ngoại ngữ" enLabel="foreign language" target="foreign-language-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
-<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
+<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
 <Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
 <Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+<Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
 
 
 
@@ -76,6 +77,7 @@
 <GroupFunction groupFunctionId="BIZADMIN_PAPER_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="PAPER_DECLARATION_STAFF"/>
 <GroupFunction groupFunctionId="BIZADMIN_PROJECT_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="PROJECT_DECLARATION_STAFF"/>
 <GroupFunction groupFunctionId="BIZADMIN_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZADMIN" functionId="APPLIED_PROJECT_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZADMIN_AWARD" securityGroupId="BIZADMIN" functionId="AWARD"/>
 
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_DOMAIN_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_DOMAIN_MANAGEMENT"/>
@@ -98,6 +100,7 @@
 <GroupFunction groupFunctionId="BIZSTAFF_PAPER_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PAPER_DECLARATION_STAFF"/>
 <GroupFunction groupFunctionId="BIZSTAFF_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PROJECT_DECLARATION_STAFF"/>
 <GroupFunction groupFunctionId="BIZSTAFF_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="APPLIED_PROJECT_DECLARATION_STAFF"/>
+<GroupFunction groupFunctionId="BIZSTAFF_AWARD" securityGroupId="BIZSTAFF" functionId="AWARD"/>
 
 <UserLogin userLoginId="giang.nguyenthiha@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="huong.doithilan@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>

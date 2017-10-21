@@ -13,9 +13,6 @@
 					<li>
 						<a href="user"><span class="glyphicon glyphicon-user"></span>Thong tin ca nhan</a>
 					</li>
-					<li>
-						<a href="404"></a>
-					</li>
 				</ul>
 			</div>
 			<hr class="side-bar-separator">
@@ -39,7 +36,6 @@
 					</ul>
 					
 				</#list>
-			
 			</div>
 			<hr class="side-bar-separator">
 		</div>
