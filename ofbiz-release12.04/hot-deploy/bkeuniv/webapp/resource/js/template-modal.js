@@ -132,21 +132,21 @@ modal.prototype._updateDefault = function(data, message) {
 		var table = this._action.dataTable;
 		var _ = this;
 		var keys = this._action.keys||[];
-		var element = table.rows().indexes().data().filter(function(e, index) {
-			var check = keys.reduce(function(acc, curr) {
+		
+		var elementIndex = Array.from(table.rows().indexes().data()).findIndex(function(e, index) {
+			return keys.reduce(function(acc, curr) {
 				return acc&&(e[curr]==data[curr]);
 			}, true);
-			
-			if(check) {
-				e.index = index;
-				return true;
-			}
-		})[0]
+		});
+		
+		var element = table.rows().indexes().data()[elementIndex];
+		
 		if(!!element&&(typeof element == "object")) {
 			Object.keys(element).forEach(function(key, index){
-				element[key] = data[key];
+					element[key] = data[key];
 			})
-			table.row(element.index).data(element);
+			
+			table.row(elementIndex).data(element);
 			$([_.id, "#modal-template"].join(" ")).modal('hide');
 
 	    	setTimeout(function() {
@@ -209,7 +209,11 @@ modal.prototype.render = function() {
 	
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
-	  _.action();
+	  if(!!_._action.type&&_._action.type=="custom") {
+		  _._action.update(_.data());
+	  } else {
+		  _.action();		  
+	  }
 	});
 	return this;
 }
@@ -229,8 +233,12 @@ modal.prototype.data = function() {
 			    	column._data = _._getSelect("#"+column.id);
 			    	break;
 			    case "custom":
-			    	acc = _._mergeData(acc, column._data);
-			    	return acc;
+			    	if(typeof column.getData == "function") {
+			    		column._data = column.getData("#"+column.id);
+			    	} else {
+			    		column._data = _._getText("#"+column.id);
+			    	}
+			    	break;
 			    case "render":
 			    	if(typeof column.getData == "function") {
 			    		column._data = column.getData("#"+column.id);

@@ -110,9 +110,9 @@
 				<set field="headerItem" value="main" /><!-- this highlights the selected 
 					menu-item with name "main" -->
 				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
-				<!-- 
-				<service service-name="getStaffs" result-map="staffs"></service>
-				 -->
+				
+				<service service-name="getDepartments" result-map="resultDepartments"></service>
+				<service service-name="getGenders" result-map="resultGenders"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

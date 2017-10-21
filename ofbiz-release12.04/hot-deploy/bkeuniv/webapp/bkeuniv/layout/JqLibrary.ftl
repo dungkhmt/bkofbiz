@@ -193,13 +193,18 @@
 	</style>
 	<script type="text/javascript">
 		var jqDataTable = new Object();
-		jqDataTable.columns = [];
+		jqDataTable.columns = [
+			{
+				name: "STT",
+				data: "index"
+			}
+		];
 		<#assign index=0 />
 		<#list columns as column>
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
-				value: '${column.data}'
+				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
@@ -210,19 +215,35 @@
 			    type: 'post',
 			    dataType: "json",
 			    success: function(data) {
-			    	jqDataTable.data = data.${fieldDataResult}.map(function(d) {
+			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>
 				    		r.${field} = d.${field}||"";
-				    	</#list>	    		
+				    	</#list>		
 				    	return r;
 			    	})
 			    	
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
-					columns: <@pfArray array=columns />,
+					columns: jqDataTable.columns,
 					"columnDefs": [
-					<#assign index = 0 />
+					{
+						"targets": 0,
+						"render": function ( data, type, row, meta ) {
+							
+							var row = meta.row;
+							if( Object.prototype.toString.call( row ) === '[object Array]' ) {
+								if(row.length > 0) {
+									return row[0] + 1
+								} else {
+									return jqDataTable.data.length
+								}
+							}
+							
+							return meta.row + 1;					      
+					    }
+					},
+					<#assign index = 1 />
 					<#list columns as column>
 						<#assign c = {} />
 						
@@ -402,6 +423,7 @@
 		
 		<table id="${id}-content" class="table table-striped table-bordered">
 			<thead>
+				<td>STT</td>
 				<#list columns as column>
 					<td>${column.name}</td>
 				</#list>

@@ -32,6 +32,12 @@
 <ProjectStatus projectStatusId="FINISH_SUCCESS" projectStatusName="Đã được nghiệm thu"/>
 <ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
 
+<!-- Tong hop ke khai KL NCKH -->
+<Function functionId="RESEARCH_DECLARATION_MANAGEMENT" uiLabelId="research_declaration_management" vnLabel="Quản lý kê khai khối lượng nghiên cứu khoa học" enLabel="research declaration management" parentFunctionId="NULL" index="1"/>
+
+<Function functionId="RESEARCH_SUMMARY_KV01" uiLabelId="research_summary_kv01" vnLabel="Tổng hợp mẫu KV01" enLabel="summary KV01" target="research-summary-kv01" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="1"/>
+
+
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
 <Function functionId="EDUCATION_PROGRESS" uiLabelId="education_progress" vnLabel="Quá trình đạo tạo" enLabel="educations" target="education-progress" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
@@ -50,11 +56,17 @@
 <!-- Quan ly danh muc -->
 <Function functionId="MISCELLANEOUS_MANAGEMENT" uiLabelId="miscellaneous_management" vnLabel="Quản lý danh mục" enLabel="miscellaneous" parentFunctionId="NULL" index="2"/>
 <Function functionId="DEPARTMENT_MANAGEMENT" uiLabelId="department_management" vnLabel="Quản lí bộ môn" enLabel="department" target="department-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="1"/>
-<Function functionId="RESEARCH_SPECIALITY_MANAGEMENT" uiLabelId="research_speciality_management" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="2"/>
+
+<Function functionId="RESEARCH_DOMAIN_MANAGEMENT" uiLabelId="research_domain_management" vnLabel="Lĩnh vực nghiên cứu" enLabel="research domain" target="research-domain-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="2"/>
+
+<Function functionId="RESEARCH_SPECIALITY_MANAGEMENT" uiLabelId="research_speciality_management" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-management" parentFunctionId="MISCELLANEOUS_MANAGEMENT" index="3"/>
 
 <!-- Quan ly can bo -->
 <Function functionId="STAFF_MANAGEMENT" uiLabelId="staff_management" vnLabel="Quản lý cán bộ" enLabel="Staffs" parentFunctionId="NULL" index="3"/>
 <Function functionId="STAFF_LIST" uiLabelId="staff_list" vnLabel="Danh sách cán bộ" enLabel="list of staffs" target="staff-management" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
+<Function functionId="STAFF_RESEARCH_SPECIALITY" uiLabelId="staff_research_speciality" vnLabel="Lĩnh vực và Chuyên ngành nghiên cứu" enLabel="research speciality of staffs" target="staff-research-speciality" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
+
+
 
 <!-- BIZADMIN -->
 <GroupFunction groupFunctionId="BIZADMIN_PROFILE_MANAGEMENT" securityGroupId="BIZADMIN" functionId="PROFILE_MANAGEMENT"/>
@@ -74,6 +86,10 @@
 <GroupFunction groupFunctionId="BIZADMIN_AWARD" securityGroupId="BIZADMIN" functionId="AWARD"/>
 
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_MANAGEMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_DOMAIN_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_DOMAIN_MANAGEMENT"/>
+
+
+<GroupFunction groupFunctionId="BIZADMIN_STAFF_RESEARCH_SPECIALITY" securityGroupId="BIZADMIN" functionId="STAFF_RESEARCH_SPECIALITY"/>
 
 
 <!-- BIZSTAFF -->
