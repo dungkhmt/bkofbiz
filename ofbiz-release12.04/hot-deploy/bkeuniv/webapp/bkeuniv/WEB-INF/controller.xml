@@ -558,6 +558,39 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="research-speciality-management">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-research-speciality-management"/>    
+    </request-map>
+    
+    <request-map uri="get-research-speciality-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    
+    <request-map uri="create-research-speciality-management">
+		<security https="true" auth="true"/>		
+		<event type="service" invoke="createResearchSpeciality"></event>		 
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-research-speciality-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-research-speciality-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -577,4 +610,5 @@
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
    <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
+   <view-map name="view-research-speciality-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#researchSpeciality"/>
 </site-conf>

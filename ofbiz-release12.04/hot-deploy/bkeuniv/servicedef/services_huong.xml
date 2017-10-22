@@ -44,6 +44,47 @@
     	
     	<attribute name="result" mode="OUT" type="String"></attribute>
 	</service>
+	
+	
+	<service name="getResearchSpeciality" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchspeciality.ResearchSpeciality" invoke="getResearchSpeciality">
+    	<attribute name="researchSpecialityId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchSpecialityName" mode="IN" type="String" optional="true"></attribute>   
+    	<attribute name="researchDomainId" mode="IN" type="String" optional="true"></attribute>
+    		
+    	<attribute name="researchSpeciality" mode="OUT" type="List"></attribute>
+    	<attribute name="result" mode="OUT" type="List"></attribute>
+    	<attribute name="count" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="createResearchSpeciality" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchspeciality.ResearchSpeciality" invoke="createResearchSpeciality">
+    	<attribute name="researchSpecialityId" mode="IN" type="String"></attribute>   
+    	<attribute name="researchSpecialityName" mode="IN" type="String"></attribute>  
+    	<attribute name="researchDomainId[]" mode="IN" type="List"></attribute>  
+    	 	
+    	<attribute name="researchSpeciality" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateResearchSpeciality" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchspeciality.ResearchSpeciality" invoke="updateResearchSpeciality">
+    	<attribute name="researchSpecialityId" mode="IN" type="String"></attribute>
+    	<attribute name="researchSpecialityName" mode="IN" type="String"></attribute>  
+    	<attribute name="researchDomainId[]" mode="IN" type="List"></attribute> 	
+    	
+    	<attribute name="researchSpeciality" mode="OUT" type="Map"></attribute>
+    	
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
+      <service name="deleteResearchSpeciality" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchspeciality.ResearchSpeciality" invoke="deleteResearchSpeciality">
+    	<attribute name="researchSpecialityId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
     
     
 </services>

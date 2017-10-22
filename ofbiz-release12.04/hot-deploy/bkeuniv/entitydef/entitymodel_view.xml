@@ -8,6 +8,18 @@
     <description>None</description>
     <copyright></copyright>
     <version></version>
+    
+    <view-entity entity-name="ResearchSpecialityView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RS" entity-name="ResearchSpeciality"></member-entity>
+		<member-entity entity-alias="RD" entity-name="ResearchDomain"></member-entity>
+		
+		<alias-all entity-alias="RS"></alias-all>
+		<alias name="researchDomainName" entity-alias="RD"></alias>
+		<view-link rel-entity-alias="RD" entity-alias="RS" rel-optional="true">
+			<key-map field-name="researchDomainId" rel-field-name="researchDomainId"/>
+		</view-link>
+		
+	</view-entity>
 
 	
 </entitymodel>
