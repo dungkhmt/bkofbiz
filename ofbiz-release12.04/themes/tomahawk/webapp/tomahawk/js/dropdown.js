@@ -17,25 +17,17 @@ specific language governing permissions and limitations
 under the License.
 */
 
-
-var DropDownMenu = (
-    function(menuElement) {
-    var menuTitle = menuElement.find("h2:first");
-    menuElement.children().each(function(node){
-      // if there is a submenu
-      var submenu = jQuery(this).find("ul:first");
-
-      if(submenu != null){
-        // make sub-menu invisible
-        submenu.hide();
-        // toggle the visibility of the submenu
-        if (menuTitle != null) {
-          menuTitle.mouseover (function(){ submenu.css({'display': 'block'});});
-          menuTitle.mouseout (function(){submenu.hide();});
-        }
-        jQuery(this).mouseover (function(){submenu.css({'display': 'block'});});
-        jQuery(this).mouseout (function(){submenu.hide();});
-      }
+function changeLanguage() {
+	var selectBox = document.getElementById("select-language");
+    var url = selectBox.options[selectBox.selectedIndex].value;
+    $.ajax({
+	    url: url,
+	    type: 'post',
+	    success: function(data) {
+	    	location.reload(true)
+	    },
+	    error: function(err) {
+	    	alertify.success(JSON.stringify(err));
+	    }
     });
-  }
-);
+}
