@@ -525,6 +525,39 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="foreign-language-catalog">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-foreign-language-catalog"/>    
+    </request-map>
+    
+    <request-map uri="get-foreign-language-catalog">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getForeignLanguageCatalog"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    
+    <request-map uri="create-foreign-language-catalog">
+		<security https="true" auth="true"/>		
+		<event type="service" invoke="createForeignLanguageCatalog"></event>		 
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-foreign-language-catalog">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateForeignLanguageCatalog"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-foreign-language-catalog">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteForeignLanguageCatalog"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -545,4 +578,5 @@
     
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     
+   <view-map name="view-foreign-language-catalog" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#foreignLanguageCatalog"/>
 </site-conf>

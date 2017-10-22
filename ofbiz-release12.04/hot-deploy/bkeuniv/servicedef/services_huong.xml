@@ -12,4 +12,40 @@
     </service> 
     
     
+    <service name="getForeignLanguageCatalog" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.foreignlanguagecatalog.ForeignLanguageCatalog" invoke="getForeignLanguageCatalog">
+    	<attribute name="foreignLanguageCatalogId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="foreignLanguageCatalogName" mode="IN" type="String" optional="true"></attribute>   
+    		
+    	<attribute name="foreignLanguageCatalog" mode="OUT" type="List"></attribute>
+    	<attribute name="result" mode="OUT" type="List"></attribute>
+    	<attribute name="count" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="createForeignLanguageCatalog" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.foreignlanguagecatalog.ForeignLanguageCatalog" invoke="createForeignLanguageCatalog">
+    	<attribute name="foreignLanguageCatalogId" mode="IN" type="String"></attribute>   
+    	<attribute name="foreignLanguageCatalogName" mode="IN" type="String"></attribute>  
+    	<attribute name="foreignLanguageCatalog" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateForeignLanguageCatalog" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.foreignlanguagecatalog.ForeignLanguageCatalog" invoke="updateForeignLanguageCatalog">
+    	<attribute name="foreignLanguageCatalogId" mode="IN" type="String"></attribute>
+    	<attribute name="foreignLanguageCatalogName" mode="IN" type="String"></attribute>  
+    	
+    	<attribute name="foreignLanguageCatalog" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
+      <service name="deleteForeignLanguageCatalog" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.foreignlanguagecatalog.ForeignLanguageCatalog" invoke="deleteForeignLanguageCatalog">
+    	<attribute name="foreignLanguageCatalogId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
+    
+    
 </services>

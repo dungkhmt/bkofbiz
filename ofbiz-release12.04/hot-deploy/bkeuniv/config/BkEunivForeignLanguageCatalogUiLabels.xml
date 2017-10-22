@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <property key="BkEunivForeignLanguageCatalogId">
+        <value xml:lang="en">foreignLanguageCatalogId</value>
+        <value xml:lang="vi">Mã danh mục ngôn ngữ nước ngoài </value>
+    </property>
+    
+    <property key="BkEunivForeignLanguageCatalogName">
+        <value xml:lang="en">foreignLanguageCatalogName</value>
+        <value xml:lang="vi">Tên danh mục ngôn ngữ nước ngoài</value>
+    </property>
+   
+    
+     <property key="BkEunivEditForeignLanguageCatalogName">
+        <value xml:lang="en">Edit Foreign Language Catalog Name</value>
+        <value xml:lang="vi">Chỉnh sửa mã danh mục ngôn ngữ nước ngoài</value>
+    </property>
+    
+     <property key="BkEunivNewResearchSpeciality">
+        <value xml:lang="en">New Foreign Language Catalog Name </value>
+        <value xml:lang="vi">Thêm mới mã danh mục ngôn ngữ nước ngoài</value>
+    </property>
+    
+    
+     <property key="BkEunivTitleDeleteForeignLanguageCatalog">
+        <value xml:lang="en">You want delete row</value>
+        <value xml:lang="vi">Bạn muốn xoá hàng</value>
+    </property>
+    
+</resource>
