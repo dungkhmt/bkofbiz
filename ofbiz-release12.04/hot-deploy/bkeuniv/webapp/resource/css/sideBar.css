@@ -123,14 +123,14 @@
 	color: #333;
 }
 
-ul li.active {
-	background: #cc181e;
-    color: #fff;
+.active-menu {
+	background: #cc181e!important;
+    color: #fff!important;
 }
 
-ul li.active:hover {
-	background: #cc181e;
-    color: #fff;
+.active-menu:hover {
+	background: #cc181e!important;
+    color: #fff!important;
 }
 
 .side-bar-item-container .nav-header .glyphicon{

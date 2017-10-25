@@ -258,7 +258,7 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
-					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
+					"scrollY": ${sizeTable} - 200,
 					"scrollCollapse": true,
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
@@ -408,11 +408,6 @@
 	</script>
 	<!-- html -->
 	<div id="${id}">
-		<div class="jqDataTable-title">
-			<a href="#" class="jqDataTable-title-hyperlink">
-				${jqTitle}
-			</a>
-		</div>
 		<div id="jqDataTable-button-add" onClick="jqNew()">
 			${uiLabelMap.BkEunivAdd}
 		</div>

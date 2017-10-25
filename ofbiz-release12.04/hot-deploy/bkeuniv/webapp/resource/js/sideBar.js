@@ -49,7 +49,6 @@ $(document).ready(function () {
 					var m = $("#" + item.id + "_children");
 					
 					if(m.length > 0 && m.css('display') !== "block") {
-						console.log(1)
 						m.css('display', 'block')
 					}
 				}
@@ -95,14 +94,13 @@ $(document).ready(function () {
 	// 	var el = $('.tree-toggle').parent().children('.tree');
 	// })
 
-	// var href = window.location.href;
-	// Array.from($(".side-bar-item-container ul li a")).forEach(function(value, index) {
-	// 	if(href===value.href) {
-	// 		value.parentNode.classList.add("active");
-	// 		//openSessionSideBar(value.parentNode);
-	// 		return;
-	// 	}
-	// }) 
+	var href = window.location.href;
+	Array.from($(".side-bar-item-container ul li div a")).forEach(function(value, index) {
+		if(href===value.href) {
+			value.parentNode.classList.add("active-menu");
+			return;
+		}
+	}) 
 });
 function openSessionSideBar(el) {
 	if (el.className.indexOf("side-bar") !== -1) {
