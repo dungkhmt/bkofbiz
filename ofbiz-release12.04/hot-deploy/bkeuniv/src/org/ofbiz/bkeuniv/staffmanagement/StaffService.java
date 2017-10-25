@@ -59,7 +59,7 @@ public class StaffService {
 		
 		String staffId = (String)userLogin.get("userLoginId");
 		
-		Debug.log(module + "::getStaffs, authorStaffId = " + staffId);
+		Debug.log(module + "::getGenders, authorStaffId = " + staffId);
 		Delegator delegator = ctx.getDelegator();
 		try{
 			List<GenericValue> genders = delegator.findList("Gender", 

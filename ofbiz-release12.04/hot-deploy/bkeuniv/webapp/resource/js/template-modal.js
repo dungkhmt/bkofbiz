@@ -197,6 +197,16 @@ modal.prototype.render = function() {
 		'</div>';
 	$(this.id).children().remove()
 	$(this.id).append(html);
+	console.log([this.id,"#modal-template"].join(" "));
+	$([this.id,"#modal-template"].join(" ")).ready(function(){
+		var maxHeight = parseInt(window.innerHeight*0.6)
+		if($(this).height() >= maxHeight) {
+	        $('.modal-body').css('max-height', maxHeight);
+	    }else{
+	        $('.modal-body').css('max-height', '');
+	    }
+	});
+	
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
 	  if(!!_._action.type&&_._action.type=="custom") {

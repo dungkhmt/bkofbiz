@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <property key="TitleWorkProgress">
+        <value xml:lang="en">Manage work progress</value>
+        <value xml:lang="vi">Quản lý quá trình công tác</value>
+    </property>
+    
+    <property key="WorkProgressId">
+        <value xml:lang="en">Work progress</value>
+        <value xml:lang="vi">Quá trình công tác</value>
+    </property>
+    
+    <property key="StaffId">
+        <value xml:lang="en">Staff</value>
+        <value xml:lang="vi">Nhân viên</value>
+    </property>
+    
+    <property key="Period">
+        <value xml:lang="en">Period</value>
+        <value xml:lang="vi">Giai đoạn</value>
+    </property>
+    
+    <property key="Position">
+        <value xml:lang="en">Position</value>
+        <value xml:lang="vi">Chức vụ</value>
+    </property>
+    
+    <property key="Specialization">
+        <value xml:lang="en">Specialization</value>
+        <value xml:lang="vi">Chuyên ngành</value>
+    </property>
+    
+    <property key="Institution">
+        <value xml:lang="en">Institution</value>
+        <value xml:lang="vi">Tổ chức</value>
+    </property>
+    
+    <property key="TitleNewWorkProgress">
+        <value xml:lang="en">New work progress</value>
+        <value xml:lang="vi">Thêm mới quá trình công tác</value>
+    </property>
+    
+    <property key="TitleEditWorkProgress">
+        <value xml:lang="en">Edit work progress</value>
+        <value xml:lang="vi">Chỉnh sửa quá trình công tác</value>
+    </property>
+    
+    <property key="TitleDeleteWorkProgress">
+        <value xml:lang="en">Delete work progress</value>
+        <value xml:lang="vi">Xóa quá trình công tác</value>
+    </property>
+    
+    <property key="DowloadPDF">
+        <value xml:lang="en">Dowload PDF</value>
+        <value xml:lang="vi">Tải PDF</value>
+    </property>
+    
+    <property key="ExportExcel">
+        <value xml:lang="en">Export Excel</value>
+        <value xml:lang="vi">Xuất Excel</value>
+    </property>
+    
+</resource>

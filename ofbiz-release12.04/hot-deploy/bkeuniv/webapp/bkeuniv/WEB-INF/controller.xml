@@ -21,7 +21,10 @@
     -->
 
     <!-- Request Mappings -->
-    <request-map uri="main"><security https="true" auth="true"/><response name="success" type="view" value="main"/></request-map>
+    <request-map uri="main">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="main"/>
+    </request-map>
     
     <request-map uri="logout">
         <security https="true" auth="true"/>
@@ -43,6 +46,12 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-paper-declaration"/>
     </request-map>
+    
+    <request-map uri="research-summary-excel">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-research-summary-excel"/>
+    </request-map>
+    
  
     <request-map uri="staff-management">
     	<security https="true" auth="true"/>
@@ -156,12 +165,27 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
     <request-map uri="update-paper">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="updatePaper"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
+	<request-map uri="create-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createPaperDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="delete-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deletePaperDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	
 	<request-map uri="create-education-progress">
 		<security https="true" auth="true"/>
@@ -195,9 +219,39 @@
 		<response name="error" type="request" value="json"></response>
     </request-map>
     
+
+	<request-map uri="award">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-award"/>
+    </request-map>
+    
+    <request-map uri="get-award">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getPatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <request-map uri="scientificserviceexperience">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-scientificserviceexperience"></response>
+    </request-map>
+    
+    <request-map uri="patent-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-patent-staff"></response>
+    </request-map>
+    
+    <request-map uri="applied-project-declaration-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-applied-project-declaration-staff"></response>
     </request-map>
     
     <request-map uri="get-scientificserviceexperience">
@@ -207,6 +261,34 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="get-applied-project-declaration-staff">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="getProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-award">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-applied-project-declaration-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createPatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
 	<request-map uri="create-scientificserviceexperience">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="createscientificserviceexperience"></event>
@@ -214,6 +296,28 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+
+	<request-map uri="update-award">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-applied-project-declaration-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updatePatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
 	<request-map uri="update-scientificserviceexperience">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="updatescientificserviceexperience"></event>
@@ -221,13 +325,40 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="delete-award">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteAward"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-patent">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deletePatent"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-applied-project-declaration-staff">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="setSessionLocale">
+        <security https="true" auth="false"/>
+        <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
+        <response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+    </request-map>
+	
 	<request-map uri="delete-scientificserviceexperience">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="deletescientificserviceexperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
-
 
     <request-map uri="get-permission-functions">
 		<security https="true" auth="false"/>
@@ -243,6 +374,157 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
     
+    <request-map uri="download-file-paper">
+		<security auth="true" https="true" />
+		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+		invoke="downloadFile"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	<request-map uri="upload-file-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="uploadFile"/>
+            <response name="AttachementSuccess" type="view" value="UploadFile"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+	<request-map uri="get-academic-years">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+                     invoke="getListAcademicYears"/>
+            <response name="AttachementSuccess" type="view" value="YEARS"/>
+           
+    </request-map>    
+	
+	<!-- 
+	<request-map uri="get-staffs">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="getStaffs"/>
+            <response name="AttachementSuccess" type="view" value="STAFFS"/>
+            
+    </request-map>    
+	 -->
+	<request-map uri="get-staffs-of-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="getStaffsOfPaper"/>
+            <response name="AttachementSuccess" type="view" value="STAFFS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
+	<request-map uri="update-staffs-of-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="updateStaffsOfPaper"/>
+            <response name="AttachementSuccess" type="view" value="STAFFS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+	<request-map uri="create-staffs-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="createStaffPaperDeclaration"/>
+            <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+    <request-map uri="export-excel-kv01">
+		<security auth="true" https="true" />
+		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV01"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
+	<request-map uri="project-declaration-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-declaration-staff"></response>
+    </request-map>
+    
+    <request-map uri="get-project-declaration">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getProjectDeclaration"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="create-project-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-project-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateProjectDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-project-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteProjectDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-staff-select">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getStaffs"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="dowload-pdf">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-dowload-pdf"></response>
+    </request-map>
+    
+    <request-map uri="export-excel-project-declaration">
+		<security auth="true" https="true" />
+		<event type="java" path="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="exportExcel"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
+	<request-map uri="work-progress">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-work-progress"></response>
+    </request-map>
+    
+    <request-map uri="get-work-progress">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getWorkProgress"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="create-work-progress">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createWorkProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-work-progress">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateWorkProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-work-progress">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteWorkProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="export-excel-work-progress">
+		<security auth="true" https="true" />
+		<event type="java" path="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -251,8 +533,16 @@
     <view-map name="view-add-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageAddDepartment"/>
     <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
+    <view-map name="view-award" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#award"/>
+    <view-map name="view-patent-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#patentStaff"/>
     <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
+    <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
+    <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
+   	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
+   <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
+    
+   <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     
 </site-conf>

@@ -21,39 +21,43 @@
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
 
-<#macro pfArray array>
+<#macro pfArray array depth=0 maxDepth=10>
 	[
-	<#list array as a>
-		<#if a?is_hash_ex>
-			<@pfObject object=a />,
-		<#elseif a?is_sequence>
-			<@pfArray array=a />,
-		<#elseif (a?string)?index_of("function")==0>
-			${a?replace("\n|\t", "", "r")},
-		<#elseif a?is_string>
-			'${a?replace("\n|\t", "", "r")}',
-		<#else>
-			'${a}',
+		<#if depth < maxDepth>
+			<#list array as a>
+				<#if a?is_hash_ex>
+					<@pfObject object=a depth=depth+1/>,
+				<#elseif a?is_sequence>
+					<@pfArray array=a depth=depth+1/>,
+				<#elseif (a?string)?index_of("function")==0>
+					${a?replace("\n|\t", "", "r")},
+				<#elseif a?is_string>
+					'${a?replace("\n|\t", "", "r")}',
+				<#else>
+					'${a}',
+				</#if>
+			</#list>
 		</#if>
-	</#list>
 	]
 </#macro>
 
-<#macro pfObject object>
+<#macro pfObject object depth=0 maxDepth=10>
 	{
-	<#list object?keys as k>
-		<#if object[k]?is_hash_ex>
-			'${k}': <@pfObject object=object[k] />,
-		<#elseif object[k]?is_sequence>
-			'${k}': <@pfArray array=object[k] />,
-		<#elseif (object[k]?string)?index_of("function") == 0>
-			'${k}': ${object[k]?replace("\n|\t", "", "r")},
-		<#elseif object[k]?is_string>
-			'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
-		<#else>
-			'${k}': '${object[k]}',
+		<#if depth < maxDepth>
+			<#list object?keys as k>
+				<#if object[k]?is_hash_ex>
+					'${k}': <@pfObject object=object[k] depth=depth+1/>,
+				<#elseif object[k]?is_sequence>
+					'${k}': <@pfArray array=object[k] depth=depth+1/>,
+				<#elseif (object[k]?string)?index_of("function") == 0>
+					'${k}': ${object[k]?replace("\n|\t", "", "r")},
+				<#elseif object[k]?is_string>
+					'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
+				<#else>
+					'${k}': '${object[k]}',
+				</#if>
+			</#list>
 		</#if>
-	</#list>
 	}
 </#macro>
 
@@ -111,8 +115,8 @@
 			cursor: pointer;
 		}
 		
-		#${id}-content tbody tr:hover {
-		    background-color: #b3b3b3;
+		#${id}-content tbody tr:hover td:first-child {
+		     border-left: 2px #0014ff solid;			
 		}
 		
 		
@@ -164,7 +168,32 @@
 		    text-align: center;
 		    border: 1px solid #68b2e3;
 		}
-		
+		#jqDataTable-button-update{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #53a7df;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
+		#jqDataTable-button-remove{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #FF0000;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
 		#jqDataTable-button-add:hover {
 			background-color: #3d9cdb;
 		}
