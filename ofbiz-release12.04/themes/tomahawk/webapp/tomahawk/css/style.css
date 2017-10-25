@@ -3150,7 +3150,7 @@ height: auto;
 .nav {
 	box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 	color: rgba(0, 0, 0, 0.87);
-    background-color: rgb(255, 255, 255);
+    background-color: #fbfbfb;
 	
 	position: fixed;
 	width: 100%;
