@@ -26,6 +26,11 @@
         <value xml:lang="en">Home Page</value>
         <value xml:lang="vi">Trang chủ</value>
     </property>
+
+    <property key="BkEunivPersonalInformation">
+        <value xml:lang="en">Personal information</value>
+        <value xml:lang="vi">Thông tin cá nhân</value>
+    </property>
       
     <property key="BkEunivAward">
         <value xml:lang="en">Awards</value>

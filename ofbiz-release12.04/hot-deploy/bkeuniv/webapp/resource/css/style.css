@@ -1,11 +1,12 @@
 .body {
-	position: absolute;
-    top: 60px;
+    position: absolute;
+    background-color: #fff;
+    top: 40px;
     left: 0;
     right: 0;
-    bottom: 12%;
+    bottom: 0;
 }
-
+/* 
 .footer{
 	position: fixed;
 	
@@ -34,4 +35,4 @@
     
     margin-top: 40px;
 	
-}
+} */

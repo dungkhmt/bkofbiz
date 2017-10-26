@@ -154,6 +154,7 @@
 		<field name="vnLabel" type="very-long"></field>
 		<field name="enLabel" type="very-long"></field>
 		<field name="target" type="very-long"></field>
+		<field name="icon" type="very-long"></field>
 		<field name="parentFunctionId" type="id-vlong"></field>
 		<field name="index" type="numeric"></field>
 		<prim-key field="functionId"/>

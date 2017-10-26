@@ -1,6 +1,5 @@
 <#macro jqMinimumLib >
 	<!-- import jqMinimumLib lib css-->
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.default.min.css">
@@ -18,7 +17,7 @@
 	<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
 	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/dataTables.bootstrap.min.js"></script>
+	
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
 
@@ -287,7 +286,7 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
-					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
+					"scrollY": ${sizeTable} - 200,
 					"scrollCollapse": true,
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
@@ -437,16 +436,11 @@
 	</script>
 	<!-- html -->
 	<div id="${id}">
-		<div class="jqDataTable-title">
-			<a href="#" class="jqDataTable-title-hyperlink">
-				${jqTitle}
-			</a>
-		</div>
 		<div id="jqDataTable-button-add" onClick="jqNew()">
 			${uiLabelMap.BkEunivAdd}
 		</div>
 		
-		<table id="${id}-content" class="table table-striped table-bordered">
+		<table id="${id}-content" class="table table-striped">
 			<thead>
 				<td>STT</td>
 				<#list columns as column>
