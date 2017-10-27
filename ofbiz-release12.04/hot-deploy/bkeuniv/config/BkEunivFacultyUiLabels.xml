@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivFacultyId">
+        <value xml:lang="en">Faculty ID</value>
+        <value xml:lang="vi">Id Vien</value>
+    </property>
+   
+   <property key="BkEunivUniversityName">
+        <value xml:lang="en">University Name</value>
+        <value xml:lang="vi">Truong dai hoc</value>
+    </property>
+
+    <property key="BkEunivFacultyName">
+        <value xml:lang="en">Faculty Name</value>
+        <value xml:lang="vi">Ten Vien</value>
+    </property>
+    
+</resource>

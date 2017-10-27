@@ -6,6 +6,14 @@
     right: 0;
     bottom: 0;
 }
+
+.body .label {
+    color: black;
+}
+
+.table .header-row {
+    font-weight: bold;
+}
 /* 
 .footer{
 	position: fixed;

@@ -5,6 +5,8 @@
          can be found in the following xml file. A component can override the
          elements found in the common-controller.xml file. -->
     <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/dpt-controller.xml"/>
+    <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/faculty-controller.xml"/>
 
     <description>BkEuniv Component Site Configuration File</description>
 	

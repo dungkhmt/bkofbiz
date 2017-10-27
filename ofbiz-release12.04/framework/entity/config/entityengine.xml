@@ -109,7 +109,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         schema-name="public"
         use-binary-type-for-blob="true"
         use-fk-initially-deferred="false"
-        use-order-by-nulls="true" offset-style="limit">
+        use-order-by-nulls="true">
 
         <read-data reader-name="tenant"/>
         <read-data reader-name="seed"/>

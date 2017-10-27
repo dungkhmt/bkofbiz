@@ -18,7 +18,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<project name="OFBiz Main Build" default="build" basedir="."
+<project name="OFBiz Main Build" default="start" basedir="."
     xmlns:ivy="antlib:org.apache.ivy.ant"
     xmlns:sonar="antlib:org.sonar.ant:sonar">
 

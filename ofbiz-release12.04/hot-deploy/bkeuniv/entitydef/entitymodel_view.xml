@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
-    <!-- ========================================================= -->
-    <!-- ======================== Defaults ======================= -->
-    <!-- ========================================================= -->
-    <title>Entity of BkEuniv Component</title>
-    <description>None</description>
-    <copyright></copyright>
-    <version></version>
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of BkEuniv Component</title>
 
-	
+	<view-entity entity-name="DepartmentDetail" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="Dpt" entity-name="Department" />
+		<member-entity entity-alias="Fcl" entity-name="Faculty" />
+		<alias-all entity-alias="Dpt"/>
+		<alias-all entity-alias="Fcl">
+			<exclude field="universityId" />
+		</alias-all>
+		<view-link entity-alias="Dpt" rel-entity-alias="Fcl">
+			<key-map field-name="facultyId" />
+		</view-link>
+	</view-entity>
+
+	<view-entity entity-name="FacultyDetail" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="Fcl" entity-name="Faculty" />
+		<member-entity entity-alias="Univ" entity-name="University" />
+		<alias-all entity-alias="Fcl"/>
+		<alias-all entity-alias="Univ" />
+		<view-link entity-alias="Fcl" rel-entity-alias="Univ">
+			<key-map field-name="universityId" />
+		</view-link>
+	</view-entity>
+
 </entitymodel>

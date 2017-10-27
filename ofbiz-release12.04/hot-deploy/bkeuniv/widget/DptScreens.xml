@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<screen name="FindDpt">
+		<section>
+			<actions>
+					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
+					<set field="dptCtx" from-field="parameters"/>
+					<set field="dptCtx.noConditionFind" value="Y"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<container style="body">
+									<include-form name="FindDpt" location="component://bkeuniv/widget/DptForms.xml"/>
+									<include-form name="ListDpt" location="component://bkeuniv/widget/DptForms.xml"/>
+								</container>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="EditDpt">
+		<section>
+			<actions>
+					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
+					<set field="dptCtx" from-field="parameters"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<container style="body">
+									<include-form name="EditDpt" location="component://bkeuniv/widget/DptForms.xml"/>
+								</container>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="CreateDpt">
+		<section>
+			<actions>
+					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
+					<set field="dptCtx" from-field="parameters"/>
+					<set field="dptCtx.noConditionFind" value="Y"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<container style="body">
+									<include-form name="EditDpt" location="component://bkeuniv/widget/DptForms.xml"/>
+									<include-form name="ListDpt" location="component://bkeuniv/widget/DptForms.xml"/>
+								</container>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="Test">
+		<section>
+			<widgets>
+				<label text="Result: ${parameters.result}" />
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="TestError">
+		<section>
+			<widgets>
+				<label text="ERROR: ${parameters._ERROR_MESSAGE_}" />
+			</widgets>
+		</section>
+	</screen>
+
+</screens>
