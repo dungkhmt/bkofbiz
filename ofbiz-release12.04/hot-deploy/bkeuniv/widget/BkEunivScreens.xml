@@ -428,5 +428,32 @@
 			</widgets>
 		</section>
 	</screen>
+	
+	<screen name="foreignLanguage">
+		<section>
+			<actions>
+				<entity-condition list="listStaffs" entity-name="ForeignLanguage"></entity-condition>
+				<property-map resource="BkEunivForeignLanguageUiLabels" map-name="foreignLanguageUiLabelMap" global="true"/>
+				<service service-name="getForeignLanguageCatalog" result-map="foreignLanguageCatalog"></service>
+				<service service-name="getStaffs" result-map="staff"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/foreignlanguage/foreign-language.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
 
 </screens>

@@ -558,6 +558,40 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="foreign-language-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-foreign-language"/>    
+    </request-map>
+    
+    <request-map uri="get-foreign-language">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    
+    <request-map uri="create-foreign-language">
+		<security https="true" auth="true"/>		
+		<event type="service" invoke="createForeignLanguage"></event>		 
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-foreign-language">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-foreign-language">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -579,4 +613,5 @@
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     
    <view-map name="view-foreign-language-catalog" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#foreignLanguageCatalog"/>
+   <view-map name="view-foreign-language" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#foreignLanguage"/>
 </site-conf>
