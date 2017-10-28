@@ -55,14 +55,14 @@
 								<#assign icon=cf.icon/>
 							</#if>
 							<li title="${StringUtil.wrapString(cf.vnLabel)}" id="${cf.functionId}">
-								<div class="sub-item">
+								<a href="${cf.target}" class="sub-item">
 									<span class="item-icon-left icon fa ${icon}"></span>
-									<a href="${cf.target}" class="item-name">
+									<div class="item-name">
 										<div>
 											${StringUtil.wrapString(cf.vnLabel)}
 										</div>
-									</a>
-								</div>
+									</div>
+								</a>
 							</li>							
 						</#list>
 					</ul>
@@ -79,17 +79,18 @@
 				<#list functions.permissionFunctions as f>
 				{
 					id: '${f.function.functionId}',
-					status: "none",
 					text: '${StringUtil.wrapString(f.function.vnLabel)}',
+					status: "none",
 					children:[
-						{
+						
 						<#list f.children as cf>
-							id: '${cf.functionId}',
-							status: "none",
-							text: '${StringUtil.wrapString(cf.vnLabel)}',
-							target: '${cf.target}',
+							{
+								id: '${cf.functionId}',
+								text: '${StringUtil.wrapString(cf.vnLabel)}',
+								target: '${cf.target}',
+								status: "none"
+							},
 						</#list>
-						},
 					],
 				},
 				</#list>

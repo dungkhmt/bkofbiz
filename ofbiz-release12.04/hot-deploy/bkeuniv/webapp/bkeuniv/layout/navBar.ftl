@@ -1,10 +1,16 @@
+
+<#assign pageName = "H&#x1EC7; th&#x1ED1;ng qu&#x1EA3;n l&#xFD; khoa h&#x1ECD;c c&#xF4;ng ngh&#x1EC7;" />
+
+<#if title??>
+	<#assign pageName = uiLabelMap[title] />
+</#if>
 <div class="nav">
 	<button class="icon-side-bar" onClick="openSideBar()">
 		<span class="glyphicon glyphicon-menu-hamburger"></span>
 	</button>
 
 	<div class="app-name">
-		<h1>H&#x1EC7; th&#x1ED1;ng qu&#x1EA3;n l&#xFD; khoa h&#x1ECD;c c&#xF4;ng ngh&#x1EC7;</h1>
+		<h1>${pageName}</h1>
 	</div>
 	<div class="change-language">
 		<select id="select-language" onchange="changeLanguage()" placeholder="Select a language...">
