@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <property key="BkEunivForeignLanguageId">
+        <value xml:lang="en">foreignLanguageId</value>
+        <value xml:lang="vi">Mã ngôn ngữ</value>
+    </property>
+    
+    <property key="BkEunivStaffId">
+        <value xml:lang="en">staffId</value>
+        <value xml:lang="vi">Mã nhân viên</value>
+    </property>
+    
+    
+    <property key="BkEunivForeignLanguageCatalogId">
+        <value xml:lang="en">foreignLanguageCatalogId</value>
+        <value xml:lang="vi">Mã danh mục ngôn ngữ</value>
+    </property>
+    
+    <property key="BkEunivListen">
+        <value xml:lang="en">Listen</value>
+        <value xml:lang="vi">Nghe</value>
+    </property>
+    
+     <property key="BkEunivSpeaking">
+        <value xml:lang="en">Speaking</value>
+        <value xml:lang="vi">Nói</value>
+    </property>
+    
+     <property key="BkEunivReading">
+        <value xml:lang="en">Reading</value>
+        <value xml:lang="vi">Đọc</value>
+    </property>
+    
+     <property key="BkEunivWriting">
+        <value xml:lang="en">Writing</value>
+        <value xml:lang="vi">Viết</value>
+    </property>
+   
+    
+     <property key="BkEunivEditForeignLanguage">
+        <value xml:lang="en">Edit Foreign Language</value>
+        <value xml:lang="vi">Chỉnh sửa mã ngôn ngữ</value>
+    </property>
+    
+     <property key="BkEunivNewForeignLanguage">
+        <value xml:lang="en">New Foreign Language</value>
+        <value xml:lang="vi">Thêm mới mã ngôn ngữ</value>
+    </property>
+    
+    
+     <property key="BkEunivTitleDeleteForeignLanguageCatalog">
+        <value xml:lang="en">You want delete row</value>
+        <value xml:lang="vi">Bạn muốn xoá hàng</value>
+    </property>
+    
+</resource>
