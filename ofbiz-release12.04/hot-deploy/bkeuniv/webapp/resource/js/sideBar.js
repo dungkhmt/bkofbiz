@@ -37,13 +37,23 @@ $(document).ready(function () {
 			localStorage.setItem("menu", JSON.stringify(menu));
 		}, 51);
 	});
+	
 	$('.tree-toggle').parent().children('ul.tree').toggle(0);
+
+	var href = window.location.href;
+	Array.from($(".side-bar-item-container ul li a")).forEach(function(value, index) {
+		if(href===value.href) {
+			value.parentNode.classList.add("active-menu");
+			return;
+		}
+	}) 
+	
+
 
 	var menuLocal = localStorage.getItem("menu");
 	if(!!menuLocal) {
 		try {
 			menuLocal = JSON.parse(menuLocal);
-			
 			menuLocal.Items.forEach(function(item) {
 				if(item.status == "block") {
 					var m = $("#" + item.id + "_children");
@@ -53,15 +63,16 @@ $(document).ready(function () {
 					}
 				}
 			});
-	
+
 			if(menuLocal.status == "block") {
 				openSideBar()
 			} else {
 				closeSideBar()
 			}
-	
+			
 			//upgrade menu
-			menu = Object.assign({}, menu, menuLocal);
+			menu = $.extend(true, menu, menuLocal) 
+			localStorage.setItem("menu", JSON.stringify(menu));
 		}
 		catch(err) {
 			console.log("not get menu from store local")
@@ -72,36 +83,8 @@ $(document).ready(function () {
 		openSideBar();
 	}
 
-
-	
-	// $('.tree-toggle').click(function () {
-
-	// 	var _ = $(this)[0]
-	// 	var el = $(this).parent().children('.tree');
-	// 	el.toggle(200);
-	// 	setTimeout(function(){
-	// 		if(el[0].style.display==="none"){
-	// 			_.children[0].classList.remove("glyphicon-minus");
-	// 			_.children[0].classList.add("glyphicon-plus");
-	// 		} else {
-	// 			_.children[0].classList.remove("glyphicon-plus");
-	// 			_.children[0].classList.add("glyphicon-minus");
-	// 		}
-	// 	}, 220);
-	// });
-
-	// $(function(){
-	// 	var el = $('.tree-toggle').parent().children('.tree');
-	// })
-
-	var href = window.location.href;
-	Array.from($(".side-bar-item-container ul li div a")).forEach(function(value, index) {
-		if(href===value.href) {
-			value.parentNode.classList.add("active-menu");
-			return;
-		}
-	}) 
 });
+
 function openSessionSideBar(el) {
 	if (el.className.indexOf("side-bar") !== -1) {
 		return;

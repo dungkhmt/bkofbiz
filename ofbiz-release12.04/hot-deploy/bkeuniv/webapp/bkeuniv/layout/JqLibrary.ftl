@@ -92,7 +92,7 @@
 			bottom: 0;
 			left: 2%;
 			right: 2%;
-			
+			padding: 1em;
 			position: absolute;
 		}
 		
@@ -286,7 +286,7 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
-					"scrollY": ${sizeTable} - 200,
+					"scrollY": ${sizeTable} - 220,
 					"scrollCollapse": true,
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
