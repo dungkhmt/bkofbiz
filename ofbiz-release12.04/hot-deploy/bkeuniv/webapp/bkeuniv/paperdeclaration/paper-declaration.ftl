@@ -81,14 +81,14 @@
 		
 		
 
-.modal-add-member {
+#myModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
-    width: 70%; /* Full width */
+    width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
@@ -96,13 +96,13 @@
 }
 
 /* Modal Content */
-.modal-content {
+#myModal .modal-content {
     position: relative;
     background-color: #fefefe;
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    width: 80%;
+    width: 50%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -136,15 +136,15 @@
     cursor: pointer;
 }
 
-.modal-header {
+#myModal .modal-content .modal-header {
     padding: 2px 16px;
     background-color: #5cb85c;
     color: white;
 }
 
-.modal-body {padding: 10px 26px;}
+#myModal .modal-content .modal-body {padding: 10px 26px;}
 
-.modal-footer {
+#myModal .modal-content .modal-footer {
     padding: 2px 16px;
     background-color: #5cb85c;
     color: white;
@@ -473,34 +473,29 @@
 	function getDataFile(id) {
 		return dataFilePaper||{};
 	}
-	
+	var test;
 	function uploadFile(e){
 		var file = e.target.files || e.dataTransfer.files;
 		
 		var reader = new FileReader();
 		if(e.target.files.length !== 0) {
-			reader.readAsBinaryString(e.target.files[0])
-			reader.onload = (event) => {
-				if (reader.result) reader.content = reader.result;
-					var base64Data = btoa(reader.content);
-				
-				$.ajax({
+			test = e
+			var data = {
+				data: e.target.files[0],
+				"filename": e.target.files[0].name,
+				"paperId": selectedEntry.paperId
+			}
+			$.ajax({
 					url: "/bkeuniv/control/upload-file-paper",
 					type: 'POST',
-					data: {
-						"filename": e.target.files[0].name,
-						"paperId": selectedEntry.paperId,
-						"data":base64Data
-					},
+					data: data,
+					cache: false,
+					contentType: false,
+					processData: false,
 					success:function(rs){
 						console.log(rs);
 					}
 				})
-			}
-			reader.onerror = (event) => {
-				this.props.onError(event);
-			}
-		
 		}
 
 		

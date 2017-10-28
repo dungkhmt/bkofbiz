@@ -330,7 +330,7 @@ public class PaperDeclarationService {
 		String data = request.getParameter("data");
 		String paperId = request.getParameter("paperId");
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-
+		Debug.log(module + "::uploadFile, paperId = " + paperId);
 		try {
 			GenericValue gv = delegator.findOne("PaperDeclaration", false,
 					UtilMisc.toMap("paperId", paperId));

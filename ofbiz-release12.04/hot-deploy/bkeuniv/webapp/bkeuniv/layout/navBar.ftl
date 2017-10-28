@@ -36,7 +36,7 @@
 				<div class="dropdown-information glyphicon glyphicon-chevron-down">         
 				</div>
 				<div class="dropdown-content hidden">
-					<a class="dropdown-item" href="/bkeuniv/control/user">${uiLabelMap.BkEunivPersonalInformation}</a>
+					<a class="dropdown-item" onClick='goto("/bkeuniv/control/user")'>${uiLabelMap.BkEunivPersonalInformation}</a>
 					<a class="dropdown-item" onClick="logout()">${uiLabelMap.BkEunivLogout}</a>
 				</div>
 			</div>
