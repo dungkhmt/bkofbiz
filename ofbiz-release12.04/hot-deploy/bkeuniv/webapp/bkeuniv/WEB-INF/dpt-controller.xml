@@ -36,23 +36,27 @@
 		<response name="error" type="view" value="CreateDpt" />
 	</request-map>
 
-	<request-map uri="test">
-		<event type="service" invoke="getFacultyAjax" />
-		<response name="success" type="view" value="Test" />
-		<response name="error" type="view" value="TestError" />
+	<request-map uri="department-management">
+		<response name="success" type="view" value="DptAjax" />
+		<response name="error" type="view" value="DptAjax" />
 	</request-map>
 
-	<request-map uri="testjson">
-		<event type="service" invoke="getFacultyAjax" />
+	<request-map uri="createDepartmentAjax">
+		<event type="service" invoke="createDepartment" />
 		<response name="success" type="request" value="toJson" />
 		<response name="error" type="request" value="toJson" />
 	</request-map>
 
-	<request-map uri="toJson">
-		<event type="java" path="src.org.ofbiz.bkeuniv.common.Events"
-			invoke="wrapStatusResponse" />
-		<response name="success" type="request" value="json" />
-		<response name="error" type="request" value="json" />
+	<request-map uri="updateDepartmentAjax">
+		<event type="service" invoke="updateDepartment" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
+	<request-map uri="getDepartmentAjax">
+		<event type="service" invoke="getDepartmentAjax" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
 	</request-map>
 
 	<view-map name="FindDpt" type="screen"
@@ -65,5 +69,6 @@
 		page="component://bkeuniv/widget/DptScreens.xml#Test" />
 	<view-map name="TestError" type="screen"
 		page="component://bkeuniv/widget/DptScreens.xml#TestError" />
-
+	<view-map name="DptAjax" type="screen"
+		page="component://bkeuniv/widget/DptScreens.xml#DptAjax" />
 </site-conf>

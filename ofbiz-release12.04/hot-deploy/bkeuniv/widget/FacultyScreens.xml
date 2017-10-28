@@ -75,4 +75,39 @@
 		</section>
 	</screen>
 
+	<screen name="FacultyAjax">
+		<section>
+			<actions>
+					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
+					<property-map resource="BkEunivFacultyUiLabels" map-name="uiLabelMap" global="true"/>
+					<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+					<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/crud-common.css" global="true" />
+					<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/faculty.js" global="true" />
+
+					<entity-condition entity-name="University" list="availUniversity">
+							<order-by field-name="universityId"/>
+					</entity-condition>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<container style="body">
+									<platform-specific>
+										<html>
+											<html-template
+												location="component://bkeuniv/webapp/bkeuniv/facultymgr/main.ftl" />
+										</html>
+									</platform-specific>
+								</container>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 </screens>

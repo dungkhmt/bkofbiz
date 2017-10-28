@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivFacultyMgr">
+        <value xml:lang="en">Faculty Management</value>
+        <value xml:lang="vi">Quản lý Khoa/Viện</value>
+    </property>
+
     <property key="BkEunivFacultyId">
         <value xml:lang="en">Faculty ID</value>
-        <value xml:lang="vi">Id Vien</value>
+        <value xml:lang="vi">ID Khoa/Viện</value>
     </property>
    
-   <property key="BkEunivUniversityName">
+   <property key="BkEunivUniversityId">
+        <value xml:lang="en">University ID</value>
+        <value xml:lang="vi">ID Trường Đại học</value>
+    </property>
+
+    <property key="BkEunivUniversityName">
         <value xml:lang="en">University Name</value>
-        <value xml:lang="vi">Truong dai hoc</value>
+        <value xml:lang="vi">Tên Trường Đại học</value>
     </property>
 
     <property key="BkEunivFacultyName">
         <value xml:lang="en">Faculty Name</value>
-        <value xml:lang="vi">Ten Vien</value>
+        <value xml:lang="vi">Tên Khoa/Viện</value>
     </property>
     
 </resource>

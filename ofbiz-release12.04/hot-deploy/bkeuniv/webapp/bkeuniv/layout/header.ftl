@@ -9,18 +9,22 @@
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
 
 		<!-- import css -->
-		<link rel="stylesheet" href="/resource/bkeuniv/css/style.css">
-		<link rel="stylesheet" href="/resource/bkeuniv/css/navBar.css">
-		<link rel="stylesheet" href="/resource/bkeuniv/css/sideBar.css">
+		<#list layoutSettings.stylesheets as sheet>
+			<link rel="stylesheet" href="${sheet}">
+		</#list> 
 		
 		<!-- import js -->
 		<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
 		<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
-		<script src="/resource/bkeuniv/js/app.js"></script>
+		<script src="/resource/bkeuniv/js/common.js"></script>
 		
-		<script src="/resource/bkeuniv/js/navBar.js"></script>
-		<script src="/resource/bkeuniv/js/sideBar.js"></script>
-		<script src="/resource/bkeuniv/js/footer.js"></script>
+		<#list layoutSettings.scripts as script>
+			<script src="${script}"></script>
+		</#list>
+
+		<script>
+			window.entrypoint = window.location.origin + "<@ofbizUrl>/</@ofbizUrl>";
+		</script>
 		
 		<title>BKEUNIV</title>
 	</head>

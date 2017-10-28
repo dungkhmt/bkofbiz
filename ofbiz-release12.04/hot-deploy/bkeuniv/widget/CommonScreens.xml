@@ -7,8 +7,14 @@
 			<actions>
 				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
                 <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
-				<service service-name="getPermissionFunctions" result-map="functions">
-				</service>
+                <set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/style.css" global="true" />
+                <set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/navBar.css" global="true" />
+                <set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/sideBar.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/navBar.js" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/sideBar.js" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/footer.js" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/app.js" global="true" />
+				<service service-name="getPermissionFunctions" result-map="functions" />
 			</actions>
 			<widgets>
 				<platform-specific>

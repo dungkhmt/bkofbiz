@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <property key="BkEunivDepartmentMgr">
+        <value xml:lang="en">Department Management</value>
+        <value xml:lang="vi">Quản lý bộ môn</value>
+    </property>
+
     <property key="BkEunivDepartmentId">
         <value xml:lang="en">Department ID</value>
-        <value xml:lang="vi">Id Bo mon</value>
+        <value xml:lang="vi">ID Bộ Môn</value>
     </property>
    
    <property key="BkEunivDepartmentName">
         <value xml:lang="en">Department Name</value>
-        <value xml:lang="vi">Ten Bo mon</value>
-    </property>
-
-    <property key="BkEunivFacultyName">
-        <value xml:lang="en">Faculty Name</value>
-        <value xml:lang="vi">Ten Vien</value>
+        <value xml:lang="vi">Tên Bộ Môn</value>
     </property>
     
 </resource>

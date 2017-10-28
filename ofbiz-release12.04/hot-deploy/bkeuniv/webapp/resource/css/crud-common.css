@@ -1,0 +1,54 @@
+.main-wrapper {
+  width: 100%;
+}
+
+.main-header {
+  background-color: #ddd;
+  padding: 15px;
+}
+
+.main-title {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+.main-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.main-body {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.item-detail {
+  margin-bottom: 20px;
+}
+
+.form-item {
+  min-width: 300px;
+  display: flex;
+}
+
+.form-item .form-key {
+  min-width: 20%;
+  border-right: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.form-item .form-value {
+  flex: 1;
+}
+
+.form-item .form-key, .form-item .form-value {
+  padding: 5px 0;
+}
+.form-item .form-value {
+  padding-left: 10px;
+}
+
+.table-view thead {
+  background-color: #eee;
+}

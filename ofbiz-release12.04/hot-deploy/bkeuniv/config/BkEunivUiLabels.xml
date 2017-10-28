@@ -81,4 +81,9 @@
         <value xml:lang="en">Logout</value>
         <value xml:lang="vi">Đăng xuất</value>
     </property>
+
+    <property key="BkEunivSTT">
+        <value xml:lang="en">Index</value>
+        <value xml:lang="vi">STT</value>
+    </property>
 </resource>

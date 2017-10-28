@@ -77,44 +77,6 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
-	
-    
-    <request-map uri="department-management">
-    	<security https="true" auth="true"/>
-    	<response name="success" type="view" value="view-department-management"/>
-    </request-map>
-
-    <request-map uri="add-department">
-    	<security https="true" auth="true"/>
-    	<response name="success" type="view" value="view-add-department"/>
-    </request-map>
-
-    <request-map uri="request-view-for-update-department">
-    	<security https="true" auth="true"/>
-    	<response name="success" type="view" value="view-for-update-department"/>
-    </request-map>
-    
-    <request-map uri="createADepartment">
-		<security https="true" auth="true"/>
-		<event type="service" invoke="createADepartment"></event>
-        <response name="success" type="view" value="view-department-management"/>
-        <response name="error" type="view" value="view-department-management"/>
-	</request-map>
-	
-    <request-map uri="updateADepartment">
-		<security https="true" auth="true"/>
-		<event type="service" invoke="svrUpdateADepartment"></event>
-        <response name="success" type="view" value="view-department-management"/>
-        <response name="error" type="view" value="view-department-management"/>
-	</request-map>
-	
-    <request-map uri="delete-department">
-		<security https="false" auth="true"/>
-		<event type="service" invoke="svrDeleteADepartment"></event>
-        <response name="success" type="view" value="view-department-management"/>
-        <response name="error" type="view" value="view-department-management"/>
-	</request-map>
-	
 
     <request-map uri="test-service">
     	<security https="true" auth="true"/>
@@ -126,14 +88,6 @@
     	<event type="service" invoke="svrTestService"></event>
     	<response name="success" type="request" value="json"></response>
     </request-map>
-    
-    
-	<request-map uri="get-departments">
-		<security https="false" auth="false"/>
-		<event type="service" invoke="getDepartments"></event>
-		<response name="success" type="request" value="json"></response>
-		<response name="error" type="request" value="json"></response>
-	</request-map>
 	
 	<request-map uri="education-progress">
     	<security https="true" auth="true"/>
@@ -526,14 +480,18 @@
 		<event type="java" path="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
+
+	<request-map uri="toJson">
+		<event type="java" path="src.org.ofbiz.bkeuniv.common.Events"
+			invoke="wrapStatusResponse" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
     <view-map name="view-staff-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffManagement"/>
-    <view-map name="view-department-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDepartmentManagement"/>
-    <view-map name="view-add-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageAddDepartment"/>
-    <view-map name="view-for-update-department" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewForUpdateDepartment"/>
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>
     <view-map name="view-award" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#award"/>
     <view-map name="view-patent-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#patentStaff"/>
