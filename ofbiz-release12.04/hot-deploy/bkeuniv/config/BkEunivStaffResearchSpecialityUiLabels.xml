@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <property key="BkEunivResearchSpecialityId">
+        <value xml:lang="en">researchSpecialityId</value>
+        <value xml:lang="vi">Mã chuyên ngành nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivStaffResearchSpecialityId">
+        <value xml:lang="en">staffResearchSpecialityId</value>
+        <value xml:lang="vi">Mã chuyên ngành của nhân viên</value>
+    </property>
+    
+    <property key="BkEunivStaffId">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">Mã nhân viên</value>
+    </property>
+    
+    <property key="BkEunivFromDate">
+        <value xml:lang="en">fromDate</value>
+        <value xml:lang="vi">Ngày bắt đầu</value>
+    </property>
+    
+    <property key="BkEunivThruDate">
+        <value xml:lang="en">thruDate</value>
+        <value xml:lang="vi">Ngày kết thúc</value>
+    </property>
+    
+     <property key="BkEunivEditStaffResearchSpeciality">
+        <value xml:lang="en">Edit Staff Research Speciality</value>
+        <value xml:lang="vi">Chỉnh sửa mã chuyên ngành nhân viên </value>
+    </property>
+    
+     <property key="BkEunivNewStaffResearchSpeciality">
+        <value xml:lang="en">New Staff Research Speciality </value>
+        <value xml:lang="vi">Thêm mới mã chuyên ngành nhân viên</value>
+    </property>
+    
+    
+     <property key="BkEunivTitleDeleteStaffResearchSpeciality">
+        <value xml:lang="en">You want delete row</value>
+        <value xml:lang="vi">Bạn muốn xoá hàng</value>
+    </property>
+    
+</resource>

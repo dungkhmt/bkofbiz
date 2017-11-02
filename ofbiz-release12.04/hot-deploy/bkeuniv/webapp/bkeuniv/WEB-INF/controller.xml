@@ -591,6 +591,39 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="staff-research-speciality">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-staff-research-speciality"/>    
+    </request-map>
+    
+    <request-map uri="get-staff-research-speciality">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    
+    <request-map uri="create-staff-research-speciality">
+		<security https="true" auth="true"/>		
+		<event type="service" invoke="createStaffResearchSpeciality"></event>		 
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-staff-research-speciality">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-staff-research-speciality">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -611,4 +644,5 @@
    <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
    <view-map name="view-research-speciality-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#researchSpeciality"/>
+    <view-map name="view-staff-research-speciality" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#staffResearchSpeciality"/>
 </site-conf>
