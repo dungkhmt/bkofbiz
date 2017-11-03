@@ -473,25 +473,25 @@
 	function getDataFile(id) {
 		return dataFilePaper||{};
 	}
-	var test;
+	var test, a;
 	function uploadFile(e){
 		var file = e.target.files || e.dataTransfer.files;
 		
 		var reader = new FileReader();
 		if(e.target.files.length !== 0) {
 			test = e
-			var data = {
-				data: e.target.files[0],
-				"filename": e.target.files[0].name,
-				"paperId": selectedEntry.paperId
-			}
+			var formData = new FormData();
+			//formData.append("filename", e.target.files[0].name);
+			formData.append("paperId", selectedEntry.paperId);
+			formData.append("file", e.target.files[0]);
+			
 			$.ajax({
 					url: "/bkeuniv/control/upload-file-paper",
 					type: 'POST',
-					data: data,
-					cache: false,
+					method: 'POST',
 					contentType: false,
-					processData: false,
+    				processData: false,
+					data: formData,
 					success:function(rs){
 						console.log(rs);
 					}
