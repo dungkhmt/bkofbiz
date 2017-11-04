@@ -105,7 +105,7 @@ function openSessionSideBar(el) {
 function openSideBar() {
 	if ($(".side-bar").hasClass("hide-side-bar")) {
 		$(".side-bar").removeClass("hide-side-bar");
-		// menu.status = "block"
+		menu.status = "block"
 	} else {
 		closeSideBar();
 	}
