@@ -55,14 +55,15 @@ import javolution.util.FastSet;
 public class PaperDeclarationService {
 
 	public static String module = PaperDeclarationService.class.getName();
-	public static String dataFolder = "./euniv-deploy";
+	public static String dataFolder = "." + File.separator + "euniv-deploy";
 
 	public static String establishFullFilename(String staffId, String name) {
 		String path = dataFolder + File.separator + staffId
 				+ File.separator + "papers";
+		System.out.println("\n\n\t****************************************\n\t"+path+"+\n\t");
 		String fullname = path + File.separator + name;
 
-		File file = new File(name, path);
+		File file = new File(path);
 		
 		if (! file.exists()){
 		
