@@ -1,3 +1,4 @@
+./ofbiz-release12.04/euniv-deploy
 ./applications/*/build
 ./framework/*/build
 ./framework/base/lib/cobertura-*.jar
@@ -46,6 +47,4 @@
 ./.DS_Store
 ./.idea
 ./*.iml
-./*~
-./*#
-./ofbiz-release12.04/euniv-deploy
+
