@@ -8,7 +8,21 @@
 <Function functionId="RESEARCH_PROJECT_MANAGEMENT" uiLabelId="research_project_management" vnLabel="Quản lý thực hiện đề tài nghiên cứu khoa học" enLabel="research project management" parentFunctionId="NULL" index="1"/>
 
 <Function functionId="RESEARCH_PROJECT_CALL_MANAGEMENT" uiLabelId="research_project_call_management" target="project-call-management" vnLabel="Quản lý đợt gọi đề tài" enLabel="research project call management" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
-<Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" target="submit-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
+
+<Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" target="submit-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="2"/>
+
+<Function functionId="RESEARCH_PROJECT_JURY" uiLabelId="research_project_jury" vnLabel="Hội đồng duyệt thuyết mình đề tài" enLabel="Jury of research proposal" target="research-project-jury" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="3"/>
+
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS" uiLabelId="research_project_jury_members" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Members of juries of research proposal" target="research-project-jury-members" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
+
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_ASSIGNMENT" uiLabelId="research_project_jury_members_assignment" vnLabel="Phân công thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Assignment of members of juries to research proposal" target="research-project-jury-members-assignment" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
+
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" uiLabelId="research_project_jury_members_evaluate" vnLabel="Nhận xét đánh giá thuyết mình đề tài" enLabel="Evaluate of research proposal" target="research-project-jury-members-evaluate" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="6"/>
+
+<Function functionId="RESEARCH_PROJECT_SUMMARY" uiLabelId="research_project_summary" vnLabel="Danh sách thuyết mình đề tài" enLabel="List of research proposal" target="list-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="7"/>
+
+
+
 
 
 
@@ -18,6 +32,9 @@
 <Function functionId="RESEARCH_SUMMARY_KV01" uiLabelId="research_summary_kv01" vnLabel="Tổng hợp mẫu KV01" enLabel="summary KV01" target="research-summary-kv01" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="1"/>
 
 <Function functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL" uiLabelId="research_summary_template_excel" vnLabel="Tổng hợp mẫu Excel" enLabel="summary Excel" target="research-summary-excel" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="2"/>
+
+<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS" uiLabelId="research_summary_all_papers" vnLabel="Danh sách tất cả bài báo" enLabel="summary papers" target="research-summary-list-papers" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="3"/>
+
 
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
@@ -49,16 +66,28 @@
 <Function functionId="STAFF_RESEARCH_SPECIALITY" uiLabelId="staff_research_speciality" vnLabel="Lĩnh vực và Chuyên ngành nghiên cứu" enLabel="research speciality of staffs" target="staff-research-speciality" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
 
 
+
+
 <!-- BIZADMIN -->
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_CALL_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_CALL_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_SUBMIT_PROPOSAL" securityGroupId="BIZADMIN" functionId="SUBMIT_PROPOSAL"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_JURY" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_JURY"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_JURY_MEMBERS" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_JURY_MEMBERS"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_JURY_MEMBERS_ASSIGNMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_JURY_MEMBERS_ASSIGNMENT"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_SUMMARY" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_SUMMARY"/>
+
+
+
+
 
 
 
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_DECLARATION_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_DECLARATION_MANAGEMENT"/>
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_KV01" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_KV01"/>
 <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_TEMPLATE_EXCEL" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL"/>
+<GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_ALL_PAPERS" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_ALL_PAPERS"/>
 
 
 <GroupFunction groupFunctionId="BIZADMIN_PROFILE_MANAGEMENT" securityGroupId="BIZADMIN" functionId="PROFILE_MANAGEMENT"/>
@@ -6622,5 +6651,9 @@
 <ResearchProductType ResearchProductTypeId="SOFTWARE" ResearchProductTypeName="Phần mềm"/>
 <ResearchProductType ResearchProductTypeId="RESEARCH_REPORT" ResearchProductTypeName="Chuyên đề"/>
 
+<ProjectProposalRoleType roleTypeId="DIRECTOR" roleTypeName="Chủ nhiệm"/>
+<ProjectProposalRoleType roleTypeId="MAIN_INVESTIGATOR" roleTypeName="Thành viên nghiên cứu chủ chốt"/>
+<ProjectProposalRoleType roleTypeId="TECHNICIAN" roleTypeName="Kỹ thuật viên"/>
+ 
 
 </entity-engine-xml>
