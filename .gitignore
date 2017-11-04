@@ -48,3 +48,4 @@
 ./*.iml
 ./*~
 ./*#
+./ofbiz-release12.04/euniv-deploy
