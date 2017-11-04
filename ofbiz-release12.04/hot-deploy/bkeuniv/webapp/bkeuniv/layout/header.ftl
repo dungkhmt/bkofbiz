@@ -10,7 +10,7 @@
 
 		<!-- import css -->
 		<#list layoutSettings.stylesheets as sheet>
-			<link rel="stylesheet" href="${sheet}">
+			<link rel="stylesheet" href="${StringUtil.wrapString(sheet)}">
 		</#list> 
 		
 		<!-- import js -->
@@ -19,7 +19,7 @@
 		<script src="/resource/bkeuniv/js/common.js"></script>
 		
 		<#list layoutSettings.scripts as script>
-			<script src="${script}"></script>
+			<script src="${StringUtil.wrapString(script)}"></script>
 		</#list>
 
 		<script>

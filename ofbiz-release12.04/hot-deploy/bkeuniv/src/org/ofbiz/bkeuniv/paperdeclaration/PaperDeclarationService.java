@@ -1,6 +1,7 @@
 package src.org.ofbiz.bkeuniv.paperdeclaration;
 
 import java.awt.print.Paper;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -53,17 +55,34 @@ import javolution.util.FastSet;
 public class PaperDeclarationService {
 
 	public static String module = PaperDeclarationService.class.getName();
-	public static String dataFolder = "C:/euniv-deploy";
+	public static String dataFolder = "." + File.separator + "euniv-deploy";
 
 	public static String establishFullFilename(String staffId, String name) {
-		String fullname = dataFolder + File.separator + staffId
-				+ File.separator + "papers" + File.separator + name;
+		String path = dataFolder + File.separator + staffId
+				+ File.separator + "papers";
+		System.out.println("\n\n\t****************************************\n\t"+path+"+\n\t");
+		String fullname = path + File.separator + name;
+
+		File file = new File(path);
+		
+		if (! file.exists()){
+		
+			file.mkdirs();
+			System.out.println("\n\n\t****************************************\n\tCreate folder\n\t");
+	        // If you require it to make the entire directory path including parents,
+	        // use directory.mkdirs(); here instead.
+	    }
+		
+		
+		
+		
 		return fullname;
 	}
 
 	@SuppressWarnings({ "unchecked" })
 	public static void exportExcelKV01(HttpServletRequest request,
 			HttpServletResponse response) {
+		
 		
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String year = (String)request.getParameter("reportyear");
@@ -326,54 +345,142 @@ public class PaperDeclarationService {
 
 	public static void uploadFile(HttpServletRequest request,
 			HttpServletResponse response) {
-		String fn = request.getParameter("filename");
-		String data = request.getParameter("data");
-		String paperId = request.getParameter("paperId");
-		Delegator delegator = (Delegator) request.getAttribute("delegator");
-
-		try {
-			GenericValue gv = delegator.findOne("PaperDeclaration", false,
-					UtilMisc.toMap("paperId", paperId));
-			String staffId = (String) gv.get("staffId");
-
-			Debug.log(module + "::uploadFile, filename = " + fn
-					+ ", paperName = " + (String) gv.get("paperName")
-					+ ", staffId = " + staffId);
-			String ext = getExtension(fn);
-			java.util.Date currentDate = new java.util.Date();
-			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
-					"HHmmssddMMyyyy");
-			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
-
-			String filenameDB = sCurrentDate + "." + ext;
-			String fullFileName = establishFullFilename(staffId, filenameDB);
-
-			Debug.log(module + "::uploadFile, filename = " + fn
-					+ ", paperId = " + paperId + ", extension = " + ext
-					+ ", filenameDB = " + filenameDB + ", fullFileName = "
-					+ fullFileName);
-
-			// byte[] B = Base64.decode(data);
-			byte[] B = Base64.decodeBase64(data);
-			// PrintWriter out = new PrintWriter("C:/tmp/" + fn);
-			// FileOutputStream fout = new FileOutputStream("C:/tmp/" + fn);
-			FileOutputStream fout = new FileOutputStream(fullFileName);
-			// fout.flush();
-			fout.write(B);
-			fout.flush();
-			fout.close();
-
-			gv.put("sourcePath", filenameDB);
-			delegator.store(gv);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 		Map<String, Object> m = FastMap.newInstance();
-		m.put("result", "ok");
-		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
-				response, 200);
-		// return "result";
+		
+		//ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory(10240, new File(new File("runtime"), "tmp")));           //Creation of servletfileupload
+        System.out.println("\n\n\t****************************************\n\tuploadFile(HttpServletRequest request,HttpServletResponse response) - start\n\t");
+        ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory());           //Creation of servletfileupload
+        List lst = null;
+        String result="AttachementException";
+        String file_name="";
+        String paperId="";
+        
+        try 
+        {
+            lst = fu.parseRequest(request);
+        }
+        catch (FileUploadException fup_ex) 
+        {
+            System.out.println("\n\n\t****************************************\n\tException of FileUploadException \n\t");
+            fup_ex.printStackTrace();
+            result="AttachementException";
+            m.put("result", result);
+    		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+    				response, 200);
+            return;
+        }
+
+        if(lst.size()==0)        //There is no item in lst
+        {
+            System.out.println("\n\n\t****************************************\n\tLst count is 0 \n\t");
+            result="AttachementException";
+            m.put("result", result);
+    		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+    				response, 200);
+            return;
+        }
+
+
+        FileItem file_item = null;
+        FileItem selected_file_item=null;
+
+        //Checking for form fields - Start
+            for (int i=0; i < lst.size(); i++) 
+            {
+                file_item=(FileItem)lst.get(i);
+                String fieldName = file_item.getFieldName();
+                
+                switch (fieldName) {
+				case "file":
+					selected_file_item=file_item;
+					
+                    file_name=file_item.getName();             //Getting the file name
+                    System.out.println("\n\n\t****************************************\n\tThe selected file item's file name is : "+file_name+"\n\t");
+					break;
+				case "paperId":
+					paperId = file_item.getString();
+					System.out.println("\n\n\t****************************************\n\tPaper id : "+paperId+"\n\t");
+					break;
+				}
+                
+            }
+        //Checking for form fields - End
+
+        //Uploading the file content - Start
+            if(selected_file_item==null)                    //If selected file item is null
+            {
+                System.out.println("\n\n\t****************************************\n\tThe selected file item is null\n\t");
+                result="AttachementException";
+                m.put("result", result);
+        		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+        				response, 200);
+                return;
+            }
+
+            byte[] file_bytes=selected_file_item.get();
+            byte[] extract_bytes=new byte[file_bytes.length];
+
+            for(int l=0;l<file_bytes.length;l++)
+                extract_bytes[l]=file_bytes[l];
+            //ByteBuffer byteWrap=ByteBuffer.wrap(file_bytes);
+            //byte[] extract_bytes;
+            //byteWrap.get(extract_bytes);
+
+
+            //System.out.println("\n\n\t****************************************\n\tExtract succeeded :content are : \n\t");
+
+            //Creation & writing to the file in server - End
+
+    		
+    		Delegator delegator = (Delegator) request.getAttribute("delegator");
+    		Debug.log(module + "::uploadFile, paperId = " + paperId);
+    		try {
+    			GenericValue gv = delegator.findOne("PaperDeclaration", false,
+    					UtilMisc.toMap("paperId", paperId));
+    			String staffId = (String) gv.get("staffId");
+
+    			Debug.log(module + "::uploadFile, filename = " + file_name
+    					+ ", paperName = " + (String) gv.get("paperName")
+    					+ ", staffId = " + staffId);
+    			String ext = getExtension(file_name);
+    			java.util.Date currentDate = new java.util.Date();
+    			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
+    					"HHmmssddMMyyyy");
+    			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+    			String filenameDB = sCurrentDate + "." + ext;
+    			String fullFileName = establishFullFilename(staffId, filenameDB);
+
+    			Debug.log(module + "::uploadFile, filename = " + file_name
+    					+ ", paperId = " + paperId + ", extension = " + ext
+    					+ ", filenameDB = " + filenameDB + ", fullFileName = "
+    					+ fullFileName);
+    			
+    			FileOutputStream fout=new FileOutputStream(fullFileName);
+                System.out.println("\n\n\t****************************************\n\tAfter creating outputstream");
+                fout.flush();
+                fout.write(extract_bytes);
+                fout.flush();
+                fout.close();
+
+    			gv.put("sourcePath", filenameDB);
+    			delegator.store(gv);
+    			
+    			System.out.println("\n\n\t****************************************\n\tuploadFile(HttpServletRequest request,HttpServletResponse response) - end\n\t");
+                m.put("result", "AttachementSuccess");
+        		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+        				response, 200);
+        		
+    		} catch (Exception ioe_ex) {
+    			System.out.println("\n\n\t****************************************\n\tIOException occured on file writing");
+                ioe_ex.printStackTrace();
+                result="AttachementException";
+                m.put("result", result);
+        		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+        				response, 200);
+                return;
+    		}	
+    
 	}
 
 	/*

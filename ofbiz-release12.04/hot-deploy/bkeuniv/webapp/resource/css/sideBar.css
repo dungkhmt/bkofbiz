@@ -40,7 +40,7 @@
     padding-top: 30px;
 }
 
-.item {
+.side-bar-item-container .item {
     cursor: pointer;
     margin-left: 0px;
     padding: 0px 36px 0px 58px;

@@ -6,6 +6,10 @@ function logout() {
 	window.location = "/bkeuniv/control/logout";
 }
 
+function goto(url) {
+	window.location = url;
+}
+
 function openDropdownUser() {
 	if($("div .dropdown-content").hasClass("hidden")) {
 		$("div .dropdown-content").removeClass("hidden");
