@@ -35,7 +35,7 @@
 
 	<service name="tspdsolve" engine="java"
 		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolve"
-		transaction-timeout="1000000">
+		transaction-timeout="10000000">
 		<description>
             Build Route a drone! 
         </description>
@@ -45,7 +45,7 @@
 
 	<service name="tspkdsolve" engine="java"
 		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspkdSolve"
-		transaction-timeout="1000000">
+		transaction-timeout="10000000">
 		<description>
             Build Route k drone! 
         </description>
@@ -55,7 +55,7 @@
 	
 	<service name="tspkdsolve-datasetid" engine="java"
 		location="org.bkofbiz.slp.tspd.TSPDService" invoke="tspdSolveLS"
-		transaction-timeout="1000000">
+		transaction-timeout="10000000">
 		<description>
             Build Route k drone! 
         </description>
@@ -78,7 +78,7 @@
 	
 	<!-- savesampledata -->
 	<service name="savesampledata" engine="java"
-		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="saveData" transaction-timeout="1000000">
+		location="org.bkofbiz.slp.sampledata.DataSampleService" invoke="saveData" transaction-timeout="10000000">
 		<description>
            Save sample data
         </description>
@@ -91,7 +91,7 @@
 	</service>
 	
 	<service name="returnsolution" engine="java"
-		location="org.bkofbiz.slp.tspd.VRP3DService" invoke="returnsolution" transaction-timeout="1000000">
+		location="org.bkofbiz.slp.tspd.VRP3DService" invoke="returnsolution" transaction-timeout="10000000">
 		<description>
             Return VRP3D solution! 
         </description>
