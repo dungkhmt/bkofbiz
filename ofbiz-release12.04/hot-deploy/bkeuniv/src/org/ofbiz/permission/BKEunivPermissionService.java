@@ -19,6 +19,18 @@ import org.ofbiz.entity.GenericValue;
 public class BKEunivPermissionService {
 	public static String module = BKEunivPermissionService.class.getName();
 	
+	public static List<GenericValue> sort(List<GenericValue> L){
+		GenericValue[] a = new GenericValue[L.size()];
+		for(int i = 0; i < a.length; i++) a[i] = L.get(i);
+		for(int i = 0; i < a.length - 1; i++)
+			for(int j = i+1; j < a.length; j++)
+				if((long)a[i].get("index") > (long)a[j].get("index")){
+					GenericValue tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+				}
+		List<GenericValue> sL = new ArrayList<GenericValue>();
+		for(int i = 0; i < a.length; i++) sL.add(a[i]);
+		return sL;
+	}
 	public static Map<String, Object> getPermissionFunctions(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -78,6 +90,7 @@ public class BKEunivPermissionService {
 					
 				}
 			}
+			parent_functions = sort(parent_functions);
 			
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
@@ -92,7 +105,7 @@ public class BKEunivPermissionService {
 			for(GenericValue f: parent_functions){
 				Map<String, Object> o = new HashMap<String, Object>();
 				o.put("function", f);
-				o.put("children", mFunction2ChildrenFunctions.get(f));
+				o.put("children", sort(mFunction2ChildrenFunctions.get(f)));
 				functions.add(o);
 			}
 			

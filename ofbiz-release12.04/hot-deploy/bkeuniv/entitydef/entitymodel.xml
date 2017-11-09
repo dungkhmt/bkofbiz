@@ -312,7 +312,13 @@
 		<field name="groupFunctionId" type="id-long"></field>
 		<field name="securityGroupId" type="id"></field>
 		<field name="functionId" type="id-vlong"></field>
+		<field name="fromDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
+		
 		<prim-key field="groupFunctionId"/>
+		<prim-key field="securityGroupId"/>
+		<prim-key field="functionId"/>
+		<prim-key field="fromDate"/>
 		<relation type="one" fk-name="MAP_FUNCTION" rel-entity-name="Function">
             <key-map field-name="functionId" rel-field-name="functionId"/>
         </relation>
