@@ -80,7 +80,7 @@ public class PaperDeclarationUtil {
 
 			delegator.create(gv);
 			
-			retSucc.put("staffPaperDeclaration", gv);
+			//retSucc.put("staffPaperDeclaration", gv);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

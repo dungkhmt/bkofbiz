@@ -77,7 +77,7 @@
 	</entity>
 	
 	<entity entity-name="ResearchProjectProposalDomain" package-name="org.ofbiz.bkeuniv">
-		<field name="" type="researchProjectProposalId"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
 		<field name="researchDomainId" type="id-vlong"></field>
 		<prim-key field="researchProjectProposalId"/>
 		<prim-key field="researchDomainId"/>
@@ -85,7 +85,7 @@
 			<key-map field-name="researchProjectProposalId"/>
 		</relation>
 		<relation rel-entity-name="ResearchDomain" type="one">
-			<key-map field-name="ResearchProjectProposalDomain"/>
+			<key-map field-name="researchDomainId"/>
 		</relation>
 	</entity>
 	

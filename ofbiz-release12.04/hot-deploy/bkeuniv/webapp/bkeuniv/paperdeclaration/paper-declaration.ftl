@@ -704,9 +704,9 @@
 		urlDelete="/bkeuniv/control/delete-paper-declaration" 
 		keysId=["paperId"] 
 		fieldDataResult = "papers" 
-		titleChange="test"
-		titleNew="test"
-		titleDelete="test"
+		titleChange="${paperDeclarationUiLabelMap.BkEunivUpdatePaper}"
+		titleNew="${paperDeclarationUiLabelMap.BkEunivAddPaper}"
+		titleDelete=""
 		jqTitle=""
 		contextmenu=false
 		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
