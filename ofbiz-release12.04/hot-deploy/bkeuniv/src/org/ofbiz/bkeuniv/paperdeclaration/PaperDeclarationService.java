@@ -852,7 +852,8 @@ public class PaperDeclarationService {
 
 			delegator.store(p);
 
-			retSucc.put("papers", papers);
+			retSucc.put("papers", p);
+			retSucc.put("message", "Update Row Success");
 
 			Debug.log(module + "::updatePaper FINISHED");
 			

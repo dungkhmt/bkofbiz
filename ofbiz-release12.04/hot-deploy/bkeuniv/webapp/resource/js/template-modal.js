@@ -142,9 +142,10 @@ modal.prototype._updateDefault = function(data, message) {
 		var element = table.rows().indexes().data()[elementIndex];
 		
 		if(!!element&&(typeof element == "object")) {
-			Object.keys(element).forEach(function(key, index){
-					element[key] = data[key];
-			})
+			element = Object.assign(element, data)
+			// Object.keys(element).forEach(function(key, index){
+			// 		element[key] = data[key];
+			// })
 			
 			table.row(elementIndex).data(element);
 			$([_.id, "#modal-template"].join(" ")).modal('hide');

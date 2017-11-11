@@ -16,7 +16,8 @@
 		<!-- 
 		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
 		 -->
-		<attribute name="papers" mode="OUT" type="List"></attribute>		
+		<attribute name="papers" mode="OUT" type="List"></attribute>	
+			
 	</service>
 
 <!-- 
@@ -192,8 +193,9 @@
 		<attribute name="month" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="ISSN" mode="IN" type="String" optional = "true"></attribute>
 		<attribute name="authors" mode="IN" type="String" optional="true"></attribute>
-		<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
-		<attribute name="papers" mode="OUT" type="List"></attribute>		
+		<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>	
+		<attribute name="papers" mode="OUT" type="Map"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>
 	</service>
     
     
