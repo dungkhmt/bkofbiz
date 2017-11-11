@@ -43,9 +43,8 @@ modal.prototype._select = function(value, edit, id, option) {
 	var maxItem = option.maxItem||1;
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
-						'$("'+[this.id, _id].join(" ")+'").selectize({'+
-							'maxItems: ' + maxItem + ', '+
-							'sortField: "text"'+
+						'$("'+[this.id, _id].join(" ")+'").select2({'+
+							'maximumSelectionLength: ' + maxItem +
 						'});'+
 					'});'+
 				'</script>';
@@ -61,7 +60,7 @@ modal.prototype._select = function(value, edit, id, option) {
 			return '<option value="'+op.value+'" '+_selected+'>'+op.name+'</option>';
 		})	
 	}
-	return '<select style="width: 70%" id="'+id+'" multiple>'+option.join("")+'</select>'+script;
+	return '<div style="width: 70%"><select style="width: 100%" id="'+id+'" multiple>'+option.join("")+'</select></div>'+script;
 }
 
 modal.prototype.setting = function(option) {
