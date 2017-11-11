@@ -52,3 +52,43 @@
 .table-view thead {
   background-color: #eee;
 }
+
+
+/*table data*/
+.table-data .nav-pager ul {
+  list-style-type: none;
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0;
+  width: 100%;
+  text-align: right;
+}
+
+.table-data .nav-pager ul li {
+  display: inline;
+}
+
+.table-data .nav-pager li span, .table-data .nav-pager li a {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #337ab7;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.table-data .nav-pager li span:hover, .table-data .nav-pager li a:hover {
+  z-index: 2;
+  color: #23527c;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.table-data .nav-pager li.nav-displaying {
+  float: left;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+}

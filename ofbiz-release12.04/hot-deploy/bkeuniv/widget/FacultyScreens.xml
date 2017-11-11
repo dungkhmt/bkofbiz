@@ -1,80 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
-
-	<screen name="FindFaculty">
-		<section>
-			<actions>
-					<property-map resource="BkEunivFacultyUiLabels" map-name="uiLabelMap" global="true"/>
-					<set field="FacultyCtx" from-field="parameters"/>
-					<set field="FacultyCtx.noConditionFind" value="Y"/>
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-						<section>
-							<widgets>
-								<container style="body">
-									<include-form name="FindFaculty" location="component://bkeuniv/widget/FacultyForms.xml"/>
-									<include-form name="ListFaculty" location="component://bkeuniv/widget/FacultyForms.xml"/>
-								</container>
-							</widgets>
-						</section>
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen>
-
-	<screen name="EditFaculty">
-		<section>
-			<actions>
-					<property-map resource="BkEunivFacultyUiLabels" map-name="uiLabelMap" global="true"/>
-					<set field="FacultyCtx" from-field="parameters"/>
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-						<section>
-							<widgets>
-								<container style="body">
-									<include-form name="EditFaculty" location="component://bkeuniv/widget/FacultyForms.xml"/>
-								</container>
-							</widgets>
-						</section>
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen>
-
-	<screen name="CreateFaculty">
-		<section>
-			<actions>
-					<property-map resource="BkEunivFacultyUiLabels" map-name="uiLabelMap" global="true"/>
-					<set field="FacultyCtx" from-field="parameters"/>
-					<set field="FacultyCtx.noConditionFind" value="Y"/>
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-						<section>
-							<widgets>
-								<container style="body">
-									<include-form name="EditFaculty" location="component://bkeuniv/widget/FacultyForms.xml"/>
-									<include-form name="ListFaculty" location="component://bkeuniv/widget/FacultyForms.xml"/>
-								</container>
-							</widgets>
-						</section>
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen>
-
 	<screen name="FacultyAjax">
 		<section>
 			<actions>
@@ -82,6 +8,7 @@
 					<property-map resource="BkEunivFacultyUiLabels" map-name="uiLabelMap" global="true"/>
 					<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
 					<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/crud-common.css" global="true" />
+					<set field="layoutSettings.scripts[]" value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" global="true" />
 					<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/faculty.js" global="true" />
 
 					<entity-condition entity-name="University" list="availUniversity">

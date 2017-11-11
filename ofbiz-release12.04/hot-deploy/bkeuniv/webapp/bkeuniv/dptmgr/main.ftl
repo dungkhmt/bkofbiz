@@ -1,15 +1,9 @@
-<div class="main-wrapper">
+<div class="main-wrapper" ng-app="department" ng-controller="dptCtrl">
   <div class="main-header">
     <h2 class="main-title">${uiLabelMap.BkEunivDepartmentMgr}</h2>
     <div class="main-action">
       <div class="group-right">
-        <button class="btn btn-primary" data-toggle="tab" data-target="#search">
-          ${uiLabelMap.CommonSearch}
-        </button>
-        <button class="btn btn-primary" data-toggle="tab" data-target="#edit">
-          ${uiLabelMap.CommonEdit}
-        </button>
-        <button class="btn btn-primary" data-toggle="tab" data-target="#create">
+        <button class="btn btn-primary" ng-click="openCreateModal()">
           ${uiLabelMap.BkEunivAddRow}
         </button>
       </div>
@@ -21,16 +15,9 @@
     </div>
   </div>
   <div class="main-body">
-    <div class="tab-content">
-
-      <!--Search-->
-      <#include "./search.ftl"/>
-
-      <!--Edit-->
-      <#include "./edit.ftl"/>
-
-      <!--Create-->
-      <#include "./create.ftl"/>
-    </div>
+    <#include "./search.ftl"/>
+    <#include "./edit.ftl"/>
+    <#include "./delete.ftl"/>
   </div>
 </div>
+

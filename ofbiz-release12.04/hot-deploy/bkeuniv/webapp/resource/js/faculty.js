@@ -1,99 +1,173 @@
-$(function() {
-  var $actions = $('.main-action');
-  var $searchTab = $actions.find('*[data-target="#search"]');
-  var $editTab = $actions.find('*[data-target="#edit"]');
-  var $createTab = $actions.find('*[data-target="#create"]');
+var app = angular.module('faculty', []);
+app.controller('facultyCtrl', function($scope, facultyService) {
+  $scope.searchForm = {
+    facultyId: '',
+    facultyName: '',
+    universityId: '',
+    universityName: '',
+    viewIndex: 0
+  };
 
-  var searchCtx = {};
+  $scope.items = [];
+  $scope.paging = {
+    totalPage: 0
+  };
 
-  /*Search tab*/
-  var $tableElem = $('#search .tabledata');
-  var tableData = new TableData($tableElem, [
-    'facultyId', 'facultyName', 'universityName'
-  ], getFaculty, function(newCtx) {
-    searchCtx = newCtx;
-  }, function(item) {
-    $editTab.tab('show');
-    dpt.edit(item);
-  });
-  tableData.print(searchCtx);
+  /*Searching*/
 
-  var $searchForm = $('.search-form');
-  $searchForm.submit(function(e) {
-    e.preventDefault();
-    tableData.print(getSearchFormData());
-  });
-  function getSearchFormData() {
-    var data = {};
-    var searchForm = $searchForm.get(0);
-    data.facultyId = searchForm.facultyId.value;
-    data.facultyName = searchForm.facultyName.value;
-    data.universityId = searchForm.universityId.value;
-    data.universityName = searchForm.universityName.value;
-    return data;
+  $scope.search = function() {
+    facultyService.searchFaculty($scope.searchForm).then(function(data) {
+      $scope.items = data.result.items;
+      $scope.paging = data.result.paging;
+      calcPage();
+    });
   }
 
-  /*Edit Tab*/
-  var $editForm = $('.edit-form');
-  var dpt = new CRUD([
-    'facultyId', 'facultyName', 'universityId'
-  ]);
-  dpt.edit = function(data) {
-    this.fields.forEach(function(key) {
-      $editForm.get(0)[key].value = data[key];
-    });
+  $scope.searchNew = function() {
+    $scope.searchForm.viewIndex = 0;
+    $scope.search();
   }
-  $editForm.submit(function(e) {
-    var body = {};
-    e.preventDefault();
-    dpt.fields.forEach(function(key) {
-      body[key] = $editForm.get(0)[key].value;
-    });
-    updateFaculty(body).then(function(json) {
-      console.log('UPdate ', json);
-      if (json.status === 'ok') {
-        $searchTab.tab('show');
-        tableData.print(searchCtx);
-      } else {
-        alert(json.message);
-      }
-    });
-  })
 
-  /*Create tab*/
-  var $createForm = $('.create-form');
-  dpt.create = function() {
-    dpt.fields.forEach(function(key) {
-      $editForm.get(0)[key].value = '';
+  $scope.getItemIndex = function (i) {
+    return $scope.paging.viewIndex * $scope.paging.viewSize + 1 + i
+  }
+
+  $scope.changePage = function(page) {
+    if (page >= $scope.paging.totalPage
+      ||page < 0) {
+      return;
+    }
+    $scope.searchForm.viewIndex = page;
+    $scope.search();
+  }
+
+  $scope.nextPage = function() {
+    $scope.changePage($scope.searchForm.viewIndex + 1);
+  }
+
+  $scope.prevPage = function() {
+    $scope.changePage($scope.searchForm.viewIndex - 1);
+  }
+
+  $scope.fisrtPage = function() {
+    $scope.changePage(0);
+  }
+
+  $scope.lastPage = function() {
+    $scope.changePage($scope.paging.totalPage - 1);
+  }
+
+  /*Editing*/
+
+  $scope.openEditModal = function(data) {
+    $scope.editForm = data;
+    $scope.editMode = true;
+    $('#editmodal').modal('show');
+  }
+
+  $scope.update = function() {
+    $('#editmodal').modal('hide');
+    facultyService.updateFaculty($scope.editForm).then(function() {
+      $scope.search();
     });
   }
-  $createForm.submit(function(e) {
-    var body = {};
-    e.preventDefault();
-    dpt.fields.forEach(function(key) {
-      body[key] = $createForm.get(0)[key].value;
+
+  /*Create*/
+
+  $scope.openCreateModal = function() {
+    $scope.editForm = null;
+    $scope.editMode = false;
+    $('#editmodal').modal('show');
+  }
+
+  $scope.create = function() {
+    $('#editmodal').modal('hide');
+    facultyService.createFaculty($scope.editForm).then(function() {
+      $scope.searchNew();
     });
-    createFaculty(body).then(function(json) {
-      console.log('Create ', json);
-      if (json.status === 'ok') {
-        $searchTab.tab('show');
-        tableData.print(searchCtx);
-      } else {
-        alert(json.message);
-      }
+  }
+
+  /*Delete*/
+  $scope.openDeleteModal = function(data) {
+    $scope.deleteForm = data;
+    $('#deletemodal').modal('show');
+  }
+
+  $scope.delete = function() {
+    $('#deletemodal').modal('hide');
+    facultyService.deleteFaculty($scope.editForm).then(function() {
+      $scope.searchNew();
     });
-  })
+  }
+
+  function calcPage() {
+    var paging = $scope.paging;
+    var totalPage = Math.round(paging.totalSize / paging.viewSize);
+    if (paging.totalSize % paging.viewSize === 0) {
+      totalPage += 1;
+    }
+    var from = Math.min(paging.viewIndex * paging.viewSize + 1, paging.totalSize);
+    var to = Math.min(from + paging.viewSize - 1, paging.totalSize);
+    paging.totalPage = totalPage;
+    paging.from = from;
+    paging.to = to;
+  }
 });
 
-function getFaculty(body) {
-  return ajax('getFacultyAjax', body);
-}
+app.service('facultyService', function($http) {
+  this.searchFaculty = function(criteria) {
+    return $http({
+      url: window.entrypoint + 'getFacultyAjax',
+      method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      data: $.param(criteria)
+    }).then(function (res) {
+      if (res.data.status === 'ok') {
+        return res.data;
+      }
+      throw new Error();
+    });
+  }
 
-function updateFaculty(body) {
-  return ajax('updateFacultyAjax', body);
-}
+  this.updateFaculty = function(data) {
+    return $http({
+      url: window.entrypoint + 'updateFacultyAjax',
+      method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      data: $.param(data)
+    }).then(function (res) {
+      if (res.data.status === 'ok') {
+        return res.data;
+      }
+      throw new Error();
+    });
+  }
 
-function createFaculty(body) {
-  return ajax('createFacultyAjax', body);
-}
+  this.createFaculty = function(data) {
+    return $http({
+      url: window.entrypoint + 'createFacultyAjax',
+      method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      data: $.param(data)
+    }).then(function (res) {
+      if (res.data.status === 'ok') {
+        return res.data;
+      }
+      throw new Error();
+    });
+  }
 
+  this.deleteFaculty = function(data) {
+    return $http({
+      url: window.entrypoint + 'deleteFacultyAjax',
+      method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      data: $.param(data)
+    }).then(function (res) {
+      if (res.data.status === 'ok') {
+        return res.data;
+      }
+      throw new Error();
+    });
+  }
+});

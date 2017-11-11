@@ -1,80 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
-
-	<screen name="FindDpt">
-		<section>
-			<actions>
-					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
-					<set field="dptCtx" from-field="parameters"/>
-					<set field="dptCtx.noConditionFind" value="Y"/>
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-						<section>
-							<widgets>
-								<container style="body">
-									<include-form name="FindDpt" location="component://bkeuniv/widget/DptForms.xml"/>
-									<include-form name="ListDpt" location="component://bkeuniv/widget/DptForms.xml"/>
-								</container>
-							</widgets>
-						</section>
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen>
-
-	<screen name="EditDpt">
-		<section>
-			<actions>
-					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
-					<set field="dptCtx" from-field="parameters"/>
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-						<section>
-							<widgets>
-								<container style="body">
-									<include-form name="EditDpt" location="component://bkeuniv/widget/DptForms.xml"/>
-								</container>
-							</widgets>
-						</section>
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen>
-
-	<screen name="CreateDpt">
-		<section>
-			<actions>
-					<property-map resource="BkEunivDptUiLabels" map-name="uiLabelMap" global="true"/>
-					<set field="dptCtx" from-field="parameters"/>
-					<set field="dptCtx.noConditionFind" value="Y"/>
-			</actions>
-			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
-					location="component://bkeuniv/widget/CommonScreens.xml">
-					<decorator-section name="body">
-						<section>
-							<widgets>
-								<container style="body">
-									<include-form name="EditDpt" location="component://bkeuniv/widget/DptForms.xml"/>
-									<include-form name="ListDpt" location="component://bkeuniv/widget/DptForms.xml"/>
-								</container>
-							</widgets>
-						</section>
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen>
-
 	<screen name="DptAjax">
 		<section>
 			<actions>
@@ -82,6 +8,7 @@
 					<property-map resource="BkEunivFacultyUiLabels" map-name="uiLabelMap" global="true"/>
 					<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
 					<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/crud-common.css" global="true" />
+					<set field="layoutSettings.scripts[]" value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" global="true" />
 					<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/dpt.js" global="true" />
 
 					<entity-condition entity-name="Faculty" list="availFaculty">
@@ -109,5 +36,4 @@
 			</widgets>
 		</section>
 	</screen>
-
 </screens>

@@ -33,7 +33,7 @@
     </field>
   </form>
 
-  <form name="FindDpt" type="single" target="FindDepartment" default-entity-name="Department">
+  <form name="FindDpt" style="basic-form" type="single" target="FindDepartment" default-entity-name="Department">
       <field name="noConditionFind"><hidden value="Y"/></field>
       <field name="departmentId_op"><hidden value="contains"/></field>
       <field name="departmentId_ic"><hidden value="Y"/></field>

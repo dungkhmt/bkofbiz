@@ -2,7 +2,7 @@
 <site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
 
-	<request-map uri="FindFaculty">
+	<!--<request-map uri="FindFaculty">
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="FindFaculty" />
 		<response name="error" type="view" value="FindFaculty" />
@@ -34,7 +34,7 @@
 		<response name="success" type="request-redirect-noparam" value="AddFaculty" />
 		<response name="error" type="view" value="CreateFaculty"/>
 	</request-map>
-
+-->
 	<request-map uri="createFacultyAjax">
 		<event type="service" invoke="createFaculty" />
 		<response name="success" type="request" value="toJson" />
@@ -43,6 +43,12 @@
 
 	<request-map uri="updateFacultyAjax">
 		<event type="service" invoke="updateFaculty" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
+	<request-map uri="deleteFacultyAjax">
+		<event type="service" invoke="deleteFaculty" />
 		<response name="success" type="request" value="toJson" />
 		<response name="error" type="request" value="toJson" />
 	</request-map>
@@ -58,9 +64,9 @@
 		<response name="error" type="view" value="FacultyAjax" />
 	</request-map>
 	
-  <view-map name="FindFaculty" type="screen" page="component://bkeuniv/widget/FacultyScreens.xml#FindFaculty"/>
+  <!--<view-map name="FindFaculty" type="screen" page="component://bkeuniv/widget/FacultyScreens.xml#FindFaculty"/>
   <view-map name="EditFaculty" type="screen" page="component://bkeuniv/widget/FacultyScreens.xml#EditFaculty"/>
-  <view-map name="CreateFaculty" type="screen" page="component://bkeuniv/widget/FacultyScreens.xml#CreateFaculty"/>
+  <view-map name="CreateFaculty" type="screen" page="component://bkeuniv/widget/FacultyScreens.xml#CreateFaculty"/>-->
   <view-map name="FacultyAjax" type="screen" page="component://bkeuniv/widget/FacultyScreens.xml#FacultyAjax"/>
     
 </site-conf>

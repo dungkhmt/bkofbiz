@@ -2,7 +2,7 @@
 <site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
 
-	<request-map uri="FindDepartment">
+	<!--<request-map uri="FindDepartment">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="FindDpt" />
 		<response name="error" type="view" value="FindDpt" />
@@ -34,7 +34,7 @@
 		<response name="success" type="request-redirect-noparam"
 			value="AddDepartment" />
 		<response name="error" type="view" value="CreateDpt" />
-	</request-map>
+	</request-map>-->
 
 	<request-map uri="department-management">
 		<response name="success" type="view" value="DptAjax" />
@@ -53,22 +53,24 @@
 		<response name="error" type="request" value="toJson" />
 	</request-map>
 
+	<request-map uri="deleteDepartmentAjax">
+		<event type="service" invoke="deleteDepartment" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
 	<request-map uri="getDepartmentAjax">
 		<event type="service" invoke="getDepartmentAjax" />
 		<response name="success" type="request" value="toJson" />
 		<response name="error" type="request" value="toJson" />
 	</request-map>
 
-	<view-map name="FindDpt" type="screen"
+	<!--<view-map name="FindDpt" type="screen"
 		page="component://bkeuniv/widget/DptScreens.xml#FindDpt" />
 	<view-map name="EditDpt" type="screen"
 		page="component://bkeuniv/widget/DptScreens.xml#EditDpt" />
 	<view-map name="CreateDpt" type="screen"
-		page="component://bkeuniv/widget/DptScreens.xml#CreateDpt" />
-	<view-map name="Test" type="screen"
-		page="component://bkeuniv/widget/DptScreens.xml#Test" />
-	<view-map name="TestError" type="screen"
-		page="component://bkeuniv/widget/DptScreens.xml#TestError" />
+		page="component://bkeuniv/widget/DptScreens.xml#CreateDpt" />-->
 	<view-map name="DptAjax" type="screen"
 		page="component://bkeuniv/widget/DptScreens.xml#DptAjax" />
 </site-conf>
