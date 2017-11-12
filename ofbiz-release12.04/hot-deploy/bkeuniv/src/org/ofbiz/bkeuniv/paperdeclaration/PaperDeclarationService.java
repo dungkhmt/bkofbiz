@@ -80,34 +80,88 @@ public class PaperDeclarationService {
 	public static void exportExcelKV01(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		String year = (String)request.getParameter("reportyear");
-		
+		String year = (String)request.getParameter("reportyear-kv01");
+		String facultyId = (String)request.getParameter("facultyId-kv01");
 		Debug.log(module + "::exportExcelKV01, academic year = " + year);
 		
 		String filename = "KV01";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
-			// start renderExcel
-			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV01(delegator, year, facultyId);
+			
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
 
-			Sheet sh = wb.createSheet("sheet1");
-
-			int i;
-			for (i = 1; i <= 10; i++) {
-				Row r = sh.createRow(i);
-				Cell c = r.createCell(0);
-				c.setCellValue("1-" + i);
-
-				c = r.createCell(1);
-				c.setCellValue("PHAM Quang Dung - " + i);
-
-				c = r.createCell(2);
-				c.setCellValue("DHBKHN - " + i);
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+		}
+	}
 
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelISI(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String)request.getParameter("reportyear-isi");
+		String facultyId = (String)request.getParameter("facultyId-isi");
+		Debug.log(module + "::exportExcelISI, academic year = " + year);
+		
+		String filename = "ISI";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormISI(delegator, year, facultyId);
+			
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelBM010203(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String)request.getParameter("reportyear-bm-01-02-03");
+		String facultyId = (String)request.getParameter("facultyId-bm-01-02-03");
+		String departmentId = (String)request.getParameter("departmentId-bm-01-02-03");
+		Debug.log(module + "::exportExcelBM010203, academic year = " + year + ", faculty = " + facultyId + ", department = " + departmentId);
+		
+		String filename = "BM010203";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormBM010203(delegator, year, facultyId, departmentId);
+			
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
 			response.setHeader("content-disposition", "attachment;filename="
@@ -574,7 +628,9 @@ public class PaperDeclarationService {
 					EntityOperator.EQUALS, staffId));
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
-
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);

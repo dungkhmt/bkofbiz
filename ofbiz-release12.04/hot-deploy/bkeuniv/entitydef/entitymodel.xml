@@ -511,7 +511,7 @@
 		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
 		<alias name="authorStaffId" entity-alias="ST" field="staffId"></alias>
 		<alias name="categoryName" entity-alias="PC" field="paperCategoryName"></alias>
-		
+		<alias name="statusStaffPaper" entity-alias="SPD" field="statusId"></alias>
 		
 		<view-link rel-entity-alias="ST" entity-alias="SPD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
@@ -564,7 +564,16 @@
 		<field name="declarationStaffId" type="id-vlong"></field>
 		<field name="projectParticipationRoleId" type="id-vlong"></field>
 		<field name="approverStaffId" type="id-vlong"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="hourOfStaff" type="numeric"></field>
+		<field name="totalhour" type="numeric"></field>
+		<field name="budget" type="numeric"></field>
+		
 		<prim-key field="projectDeclarationId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
 		
 		<relation rel-entity-name="ProjectCategory" type="one">
 			<key-map field-name="projectCategoryId"/>

@@ -51,6 +51,14 @@
         <value xml:lang="en">Add</value>
         <value xml:lang="vi">Thêm</value>
     </property>
+    <property key="BkEunivStore">
+        <value xml:lang="en">Store</value>
+        <value xml:lang="vi">Lưu</value>
+    </property>
+    <property key="BkEunivCancel">
+        <value xml:lang="en">Cancel</value>
+        <value xml:lang="vi">Huỷ</value>
+    </property>
     
     <property key="BkEunivEdit">
         <value xml:lang="en">Edit</value>
