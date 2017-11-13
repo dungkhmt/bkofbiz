@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <property key="GroupId">
+        <value xml:lang="en">Group ID</value>
+        <value xml:lang="vi">Mã nhóm quyền</value>
+    </property>
+    
+    <property key="Description">
+        <value xml:lang="en">Description</value>
+        <value xml:lang="vi">Mô tả nhóm quyền</value>
+    </property>
+    
+</resource>

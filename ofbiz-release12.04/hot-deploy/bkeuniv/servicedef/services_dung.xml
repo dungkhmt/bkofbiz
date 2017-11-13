@@ -11,6 +11,23 @@
         </description>
     </service> 
     
+    <service name="getListSecurityGroups" engine="java"
+    	location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getListSecurityGroups">
+    	<attribute name="securityGroups" mode="OUT" type="List"></attribute>
+    </service>
+    <service name="getListFunctions" engine="java"
+    	location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getListFunctions">
+    	<attribute name="functions" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="updateSecurityGroupFunction" engine="java"
+    	location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="updateSecurityGroupFunction">
+    	<attribute name="groupId" mode="IN" type="String"></attribute>
+    	<attribute name="functions[]" mode="IN" type="List"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
     <service name="getStaffs" engine="java" 
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
     	<attribute name="staffs" mode="OUT" type="List"></attribute>

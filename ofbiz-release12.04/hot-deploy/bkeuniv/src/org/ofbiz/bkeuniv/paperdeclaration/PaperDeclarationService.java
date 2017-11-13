@@ -1,14 +1,11 @@
 package src.org.ofbiz.bkeuniv.paperdeclaration;
 
-import java.awt.print.Paper;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,34 +80,88 @@ public class PaperDeclarationService {
 	public static void exportExcelKV01(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		String year = (String)request.getParameter("reportyear");
-		
+		String year = (String)request.getParameter("reportyear-kv01");
+		String facultyId = (String)request.getParameter("facultyId-kv01");
 		Debug.log(module + "::exportExcelKV01, academic year = " + year);
 		
 		String filename = "KV01";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
-			// start renderExcel
-			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV01(delegator, year, facultyId);
+			
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
 
-			Sheet sh = wb.createSheet("sheet1");
-
-			int i;
-			for (i = 1; i <= 10; i++) {
-				Row r = sh.createRow(i);
-				Cell c = r.createCell(0);
-				c.setCellValue("1-" + i);
-
-				c = r.createCell(1);
-				c.setCellValue("PHAM Quang Dung - " + i);
-
-				c = r.createCell(2);
-				c.setCellValue("DHBKHN - " + i);
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+		}
+	}
 
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelISI(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String)request.getParameter("reportyear-isi");
+		String facultyId = (String)request.getParameter("facultyId-isi");
+		Debug.log(module + "::exportExcelISI, academic year = " + year);
+		
+		String filename = "ISI";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormISI(delegator, year, facultyId);
+			
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelBM010203(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String)request.getParameter("reportyear-bm-01-02-03");
+		String facultyId = (String)request.getParameter("facultyId-bm-01-02-03");
+		String departmentId = (String)request.getParameter("departmentId-bm-01-02-03");
+		Debug.log(module + "::exportExcelBM010203, academic year = " + year + ", faculty = " + facultyId + ", department = " + departmentId);
+		
+		String filename = "BM010203";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormBM010203(delegator, year, facultyId, departmentId);
+			
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
 			response.setHeader("content-disposition", "attachment;filename="
@@ -557,6 +608,7 @@ public class PaperDeclarationService {
 	 * ); return ("AttachementSuccess"); // Uploading the file content - End }
 	 */
 
+	
 	public static Map<String, Object> getPapersOfStaff(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -576,7 +628,9 @@ public class PaperDeclarationService {
 					EntityOperator.EQUALS, staffId));
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
-
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
@@ -595,6 +649,44 @@ public class PaperDeclarationService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> getPaperDeclarations(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		// String staffId = (String)context.get("authorStaffId");
+
+		Map<String, Object> userLogin = (Map<String, Object>) context
+				.get("userLogin");
+		// String userLoginId =
+		// (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String staffId = (String) userLogin.get("userLoginId");
+
+		Debug.log(module + "::getPapersOfStaff, authorStaffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			//conds.add(EntityCondition.makeCondition("authorStaffId",
+			//		EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			List<GenericValue> papers = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			for (GenericValue gv : papers) {
+				Debug.log(module + "::getPaperDeclarations, paper "
+						+ gv.get("paperName"));
+			}
+			Debug.log(module + "::getPaperDeclarations, papers.sz = "
+					+ papers.size());
+			retSucc.put("papers", papers);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 	@SuppressWarnings({ "unchecked" })
 	public static void createStaffPaperDeclaration(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -628,7 +720,8 @@ public class PaperDeclarationService {
 			ex.printStackTrace();
 		}
 	}
-	public static Map<String, Object> createStaffPaperDeclaration(
+	
+	public static Map<String, Object> jcreateStaffPaperDeclaration(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
@@ -672,20 +765,20 @@ public class PaperDeclarationService {
 		String volumn = (String) context.get("volumn");
 		String syear = (String) context.get("year");
 		String smonth = (String) context.get("month");
-		Long year = Long.valueOf(syear);
-		Long month = Long.valueOf(smonth);
+		//Long year = Long.valueOf(syear);
+		//Long month = Long.valueOf(smonth);
 		String ISSN = (String) context.get("ISSN");
 		String authors = (String) context.get("authors");
 		// String academicYearId = (String)context.get("academicYearId");
 		List<Object> academicYears = (List<Object>) context
 				.get("academicYearId[]");
-		String academicYearId = "NULL";
+		String academicYearId = "";
 		if (academicYears != null)
 			academicYearId = (String) academicYears.get(0);
 
 		Debug.log(module + "::createPaperDeclaration, authorStaffId = "
-				+ staffId + ", paperName = " + paperName + ", year = " + year
-				+ ", month = " + month + ", academicYearId = " + academicYearId
+				+ staffId + ", paperName = " + paperName + ", year = " + syear
+				+ ", month = " + smonth + ", academicYearId = " + academicYearId
 				+ ", paperCategoryId = " + paperCategoryId);
 
 		Delegator delegator = ctx.getDelegator();
@@ -696,15 +789,28 @@ public class PaperDeclarationService {
 			String paperId = delegator.getNextSeqId("PaperDeclaration");
 			p.put("paperId", paperId);
 			p.put("staffId", staffId);
-			p.put("paperName", paperName);
-			p.put("paperCategoryId", paperCategoryId);
-			p.put("journalConferenceName", journalConferenceName);
-			p.put("volumn", volumn);
-			p.put("year", year);
-			p.put("month", month);
-			p.put("ISSN", ISSN);
-			p.put("authors", authors);
-			p.put("academicYearId", academicYearId);
+			if(paperName != null && !paperName.equals(""))
+				p.put("paperName", paperName);
+			if(paperCategoryId != null && !paperCategoryId.equals(""))
+				p.put("paperCategoryId", paperCategoryId);
+			if(journalConferenceName != null && !journalConferenceName.equals(""))
+				p.put("journalConferenceName", journalConferenceName);
+			if(volumn != null && !volumn.equals(""))
+				p.put("volumn", volumn);
+			if(syear != null && !syear.equals("")){
+				long year = Long.valueOf(syear);
+				p.put("year", year);
+			}
+			if(smonth != null && !smonth.equals("")){
+				long month = Long.valueOf(smonth);
+				p.put("month", month);
+			}
+			if(ISSN != null && !ISSN.equals(""))
+				p.put("ISSN", ISSN);
+			if(authors != null && !authors.equals(""))
+				p.put("authors", authors);
+			if(academicYearId != null && !academicYearId.equals(""))
+				p.put("academicYearId", academicYearId);
 			p.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
 
 			delegator.create(p);
@@ -741,7 +847,14 @@ public class PaperDeclarationService {
 		String staffId = (String) userLogin.get("userLoginId");
 		String paperId = (String) context.get("paperId");
 		String paperName = (String) context.get("paperName");
-		String paperCategoryId = (String) context.get("paperCategoryId");
+		
+		//String paperCategoryId = (String) context.get("paperCategoryId");
+		List<Object> paperCategoryIds = (List<Object>) context
+				.get("paperCategoryId[]");
+		String paperCategoryId = "";
+		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
+			paperCategoryId = (String) (paperCategoryIds.get(0));
+
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
 		String volumn = (String) context.get("volumn");
@@ -749,7 +862,12 @@ public class PaperDeclarationService {
 		String month = (String) context.get("month");
 		String ISSN = (String) context.get("ISSN");
 		String authors = (String) context.get("authors");
-		String academicYearId = (String) context.get("academicYearId");
+		//String academicYearId = (String) context.get("academicYearId");
+		List<Object> academicYearIds = (List<Object>) context
+				.get("academicYearId[]");
+		String academicYearId = "";
+		if (academicYearIds != null && academicYearIds.size() > 0)
+			academicYearId = (String) (academicYearIds.get(0));
 
 		Debug.log(module + "::updatePaper, authorStaffId = " + staffId
 				+ ", paperId = " + paperId);
@@ -762,23 +880,39 @@ public class PaperDeclarationService {
 									paperId)), null, null, null, false);
 			for (GenericValue gv : papers) {
 				Debug.log(module + "::updatePaper, paper "
-						+ gv.get("paperName") + ", new Name = " + paperName);
+						+ gv.get("paperName") + ", new Name = " + paperName + ", category = " + paperCategoryId);
 			}
 			GenericValue p = papers.get(0);
-			p.put("paperName", paperName);
-			p.put("paperCategoryId", paperCategoryId);
-			p.put("journalConferenceName", journalConferenceName);
-			p.put("volumn", volumn);
-			p.put("year", year);
-			p.put("month", month);
-			p.put("ISSN", ISSN);
-			p.put("authors", authors);
-			p.put("academicYearId", academicYearId);
+			if(paperName != null && !paperName.equals(""))
+				p.put("paperName", paperName);
+			if(paperCategoryId != null && !paperCategoryId.equals(""))
+				p.put("paperCategoryId", paperCategoryId);
+			if(journalConferenceName != null && ! journalConferenceName.equals(""))
+				p.put("journalConferenceName", journalConferenceName);
+			if(volumn != null && !volumn.equals(""))
+				p.put("volumn", volumn);
+			if(year != null && !year.equals("")){
+				long l_year = Long.valueOf(year);
+				p.put("year", l_year);
+			}
+			if(month != null && !month.equals("")){
+				long l_month = Long.valueOf(month);
+				p.put("month", l_month);
+			}
+			if(ISSN != null && !ISSN.equals(""))
+				p.put("ISSN", ISSN);
+			if(authors != null && !authors.equals(""))
+				p.put("authors", authors);
+			if(academicYearId != null && !academicYearId.equals(""))
+				p.put("academicYearId", academicYearId);
 
 			delegator.store(p);
 
-			retSucc.put("papers", papers);
+			retSucc.put("papers", p);
+			retSucc.put("message", "Update Row Success");
 
+			Debug.log(module + "::updatePaper FINISHED");
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			ServiceUtil.returnError(ex.getMessage());

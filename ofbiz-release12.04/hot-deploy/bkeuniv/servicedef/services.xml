@@ -16,16 +16,18 @@
 		<!-- 
 		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
 		 -->
-		<attribute name="papers" mode="OUT" type="List"></attribute>		
+		<attribute name="papers" mode="OUT" type="List"></attribute>	
+			
 	</service>
 
+<!-- 
 	<service name="updatePaper" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="paperName" mode="IN" type="String"></attribute>
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
-    
+ -->    
     
     <service name="getPermissionFunctions" engine="java"
             location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
@@ -167,17 +169,47 @@
     	<attribute name="count" mode="OUT" type="String"></attribute>
     </service>
     
+    <service name="getPapersOfStaff" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
+		<!-- 
+		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
+		 -->
+		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+
+    <service name="getPaperDeclarations" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperDeclarations">
+		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+
+	<service name="updatePaper" engine="java" 
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+		<attribute name="journalConferenceName" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="year" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="month" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="ISSN" mode="IN" type="String" optional = "true"></attribute>
+		<attribute name="authors" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>	
+		<attribute name="papers" mode="OUT" type="Map"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>
+	</service>
+    
+    
     <service name="createPaperDeclaration" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
 		<attribute name="paperName" mode="IN" type="String"></attribute>
-		<attribute name="paperCategoryId[]" mode="IN" type="List"></attribute>
-		<attribute name="journalConferenceName" mode="IN" type="String"></attribute>
+		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+		<attribute name="journalConferenceName" mode="IN" type="String"  optional="true"></attribute>
 		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
-		<attribute name="year" mode="IN" type="String"></attribute>
-		<attribute name="month" mode="IN" type="String"></attribute>
+		<attribute name="year" mode="IN" type="String"  optional="true"></attribute>
+		<attribute name="month" mode="IN" type="String"  optional="true"></attribute>
 		<attribute name="ISSN" mode="IN" type="String" optional="true"></attribute>
-		<attribute name="authors" mode="IN" type="String"></attribute>
-		<attribute name="academicYearId[]" mode="IN" type="List"></attribute>
+		<attribute name="authors" mode="IN" type="String"  optional="true"></attribute>
+		<attribute name="academicYearId[]" mode="IN" type="List"  optional="true"></attribute>
 		<attribute name="papers" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="message" mode="OUT" type="String"></attribute>	
 	</service>
@@ -193,7 +225,7 @@
 	</service>
 
     <service name="createStaffPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createStaffPaperDeclaration">
+		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="jcreateStaffPaperDeclaration">
 		<attribute name="staffId" mode="IN" type="String"></attribute>
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="message" mode="OUT" type="String"></attribute>

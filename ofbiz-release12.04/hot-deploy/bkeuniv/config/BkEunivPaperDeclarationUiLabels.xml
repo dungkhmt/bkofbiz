@@ -65,4 +65,14 @@
         <value xml:lang="vi">Thành viên bài báo</value>
     </property>
    
+    <property key="BkEunivUpdatePaper">
+        <value xml:lang="en">Update information of the paper</value>
+        <value xml:lang="vi">Chỉnh sửa thông tin bài báo</value>
+    </property>
+    
+    <property key="BkEunivAddPaper">
+        <value xml:lang="en">Create a paper declaration</value>
+        <value xml:lang="vi">Thêm mới kê khai bài báo</value>
+    </property>
+   
 </resource>
