@@ -306,6 +306,7 @@
 		<field name="icon" type="very-long"></field>
 		<field name="parentFunctionId" type="id-vlong"></field>
 		<field name="index" type="numeric"></field>
+		<field name="status" type="id-long"></field>
 		<prim-key field="functionId"/>
 	</entity>
 	<entity entity-name="GroupFunction" package-name="org.ofbiz.bkeuniv">
@@ -566,7 +567,7 @@
 		<field name="approverStaffId" type="id-vlong"></field>
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="hourOfStaff" type="numeric"></field>
-		<field name="totalhour" type="numeric"></field>
+		<field name="totalhour" type="numeric"></field>ưực
 		<field name="budget" type="numeric"></field>
 		
 		<prim-key field="projectDeclarationId"/>
