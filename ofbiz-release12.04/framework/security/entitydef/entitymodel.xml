@@ -134,6 +134,7 @@ under the License.
             title="Security Component - Security Group Entity">
       <field name="groupId" type="id-ne"></field>
       <field name="description" type="description"></field>
+      <field name="status" type="id-long"></field>
       <prim-key field="groupId"/>
     </entity>
     <entity entity-name="SecurityGroupPermission"

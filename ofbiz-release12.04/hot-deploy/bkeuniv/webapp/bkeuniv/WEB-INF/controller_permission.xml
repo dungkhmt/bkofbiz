@@ -38,19 +38,35 @@
 	    <security https="true" auth="true"/>
 	    <response name="success" type="view" value="view-form-create-security-group"/>
     </request-map>
-    
+<!--     
     <request-map uri="update-security-group-function">
             <security https="true" auth="true"/>
            <event type="service" invoke="updateSecurityGroupFunction"/>
            <response name="success" type="view" value="view-enable-security-group-function"/>
-           <!-- <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/> -->
-            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <response name="AttachementException" type="view" value="AttachementException"/>
     </request-map>    
-    
+ -->    
     <request-map uri="add-new-security-group">
             <security https="true" auth="true"/>
            <event type="java" path="src.org.ofbiz.permission.BKEunivPermissionService" 
            invoke="addASecurityGroup"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+    <request-map uri="store-security-group-functions">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="storeSecurityGroupFunctions"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
+    <request-map uri="get-functions-of-security-group">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="getFunctionsOfASecurityGroup"/>
            <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    

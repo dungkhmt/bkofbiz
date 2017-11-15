@@ -1,6 +1,7 @@
 package src.org.ofbiz.permission;
 
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,7 +11,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javolution.util.FastList;
+
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -23,24 +27,165 @@ import org.ofbiz.entity.GenericValue;
 public class BKEunivPermissionService {
 	public static String module = BKEunivPermissionService.class.getName();
 	
-	public static Map<String, Object> updateSecurityGroupFunction(DispatchContext ctx, Map<String, ? extends Object> context){
-		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+	
+	public static List<GenericValue> getFunctionsOfASecurityGroup(Delegator delegator, String groupId){
 		try{
-			List<Object> functions = (List<Object>)context.get("functions[]");
-			String groupId = (String)context.get("groupId");
-			Debug.logInfo("groupId = " + groupId, module);
-			for(Object o: functions){
-				Debug.logInfo((String)o, module);
-			}
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("securityGroupId",EntityOperator.EQUALS,groupId));
+			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
 			
+			List<GenericValue> rs = delegator.findList("GroupFunction", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			return rs;
 		}catch(Exception ex){
 			ex.printStackTrace();
-			return ServiceUtil.returnError(ex.getMessage());
+			return null;
 		}
-		retSucc.put("message", "OK");
-		return retSucc;
+	}
+	public static boolean groupFunctionEnabled(Delegator delegator, String groupId, String functionId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("securityGroupId",EntityOperator.EQUALS,groupId));
+			conds.add(EntityCondition.makeCondition("functionId",EntityOperator.EQUALS,functionId));
+			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
+			
+			List<GenericValue> rs = delegator.findList("GroupFunction", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			return (rs.size() > 0);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
 	}
 	
+	public static void createGroupFunction(Delegator delegator, String groupId, String functionId){
+		try{
+			GenericValue gv = delegator.makeValue("GroupFunction");
+			String id = delegator.getNextSeqId("GroupFunction");
+			Timestamp now = UtilDateTime.nowTimestamp();
+			gv.put("groupFunctionId", id);
+			gv.put("securityGroupId", groupId);
+			gv.put("functionId", functionId);
+			gv.put("fromDate", now);
+			delegator.create(gv);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	public static void disableGroupFunction(Delegator delegator, String groupId, String functionId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("securityGroupId",EntityOperator.EQUALS,groupId));
+			conds.add(EntityCondition.makeCondition("functionId",EntityOperator.EQUALS,functionId));
+			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
+			
+			List<GenericValue> rs = delegator.findList("GroupFunction", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			for(GenericValue gv: rs){
+				Timestamp now = UtilDateTime.nowTimestamp();
+				gv.put("thruDate", now);
+				delegator.store(gv);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void getFunctionsOfASecurityGroup(HttpServletRequest request,
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String groupId = request.getParameter("groupId");
+		List<GenericValue> funcs = getFunctionsOfASecurityGroup(delegator, groupId);
+		HashMap<String, Integer> mFunction2Checked = new HashMap<String, Integer>();
+		
+		try{
+			List<GenericValue> functions = delegator.findList("Function", 
+					null, 
+					null, 
+					null, 
+					null, 
+					false);
+			for(GenericValue gv: functions){
+				mFunction2Checked.put((String)gv.get("functionId"), 0);
+			}
+			if(funcs != null){
+				for(GenericValue gv: funcs){
+					mFunction2Checked.put((String)gv.get("functionId"), 1);
+				}
+			}
+				
+			String json = "{\"functions\":[";
+			for(int i = 0; i < functions.size(); i++){
+				GenericValue gv = functions.get(i);
+				json += "{\"functionId\":\"" + gv.get("functionId") + "\",\"vnLabel\":\"" + gv.get("vnLabel") + "\","
+						+ "\"checked\":" + mFunction2Checked.get((String)gv.get("functionId")) + "}";
+				if(i < functions.size() - 1)
+					json += ",\n";
+			}
+				json += "]}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(json);
+			out.close();
+			Debug.log(module + "::getFunctionsOfASecurityGroup, RETURN JSON = " + json);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public static void storeSecurityGroupFunctions(HttpServletRequest request,
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String groupId = request.getParameter("groupId");
+		String functions = request.getParameter("functions");
+		Debug.log(module + "::storeSecurityGroupFunctions, groupId = " + groupId + ", functions = " + functions);
+		String[] lst_function_id = functions.split(",");
+		
+		
+		
+		try{
+			List<GenericValue> all_functions = delegator.findList("Function", 
+					null, 
+					null, 
+					null, 
+					null, 
+					false);
+			
+			HashSet<String> F = new HashSet<String>();
+			for(GenericValue gv: all_functions){
+				F.add((String)gv.get("functionId"));
+			}
+			
+			for(int i = 0; i < lst_function_id.length; i++){
+				String functionId = lst_function_id[i];
+				if(!groupFunctionEnabled(delegator, groupId, functionId)){
+					createGroupFunction(delegator, groupId, functionId);
+				}
+				
+				F.remove(functionId);
+			}
+			for(String fId: F){
+				if(groupFunctionEnabled(delegator, groupId, fId)){
+					disableGroupFunction(delegator, groupId, fId);
+				}
+			}
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write("{}");
+			out.close();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+		}
+		
+	}
 	@SuppressWarnings({ "unchecked" })
 	public static void addASecurityGroup(HttpServletRequest request,
 			HttpServletResponse response){
@@ -65,6 +210,7 @@ public class BKEunivPermissionService {
 		}
 		
 	}
+
 	public static Map<String, Object> getListSecurityGroups(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		try{
@@ -154,11 +300,10 @@ public class BKEunivPermissionService {
 				tmp_functions.add(aFunction);
 			}
 			
-			Debug.log(module + "::getPermissionFunctions, functions.sz = " + tmp_functions.size());
-			
-			for(GenericValue f: tmp_functions){
-				Debug.log(module + "::getPermissionFunctions, get functions " + f.get("functionId"));
-			}
+			//Debug.log(module + "::getPermissionFunctions, functions.sz = " + tmp_functions.size());
+			//for(GenericValue f: tmp_functions){
+			//	Debug.log(module + "::getPermissionFunctions, get functions " + f.get("functionId"));
+			//}
 			
 			List<GenericValue> parent_functions = new ArrayList<GenericValue>();
 			HashMap<String, GenericValue> mId2Function = new HashMap<String, GenericValue>();
