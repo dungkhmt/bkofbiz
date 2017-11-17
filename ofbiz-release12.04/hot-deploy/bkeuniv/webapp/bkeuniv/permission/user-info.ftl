@@ -8,27 +8,31 @@
 </style>
 
 <div id="form-security-group-function">
-<table>
-	<tr>
-		<td>
-			${staffManagementUiLabelMap.BkEunivFullName} 
-		</td>
-		<td>
-			${staff.staff.staffName}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			${staffManagementUiLabelMap.BkEunivStaffId} 
-		</td>
-		<td>
-			${staff.staff.staffId}
-		</td>
-	</tr>
+
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 30%;">
+		${staffManagementUiLabelMap.BkEunivFullName}
+	</div>
+	<div style="display: inline-block;width: 69%;">
+		<input style="width: 100%" type="text" width="1000" value="${staff.staff.staffName}"/>
+	</div>
 	
-</table>
+</div>
+
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 30%;">
+			${staffManagementUiLabelMap.BkEunivStaffId} 
+	</div>
+	<div style="display: inline-block;width: 69%;">
+		<input style="width: 100%" type="text" width="1000" value="${staff.staff.staffId}"/>
+	</div>
+	
+</div>
+
 <@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="updateInfo"/>
 </div>
+
+
 <script>
 
 function updateInfo(){
