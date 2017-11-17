@@ -1,5 +1,6 @@
 package src.org.ofbiz.bkeuniv.staffmanagement;
 
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,9 @@ import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityOperator;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
@@ -137,8 +141,64 @@ public class StaffService {
 					EntityCondition.makeCondition(conds),
 					null, null, null, false);
 			if(staffs != null && staffs.size() > 0){
-				retSucc.put("staff", staffs.get(0));
+				GenericValue st = staffs.get(0);
+				retSucc.put("staff", st);
+				
+				String deptId = (String)st.get("departmentId");
+				String facultyId = "";
+				conds.clear();
+				
+				List<GenericValue> all_departments = delegator.findList("Department", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				
+				List<GenericValue> all_faculty = delegator.findList("Faculty", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				
+				
+				for(GenericValue d: all_departments){
+					String dId = (String)d.get("departmentId");
+					if(dId.equals(deptId)){
+						facultyId = (String)d.get("facultyId");
+						break;
+					}
+				}
+				
+				
+				
+				conds.add(EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS,facultyId));
+				List<GenericValue> sel_departments = delegator.findList("Department", 
+						EntityCondition.makeCondition(conds), 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				List<GenericValue> genders = delegator.findList("Gender", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				retSucc.put("departments", sel_departments);
+				retSucc.put("faculties", all_faculty);
+				retSucc.put("selected_department_id", deptId);
+				retSucc.put("selected_faculty_id", facultyId);
+				retSucc.put("genders", genders);
+				
 			}
+			
+			
 			/*
 			List<Map<String, Object>> ret_staffs = FastList.newInstance();
 					
@@ -434,5 +494,45 @@ public class StaffService {
 		}
 		return retSucc;
 	}
-	
+
+	@SuppressWarnings({ "unchecked" })
+	public static void updateStaffInfo(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String staffId = request.getParameter("staffId");
+		String departmentId = request.getParameter("departmentId");
+		String genderId = request.getParameter("genderId");
+		String email = request.getParameter("email");
+		String birthDate = request.getParameter("birthDate");
+		String staffName = request.getParameter("staffName");
+		String phone = request.getParameter("phone");
+		
+		Debug.log(module + "::updateStaffInfo, staffId = " + staffId + ", staffName = " + staffName
+				+ ", departmentId = " + departmentId + ", email = " + email + ", phone = " + phone
+				+ ", birthDate = " + birthDate + ", genderId = " + genderId);
+		
+		try{
+			GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",staffId), false);
+			if(st != null){
+				st.put("staffName", staffName);
+				st.put("staffEmail", email);
+				st.put("departmentId", departmentId);
+				st.put("staffGenderId", genderId);
+				st.put("staffDateOfBirth", Date.valueOf(birthDate));
+				st.put("staffPhone", phone);
+				delegator.store(st);
+				
+				String rs = "{\"result\":\"OK\"}";
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				PrintWriter out = response.getWriter();
+				out.write(rs);
+				out.close();
+				
+				Debug.log(module + "::updateStaffInfo, rs = " + rs);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 }

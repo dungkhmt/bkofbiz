@@ -368,6 +368,14 @@
             <response name="AttachementSuccess" type="view" value="DEPARTMENTSFACULTY"/>
            
     </request-map>    
+	<request-map uri="update-staff-info">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" 
+                     invoke="updateStaffInfo"/>
+            <response name="AttachementSuccess" type="view" value="STAFFINFO"/>
+           
+    </request-map>    
 	
 	<!-- 
 	<request-map uri="get-staffs">
