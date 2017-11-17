@@ -23,6 +23,16 @@
     -->
 
     <!-- Request Mappings -->
+    <request-map uri="user">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-user"/>
+    </request-map>
+
+    <request-map uri="enable-security-group-user">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-enable-security-group-user"/>
+    </request-map>
+
     <request-map uri="create-security-group">
 	    <security https="true" auth="true"/>
 	    <response name="success" type="view" value="view-create-security-group"/>
@@ -63,6 +73,14 @@
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
 
+    <request-map uri="store-security-group-users">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="storeSecurityGroupUsers"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
     <request-map uri="get-functions-of-security-group">
             <security https="true" auth="true"/>
            <event type="java" path="src.org.ofbiz.permission.BKEunivPermissionService" 
@@ -71,8 +89,18 @@
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
     
+    <request-map uri="get-staffs-of-security-group">
+            <security https="true" auth="true"/>
+           <event type="java" path="src.org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="getStaffsOfASecurityGroup"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
    <view-map name="view-create-security-group" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageCreateSecurityGroup"/>
    <view-map name="view-form-create-security-group" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormCreateSecurityGroup"/>
    <view-map name="view-enable-security-group-function" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageEnableSecurityGroupFunction"/>
+   <view-map name="view-user" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewUser"/>
     
+    <view-map name="view-enable-security-group-user" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageEnableSecurityGroupUser"/>
 </site-conf>

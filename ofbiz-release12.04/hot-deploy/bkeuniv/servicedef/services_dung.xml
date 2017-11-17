@@ -32,6 +32,11 @@
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
     	<attribute name="staffs" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getStaffInfo" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
+    	<attribute name="staff" mode="OUT" type="Map"></attribute>
+    </service>
+    
     <service name="getGenders" engine="java" 
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getGenders">
     	<attribute name="genders" mode="OUT" type="List"></attribute>

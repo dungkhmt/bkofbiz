@@ -119,6 +119,56 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+	public static Map<String, Object> getStaffInfo(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		//String staffId = (String)context.get("authorStaffId");
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String staffId = (String)userLogin.get("userLoginId");
+		
+		Debug.log(module + "::getStaffInfo, authorStaffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS,staffId));
+			
+			List<GenericValue> staffs = delegator.findList("StaffView", 
+					EntityCondition.makeCondition(conds),
+					null, null, null, false);
+			if(staffs != null && staffs.size() > 0){
+				retSucc.put("staff", staffs.get(0));
+			}
+			/*
+			List<Map<String, Object>> ret_staffs = FastList.newInstance();
+					
+			for(GenericValue gv: staffs){
+				//Debug.log(module + "::getStaffs, staff " + gv.get("staffName"));
+				Map<String, Object> rs = FastMap.newInstance();
+				rs.put("staffId", gv.getString("staffId"));
+				rs.put("staffId", gv.getString("staffId"));
+				rs.put("staffName", gv.getString("staffName"));
+				rs.put("staffEmail", gv.getString("staffEmail"));
+				rs.put("departmentId", gv.getString("departmentId"));
+				rs.put("staffGenderId", gv.getString("staffGenderId"));
+				rs.put("staffDateOfBirth", gv.getString("staffDateOfBirth"));
+				rs.put("staffPhone", gv.getString("staffPhone"));
+				rs.put("departmentName", gv.getString("departmentName"));
+				rs.put("genderName", gv.getString("genderName"));
+				rs.put("facultyId", gv.getString("facultyId"));
+				rs.put("facultyName", gv.getString("facultyName"));
+				ret_staffs.add(rs);
+			}
+		
+			retSucc.put("staffs", ret_staffs);
+			*/
+		}catch(Exception ex){
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> removeAStaff(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		

@@ -43,6 +43,22 @@ public class BKEunivPermissionService {
 			return null;
 		}
 	}
+	public static List<GenericValue> getStaffsOfASecurityGroup(Delegator delegator, String groupId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("groupId",EntityOperator.EQUALS,groupId));
+			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
+			
+			List<GenericValue> rs = delegator.findList("UserLoginSecurityGroup", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			return rs;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
 	public static boolean groupFunctionEnabled(Delegator delegator, String groupId, String functionId){
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
@@ -60,6 +76,23 @@ public class BKEunivPermissionService {
 		}
 	}
 	
+	public static boolean groupUserEnabled(Delegator delegator, String groupId, String staffId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("groupId",EntityOperator.EQUALS,groupId));
+			conds.add(EntityCondition.makeCondition("userLoginId",EntityOperator.EQUALS,staffId));
+			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
+			
+			List<GenericValue> rs = delegator.findList("UserLoginSecurityGroup", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			return (rs.size() > 0);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
 	public static void createGroupFunction(Delegator delegator, String groupId, String functionId){
 		try{
 			GenericValue gv = delegator.makeValue("GroupFunction");
@@ -74,6 +107,20 @@ public class BKEunivPermissionService {
 			ex.printStackTrace();
 		}
 	}
+	public static void createGroupUser(Delegator delegator, String groupId, String staffId){
+		try{
+			GenericValue gv = delegator.makeValue("UserLoginSecurityGroup");
+			String id = delegator.getNextSeqId("UserLoginSecurityGroup");
+			Timestamp now = UtilDateTime.nowTimestamp();
+			gv.put("groupId", groupId);
+			gv.put("userLoginId", staffId);
+			gv.put("fromDate", now);
+			delegator.create(gv);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
 	public static void disableGroupFunction(Delegator delegator, String groupId, String functionId){
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
@@ -82,6 +129,26 @@ public class BKEunivPermissionService {
 			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
 			
 			List<GenericValue> rs = delegator.findList("GroupFunction", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			for(GenericValue gv: rs){
+				Timestamp now = UtilDateTime.nowTimestamp();
+				gv.put("thruDate", now);
+				delegator.store(gv);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public static void disableGroupUser(Delegator delegator, String groupId, String staffId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("groupId",EntityOperator.EQUALS,groupId));
+			conds.add(EntityCondition.makeCondition("userLoginId",EntityOperator.EQUALS,staffId));
+			conds.add(EntityCondition.makeCondition("thruDate",EntityOperator.EQUALS,null));
+			
+			List<GenericValue> rs = delegator.findList("UserLoginSecurityGroup", 
 					EntityCondition.makeCondition(conds), 
 					null, null, null, false);
 			for(GenericValue gv: rs){
@@ -139,6 +206,54 @@ public class BKEunivPermissionService {
 	}
 	
 	@SuppressWarnings({ "unchecked" })
+	public static void getStaffsOfASecurityGroup(HttpServletRequest request,
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String groupId = request.getParameter("groupId");
+		List<GenericValue> staffs = getStaffsOfASecurityGroup(delegator, groupId);
+		HashMap<String, Integer> mStaff2Checked = new HashMap<String, Integer>();
+		
+		try{
+			List<GenericValue> all_staffs = delegator.findList("Staff", 
+					null, 
+					null, 
+					null, 
+					null, 
+					false);
+			for(GenericValue gv: all_staffs){
+				mStaff2Checked.put((String)gv.get("staffId"), 0);
+			}
+			if(staffs != null){
+				for(GenericValue gv: staffs){
+					mStaff2Checked.put((String)gv.get("userLoginId"), 1);
+				}
+			}
+				
+			String json = "{\"staffs\":[";
+			for(int i = 0; i < all_staffs.size(); i++){
+				GenericValue gv = all_staffs.get(i);
+				json += "{\"staffId\":\"" + gv.get("staffId") + "\",\"staffName\":\"" + gv.get("staffName") + "\","
+						+ "\"checked\":" + mStaff2Checked.get((String)gv.get("staffId")) + "}";
+				if(i < all_staffs.size() - 1)
+					json += ",\n";
+			}
+				json += "]}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(json);
+			out.close();
+			//Debug.log(module + "::getStaffsOfASecurityGroup, RETURN JSON = " + json);
+			//Debug.log(module + "::getStaffsOfASecurityGroup, HAS staffs.sz = " + staffs.size());
+			//for(GenericValue gv: staffs){
+			//	Debug.log(module + "::getStaffsOfASecurityGroup, HAS staff " + (String)gv.get("userLoginId"));
+			//}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
 	public static void storeSecurityGroupFunctions(HttpServletRequest request,
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -186,6 +301,57 @@ public class BKEunivPermissionService {
 		}
 		
 	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void storeSecurityGroupUsers(HttpServletRequest request,
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String groupId = request.getParameter("groupId");
+		String staffs = request.getParameter("staffs");
+		Debug.log(module + "::storeSecurityGroupUsers, groupId = " + groupId + ", staffs = " + staffs);
+		String[] lst_staff_id = staffs.split(",");
+		
+		
+		
+		try{
+			List<GenericValue> all_staffs = delegator.findList("Staff", 
+					null, 
+					null, 
+					null, 
+					null, 
+					false);
+			
+			HashSet<String> U = new HashSet<String>();
+			for(GenericValue gv: all_staffs){
+				U.add((String)gv.get("staffId"));
+			}
+			
+			for(int i = 0; i < lst_staff_id.length; i++){
+				String staffId = lst_staff_id[i];
+				if(!groupUserEnabled(delegator, groupId, staffId)){
+					createGroupUser(delegator, groupId, staffId);
+				}
+				
+				U.remove(staffId);
+			}
+			for(String uId: U){
+				if(groupUserEnabled(delegator, groupId, uId)){
+					disableGroupUser(delegator, groupId, uId);
+				}
+			}
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write("{}");
+			out.close();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+		}
+		
+	}
+	
+	
 	@SuppressWarnings({ "unchecked" })
 	public static void addASecurityGroup(HttpServletRequest request,
 			HttpServletResponse response){
@@ -270,15 +436,18 @@ public class BKEunivPermissionService {
 		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
 		String userLoginId = (String)userLogin.get("userLoginId");
 		
-		EntityCondition cond = EntityCondition.makeCondition("userLoginId", EntityOperator.EQUALS, userLoginId);
+		List<EntityCondition> cond = FastList.newInstance();
+		cond.add(EntityCondition.makeCondition("userLoginId", EntityOperator.EQUALS, userLoginId));
+		cond.add(EntityCondition.makeCondition("thruDate", EntityOperator.EQUALS, null));
 		
 		Debug.log(module + "::getPermissionFunctions, userLoginId = " + userLoginId);
 		
 		try{
 			List<GenericValue> tmp_functions = new ArrayList<GenericValue>();
-			List<GenericValue> userLoginSecurityGroup = delegator.findList("UserLoginSecurityGroup", EntityCondition.makeCondition(cond), 
+			List<GenericValue> userLoginSecurityGroup = delegator.findList("UserLoginSecurityGroup", 
+					EntityCondition.makeCondition(cond), 
 					null, null, null, false);
-			Debug.log(module + "::getPermissionFunctions, groups.sz = " + userLoginSecurityGroup.size());
+			//Debug.log(module + "::getPermissionFunctions, groups.sz = " + userLoginSecurityGroup.size());
 			
 			HashSet<String> set_function_id = new HashSet<String>();
 			
