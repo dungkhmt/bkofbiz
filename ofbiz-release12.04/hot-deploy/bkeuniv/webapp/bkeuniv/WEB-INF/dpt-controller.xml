@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+
+	<!--<request-map uri="FindDepartment">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindDpt" />
+		<response name="error" type="view" value="FindDpt" />
+	</request-map>
+
+	<request-map uri="EditDepartment">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditDpt" />
+		<response name="error" type="view" value="EditDpt" />
+	</request-map>
+
+	<request-map uri="AddDepartment">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="CreateDpt" />
+		<response name="error" type="view" value="CreateDpt" />
+	</request-map>
+
+	<request-map uri="updateDepartment">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateDepartment" />
+		<response name="success" type="request-redirect" value="FindDepartment">
+		</response>
+		<response name="error" type="view" value="EditDpt" />
+	</request-map>
+
+	<request-map uri="createDepartment">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createDepartment" />
+		<response name="success" type="request-redirect-noparam"
+			value="AddDepartment" />
+		<response name="error" type="view" value="CreateDpt" />
+	</request-map>-->
+
+	<request-map uri="department-management">
+		<response name="success" type="view" value="DptAjax" />
+		<response name="error" type="view" value="DptAjax" />
+	</request-map>
+
+	<request-map uri="createDepartmentAjax">
+		<event type="service" invoke="createDepartment" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
+	<request-map uri="updateDepartmentAjax">
+		<event type="service" invoke="updateDepartment" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
+	<request-map uri="deleteDepartmentAjax">
+		<event type="service" invoke="deleteDepartment" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
+	<request-map uri="getDepartmentAjax">
+		<event type="service" invoke="getDepartmentAjax" />
+		<response name="success" type="request" value="toJson" />
+		<response name="error" type="request" value="toJson" />
+	</request-map>
+
+	<!--<view-map name="FindDpt" type="screen"
+		page="component://bkeuniv/widget/DptScreens.xml#FindDpt" />
+	<view-map name="EditDpt" type="screen"
+		page="component://bkeuniv/widget/DptScreens.xml#EditDpt" />
+	<view-map name="CreateDpt" type="screen"
+		page="component://bkeuniv/widget/DptScreens.xml#CreateDpt" />-->
+	<view-map name="DptAjax" type="screen"
+		page="component://bkeuniv/widget/DptScreens.xml#DptAjax" />
+</site-conf>

@@ -1,4 +1,6 @@
+
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+
 <body>
 <div class="body">
 

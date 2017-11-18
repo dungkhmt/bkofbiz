@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <PaperCategoryHourBudget paperCategoryId="JINT_Other" academicYearId="2016-2017" hour="900" budget="2000000" lastUpdatedStamp="2017-10-19 00:05:26.253" lastUpdatedTxStamp="2017-10-19 00:05:26.245" createdStamp="2017-10-19 00:05:26.253" createdTxStamp="2017-10-19 00:05:26.245"/>
+    <PaperCategoryHourBudget paperCategoryId="JINT_SCIE" academicYearId="2016-2017" hour="900" budget="2000000" lastUpdatedStamp="2017-10-19 00:05:26.248" lastUpdatedTxStamp="2017-10-19 00:05:26.245" createdStamp="2017-10-19 00:05:26.248" createdTxStamp="2017-10-19 00:05:26.245"/>
+    <PaperCategoryHourBudget paperCategoryId="JDOM_Other" academicYearId="2016-2017" hour="600" budget="1000000" lastUpdatedStamp="2017-10-19 00:05:26.25" lastUpdatedTxStamp="2017-10-19 00:05:26.245" createdStamp="2017-10-19 00:05:26.25" createdTxStamp="2017-10-19 00:05:26.245"/>
+    <PaperCategoryHourBudget paperCategoryId="CDOM_Other" academicYearId="2016-2017" hour="400" budget="1000000" lastUpdatedStamp="2017-10-19 00:05:26.252" lastUpdatedTxStamp="2017-10-19 00:05:26.245" createdStamp="2017-10-19 00:05:26.252" createdTxStamp="2017-10-19 00:05:26.245"/>
+    <PaperCategoryHourBudget paperCategoryId="CINT_Other" academicYearId="2016-2017" hour="600" budget="1000000" lastUpdatedStamp="2017-10-19 00:05:26.251" lastUpdatedTxStamp="2017-10-19 00:05:26.245" createdStamp="2017-10-19 00:05:26.251" createdTxStamp="2017-10-19 00:05:26.245"/>
+    <PaperCategoryHourBudget paperCategoryId="JINT_SCOPUS" academicYearId="2016-2017" hour="900" budget="2000000" lastUpdatedStamp="2017-10-19 00:05:26.255" lastUpdatedTxStamp="2017-10-19 00:05:26.245" createdStamp="2017-10-19 00:05:26.255" createdTxStamp="2017-10-19 00:05:26.245"/>
+    <PaperCategoryHourBudget paperCategoryId="JINT_SCI" academicYearId="2016-2017" hour="900" budget="2000000" lastUpdatedStamp="2017-10-19 00:03:47.922" lastUpdatedTxStamp="2017-10-19 00:03:47.919" createdStamp="2017-10-19 00:03:47.922" createdTxStamp="2017-10-19 00:03:47.919"/>
+</entity-engine-xml>

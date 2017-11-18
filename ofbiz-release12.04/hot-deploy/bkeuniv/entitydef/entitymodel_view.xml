@@ -1,13 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
-    <!-- ========================================================= -->
-    <!-- ======================== Defaults ======================= -->
-    <!-- ========================================================= -->
-    <title>Entity of BkEuniv Component</title>
-    <description>None</description>
-    <copyright></copyright>
-    <version></version>
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of BkEuniv Component</title>
 
-	
+	<view-entity entity-name="DepartmentDetail" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="Dpt" entity-name="Department" />
+		<member-entity entity-alias="Fcl" entity-name="Faculty" />
+		<alias-all entity-alias="Dpt"/>
+		<alias-all entity-alias="Fcl">
+			<exclude field="universityId" />
+		</alias-all>
+		<view-link entity-alias="Dpt" rel-entity-alias="Fcl">
+			<key-map field-name="facultyId" />
+		</view-link>
+	</view-entity>
+
+	<view-entity entity-name="FacultyDetail" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="Fcl" entity-name="Faculty" />
+		<member-entity entity-alias="Univ" entity-name="University" />
+		<alias-all entity-alias="Fcl"/>
+		<alias-all entity-alias="Univ" />
+		<view-link entity-alias="Fcl" rel-entity-alias="Univ">
+			<key-map field-name="universityId" />
+		</view-link>
+	</view-entity>
+
+	<view-entity entity-name="PaperFacultyView" package-name="PaperDeclaration">
+		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="D" entity-name="Department"></member-entity>
+		<member-entity entity-alias="F" entity-name="Faculty"></member-entity>
+		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
+		
+		<alias-all entity-alias="PD"></alias-all>
+		<alias name="statusStaffPaper" entity-alias="SPD" field="statusId"></alias>
+		<alias name="facultyId" entity-alias="F"></alias>
+		
+		 
+		<view-link rel-entity-alias="SPD" entity-alias="PD">
+			<key-map rel-field-name="paperId" field-name="paperId"/>
+		</view-link>
+		<view-link rel-entity-alias="ST" entity-alias="SPD">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="D" entity-alias="ST">
+			<key-map rel-field-name="departmentId" field-name="departmentId"/>
+		</view-link>
+		<view-link rel-entity-alias="F" entity-alias="D">
+			<key-map rel-field-name="facultyId" field-name="facultyId"/>
+		</view-link>
+		
+		
+		
+	</view-entity>
 </entitymodel>

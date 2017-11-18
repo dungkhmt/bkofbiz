@@ -2,6 +2,82 @@
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
+	<screen name="pageEnableSecurityGroupFunction">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<service service-name="getListSecurityGroups" result-map="securityGroup"></service>
+				<service service-name="getListFunctions" result-map="resultFunctions"> </service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/permission/enable-security-group-function.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageCreateSecurityGroup">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<service service-name="getListSecurityGroups" result-map="result"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/permission/create-security-group.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageFormCreateSecurityGroup">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPermissionUiLabels" map-name="bkEunivPermissionUiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/permission/form-create-security-group.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
 	<screen name="pageTestService">
 		<section>
 			<widgets>
@@ -180,12 +256,86 @@
 			</widgets>
 		</section>
 	</screen>
+
+	<screen name="award">
+		<section>
+			<actions>
+				<property-map resource="BkEunivAwardUiLabels" map-name="uiAwardLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
 	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/award/award.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="patentStaff">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPatentUiLabels" map-name="uiPatentLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/patentstaff/patent.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="appliedResearchProject">
+		<section>
+			<actions>
+				<property-map resource="BkEunivAppliedRP" map-name="uiApplied" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/appliedresearchproject/applied.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="educationProgress">
 		<section>
 			<actions>
 				<entity-condition list="listStaffs" entity-name="EducationProgress"></entity-condition>
 				<property-map resource="BkEunivEducationProgressUiLabels" map-name="educationProgressUiLabelMap" global="true"/>
+				<set field="title" value="BkEunivEducationProgress"/>
+				
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -211,6 +361,7 @@
 			<actions>
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
 				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListAcademicYears" result-map="result"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -231,6 +382,85 @@
 		</section>
 	</screen>
 	
+	<screen name="summaryPaperDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<service service-name="getPaperDeclarations" result-map="resultPapers"></service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/summary-paper-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="paperViewResearchSummaryExcel">
+		<section>
+			<actions>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/researchdeclarationsummary/summary-excel.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageProjectDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProjectDeclarationUiLabels" map-name="projectDeclarationUiLabelMap" global="true"/>
+				<service service-name="getProjectCategory" result-map="projectCategory"></service>
+				<service service-name="getProjectStatus" result-map="projectStatus"></service>
+				<service service-name="getProjectParticipationRole" result-map="projectParticipationRole"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+
 	<screen name="profilePDF">
 		<section>
 			<actions>
@@ -265,11 +495,31 @@
 						</section>
 					</decorator-section>
 				</decorator-screen>
-
-
 			</widgets>
 		</section>
 	</screen>
+	
+	<screen name="pageWorkProgress">
+		<section>
+			<actions>
+				<property-map resource="BkEunivWorkProgressUiLabels" map-name="workProgressUiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
 
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/workprogress/workprogress.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
 
 </screens>

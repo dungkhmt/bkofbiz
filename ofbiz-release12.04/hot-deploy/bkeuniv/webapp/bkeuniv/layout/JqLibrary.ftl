@@ -1,6 +1,5 @@
 <#macro jqMinimumLib >
 	<!-- import jqMinimumLib lib css-->
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.default.min.css">
@@ -10,7 +9,6 @@
 	<link rel="stylesheet" href="/resource/bkeuniv/css/template-modal.css">
 
 	<!-- import jqMinimumLib lib js -->
-	<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
 	<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery-ui.min.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery.ui-contextmenu.min.js"></script>
@@ -18,7 +16,7 @@
 	<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
 	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/dataTables.bootstrap.min.js"></script>
+	
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
 
@@ -93,7 +91,7 @@
 			bottom: 0;
 			left: 2%;
 			right: 2%;
-			
+			padding: 1em;
 			position: absolute;
 		}
 		
@@ -169,7 +167,32 @@
 		    text-align: center;
 		    border: 1px solid #68b2e3;
 		}
-		
+		#jqDataTable-button-update{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #53a7df;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
+		#jqDataTable-button-remove{
+		    position: relative;
+		    width: 70px;
+		    padding: 6px;
+		    border-radius: 5px;
+		    box-shadow: 0 1px 1px rgba(255,255,255,.37), 1px 0 1px rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.36), 0 -2px 12px rgba(0,0,0,.08);
+		    cursor: pointer;
+		    margin: 10px 0px;
+		    background-color: #FF0000;
+		    color: #fff;
+		    text-align: center;
+		    border: 1px solid #68b2e3;
+		}
 		#jqDataTable-button-add:hover {
 			background-color: #3d9cdb;
 		}
@@ -193,13 +216,18 @@
 	</style>
 	<script type="text/javascript">
 		var jqDataTable = new Object();
-		jqDataTable.columns = [];
+		jqDataTable.columns = [
+			{
+				name: "STT",
+				data: "index"
+			}
+		];
 		<#assign index=0 />
 		<#list columns as column>
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
-				value: '${column.data}'
+				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
@@ -210,19 +238,35 @@
 			    type: 'post',
 			    dataType: "json",
 			    success: function(data) {
-			    	jqDataTable.data = data.${fieldDataResult}.map(function(d) {
+			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>
 				    		r.${field} = d.${field}||"";
-				    	</#list>	    		
+				    	</#list>		
 				    	return r;
 			    	})
 			    	
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
-					columns: <@pfArray array=columns />,
+					columns: jqDataTable.columns,
 					"columnDefs": [
-					<#assign index = 0 />
+					{
+						"targets": 0,
+						"render": function ( data, type, row, meta ) {
+							
+							var row = meta.row;
+							if( Object.prototype.toString.call( row ) === '[object Array]' ) {
+								if(row.length > 0) {
+									return row[0] + 1
+								} else {
+									return jqDataTable.data.length
+								}
+							}
+							
+							return meta.row + 1;					      
+					    }
+					},
+					<#assign index = 1 />
 					<#list columns as column>
 						<#assign c = {} />
 						
@@ -241,7 +285,7 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
-					"scrollY": ${sizeTable}- $(".jqDataTable-title").innerHeight() - 165,
+					"scrollY": ${sizeTable} - 220,
 					"scrollCollapse": true,
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
@@ -391,17 +435,13 @@
 	</script>
 	<!-- html -->
 	<div id="${id}">
-		<div class="jqDataTable-title">
-			<a href="#" class="jqDataTable-title-hyperlink">
-				${jqTitle}
-			</a>
-		</div>
 		<div id="jqDataTable-button-add" onClick="jqNew()">
 			${uiLabelMap.BkEunivAdd}
 		</div>
 		
-		<table id="${id}-content" class="table table-striped table-bordered">
+		<table id="${id}-content" class="table table-striped">
 			<thead>
+				<td>STT</td>
 				<#list columns as column>
 					<td>${column.name}</td>
 				</#list>

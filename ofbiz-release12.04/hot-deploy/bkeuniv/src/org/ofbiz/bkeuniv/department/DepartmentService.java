@@ -22,7 +22,7 @@ public class DepartmentService {
 	public static String name(){
 		return "DepartmentService";
 	}
-	
+
 	public static Map<String, Object> getDepartments(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();

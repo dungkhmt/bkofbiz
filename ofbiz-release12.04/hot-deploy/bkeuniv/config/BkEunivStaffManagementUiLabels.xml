@@ -9,6 +9,14 @@
         <value xml:lang="en">Staff ID</value>
         <value xml:lang="vi">ID cán bộ</value>
     </property>
+    <property key="BkEunivStaffPassword">
+        <value xml:lang="en">Password</value>
+        <value xml:lang="vi">Mật khẩu</value>
+    </property>
+    <property key="BkEunivStaffPermissionGroup">
+        <value xml:lang="en">Permission Group</value>
+        <value xml:lang="vi">Nhóm quyền</value>
+    </property>
     
     <property key="BkEunivFullName">
         <value xml:lang="en">Full name</value>

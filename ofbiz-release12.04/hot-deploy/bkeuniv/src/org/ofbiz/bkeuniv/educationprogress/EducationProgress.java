@@ -35,6 +35,7 @@ public class EducationProgress {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		Locale locale = UtilHttp.getLocale(request);
+		
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
 		System.out.println("EducationProgress::createEducatinoProgressRequestResponse, Staff = " + staff.get("staffEmail"));
@@ -125,7 +126,9 @@ public class EducationProgress {
 
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
-		String staffId = (String) context.get("staffId");
+		//String staffId = (String) context.get("staffId");
+		String staffId = (String)userLogin.get("userLoginId");
+		
 		String educationType = (String) context.get("educationType");
 		String institution = (String) context.get("institution");
 		String speciality = (String) context.get("speciality");

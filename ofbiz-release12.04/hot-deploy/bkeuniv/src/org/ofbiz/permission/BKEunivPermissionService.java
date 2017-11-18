@@ -1,10 +1,14 @@
 package src.org.ofbiz.permission;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -19,6 +23,99 @@ import org.ofbiz.entity.GenericValue;
 public class BKEunivPermissionService {
 	public static String module = BKEunivPermissionService.class.getName();
 	
+	public static Map<String, Object> updateSecurityGroupFunction(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			List<Object> functions = (List<Object>)context.get("functions[]");
+			String groupId = (String)context.get("groupId");
+			Debug.logInfo("groupId = " + groupId, module);
+			for(Object o: functions){
+				Debug.logInfo((String)o, module);
+			}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		retSucc.put("message", "OK");
+		return retSucc;
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public static void addASecurityGroup(HttpServletRequest request,
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String groupId = request.getParameter("groupId");
+		String description = request.getParameter("description");
+		Debug.log(module + "::addASecurityGroup, groupId = " + groupId + ", description = " + description);
+		try{
+			GenericValue gv = delegator.makeValue("SecurityGroup");
+			gv.put("groupId", groupId);
+			gv.put("description", description);
+			delegator.create(gv);
+		
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write("{}");
+			out.close();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+		}
+		
+	}
+	public static Map<String, Object> getListSecurityGroups(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			Delegator delegator = ctx.getDelegator();
+			List<GenericValue> securityGroups = delegator.findList("SecurityGroup", 
+					null, 
+					null, 
+					null, 
+					null, 
+					false);
+			
+			retSucc.put("securityGroups", securityGroups);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+	public static Map<String, Object> getListFunctions(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			Delegator delegator = ctx.getDelegator();
+			List<GenericValue> functions = delegator.findList("Function", 
+					null, 
+					null, 
+					null, 
+					null, 
+					false);
+			Debug.logInfo("functions.sz = " + functions.size(), module);
+			retSucc.put("functions", functions);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+
+	public static List<GenericValue> sort(List<GenericValue> L){
+		GenericValue[] a = new GenericValue[L.size()];
+		for(int i = 0; i < a.length; i++) a[i] = L.get(i);
+		for(int i = 0; i < a.length - 1; i++)
+			for(int j = i+1; j < a.length; j++)
+				if((long)a[i].get("index") > (long)a[j].get("index")){
+					GenericValue tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+				}
+		List<GenericValue> sL = new ArrayList<GenericValue>();
+		for(int i = 0; i < a.length; i++) sL.add(a[i]);
+		return sL;
+	}
 	public static Map<String, Object> getPermissionFunctions(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -78,6 +175,7 @@ public class BKEunivPermissionService {
 					
 				}
 			}
+			parent_functions = sort(parent_functions);
 			
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
@@ -92,7 +190,7 @@ public class BKEunivPermissionService {
 			for(GenericValue f: parent_functions){
 				Map<String, Object> o = new HashMap<String, Object>();
 				o.put("function", f);
-				o.put("children", mFunction2ChildrenFunctions.get(f));
+				o.put("children", sort(mFunction2ChildrenFunctions.get(f)));
 				functions.add(o);
 			}
 			

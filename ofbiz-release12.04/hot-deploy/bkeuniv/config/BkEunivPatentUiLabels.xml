@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<property key="BkEunivPatent">
+        <value xml:lang="en">Patent</value>
+        <value xml:lang="vi">Quản lý bằng sáng chế</value>
+    </property>
+
+    <property key="BkEunivPatentId">
+        <value xml:lang="en">Patent ID</value>
+        <value xml:lang="vi">Mã bằng sáng chế</value>
+    </property>
+    
+    <property key="BkEunivPatentName">
+        <value xml:lang="en">Patent Name</value>
+        <value xml:lang="vi">Tên bằng sáng chế</value>
+    </property>
+    
+     <property key="BkEunivStaffId">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">Mã nhân viên</value>
+    </property>
+    
+     <property key="BkEunivYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="vi">Năm</value>
+    </property>
+    
+    <property key="BkEunivAddPatent">
+        <value xml:lang="en">Add a new Patent</value>
+        <value xml:lang="vi">Thêm mới bằng sáng chế</value>
+    </property>
+    
+    <property key="BkEunivEditPatent">
+        <value xml:lang="en">Edit a Patent</value>
+        <value xml:lang="vi">Chỉnh sửa bằng sáng chế</value>
+    </property>
+    
+    <property key="BkEunivDeletePatent">
+        <value xml:lang="en">Delete a Patent</value>
+        <value xml:lang="vi">Xóa bằng sáng chế?</value>
+    </property>
+</resource>
