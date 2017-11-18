@@ -91,7 +91,6 @@
         </section>
     </screen>
     
-    <!-- fo decorator for pdf documents (invoices, sales orders, purchase orders etc...). -->
     <screen name="FoReportDecorator">
         <section>
             <actions>
@@ -100,11 +99,10 @@
             <widgets>
                 <platform-specific>
                 	<xsl-fo>
-                		<html-template location="component://bkeuniv/webapp/bkeuniv/dowloadpdf/reportTemplate.fo.ftl"/>
+                		<html-template location="component://bkeuniv/webapp/bkeuniv/exportPDF/reportTemplate.fo.ftl"/>
                 	</xsl-fo>
                 </platform-specific>
             </widgets>
         </section>
     </screen>
-    
 </screens>

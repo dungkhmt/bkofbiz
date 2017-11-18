@@ -434,6 +434,7 @@
 			</widgets>
 		</section>
 	</screen>
+	
 	<screen name="summaryPaperDeclaration">
 		<section>
 			<actions>
@@ -511,28 +512,42 @@
 			</widgets>
 		</section>
 	</screen>
-	
-	<screen name="pageDowloadPDF">
+
+
+	<screen name="profilePDF">
 		<section>
 			<actions>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
 			</actions>
 			<widgets>
 				<decorator-screen name="FoReportDecorator"
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<!-- at the top left of every page we put the logo and company information -->
-					
+					<decorator-section name="title">
+						<section>
+							<widgets>
+								<platform-specific>
+									<xsl-fo>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/exportPDF/profileTitle.fo.ftl" />
+									</xsl-fo>
+								</platform-specific>
+							</widgets>
+						</section>
+					</decorator-section>
 					<decorator-section name="body">
-					
-						<platform-specific>
-							<html>
-								<html-template
-									location="component://bkeuniv/webapp/bkeuniv/dowloadpdf/dowload-pdf.ftl" />
-							</html>
-						</platform-specific>
-
+						<section>
+							<widgets>
+								<platform-specific>
+									<xsl-fo>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/exportPDF/profileScience.fo.ftl" />
+									</xsl-fo>
+								</platform-specific>
+							</widgets>
+						</section>
 					</decorator-section>
 				</decorator-screen>
-
 			</widgets>
 		</section>
 	</screen>
@@ -556,7 +571,6 @@
 
 					</decorator-section>
 				</decorator-screen>
-
 			</widgets>
 		</section>
 	</screen>
