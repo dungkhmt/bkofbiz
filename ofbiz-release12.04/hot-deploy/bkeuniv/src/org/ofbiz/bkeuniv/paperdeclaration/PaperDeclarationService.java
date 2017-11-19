@@ -612,13 +612,15 @@ public class PaperDeclarationService {
 	public static Map<String, Object> getPapersOfStaff(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
-		// String staffId = (String)context.get("authorStaffId");
+		String authoStaffId = (String)context.get("authorStaffId");
 
 		Map<String, Object> userLogin = (Map<String, Object>) context
 				.get("userLogin");
 		// String userLoginId =
 		// (String)context.get("userId");//(String)userLogin.get("userLoginId");
-		String staffId = (String) userLogin.get("userLoginId");
+		String staffId = authoStaffId;
+		if(staffId == null)
+			staffId = (String) userLogin.get("userLoginId");
 
 		Debug.log(module + "::getPapersOfStaff, authorStaffId = " + staffId);
 		Delegator delegator = ctx.getDelegator();
@@ -669,7 +671,8 @@ public class PaperDeclarationService {
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
-			List<GenericValue> papers = delegator.findList("PapersStaffView",
+			//List<GenericValue> papers = delegator.findList("PapersStaffView",
+			List<GenericValue> papers = delegator.findList("PaperView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			for (GenericValue gv : papers) {
@@ -870,7 +873,7 @@ public class PaperDeclarationService {
 			academicYearId = (String) (academicYearIds.get(0));
 
 		Debug.log(module + "::updatePaper, authorStaffId = " + staffId
-				+ ", paperId = " + paperId);
+				+ ", paperId = " + paperId + ", paperCategoryId = " + paperCategoryId + ", month = " + month + ", year = " + year);
 		Delegator delegator = ctx.getDelegator();
 
 		try {

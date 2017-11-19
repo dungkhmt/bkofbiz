@@ -518,6 +518,10 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<!-- 
+				<service service-name="getEducationProgressOfLoginStaff" result-map="educationProgress"></service>
+				 -->
+				 <service service-name="getCVProfileOfStaff" result-map="resultCV"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="FoReportDecorator"

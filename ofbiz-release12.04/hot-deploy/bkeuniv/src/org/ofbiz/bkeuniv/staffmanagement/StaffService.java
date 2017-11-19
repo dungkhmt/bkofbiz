@@ -123,15 +123,71 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+	public static Map<String, Object> getCVProfileOfStaff(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String)userLogin.get("userLoginId");
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		
+		try{
+			Map<String, Object> cv = FastMap.newInstance();
+			
+			// get general info of staff
+			Map<String, Object> param = FastMap.newInstance();
+			param.put("staffId", staffId);
+			Map<String, Object> result_staff = dispatcher.runSync("getStaffInfo", param);
+			cv.put("info", result_staff.get("staff"));
+			
+			// get Education Progress
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_ep = dispatcher.runSync("getEducationProgress", param);
+			cv.put("educationProgress", result_ep.get("educationProgress"));
+			
+			// get papers
+			param.clear();
+			param.put("authorStaffId", staffId);
+			Map<String, Object> result_papers = dispatcher.runSync("getPapersOfStaff", param);
+			cv.put("papers", result_papers.get("papers"));
+			
+			// get patents
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_patent = dispatcher.runSync("getPatent", param);
+			cv.put("patents", result_patent.get("patent"));
+			
+			// get applied projects
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_projects = dispatcher.runSync("getAppliedProjects", param);
+			cv.put("projects", result_projects.get("projects"));
+			
+			// get awards
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_awards = dispatcher.runSync("getAward", param);
+			cv.put("awards", result_awards.get("award"));
+			
+			
+			retSucc.put("cv", cv);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 	public static Map<String, Object> getStaffInfo(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
-		//String staffId = (String)context.get("authorStaffId");
 		
 		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
-		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
-		String staffId = (String)userLogin.get("userLoginId");
 		
-		Debug.log(module + "::getStaffInfo, authorStaffId = " + staffId);
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.get("userLoginId");
+		
+		Debug.log(module + "::getStaffInfo, staffId = " + staffId);
 		Delegator delegator = ctx.getDelegator();
 		try{
 			List<EntityCondition> conds = FastList.newInstance();

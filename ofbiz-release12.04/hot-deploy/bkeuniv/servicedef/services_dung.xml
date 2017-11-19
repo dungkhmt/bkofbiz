@@ -34,6 +34,7 @@
     </service>
     <service name="getStaffInfo" engine="java" 
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
     	<attribute name="staff" mode="OUT" type="Map"></attribute>
     	<attribute name="departments" mode="OUT" type="List"></attribute>
     	<attribute name="faculties" mode="OUT" type="List"></attribute>

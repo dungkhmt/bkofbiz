@@ -91,7 +91,10 @@ public class EducationProgress {
 				}
 			}
 			
-			List<GenericValue> list = delegator.findList("EducationProgress", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
+			List<GenericValue> list = delegator.findList("EducationProgress", 
+					EntityCondition.makeCondition(conditions), 
+					null, null, 
+					findOptions, false);
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 			
 			List<Map> listEducationProgress = FastList.newInstance();
@@ -109,7 +112,38 @@ public class EducationProgress {
 			return result;
 		
 		} catch (Exception e) {
-			System.out.print("Education Progress Error");
+			e.printStackTrace();
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+	}
+	public static Map<String, Object> getEducationProgressOfLoginStaff(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String userLoginId = (String)userLogin.get("userLoginId");
+		
+		
+		
+		Debug.log(module + "::getEducationProgress, userLoginId = " + userLoginId);
+		
+		
+		try {
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,userLoginId));
+			List<GenericValue> list = delegator.findList("EducationProgress", 
+					EntityCondition.makeCondition(conditions), 
+					null, null, 
+					null, false);
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			
+			result.put("educationProgress", list);
+			return result;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}

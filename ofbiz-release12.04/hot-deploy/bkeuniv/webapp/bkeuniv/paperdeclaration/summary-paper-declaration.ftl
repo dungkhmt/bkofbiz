@@ -11,16 +11,54 @@
 		<thead>
 			<tr>
 				<th>${paperDeclarationUiLabelMap.BkEunivStaffId}</th>
+				<th>Tac gia</th>
 				<th>${paperDeclarationUiLabelMap.BkEunivPaperName}</th>
 				<th>${paperDeclarationUiLabelMap.BkEunivPaperCategory}</th>
+				<th>Ten hoi nghi, tap chi</th>
+				<th>Nam</th>
+				<th>Vol. number</th>
+				<th>ISSN</th>
+				<th>Nam ke khai</th>
 			</tr>
 		</thead>
 	<tbody>
 	<#list resultPapers.papers as p>
 		<tr>
 			<td>${p.staffName}</td>
-			<td>${p.paperName}</td>
-			<td>${p.categoryName}</td>
+			<#if p.authors?exists>
+				<td>${p.authors}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<#if p.paperName?exists>
+				<td>${p.paperName}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<#if p.paperCategoryName?exists>
+				<td>${p.paperCategoryName}</td>
+			<#else>
+				<td></td>
+			</#if>
+			
+			<#if p.journalConferenceName?exists>
+				<td>${p.journalConferenceName}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<td>${p.year}</td>
+			<#if p.volumn?exists>
+				<td>${p.volumn}</td>
+			<#else>
+				<td></td>
+			</#if>
+			
+			<#if p.ISSN?exists>
+				<td>${p.ISSN}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<td>${p.academicYearId}</td>
 		</tr>
 	</#list>
 	</tbody>

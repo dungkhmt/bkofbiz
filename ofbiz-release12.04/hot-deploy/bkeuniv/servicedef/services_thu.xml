@@ -27,6 +27,12 @@
 		<attribute name="project" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getAppliedProjects" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="getAppliedProjects">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projects" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="createPatent" engine="java" 
     		location="src.org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="createPatent">
     	<attribute name="patentName" mode="IN" type="String" optional="true"></attribute>

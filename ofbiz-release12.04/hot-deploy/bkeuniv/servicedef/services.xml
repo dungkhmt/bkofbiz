@@ -126,6 +126,20 @@
     	<attribute name="graduateDate" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
     </service>
+
+    <service name="getEducationProgressOfLoginStaff" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="getEducationProgressOfLoginStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
+    </service>
+    
+    
+    <service name="getCVProfileOfStaff" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getCVProfileOfStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="cv" mode="OUT" type="Map"></attribute>
+    </service>
+    
     
     <service name="createEducationProgress" engine="java" 
     		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="createEducationProgress">
@@ -171,9 +185,9 @@
     
     <service name="getPapersOfStaff" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
-		<!-- 
-		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
-		 -->
+		
+		<attribute name="authorStaffId" mode="IN" type="String" optional="true"></attribute>
+		
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
 
