@@ -36,7 +36,10 @@ public class WorkProgress {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
 		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
-		String staffId = (String)userLogin.get("userLoginId");
+		
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+				staffId = (String)userLogin.get("userLoginId");
 		
 		Delegator delegator = ctx.getDelegator();
 		try{

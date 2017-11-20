@@ -168,6 +168,11 @@ public class StaffService {
 			Map<String, Object> result_awards = dispatcher.runSync("getAward", param);
 			cv.put("awards", result_awards.get("award"));
 			
+			// get work progress
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_wp = dispatcher.runSync("getWorkProgress", param);
+			cv.put("workProgress", result_wp.get("workProgress"));
 			
 			retSucc.put("cv", cv);
 			
