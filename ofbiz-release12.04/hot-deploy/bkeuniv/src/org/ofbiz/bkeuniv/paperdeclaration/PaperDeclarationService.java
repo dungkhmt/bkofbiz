@@ -877,6 +877,16 @@ public class PaperDeclarationService {
 		Delegator delegator = ctx.getDelegator();
 
 		try {
+			List<GenericValue> cat = delegator.findList("PaperCategory",
+					null, null, null, null, false);
+			String paperCategoryName = "";
+			for(GenericValue c: cat){
+				String pc = (String)c.get("paperCategoryId"); 
+				if(pc.equals(paperCategoryId)){
+					paperCategoryName = (String)c.get("paperCategoryName");
+				}
+			}
+			
 			List<GenericValue> papers = delegator.findList("PaperDeclaration",
 					EntityCondition.makeCondition(EntityCondition
 							.makeCondition("paperId", EntityOperator.EQUALS,
@@ -886,6 +896,7 @@ public class PaperDeclarationService {
 						+ gv.get("paperName") + ", new Name = " + paperName + ", category = " + paperCategoryId);
 			}
 			GenericValue p = papers.get(0);
+			
 			if(paperName != null && !paperName.equals(""))
 				p.put("paperName", paperName);
 			if(paperCategoryId != null && !paperCategoryId.equals(""))
@@ -909,9 +920,34 @@ public class PaperDeclarationService {
 			if(academicYearId != null && !academicYearId.equals(""))
 				p.put("academicYearId", academicYearId);
 
+			
+			
 			delegator.store(p);
 
-			retSucc.put("papers", p);
+			/*
+			Map<String, Object> ret_paper = FastMap.newInstance();
+			ret_paper.put("paperName", p.get("paperName"));
+			ret_paper.put("paperCategoryId", p.get("paperCategoryId"));
+			ret_paper.put("journalConferenceName", p.get("journalConferenceName"));
+			ret_paper.put("volumn", p.get("volumn"));
+			ret_paper.put("year", p.get("year"));
+			ret_paper.put("month", p.get("month"));
+			ret_paper.put("ISSN", p.get("ISSN"));
+			ret_paper.put("authors", p.get("authors"));
+			ret_paper.put("academicYearId", p.get("academicYearId"));
+'			ret_paper.put("paperCategoryName", paperCategoryName);
+			*/
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId", EntityOperator.EQUALS,p.get("paperId")));
+			List<GenericValue> ret_paper = delegator.findList("PaperView",
+					EntityCondition.makeCondition(conds),
+					null, null, null, false
+					);
+			
+			
+			retSucc.put("papers", ret_paper.get(0));
+			
 			retSucc.put("message", "Update Row Success");
 
 			Debug.log(module + "::updatePaper FINISHED");

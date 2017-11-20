@@ -12,7 +12,13 @@ modal.prototype._getText = function (selector) {
 }
 
 modal.prototype._getSelect = function (selector) {
-    return $([this.id,selector].join(" ")).val();
+	var _data_select = ($([this.id,selector].join(" ")).val());
+	
+	if(typeof _data_select == "string") {
+		_data_select = [_data_select];
+	}
+	
+    return _data_select;
 }
 
 modal.prototype._date = function(value, edit, id){
@@ -141,12 +147,15 @@ modal.prototype._updateDefault = function(data, message) {
 		var element = table.rows().indexes().data()[elementIndex];
 		
 		if(!!element&&(typeof element == "object")) {
-			element = Object.assign(element, data)
-			// Object.keys(element).forEach(function(key, index){
-			// 		element[key] = data[key];
-			// })
+			//element = Object.assign(data, element)
+			 Object.keys(element).forEach(function(key, index){
+				 if(data.hasOwnProperty(key)) {
+					 element[key] = data[key]
+				 }
+			 		
+			 })
 			
-			table.row(elementIndex).data(element);
+			table.row(elementIndex).data(element).draw();
 			$([_.id, "#modal-template"].join(" ")).modal('hide');
 
 	    	setTimeout(function() {
