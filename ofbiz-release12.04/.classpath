@@ -26,7 +26,6 @@
 	<classpathentry kind="lib" path="framework/base/lib/clhm-release-1.0-lru.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/hamcrest-all-1.2.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/fop-1.0.jar"/>
-	<classpathentry kind="lib" path="framework/base/lib/freemarker-2.3.19.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpclient-4.1.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpclient-cache-4.1.1.jar"/>
 	<classpathentry kind="lib" path="framework/base/lib/httpcore-4.1.jar"/>
@@ -218,5 +217,6 @@
 	<classpathentry kind="src" path="specialpurpose/webpos/src"/>
 	<classpathentry kind="src" path="specialpurpose/workflow/src"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="lib" path="framework/base/lib/freemarker-2.3.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -8,6 +8,7 @@
     <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/dpt-controller.xml"/>
     <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/faculty-controller.xml"/>
 	<include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/controller_permission.xml"/>
+	<include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/test-controller.xml"/>
 
     <description>BkEuniv Component Site Configuration File</description>
 	
