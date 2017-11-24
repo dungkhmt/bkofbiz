@@ -92,7 +92,7 @@
 			left: 2%;
 			right: 2%;
 			padding: 1em;
-			position: absolute;
+			<#--  position: absolute;  -->
 		}
 		
 		#${id} .jqDataTable-title {

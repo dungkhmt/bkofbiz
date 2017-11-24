@@ -1,3 +1,22 @@
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+
+<@SideBar open=true handleToggle="sideBar">
+	<@List>
+		<@ListItem primaryText=uiLabelMap.BkEunivHomePage leftIcon="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z">
+		<@ListItem primaryText="Test" level=1 linkTo="main"/>
+		<@ListItem primaryText="Test" level=1/>
+		<@ListItem primaryText="Test" level=1/>
+		<@ListItem primaryText="Test" level=1/>
+		</@ListItem>
+		<@ListItem primaryText="Menu2">
+			<@ListItem primaryText="Test" level=1/>
+		</@ListItem>
+	</@List>
+</@SideBar>
+
+
+
+<#--  
 <div class="side-bar hide-side-bar">
 
 	<button class="closeSideBar" onClick="closeSideBar()">
@@ -97,4 +116,4 @@
 			]
 		}
 	</script>
-</div>
+</div>  -->
