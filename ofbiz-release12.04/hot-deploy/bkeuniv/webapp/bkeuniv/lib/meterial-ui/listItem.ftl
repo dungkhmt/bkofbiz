@@ -30,7 +30,7 @@
 	
 	</#if>
 
-	<#if rightIcon!="">
+	<#if leftIcon!="">
 		<#local paddingLeft = paddingLeft + 56/>
 	<#else>
 	
