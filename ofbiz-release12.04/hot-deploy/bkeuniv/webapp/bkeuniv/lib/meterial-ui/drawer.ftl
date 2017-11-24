@@ -43,45 +43,45 @@
 	</#if>
 
 	<div id="${idDrawer}">
-		<div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; border-radius: 0px; height: 100%; width: ${width}; position: fixed; z-index: 1300; top: 0px; overflow: auto; ${openEl} ${style}">
+		<div id="content-${code}" style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; border-radius: 0px; height: 100%; width: ${width}; position: fixed; z-index: 1300; top: 0px; overflow: auto; ${openEl} ${style}">
 			<#nested>
 		</div>
 
 		<#if !docked>
-			<div style="position: fixed; height: 100%; width: 100%; top: 0px; <#if open>left: 0px; opacity: 1;<#else>left: -100%; opacity: 0;</#if> background-color: rgba(0, 0, 0, 0.54); -webkit-tap-highlight-color: rgba(0, 0, 0, 0); will-change: opacity; transform: translateZ(0px); transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; z-index: 1200; pointer-events: auto;">
+			<div id="docked-${code}" style="position: fixed; height: 100%; width: 100%; top: 0px; <#if open>left: 0px; opacity: 1;<#else>left: -100%; opacity: 0;</#if> background-color: rgba(0, 0, 0, 0.54); -webkit-tap-highlight-color: rgba(0, 0, 0, 0); will-change: opacity; transform: translateZ(0px); transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; z-index: 1200; pointer-events: auto;">
 			</div>
 		</#if>
-	</div>
-	<script>
 		<#if handleToggle!="">
-			${handleToggle} = {
-				isOpen: ${open?string},
-				open: function() {
-					if(!this.isOpen) {
-						document.getElementById("${idDrawer}").firstElementChild.style.transform = "${transformOpen}";
-						<#if !docked>
-							document.getElementById("${idDrawer}").lastElementChild.style.left = "0px";
-							document.getElementById("${idDrawer}").lastElementChild.style.opacity = "1";
-						</#if>
+			<script>
+				${handleToggle} = {
+					isOpen: ${open?string},
+					open: function() {
+						if(!this.isOpen) {
+							document.getElementById("content-${code}").style.transform = "${transformOpen}";
+							<#if !docked>
+								document.getElementById("docked-${code}").style.left = "0px";
+								document.getElementById("docked-${code}").style.opacity = "1";
+							</#if>
+						}
+						this.isOpen = true;
+					},
+					close: function() {
+						if(this.isOpen) {
+							document.getElementById("content-${code}").style.transform = "${transformClose}";
+							<#if !docked>
+								document.getElementById("docked-${code}").style.left = "-100%";
+								document.getElementById("docked-${code}").style.opacity = "0";
+							</#if>
+						}
+						this.isOpen = false;
 					}
-					this.isOpen = true;
-				},
-				close: function() {
-					if(this.isOpen) {
-						document.getElementById("${idDrawer}").firstElementChild.style.transform = "${transformClose}";
-						<#if !docked>
-							document.getElementById("${idDrawer}").lastElementChild.style.left = "-100%";
-							document.getElementById("${idDrawer}").lastElementChild.style.opacity = "0";
-						</#if>
-					}
-					this.isOpen = false;
 				}
-			}
+				<#if !docked>
+					document.getElementById("docked-${code}").addEventListener("click", function(e) {
+						${handleToggle}.close();
+					})
+				</#if>
+			</script>
 		</#if>
-		<#if !docked>
-			document.getElementById("${idDrawer}").lastElementChild.addEventListener("click", function(e) {
-				${handleToggle}.close();
-			})
-		</#if>
-	</script>
+	</div>
 </#macro>
