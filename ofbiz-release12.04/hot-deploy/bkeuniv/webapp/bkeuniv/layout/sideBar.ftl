@@ -2,19 +2,20 @@
 
 <@SideBar open=true handleToggle="sideBar">
 	<@List>
-		<@ListItem primaryText=uiLabelMap.BkEunivHomePage leftIcon="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z">
-		<@ListItem primaryText="Test" level=1 linkTo="main"/>
-		<@ListItem primaryText="Test" level=1/>
-		<@ListItem primaryText="Test" level=1/>
-		<@ListItem primaryText="Test" level=1/>
-		</@ListItem>
-		<@ListItem primaryText="Menu2">
-			<@ListItem primaryText="Test" level=1/>
-		</@ListItem>
+		<@ListItem primaryText=uiLabelMap.BkEunivHomePage leftIcon="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" linkTo="main" />
+		<@ListItem primaryText=uiLabelMap.BkEunivPersonalInformation linkTo="main"leftIcon="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" linkTo="user"/>
+		<hr class="side-bar-separator">
+
+		<#list functions.permissionFunctions as f>
+			<@ListItem id=f.function.functionId primaryText=f.function.vnLabel leftIcon=f.function.icon>
+				<#list f.children as cf>
+					<@ListItem level=1 id=cf.functionId primaryText=cf.vnLabel leftIcon=cf.icon>
+					</@ListItem>
+				</#list>
+			</@ListItem>
+		</#list>
 	</@List>
 </@SideBar>
-
-
 
 <#--  
 <div class="side-bar hide-side-bar">
