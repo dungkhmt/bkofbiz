@@ -1,76 +1,126 @@
 <#include "util.ftl"/>
 
 <style>
-
-    @-webkit-keyframes rotator {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(270deg); }
+    @keyframes spinner-rotate {
+        100% {
+            transform: rotate(360deg);
+        }
     }
 
-    @-webkit-keyframes colors {
-        0% { stroke: #4285F4; }
-        25% { stroke: #DE3E35; }
-        50% { stroke: #F7C223; }
-        75% { stroke: #1B9A59; }
-        100% { stroke: #4285F4; }
-    }
-
-    @-webkit-keyframes dash {
-        0% { stroke-dashoffset: 187; }
+    @keyframes spinner-dash {
+        0% {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+        }
         50% {
-            stroke-dashoffset: 47;
-            transform:rotate(135deg);
+            stroke-dasharray: 89, 200;
+            stroke-dashoffset: -35px;
         }
         100% {
-            stroke-dashoffset: 187;
-            transform:rotate(450deg);
+            stroke-dasharray: 89, 200;
+            stroke-dashoffset: -124px;
         }
     }
 
-    @keyframes colors {
-        0% { stroke: #4285F4; }
-        25% { stroke: #DE3E35; }
-        50% { stroke: #F7C223; }
-        75% { stroke: #1B9A59; }
-        100% { stroke: #4285F4; }
+    @keyframes spinner-color {
+        100%,
+        0% {
+            stroke: #d62d20;
+        }
+        40% {
+            stroke: #0057e7;
+        }
+        66% {
+            stroke: #008744;
+        }
+        80%,
+        90% {
+            stroke: #ffa700;
+        }
     }
 
-    @keyframes dash {
-        0% { stroke-dashoffset: 187; }
-        50% {
-            stroke-dashoffset: 47;
-            transform:rotate(135deg);
-        }
+    @-webkit-keyframes spinner-rotate {
         100% {
-            stroke-dashoffset: 187;
-            transform:rotate(450deg);
+            transform: rotate(360deg);
         }
     }
 
-    @-moz-keyframes colors {
-        0% { stroke: #4285F4; }
-        25% { stroke: #DE3E35; }
-        50% { stroke: #F7C223; }
-        75% { stroke: #1B9A59; }
-        100% { stroke: #4285F4; }
+    @-webkit-keyframes spinner-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
     }
 
-    @-moz-keyframes dash {
-        0% { stroke-dashoffset: 187; }
-        50% {
-            stroke-dashoffset: 47;
-            transform:rotate(135deg);
+    @-webkit-keyframes spinner-color {
+        100%,
+        0% {
+            stroke: #d62d20;
         }
+        40% {
+            stroke: #0057e7;
+        }
+        66% {
+            stroke: #008744;
+        }
+        80%,
+        90% {
+            stroke: #ffa700;
+        }
+    }
+
+    @-moz-keyframes spinner-rotate {
         100% {
-            stroke-dashoffset: 187;
-            transform:rotate(450deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @-moz-keyframes spinner-dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+    }
+
+    @-moz-keyframes spinner-color {
+        100%,
+        0% {
+            stroke: #d62d20;
+        }
+        40% {
+            stroke: #0057e7;
+        }
+        66% {
+            stroke: #008744;
+        }
+        80%,
+        90% {
+            stroke: #ffa700;
         }
     }
 </style>
 
-<#macro IconSpinner >
+<#macro IconSpinner size="65px">
     <#local code=random(1, 999999)?string["000000"] />
-    <svg id="spinner-${code}" style="-webkit-animation: rotator 1.4s linear infinite; animation: rotator 1.4s linear infinite; -moz-animation: rotator 1.4s linear infinite; -ms-animation: rotator 1.4s linear infinite; -o-animation: rotator 1.4s linear infinite;" width="65px" height="65px" viewBox="0 0 66 66">
-        <circle style="stroke-dasharray: 187; stroke-dashoffset: 0; transform-origin: center; -webkit-animation: dash 1.4s ease-in-out infinite, colors (5.6s) ease-in-out infinite; -moz-animation: dash 1.4s ease-in-out infinite, colors (5.6s) ease-in-out infinite; -ms-animation: dash 1.4s ease-in-out infinite, colors (5.6s) ease-in-out infinite; -o-animation: dash 1.4s ease-in-out infinite, colors (5.6s) ease-in-out infinite; animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-    </svg>
+    <div id="spinner-${code}" style="position: relative; margin: 0 auto; width: ${size}; height: ${size}">
+        <svg style="animation: spinner-rotate 2s linear infinite; height: 100%; transform-origin: center center; width: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;" viewBox="25 25 50 50">
+            <circle style="stroke-dasharray: 1, 200; stroke-dashoffset: 0; animation: spinner-dash 1.5s ease-in-out infinite, spinner-color 6s ease-in-out infinite; stroke-linecap: spinner-round;" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
 </#macro>

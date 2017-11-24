@@ -5,9 +5,12 @@
     }
 </style>
 
-<#macro ListItem primaryText="" rightIcon="" leftIcon="" disabled=false level=0 initiallyOpen=false open=false>
+<#macro ListItem primaryText="" rightIcon="" leftIcon="" disabled=false level=0 initiallyOpen=false open=false linkTo="">
 
 	<#local marginLeft="margin-left: "+level*18+"px;" />
+
+	<#local pathOpen="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
+	<#local pathClose="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
 
 	<#local elOpen="display: none;" />
 	<#if initiallyOpen>
@@ -25,10 +28,10 @@
 		                <path d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"></path>
 		            </svg>
 					<#if nested?has_content>
-						<button id='open-${id_item}'tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 12px; outline: none; font-size: 0px; font-weight: inherit; position: absolute; overflow: visible; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; width: 48px; height: 48px; top: 0px; right: 4px; background: none;">
+						<button id='open-${id_item}' tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 12px; outline: none; font-size: 0px; font-weight: inherit; position: absolute; overflow: visible; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; width: 48px; height: 48px; top: 0px; right: 4px; background: none;">
 							<div>
 								<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: currentcolor; height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;">
-									<path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"></path>
+									<path id='icon-${id_item}' d="<#if open>${pathOpen}<#else>${pathClose}</#if>"></path>
 								</svg>
 							</div>
 						</button>
@@ -38,18 +41,26 @@
 		    </div>
 		</span>
 		
-		<#if nested?has_content&!disabled>
+		<#if !disabled>
 			<script>
 				document.getElementById("${id_item}").addEventListener("click", function(e) {
-					var child_items = document.getElementById("children-${code}");
-					
-					if(!!child_items) {
-						if(!!child_items.style.display) {
-							child_items.style.display = "";
-						} else {
-							child_items.style.display = "none";
-						}
-					}
+					<#if linkTo=="">
+						<#if nested?has_content>
+							var item = document.getElementById("children-${code}");
+							var icon_item = document.getElementById("icon-${id_item}");
+							if(!!item) {
+								if(!!item.style.display) {
+									item.style.display = "";
+									icon_item.setAttribute("d", "${pathOpen}")
+								} else {
+									item.style.display = "none";
+									icon_item.setAttribute("d", "${pathClose}")
+								}
+							}
+						</#if>
+					<#else>
+						location.href = "${linkTo}";
+					</#if>
 				});
 			</script>
 		</#if>
