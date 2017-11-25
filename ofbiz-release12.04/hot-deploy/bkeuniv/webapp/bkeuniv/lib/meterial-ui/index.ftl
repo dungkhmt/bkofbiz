@@ -6,3 +6,4 @@
 <#include "body.ftl"/>
 <#include "list.ftl"/>
 <#include "icon.ftl"/>
+<#include "loader.ftl"/>

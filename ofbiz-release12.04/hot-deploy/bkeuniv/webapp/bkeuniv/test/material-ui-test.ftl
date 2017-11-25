@@ -10,7 +10,9 @@
     <@ListItem primaryText="Test" level=1/>
 </@ListItem>  -->
 <@Body>
-	<@IconSpinner/>
+	<@Loader handleToggle="test">
+		<@IconSpinner/>
+	</@Loader>
 	<@SideBar open=true handleToggle="menu" openSecondary=true>
 		<@List>
 			<@ListItem primaryText="Test">
