@@ -92,6 +92,10 @@
 			overflow-y: auto;
     		height: 100%;
 		}
+
+		#${id}-content {
+			width: 100%!important;
+		}
 		
 		#${id} .jqDataTable-title {
 			padding: 30px 0px 30px 0px;
