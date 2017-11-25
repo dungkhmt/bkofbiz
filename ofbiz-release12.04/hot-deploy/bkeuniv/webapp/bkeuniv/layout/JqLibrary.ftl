@@ -1,3 +1,4 @@
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 <#macro jqMinimumLib >
 	<!-- import jqMinimumLib lib css-->
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
@@ -240,11 +241,13 @@
 		</#list>
 		
 		$(document).ready(function(){
+			loader.open();
 			$.ajax({
 			    url: "${urlData}",
 			    type: 'post',
 			    dataType: "json",
 			    success: function(data) {
+					loader.close();
 			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>
@@ -439,6 +442,9 @@
 	
 	</script>
 	<!-- html -->
+	<@Loader handleToggle="loader">
+		<@IconSpinner/>
+	</@Loader>
 	<div id="${id}">
 		<div id="jqDataTable-button-add" onClick="jqNew()">
 			${uiLabelMap.BkEunivAdd}
