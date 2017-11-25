@@ -1,5 +1,11 @@
+html, body {
+    min-height: 100% !important;
+    height: 100%;
+    overflow: hidden;
+}
+
 .body {
-    flex: 1 1 0%; padding: 2em;
+    flex: 1 1 0%;
 }
 
 .table .header-row {

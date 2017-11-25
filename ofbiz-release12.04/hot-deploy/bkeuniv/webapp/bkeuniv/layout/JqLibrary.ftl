@@ -86,13 +86,10 @@
 	
 	<style>
 		#${id} {
-			width: 96%;
-			top: 0;
-			bottom: 0;
-			left: 2%;
-			right: 2%;
-			padding: 1em;
-			<#--  position: absolute;  -->
+			width: 100%;
+    		padding: 2em 3em 6em 3em;
+			overflow-y: auto;
+    		height: 100%;
 		}
 		
 		#${id} .jqDataTable-title {
@@ -116,6 +113,14 @@
 		
 		#${id}-content tbody tr:hover td:first-child {
 		     border-left: 2px #0014ff solid;			
+		}
+
+		.dataTables_scrollHeadInner {
+			width: 100%!important;
+		}
+
+		.dataTables_scrollHeadInner table {
+			width: 100%!important;
 		}
 		
 		
@@ -219,6 +224,7 @@
 		jqDataTable.columns = [
 			{
 				name: "STT",
+				title: 'STT',
 				data: "index"
 			}
 		];
@@ -227,6 +233,7 @@
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
+				title: '${column.name}',
 				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
@@ -285,8 +292,6 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
-					"scrollY": ${sizeTable} - 220,
-					"scrollCollapse": true,
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
 					</#if>
@@ -440,12 +445,6 @@
 		</div>
 		
 		<table id="${id}-content" class="table table-striped">
-			<thead>
-				<td>STT</td>
-				<#list columns as column>
-					<td>${column.name}</td>
-				</#list>
-			</thead>
 		</table>
 	</div>
 	
