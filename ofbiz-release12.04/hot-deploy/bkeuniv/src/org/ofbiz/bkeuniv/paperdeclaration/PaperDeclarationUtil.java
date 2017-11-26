@@ -1,5 +1,6 @@
 package src.org.ofbiz.bkeuniv.paperdeclaration;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +185,18 @@ public class PaperDeclarationUtil {
 			return null;
 		}
 	}
+	public static List<GenericValue> getListStaffs(Delegator delegator) {
+		try {
+			
+			List<GenericValue> staffs = delegator.findList("Staff", 
+					null,
+					null, null, null, false);
+			return staffs;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
 	
 	public static List<GenericValue> getListStaffsOfFaculty(Delegator delegator,
 			String facultyId) {
@@ -354,6 +367,158 @@ public class PaperDeclarationUtil {
 		}
 		
 		
+		return wb;
+	}
+
+	public static HSSFWorkbook createExcelFormKV04(Delegator delegator,
+			String academicYearId, String facultyId) {
+
+		// get list of paper category hour-budget
+		List<GenericValue> paperHourBudget = getPaperCategoryHourBudget(
+				delegator, academicYearId);
+		Map<String, Long> mPaperCategory2Money = FastMap.newInstance();
+		
+		if (paperHourBudget != null){
+			for (GenericValue gv : paperHourBudget) {
+				String cat = (String) gv.get("paperCategoryId");
+				long money = (long) gv.get("budget");
+				mPaperCategory2Money.put(cat, money);
+			}
+		}else{
+			Debug.log(module + "::createExcelFormKV04, hour-budget of year " + academicYearId + " NOT EXISTS");;
+			
+		}
+		
+		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
+		List<GenericValue> all_staffs = getListStaffs(delegator);
+		
+		HashMap<String, GenericValue> mId2Staff = new HashMap<String, GenericValue>();
+		
+		List<String> staffIDs = FastList.newInstance();
+		for(GenericValue gv: staffs){
+			staffIDs.add((String)gv.get("staffId"));			
+		}
+		for(GenericValue st: all_staffs){
+			mId2Staff.put((String)st.get("staffId"), st);
+		}
+		
+		List<EntityCondition> conds = FastList.newInstance();
+		conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
+		conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,PaperDeclarationUtil.STATUS_ENABLED));
+		
+		//conds.add(EntityCondition.makeCondition("staffId",EntityOperator.IN,staffIDs));
+		List<GenericValue> papers = FastList.newInstance();
+		try{
+			papers = delegator.findList("PaperDeclaration", 
+				EntityCondition.makeCondition(conds), 
+				null, 
+				null, 
+				null, 
+				false);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+		Debug.log(module + "::createExcelFormKV04, papers.sz = " + papers.size());
+		
+		List<GenericValue> list_paper_international_journals = FastList.newInstance();
+		List<GenericValue> list_paper_national_journals = FastList.newInstance();
+		List<GenericValue> list_paper_international_conferences = FastList.newInstance();
+		List<GenericValue> list_paper_national_conferences = FastList.newInstance();
+		
+		for(GenericValue p: papers){
+			String paperCategoryId = (String)p.get("paperCategoryId");
+			Debug.log(module + "::createExcelFormKV04, paper " + (String)p.get("paperName") + ", category = " + paperCategoryId);
+			if(paperCategoryId == null || paperCategoryId.equals("")) continue;
+			
+			if(paperCategoryId.equals("JINT_Other")){
+				list_paper_international_journals.add(p);
+			}else if(paperCategoryId.equals("JDOM_Other")){
+				list_paper_national_journals.add(p);
+			}else if(paperCategoryId.equals("CINT_Other")){
+				list_paper_international_conferences.add(p);
+			}else if(paperCategoryId.equals("CDOM_Other")){
+				list_paper_national_conferences.add(p);
+			}			
+		}
+		
+		
+		// start renderExcel
+		HSSFWorkbook wb = new HSSFWorkbook();
+
+		Sheet sh = wb.createSheet("KV04");
+
+		int i_row = 0;
+		
+		for(GenericValue p: list_paper_international_journals){
+			i_row += 1;
+			Row r = sh.createRow(i_row);
+			
+			
+			String paperId = (String)p.get("paperId");
+			List<GenericValue> staffsOfPaper = getStaffsOfPaper(paperId, delegator);
+			String authors = (String)p.get("authors");
+			String paperName = (String)p.get("paperName");
+			String journalConferenceName = (String)p.get("journalConferenceName");
+			String volumn = (String)p.get("volumn");
+			String ISSN = (String)p.get("ISSN");
+			int nbAuthors = 1;
+			String[] s = authors.split(",");
+			if(s != null) nbAuthors = s.length;
+			String paperCategoryId = (String)p.get("paperCategoryId");
+			Long money = mPaperCategory2Money.get(paperCategoryId);
+			double moneyPerAuthor = money*1.0/nbAuthors;
+			
+			Cell c = r.createCell(1);
+			c.setCellValue(authors);
+			
+			c = r.createCell(2);
+			c.setCellValue(paperName);
+			
+			c = r.createCell(3);
+			c.setCellValue(journalConferenceName);
+			
+			c = r.createCell(4);
+			c.setCellValue(volumn);
+			
+			c = r.createCell(5);
+			c.setCellValue(ISSN);
+			
+			c = r.createCell(6);
+			c.setCellValue(money + "");
+			
+			c = r.createCell(7);
+			c.setCellValue(nbAuthors + "");
+			
+			c = r.createCell(8);
+			c.setCellValue(staffsOfPaper.size() + "");
+			
+			if(staffsOfPaper.size() > 0){
+				GenericValue st = staffsOfPaper.get(0);
+				String staffName = (String)(mId2Staff.get(st.get("staffId")).get("staffName"));
+				c = r.createCell(9);
+				c.setCellValue(staffName);
+				
+			}
+			
+			
+			c = r.createCell(10);
+			c.setCellValue(moneyPerAuthor + "");
+			
+			for(int i = 1; i < staffsOfPaper.size(); i++){
+				GenericValue st = staffsOfPaper.get(i);
+				String staffName = (String)(mId2Staff.get(st.get("staffId")).get("staffName"));
+				i_row += 1;
+				r = sh.createRow(i_row);
+				c = r.createCell(9);
+				c.setCellValue(staffName);
+			
+				c = r.createCell(10);
+				c.setCellValue(moneyPerAuthor + "");
+				
+			}
+			
+		}
 		return wb;
 	}
 

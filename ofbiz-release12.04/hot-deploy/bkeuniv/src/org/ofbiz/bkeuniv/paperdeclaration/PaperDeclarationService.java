@@ -112,6 +112,41 @@ public class PaperDeclarationService {
 	}
 
 	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelKV04(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String)request.getParameter("reportyear-kv04");
+		String facultyId = (String)request.getParameter("facultyId-kv04");
+		Debug.log(module + "::exportExcelKV04, academic year = " + year);
+		
+		String filename = "KV04";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV04(delegator, year, facultyId);
+			
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
 	public static void exportExcelISI(HttpServletRequest request,
 			HttpServletResponse response) {
 		
