@@ -7,3 +7,4 @@
 <#include "list.ftl"/>
 <#include "icon.ftl"/>
 <#include "loader.ftl"/>
+<#include "button.ftl"/>

@@ -93,6 +93,22 @@
 						location.href = "${linkTo}";
 					</#if>
 				});
+				<#if nested?has_content>
+					document.getElementById("open-${id_item}").addEventListener("click", function(e) {
+						e.stopPropagation();
+						var item = document.getElementById("children-${code}");
+						var icon_item = document.getElementById("icon-${id_item}");
+						if(!!item) {
+							if(!!item.style.display) {
+								item.style.display = "";
+								icon_item.setAttribute("d", "${pathOpen}")
+							} else {
+								item.style.display = "none";
+								icon_item.setAttribute("d", "${pathClose}")
+							}
+						}
+					})
+				</#if>
 			</script>
 		</#if>
 		

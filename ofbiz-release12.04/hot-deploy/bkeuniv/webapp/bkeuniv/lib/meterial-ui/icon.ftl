@@ -116,11 +116,11 @@
     }
 </style>
 
-<#macro IconSpinner size="65px">
+<#macro IconSpinner size="65px" strokeWidth=2>
     <#local code=random(1, 999999)?string["000000"] />
     <div id="spinner-${code}" style="position: relative; margin: 0 auto; width: ${size}; height: ${size}">
         <svg style="animation: spinner-rotate 2s linear infinite; height: 100%; transform-origin: center center; width: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;" viewBox="25 25 50 50">
-            <circle style="stroke-dasharray: 1, 200; stroke-dashoffset: 0; animation: spinner-dash 1.5s ease-in-out infinite, spinner-color 6s ease-in-out infinite; stroke-linecap: spinner-round;" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+            <circle style="stroke-dasharray: 1, 200; stroke-dashoffset: 0; animation: spinner-dash 1.5s ease-in-out infinite, spinner-color 6s ease-in-out infinite; stroke-linecap: spinner-round;" cx="50" cy="50" r="20" fill="none" stroke-width="${strokeWidth}" stroke-miterlimit="10"/>
         </svg>
     </div>
 </#macro>
