@@ -975,17 +975,18 @@ public class PaperDeclarationService {
 			
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("paperId", EntityOperator.EQUALS,p.get("paperId")));
-			List<GenericValue> ret_paper = delegator.findList("PaperView",
+			List<GenericValue> ret_paper = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds),
 					null, null, null, false
 					);
 			
 			
-			retSucc.put("papers", ret_paper.get(0));
+			GenericValue pv = ret_paper.get(0);
+			retSucc.put("papers", pv);
 			
 			retSucc.put("message", "Update Row Success");
 
-			Debug.log(module + "::updatePaper FINISHED");
+			Debug.log(module + "::updatePaper FINISHED, journal-conference = " + (String)pv.get("categoryName"));
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

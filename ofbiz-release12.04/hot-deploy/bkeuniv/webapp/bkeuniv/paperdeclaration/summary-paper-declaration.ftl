@@ -1,17 +1,17 @@
-<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+
+
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
   <head>
 
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.datatables.net/plug-ins/725b2a2115b/integration/jqueryui/dataTables.jqueryui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+
     
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     
-    <script src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/colreorder/1.1.2/js/dataTables.colReorder.min.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/725b2a2115b/api/fnFilterClear.js"></script>
     
     <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
     
@@ -20,16 +20,19 @@
     <title>DataTables - Context menu integration</title>
   
   </head>
+  
+<@Loader handleToggle="loader">
+	<@IconSpinner/>
+</@Loader>
 
-<style>
-#table-list-paper {
-    margin-top: 60px;
-}
-</style>
-<div id="table-list-paper">
+<script>
+  	loader.open();
+  </script>
+<div id="table-list-paper" style="overflow-y: auto; padding: 2em;">
 	<table id="list-papers" cellspacing="0" width="100%" class="display dataTable">
 		<thead>
 			<tr>
+				<th style="display: none"></th>
 				<th>${paperDeclarationUiLabelMap.BkEunivStaffId}</th>
 				<th>Tac gia</th>
 				<th>${paperDeclarationUiLabelMap.BkEunivPaperName}</th>
@@ -44,6 +47,7 @@
 	<tbody>
 	<#list resultPapers.papers as p>
 		<tr>
+			<td style="display: none">${p.paperId}</td>
 			<td>${p.staffName}</td>
 			<#if p.authors?exists>
 				<td>${p.authors}</td>
@@ -83,12 +87,13 @@
 	</#list>
 	</tbody>
 	</table>
+	
 </div>
 <script>
 var obj;
+
 $(document).ready(function() {
-    //$('#list-papers').DataTable();
-    
+  loader.close();
   var oTable = $('#list-papers').dataTable({
     "bJQueryUI": true,
     "sDom": 'l<"H"Rf>t<"F"ip>'
@@ -105,9 +110,10 @@ $(document).ready(function() {
                 $(ui.target).parent().remove();
                 break;
             case "edit":
-				obj = ui.target;
+				obj = ui;
 				var el = ui.target.parent();
-				console.log(el);
+				var paperId = el.children()[0].innerHTML;
+				alert('edit paper ' + paperId);
 			    break;
         }
     },

@@ -8,6 +8,7 @@ import java.util.Map;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -370,6 +371,104 @@ public class PaperDeclarationUtil {
 		return wb;
 	}
 
+	private static int createSegmentKV04(List<GenericValue> papers, CellStyle styleNormal, Sheet sh, int i_row,
+			Delegator delegator, Map<String, Long> mPaperCategory2Money,
+			Map<String, GenericValue> mId2Staff){
+		for(GenericValue p: papers){
+			i_row += 1;
+			Row r = sh.createRow(i_row);
+			
+			
+			String paperId = (String)p.get("paperId");
+			List<GenericValue> staffsOfPaper = getStaffsOfPaper(paperId, delegator);
+			String authors = (String)p.get("authors");
+			String paperName = (String)p.get("paperName");
+			String journalConferenceName = (String)p.get("journalConferenceName");
+			String volumn = (String)p.get("volumn");
+			String ISSN = (String)p.get("ISSN");
+			int nbAuthors = 1;
+			String[] s = authors.split(",");
+			if(s != null) nbAuthors = s.length;
+			String paperCategoryId = (String)p.get("paperCategoryId");
+			Long money = mPaperCategory2Money.get(paperCategoryId);
+			double moneyPerAuthor = money*1.0/nbAuthors;
+			
+			Cell c = r.createCell(2);
+			c.setCellValue(authors);
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(3);
+			c.setCellValue(paperName);
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(4);
+			c.setCellValue(journalConferenceName);
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(5);
+			c.setCellValue(volumn);
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(6);
+			c.setCellValue(ISSN);
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(7);
+			c.setCellValue(money + "");
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(8);
+			c.setCellValue(nbAuthors + "");
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(9);
+			c.setCellValue(staffsOfPaper.size() + "");
+			c.setCellStyle(styleNormal);
+			
+			double mp = moneyPerAuthor*nbAuthors;
+			c = r.createCell(10);
+			c.setCellValue(mp + "");
+			c.setCellStyle(styleNormal);
+			
+			if(staffsOfPaper.size() > 0){
+				GenericValue st = staffsOfPaper.get(0);
+				String staffName = (String)(mId2Staff.get(st.get("staffId")).get("staffName"));
+				c = r.createCell(11);
+				c.setCellValue(staffName);
+				c.setCellStyle(styleNormal);
+			}
+			
+			
+			c = r.createCell(12);
+			c.setCellValue(moneyPerAuthor + "");
+			c.setCellStyle(styleNormal);
+			
+			int start_r = i_row;
+			for(int i = 1; i < staffsOfPaper.size(); i++){
+				GenericValue st = staffsOfPaper.get(i);
+				String staffName = (String)(mId2Staff.get(st.get("staffId")).get("staffName"));
+				i_row += 1;
+				r = sh.createRow(i_row);
+				c = r.createCell(11);
+				c.setCellValue(staffName);
+				c.setCellStyle(styleNormal);
+				
+				c = r.createCell(12);
+				c.setCellValue(moneyPerAuthor + "");
+				c.setCellStyle(styleNormal);
+				
+				for(int j = 2; j <= 10; j++){
+					c = r.createCell(j);
+					c.setCellStyle(styleNormal);
+				}
+			}
+			
+			if(start_r < i_row)for(int j = 2; j <= 10; j++){
+				sh.addMergedRegion(new CellRangeAddress(start_r, i_row, j, j));
+			}
+		}
+		return i_row;
+	}
 	public static HSSFWorkbook createExcelFormKV04(Delegator delegator,
 			String academicYearId, String facultyId) {
 
@@ -446,10 +545,161 @@ public class PaperDeclarationUtil {
 		// start renderExcel
 		HSSFWorkbook wb = new HSSFWorkbook();
 
+		
 		Sheet sh = wb.createSheet("KV04");
 
+		CellStyle styleTitle = wb.createCellStyle();
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+		
+		CellStyle styleNormal = wb.createCellStyle();
+		Font fontNormal = wb.createFont();
+		fontNormal.setFontHeightInPoints((short) 12);
+		fontNormal.setFontName("Times New Roman");
+		//fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontNormal.setColor(HSSFColor.BLACK.index);
+		styleNormal.setFont(fontNormal);
+		styleNormal.setWrapText(true);
+		styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+		
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 1000);
+		sh.setColumnWidth(2, 8000);
+		sh.setColumnWidth(3, 8000);
+		sh.setColumnWidth(4, 8000);
+		
 		int i_row = 0;
 		
+		i_row = 10;
+		Row rh = sh.createRow(i_row);
+		Cell ch = rh.createCell(2);
+		ch.setCellValue("Họ và tên các tác giả");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(3);
+		ch.setCellValue("Tên bài báo");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(4);
+		ch.setCellValue("Tạp chí, Proceedings");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(5);
+		ch.setCellValue("");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(6);
+		ch.setCellValue("");
+		ch.setCellStyle(styleTitle);
+		
+		
+		ch = rh.createCell(7);
+		ch.setCellValue("Mức hỗ trợ bài báo");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(8);
+		ch.setCellValue("Số đồng tác giá/bài báo");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(9);
+		ch.setCellValue("Số người thuộc đơn vị/bài báo");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(10);
+		ch.setCellValue("Kinh phí hỗ trợ cho cán bộ của đơn vị/bài báo");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(11);
+		ch.setCellValue("Tên người được nhận");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(12);
+		ch.setCellValue("Số tiền/người/bài báo");
+		ch.setCellStyle(styleTitle);
+		
+		i_row += 1;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(4);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tạp chí, proceedings");
+		
+		ch = rh.createCell(5);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Số tạp chí, thời gian xuất bản");
+		
+		ch = rh.createCell(6);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("ISSN");
+		
+		
+		sh.addMergedRegion(new CellRangeAddress(
+				i_row-1, i_row, 2, 2));
+		sh.addMergedRegion(new CellRangeAddress(
+				i_row-1, i_row, 3, 3));
+		sh.addMergedRegion(new CellRangeAddress(
+				i_row-1, i_row-1, 4, 6));
+		
+		for(int j = 2; j <= 3; j++){
+			ch = rh.createCell(j);
+			ch.setCellStyle(styleTitle);
+		}
+		for(int j = 7; j <= 12; j++){
+			ch = rh.createCell(j);
+			ch.setCellStyle(styleTitle);
+		}
+		
+		for(int j = 7; j <= 12; j++){
+			sh.addMergedRegion(new CellRangeAddress(i_row-1, i_row, j, j));
+		}
+		
+		i_row += 1;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(2);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Danh sách bài báo tạp chí quốc tế không trong danh mục ISI, Scopus");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
+		i_row = createSegmentKV04(list_paper_international_journals, styleNormal, sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
+		
+		i_row += 1;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(2);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Danh sách bài báo tạp chí trong nước");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
+		i_row = createSegmentKV04(list_paper_national_journals, styleNormal, sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
+		
+		i_row += 1;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(2);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Danh sách bài báo hội nghị quốc tế");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
+		i_row = createSegmentKV04(list_paper_international_conferences, styleNormal, sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
+		
+		i_row += 1;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(2);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Danh sách bài báo hội nghị trong nước");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
+		i_row = createSegmentKV04(list_paper_national_conferences, styleNormal, sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
+		
+		/*
 		for(GenericValue p: list_paper_international_journals){
 			i_row += 1;
 			Row r = sh.createRow(i_row);
@@ -469,56 +719,81 @@ public class PaperDeclarationUtil {
 			Long money = mPaperCategory2Money.get(paperCategoryId);
 			double moneyPerAuthor = money*1.0/nbAuthors;
 			
-			Cell c = r.createCell(1);
+			Cell c = r.createCell(2);
 			c.setCellValue(authors);
-			
-			c = r.createCell(2);
-			c.setCellValue(paperName);
+			c.setCellStyle(styleNormal);
 			
 			c = r.createCell(3);
-			c.setCellValue(journalConferenceName);
+			c.setCellValue(paperName);
+			c.setCellStyle(styleNormal);
 			
 			c = r.createCell(4);
-			c.setCellValue(volumn);
+			c.setCellValue(journalConferenceName);
+			c.setCellStyle(styleNormal);
 			
 			c = r.createCell(5);
-			c.setCellValue(ISSN);
+			c.setCellValue(volumn);
+			c.setCellStyle(styleNormal);
 			
 			c = r.createCell(6);
-			c.setCellValue(money + "");
+			c.setCellValue(ISSN);
+			c.setCellStyle(styleNormal);
 			
 			c = r.createCell(7);
-			c.setCellValue(nbAuthors + "");
+			c.setCellValue(money + "");
+			c.setCellStyle(styleNormal);
 			
 			c = r.createCell(8);
+			c.setCellValue(nbAuthors + "");
+			c.setCellStyle(styleNormal);
+			
+			c = r.createCell(9);
 			c.setCellValue(staffsOfPaper.size() + "");
+			c.setCellStyle(styleNormal);
+			
+			double mp = moneyPerAuthor*nbAuthors;
+			c = r.createCell(10);
+			c.setCellValue(mp + "");
+			c.setCellStyle(styleNormal);
 			
 			if(staffsOfPaper.size() > 0){
 				GenericValue st = staffsOfPaper.get(0);
 				String staffName = (String)(mId2Staff.get(st.get("staffId")).get("staffName"));
-				c = r.createCell(9);
+				c = r.createCell(11);
 				c.setCellValue(staffName);
-				
+				c.setCellStyle(styleNormal);
 			}
 			
 			
-			c = r.createCell(10);
+			c = r.createCell(12);
 			c.setCellValue(moneyPerAuthor + "");
+			c.setCellStyle(styleNormal);
 			
+			int start_r = i_row;
 			for(int i = 1; i < staffsOfPaper.size(); i++){
 				GenericValue st = staffsOfPaper.get(i);
 				String staffName = (String)(mId2Staff.get(st.get("staffId")).get("staffName"));
 				i_row += 1;
 				r = sh.createRow(i_row);
-				c = r.createCell(9);
+				c = r.createCell(11);
 				c.setCellValue(staffName);
-			
-				c = r.createCell(10);
-				c.setCellValue(moneyPerAuthor + "");
+				c.setCellStyle(styleNormal);
 				
+				c = r.createCell(12);
+				c.setCellValue(moneyPerAuthor + "");
+				c.setCellStyle(styleNormal);
+				
+				for(int j = 2; j <= 10; j++){
+					c = r.createCell(j);
+					c.setCellStyle(styleNormal);
+				}
 			}
 			
+			if(start_r < i_row)for(int j = 2; j <= 10; j++){
+				sh.addMergedRegion(new CellRangeAddress(start_r, i_row, j, j));
+			}
 		}
+		*/
 		return wb;
 	}
 

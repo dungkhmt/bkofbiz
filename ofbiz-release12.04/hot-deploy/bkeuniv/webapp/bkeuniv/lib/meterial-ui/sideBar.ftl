@@ -36,8 +36,8 @@
 		<#assign style>order: -1;</#assign>
 	</#if>
 
-    <div id="${idSideBar}" style="overflow-y: auto; color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: margin 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; flex: 0 0 256px; ${style} ${openEl}">
-        <div id="content-${code}" style="z-index: 1300; width: 256px;">
+    <div id="${idSideBar}" style="overflow-y: auto; color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: margin 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; flex: 0 0 ${width}; ${style} ${openEl}">
+        <div id="content-${code}" style="z-index: 1300; width: ${width};">
             <#nested />
         </div>
         <#if handleToggle!="">
