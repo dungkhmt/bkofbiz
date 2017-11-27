@@ -251,6 +251,7 @@
 			    type: 'post',
 			    dataType: "json",
 			    success: function(data) {
+					
 					loader.close();
 			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
@@ -263,6 +264,7 @@
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
 					columns: jqDataTable.columns,
+					deferRender: true,
 					"columnDefs": [
 					{
 						"targets": 0,

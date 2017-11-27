@@ -11,22 +11,23 @@
 </@ListItem>  -->
 <@Body>
 	<@Loader handleToggle="test">
-		<@IconSpinner/>
+		<@IconSpinner strokeWidth=4/>
 	</@Loader>
+	<@FlatButton />
 	<@SideBar open=true handleToggle="menu" openSecondary=true>
 		<@List>
-			<@ListItem primaryText="Test">
-	        <@ListItem primaryText="Test" level=1 linkTo=""/>
-	        <@ListItem primaryText="Test" level=1/>
-	        <@ListItem primaryText="Test" level=1/>
-	        <@ListItem primaryText="Test" level=1/>
+			<@ListItem primaryText="Test" linkTo="google">
+				<@ListItem primaryText="Test" level=1 linkTo=""/>
+				<@ListItem primaryText="Test" level=1/>
+				<@ListItem primaryText="Test" level=1/>
+				<@ListItem primaryText="Test" level=1/>
 			</@ListItem>
 			<@ListItem primaryText="Menu2">
 				<@ListItem primaryText="Test" level=1/>
 			</@ListItem>
 		</@List>
 	</@SideBar>
-	
+	<@TextField />
 	<!-- Test body -->
 	<div style="flex: 1 1 0%; padding: 2em;">
 	    <div class="list-page">
