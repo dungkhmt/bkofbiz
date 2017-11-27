@@ -16,6 +16,6 @@
             <span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; text-transform: uppercase; font-weight: 500; font-size: 14px;">Secondary</span>
         </div>
     </button>
-    <script>
+    
     
 </#macro>
