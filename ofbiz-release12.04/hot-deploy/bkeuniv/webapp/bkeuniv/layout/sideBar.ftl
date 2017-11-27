@@ -1,3 +1,23 @@
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+
+<@SideBar open=true handleToggle="sideBar" width="300px">
+	<@List height="100%" width="300px">
+		<@ListItem primaryText=uiLabelMap.BkEunivHomePage leftIcon="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" linkTo="main" />
+		<@ListItem primaryText=uiLabelMap.BkEunivPersonalInformation linkTo="main"leftIcon="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" linkTo="user"/>
+		<hr class="side-bar-separator" />
+
+		<#list functions.permissionFunctions as f>
+			<@ListItem id=f.function.functionId primaryText=f.function.vnLabel leftIcon=f.function.icon linkTo=f.function.target>
+				<#list f.children as cf>
+					<@ListItem level=1 id=cf.functionId primaryText=cf.vnLabel leftIcon="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" linkTo=cf.target>
+					</@ListItem>
+				</#list>
+			</@ListItem>
+		</#list>
+	</@List>
+</@SideBar>
+
+<#--  
 <div class="side-bar hide-side-bar">
 
 	<button class="closeSideBar" onClick="closeSideBar()">
@@ -97,4 +117,4 @@
 			]
 		}
 	</script>
-</div>
+</div>  -->

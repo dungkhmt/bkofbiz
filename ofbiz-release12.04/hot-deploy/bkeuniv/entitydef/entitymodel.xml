@@ -306,6 +306,7 @@
 		<field name="icon" type="very-long"></field>
 		<field name="parentFunctionId" type="id-vlong"></field>
 		<field name="index" type="numeric"></field>
+		<field name="status" type="id-long"></field>
 		<prim-key field="functionId"/>
 	</entity>
 	<entity entity-name="GroupFunction" package-name="org.ofbiz.bkeuniv">
@@ -524,14 +525,21 @@
 		</view-link>
 	</view-entity>
 	
-	<view-entity entity-name="PapersView" package-name="org.ofbiz.bkeuniv">
+	<view-entity entity-name="PaperView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
+		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
+		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST"></alias>
+		<alias name="paperCategoryName" entity-alias="PC"></alias>
 		<view-link rel-entity-alias="ST" entity-alias="PD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
+		<view-link rel-entity-alias="PC" entity-alias="PD">
+			<key-map rel-field-name="paperCategoryId" field-name="paperCategoryId"/>
+		</view-link>
+		
 	</view-entity>
 	
 	
@@ -566,7 +574,7 @@
 		<field name="approverStaffId" type="id-vlong"></field>
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="hourOfStaff" type="numeric"></field>
-		<field name="totalhour" type="numeric"></field>
+		<field name="totalhour" type="numeric"></field>ưực
 		<field name="budget" type="numeric"></field>
 		
 		<prim-key field="projectDeclarationId"/>

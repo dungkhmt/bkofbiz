@@ -1,5 +1,6 @@
 package src.org.ofbiz.bkeuniv.staffmanagement;
 
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,9 @@ import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityOperator;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
@@ -119,6 +123,173 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+	public static Map<String, Object> getCVProfileOfStaff(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String)userLogin.get("userLoginId");
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		
+		try{
+			Map<String, Object> cv = FastMap.newInstance();
+			
+			// get general info of staff
+			Map<String, Object> param = FastMap.newInstance();
+			param.put("staffId", staffId);
+			Map<String, Object> result_staff = dispatcher.runSync("getStaffInfo", param);
+			cv.put("info", result_staff.get("staff"));
+			
+			// get Education Progress
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_ep = dispatcher.runSync("getEducationProgress", param);
+			cv.put("educationProgress", result_ep.get("educationProgress"));
+			
+			// get papers
+			param.clear();
+			param.put("authorStaffId", staffId);
+			Map<String, Object> result_papers = dispatcher.runSync("getPapersOfStaff", param);
+			cv.put("papers", result_papers.get("papers"));
+			
+			// get patents
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_patent = dispatcher.runSync("getPatent", param);
+			cv.put("patents", result_patent.get("patent"));
+			
+			// get applied projects
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_projects = dispatcher.runSync("getAppliedProjects", param);
+			cv.put("projects", result_projects.get("projects"));
+			
+			// get awards
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_awards = dispatcher.runSync("getAward", param);
+			cv.put("awards", result_awards.get("award"));
+			
+			// get work progress
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_wp = dispatcher.runSync("getWorkProgress", param);
+			cv.put("workProgress", result_wp.get("workProgress"));
+			
+			retSucc.put("cv", cv);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> getStaffInfo(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.get("userLoginId");
+		
+		Debug.log(module + "::getStaffInfo, staffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS,staffId));
+			
+			List<GenericValue> staffs = delegator.findList("StaffView", 
+					EntityCondition.makeCondition(conds),
+					null, null, null, false);
+			if(staffs != null && staffs.size() > 0){
+				GenericValue st = staffs.get(0);
+				retSucc.put("staff", st);
+				
+				String deptId = (String)st.get("departmentId");
+				String facultyId = "";
+				conds.clear();
+				
+				List<GenericValue> all_departments = delegator.findList("Department", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				
+				List<GenericValue> all_faculty = delegator.findList("Faculty", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				
+				
+				for(GenericValue d: all_departments){
+					String dId = (String)d.get("departmentId");
+					if(dId.equals(deptId)){
+						facultyId = (String)d.get("facultyId");
+						break;
+					}
+				}
+				
+				
+				
+				conds.add(EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS,facultyId));
+				List<GenericValue> sel_departments = delegator.findList("Department", 
+						EntityCondition.makeCondition(conds), 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				List<GenericValue> genders = delegator.findList("Gender", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				retSucc.put("departments", sel_departments);
+				retSucc.put("faculties", all_faculty);
+				retSucc.put("selected_department_id", deptId);
+				retSucc.put("selected_faculty_id", facultyId);
+				retSucc.put("genders", genders);
+				
+			}
+			
+			
+			/*
+			List<Map<String, Object>> ret_staffs = FastList.newInstance();
+					
+			for(GenericValue gv: staffs){
+				//Debug.log(module + "::getStaffs, staff " + gv.get("staffName"));
+				Map<String, Object> rs = FastMap.newInstance();
+				rs.put("staffId", gv.getString("staffId"));
+				rs.put("staffId", gv.getString("staffId"));
+				rs.put("staffName", gv.getString("staffName"));
+				rs.put("staffEmail", gv.getString("staffEmail"));
+				rs.put("departmentId", gv.getString("departmentId"));
+				rs.put("staffGenderId", gv.getString("staffGenderId"));
+				rs.put("staffDateOfBirth", gv.getString("staffDateOfBirth"));
+				rs.put("staffPhone", gv.getString("staffPhone"));
+				rs.put("departmentName", gv.getString("departmentName"));
+				rs.put("genderName", gv.getString("genderName"));
+				rs.put("facultyId", gv.getString("facultyId"));
+				rs.put("facultyName", gv.getString("facultyName"));
+				ret_staffs.add(rs);
+			}
+		
+			retSucc.put("staffs", ret_staffs);
+			*/
+		}catch(Exception ex){
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> removeAStaff(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -384,5 +555,45 @@ public class StaffService {
 		}
 		return retSucc;
 	}
-	
+
+	@SuppressWarnings({ "unchecked" })
+	public static void updateStaffInfo(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String staffId = request.getParameter("staffId");
+		String departmentId = request.getParameter("departmentId");
+		String genderId = request.getParameter("genderId");
+		String email = request.getParameter("email");
+		String birthDate = request.getParameter("birthDate");
+		String staffName = request.getParameter("staffName");
+		String phone = request.getParameter("phone");
+		
+		Debug.log(module + "::updateStaffInfo, staffId = " + staffId + ", staffName = " + staffName
+				+ ", departmentId = " + departmentId + ", email = " + email + ", phone = " + phone
+				+ ", birthDate = " + birthDate + ", genderId = " + genderId);
+		
+		try{
+			GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",staffId), false);
+			if(st != null){
+				st.put("staffName", staffName);
+				st.put("staffEmail", email);
+				st.put("departmentId", departmentId);
+				st.put("staffGenderId", genderId);
+				st.put("staffDateOfBirth", Date.valueOf(birthDate));
+				st.put("staffPhone", phone);
+				delegator.store(st);
+				
+				String rs = "{\"result\":\"OK\"}";
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				PrintWriter out = response.getWriter();
+				out.write(rs);
+				out.close();
+				
+				Debug.log(module + "::updateStaffInfo, rs = " + rs);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 }

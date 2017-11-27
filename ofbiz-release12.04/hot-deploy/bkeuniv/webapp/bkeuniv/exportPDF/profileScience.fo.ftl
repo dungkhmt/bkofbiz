@@ -1,16 +1,17 @@
 
 <#escape x as x?xml>
-	<@macro NumericalOrder numericalOrder=1>
-		
+	
+	<@macro NumericalOrder numericalOrder=1>		
 	</@macro>
+	
 	<#assign stt=1 />
-	<#assign fullName="Pham Quang Dung" />
-	<#assign BkEunivBirthday="10/02/1996" />
-	<#assign BkEunivGender="Nam" />
+	<#assign fullName=resultCV.cv.info.staffName />
+	<#assign BkEunivBirthday=resultCV.cv.info.staffDateOfBirth?if_exists />
+	<#assign BkEunivGender="" />
 	<#assign BkEunivAcademic="" />
 	<#assign BkEunivYearAcademic="" />
-	<#assign BkEunivDegree="Tien si" />
-	<#assign BkEunivYearDegree="2017" />
+	<#assign BkEunivDegree="" />
+	<#assign BkEunivYearDegree="" />
 	<#assign ResearchDomain="Linh vuc nghien cuu trong 5 nam gan day" />
 	<#assign NatureScience="Khoa hoc va tu nhien"/>
 	<#assign ScienceAndTechnology="Khoa hoc Ky thuat va Cong nghe"/>
@@ -20,8 +21,8 @@
 	<#assign AgriculturalScience="Khoa hoc Nong nghiep"/>
 	<#assign CodeOfScience="Ma chuyen nganh KH&CN"/>
 	<#assign BkEunivNumber=""/>
-	<#assign BkEunivName="VAT LY CAC CHAT CO DAC"/>
-	<#assign Additional="Co the bo sung chuyen nganh dao tao cua Truong?"/>
+	<#assign BkEunivName=""/>
+	<#assign Additional=""/>
 	<#assign BkEunivResearchSpecial=" "/>	
 	<#assign BkEunivCurrentPosition=" "/>	
 	<#assign BkEunivAdrressHome="Dia chi nha rieng "/>
@@ -746,92 +747,57 @@
 						
 			<fo:table-body>
 				<fo:table-row height="20pt" >
-				//STT
-					<fo:table-cell />
 					
-					<fo:table-cell border-right-style="dotted">
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block >${EducationType}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block>${Institution}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block>${Speciality}</fo:block>
-					</fo:table-cell>
+					</fo:table-cell>		
 					
-					<fo:table-cell />
-					
-					<fo:table-cell >
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-bottom-style="dotted">
 						<fo:block>${GraduateDate}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
 				
-				
-				<fo:table-row border-top-style="dotted">
-							//STT
-			        <fo:table-cell />
-	
-			        <fo:table-cell border-right-style="dotted">
-			          <fo:block>${University}</fo:block>
-			        </fo:table-cell>
-			        
-			        <fo:table-cell />
-			        <fo:table-cell border-right-style="solid" />
-			        
-			        <fo:table-cell />
-			        <fo:table-cell border-right-style="solid" />
-			      </fo:table-row>
-				
-				<fo:table-row border-top-style="dotted">
-							//STT
-			        <fo:table-cell />
-	
-			        <fo:table-cell border-right-style="dotted">
-			          <fo:block>${Masters}</fo:block>
-			        </fo:table-cell>
-			        
-			        <fo:table-cell />
-			        <fo:table-cell border-right-style="solid" />
-			        
-			         <fo:table-cell />
-			        <fo:table-cell border-right-style="solid" />
-			     </fo:table-row>
-			     
-			  <fo:table-row border-top-style="dotted">
-						//STT
-		        <fo:table-cell />
+				<#assign index = 0>
+				<#assign cv = resultCV.cv>
+		      	<#list cv.educationProgress as eduProg>
+					<#assign index = index+1>			        
+			    	<fo:table-row height="20pt" >
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<fo:block >${eduProg.educationType}</fo:block>
+						</fo:table-cell>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<fo:block>${eduProg.institution}</fo:block>
+						</fo:table-cell>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<fo:block>${eduProg.speciality}</fo:block>
+						</fo:table-cell>		
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted">
+							<fo:block>${eduProg.graduateDate}</fo:block>
+						</fo:table-cell>
+					</fo:table-row>	
+				  
+				</#list>
 
-		        <fo:table-cell border-right-style="dotted">
-		          <fo:block>${Degree}</fo:block>
-		        </fo:table-cell>
-		        <fo:table-cell />
-		        <fo:table-cell border-right-style="solid" />
-		        
-		         <fo:table-cell />
-		        <fo:table-cell border-right-style="solid" />
-		        
-		      </fo:table-row>
-		      
-		     <fo:table-row border-top-style="dotted">
-						//STT
-		        <fo:table-cell />
-
-		        <fo:table-cell border-right-style="dotted">
-		          <fo:block>${Internship}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell />
-		        <fo:table-cell border-right-style="solid" />
-		        
-		         <fo:table-cell />
-		        <fo:table-cell border-right-style="solid" />
-		      </fo:table-row>
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>
@@ -1072,28 +1038,46 @@
 				</fo:table-row>	
 				
 				
+				<#list resultCV.cv.workProgress as wp>
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
+					<fo:table-cell border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+						<#if wp.period?exists>
+							<fo:block >${wp.period}</fo:block>
+						<#else>
+							<fo:block ></fo:block>
+						</#if>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+					<fo:table-cell border-bottom-style="dotted" />
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+						<#if wp.position?exists>
+							<fo:block >${wp.position}</fo:block>
+						<#else>
+							<fo:block ></fo:block>
+						</#if>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+						<#if wp.specialization?exists>
+							<fo:block >${wp.specialization}</fo:block>
+						<#else>
+							<fo:block ></fo:block>
+						</#if>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-bottom-style="dotted">
+						<#if wp.institution?exists>
+							<fo:block >${wp.institution}</fo:block>
+						<#else>
+							<fo:block ></fo:block>
+						</#if>
 					</fo:table-cell>
 				</fo:table-row>	
+				</#list>
 				
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
@@ -1197,360 +1181,82 @@
 			<fo:table-body>
 				<fo:table-row height="20pt" >
 				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block >${ID}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block>${ConstructionName}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block>${Author}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
 						<fo:block>${Public}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell>
+					<fo:table-cell  border-bottom-style="dotted"/>
+					<fo:table-cell border-bottom-style="dotted">
 						<fo:block>${Year}</fo:block>
 					</fo:table-cell>
-					
-					
 				</fo:table-row>	
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID1}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional1}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+				<#assign index = 0>
+				<#list cv.papers as p>
+					<#assign index = index + 1>
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID2}</fo:block>
-					</fo:table-cell>
+					<fo:table-row height="20pt" >
+						//STT
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<fo:block >${index}</fo:block>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional2}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if p.paperName?exists>
+								<fo:block>${p.paperName}</fo:block>
+							<#else>
+								<fo:block>""</fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if p.paperName?exists>
+								<fo:block></fo:block>
+							<#else>
+								<fo:block></fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if p.journalConferenceName?exists>
+								<fo:block>${p.journalConferenceName}</fo:block>
+							<#else>
+								<fo:block>""</fo:block>
+							</#if>
+						</fo:table-cell>
 					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted">
+							<#if p.year?exists>
+								<fo:block>${p.year}</fo:block>
+							<#else>
+								<fo:block>""</fo:block>
+							</#if>
+						</fo:table-cell>
+					</fo:table-row>	
 					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID3}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional3}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID4}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional4}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID5}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional5}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID6}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional6}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell  />
-					
-				</fo:table-row>	
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell  />
-					
-				</fo:table-row>	
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell  />
-					
-				</fo:table-row>	
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid" />
-					<fo:table-cell />
-					<fo:table-cell  />
-					
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional7}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${Internetional8}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				
+				</#list>
+			
 				
 			</fo:table-body>
 		</fo:table>
@@ -1605,43 +1311,63 @@
 			<fo:table-body>
 				<fo:table-row height="20pt" >
 				//STT
-					<fo:table-cell />
+					<fo:table-cell border-bottom-style="solid"/>
 					
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell border-right-style="solid" border-bottom-style="solid">
 						<fo:block >${ID}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
+					<fo:table-cell  border-bottom-style="solid"/>
 					
-					<fo:table-cell border-right-style="solid">
+					<fo:table-cell border-right-style="solid" border-bottom-style="solid">
 						<fo:block>${NameAndContent}</fo:block>
 					</fo:table-cell>
 					
-					<fo:table-cell />
+					<fo:table-cell  border-bottom-style="solid"/>
 					
-					<fo:table-cell>
+					<fo:table-cell border-bottom-style="solid">
 						<fo:block text-align = "center">${YearDegree}</fo:block>
 					</fo:table-cell>
 					
 				</fo:table-row>	
+			
+				<#assign index = 0>
+				<#list resultCV.cv.patents as pt>
+					<#assign index = index + 1>
+					<fo:table-row height="20pt" >
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID1}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if index?exists>
+								<fo:block >${index}</fo:block>
+							<#else>
+								<fo:block ></fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if pt.patentName?exists>
+								<fo:block >${pt.patentName}</fo:block>
+							<#else>
+								<fo:block ></fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted">
+							<#if pt.year?exists>
+								<fo:block >${pt.year}</fo:block>
+							<#else>
+								<fo:block ></fo:block>
+							</#if>
+						</fo:table-cell>
+					
+					</fo:table-row>	
+
+				</#list>
+				
+				
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>
@@ -1717,51 +1443,46 @@
 					
 				</fo:table-row>	
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID1}</fo:block>
-					</fo:table-cell>
+				<#assign index = 0>
+				<#list resultCV.cv.projects as p>
+					<#assign index = index+1>
+					<fo:table-row height="20pt" border-top-style="dotted" >
+					//STT
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<fo:block >${index}</fo:block>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if p.name?exists>
+								<fo:block>${p.name}</fo:block>
+							<#else>
+								<fo:block></fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if p.description?exists>
+								<fo:block>${p.description}</fo:block>
+							<#else>
+								<fo:block></fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted">
+							<#if p.period?exists>
+								<fo:block>${p.period}</fo:block>
+							<#else>
+								<fo:block></fo:block>
+							</#if>
+						</fo:table-cell>
+					</fo:table-row>	
+					
+				</#list>
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID2}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>
@@ -2039,23 +1760,36 @@
 					
 				</fo:table-row>	
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID1}</fo:block>
-					</fo:table-cell>
+				<#assign index = 0>
+				<#list resultCV.cv.awards as aw>
+					<#assign index = index + 1>
+					<fo:table-row height="20pt" border-top-style="dotted" >
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<fo:block >${index}</fo:block>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
+						<fo:table-cell border-bottom-style="dotted" />
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
+							<#if aw.description?exists>
+								<fo:block>${aw.description}</fo:block>
+							<#else>
+								<fo:block></fo:block>
+							</#if>
+						</fo:table-cell>
 					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted">
+							<#if aw.year?exists>
+								<fo:block>${aw.year}</fo:block>
+							<#else>
+								<fo:block></fo:block>
+							</#if>
+						</fo:table-cell>
+					</fo:table-row>	
+
+				</#list>
+				
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>

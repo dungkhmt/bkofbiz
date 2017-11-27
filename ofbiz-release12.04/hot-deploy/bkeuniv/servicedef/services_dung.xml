@@ -32,6 +32,17 @@
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
     	<attribute name="staffs" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getStaffInfo" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
+    	<attribute name="staff" mode="OUT" type="Map"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
+    	<attribute name="faculties" mode="OUT" type="List"></attribute>
+    	<attribute name="genders" mode="OUT" type="List"></attribute>
+    	<attribute name="selected_department_id" mode="OUT" type="String"></attribute>
+    	<attribute name="selected_faculty_id" mode="OUT" type="String"></attribute>
+    </service>
+    
     <service name="getGenders" engine="java" 
     		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getGenders">
     	<attribute name="genders" mode="OUT" type="List"></attribute>

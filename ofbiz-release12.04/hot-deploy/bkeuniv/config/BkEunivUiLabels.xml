@@ -21,6 +21,10 @@
         <value xml:lang="zh">不允许你浏览这个页面。</value>
     </property>
     
+    <property key="SecurityGroup">
+        <value xml:lang="en">Security Group</value>
+        <value xml:lang="vi">Nhóm phân quyền</value>
+    </property>
     
     <property key="BkEunivHomePage">
         <value xml:lang="en">Home Page</value>

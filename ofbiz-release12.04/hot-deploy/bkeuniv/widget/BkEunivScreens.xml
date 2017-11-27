@@ -2,6 +2,59 @@
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
+	<screen name="pageViewUser">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
+				<service service-name="getStaffInfo" result-map="staff"></service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/permission/user-info.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageEnableSecurityGroupUser">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<service service-name="getListSecurityGroups" result-map="securityGroup"></service>
+				<service service-name="getStaffs" result-map="resultStaffs"> </service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/permission/enable-security-group-user.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="pageEnableSecurityGroupFunction">
 		<section>
 			<actions>
@@ -465,6 +518,10 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<!-- 
+				<service service-name="getEducationProgressOfLoginStaff" result-map="educationProgress"></service>
+				 -->
+				 <service service-name="getCVProfileOfStaff" result-map="resultCV"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="FoReportDecorator"

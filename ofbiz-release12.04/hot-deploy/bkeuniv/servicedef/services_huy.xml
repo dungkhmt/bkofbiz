@@ -70,6 +70,7 @@
     
     <service name="getWorkProgress" engine="java" 
     		location="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="getWorkProgress">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
     	<attribute name="workProgress" mode="OUT" type="List"></attribute>
     </service>
     
