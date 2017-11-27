@@ -17,7 +17,9 @@
 	
 	<@SideBar open=true handleToggle="menu" openSecondary=true>
 		<@List>
-			<@FlatButton />
+			<@FlatButton type="disabled">
+				Anh yeu em nha
+			</@FlatButton>
 			<@TextField />
 			<@ListItem primaryText="Test" linkTo="google">
 				<@ListItem primaryText="Test" level=1 linkTo=""/>
