@@ -81,7 +81,7 @@
             document.getElementById("ripple-container-${code}").parentElement.addEventListener('click', function(){
                 setTimeout(function(){ 
                     window.location.href = "${href}";
-                }, 200);
+                }, 100);
             });
         </#if>
         <#if !disableTouchRipple>
@@ -158,4 +158,66 @@
         </@FlatButton>
     </div>
 </#macro>
+
+<#macro FloatingActionButton icon style="" mini=false size="56px" id="" type="default" disabled=false hoverColor="rgba(255,255,255,0.3)" href="">
+    <#local code=random(1, 999999)?string["000000"] />
+    <#switch type>
+        <#case "default">
+            <#local color="rgba(0, 0, 0, 0.87)" />
+            <#local backgroundColor="rgb(255, 255, 255)" />
+            <#break>
+        <#case "primary">
+            <#local color="rgb(255, 255, 255)" />
+            <#local backgroundColor="rgb(0, 188, 212)" />
+            <#break>
+        <#case "secondary">
+            <#local color="rgb(255, 255, 255)" />
+            <#local backgroundColor="rgb(255, 64, 129)" />
+            <#break>
+        <#case "disabled">
+            <#local color="rgba(0, 0, 0, 0.3)" />
+            <#local backgroundColor="rgb(229, 229, 229)" />
+            <#local disabled=true />
+            <#break>
+    </#switch>
+
+    <#if mini>
+        <#local size="40px" />
+    </#if>
+
+    <style>
+        <#if !disabled>
+            #floating-action-button-${code}:active {
+                box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 30px, rgba(0, 0, 0, 0.23) 0px 6px 10px!important;
+            }
+
+            #floating-action-button-${code}:hover button div span {
+                background-color: ${hoverColor};
+            }
+        </#if>
+    </style>
+    <div id="floating-action-button-${code}" style="color: ${color}; background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); <#if !disabled>box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; </#if>border-radius: 50%; display: inline-block;">
+        <button id="${id}" tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; vertical-align: bottom; background-color: ${backgroundColor}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; height: ${size}; width: ${size}; overflow: hidden; border-radius: 50%; text-align: center;${style}">
+            <div>
+                <span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
+                <div style="transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; top: 0px;">
+                    <svg viewBox="0 0 24 24" style="display: inline-block; color: ${color}; fill: ${color}; height: ${size}; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; line-height: ${size};">
+                        <path d="${icon}"></path>
+                    </svg>
+                </div>
+            </div>
+        </button>
+    </div>
+    <script>
+        <#if href!="">
+            document.getElementById("floating-action-button-${code}").addEventListener('click', function(){
+                setTimeout(function(){ 
+                    window.location.href = "${href}";
+                }, 100);
+            });
+        </#if>
+    </script>
+</#macro>
+
+
 
