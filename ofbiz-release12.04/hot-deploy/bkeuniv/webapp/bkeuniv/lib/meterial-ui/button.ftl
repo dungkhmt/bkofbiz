@@ -3,7 +3,7 @@
 <#--  backgroundColor id href disableTouchRipple disabled width hoverColor icon label labelPosition labelStyle rippleColor style  -->
 
 
-<#macro FlatButton height="36px" styleCus="" id="" type="" color="rgb(0, 188, 212)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="">
+<#macro FlatButton style="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="">
     <#local code=random(1, 999999)?string["000000"] />
 
     <#switch type>
@@ -25,7 +25,7 @@
     <style>
     
     <#if !disableTouchRipple&&!disabled>
-        .flat-button-${code}:hover {
+        #ripple-${code}:hover {
             background-color: ${hoverColor}!important;
         }
         
@@ -68,7 +68,7 @@
     </#if>
     </style>
 
-    <button id="${id}" tabindex="0" class="flat-button-${code}" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; height: ${height}; line-height: 36px; min-width: 88px; color: ${color}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; user-select: none; overflow: hidden; background-color: ${backgroundColor}; text-align: center;${styleCus}">
+    <button id="${id}" tabindex="0" class="flat-button-${code}" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; line-height: 36px; min-width: 88px; color: ${color}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; user-select: none; overflow: hidden; background-color: ${backgroundColor}; text-align: center;${style}">
         <div id="ripple-${code}">
             <span id="ripple-container-${code}" style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
             <span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; font-weight: 500; font-size: 14px;">
@@ -128,5 +128,34 @@
             }());
         </#if>
     </script>
-    
 </#macro>
+
+<#macro RaisedButton style="" id="" type="default" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgb(255, 255, 255)" disableTouchRipple=false disabled=false hoverColor="rgba(255,255,255,0.4)" href="">
+    <#local code=random(1, 999999)?string["000000"] />
+    <#switch type>
+        <#case "default">
+            <#local color="rgba(0, 0, 0, 0.87)" />
+            <#local backgroundColor="rgb(255, 255, 255)" />
+            <#local hoverColor="rgba(0,0,0,0.08)" />
+            <#break>
+        <#case "primary">
+            <#local color="rgb(255, 255, 255)" />
+            <#local backgroundColor="rgb(0, 188, 212)" />
+            <#break>
+        <#case "secondary">
+            <#local color="rgb(255, 255, 255)" />
+            <#local backgroundColor="rgb(255, 64, 129)" />
+            <#break>
+        <#case "disabled">
+            <#local color="rgba(0, 0, 0, 0.3)" />
+            <#local backgroundColor="rgb(229, 229, 229)" />
+            <#local disabled=true />
+            <#break>
+    </#switch>
+    <div id="raised-button-${code}" style="transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); <#if !disabled>box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px</#if>; border-radius: 2px; display: inline-block;">
+        <@FlatButton id=id type="RaisedButton" style=style hoverColor=hoverColor disableTouchRipple=disableTouchRipple href=href color=color backgroundColor=backgroundColor disabled=disabled>
+            <#nested/>
+        </@FlatButton>
+    </div>
+</#macro>
+
