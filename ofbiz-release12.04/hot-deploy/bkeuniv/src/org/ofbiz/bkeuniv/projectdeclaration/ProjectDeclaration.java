@@ -66,6 +66,13 @@ public class ProjectDeclaration {
 					map.put("projectParticipationRoleName", gv.getString("projectParticipationRoleName"));
 					map.put("approverStaffId", gv.getString("approverStaffId"));
 					map.put("staffName", gv.getString("staffName"));
+					map.put("hourOfStaff", gv.getString("hourOfStaff"));
+					map.put("totalhour", gv.getString("totalhour"));
+					map.put("budget", gv.getString("budget"));
+					map.put("academicYearId", gv.getString("academicYearId"));
+					map.put("academicYearName", gv.getString("academicYearName"));
+					
+					map.put("sponsor", gv.getString("sponsor"));
 				
 				projectDeclarations.add(map);
 			}
@@ -91,19 +98,58 @@ public class ProjectDeclaration {
 		List<String> projectParticipationRoleId = (List<String>) context.get("projectParticipationRoleId[]");
 		List<String> approverStaffId = (List<String>) context.get("approverStaffId[]");
 		
+		String stotalHour = (String)context.get("totalhour");
+		String sStaffHour = (String)context.get("hourOfStaff");
+		String sBudget = (String)context.get("budget");
+		String sponsor = (String)context.get("sponsor");
+		List<String> academicYearId = (List<String>) context.get("academicYearId[]");
+		
 		Delegator delegator = ctx.getDelegator();
 		try{
 			GenericValue gv = delegator.makeValue("ProjectDeclaration");
 			gv.put("projectDeclarationId", delegator.getNextSeqId("ProjectDeclaration"));
-			gv.put("projectCategoryId", projectCategoryId.get(0));
+			if(projectCategoryId != null && projectCategoryId.size() > 0)
+				gv.put("projectCategoryId", projectCategoryId.get(0));
+			
+			if(academicYearId != null && academicYearId.size() > 0)
+				gv.put("academicYearId", academicYearId.get(0));
+			
 			gv.put("projectName", projectName);
-			gv.put("startDate", Date.valueOf(startDate));
-			gv.put("endDate", Date.valueOf(endDate));
-			gv.put("projectStatusId", projectStatusId.get(0));
-			gv.put("researchProgram", researchProgram);
+			if(startDate != null && !startDate.equals(""))
+				gv.put("startDate", Date.valueOf(startDate));
+			if(endDate != null && !endDate.equals(""))
+				gv.put("endDate", Date.valueOf(endDate));
+			if(projectStatusId != null && projectStatusId.size() > 0)
+				gv.put("projectStatusId", projectStatusId.get(0));
+			
+			
+			
+			if(researchProgram != null && ! researchProgram.equals(""))
+				gv.put("researchProgram", researchProgram);
+			
 			gv.put("declarationStaffId", staffId);
-			gv.put("projectParticipationRoleId", projectParticipationRoleId.get(0));
-			gv.put("approverStaffId", approverStaffId.get(0));
+			
+			if(projectParticipationRoleId != null && projectParticipationRoleId.size() > 0)
+				gv.put("projectParticipationRoleId", projectParticipationRoleId.get(0));
+			
+			if(approverStaffId != null && approverStaffId.size() > 0)
+				gv.put("approverStaffId", approverStaffId.get(0));
+			
+			if(stotalHour != null && !stotalHour.equals("")){
+				long totalHour = Long.valueOf(stotalHour);
+				gv.put("totalhour", totalHour);
+			}
+			if(sStaffHour != null && !sStaffHour.equals("")){
+				long staffHour = Long.valueOf(sStaffHour);
+				gv.put("hourOfStaff", staffHour);
+			}
+			if(sBudget != null && !sBudget.equals("")){
+				long budget = Long.valueOf(sBudget);
+				gv.put("budget", budget);
+			}
+			if(sponsor != null && ! sponsor.equals(""))
+				gv.put("sponsor", sponsor);
+			
 			delegator.create(gv);
 			
 			GenericValue result = delegator.findOne("ProjectDeclarationView", false, UtilMisc.toMap("projectDeclarationId",
@@ -121,6 +167,14 @@ public class ProjectDeclaration {
 				map.put("declarationStaffId", result.getString("declarationStaffId"));
 				map.put("projectParticipationRoleId", result.getString("projectParticipationRoleId"));
 				map.put("projectParticipationRoleName", result.getString("projectParticipationRoleName"));
+				map.put("hourOfStaff", result.getString("hourOfStaff"));
+				map.put("totalhour", result.getString("totalhour"));
+				map.put("budget", result.getString("budget"));
+				map.put("academicYearId", result.getString("academicYearId"));
+				map.put("academicYearName", result.getString("academicYearName"));
+				
+				map.put("sponsor", result.getString("sponsor"));
+				
 				map.put("approverStaffId", result.getString("approverStaffId"));
 				map.put("staffName", result.getString("staffName"));
 			
@@ -146,20 +200,58 @@ public class ProjectDeclaration {
 		String researchProgram = (String) context.get("researchProgram");
 		List<String> projectParticipationRoleId = (List<String>) context.get("projectParticipationRoleId[]");
 		String approverStaffId = (String) context.get("approverStaffId");
+		String stotalHour = (String)context.get("totalhour");
+		String sStaffHour = (String)context.get("hourOfStaff");
+		String sBudget = (String)context.get("budget");
+		String sponsor = (String)context.get("sponsor");
+		List<String> academicYearId = (List<String>) context.get("academicYearId[]");
+		
+		Debug.log(module + "::updateProjectDeclaration, projectDeclarationId = " + projectDeclarationId + 
+				", stotalHour = " + stotalHour + ", sStaffHour= " + sStaffHour);
 		
 		Delegator delegator = ctx.getDelegator();
 		try{
 			GenericValue gv = delegator.findOne("ProjectDeclaration", false, UtilMisc.toMap("projectDeclarationId", projectDeclarationId));
 			if(gv != null){
-				gv.put("projectCategoryId", projectCategoryId.get(0));
+				if(projectCategoryId != null && projectCategoryId.size() > 0)
+					gv.put("projectCategoryId", projectCategoryId.get(0));
+				
+				if(academicYearId != null && academicYearId.size() > 0)
+					gv.put("academicYearId", academicYearId.get(0));
+				
 				gv.put("projectName", projectName);
-				gv.put("startDate", Date.valueOf(startDate));
-				gv.put("endDate", Date.valueOf(endDate));
-				gv.put("projectStatusId", projectStatusId.get(0));
-				gv.put("researchProgram", researchProgram);
-				gv.put("declarationStaffId", staffId);
-				gv.put("projectParticipationRoleId", projectParticipationRoleId.get(0));
-				gv.put("approverStaffId", approverStaffId);
+				if(startDate != null && !startDate.equals(""))
+					gv.put("startDate", Date.valueOf(startDate));
+				if(endDate != null && !endDate.equals(""))
+					gv.put("endDate", Date.valueOf(endDate));
+				if(projectStatusId != null && projectStatusId.size() > 0)
+					gv.put("projectStatusId", projectStatusId.get(0));
+				if(researchProgram != null && ! researchProgram.equals(""))
+					gv.put("researchProgram", researchProgram);
+				//gv.put("declarationStaffId", staffId);
+				if(projectParticipationRoleId != null && projectParticipationRoleId.size() > 0)
+					gv.put("projectParticipationRoleId", projectParticipationRoleId.get(0));
+				
+				//gv.put("approverStaffId", approverStaffId);
+				
+				if(stotalHour != null && !stotalHour.equals("")){
+					long totalHour = Long.valueOf(stotalHour);
+					gv.put("totalhour", totalHour);
+					Debug.log(module + "::updateProjectDeclaration, totalHour = " + totalHour);
+				}
+				if(sStaffHour != null && !sStaffHour.equals("")){
+					long staffHour = Long.valueOf(sStaffHour);
+					gv.put("hourOfStaff", staffHour);
+					Debug.log(module + "::updateProjectDeclaration, staffHour = " + staffHour);
+				}
+				
+				if(sBudget != null && !sBudget.equals("")){
+					long budget = Long.valueOf(sBudget);
+					gv.put("budget", budget);
+				}
+				if(sponsor != null && ! sponsor.equals(""))
+					gv.put("sponsor", sponsor);
+				
 				delegator.store(gv);
 				
 				GenericValue result = delegator.findOne("ProjectDeclarationView", false, UtilMisc.toMap("projectDeclarationId", 
@@ -179,7 +271,14 @@ public class ProjectDeclaration {
 					map.put("projectParticipationRoleName", result.getString("projectParticipationRoleName"));
 					map.put("approverStaffId", result.getString("approverStaffId"));
 					map.put("staffName", result.getString("staffName"));
-				
+					map.put("hourOfStaff", result.getString("hourOfStaff"));
+					map.put("totalhour", result.getString("totalhour"));
+					map.put("budget", result.getString("budget"));
+					map.put("academicYearId", result.getString("academicYearId"));
+					map.put("academicYearName", result.getString("academicYearName"));
+					map.put("sponsor", result.getString("sponsor"));
+					
+					
 				retSucc.put("projectDeclarations", map);
         		retSucc.put("message", "Updated record with id: " + projectDeclarationId);
         	} else {

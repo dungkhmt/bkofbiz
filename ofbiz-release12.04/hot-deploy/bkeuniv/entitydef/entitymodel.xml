@@ -574,8 +574,9 @@
 		<field name="approverStaffId" type="id-vlong"></field>
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="hourOfStaff" type="numeric"></field>
-		<field name="totalhour" type="numeric"></field>ưực
+		<field name="totalhour" type="numeric"></field>
 		<field name="budget" type="numeric"></field>
+		<field name="sponsor" type="very-long"></field>
 		
 		<prim-key field="projectDeclarationId"/>
 		
@@ -608,11 +609,14 @@
 		<member-entity entity-alias="PS" entity-name="ProjectStatus"></member-entity>
 		<member-entity entity-alias="PC" entity-name="ProjectCategory"></member-entity>
 		<member-entity entity-alias="PP" entity-name="ProjectParticipationRole"></member-entity>
+		<member-entity entity-alias="Y" entity-name="AcademicYear"></member-entity>
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST"></alias>
 		<alias name="projectCategoryName" entity-alias="PC"></alias>
 		<alias name="projectStatusName" entity-alias="PS"></alias>
 		<alias name="projectParticipationRoleName" entity-alias="PP"></alias>
+		<alias name="academicYearName" entity-alias="Y"></alias>
+		
 		<view-link rel-entity-alias="ST" entity-alias="PD" rel-optional="true">
 			<key-map field-name="approverStaffId" rel-field-name="staffId"/>
 		</view-link>
@@ -625,6 +629,10 @@
 		<view-link rel-entity-alias="PP" entity-alias="PD" rel-optional="true">
 			<key-map field-name="projectParticipationRoleId" rel-field-name="projectParticipationRoleId"/>
 		</view-link>
+		<view-link rel-entity-alias="Y" entity-alias="PD" rel-optional="true">
+			<key-map field-name="academicYearId" rel-field-name="academicYearId"/>
+		</view-link>
+		
 	</view-entity>
 	
 	<entity entity-name="EducationProgress" package-name="org.ofbiz.bkeuniv">

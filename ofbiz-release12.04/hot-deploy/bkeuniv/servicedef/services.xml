@@ -10,7 +10,20 @@
             Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
         </description>
     </service> 
-    
+<!--     
+     <service name="getProjectCategory" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectCategory">
+    	<attribute name="projectCategorys" mode="OUT" type="List"></attribute>
+    </service>
+        <service name="getProjectStatus" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectStatus">
+    	<attribute name="projectStatuss" mode="OUT" type="List"></attribute>
+    </service>    
+    <service name="getProjectParticipationRole" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectParticipationRole">
+    	<attribute name="projectParticipationRoles" mode="OUT" type="List"></attribute>
+    </service>
+ -->    
 	<service name="getPapersOfStaff" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDecalarationService" invoke="getPapersOfStaff">
 		<!-- 

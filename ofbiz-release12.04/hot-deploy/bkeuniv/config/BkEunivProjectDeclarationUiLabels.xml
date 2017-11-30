@@ -51,6 +51,21 @@
         <value xml:lang="vi">Vai trò</value>
     </property>
     
+    <property key="ProjectTotalHour">
+        <value xml:lang="en">Total hour </value>
+        <value xml:lang="vi">Tổng số giờ đề tài</value>
+    </property>
+
+    <property key="ProjectHourOfStaff">
+        <value xml:lang="en">Hour of staff</value>
+        <value xml:lang="vi">Số giờ tính cho thành viên</value>
+    </property>
+    
+    <property key="ProjectAcademicYear">
+        <value xml:lang="en">Academic Year</value>
+        <value xml:lang="vi">Năm kê khai</value>
+    </property>
+
     <property key="ApproverStaffId">
         <value xml:lang="en">Approver staff</value>
         <value xml:lang="vi">Nhân viên phê duyệt</value>
