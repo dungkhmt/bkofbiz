@@ -108,7 +108,7 @@
                     rippler = document.createElement('span');
                     size = ripple.offsetWidth;
                     pos = ripple.getBoundingClientRect();
-                    console.log(e, size, pos)
+
                     x = e.pageX - pos.left - (size / 2);
                     y = e.pageY - pos.top - (size / 2);
                     style = 'top:' + y + 'px; left: ' + x + 'px; height: ' + size + 'px; width: ' + size + 'px;';
@@ -224,7 +224,7 @@
 <#macro IconButton icon style="" styleIcon="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="" size="56px" colorTouchRipple="rgba(0, 0, 0, 0.25)">
     <#local code=random(1, 999999)?string["000000"] />
     <#assign sizeZ = size?matches(r"(-?\d+)(\w+)")/>
-	<#if !sizeZ>
+    <#if !sizeZ>
 		<#assign size="56px"/>
 		<#assign sizeZ = size?matches(r"(-?\d+)(\w+)")/>
 	</#if>
@@ -283,7 +283,7 @@
             <div id="icon-button-ripple-${code}">
                 <span id="icon-button-ripple-container-${code}" style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
                 <div style="transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; top: 0px;">
-                    <svg viewBox="0 0 24 24" style="${styleIcon}display: inline-block; color: ${color}; fill: ${color}; height: ${size}; width: ${sizeZ?groups[1]?number/2.5+sizeZ?groups[2]}; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; line-height: ${size};">
+                    <svg viewBox="0 0 24 24" style="${styleIcon}display: inline-block; color: ${color}; fill: ${color}; height: ${size}; width: ${sizeZ?groups[1]?number/2+sizeZ?groups[2]}; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; line-height: ${size};">
                         <path d="${icon}" style="margin-left: 0;"></path>
                     </svg>
                 </div>
@@ -324,7 +324,7 @@
                     rippler = document.createElement('span');
                     size = ripple.offsetWidth;
                     pos = ripple.getBoundingClientRect();
-                    console.log(e, size, pos)
+
                     x = e.pageX - pos.left - (size / 2);
                     y = e.pageY - pos.top - (size / 2);
                     style = 'z-index: 2; display: block; position: absolute; height: ${sizeZ?groups[1]?number/2.5+sizeZ?groups[2]}; width: ${sizeZ?groups[1]?number/2.5+sizeZ?groups[2]}; top: calc(50% - ${sizeZ?groups[1]?number/5+sizeZ?groups[2]}); left: calc(50% - ${sizeZ?groups[1]?number/5+sizeZ?groups[2]}); background: ${colorTouchRipple}; border-radius: 50%; transform: scale(0); animation: icon-button-ripple-${code} 1s;';
