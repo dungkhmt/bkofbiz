@@ -1,8 +1,8 @@
 <#include "util.ftl"/>
 <style>
-    .textfield-HintText-FloatingLabelText:focus-within div hr:nth-child(2) {
+    <#--  .textfield-HintText-FloatingLabelText:focus-within div hr:nth-child(2) {
     	transform: scaleX(1)!important;
-    }
+    }  -->
 
     .textfield-HintText-FloatingLabelText input:required:not(:invalid) ~ label{
     	transform: scale(0.75) translate(0px, -28px)!important;
@@ -17,15 +17,11 @@
     	transform: scale(0.75) translate(0px, -28px)!important;
     	color: rgb(0, 188, 212)!important;
     }
-
-    hr {
-        height: 0!important;
-    }
-
 </style>
 
 <#macro TextField type="text" field="" value="" id="" name="" placeholder="">
-    <div
+    <#local code=random(1, 999999)?string["000000"] />
+    <div id="textfield-${code}"
     	class="textfield-HintText-FloatingLabelText"
         style="font-size: 16px; line-height: 24px; width: 100%; height: 72px; display: inline-block; position: relative; background-color: transparent; font-family: Roboto, sans-serif; transition: height 200ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; cursor: auto;">
         <input type="${type}" id="${id}" name="${name}"
@@ -40,9 +36,18 @@
             ${placeholder}</div>
         <div>
             <hr aria-hidden="true" class="hr-no-color"
-                style="border-top: none rgb(224, 224, 224); border-left: none rgb(224, 224, 224); border-right: none rgb(224, 224, 224); border-bottom: 1px solid rgb(224, 224, 224); bottom: 8px; box-sizing: content-box; margin: 0px; position: absolute; width: 100%;" />
-            <hr aria-hidden="true" class="hr-color"
-                style="border-top: none rgb(0, 188, 212); border-left: none rgb(0, 188, 212); border-right: none rgb(0, 188, 212); border-bottom: 2px solid rgb(0, 188, 212); bottom: 8px; box-sizing: content-box; margin: 0px; position: absolute; width: 100%; transform: scaleX(0); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;" />
+                style="height: 0!important;border-top: none rgb(224, 224, 224); border-left: none rgb(224, 224, 224); border-right: none rgb(224, 224, 224); border-bottom: 1px solid rgb(224, 224, 224); bottom: 8px; box-sizing: content-box; margin: 0px; position: absolute; width: 100%;" />
+            <hr id="hr-${code}" aria-hidden="true" class="hr-color"
+                style="height: 0!important;border-top: none rgb(0, 188, 212); border-left: none rgb(0, 188, 212); border-right: none rgb(0, 188, 212); border-bottom: 2px solid rgb(0, 188, 212); bottom: 8px; box-sizing: content-box; margin: 0px; position: absolute; width: 100%; transform: scaleX(0); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;" />
         </div>
     </div>
+    <script>
+        var input = document.getElementById("textfield-${code}").children[0];
+        input.addEventListener("focusin", function(e) {
+            document.getElementById("hr-${code}").style.transform = "scaleX(1)";
+        });
+        input.addEventListener("focusout",  function(e) {
+            document.getElementById("hr-${code}").style.transform = "scaleX(0)";  
+        });
+    </script>
 </#macro>
