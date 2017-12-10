@@ -187,7 +187,7 @@ public class DataSampleService {
 		pGv.put("P_Lat", P_Lat);
 		pGv.put("P_Lng", P_Lng);
 		pGv.put("DS_Id", DS_Id);
-		pGv.put("P_AllowDrone", 1);
+		pGv.put("P_AllowDrone", (long)1);
 
 		delegator.create(pGv);
 		return p_id;
