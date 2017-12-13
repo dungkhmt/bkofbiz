@@ -33,14 +33,19 @@
     
     <service name="createProjectDeclaration" engine="java" 
     		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="createProjectDeclaration">
-    	<attribute name="projectCategoryId[]" mode="IN" type="List"></attribute>
-    	<attribute name="projectName" mode="IN" type="String"></attribute>
-    	<attribute name="startDate" mode="IN" type="String"></attribute>
-    	<attribute name="endDate" mode="IN" type="String"></attribute>
-    	<attribute name="projectStatusId[]" mode="IN" type="List"></attribute>
-    	<attribute name="researchProgram" mode="IN" type="String"></attribute>
-    	<attribute name="projectParticipationRoleId[]" mode="IN" type="List"></attribute>
-    	<attribute name="approverStaffId[]" mode="IN" type="List"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="projectName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectStatusId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="researchProgram" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectParticipationRoleId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="approverStaffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="totalhour" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="hourOfStaff" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="budget" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="sponsor" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
     	
     	<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -49,14 +54,19 @@
     <service name="updateProjectDeclaration" engine="java" 
     		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="updateProjectDeclaration">
     	<attribute name="projectDeclarationId" mode="IN" type="String"></attribute>
-    	<attribute name="projectCategoryId[]" mode="IN" type="List"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="projectName" mode="IN" type="String"></attribute>
-    	<attribute name="startDate" mode="IN" type="String"></attribute>
-    	<attribute name="endDate" mode="IN" type="String"></attribute>
-    	<attribute name="projectStatusId[]" mode="IN" type="List"></attribute>
-    	<attribute name="researchProgram" mode="IN" type="String"></attribute>
-    	<attribute name="projectParticipationRoleId[]" mode="IN" type="List"></attribute>
-    	<attribute name="approverStaffId" mode="IN" type="String"></attribute>
+    	<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectStatusId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="researchProgram" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectParticipationRoleId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="approverStaffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="totalhour" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="hourOfStaff" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="budget" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="sponsor" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
     	
     	<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>

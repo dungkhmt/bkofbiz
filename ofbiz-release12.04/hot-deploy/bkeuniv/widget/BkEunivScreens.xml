@@ -490,9 +490,13 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivProjectDeclarationUiLabels" map-name="projectDeclarationUiLabelMap" global="true"/>
+						
 				<service service-name="getProjectCategory" result-map="projectCategory"></service>
+			
 				<service service-name="getProjectStatus" result-map="projectStatus"></service>
 				<service service-name="getProjectParticipationRole" result-map="projectParticipationRole"></service>
+				<service service-name="getListAcademicYears" result-map="resultAcademicYears"></service>
+			
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
