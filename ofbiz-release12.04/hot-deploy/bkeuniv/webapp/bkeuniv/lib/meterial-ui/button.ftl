@@ -5,7 +5,9 @@
 
 <#macro FlatButton style="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="">
     <#local code=random(1, 999999)?string["000000"] />
-
+	<#if id!="">
+		<#local code=id />
+	</#if>
     <#switch type>
         <#case "default">
             <#local color="rgba(0, 0, 0, 0.87)" />

@@ -35,7 +35,7 @@
 			<br />
 			<@IconButton icon="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" type="primary" size="40px"/>
 			
-			<@TextField />
+			<@TextField field="field" id="a" name="name" placeholder="placeholder"/>
 			<@ListItem primaryText="Test" linkTo="google">
 				<@ListItem primaryText="Test" level=1 linkTo=""/>
 				<@ListItem primaryText="Test" level=1/>
