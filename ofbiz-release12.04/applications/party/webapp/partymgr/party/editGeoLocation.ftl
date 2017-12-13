@@ -17,7 +17,6 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 <script type="text/javascript">
     function load() {
         var geocoder = new google.maps.Geocoder();

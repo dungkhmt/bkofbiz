@@ -251,8 +251,8 @@
 			    type: 'post',
 			    dataType: "json",
 			    success: function(data) {
+					setTimeout(function(){ loader.close();}, 500);
 					
-					loader.close();
 			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>

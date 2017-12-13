@@ -10,12 +10,32 @@
     <@ListItem primaryText="Test" level=1/>
 </@ListItem>  -->
 <@Body>
+	
 	<@Loader handleToggle="test">
 		<@IconSpinner strokeWidth=4/>
 	</@Loader>
-	<@FlatButton />
+	
 	<@SideBar open=true handleToggle="menu" openSecondary=true>
 		<@List>
+			<@FlatButton>
+				DEFAULT
+			</@FlatButton>
+			<@RaisedButton type="primary">
+				PRIMARY
+			</@RaisedButton>
+			<@RaisedButton type="disabled">
+				DISABLE
+			</@RaisedButton>
+			<@FloatingActionButton type="primary" icon="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z">
+				PRIMARY
+			</@FloatingActionButton>
+			<@FloatingActionButton type="primary" icon="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" mini=true>
+				PRIMARY MINI
+			</@FloatingActionButton>
+			<br />
+			<@IconButton icon="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" type="primary" size="40px"/>
+			
+			<@TextField field="field" id="a" name="name" placeholder="placeholder"/>
 			<@ListItem primaryText="Test" linkTo="google">
 				<@ListItem primaryText="Test" level=1 linkTo=""/>
 				<@ListItem primaryText="Test" level=1/>
@@ -27,9 +47,10 @@
 			</@ListItem>
 		</@List>
 	</@SideBar>
-	<@TextField />
+	
+	
 	<!-- Test body -->
-	<div style="flex: 1 1 0%; padding: 2em;">
+	<div style="flex: 1 1 0%; padding: 2em; margin-top: 50px">
 	    <div class="list-page">
 	        <div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; z-index: 1; opacity: 1;">
 	            <div style="padding-bottom: 0px;">
