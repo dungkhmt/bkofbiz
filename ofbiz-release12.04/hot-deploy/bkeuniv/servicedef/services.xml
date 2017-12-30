@@ -58,6 +58,12 @@
     	<attribute name="departments" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getFaculties" engine="java" 
+    		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getFaculties">
+    	<attribute name="universityId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="faculties" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="getAward" engine="java" 
     		location="src.org.ofbiz.bkeuniv.award.Award" invoke="getAward">
     	<attribute name="awardId" mode="IN" type="String" optional="true"></attribute>

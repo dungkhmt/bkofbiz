@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.workprogress;
+package org.ofbiz.bkeuniv.workprogress;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

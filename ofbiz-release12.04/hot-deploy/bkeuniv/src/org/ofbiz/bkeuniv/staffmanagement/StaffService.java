@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.staffmanagement;
+package org.ofbiz.bkeuniv.staffmanagement;
 
 import java.io.PrintWriter;
 import java.sql.Date;

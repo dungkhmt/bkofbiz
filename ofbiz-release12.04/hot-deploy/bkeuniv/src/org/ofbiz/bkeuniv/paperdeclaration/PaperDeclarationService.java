@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.paperdeclaration;
+package org.ofbiz.bkeuniv.paperdeclaration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,7 +38,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import src.org.ofbiz.utils.BKEunivUtils;
+import org.ofbiz.utils.BKEunivUtils;
 
 import java.util.List;
 
@@ -862,8 +862,8 @@ public class PaperDeclarationService {
 			Map<String, Object> rs = dispatcher.runSync(
 					"createStaffPaperDeclaration", input);
 
-			List<GenericValue> papers = FastList.newInstance();
-			papers.add(p);
+			//List<GenericValue> papers = FastList.newInstance();
+			//papers.add(p);
 			retSucc.put("papers", p);
 			retSucc.put("message", "Successfully");
 		} catch (Exception ex) {

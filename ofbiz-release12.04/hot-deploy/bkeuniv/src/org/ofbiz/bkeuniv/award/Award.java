@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.award;
+package org.ofbiz.bkeuniv.award;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
-import src.org.ofbiz.bkeuniv.educationprogress.EducationProgress;
-import src.org.ofbiz.utils.BKEunivUtils;
+import org.ofbiz.bkeuniv.educationprogress.EducationProgress;
+import org.ofbiz.utils.BKEunivUtils;
 
 public class Award {
 	

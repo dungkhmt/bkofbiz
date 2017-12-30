@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.academicyear;
+package org.ofbiz.bkeuniv.academicyear;
 
 import java.io.PrintWriter;
 import java.util.List;

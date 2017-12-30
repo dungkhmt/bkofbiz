@@ -1,4 +1,4 @@
-package src.org.ofbiz.permission;
+package org.ofbiz.permission;
 
 import java.io.PrintWriter;
 import java.sql.Timestamp;

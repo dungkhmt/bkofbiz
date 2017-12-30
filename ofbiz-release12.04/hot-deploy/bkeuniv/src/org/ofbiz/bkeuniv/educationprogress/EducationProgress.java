@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.educationprogress;
+package org.ofbiz.bkeuniv.educationprogress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
-import src.org.ofbiz.utils.BKEunivUtils;
+import org.ofbiz.utils.BKEunivUtils;
 
 public class EducationProgress {
 	public final static String module = EducationProgress.class.getName();

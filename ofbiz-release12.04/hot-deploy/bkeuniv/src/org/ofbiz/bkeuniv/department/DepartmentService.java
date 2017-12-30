@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.department;
+package org.ofbiz.bkeuniv.department;
 
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +38,31 @@ public class DepartmentService {
 			List<GenericValue> list = delegator.findList("Department", 
 					EntityCondition.makeCondition(conds), null, null, null, false);				
 			result.put("departments", list);
+			return result;
+		
+		} catch (Exception e) {
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+	}
+	public static Map<String, Object> getFaculties(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		String universityId = (String)context.get("universityId");
+		List<EntityCondition> conds = FastList.newInstance();
+		if(universityId == null)
+			universityId = "HUST";
+		
+		if(universityId != null && !universityId.equals("")){
+			conds.add(EntityCondition.makeCondition("universityId", EntityOperator.EQUALS,universityId));
+		}
+		
+		try {
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+
+			List<GenericValue> list = delegator.findList("Faculty", 
+					EntityCondition.makeCondition(conds), null, null, null, false);				
+			result.put("faculties", list);
 			return result;
 		
 		} catch (Exception e) {

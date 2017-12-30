@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.scientificserviceexperience;
+package org.ofbiz.bkeuniv.scientificserviceexperience;
 
 import java.util.HashMap;
 import java.util.List;

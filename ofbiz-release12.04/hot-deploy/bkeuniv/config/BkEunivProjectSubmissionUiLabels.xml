@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <property key="TitleProjectSubmissionManagement">
+        <value xml:lang="en">Project proposal submission management</value>
+        <value xml:lang="vi">Quản lý đăng ký đề tài</value>
+    </property>
+    
+    <property key="ProjectProposalName">
+        <value xml:lang="en">Project proposal name</value>
+        <value xml:lang="vi">Tên đề tài</value>
+    </property>
+    
+    <property key="ProjectCategoryName">
+        <value xml:lang="en">Project category name</value>
+        <value xml:lang="vi">Loại hình đề tài</value>
+    </property>
+
+    <property key="ProjectCallName">
+        <value xml:lang="en">Project Call</value>
+        <value xml:lang="vi">Đợt gọi đề tài</value>
+    </property>
+
+    <property key="Year">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="vi">Năm</value>
+    </property>
+    
+    <property key="Category">
+        <value xml:lang="en">Category</value>
+        <value xml:lang="vi">Loại hình</value>
+    </property>
+    
+    <property key="CreateStaff">
+        <value xml:lang="en">Created by</value>
+        <value xml:lang="vi">Người tạo</value>
+    </property>
+    
+    <property key="StartDate">
+        <value xml:lang="en">Start Date</value>
+        <value xml:lang="vi">Ngày bắt đầu</value>
+    </property>
+    
+    <property key="EndDate">
+        <value xml:lang="en">End Date</value>
+        <value xml:lang="vi">Ngày kết thúc</value>
+    </property>
+    
+    <property key="Faculty">
+        <value xml:lang="en">Faculty</value>
+        <value xml:lang="vi">Khoa, viện</value>
+    </property>
+    
+    <property key="Submit">
+        <value xml:lang="en">Submit</value>
+        <value xml:lang="vi">Nộp thuyết minh</value>
+    </property>
+    
+    <property key="WorkPackage">
+        <value xml:lang="en">Work package</value>
+        <value xml:lang="vi">Nội dung công việc</value>
+    </property>
+    
+    <property key="Products">
+        <value xml:lang="en">Products</value>
+        <value xml:lang="vi">Sản phẩm</value>
+    </property>
+    
+    <property key="ViewDetail">
+        <value xml:lang="en">Detail</value>
+        <value xml:lang="vi">Chi tiết thuyết minh đề tài</value>
+    </property>
+
+</resource>

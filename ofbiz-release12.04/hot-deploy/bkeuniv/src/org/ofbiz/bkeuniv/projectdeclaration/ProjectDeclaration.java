@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.projectdeclaration;
+package org.ofbiz.bkeuniv.projectdeclaration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

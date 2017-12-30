@@ -1,4 +1,4 @@
-package src.org.ofbiz.utils;
+package org.ofbiz.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;

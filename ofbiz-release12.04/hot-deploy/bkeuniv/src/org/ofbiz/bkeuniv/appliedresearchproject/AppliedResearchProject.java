@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.appliedresearchproject;
+package org.ofbiz.bkeuniv.appliedresearchproject;
 
 import java.util.ArrayList;
 import java.util.Arrays;

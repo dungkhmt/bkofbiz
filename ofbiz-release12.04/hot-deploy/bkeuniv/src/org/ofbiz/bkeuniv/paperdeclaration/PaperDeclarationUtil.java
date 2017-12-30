@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.paperdeclaration;
+package org.ofbiz.bkeuniv.paperdeclaration;
 
 import java.util.HashMap;
 import java.util.HashSet;

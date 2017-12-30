@@ -4029,6 +4029,8 @@
 <ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
 <ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
 
+<ProjectStatus projectStatusId="CANCELLED" projectStatusName="Đã huỷ"/>
+<ProjectStatus projectStatusId="CREATED" projectStatusName="Tạo mới"/>
 <ProjectStatus projectStatusId="SUBMITTED" projectStatusName="Đã nộp"/>
 <ProjectStatus projectStatusId="APPROVED" projectStatusName="Đã được phê duyệt"/>
 <ProjectStatus projectStatusId="NON_APPROVED" projectStatusName="Không được phê duyệt"/>
@@ -6672,7 +6674,7 @@
 <PaperCategoryHourBudget paperCategoryId="JINT_SCOPUS" academicYearId="2015-2016" hour="900" budget="2000000"/>
 
 
-
+<ProjectProposalStatus statusId="CANCELLED" statusName="Đã huỷ"/>
 <ProjectProposalStatus statusId="SUBMITTED" statusName="Đã nộp"/>
 <ProjectProposalStatus statusId="CREATED" statusName="Tạo mới"/>
 <ProjectProposalStatus statusId="REJECTED" statusName="Từ chối"/>
@@ -6704,5 +6706,7 @@
     <WorkProgress workProgressId="10000" staffId="dung.phamquang@hust.edu.vn" period="2003-2006" position="Tr&#7907; gi&#7843;ng" specialization="Khoa h&#7885;c m&#225;y t&#237;nh" institution="Vi&#7879;n C&#244;ng ngh&#7879; Th&#244;ng tin v&#224; Truy&#7873;n th&#244;ng" lastUpdatedStamp="2017-10-21 16:19:57.331" lastUpdatedTxStamp="2017-10-21 16:19:57.321" createdStamp="2017-10-21 16:19:57.331" createdTxStamp="2017-10-21 16:19:57.321"/>
     <WorkProgress workProgressId="10001" staffId="dung.phamquang@hust.edu.vn" period="2007-2011" position="Tr&#7907; gi&#7843;ng" specialization="Khoa h&#7885;c m&#225;y t&#237;nh" institution="Tr&#432;&#7901;ng UCL" lastUpdatedStamp="2017-10-21 16:20:20.959" lastUpdatedTxStamp="2017-10-21 16:20:20.959" createdStamp="2017-10-21 16:20:20.959" createdTxStamp="2017-10-21 16:20:20.959"/>
     <WorkProgress workProgressId="10002" staffId="dung.phamquang@hust.edu.vn" period="2012-nay" position="Gi&#7843;ng vi&#234;n" specialization="Khoa h&#7885;c m&#225;y t&#237;nh" institution="Vi&#7879;n CNTT&amp;TT" lastUpdatedStamp="2017-10-21 16:20:39.557" lastUpdatedTxStamp="2017-10-21 16:20:39.556" createdStamp="2017-10-21 16:20:39.557" createdTxStamp="2017-10-21 16:20:39.556"/>
+	
+	<ProjectCall projectCallId="00001" projectCallName="Đề tài cơ sở phân cấp 2018" year="2018" projectCategoryId="INST_PROJ"/>
 	
 </entity-engine-xml>
