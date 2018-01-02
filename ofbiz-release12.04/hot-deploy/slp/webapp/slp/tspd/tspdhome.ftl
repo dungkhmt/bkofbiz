@@ -8,10 +8,9 @@
 
 	<div class="row">
 		<!-- <form action="tspd/uploadSolution" method="POST" id="tspdsolution" commandName="tspdsolution" enctype="multipart/form-data" role="form" class="form-horizontal"> -->
-			<!-- <input id="input-solution" path="tspdSolutionFile" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" /> -->
-			<!-- <a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a> -->
+			
 		<!-- </form> -->
-		<form action="tspd-solve-ls" method="POST" commandName="tspd" role="form" class="form-horizontal">
+		<form action="tspd-solve-ls" method="POST" id="tspdsolution" commandName="tspd" role="form" class="form-horizontal">
 			<div class="row">
 				<div class="col-lg-10">
 					<label class="control-label col-lg-1">DataSet</label>
@@ -69,7 +68,10 @@
 						<button class="btn btn-primary col-lg-offset-5" onclick="run_algorithm();" type="submit">${slplabel.start}</button>
 						<!-- <a class="btn btn-primary" onclick="save_file(this);">${slplabel.saveinput}</a> -->
 						<!-- <a class="btn btn-primary" onclick="upload_file();">${slplabel.uploadinput}</a> -->
-						<!-- <input id="file-tsp-data" class="file file-loading" type="file" style="display:none"/>	 -->
+						<!-- <input id="file-tsp-data" class="file file-loading" type="file" style="display:none"/> -->
+						<input id="tspSolutionText" name="tspSolutiontext" type="hidden" class="file file-loading " /> 
+						<input id="input-solution" name="tspdSolutionFile" type="file" class="file file-loading " style="display:none" /> 
+						<a class="btn btn-primary " id="submit-button-solution" onclick="uploadSolution()" >${slplabel.uploadsolution}</a>
 					</div>
 				</div>		
 			</div>
@@ -216,7 +218,7 @@ function upload_file(){
 function uploadSolution(){
 	$('#input-solution').click();
 }
-(function(){
+/*(function(){
 
     function onChange(event) {
         var reader = new FileReader();
@@ -262,11 +264,19 @@ function uploadSolution(){
     }
 
     document.getElementById('file-tsp-data').addEventListener('change', onChange);
-}());
+}());*/
 (function(){
     function onChange(event) {
     	console.log("input-solution");
-        $("#tspdsolution").submit();
+    	var reader = new FileReader();
+        reader.onload = onReaderLoad;
+        reader.readAsText(event.target.files[0]);
+    }
+    function onReaderLoad(event){
+        //console.log(event.target.result);
+        var obj = JSON.parse(event.target.result);
+		$('#tspSolutionText').val(JSON.stringify(obj));
+         $("#tspdsolution").submit();
     }
     document.getElementById('input-solution').addEventListener('change', onChange);
 }());

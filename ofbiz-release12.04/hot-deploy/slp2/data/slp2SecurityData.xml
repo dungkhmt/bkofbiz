@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the slp2 Component." permissionId="slp2_VIEW"/>
+    <SecurityPermission description="Create operations in the slp2 Component." permissionId="slp2_CREATE"/>
+    <SecurityPermission description="Update operations in the slp2 Component." permissionId="slp2_UPDATE"/>
+    <SecurityPermission description="Delete operations in the slp2 Component." permissionId="slp2_DELETE"/>
+    <SecurityPermission description="ALL operations in the slp2 Component." permissionId="slp2_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="slp2_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="slp2_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="slp2_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="slp2_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="slp2_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="slp2_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="slp2_ADMIN"/>
+</entity-engine-xml>
