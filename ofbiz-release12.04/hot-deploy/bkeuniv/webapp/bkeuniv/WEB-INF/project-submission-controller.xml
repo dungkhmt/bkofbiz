@@ -75,6 +75,20 @@
 		<response name="error" type="view" value="view-form-add-workpackages-of-project-proposals" />
 	</request-map>
 	
+	<request-map uri="form-add-project-call">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-form-add-project-call" />
+		<response name="error" type="view" value="view-form-add-project-call" />
+	</request-map>
+
+	<request-map uri="add-a-project-call">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="addProjectCall" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDPROJECTCALL"/>
+	</request-map>
+	
+	
 	<request-map uri="add-a-workpackage-project-proposal">
 		<security https="true" auth="true"/>
 		<event type="java" invoke="addWorkpackageProject" 
@@ -97,6 +111,13 @@
 		<event type="java" invoke="addProductProject" 
 		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
 		<response name="AttachementSuccess" type="view" value="ADDPRODUCTPROJECT"/>
+	</request-map>
+	
+	<request-map uri="add-a-member-project-proposal-jury">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="addProjectProposalJuryMember" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDPROJECTPROPOSALJURYMEMBER"/>
 	</request-map>
 
 	<request-map uri="detail-research-project-proposal">
@@ -125,6 +146,94 @@
 		<response name="error" type="view" value="view-list-research-project-proposal" />
 	</request-map>
 	
+	<request-map uri="project-call-management">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-project-call-management" />
+		<response name="error" type="view" value="view-project-call-management" />
+	</request-map>
+	
+	<request-map uri="research-project-jury">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-research-project-jury" />
+		<response name="error" type="view" value="view-research-project-jury" />
+	</request-map>
+
+	<request-map uri="form-add-project-proposal-jury">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-form-add-project-proposal-jury" />
+		<response name="error" type="view" value="view-form-add-project-proposal-jury" />
+	</request-map>
+	<request-map uri="add-a-project-proposal-jury">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="addProjectProposalJury" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDPROJECTPROPOSALJURY"/>
+	</request-map>
+	
+	<request-map uri="store-reviewer-project-proposal-assignment">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="storeReviewerProjectProposalsAssignment" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDPROJECTPROPOSALJURY"/>
+	</request-map>
+	
+	<request-map uri="update-review-project-proposal">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="updateReviewProjectProposal" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDPROJECTPROPOSALJURY"/>
+	</request-map>
+
+	<request-map uri="confirm-review-project-proposal">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="confirmReviewProjectProposal" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="CONFIRMPROJECTPROPOSALJURY"/>
+	</request-map>
+
+	<request-map uri="get-list-project-proposals-assigned-for-review">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="getListProjectProposalsAssignedForReviewJSON" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="GETLISTPROPOSALASSIGNEDFORREVIEW"/>
+	</request-map>
+	
+	<request-map uri="research-project-jury-members">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-research-project-jury-members" />
+		<response name="error" type="view" value="view-research-project-jury-members" />
+	</request-map>
+	
+	<request-map uri="research-project-jury-assgin-reviewer">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-research-project-jury-assgin-reviewer" />
+		<response name="error" type="view" value="view-research-project-jury-assgin-reviewer" />
+	</request-map>
+	
+	<request-map uri="research-project-jury-members-evaluate">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-research-project-jury-members-evaluate" />
+		<response name="error" type="view" value="view-research-project-jury-members-evaluate" />
+	</request-map>
+
+	<request-map uri="form-evaluate-research-project-proposal">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-form-evaluate-research-project-proposal" />
+		<response name="error" type="view" value="view-form-evaluate-research-project-proposal" />
+	</request-map>
+	
+	<request-map uri="detail-evaluation-project-proposal">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-detail-evaluation-project-proposal" />
+		<response name="error" type="view" value="view-detail-evaluation-project-proposal" />
+	</request-map>
+
+	<request-map uri="list-research-project-proposal-evaluation-result">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-list-research-project-proposal-evaluation-result" />
+		<response name="error" type="view" value="view-list-research-project-proposal-evaluation-result" />
+	</request-map>
+
   <view-map name="view-members-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#MembersOfProjectProposal"/>
   <view-map name="view-workpackages-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#WorkpackagesOfProjectProposal"/>
   <view-map name="view-form-add-workpackages-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddWorkpackagesOfProjectProposal"/>
@@ -135,5 +244,19 @@
   <view-map name="view-detail-research-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposal"/>
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>
     
+  <view-map name="view-project-call-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallManagement"/>
+  <view-map name="view-form-add-project-call" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProjectCall"/>
+
+  <view-map name="view-research-project-jury" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ResearchProjectProposalJury"/>
+  <view-map name="view-form-add-project-proposal-jury" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProjectProposalJury"/>
     
+  <view-map name="view-research-project-jury-members" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#MembersOfProjectProposalJury"/>
+  <view-map name="view-research-project-jury-assgin-reviewer" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectProposalJuryAssignReviewers"/>
+  <view-map name="view-research-project-jury-members-evaluate" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ResearchProjectJuryMemberEvaluate"/>
+  <view-map name="view-form-evaluate-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormEvaluateResearchProjectProposal"/>
+    
+  <view-map name="view-detail-evaluation-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailEvaluationResearchProjectProposal"/>
+
+  <view-map name="list-research-project-proposal-evaluation-result" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposalEvaluationResult"/>
+
 </site-conf>

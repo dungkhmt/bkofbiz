@@ -367,14 +367,25 @@
             <response name="AttachementSuccess" type="view" value="YEARSFACULTIES"/>
            
     </request-map>    
+	
 	<request-map uri="get-departments-of-faculty">
             <security https="true" auth="true"/>
           
-            <event type="java" path="src.org.ofbiz.utils.BKEunivUtils" 
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
                      invoke="getListDepartmentsOfFacultyJSON"/>
             <response name="AttachementSuccess" type="view" value="DEPARTMENTSFACULTY"/>
            
     </request-map>    
+    
+	<request-map uri="get-staffs-of-department">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
+                     invoke="getListStaffsOfDepartmentJSON"/>
+            <response name="AttachementSuccess" type="view" value="STAFFSDEPARTMENT"/>
+           
+    </request-map>    
+
 	<request-map uri="update-staff-info">
             <security https="true" auth="true"/>
           

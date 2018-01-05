@@ -15,7 +15,7 @@
 
     
     <service name="getPermissionFunctions" engine="java"
-            location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
+            location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
        <attribute name="permissionFunctions" mode="OUT" type="List"></attribute>
     </service>
     

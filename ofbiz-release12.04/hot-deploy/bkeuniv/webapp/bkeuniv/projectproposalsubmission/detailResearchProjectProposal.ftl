@@ -11,6 +11,11 @@
 	</tr>
 	
 	<tr>
+		<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">
+		Xem danh gia chi tiet</a>${researchProjectProposalId}</td>
+	</tr>
+	
+	<tr>
 		<td>		
 		<div class="info-box">
 			Ten de tai: ${resultProjectProposal.projectproposal.researchProjectProposalName}

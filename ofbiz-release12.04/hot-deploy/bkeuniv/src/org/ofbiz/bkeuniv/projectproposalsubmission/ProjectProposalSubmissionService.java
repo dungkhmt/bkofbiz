@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.List;
 
@@ -36,8 +37,8 @@ import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.util.EntityFindOptions;
 
 public class ProjectProposalSubmissionService {
-	public static String STATUS_CREATED = "CREATED";
-	public static String STATUS_CANCELLED = "CANCELLED";
+	//public static String STATUS_CREATED = "CREATED";
+	//public static String STATUS_CANCELLED = "CANCELLED";
 	
 	public static String module = ProjectProposalSubmissionService.class.getName();
 
@@ -65,6 +66,111 @@ public class ProjectProposalSubmissionService {
 		return fullname;
 	}
 
+	public static void enableReviewerProposalAssignment(Delegator delegator, String juryId, String staffId, 
+			String researchProjectProposalId){
+		try{
+			//GenericValue gv = delegator.findOne("ReviewerResearchProposal", 
+			//	UtilMisc.toMap("juryId", juryId, "staffId", staffId, "researchProjectProposalId", researchProjectProposalId), 
+			//	false);
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId", EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS,staffId));
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS,researchProjectProposalId));
+			List<GenericValue> list = delegator.findList("ReviewerResearchProposal", 
+					EntityCondition.makeCondition(conds), 
+					null,null,null, false);
+			if(list != null && list.size() > 0){
+				GenericValue gv = list.get(0);
+				gv.put("statusId", "ASSIGNED_REVIEWER");
+				delegator.store(gv);
+			}else{
+				GenericValue gv = delegator.makeValue("ReviewerResearchProposal");
+				String reviewerResearchProposalId = delegator.getNextSeqId("ReviewerResearchProposal");
+				gv.put("reviewerResearchProposalId", reviewerResearchProposalId);
+				gv.put("juryId", juryId);
+				gv.put("staffId", staffId);
+				gv.put("researchProjectProposalId", researchProjectProposalId);
+				gv.put("statusId", "ASSIGNED_REVIEWER");
+				delegator.create(gv);
+				Debug.log(module + "::enableReviewerProposalAssignment, reviewerResearchProposalId = " + reviewerResearchProposalId);
+				
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public static void disableReviewerProposalAssignment(Delegator delegator, String juryId, String staffId, 
+			String researchProjectProposalId){
+		try{
+			//GenericValue gv = delegator.findOne("ReviewerResearchProposal", 
+			//	UtilMisc.toMap("juryId", juryId, "staffId", staffId, "researchProjectProposalId", researchProjectProposalId), 
+			//	false);
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId", EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS,staffId));
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS,researchProjectProposalId));
+			List<GenericValue> list = delegator.findList("ReviewerResearchProposal", 
+					EntityCondition.makeCondition(conds), 
+					null,null,null, false);
+			if(list != null && list.size() > 0){
+				for(GenericValue gv: list){
+					gv.put("statusId", "CANCELLED");
+					delegator.store(gv);
+				}
+			}else{
+				/*
+				gv = delegator.makeValue("ReviewerResearchProposal");
+				gv.put("juryId", juryId);
+				gv.put("staffId", staffId);
+				gv.put("researchProjectProposalId", researchProjectProposalId);
+				gv.put("statusId", "ASSIGNED_REVIEWER");
+				delegator.create(gv);
+				*/
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public static void storeReviewerProjectProposalsAssignment(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		String juryId = request.getParameter("juryId");
+		String staffId = request.getParameter("staffId");
+		String sel_proposalIds = request.getParameter("sel_proposalIds");
+		String unsel_proposalIds = request.getParameter("unsel_proposalIds");
+		
+		
+		Debug.log(module + "::storeReviewerProjectProposalsAssignment, staffId = " + staffId +
+				", sel_proposalIds = " + sel_proposalIds + ", unsel_proposalIds = " + unsel_proposalIds + ", juryId = " + juryId);
+		try{
+			// ENABLE selected porposal
+			String[] researchProjectProposalId = sel_proposalIds.split(",");
+			for(int i = 0; i < researchProjectProposalId.length; i++){
+				enableReviewerProposalAssignment(delegator, juryId, staffId, researchProjectProposalId[i]);
+			}
+			//DISABLE un_selected proposal
+			researchProjectProposalId = unsel_proposalIds.split(",");
+			for(int i = 0; i < researchProjectProposalId.length; i++){
+				disableReviewerProposalAssignment(delegator, juryId, staffId, researchProjectProposalId[i]);
+			}
+			
+			
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
 	public static void addProductProject(HttpServletRequest request, 
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -97,6 +203,248 @@ public class ProjectProposalSubmissionService {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+
+	public static void addProjectProposalJury(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		String facultyId = request.getParameter("facultyId");
+		String juryName = request.getParameter("juryName");
+		String projectCallId = request.getParameter("projectCallId");
+		
+		
+		Debug.log(module + "::addProjectProposalJury, facultyId = " + facultyId +
+				", juryName = " + juryName + ", projectCallId = " + projectCallId);
+		try{
+			GenericValue gv = delegator.makeValue("Jury");
+			String juryId = delegator.getNextSeqId("Jury");
+			
+			gv.put("facultyId", facultyId);
+			gv.put("juryName", juryName);
+			gv.put("projectCallId", projectCallId);
+			gv.put("juryId", juryId);
+			
+			delegator.create(gv);
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	public static Map<String, Object> getReviewProjectProposal(DispatchContext ctx, Map<String, ? extends Object> context){
+		Delegator delegator = ctx.getDelegator();
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		try{
+			String reviewerResearchProposalId = (String) context.get("reviewerResearchProposalId");
+			GenericValue gv = delegator.findOne("ReviewerResearchProposal",
+					UtilMisc.toMap("reviewerResearchProposalId", reviewerResearchProposalId), false);
+			retSucc.put("reviewprojectproposal", gv);
+			
+			return retSucc;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+	}
+
+	public static Map<String, Object> getListReviewsOfProjectProposal(DispatchContext ctx, Map<String, ? extends Object> context){
+		Delegator delegator = ctx.getDelegator();
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		try{
+			String researchProjectProposalId = (String) context.get("researchProjectProposalId");
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId", 
+					EntityOperator.EQUALS,researchProjectProposalId));
+			conds.add(EntityCondition.makeCondition("statusId", 
+					EntityOperator.EQUALS,ProjectProposalSubmissionServiceUtil.STATUS_APPROVED));
+			
+			List<GenericValue> list = delegator.findList("ReviewerResearchProposalView", 
+					EntityCondition.makeCondition(conds), null,null,null, false);
+			
+			retSucc.put("reviewprojectproposals", list);
+			
+			return retSucc;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+	}
+	
+	public static void updateReviewProjectProposal(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		try{
+			String reviewerResearchProposalId = request.getParameter("reviewerResearchProposalId");
+			Long evaluationInnovation = Long.valueOf(request.getParameter("evaluationInnovation"));
+			Long evaluationMotivation = Long.valueOf(request.getParameter("evaluationMotivation"));
+			Long evaluationApplicability = Long.valueOf(request.getParameter("evaluationApplicability"));
+			Long evaluationResearchMethod = Long.valueOf(request.getParameter("evaluationResearchMethod"));
+			
+			Long evaluationResearchContent = Long.valueOf(request.getParameter("evaluationResearchContent"));
+			Long evaluationPaper = Long.valueOf(request.getParameter("evaluationPaper"));
+			Long evaluationProduct = Long.valueOf(request.getParameter("evaluationProduct"));
+			Long evaluationPatent = Long.valueOf(request.getParameter("evaluationPatent"));
+			Long evaluationGraduateStudent = Long.valueOf(request.getParameter("evaluationGraduateStudent"));
+			Long evaluationYoungResearcher = Long.valueOf(request.getParameter("evaluationYoungResearcher"));
+			Long evaluationEducation = Long.valueOf(request.getParameter("evaluationEducation"));
+			Long evaluationReasonableBudget = Long.valueOf(request.getParameter("evaluationReasonableBudget"));
+			
+			Long totalEvaluation = evaluationInnovation +
+					evaluationMotivation + 
+					evaluationApplicability +
+					evaluationResearchMethod + 
+					evaluationResearchContent +
+					evaluationPaper +
+					evaluationProduct +
+					evaluationPatent +
+					evaluationGraduateStudent +
+					evaluationYoungResearcher +
+					evaluationEducation +
+					evaluationReasonableBudget;
+			
+			Debug.log(module + "::updateReviewProjectProposal, reviewerResearchProposalId = " + reviewerResearchProposalId +
+					", evaluationInnovation = " + evaluationInnovation + ", evaluationMotivation = " + evaluationMotivation
+					+ ", evaluationApplicability = " + evaluationApplicability);
+
+			
+			GenericValue gv = delegator.findOne("ReviewerResearchProposal",
+					UtilMisc.toMap("reviewerResearchProposalId", reviewerResearchProposalId), false);
+			gv.put("evaluationInnovation", evaluationInnovation);
+			gv.put("evaluationMotivation", evaluationMotivation);
+			gv.put("evaluationApplicability", evaluationApplicability);
+			gv.put("evaluationResearchMethod", evaluationResearchMethod);
+			
+			gv.put("evaluationResearchContent", evaluationResearchContent);
+			gv.put("evaluationPaper", evaluationPaper);
+			gv.put("evaluationProduct", evaluationProduct);
+			gv.put("evaluationPatent", evaluationPatent);
+			gv.put("evaluationGraduateStudent", evaluationGraduateStudent);
+			gv.put("evaluationYoungResearcher", evaluationYoungResearcher);
+			gv.put("evaluationEducation", evaluationEducation);
+			gv.put("evaluationReasonableBudget", evaluationReasonableBudget);
+			
+			gv.put("totalEvaluation", totalEvaluation);
+			
+			delegator.store(gv);
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public static void confirmReviewProjectProposal(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		try{
+			String reviewerResearchProposalId = request.getParameter("reviewerResearchProposalId");
+			Debug.log(module + "::updateReviewProjectProposal, reviewerResearchProposalId = "
+			+ reviewerResearchProposalId);
+					
+			
+			GenericValue gv = delegator.findOne("ReviewerResearchProposal",
+					UtilMisc.toMap("reviewerResearchProposalId", reviewerResearchProposalId), false);
+			
+			gv.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_APPROVED);
+			
+			delegator.store(gv);
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	public static void addProjectCall(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		String projectCategoryId = request.getParameter("projectCategoryId");
+		String projectCallName = request.getParameter("projectCallName");
+		String year = request.getParameter("year");
+		
+		Debug.log(module + "::addProjectCall, projectCategoryId = " + projectCategoryId + 
+				", projectCallName = " + projectCallName + ", year  = " + year);
+		try{
+			GenericValue gv = delegator.makeValue("ProjectCall");
+			String projectCallId = delegator.getNextSeqId("ProjectCall");
+			
+			gv.put("projectCallId", projectCallId);
+			gv.put("projectCallName", projectCallName);
+			gv.put("projectCategoryId", projectCategoryId);
+			gv.put("year", year);
+			
+			delegator.create(gv);
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	public static void addProjectProposalJuryMember(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		String staffId = request.getParameter("staffId");
+		String juryRoleTypeId = request.getParameter("juryRoleTypeId");
+		String juryId = request.getParameter("juryId");
+		
+		Debug.log(module + "::addProjectProposalJuryMember, staffId = " + staffId + 
+				", juryRoleTypeId = " + juryRoleTypeId + ", juryId  = " + juryId);
+		try{
+			GenericValue gv = delegator.makeValue("JuryMember");
+			String juryMemberId = delegator.getNextSeqId("JuryMember");
+			
+			gv.put("staffId", staffId);
+			gv.put("juryRoleTypeId", juryRoleTypeId);
+			gv.put("juryId", juryId);
+			gv.put("juryMemberId", juryMemberId);
+			
+			delegator.create(gv);
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
 	}
 
 	public static void addWorkpackageProject(HttpServletRequest request, 
@@ -138,6 +486,45 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 		}
 	}
+	
+
+	public static Map<String, Object> getMembersOfResearchProjectProposalJury(DispatchContext ctx, 
+			Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String juryId = (String)context.get("juryId");
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId",EntityOperator.EQUALS,juryId));
+			List<GenericValue> list = delegator.findList("JuryMemberView", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			Debug.log(module + "::getMembersOfResearchProjectProposalJury, list.sz = " + list.size());
+			retSucc.put("members", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	public static Map<String, Object> getListJuryRoleTypes(DispatchContext ctx, 
+			Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			List<GenericValue> list = delegator.findList("JuryRoleType", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			Debug.log(module + "::getListJuryRoleTypes, list.sz = " + list.size());
+			retSucc.put("juryRoleTypes", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> getProjectProposalContentItem(DispatchContext ctx, 
 			Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -241,7 +628,7 @@ public class ProjectProposalSubmissionService {
 			
 			List<EntityCondition> conds = FastList.newInstance();
 			
-			List<GenericValue> projectCalls = delegator.findList("ProjectCall", 
+			List<GenericValue> projectCalls = delegator.findList("ProjectCallView", 
 					EntityCondition.makeCondition(conds), 
 					null, 
 					null, 
@@ -268,7 +655,7 @@ public class ProjectProposalSubmissionService {
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS,researchProjectProposalId));
-			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,STATUS_CANCELLED));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
 			
 			List<GenericValue> prj = delegator.findList("ResearchProjectProposalView", 
 					EntityCondition.makeCondition(conds), 
@@ -302,7 +689,7 @@ public class ProjectProposalSubmissionService {
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS,staffId));
-			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,STATUS_CANCELLED));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
 			
 			List<GenericValue> prj = delegator.findList("ResearchProjectProposalView", 
 					EntityCondition.makeCondition(conds), 
@@ -325,18 +712,41 @@ public class ProjectProposalSubmissionService {
 
 	public static Map<String, Object> getListProjectProposals(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
-		String staffId = (String)context.get("staffId");
 		Delegator delegator = ctx.getDelegator();
 		
-		Map<String, Object> userLogin = (Map<String, Object>) context.get("userLogin");
+		String juryId = (String)context.get("juryId");
 		
-		if(staffId == null)
-			staffId = (String) userLogin.get("userLoginId");
+		List<GenericValue> list = ProjectProposalSubmissionServiceUtil.getListProjectProposals(delegator, juryId);
+		if(list != null){
+			retSucc.put("projectproposals", list);
+		}
+		
+		
+		/*
+		String juryId = null;
+		String projectCallId = null;
+		String facultyId = null;
+		
 		
 		try{
+			// get projectCall of the current jury if any
+			if(context.get("juryId") != null){
+				juryId = context.get("juryId") + ""; 
+				GenericValue J = delegator.findOne("Jury", UtilMisc.toMap("juryId", juryId), false);
+				if(J != null){
+					projectCallId = (String)J.get("projectCallId");
+					facultyId = (String)J.get("facultyId");
+				}
+			}
+			
+			
 			List<EntityCondition> conds = FastList.newInstance();
-			//conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS,staffId));
-			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,STATUS_CANCELLED));
+			if(projectCallId != null)
+				conds.add(EntityCondition.makeCondition("projectCallId", EntityOperator.EQUALS,projectCallId));
+			if(facultyId != null)
+				conds.add(EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS,facultyId));
+			
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
 			
 			List<GenericValue> prj = delegator.findList("ResearchProjectProposalView", 
 					EntityCondition.makeCondition(conds), 
@@ -352,11 +762,139 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
+		*/
 		return retSucc;
 		
 		
 	}
 	
+	public static Map<String, Object> getListProjectProposalJuries(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		
+		Map<String, Object> userLogin = (Map<String, Object>) context.get("userLogin");
+		
+		String	staffId = (String) userLogin.get("userLoginId");
+		
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			
+			List<GenericValue> list = delegator.findList("JuryView", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			
+			
+			retSucc.put("projectproposaljuries", list);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+		
+	}
+
+	public static void getListProjectProposalsAssignedForReviewJSON(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		String juryId = request.getParameter("juryId");
+		String staffId = request.getParameter("staffId");
+		
+		
+		
+		
+		try{
+			List<GenericValue> list = ProjectProposalSubmissionServiceUtil.getListProjectProposals(delegator, juryId);
+			Debug.log(module + "::storeReviewerProjectProposalsAssignmentJSON, staffId = " + staffId +
+					", juryId = " + juryId + ", list = " + list.size());
+			
+			
+			List<GenericValue> assigned_list = ProjectProposalSubmissionServiceUtil.getListProjectProposalsAssignedForReview(delegator, staffId, juryId);
+			HashSet<String> S = new HashSet<String>();
+			for(GenericValue gv: assigned_list){
+				S.add((String)gv.get("researchProjectProposalId"));
+			}
+			
+			String rs = "";
+			if(list != null){
+				rs = "{\"proposals\":[";
+				for(int i = 0; i < list.size(); i++){
+					GenericValue gv = list.get(i);
+					rs += "{";
+					rs += "\"id\":\"" + gv.get("researchProjectProposalId") + "\"";
+					rs += ",";
+					rs += "\"name\":\"" + gv.get("researchProjectProposalName") + "\"";
+					rs += ",";
+					if(S.contains(gv.get("researchProjectProposalId")))
+						rs += "\"checked\":1";
+					else
+						rs += "\"checked\":0";
+					rs += "}";
+					if(i < list.size() - 1)
+						rs += ",";
+				}
+				rs += "]}";
+			}else{
+				rs = "{\"proposals\":[]}";
+			}
+			
+			//String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			Debug.log(module + "::getListProjectProposalsAssignedForReviewJSON, rs = " + rs);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public static Map<String, Object> getListProjectProposalsAssignedForReview(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		
+		Map<String, Object> userLogin = (Map<String, Object>) context.get("userLogin");
+		
+		String	staffId = (String)context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.get("userLoginId");
+		
+		String juryId = (String)context.get("juryId");
+		List<GenericValue> list = ProjectProposalSubmissionServiceUtil.getListProjectProposalsAssignedForReview(delegator, staffId, juryId);
+		if(list != null){
+			retSucc.put("projectproposals", list);
+		}
+		/*
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId", EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS,staffId));
+			
+			List<GenericValue> list = delegator.findList("ReviewerResearchProposal", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			
+			
+			retSucc.put("projectproposals", list);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		*/
+		return retSucc;
+		
+	}
+
 	public static Map<String, Object> createProjectProposalContentItem(DispatchContext ctx, 
 			Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -462,7 +1000,7 @@ public class ProjectProposalSubmissionService {
 			pps.put("researchProjectProposalName", researchProjectProposalName);
 			pps.put("createStaffId", staffId);
 			pps.put("partyId", partyId);
-			pps.put("statusId", STATUS_CREATED);
+			pps.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
 			
 			if(listProjectCalls != null && listProjectCalls.size() > 0){
 				pps.put("projectCallId", listProjectCalls.get(0));
@@ -538,7 +1076,7 @@ public class ProjectProposalSubmissionService {
 		try{
 			GenericValue pps = delegator.findOne("ResearchProjectProposal", 
 					UtilMisc.toMap("researchProjectProposalId",researchProjectProposalId),false);
-			pps.put("statusId",STATUS_CANCELLED);
+			pps.put("statusId",ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED);
 			
 			delegator.store(pps);
 			

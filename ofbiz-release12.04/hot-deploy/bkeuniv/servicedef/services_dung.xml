@@ -11,15 +11,44 @@
         </description>
     </service> 
     
+    <service name="updateCountResearchProposalSubmission" engine="java"
+    	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
+		invoke="updateCountResearchProposalSubmission">
+		<attribute name="msg" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="getMembersOfResearchProjectProposalJury" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getMembersOfResearchProjectProposalJury">
+		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="members" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListJuryRoleTypes" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListJuryRoleTypes">
+		<attribute name="juryRoleTypes" mode="OUT" type="List"></attribute>	
+	</service>
+
     <service name="getProjectProposalsOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalsOfStaff">
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
 	</service>
 	
+    <service name="getListProjectProposalJuries" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposalJuries">
+		
+		<attribute name="projectproposaljuries" mode="OUT" type="List"></attribute>	
+	</service>
+
     <service name="getListProjectProposals" engine="java" 
-		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getListProjectProposals">
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposals">
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
+		
 		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
 	</service>
 
@@ -61,7 +90,31 @@
 		<attribute name="projectProposalProductTypes" mode="OUT" type="List"></attribute>	
 	</service>
 	
+    <service name="getListProjectProposalsAssignedForReview" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposalsAssignedForReview">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
     
+    <service name="getReviewProjectProposal" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getReviewProjectProposal">
+		<attribute name="reviewerResearchProposalId" mode="IN" type="String"></attribute>
+		
+		<attribute name="reviewprojectproposal" mode="OUT" type="Map"></attribute>	
+	</service>
+    
+    <service name="getListReviewsOfProjectProposal" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListReviewsOfProjectProposal">
+		<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+		
+		<attribute name="reviewprojectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+
     <service name="getListProjectCalls" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getListProjectCalls">
 		
@@ -145,16 +198,16 @@
 	</service>
 	
     <service name="getListSecurityGroups" engine="java"
-    	location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getListSecurityGroups">
+    	location="org.ofbiz.permission.BKEunivPermissionService" invoke="getListSecurityGroups">
     	<attribute name="securityGroups" mode="OUT" type="List"></attribute>
     </service>
     <service name="getListFunctions" engine="java"
-    	location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getListFunctions">
+    	location="org.ofbiz.permission.BKEunivPermissionService" invoke="getListFunctions">
     	<attribute name="functions" mode="OUT" type="List"></attribute>
     </service>
     
     <service name="updateSecurityGroupFunction" engine="java"
-    	location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="updateSecurityGroupFunction">
+    	location="org.ofbiz.permission.BKEunivPermissionService" invoke="updateSecurityGroupFunction">
     	<attribute name="groupId" mode="IN" type="String"></attribute>
     	<attribute name="functions[]" mode="IN" type="List"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -162,11 +215,11 @@
     
     
     <service name="getStaffs" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
     	<attribute name="staffs" mode="OUT" type="List"></attribute>
     </service>
     <service name="getStaffInfo" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
     	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
     	<attribute name="staff" mode="OUT" type="Map"></attribute>
     	<attribute name="departments" mode="OUT" type="List"></attribute>
@@ -177,12 +230,12 @@
     </service>
     
     <service name="getGenders" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getGenders">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getGenders">
     	<attribute name="genders" mode="OUT" type="List"></attribute>
     </service>
 	
     <service name="updateStaff" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="updateStaff">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="updateStaff">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="staffName" mode="IN" type="String"></attribute>
     	<attribute name="staffEmail" mode="IN" type="String"></attribute>
@@ -194,13 +247,13 @@
     	<attribute name="staffs" mode="OUT" type="Map"></attribute> 
     </service>
     <service name="removeAStaff" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="removeAStaff">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="removeAStaff">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
 
     <service name="createAStaff" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="createAStaff">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="createAStaff">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="password" mode="IN" type="String"></attribute>
     	<attribute name="staffName" mode="IN" type="String"></attribute>
@@ -214,7 +267,7 @@
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     <service name="addPermissionGroupStaff" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="addPermissionGroupStaff">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="addPermissionGroupStaff">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="groupId" mode="IN" type="String"></attribute>
     </service>

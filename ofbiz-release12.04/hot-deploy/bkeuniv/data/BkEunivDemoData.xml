@@ -31,15 +31,17 @@
 
 <Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" target="submit-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="2"/>
 
-<Function functionId="RESEARCH_PROJECT_JURY" uiLabelId="research_project_jury" vnLabel="Hội đồng duyệt thuyết mình đề tài" enLabel="Jury of research proposal" target="research-project-jury" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="3"/>
+<Function functionId="RESEARCH_PROJECT_JURY" uiLabelId="research_project_jury" vnLabel="Hội đồng duyệt thuyết mình đề tài" enLabel="Jury of research proposal" target="research-project-jury" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
 
-<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS" uiLabelId="research_project_jury_members" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Members of juries of research proposal" target="research-project-jury-members" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS" uiLabelId="research_project_jury_members" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Members of juries of research proposal" target="research-project-jury-members" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
 
-<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_ASSIGNMENT" uiLabelId="research_project_jury_members_assignment" vnLabel="Phân công thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Assignment of members of juries to research proposal" target="research-project-jury-members-assignment" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_ASSIGNMENT" uiLabelId="research_project_jury_members_assignment" vnLabel="Phân công thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Assignment of members of juries to research proposal" target="research-project-jury-members-assignment" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="6"/>
 
-<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" uiLabelId="research_project_jury_members_evaluate" vnLabel="Nhận xét đánh giá thuyết mình đề tài" enLabel="Evaluate of research proposal" target="research-project-jury-members-evaluate" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="6"/>
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" uiLabelId="research_project_jury_members_evaluate" vnLabel="Nhận xét đánh giá thuyết mình đề tài" enLabel="Evaluate of research proposal" target="research-project-jury-members-evaluate" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="7"/>
 
-<Function functionId="RESEARCH_PROJECT_SUMMARY" uiLabelId="research_project_summary" vnLabel="Danh sách thuyết mình đề tài" enLabel="List of research proposal" target="list-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="7"/>
+<Function functionId="RESEARCH_PROJECT_SUMMARY" uiLabelId="research_project_summary" vnLabel="Danh sách thuyết mình đề tài" enLabel="List of research proposal" target="list-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="3"/>
+
+<Function functionId="RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" uiLabelId="research_project_evaluation_result_summary" vnLabel="Danh sách kết quả duyệt đánh giá thuyết mình đề tài" enLabel="Research proposal evaluation results" target="list-research-project-proposal-evaluation-result" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="8"/>
 
 
 
@@ -117,6 +119,9 @@
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-31 00:02:35.246" lastUpdatedTxStamp="2017-10-31 00:02:35.228" createdStamp="2017-10-31 00:02:35.246" createdTxStamp="2017-10-31 00:02:35.228"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.801" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.801" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_SUMMARY" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_SUMMARY" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-31 00:02:35.247" lastUpdatedTxStamp="2017-10-31 00:02:35.228" createdStamp="2017-10-31 00:02:35.247" createdTxStamp="2017-10-31 00:02:35.228"/>
+	
+    <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" securityGroupId="BIZADMIN" functionId="RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-31 00:02:35.247" lastUpdatedTxStamp="2017-10-31 00:02:35.228" createdStamp="2017-10-31 00:02:35.247" createdTxStamp="2017-10-31 00:02:35.228"/>
+	
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.936" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.936" createdTxStamp="2017-08-13 18:06:03.916"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.93" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.93" createdTxStamp="2017-08-13 18:06:03.916"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_ALL_PAPERS" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_ALL_PAPERS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-28 18:30:08.808" lastUpdatedTxStamp="2017-10-28 18:30:08.806" createdStamp="2017-10-28 18:30:08.808" createdTxStamp="2017-10-28 18:30:08.806"/>
@@ -143,6 +148,7 @@
     <GroupFunction groupFunctionId="BIZSTAFF_SUBMIT_PROPOSAL" securityGroupId="BIZSTAFF" functionId="SUBMIT_PROPOSAL" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.809" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.809" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZSTAFF_WORK_PROGRESS" securityGroupId="BIZSTAFF" functionId="WORK_PROGRESS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.937" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.937" createdTxStamp="2017-08-13 18:06:03.916"/>
 
+ 
 
 <UserLogin userLoginId="giang.nguyenthiha@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="huong.doithilan@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
@@ -6680,6 +6686,20 @@
 <ProjectProposalStatus statusId="REJECTED" statusName="Từ chối"/>
 <ProjectProposalStatus statusId="ACCEPT_REVISE" statusName="Chấp nhận và cần chỉnh sửa"/>
 <ProjectProposalStatus statusId="APPROVED" statusName="Phê duyệt"/>
+<ProjectProposalStatus statusId="ASSIGNED_REVIEWER" statusName="Đã gán phản biện"/>
+
+<ProjectCallStatus statusId="CREATED" statusName="Mới tạo"/>
+<ProjectCallStatus statusId="CANCELLED" statusName="Huỷ"/>
+<ProjectCallStatus statusId="OPEN" statusName="Mở đăng ký mới"/>
+<ProjectCallStatus statusId="CLOSED" statusName="Đóng đăng ký mới"/>
+<ProjectCallStatus statusId="OPEN_REVISED" statusName="Mở cho phép chỉnh sửa"/>
+<ProjectCallStatus statusId="CLOSED_REVISED" statusName="Đóng cho phép chỉnh sửa"/>
+
+<JuryRoleType juryRoleTypeId="PRESIDENT" juryRoleTypeName="Chủ tịch"/>
+<JuryRoleType juryRoleTypeId="SECRETARY" juryRoleTypeName="Thư ký"/>
+<JuryRoleType juryRoleTypeId="SPECIALIST" juryRoleTypeName="Uỷ viên"/>
+
+
 
 
 <ResearchProductType ResearchProductTypeId="PAPER_ISI" ResearchProductTypeName="Bài báo ISI"/>

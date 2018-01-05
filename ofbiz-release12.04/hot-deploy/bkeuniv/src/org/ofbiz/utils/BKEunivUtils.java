@@ -185,6 +185,45 @@ public class BKEunivUtils {
 
 	}
 
+	@SuppressWarnings({ "unchecked" })
+	public static void getListStaffsOfDepartmentJSON(
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String departmentId = (String)request.getParameter("departmentId");
+		Debug.log(module + "::getListStaffsOfDepartmentJSON, departmentId = " + departmentId);
+		
+		try {
+
+			List<GenericValue> staffs = getListStaffsOfDepartment(delegator, departmentId);
+			
+			String rs = "{\"staffs\":[";
+			for (int i = 0; i < staffs.size(); i++) {
+				GenericValue st = staffs.get(i);
+				rs += "{\"id\":\"" + st.get("staffId")
+						+ "\",\"name\":\"" + st.get("staffName") + "\"}";
+				if (i < staffs.size() - 1)
+					rs += ",";
+
+			}
+			rs += "]";
+			rs += "}";
+			
+			Debug.log(module + "::getListStaffsOfDepartmentJSON, json = " + rs);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+	}
+
 	public static JSONObject parseJSONObject(Map<String, Object> map) {
 		JSONObject result = new JSONObject();
 		Set<String> keys = map.keySet();
