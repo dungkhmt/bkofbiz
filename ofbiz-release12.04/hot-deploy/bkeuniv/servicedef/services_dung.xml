@@ -11,6 +11,8 @@
         </description>
     </service> 
     
+    
+    
     <service name="updateCountResearchProposalSubmission" engine="java"
     	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
 		invoke="updateCountResearchProposalSubmission">
