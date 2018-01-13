@@ -15,20 +15,16 @@ import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityOperator;
-import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.google.maps.model.LatLng;
 import com.mso.googlemap.direction.DirectionQuery;
 import com.mso.googlemap.model.Point;
-import com.squareup.okhttp.MediaType;
 
 public class DataSampleService {
 	public static final String MODULE_NAME = DataSampleService.class.getName();
@@ -191,6 +187,7 @@ public class DataSampleService {
 		pGv.put("P_Lat", P_Lat);
 		pGv.put("P_Lng", P_Lng);
 		pGv.put("DS_Id", DS_Id);
+		pGv.put("P_AllowDrone", (long)1);
 
 		delegator.create(pGv);
 		return p_id;
@@ -415,6 +412,7 @@ public class DataSampleService {
 			map.put("P_Lat", el.getString("P_Lat"));
 			map.put("P_Lng", el.getString("P_Lng"));
 			map.put("DS_Id", el.getString("DS_Id"));
+			map.put("P_AllowDrone", el.getLong("P_AllowDrone"));
 			listRes.add(map);
 		}
 		return listRes;

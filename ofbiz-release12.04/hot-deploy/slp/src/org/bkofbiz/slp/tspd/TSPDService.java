@@ -1,7 +1,6 @@
 package org.bkofbiz.slp.tspd;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,23 +8,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import javolution.util.FastList;
+
+
+
 import javolution.util.FastMap;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.util.EntityUtils;
+
+
+
 import org.bkofbiz.slp.sampledata.DataSampleService;
 import org.bkofbiz.slp.tspd.model.DroneDelivery;
 import org.bkofbiz.slp.tspd.model.LatLng;
 import org.bkofbiz.slp.tspd.model.Point;
 import org.bkofbiz.slp.tspd.model.TSPDSolution;
 import org.bkofbiz.slp.tspd.model.Tour;
-import org.bkofbiz.slp.tspd.model.TruckTour;
 import org.ofbiz.base.util.Debug;
-import org.ofbiz.base.util.HttpClient;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.service.DispatchContext;
@@ -34,7 +31,6 @@ import org.ofbiz.service.ServiceUtil;
 import utils.JsonMapUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -90,6 +86,7 @@ public class TSPDService {
 			pointMaped.put("id", "" + i);
 			pointMaped.put("lat", (String) point.get("P_Lat"));
 			pointMaped.put("lng", (String) point.get("P_Lng"));
+			pointMaped.put("allowdrone", (String) point.get("P_AllowDrone"));
 			listPointMaped.add(pointMaped);
 		}
 
@@ -245,6 +242,7 @@ public class TSPDService {
 			pointMaped.put("id", "" + i);
 			pointMaped.put("lat", (String) point.get("P_Lat"));
 			pointMaped.put("lng", (String) point.get("P_Lng"));
+			pointMaped.put("allowdrone", (String) point.get("P_AllowDrone"));
 			listPointMaped.add(pointMaped);
 		}
 
@@ -449,17 +447,18 @@ public class TSPDService {
 		/**
 		 * RE-mapping with new ID
 		 */
-		List<Map<String, String>> listPointMaped = new ArrayList<Map<String, String>>();
+		List<Map<String, Object>> listPointMaped = new ArrayList<Map<String, Object>>();
 		Map<String, Integer> mapId = new HashMap<String, Integer>();
 		Map<String, String> mapValue = new HashMap<String, String>();
 		for (int i = 0; i < listPoint.size(); i++) {
 			Map<String, Object> point = listPoint.get(i);
 			mapId.put((String) point.get("P_Id"), i);
 			mapValue.put(i + "", (String) point.get("P_Id"));
-			Map<String, String> pointMaped = new HashMap<String, String>();
+			Map<String, Object> pointMaped = new HashMap<String, Object>();
 			pointMaped.put("id", "" + i);
 			pointMaped.put("lat", (String) point.get("P_Lat"));
 			pointMaped.put("lng", (String) point.get("P_Lng"));
+			pointMaped.put("allowdrone", (Long)point.get("P_AllowDrone")==1?new Boolean(true):new Boolean(false));
 			listPointMaped.add(pointMaped);
 		}
 

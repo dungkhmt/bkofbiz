@@ -19,6 +19,7 @@
         <field name="P_Id" type="id"><description>id</description></field>
         <field name="P_Lat" type="value"></field>
         <field name="P_Lng" type="value"></field>
+        <field name="P_AllowDrone" type="numeric"></field>
         <field name="DS_Id" type="id"></field>
         <prim-key field="P_Id"/>
         <relation type="one" fk-name="POINT_DS" rel-entity-name="DataSet">

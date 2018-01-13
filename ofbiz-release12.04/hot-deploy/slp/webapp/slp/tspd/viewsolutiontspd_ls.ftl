@@ -11,6 +11,7 @@
 		<div  class="col-sm-2" id="loading">${slplabel.pleasewait}<img style="width: 35px; height: 35px" src="/resource/slp/image/rolling.gif"/></div>
 		<h3 id="totalCost" class="col-sm-2"></h3>
 		<h3 id="totalTime" class="col-sm-2"></h3>
+		<input type="hidden" id="dataResponce" value='${requestParameters.tspSolutiontext}'></input>
 	</div>
 	<div class="row">
 		<div id="map" style="height:500px"></div>
@@ -22,6 +23,7 @@
 <script>
 var map;
 var dataResponse ;
+var savedata;
 var tours;
 var markerDrone=[];
 var makerTruck;
@@ -31,6 +33,14 @@ var directionsService ;
 var stateBotNormalPolyline=0;
 $( document ).ready(function() {
 	var datasetid='${requestParameters.datasetid}';
+	if($("#dataResponce").val()!="") {
+	var dataResponcezzzz=JSON.parse($("#dataResponce").val());
+			dataResponse=dataResponcezzzz.sol;
+			tours=dataResponse.tours;
+			directionPath=dataResponcezzzz.directionPath;
+			$('#loading').html('${slplabel.done}<img style="width: 35px; height: 35px" src="/resource/slp/image/icon/ticker.png"/>')
+			return;
+	}
 	var dataSend={
 		"datasetid":'${requestParameters.datasetid}',
 		"truckSpeed":'${requestParameters.truckSpeed}',
@@ -47,6 +57,7 @@ $( document ).ready(function() {
 	    dataType: "json",
 		success: function (data) {
 			console.log(data);
+			savedata=data;
 			dataResponse=data.sol;
 			tours=dataResponse.tours;
 			directionPath=data.directionPath;
@@ -55,12 +66,20 @@ $( document ).ready(function() {
 	});
 });
 function saveSolution(view){
-	//console.log("here");
-	save_data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataResponse));
-	//console.log(save_data);
+	console.log("here");
+	/*var a = document.createElement('a');
+	save_data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+	console.log(save_data);
 	view.setAttribute("href", "data:"+save_data);
     view.setAttribute("download", "solution.json");
+    a.click();*/
     //window.location = baseUrl + "/tsp-drone/tspd-solve-home";
+    
+    var a = document.createElement("a");
+    var file = new Blob([JSON.stringify(savedata)], {type: "text/json;charset=utf-8,"});
+    a.href = URL.createObjectURL(file);
+    a.download = "solution.json";
+    a.click();
 }
 function hireNormalPolyline(){
 	//console.log(stateBotNormalPolyline);
