@@ -47,10 +47,7 @@
 	<style>
     
     <#if !disableTouchRipple&&!disabled>
-        #${id_item}:hover {
-            background-color: ${hoverColor}!important;
-        }
-        
+      
         #ripple-container-${code} span {
             transform: scale(0);
             border-radius: 100%;

@@ -5,11 +5,17 @@
 	<@List height="100%" width="300px">
 		<#if "main"?index_of(targetCurr)!= -1 || targetCurr?index_of("main")!= -1>
 			<#assign styleMain="background-color: rgba(0, 0, 0, 0.1);" />
+			<#if !titlePage??>
+				<#assign titlePage=uiLabelMap.BkEunivHomePage />
+			</#if>
 		<#else>
 			<#assign styleMain="" />
 		</#if>
 		<#if "user"?index_of(targetCurr)!= -1 || targetCurr?index_of("user")!= -1>
 			<#assign styleUser="background-color: rgba(0, 0, 0, 0.1);" />
+			<#if !titlePage??>
+				<#assign titlePage=uiLabelMap.BkEunivPersonalInformation />
+			</#if>
 		<#else>
 			<#assign styleUser="" />
 		</#if>
@@ -21,6 +27,9 @@
 			<#if f.function.target??>
 				<#if f.function.target?index_of(targetCurr)!= -1 || targetCurr?index_of(f.function.target)!= -1>
 					<#assign styleItem="background-color: rgba(0, 0, 0, 0.1);" />
+					<#if !titlePage??>
+						<#assign titlePage=f.function.vnLabel />
+					</#if>
 				<#else>
 					<#assign styleItem="" />
 				</#if>
@@ -33,6 +42,9 @@
 						<#if cf.target??>
 							<#if cf.target?index_of(targetCurr)!= -1 || targetCurr?index_of(cf.target)!= -1>
 								<#assign styleItem="background-color: rgba(0, 0, 0, 0.1);" />
+								<#if !titlePage??>
+									<#assign titlePage=cf.vnLabel />
+								</#if>
 							<#else>
 								<#assign styleItem="" />
 							</#if>
@@ -68,6 +80,9 @@
 	</#if>
 	<#return false/>
 </#function>
+<script>
+	var titlePage = "${titlePage?if_exists}"
+</script>
 <#--  
 <div class="side-bar hide-side-bar">
 

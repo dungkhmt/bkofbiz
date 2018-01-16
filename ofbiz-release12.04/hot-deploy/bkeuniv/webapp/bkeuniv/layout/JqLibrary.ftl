@@ -234,6 +234,8 @@
 		</#list>
 		
 		$(document).ready(function(){
+			document.getElementById("jqTitlePage").innerHTML = titlePage;
+			
 			loader.open();
 			$.ajax({
 			    url: "${urlData}",
@@ -467,7 +469,7 @@
 			<div style="display: flex; justify-content: space-between;">
 				<div class="title" style="padding: 16px; position: relative;">
 					<span style="font-size: 24px; color: rgba(0, 0, 0, 0.87); display: block; line-height: 36px;">
-						<span>Orders List</span>
+						<span id="jqTitlePage">${titlePage?if_exists}</span>
 					</span>
 					<span style="font-size: 14px; color: rgba(0, 0, 0, 0.54); display: block;"></span>
 				</div>

@@ -40,6 +40,7 @@ public class EducationProgress {
 		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
 		System.out.println("EducationProgress::createEducatinoProgressRequestResponse, Staff = " + staff.get("staffEmail"));
 		Map<String, Object> context = FastMap.newInstance();
+		
 		context.put("staffId",staff.get("staffId"));
 		context.put("institution",request.getParameter("institution"));
 		context.put("speciality",request.getParameter("speciality"));
@@ -154,14 +155,12 @@ public class EducationProgress {
 
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
-
-		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		Locale locale = (Locale) context.get("locale");
 
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
 		//String staffId = (String) context.get("staffId");
-		String staffId = (String)userLogin.get("userLoginId");
+		String staffId = (String)context.get("staffId");
 		
 		String educationType = (String) context.get("educationType");
 		String institution = (String) context.get("institution");

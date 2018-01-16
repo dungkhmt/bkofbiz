@@ -10,7 +10,7 @@
 	</button>
 
 	<div class="app-name">
-		<h1>${pageName}</h1>
+		<h1 style="font-size: 1.7vw;">${pageName}</h1>
 	</div>
 	<div class="change-language">
 		<select id="select-language" onchange="changeLanguage()" placeholder="Select a language...">
