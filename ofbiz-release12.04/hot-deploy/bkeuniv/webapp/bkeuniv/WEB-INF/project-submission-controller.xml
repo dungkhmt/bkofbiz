@@ -152,6 +152,14 @@
 		<response name="error" type="view" value="view-project-call-management" />
 	</request-map>
 	
+	<request-map uri="get-list-project-calls">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getListProjectCalls"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
 	<request-map uri="research-project-jury">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-research-project-jury" />

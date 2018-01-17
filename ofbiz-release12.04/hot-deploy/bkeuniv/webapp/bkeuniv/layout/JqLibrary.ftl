@@ -86,6 +86,10 @@
 	<@jqMinimumLib />
 	
 	<style>
+
+		th {
+			transition: .2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
+		}
 		
 		#${id} .jqDataTable-title {
 			padding: 30px 0px 30px 0px;
@@ -218,7 +222,7 @@
 		jqDataTable.columns = [
 			{
 				name: "STT",
-				title: 'STT',
+				
 				data: "index"
 			}
 		];
@@ -227,7 +231,7 @@
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
-				title: '${column.name}',
+				
 				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
@@ -492,6 +496,22 @@
 			</div>
 			
 			<table id="${id}-content" style="width: 100%!important;" class="table table-striped">
+			 <thead>
+				<tr>
+					<th>
+						<@FlatButton id="STT" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+							STT
+						</@FlatButton>
+					</th>
+					<#list columns as column>
+						<th>
+							<@FlatButton id="${column.data}" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+								${column.name}
+							</@FlatButton>
+						</th>
+					</#list>
+				</tr>
+			</thead>
 			</table>
 		</div>
 	</div>

@@ -1,3 +1,84 @@
+<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+<body>
+<div class="body">
+	<#assign columns=[
+		{
+			"name": "Ten dot goi de tai",
+			"data": "projectCallName"
+		},
+		
+		{
+			"name": "Loai hinh de tai",
+			"data": "projectCategoryName"
+		},
+		{
+			"name": "Nam",
+			"data": "year"
+		}
+	] />
+
+    <#assign fields=[
+		"projectCallId",
+		"projectCallName",
+		"projectCategoryName",
+		"year",
+		"projectCategoryId",
+		"statusId"
+	] />
+
+	<#assign columnsChange=[
+		{
+			"name": "Ten dot goi de tai",
+			"value": "projectCallName"
+		},
+		{
+			"name": "Loai hinh de tai",
+			"value": "projectCategoryName"
+		},
+		{
+			"name": "Nam",
+			"value": "year"
+		}
+	] />
+
+	<#assign columnsNew=[
+		{
+			"name": "Ten dot goi de tai",
+			"value": "projectCallName"
+		},
+		{
+			"name": "Loai hinh de tai",
+			"value": "projectCategoryName"
+		},
+		{
+			"name": "Nam",
+			"value": "year"
+		}
+	] />
+
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	<@jqDataTable
+		id="jqDataTable"
+		urlData="/bkeuniv/control/get-list-project-calls" 
+		columns=columns 
+		dataFields=fields
+		sizeTable=sizeTable
+		columnsChange=columnsChange 
+		columnsNew=columnsNew 
+		urlUpdate="/bkeuniv/control/update-project-call" 
+		urlAdd="/bkeuniv/control/create-project-call" 
+		urlDelete="/bkeuniv/control/remove-project-call" 
+		keysId=["projectCallId"] 
+		fieldDataResult = "projectCalls" 
+		titleChange="Chỉnh sửa"
+		titleNew="Tạo mới"
+		titleDelete="Xoá"
+		jqTitle="Quản lý"
+		contextmenu=true
+	/>
+</div>
+<#--      
+
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
   <head>
@@ -102,4 +183,4 @@ $(document).ready(function() {
   });
     
 } );
-</script>
+</script>  -->
