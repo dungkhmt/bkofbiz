@@ -229,7 +229,7 @@
 </#macro>
 
 
-<#macro IconButton icon style="" styleIcon="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="" size="56px" colorTouchRipple="rgba(0, 0, 0, 0.25)">
+<#macro IconButton icon styleIcon="" style="" styleIcon="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="" size="56px" colorTouchRipple="rgba(0, 0, 0, 0.25)">
     <#local code=random(1, 999999)?string["000000"] />
     <#if id!="">
 		<#local code=id />
@@ -290,7 +290,7 @@
         }
     </style>
     <div id="icon-button-${code}" style="color: ${color}; background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); border-radius: 50%; display: inline-block;">
-        <button id="${id}" tabindex="0" type="button" style="${style} border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; vertical-align: bottom; background-color: ${backgroundColor}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; height: ${size}; width: ${size}; overflow: hidden; border-radius: 50%; text-align: center;${style}">
+        <button id="${id}" tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; vertical-align: bottom; background-color: ${backgroundColor}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; height: ${size}; width: ${size}; overflow: hidden; border-radius: 50%; text-align: center;${style}">
             <div id="icon-button-ripple-${code}">
                 <span id="icon-button-ripple-container-${code}" style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
                 <div style="transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; top: 0px;">
@@ -335,10 +335,9 @@
                     rippler = document.createElement('span');
                     size = ripple.offsetWidth;
                     pos = ripple.getBoundingClientRect();
-
-                    x = e.pageX - pos.left - (size / 2);
-                    y = e.pageY - pos.top - (size / 2);
-                    style = 'z-index: 2; display: block; position: absolute; height: ${sizeZ?groups[1]?number/2.5+sizeZ?groups[2]}; width: ${sizeZ?groups[1]?number/2.5+sizeZ?groups[2]}; top: calc(50% - ${sizeZ?groups[1]?number/5+sizeZ?groups[2]}); left: calc(50% - ${sizeZ?groups[1]?number/5+sizeZ?groups[2]}); background: ${colorTouchRipple}; border-radius: 50%; transform: scale(0); animation: icon-button-ripple-${code} 1s;';
+                    console.log(ripple.__protot, pos, this)
+                    console.log(x, y)
+                    style = 'z-index: 2; display: block; position: absolute; height: ${(sizeZ?groups[1]?number/2.2)?c+sizeZ?groups[2]}; width: ${(sizeZ?groups[1]?number/2.2)?c+sizeZ?groups[2]}; display: table-cell; text-align: center; vertical-align: middle; background: ${colorTouchRipple}; border-radius: 50%; transform: scale(0); animation: icon-button-ripple-${code} 1s;top: calc(50% - ${(sizeZ?groups[1]?number/4.4)?c+sizeZ?groups[2]}); left: calc(50% - ${(sizeZ?groups[1]?number/4.4)?c+sizeZ?groups[2]});';
                     ripple.rippleContainer.append(rippler);
                     return rippler.setAttribute('style', style);
                 };
@@ -351,7 +350,7 @@
 
                 var ripple = document.getElementById("icon-button-ripple-${code}");
                 ripple.addEventListener('mousedown', showRipple);
-                ripple.addEventListener('mouseup', debounce(cleanUp, 2000));
+                //ripple.addEventListener('mouseup', debounce(cleanUp, 2000));
                 ripple.rippleContainer = document.getElementById("icon-button-ripple-container-${code}");
             }());
         </#if>
