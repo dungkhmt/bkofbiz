@@ -328,6 +328,11 @@
 	
 	<request-map uri="profile-science">
     	<security auth="true" https="true"/>
+    	<response name="success" type="view" value="profile-science-setting"></response>
+    </request-map>
+
+	<request-map uri="profile-science-pdf">
+    	<security auth="true" https="true"/>
     	<response name="success" type="view" value="profile-science-PDF"></response>
     </request-map>
 
@@ -563,6 +568,7 @@
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
     <view-map name="profile-science-PDF" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDF" content-type="application/pdf" encoding="none"/>
+    <view-map name="profile-science-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFSetting"/>
     <view-map name="view-summary-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclaration"/>
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
