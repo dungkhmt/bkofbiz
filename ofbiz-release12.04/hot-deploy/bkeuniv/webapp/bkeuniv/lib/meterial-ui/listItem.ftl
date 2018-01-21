@@ -1,7 +1,7 @@
 <#include "util.ftl"/>
 <#include "button.ftl"/>
 
-<#macro ListItem id="" primaryText="" rightIcon="" leftIcon="" disabled=false level=0 initiallyOpen=false open=false linkTo="">
+<#macro ListItem id="" disableTouchRipple=false  primaryText="" rightIcon="" leftIcon="" disabled=false level=0 initiallyOpen=false open=false linkTo="" style="">
 
 	<#local marginLeft="margin-left: "+level*18+"px;" />
 
@@ -43,11 +43,56 @@
 	<#else>
 	
 	</#if>
+
+	<style>
+    
+    <#if !disableTouchRipple&&!disabled>
+      
+        #ripple-container-${code} span {
+            transform: scale(0);
+            border-radius: 100%;
+            position: absolute;
+            opacity: 0.75;
+            background-color: rgba(153,153,153,0.6);
+            animation: ${id_item} 1100ms;
+        }
+
+        @-moz-keyframes ${id_item} {
+            to {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        @-webkit-keyframes ${id_item} {
+            to {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        @-o-keyframes ${id_item} {
+            to {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        @keyframes ${id_item} {
+            to {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+    </#if>
+    </style>
+
 	<div class="list-item-${code}" id="${id}">
-	    <span tabindex="0" style="border: 10px; box-sizing: border-box; display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: 16px; font-weight: inherit; position: relative; color: rgba(0, 0, 0, 0.87); line-height: 16px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; background: none;">
+	    <span tabindex="0" style="border: 10px; box-sizing: border-box; display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: 16px; font-weight: inherit; position: relative; color: rgba(0, 0, 0, 0.87); line-height: 16px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; background: none; ${style}">
 		    <div id="${id_item}">
 		        <span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
-		        <div id="container-${id_item}" style="${marginLeft} padding: 16px ${paddingRight}px 16px ${paddingLeft}px; position: relative;">
+				<span id="ripple-container-${code}" style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
+				<div id="container-${id_item}" style="${marginLeft} padding: 16px ${paddingRight}px 16px ${paddingLeft}px; position: relative;">
 		            <#if leftIcon!="">
 						<svg viewBox="0 0 24 24" style="display: block; color: rgba(0, 0, 0, 0.87); fill: rgb(117, 117, 117); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; position: absolute; top: 0px; margin: 12px; left: 4px;">
 							<path d="${leftIcon}"></path>
@@ -60,14 +105,8 @@
 						<#else>
 							<#local iconD=pathClose/>
 						</#if>
-						<@IconButton id=("button-"+code) style="height: 100%!important;display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);margin: 0px; position: absolute; overflow: visible; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;top: 0px; right: 0px; background: none;" id=("open-" +id_item) icon=iconD size="50px"/>
-						<#--  <button id='open-${id_item}' tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 12px; outline: none; font-size: 0px; font-weight: inherit; position: absolute; overflow: visible; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; width: 48px; height: 48px; top: 0px; right: 4px; background: none;">
-							<div>
-								<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: currentcolor; height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;">
-									<path id='icon-${id_item}' d="<#if open>${pathOpen}<#else>${pathClose}</#if>"></path>
-								</svg>
-							</div>
-						</button>  -->
+						<@IconButton id=("open-" +id_item) style="height: 100%!important;display: block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);margin: 0px; position: absolute; overflow: visible; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;top: 0px; right: 0px; background: none;"  icon=iconD size="50px"/>
+						
 					</#if>
 					<#if rightIcon!="">
 						<svg viewBox="0 0 24 24" style="display: block; color: rgba(0, 0, 0, 0.87); fill: rgb(117, 117, 117); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; position: absolute; top: 0px; margin: 12px; right: ${right_icon_right};">
@@ -81,6 +120,58 @@
 		
 		<#if !disabled>
 			<script>
+				<#if !disableTouchRipple>
+					(function () {
+						var cleanUp, debounce, ripple, showRipple;
+
+						debounce = function (func, delay) {
+							var inDebounce;
+							inDebounce = undefined;
+							return function () {
+								var args, context;
+								context = this;
+								args = arguments;
+								clearTimeout(inDebounce);
+								return inDebounce = setTimeout(function () {
+									return func.apply(context, args);
+								}, delay);
+							};
+						};
+
+						showRipple = function (e) {
+							var path = e.path;
+							for(i = 0; i < path.length; ++i) {
+								var p = path[i];
+								if(p.id===`open-${id_item}`) {
+									return ;
+								}
+							}
+							var pos, ripple, rippler, size, style, x, y;
+							ripple = this;
+							rippler = document.createElement('span');
+							size = ripple.offsetWidth;
+							pos = ripple.getBoundingClientRect();
+
+							x = e.pageX - pos.left - (size / 2);
+							y = e.pageY - pos.top - (size / 2);
+							style = 'top:' + y + 'px; left: ' + x + 'px; height: ' + size + 'px; width: ' + size + 'px;';
+							ripple.rippleContainer.append(rippler);
+							return rippler.setAttribute('style', style);
+						};
+
+						cleanUp = function () {
+							while (this.rippleContainer.firstElementChild) {
+								this.rippleContainer.firstElementChild.remove();
+							}
+						};
+
+						var ripple = document.getElementById("${id_item}");
+						ripple.addEventListener('mousedown', showRipple);
+						ripple.addEventListener('mouseup', debounce(cleanUp, 2500));
+						ripple.rippleContainer = document.getElementById("ripple-container-${code}");
+					}());
+				</#if>
+
 				<#if nested?has_content>
 					document.getElementById("open-${id_item}").addEventListener("mouseover", function( event ) {
 						event.stopPropagation();

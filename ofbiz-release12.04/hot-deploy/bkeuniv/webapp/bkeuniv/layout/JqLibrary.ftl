@@ -86,15 +86,9 @@
 	<@jqMinimumLib />
 	
 	<style>
-		#${id} {
-			width: 100%;
-    		padding: 2em 3em 6em 3em;
-			overflow-y: auto;
-    		height: 100%;
-		}
 
-		#${id}-content {
-			width: 100%!important;
+		th {
+			transition: .2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
 		}
 		
 		#${id} .jqDataTable-title {
@@ -132,7 +126,6 @@
 		.ui-menu-item {
 		    list-style: none;
 		    padding: 5px 10px 5px 10px;
-		    width: 100px;
 		    
 		    padding-left: 2em;
 		    position: relative;
@@ -229,7 +222,7 @@
 		jqDataTable.columns = [
 			{
 				name: "STT",
-				title: 'STT',
+				
 				data: "index"
 			}
 		];
@@ -238,13 +231,15 @@
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
-				title: '${column.name}',
+				
 				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
 		
 		$(document).ready(function(){
+			document.getElementById("jqTitlePage").innerHTML = titlePage;
+			
 			loader.open();
 			$.ajax({
 			    url: "${urlData}",
@@ -434,6 +429,27 @@
 			});
 		}
 		
+		function JqRefresh() {
+			loader.open();
+			$.ajax({
+			    url: "${urlData}",
+			    type: 'post',
+			    dataType: "json",
+			    success: function(data) {
+					setTimeout(function(){ loader.close();}, 500);
+					jqDataTable.table.clear().draw();
+					jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
+			    		var r = new Object();
+				    	<#list dataFields as field>
+				    		r.${field} = d.${field}||"";
+				    	</#list>		
+				    	return r;
+			    	});
+			    	jqDataTable.table.rows.add(jqDataTable.data).draw();
+			    }
+			});
+		}
+
 		function openLoader() {
 			if($(".loader").hasClass("hidden-loading")) {
 				$(".loader").removeClass("hidden-loading");
@@ -451,13 +467,53 @@
 	<@Loader handleToggle="loader">
 		<@IconSpinner/>
 	</@Loader>
-	<div id="${id}">
-		<div id="jqDataTable-button-add" onClick="jqNew()">
-			${uiLabelMap.BkEunivAdd}
+
+	<div id="${id}" style="flex: 1 1 0%; padding: 2em 3em 6em 3em; width: 100%;overflow-y: auto; height: 100%;background-color: rgb(237, 236, 236);">
+		<div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; z-index: 1; opacity: 1;padding: 1em;">
+			<div style="display: flex; justify-content: space-between;">
+				<div class="title" style="padding: 16px; position: relative;">
+					<span style="font-size: 24px; color: rgba(0, 0, 0, 0.87); display: block; line-height: 36px;">
+						<span id="jqTitlePage">${titlePage?if_exists}</span>
+					</span>
+					<span style="font-size: 14px; color: rgba(0, 0, 0, 0.54); display: block;"></span>
+				</div>
+
+				<div style="padding: 8px; position: relative; z-index: 2; display: flex; justify-content: flex-end; flex-wrap: wrap;">
+					<@FlatButton id="JqNewRecord" onClick="jqNew()" style="color: rgb(0, 188, 212); text-transform: uppercase;">
+						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+							<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+						</svg>
+						${uiLabelMap.BkEunivAdd}
+					</@FlatButton>
+
+					<@FlatButton id="JqRefresh" onClick="JqRefresh()" style="color: rgb(0, 188, 212); text-transform: uppercase;">
+						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
+						</svg>
+						Làm mới
+					</@FlatButton>
+				</div>
+			</div>
+			
+			<table id="${id}-content" style="width: 100%!important;" class="table table-striped">
+			 <thead>
+				<tr>
+					<th>
+						<@FlatButton id="STT" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+							STT
+						</@FlatButton>
+					</th>
+					<#list columns as column>
+						<th>
+							<@FlatButton id="${column.data}" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+								${column.name}
+							</@FlatButton>
+						</th>
+					</#list>
+				</tr>
+			</thead>
+			</table>
 		</div>
-		
-		<table id="${id}-content" class="table table-striped">
-		</table>
 	</div>
 	
 	<div class="loader hidden-loading"></div>
