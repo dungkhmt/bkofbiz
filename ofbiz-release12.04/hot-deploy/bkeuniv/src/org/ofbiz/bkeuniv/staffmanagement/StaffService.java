@@ -2,21 +2,29 @@ package org.ofbiz.bkeuniv.staffmanagement;
 
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Set;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 //import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
 
 import java.util.List;
 
@@ -80,6 +88,70 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+	
+	public static Map<String,Object> JQGetListStaffs(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator staffs = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.get("q") != null) {
+				String q = (String)parameters.get("q")[0];
+				System.out.println("1. debug ::::::::::" +q);
+				String[] searchKeys = {"staffId", "staffEmail", "staffName", "facultyName", "departmentName", "genderName", "facultyName"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, "%" + q + "%");
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+			EntityCondition condition = null;
+			
+			if(listAllConditions.size() > 1) {
+				System.out.println("2. debug ::::::::::");
+				condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			} else {
+				if(listAllConditions.size() == 1) {
+					System.out.println("3. debug ::::::::::");
+					condition = listAllConditions.get(0);
+				}
+			}
+			System.out.println(condition.toString());
+			staffs = delegator.find("StaffView", condition, null, null, sort, opts);
+			
+			//int total = staffs.getResultsSizeAfterPartialList();
+			//System.out.println("Size Staff ::::::::" + staffs.getCompleteList().size());
+						
+			result.put("listIterator", staffs);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list staffs");
+		} finally {
+//			if(staffs != null){
+//				staffs.close();
+//			}
+		}
+		return result;
+	}
+
 
 	public static Map<String, Object> getStaffs(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -94,6 +166,20 @@ public class StaffService {
 		try{
 			List<GenericValue> staffs = delegator.findList("StaffView", 
 					null,null, null, null, false);
+			
+			String q = (String)context.get("q");
+			
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
+			
+			String[] searchKeys = {"departmentName", "genderName", "facultyName"}; 
+			
+			for(String key: searchKeys) {
+				EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, q);
+				conditions.add(condition);
+			}
+		
+			staffs = delegator.findList("StaffView", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
 		
 			List<Map<String, Object>> ret_staffs = FastList.newInstance();
 					

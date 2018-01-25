@@ -1,7 +1,7 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 <body>
 
-Project Proposal ID = ${projectProposalId}
+<#--  Project Proposal ID = ${projectProposalId}  -->
 
 <script>
 	var modal;
@@ -33,10 +33,10 @@ Project Proposal ID = ${projectProposalId}
 			  });
 	}
 				
-function 	jqViewDetail(data){
-	alert(data.researchProjectProposalId);
-	//window.location.href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=" + data.researchProjectProposalId;
-}
+	function 	jqViewDetail(data){
+		alert(data.researchProjectProposalId);
+		//window.location.href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=" + data.researchProjectProposalId;
+	}
 
 </script>
 
@@ -59,7 +59,7 @@ function 	jqViewDetail(data){
 		"roleTypeId",
 		"roleTypeName"
 	] />
-	
+<#--  	
 	<#assign roleTypeList=[]/>
 	<#list resultRoleTypes.projectProposalRoleTypes as rt>
 		<#if rt?has_content>
@@ -74,7 +74,7 @@ function 	jqViewDetail(data){
 			<#assign op={"name": st.staffName? j_string, "value": st.staffId?j_string}/>
 			<#assign staffs = staffs + [op]/>
 		</#if>
-	</#list>
+	</#list>  -->
 
 	<#assign columnsChange=[
 		{
@@ -85,7 +85,6 @@ function 	jqViewDetail(data){
 		{
 			"name": "Role Type Name"?j_string,
 			"value": "roleTypeName"
-		
 		}
 	
 	] />
@@ -93,22 +92,22 @@ function 	jqViewDetail(data){
 	<#assign columnsNew=[
 		{
 			"name": "Staff Name"?j_string,
-			"value": "staffId",
-			"type":"select",
+			"value": "staffId"
+			<#--  "type":"select",
 			"option":{
 				"source": staffs,
 				"maxItem": 1
 			}
-		
+		  -->
 		},
 		{
 			"name": "Role Type"?j_string,
-			"value": "roleTypeId",
-			"type": "select",
+			"value": "roleTypeId"
+			<#--  "type": "select",
 			"option":{
 				"source": roleTypeList,
 				"maxItem": 1
-			}
+			}  -->
 		
 		}
 		]

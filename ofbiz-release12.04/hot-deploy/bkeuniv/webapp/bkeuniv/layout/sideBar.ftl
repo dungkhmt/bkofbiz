@@ -62,21 +62,23 @@
 </@SideBar>
 
 <#function isOpen parent target=Request.targetRequestUri>
-    <#if parent.children??>
-		<#list parent.children as cf>
-			<#if cf.target??>
-				<#if cf.target?index_of(target)!= -1 || target?index_of(cf.target)!= -1 >
-					<#return true/>
+	<#if parent??&&parent?is_hash_ex>
+		<#if parent.children??&&parent.children?is_hash_ex>
+			<#list parent.children as cf>
+				<#if cf.target??>
+					<#if cf.target?index_of(target)!= -1 || target?index_of(cf.target)!= -1 >
+						<#return true/>
+					</#if>
 				</#if>
-			</#if>
 
-			<#if cf.children??>
-				<#assign _check=isOpen(cf, target) />
-				<#if _check>
-					<#return true/>
+				<#if cf.children??>
+					<#assign _check=isOpen(cf, target) />
+					<#if _check>
+						<#return true/>
+					</#if>
 				</#if>
-			</#if>
-		</#list>
+			</#list>
+		</#if>
 	</#if>
 	<#return false/>
 </#function>

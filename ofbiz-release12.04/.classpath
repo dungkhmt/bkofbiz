@@ -218,5 +218,8 @@
 	<classpathentry kind="src" path="specialpurpose/workflow/src"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="lib" path="framework/base/lib/freemarker-2.3.19.jar"/>
+	<classpathentry kind="lib" path="framework/base/lib/jackson-core-2.8.6.jar"/>
+	<classpathentry kind="lib" path="framework/base/lib/jackson-annotations-2.4.0.jar"/>
+	<classpathentry kind="lib" path="framework/base/lib/jackson-databind-2.4.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -258,9 +258,9 @@
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
 			<key-map field-name="researchProjectProposalId" rel-field-name="researchProjectProposalId"/>
 		</relation>
-		<relation rel-entity-name="Party" type="one">
+		<!-- <relation rel-entity-name="Party" type="one">
 			<key-map field-name="partyId"/>
-		</relation>
+		</relation> -->
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>		

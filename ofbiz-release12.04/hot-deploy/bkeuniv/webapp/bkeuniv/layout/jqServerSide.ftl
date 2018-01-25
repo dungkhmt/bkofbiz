@@ -222,7 +222,7 @@
 		jqDataTable.columns = [
 			{
 				name: "STT",
-				
+				orderable: false,
 				data: "index"
 			}
 		];
@@ -239,97 +239,229 @@
 		
 		$(document).ready(function(){
 			document.getElementById("jqTitlePage").innerHTML = titlePage;
+
+            jqDataTable.table = $('#${id}-content').DataTable( {
+                "processing": true,
+                "serverSide": true,
+                "sAjaxSource": "${urlData}",
+                columns: jqDataTable.columns,
+                deferRender: true,
+                "columnDefs": [
+                {
+                    "targets": 0,
+                    "render": function ( data, type, row, meta ) {
+                        
+                        var row = meta.row;
+                        if( Object.prototype.toString.call( row ) === '[object Array]' ) {
+                            if(row.length > 0) {
+                                return row[0] + 1
+                            } else {
+                                return jqDataTable.data.length
+                            }
+                        }
+                        
+                        return meta.row + 1;					      
+                    }
+                },
+                <#assign index = 1 />
+                <#list columns as column>
+                    <#assign c = {} />
+                    
+                    <#if column.render?has_content>
+                            <#assign c = c + {"render": column.render} />
+                    </#if>
+                    <#if column.width?has_content>
+                            <#assign c = c + {"width": column.width} />
+                    </#if>
+                    
+                    <#if c?has_content>
+                            <#assign c = c + {"targets": index} />
+                            <@pfObject object=c />,
+                    </#if>
+                    
+                    <#assign index = index + 1 />
+                </#list>
+                ],
+                <#if fnInfoCallback?has_content>
+                    "fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
+                </#if>
+                "bJQueryUI": true,
+                
+                "fnServerData": function ( sSource, aoData, fnCallback ) {
+                    loader.open();
+                    console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
+                    var n_colunm = (aoData.find(function(data) {
+                        return data.name=="iColumns";
+                    })||{}).value||0;
+
+                    var s_search = (aoData.find(function(data) {
+                        return data.name=="sSearch";
+                    })||{}).value||"";
+
+                    var n_sort_field = (aoData.find(function(data) {
+                        return data.name=="iSortCol_0";
+                    })||{}).value||0;
+
+                    n_sort_field = n_sort_field==0?1:n_sort_field;
+
+                    var s_sort_field = (aoData.find(function(data) {
+                        return data.name=="mDataProp_"+n_sort_field;
+                    })||{}).value;
+
+                    var s_sort_type = (aoData.find(function(data) {
+                        return data.name=="sSortDir_0";
+                    })||{}).value;
+
+                    var i_start = (aoData.find(function(data) {
+                        return data.name=="iDisplayStart";
+                    })||{}).value||0;
+
+                    var i_size = (aoData.find(function(data) {
+                        return data.name=="iDisplayLength";
+                    })||{}).value||0;
+                    
+                    var page = !i_size?0:i_start/i_size;
+
+                    $.ajax( {
+                        "dataType": 'json', 
+                        "type": "POST", 
+                        "url": sSource, 
+                        "data": {
+                            "q": s_search,
+                            "pagenum" : page.toString(),
+                            "pagesize": i_size.toString(),
+                            <#--  "filter": '{"field": "staffId", "value": "dung", "operation": "CONTAINS" }',  -->
+                            "sort": JSON.stringify([{"field": s_sort_field, "type": s_sort_type}]),
+                        },
+                        "success": function (reponse) {
+                            setTimeout(function(){ loader.close();}, 500);
+                            let data = {
+                                aaData: reponse.results,
+                                iTotalDisplayRecords: reponse.totalRows,
+                                iTotalRecords: reponse.totalRows,
+                                recordsTotal: reponse.totalRows,
+                            }
+
+                            data.aaData = data.aaData.map(function(d, index) {
+                                d.index = i_start+ index + 1;
+                                return d;
+                            })
+                            fnCallback(data)
+                        }
+                    } );
+                    
+                }
+            } );
+            <#if contextmenu>
+                    $(document).contextmenu({
+                        delegate: "#${id}-content td",
+                    menu: [
+                        {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+                        {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+                    ],
+                    select: function(event, ui) {
+                        var el = ui.target.parent();
+                        var data = jqDataTable.table.row( el ).data();
+                        switch(ui.cmd){
+                            case "edit":
+                                jqChange(data)
+                                break;
+                            case "delete":
+                                jqDelete(data);
+                                break;
+                            }
+                        },
+                        beforeOpen: function(event, ui) {
+                            var $menu = ui.menu,
+                                $target = ui.target,
+                                extraData = ui.extraData;
+                            ui.menu.zIndex(9999);
+                        }
+                        });
+                </#if>
+
+
 			
-			loader.open();
-			$.ajax({
-			    url: "${urlData}",
-			    type: 'post',
-			    dataType: "json",
-			    success: function(data) {
-					setTimeout(function(){ loader.close();}, 500);
-					
-			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
-			    		var r = new Object();
-				    	<#list dataFields as field>
-				    		r.${field} = d.${field}||"";
-				    	</#list>		
-				    	return r;
-			    	})
-			    	
-			    	jqDataTable.table = $('#${id}-content').DataTable({
-			   		data: jqDataTable.data,
-					columns: jqDataTable.columns,
-					deferRender: true,
-					"columnDefs": [
-					{
-						"targets": 0,
-						"render": function ( data, type, row, meta ) {
-							
-							var row = meta.row;
-							if( Object.prototype.toString.call( row ) === '[object Array]' ) {
-								if(row.length > 0) {
-									return row[0] + 1
-								} else {
-									return jqDataTable.data.length
-								}
-							}
-							
-							return meta.row + 1;					      
-					    }
-					},
-					<#assign index = 1 />
-					<#list columns as column>
-						<#assign c = {} />
-						
-						<#if column.render?has_content>
-				             <#assign c = c + {"render": column.render} />
-						</#if>
-						<#if column.width?has_content>
-				             <#assign c = c + {"width": column.width} />
-						</#if>
-						
-						<#if c?has_content>
-				             <#assign c = c + {"targets": index} />
-				             <@pfObject object=c />,
-						</#if>
-						
-						<#assign index = index + 1 />
-					</#list>
-					],
-					<#if fnInfoCallback?has_content>
-						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
-					</#if>
-					"bJQueryUI": true
-			       });
-			       <#if contextmenu>
-				       $(document).contextmenu({
-						    delegate: "#${id}-content td",
-						menu: [
-						  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-						  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
-						],
-						select: function(event, ui) {
-							var el = ui.target.parent();
-							var data = jqDataTable.table.row( el ).data();
-							switch(ui.cmd){
-								case "edit":
-									jqChange(data)
-									break;
-								case "delete":
-									jqDelete(data);
-									break;
-								}
-							},
-							beforeOpen: function(event, ui) {
-								var $menu = ui.menu,
-									$target = ui.target,
-									extraData = ui.extraData;
-								ui.menu.zIndex(9999);
-						    }
-						  });
-					</#if>
-			    }
-			});
+            <#--  jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
+                    var r = new Object();
+                    <#list dataFields as field>
+                        r.${field} = d.${field}||"";
+                    </#list>		
+                    return r;
+                })  -->
+                
+                <#--  jqDataTable.table = $('#${id}-content').DataTable({
+                data: jqDataTable.data,
+                columns: jqDataTable.columns,
+                deferRender: true,
+                "columnDefs": [
+                {
+                    "targets": 0,
+                    "render": function ( data, type, row, meta ) {
+                        
+                        var row = meta.row;
+                        if( Object.prototype.toString.call( row ) === '[object Array]' ) {
+                            if(row.length > 0) {
+                                return row[0] + 1
+                            } else {
+                                return jqDataTable.data.length
+                            }
+                        }
+                        
+                        return meta.row + 1;					      
+                    }
+                },
+                <#assign index = 1 />
+                <#list columns as column>
+                    <#assign c = {} />
+                    
+                    <#if column.render?has_content>
+                            <#assign c = c + {"render": column.render} />
+                    </#if>
+                    <#if column.width?has_content>
+                            <#assign c = c + {"width": column.width} />
+                    </#if>
+                    
+                    <#if c?has_content>
+                            <#assign c = c + {"targets": index} />
+                            <@pfObject object=c />,
+                    </#if>
+                    
+                    <#assign index = index + 1 />
+                </#list>
+                ],
+                <#if fnInfoCallback?has_content>
+                    "fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
+                </#if>
+                "bJQueryUI": true
+                });
+                <#if contextmenu>
+                    $(document).contextmenu({
+                        delegate: "#${id}-content td",
+                    menu: [
+                        {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+                        {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+                    ],
+                    select: function(event, ui) {
+                        var el = ui.target.parent();
+                        var data = jqDataTable.table.row( el ).data();
+                        switch(ui.cmd){
+                            case "edit":
+                                jqChange(data)
+                                break;
+                            case "delete":
+                                jqDelete(data);
+                                break;
+                            }
+                        },
+                        beforeOpen: function(event, ui) {
+                            var $menu = ui.menu,
+                                $target = ui.target,
+                                extraData = ui.extraData;
+                            ui.menu.zIndex(9999);
+                        }
+                        });
+                </#if>  -->
 		});
 		
 		function jqChange(data) {

@@ -41,6 +41,27 @@
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
  -->    
+ 
+ 	<service name="jqxGetListInterface" engine="interface" >
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="org.ofbiz.entity.util.EntityListIterator" optional="true"></attribute>
+   </service>
+ 
+ 	<service name="jqxGridGeneralServicer" engine="java"
+            location="org.ofbiz.bkeuniv.service.JqxWidgetSevices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
+        <attribute name="request" mode="IN" type="javax.servlet.http.HttpServletRequest" optional="true"></attribute>
+        <attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+        <attribute name="results" mode="OUT" type="List" ></attribute>
+        <attribute name="totalRows" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="JQGetListStaffs" engine="java" invoke="JQGetListStaffs" location="org.ofbiz.bkeuniv.staffmanagement.StaffService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
             location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">

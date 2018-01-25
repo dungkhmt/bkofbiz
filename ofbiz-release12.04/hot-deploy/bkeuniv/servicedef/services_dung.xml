@@ -216,6 +216,7 @@
     
     <service name="getStaffs" engine="java" 
     		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
+    	<attribute name="q" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="staffs" mode="OUT" type="List"></attribute>
     </service>
     <service name="getStaffInfo" engine="java" 

@@ -34,8 +34,6 @@
 				
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<set field="projectProposalId" from-field="${parameters.researchProjectProposalId}"/>
-				<service service-name="getListProjectProposalRoleTypes" result-map="resultRoleTypes"></service>
-				<service service-name="getStaffs" result-map="resultStaffs"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
