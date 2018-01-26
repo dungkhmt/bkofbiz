@@ -243,14 +243,15 @@
             jqDataTable.table = $('#${id}-content').DataTable( {
                 "processing": true,
                 "serverSide": true,
+				"order": [[ 1, "asc" ]],
                 "sAjaxSource": "${urlData}",
                 columns: jqDataTable.columns,
                 deferRender: true,
                 "columnDefs": [
-                {
+                <#--  {
                     "targets": 0,
                     "render": function ( data, type, row, meta ) {
-                        
+                        console.log(data, type, row, meta)
                         var row = meta.row;
                         if( Object.prototype.toString.call( row ) === '[object Array]' ) {
                             if(row.length > 0) {
@@ -262,7 +263,7 @@
                         
                         return meta.row + 1;					      
                     }
-                },
+                },  -->
                 <#assign index = 1 />
                 <#list columns as column>
                     <#assign c = {} />
@@ -288,7 +289,7 @@
                 "bJQueryUI": true,
                 
                 "fnServerData": function ( sSource, aoData, fnCallback ) {
-                    loader.open();
+                    <#--  loader.open();  -->
                     console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
                     var n_colunm = (aoData.find(function(data) {
                         return data.name=="iColumns";
@@ -334,16 +335,19 @@
                             "sort": JSON.stringify([{"field": s_sort_field, "type": s_sort_type}]),
                         },
                         "success": function (reponse) {
-                            setTimeout(function(){ loader.close();}, 500);
+                            <#--  setTimeout(function(){ loader.close();}, 500);  -->
                             let data = {
-                                aaData: reponse.results,
+								data: reponse.results,
+								recordsFiltered: reponse.totalRows,
+								recordsTotal: reponse.totalRows,
+                                <#--  aaData: reponse.results,
                                 iTotalDisplayRecords: reponse.totalRows,
                                 iTotalRecords: reponse.totalRows,
-                                recordsTotal: reponse.totalRows,
+                                recordsTotal: reponse.totalRows,  -->
                             }
 
-                            data.aaData = data.aaData.map(function(d, index) {
-                                d.index = i_start+ index + 1;
+                            data.data = reponse.results.map(function(d, index) {
+                                d.index = page*i_size + index + 1;
                                 return d;
                             })
                             fnCallback(data)

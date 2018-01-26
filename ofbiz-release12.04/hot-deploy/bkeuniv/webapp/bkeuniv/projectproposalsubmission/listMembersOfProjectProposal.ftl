@@ -89,26 +89,32 @@
 	
 	] />
 	
+	<#assign roleTypeList=[]/>
+  <#list resultRoleTypes.projectProposalRoleTypes as rt>
+    <#if rt?has_content>
+             <#assign op = { "name": rt.roleTypeName?j_string ,"value": rt.roleTypeId?j_string } />
+            <#assign roleTypeList = roleTypeList + [op] />
+    </#if>
+  </#list>
+
 	<#assign columnsNew=[
 		{
 			"name": "Staff Name"?j_string,
-			"value": "staffId"
-			<#--  "type":"select",
+			"value": "staffId",
+			"type":"select_server_side",
 			"option":{
-				"source": staffs,
-				"maxItem": 1
+				"maxItem": 1,
+				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
-		  -->
 		},
 		{
 			"name": "Role Type"?j_string,
-			"value": "roleTypeId"
-			<#--  "type": "select",
+			"value": "roleTypeId",
+			"type": "select",
 			"option":{
 				"source": roleTypeList,
 				"maxItem": 1
-			}  -->
-		
+			}
 		}
 		]
 	 />

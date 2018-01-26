@@ -69,6 +69,43 @@ modal.prototype._select = function(value, edit, id, option) {
 	return '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'>'+option.join("")+'</select></div>'+script;
 }
 
+modal.prototype._select_server_side = function(edit, id, option) {
+	var _id = "#"+id;
+	var maxItem = option.maxItem||1;
+	var script = '<script type="text/javascript">'+
+					'$(function () {'+
+						'$("'+[this.id, _id].join(" ")+'").select2({'+
+							'language: "vi",'+
+							'ajax: {' +
+								'url: "'+option.url+'",'+
+								'delay: 250,'+
+								'cache: true,'+
+								'data: function (params) {'+
+									'var query = {'+
+										'q: params.term||"",'+
+										'pagenum:0,'+
+										'pagesize:10,'+
+									'};'+
+									'return query;'+
+								'},'+
+								'processResults: function (data) {'+
+								'return {'+
+									'results: data.results.map(function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}),'+
+									'"pagination": {'+
+										'"more": true,'+
+									'},'+
+								'};'+
+								'},'+
+							'},'+
+							(maxItem>1?'maximumSelectionLength: ' + maxItem:"")+
+						'});'+
+					'});'+
+				'</script>';
+	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
+	console.log(a)
+	return a;
+}
+
 modal.prototype.setting = function(option) {
 	this.option = option;
 	this._data = option.data;
@@ -90,7 +127,10 @@ modal.prototype.setting = function(option) {
 		        break;
 		    case "select":
 		    	el = this._select(column._data, column.edit, column.id, column.option);
-		    	break;
+				break;
+			case "select_server_side":
+		    	el = this._select_server_side(column.edit, column.id, column.option);
+				break;
 		    case "custom":
 		    	el = column.el;
 		    	break;
@@ -240,7 +280,10 @@ modal.prototype.data = function() {
 			        break;
 			    case "select":
 			    	column._data = _._getSelect("#"+column.id);
-			    	break;
+					break;
+				case "select_server_side":
+			    	column._data = _._getSelect("#"+column.id);
+					break;
 			    case "custom":
 			    	if(typeof column.getData == "function") {
 			    		column._data = column.getData("#"+column.id);
