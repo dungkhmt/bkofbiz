@@ -428,11 +428,50 @@
 		<prim-key field="researchDomainId"/>
 	</entity>
 	
+	<entity entity-name="ResearchSubDomain" title="Lĩnh vực nghiên cứu" package-name="org.ofbiz.bkeuniv">
+		<field name="researchDomainId" type="id-ne"></field>
+		<field name="researchSubDomainSeqId" type="id-ne"></field>
+		<field name="researchSubDomainName" type="very-long"></field>
+		<field name="researchSubDomainCode" type="very-long"></field>
+		<prim-key field="researchSubDomainSeqId"/>
+		<prim-key field="researchDomainId"/>
+		<relation rel-entity-name="ResearchDomain" type="one">
+			<key-map field-name="researchDomainId"/>
+		</relation>
+	</entity>
+	
 	<entity entity-name="ResearchSpeciality" title="Chuyên ngành nghiên cứu" package-name="org.ofbiz.bkeuniv">
-		<field name="researchSpecialityId" type="id-ne"></field>
+		<field name="researchDomainId" type="id-ne"></field>
+		<field name="researchSubDomainSeqId" type="id"></field>
+		<field name="researchSpecialitySeqId" type="id-ne"></field>
 		<field name="researchSpecialityName" type="very-long"></field>
+		<field name="researchSpecialityCode" type="id-ne"></field>
+		
+		<prim-key field="researchSpecialitySeqId"/>
+		<prim-key field="researchSubDomainSeqId"/>
+		<prim-key field="researchDomainId"/>
+		<relation rel-entity-name="ResearchSubDomain" type="one">
+			<key-map field-name="researchSubDomainSeqId"/>
+		</relation>
+		<relation rel-entity-name="ResearchSubDomain" type="one">
+			<key-map field-name="researchDomainId"/>
+		</relation>
+		
+		
+	</entity>
+
+	<entity entity-name="StaffResearchDomain" package-name="org.ofbiz.bkeuniv">
+		<field name="staffResearchDomainId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
 		<field name="researchDomainId" type="id"></field>
-		<prim-key field="researchSpecialityId"/>
+		<field name="fromDate" type="date"></field>
+		<field name="thruDate" type="date"></field>
+		
+		<prim-key field="staffResearchDomainId"/>
+		
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
 		<relation rel-entity-name="ResearchDomain" type="one">
 			<key-map field-name="researchDomainId"/>
 		</relation>
@@ -441,13 +480,27 @@
 	<entity entity-name="StaffResearchSpeciality" package-name="org.ofbiz.bkeuniv">
 		<field name="staffResearchSpecialityId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
-		<field name="researchSpecialityId" type="id"></field>
+		<field name="researchDomainId" type="id"></field>
+		<field name="researchSubDomainSeqId" type="id"></field>
+		<field name="researchSpecialitySeqId" type="id"></field>
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
+		
 		<prim-key field="staffResearchSpecialityId"/>
+		
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>
+		<relation rel-entity-name="ResearchSpeciality" type="one">
+			<key-map field-name="researchSubDomainSeqId"/>
+		</relation>
+		<relation rel-entity-name="ResearchSpeciality" type="one">
+			<key-map field-name="researchDomainId"/>
+		</relation>
+		<relation rel-entity-name="ResearchSpeciality" type="one">
+			<key-map field-name="researchSpecialitySeqId"/>
+		</relation>
+		
 	</entity>
 	<!-- end lĩnh vực nghiên cứu -->
 

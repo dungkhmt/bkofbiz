@@ -59,13 +59,15 @@
 <Function functionId="SCIENTIFIC_SERVICES" uiLabelId="scientific_services" vnLabel="Kinh nghiệm quản lý đánh giá khoa học công nghệ" enLabel="scientific services" target="scientificserviceexperience" parentFunctionId="PROFILE_MANAGEMENT" index="2"/>
 <Function functionId="WORK_PROGRESS" uiLabelId="work_progress" vnLabel="Quá trình công tác" enLabel="works" target="work-progress" parentFunctionId="PROFILE_MANAGEMENT" index="3"/>
 <Function functionId="RESEARCH_SPECIALITY_STAFF" uiLabelId="research_speciality_staff" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-staff" parentFunctionId="PROFILE_MANAGEMENT" index="4"/>
-<Function functionId="FOREIGN_LANGUAGE_STAFF" uiLabelId="foreign_language_staff" vnLabel="Trình độ ngoại ngữ" enLabel="foreign language" target="foreign-language-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
-<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
-<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
-<Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
-<Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
-<Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
-<Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
+<Function functionId="RESEARCH_DOMAIN_STAFF" uiLabelId="research_domain_staff" vnLabel="Lĩnh vực nghiên cứu" enLabel="research domain" target="research-domain-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
+
+<Function functionId="FOREIGN_LANGUAGE_STAFF" uiLabelId="foreign_language_staff" vnLabel="Trình độ ngoại ngữ" enLabel="foreign language" target="foreign-language-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
+<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
+<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
+<Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+<Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
+<Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
+<Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="12"/>
 
 
 
@@ -119,6 +121,10 @@
 	
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.936" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.936" createdTxStamp="2017-08-13 18:06:03.916"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZADMIN" functionId="RESEARCH_SPECIALITY_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.93" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.93" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+    <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_DOMAIN_STAFF" securityGroupId="BIZADMIN" functionId="RESEARCH_DOMAIN_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.93" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.93" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+	
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_ALL_PAPERS" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_ALL_PAPERS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-28 18:30:08.808" lastUpdatedTxStamp="2017-10-28 18:30:08.806" createdStamp="2017-10-28 18:30:08.808" createdTxStamp="2017-10-28 18:30:08.806"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_KV01" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_KV01" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-07 12:14:37.406" lastUpdatedTxStamp="2017-10-07 12:14:37.398" createdStamp="2017-10-07 12:14:37.406" createdTxStamp="2017-10-07 12:14:37.398"/>
     <GroupFunction groupFunctionId="BIZADMIN_RESEARCH_SUMMARY_TEMPLATE_EXCEL" securityGroupId="BIZADMIN" functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-07 15:27:53.194" lastUpdatedTxStamp="2017-10-07 15:27:53.193" createdStamp="2017-10-07 15:27:53.194" createdTxStamp="2017-10-07 15:27:53.193"/>
@@ -126,6 +132,7 @@
     <GroupFunction groupFunctionId="BIZADMIN_STAFF_LIST" securityGroupId="BIZADMIN" functionId="STAFF_LIST" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-12 19:38:24.151" lastUpdatedTxStamp="2017-08-12 19:38:24.085" createdStamp="2017-08-12 19:38:24.151" createdTxStamp="2017-08-12 19:38:24.085"/>
     <GroupFunction groupFunctionId="BIZADMIN_STAFF_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STAFF_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-12 19:38:24.15" lastUpdatedTxStamp="2017-08-12 19:38:24.085" createdStamp="2017-08-12 19:38:24.15" createdTxStamp="2017-08-12 19:38:24.085"/>
     <GroupFunction groupFunctionId="BIZADMIN_STAFF_RESEARCH_SPECIALITY" securityGroupId="BIZADMIN" functionId="STAFF_RESEARCH_SPECIALITY" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-19 11:47:48.046" lastUpdatedTxStamp="2017-08-19 11:47:48.034" createdStamp="2017-08-19 11:47:48.046" createdTxStamp="2017-08-19 11:47:48.034"/>
+
     <GroupFunction groupFunctionId="BIZADMIN_SUBMIT_PROPOSAL" securityGroupId="BIZADMIN" functionId="SUBMIT_PROPOSAL" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.803" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.803" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZADMIN_WORK_PROGRESS" securityGroupId="BIZADMIN" functionId="WORK_PROGRESS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
     <GroupFunction groupFunctionId="BIZSTAFF_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="APPLIED_PROJECT_DECLARATION_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.943" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.943" createdTxStamp="2017-08-13 18:06:03.916"/>
@@ -139,7 +146,10 @@
     <GroupFunction groupFunctionId="BIZSTAFF_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="PROJECT_DECLARATION_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.942" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.942" createdTxStamp="2017-08-13 18:06:03.916"/>
     <GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_PROJECT_MANAGEMENT" securityGroupId="BIZSTAFF" functionId="RESEARCH_PROJECT_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.808" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.808" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZSTAFF" functionId="RESEARCH_SPECIALITY_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.938" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.938" createdTxStamp="2017-08-13 18:06:03.916"/>
-    <GroupFunction groupFunctionId="BIZSTAFF_SCIENTIFIC_SERVICES" securityGroupId="BIZSTAFF" functionId="SCIENTIFIC_SERVICES" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-12 19:38:24.154" lastUpdatedTxStamp="2017-08-12 19:38:24.085" createdStamp="2017-08-12 19:38:24.154" createdTxStamp="2017-08-12 19:38:24.085"/>
+  
+    <GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_DOMAIN_STAFF" securityGroupId="BIZSTAFF" functionId="RESEARCH_DOMAIN_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.938" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.938" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+  <GroupFunction groupFunctionId="BIZSTAFF_SCIENTIFIC_SERVICES" securityGroupId="BIZSTAFF" functionId="SCIENTIFIC_SERVICES" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-12 19:38:24.154" lastUpdatedTxStamp="2017-08-12 19:38:24.085" createdStamp="2017-08-12 19:38:24.154" createdTxStamp="2017-08-12 19:38:24.085"/>
     <GroupFunction groupFunctionId="BIZSTAFF_SUBMIT_PROPOSAL" securityGroupId="BIZSTAFF" functionId="SUBMIT_PROPOSAL" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.809" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.809" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZSTAFF_WORK_PROGRESS" securityGroupId="BIZSTAFF" functionId="WORK_PROGRESS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.937" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.937" createdTxStamp="2017-08-13 18:06:03.916"/>
 
@@ -6723,5 +6733,36 @@
     <WorkProgress workProgressId="10002" staffId="dung.phamquang@hust.edu.vn" period="2012-nay" position="Gi&#7843;ng vi&#234;n" specialization="Khoa h&#7885;c m&#225;y t&#237;nh" institution="Vi&#7879;n CNTT&amp;TT" lastUpdatedStamp="2017-10-21 16:20:39.557" lastUpdatedTxStamp="2017-10-21 16:20:39.556" createdStamp="2017-10-21 16:20:39.557" createdTxStamp="2017-10-21 16:20:39.556"/>
 	
 	<ProjectCall projectCallId="00001" projectCallName="Đề tài cơ sở phân cấp 2018" year="2018" projectCategoryId="INST_PROJ"/>
+
+	
+	<ResearchDomain researchDomainId="00001" researchDomainName="Khoa học tự nhiên"/>
+	<ResearchDomain researchDomainId="00002" researchDomainName="Khoa học kỹ thuật và công nghệ"/>
+	<ResearchDomain researchDomainId="00003" researchDomainName="Khoa học Y, Dược"/>
+	<ResearchDomain researchDomainId="00004" researchDomainName="Khoa học nông nghiệp"/>
+	<ResearchDomain researchDomainId="00005" researchDomainName="Khoa học xã hội"/>
+	<ResearchDomain researchDomainId="00006" researchDomainName="Khoa học nhân văn"/>
+	
+	<ResearchSubDomain  researchDomainId="00001" researchSubDomainSeqId="00001" researchSubDomainName="Toán học và Thống kê" researchSubDomainCode="101"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00002" researchSubDomainName="Khoa học máy tính và thông tin" researchSubDomainCode="102"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00003" researchSubDomainName="Vật lý" researchSubDomainCode="103" />
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00004" researchSubDomainName="Hoá học" researchSubDomainCode="104" />
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00005" researchSubDomainName="Các khoa học trái đất và môi trường liên quan" researchSubDomainCode="105"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00006" researchSubDomainName="Sinh học" researchSubDomainCode="106" />
+	<ResearchSubDomain researchDomainId="00001"  researchSubDomainSeqId="00007" researchSubDomainName="Khoa học tự nhiên khác" researchSubDomainCode="199"mainId="00001"/>
+	
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00001" researchSubDomainName="Kỹ thuật dân dụng" researchSubDomainCode="201" />
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00002" researchSubDomainName="Kỹ thuật điện, kỹ thuật điện tử, kỹ thuật thông tin" researchSubDomainCode="202"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00003" researchSubDomainName="Kỹ thuật cơ khí chế tạo" researchSubDomainCode="203"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00004" researchSubDomainName="Kỹ thuật Hoá học" researchSubDomainCode="204" />
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00005" researchSubDomainName="Kỹ thuật vật liệu và luyện kim" researchSubDomainCode="205"/>
+	
+		
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Toán học cơ bản" researchSpecialityCode="10101"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Toán học ứng dụng" researchSpecialityCode="10102"/>
+
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật kiến trúc" researchSpecialityCode="20101"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật xây dựng" researchSpecialityCode="20102"/>
+	
 	
 </entity-engine-xml>
