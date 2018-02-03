@@ -235,6 +235,8 @@ public class StaffService {
 			param.put("authorStaffId", staffId);
 			Map<String, Object> result_papers = dispatcher.runSync("getPapersOfStaff", param);
 			cv.put("papers", result_papers.get("papers"));
+			List<GenericValue> lstPapers = (List<GenericValue>)cv.get("papers");
+			Debug.log(module + "::getCVProfileOfStaff, publications = " + lstPapers.size());
 			
 			// get patents
 			param.clear();

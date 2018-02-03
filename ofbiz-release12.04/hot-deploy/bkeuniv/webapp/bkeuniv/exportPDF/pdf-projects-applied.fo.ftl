@@ -1,4 +1,6 @@
-     <fo:table-row>
+<#escape x as x?xml>
+
+          <fo:table-row>
         <fo:table-cell height="20pt" display-align="center" border-style="solid">
           
           //Full name
@@ -112,3 +114,5 @@
 		</fo:table>
        </fo:table-cell>
      </fo:table-row> 
+
+</#escape>

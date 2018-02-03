@@ -1,22 +1,20 @@
-     <fo:table-row>
+<#escape x as x?xml>
+          <fo:table-row>
         <fo:table-cell height="20pt" display-align="center" border-style="solid">
-         
-          //Full name
           <fo:table table-layout="fixed">
           	<fo:table-column column-width="proportional-column-width(1)"/>
 		  	<fo:table-column column-width="proportional-column-width(30)"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
 		        <fo:table-cell>
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
-			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
+		    	</fo:table-cell>
+		    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block font-weight="bold">${ResearchConstruction}</fo:block>
 		        </fo:table-cell>
-		      </fo:table-row>
+  	          </fo:table-row>
 		      
 		      <fo:table-row>
 				<fo:table-cell />
@@ -77,7 +75,7 @@
 				</fo:table-row>	
 				
 				<#assign index = 0>
-				<#list cv.papers as p>
+				<#list resultCV.cv.papers as p>
 					<#assign index = index + 1>
 				
 					<fo:table-row height="20pt" >
@@ -131,3 +129,4 @@
 		</fo:table>
        </fo:table-cell>
      </fo:table-row>
+</#escape>

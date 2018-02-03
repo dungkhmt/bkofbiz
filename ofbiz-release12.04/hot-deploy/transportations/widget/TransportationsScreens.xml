@@ -33,8 +33,10 @@
 	<screen name="pageRoutesView">
 		<section>
 			<actions>
+				<!-- 
 				<property-map resource="LearningUiLabels" map-name="uiLearningMap"
 					global="true" />
+				 -->	
 				<entity-condition list="listRoutes" entity-name="RouteAndShipper"></entity-condition>
 				<entity-condition list="listShippers" entity-name="Shippers"></entity-condition>
 			</actions>

@@ -528,6 +528,12 @@
 				<set field="idxPhDDefensed" from-field="${parameters.idxPhDDefensed}"/>
 				<set field="idxGraduateStudents" from-field="${parameters.idxGraduateStudents}"/>
 				
+				<set field="idxPublications" from-field="${parameters.idxPublications}"/>
+				<set field="idxWorkProgress" from-field="${parameters.idxWorkProgress}"/>
+				<set field="idxRecent5YearProjects" from-field="${parameters.idxRecent5YearProjects}"/>
+				<set field="idxAward" from-field="${parameters.idxAward}"/>
+				<set field="idxScientificService" from-field="${parameters.idxScientificService}"/>
+				
 				<!-- 
 				<service service-name="getEducationProgressOfLoginStaff" result-map="educationProgress"></service>
 				 -->

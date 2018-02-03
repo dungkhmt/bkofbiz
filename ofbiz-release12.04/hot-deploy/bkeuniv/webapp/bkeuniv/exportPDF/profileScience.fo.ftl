@@ -1,8 +1,7 @@
 
 <#escape x as x?xml>
 	
-	<@macro NumericalOrder numericalOrder=1>		
-	</@macro>
+	
 	
 	<#assign stt=1 />
 	<#assign fullName=resultCV.cv.info.staffName />
@@ -19,7 +18,7 @@
 	<#assign SocialScience="Khoa hoc Xa hoi"/>
 	<#assign HumanScience="Khoa hoc Nhan van"/>
 	<#assign AgriculturalScience="Khoa hoc Nong nghiep"/>
-	<#assign CodeOfScience="Ma chuyen nganh KH&CN"/>
+	<#assign CodeOfScience="Ma chuyen nganh KH-CN"/>
 	<#assign BkEunivNumber=""/>
 	<#assign BkEunivName=""/>
 	<#assign Additional=""/>
@@ -56,11 +55,11 @@
 	<#assign Level = "Tot" />
 	<#assign English = "Tieng Anh" />
 	<#assign BussinessProgress = "Qua trinh cong tac" />
-	<#assign Time = "Thoi gian (tu nam ... den nam ..." />
+	<#assign Time = "Thoi gian (tu nam    den nam " />
 	<#assign PositionBussiness = "Vi tri cong tac" />
 	<#assign Domain = "Linh vuc chuyen mon" />
 	<#assign Company = "Co quan cong tac" />
-	<#assign ResearchConstruction = "Cac cong trinh KH&CN chu yeu duoc cong bo, sach chuyen khao " />
+	<#assign ResearchConstruction = "Cac cong trinh KH-CN chu yeu duoc cong bo, sach chuyen khao " />
 	<#assign Construction = "(liet ke cong trinh tieu bieu da cong bo trong 5 nam gan nhat) " />
 	<#assign ConstructionName = "Ten cong trinh (bai bao, cong trinh ...) " />
 	<#assign Author = "La tac gia hoac la dong tac gia cong trinh" />
@@ -82,18 +81,18 @@
 	<#assign NameOfConstruction = "Ten cong trinh" />
 	<#assign Model = "Hinh thuc, quy mo, dia chi ap dung" />
 	<#assign TimeConstruction = "Thoi gian" /> 
-	<#assign Topic = "Cac de tai, du an, nhiem vu KH&CN da chu tri hoac tham gia trong 5 nam gan day" />
-	<#assign SubTopic1 = "Cac de tai, du an, nhiem vu KH&CN da chu tri" />
-	<#assign SubTopic2 = "Cac de tai, du an, nhiem vu KH&CN tham gia" />
+	<#assign Topic = "Cac de tai, du an, nhiem vu KH-CN da chu tri hoac tham gia trong 5 nam gan day" />
+	<#assign SubTopic1 = "Cac de tai, du an, nhiem vu KH-CN da chu tri" />
+	<#assign SubTopic2 = "Cac de tai, du an, nhiem vu KH-CN tham gia" />
 	<#assign TimeStart = "Thoi gian (bat dau - ket thuc) " />
 	<#assign Program = "Thuoc chuong trinh (neu co)" />
 	<#assign Status1 = "Tinh trang (da nghiem thu - xep loai, chua nghiem thu) " />
 	<#assign Status2 = "Tinh trang (da nghiem thu, chua nghiem thu)" />
-	<#assign Award = "Giai thuong (ve KH&CN, ve chat luong san pham, ...)" />
+	<#assign Award = "Giai thuong (ve KH-CN, ve chat luong san pham, ...)" />
 	<#assign ModelAndContent = "Hinh thuc va noi dung giai thuong" />
 	<#assign YearOfAward = "Nam tang thuong" />
-	<#assign ExperienceManagement1 = "Kinh nghiem ve quan ly, danh gia KH&CN (so luong cac Hoi dong tu van, xet duyet, " />
-	<#assign ExperienceManagement2 = "nghiem thu, danh gia cac chuong trinh, de tai, du an KH&CN cap quoc gia hoac tuong
+	<#assign ExperienceManagement1 = "Kinh nghiem ve quan ly, danh gia KH-CN (so luong cac Hoi dong tu van, xet duyet, " />
+	<#assign ExperienceManagement2 = "nghiem thu, danh gia cac chuong trinh, de tai, du an KH-CN cap quoc gia hoac tuong
 		 duong trong va ngoai nuoc da tham gia trong 5 nam gan day)" />
 		 
 	<#assign ModelCouncil = "Hinh thuc hoi dong" />
@@ -708,7 +707,9 @@
      	 </fo:table-row>
  	
  	
- 	<#list 1..20 as idx>
+ 	
+  	
+  	<#list 1..20 as idx>
  		<#if idx==idxEducationProgress>
  			<#include "pdf-education-progress.fo.ftl"/>
  		</#if>
@@ -724,18 +725,33 @@
  		<#if idx=idxGraduateStudents>
  			<#include "pdf-current-graduate-students.fo.ftl"/>
  		</#if> 		
+ 		<#if idx=idxPublications>
+ 			<#include "pdf-publications.fo.ftl"/>
+ 		</#if>
+ 		<#if idx=idxWorkProgress>
+ 			<#include "pdf-business-progress.fo.ftl"/>
+ 		</#if>
+ 		<#if idx=idxRecent5YearProjects>
+ 			<#include "pdf-5-years-recent-projects.fo.ftl"/>
+ 		</#if>
+ 		<#if idx=idxAward>
+ 			<#include "pdf-awards.fo.ftl"/>
+ 		</#if>
+ 		<#if idx=idxScientificService>
+ 			 <#include "pdf-scientific-service-experience.fo.ftl"/>
+ 		</#if>
  		
  	</#list>
- 
-    <!--	     	 
-     <#include "pdf-business-progress.fo.ftl"/>
+
+   	     	 
      
-     <#include "pdf-publications.fo.ftl"/>
+     
     
-     <#include "pdf-5-years-recent-projects.fo.ftl"/>
-     <#include "pdf-awards.fo.ftl"/>
-     <#include "pdf-scientific-service-experience.fo.ftl"/>
-     -->
+    
+     
+     
+    
+    
       
       <fo:table-row>
         <fo:table-cell height="20pt" display-align="center" >
