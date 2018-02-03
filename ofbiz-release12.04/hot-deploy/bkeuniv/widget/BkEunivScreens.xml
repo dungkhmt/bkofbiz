@@ -522,6 +522,12 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<set field="idxEducationProgress" from-field="${parameters.idxEducationProgress}" />
+				<set field="idxPatent" from-field="${parameters.idxPatent}"/>
+				<set field="idxProjectsApplied" from-field="${parameters.idxProjectsApplied}"/>
+				<set field="idxPhDDefensed" from-field="${parameters.idxPhDDefensed}"/>
+				<set field="idxGraduateStudents" from-field="${parameters.idxGraduateStudents}"/>
+				
 				<!-- 
 				<service service-name="getEducationProgressOfLoginStaff" result-map="educationProgress"></service>
 				 -->
@@ -560,6 +566,30 @@
 		</section>
 	</screen>
 	
+	<screen name="profilePDFSetting">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/exportPDF/export-CV-PDF-setting.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="pageWorkProgress">
 		<section>
 			<actions>

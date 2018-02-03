@@ -119,13 +119,13 @@
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     
-    <service name="deleteEducationProgress" engine="java" 
+<!--     <service name="deleteEducationProgress" engine="java" 
     		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="deleteEducationProgress">
     	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
     	
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
-    
+ -->    
     <service name="deleteEducationProgress" engine="java" 
     		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="deleteEducationProgress">
     	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
