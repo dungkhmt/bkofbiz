@@ -35,7 +35,7 @@
 				
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<service service-name="getListSecurityGroups" result-map="securityGroup"></service>
-				<service service-name="getStaffs" result-map="resultStaffs"> </service>
+				<!-- <service service-name="getStaffs" result-map="resultStaffs"> </service> -->
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

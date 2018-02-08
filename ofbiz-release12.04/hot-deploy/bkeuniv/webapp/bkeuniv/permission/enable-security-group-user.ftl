@@ -1,5 +1,6 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
-
+<body>
+<div class="body">
 <style>
 #form-security-group-staff {
     margin-top: 60px;
@@ -82,3 +83,4 @@ function updatePermission(){
 		
 }
 </script>
+</div>

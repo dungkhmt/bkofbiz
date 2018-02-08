@@ -64,8 +64,10 @@
 
 <#macro jqDataTable 
 		urlData="" 
-		urlUpdate="" 
-		urlAdd="" 
+		optionData={}
+		urlUpdate=""
+		urlAdd=""
+		optionDataAdd={}
 		urlDelete="" 
 		keysId=[]
 		fnInfoCallback=""
@@ -222,7 +224,6 @@
 		jqDataTable.columns = [
 			{
 				name: "STT",
-				
 				data: "index"
 			}
 		];
@@ -231,7 +232,9 @@
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
-				
+				<#if column.type??>
+				type: '${column.type}',
+				</#if>
 				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
@@ -241,7 +244,7 @@
 			document.getElementById("jqTitlePage").innerHTML = titlePage;
 			
 			loader.open();
-			$.ajax({
+			$.ajax(Object.assign(<@pfObject object=optionData />, {
 			    url: "${urlData}",
 			    type: 'post',
 			    dataType: "json",
@@ -261,22 +264,36 @@
 					columns: jqDataTable.columns,
 					deferRender: true,
 					"columnDefs": [
-					{
-						"targets": 0,
-						"render": function ( data, type, row, meta ) {
-							
-							var row = meta.row;
-							if( Object.prototype.toString.call( row ) === '[object Array]' ) {
-								if(row.length > 0) {
-									return row[0] + 1
-								} else {
-									return jqDataTable.data.length
+						{
+							"targets": 0,
+							"render": function ( data, type, row, meta ) {
+								
+								var row = meta.row;
+								if( Object.prototype.toString.call( row ) === '[object Array]' ) {
+									if(row.length > 0) {
+										return row[0] + 1
+									} else {
+										return jqDataTable.data.length
+									}
 								}
+								
+								return meta.row + 1;					      
 							}
-							
-							return meta.row + 1;					      
-					    }
-					},
+						},
+					<#assign index= 1 />
+					<#list columns as column>
+					<#if column.type??>
+						<#if !column.render??>
+						{
+							"targets": ${index},
+							"render": function ( data, type, row, meta ) {
+								return jqDataTable.buildColumn(data, '${column.type}', row, meta);					      
+							}
+						},
+						</#if>
+					</#if>
+						<#assign index=index+1 />
+					</#list>
 					<#assign index = 1 />
 					<#list columns as column>
 						<#assign c = {} />
@@ -329,7 +346,7 @@
 						  });
 					</#if>
 			    }
-			});
+			}));
 		});
 		
 		function jqChange(data) {
@@ -359,7 +376,7 @@
 				resolve(new modal("#jqModalAdd").setting({
 					data: {},
 					columns: <@pfArray array=columnsNew />,
-					
+					optionAjax: <@pfObject object=optionDataAdd />,
 			        title: '${titleNew}',
 			        action: {
 						name: '${uiLabelMap.BkEunivAddRow}',
@@ -460,6 +477,55 @@
 			if(!$(".loader").hasClass("hidden-loading")) {
 				$(".loader").addClass("hidden-loading");
 			}
+		}
+
+		jqDataTable.buildColumn = function(data, type, row, meta) {
+			console.log(data, type, row, meta)
+			var value = data;
+			switch(type) {
+				case "date":
+					value = parseDate(data);
+					break;
+				case "datetime":
+					value = parseDateTime(data);
+					break;
+				default:
+					value = data;
+			}
+			return value;
+		}
+
+		function parseDate(data) {
+			var date = "";
+			if(!!data) {
+				date = new Date(data).toLocaleDateString('vi');
+			}
+
+			return date;
+		}
+
+		function parseDateTime(data) {
+			var date = "";
+			if(!!data) {
+				options = {
+					year: 'numeric', month: 'numeric', day: 'numeric',
+					hour: 'numeric', minute: 'numeric', second: 'numeric',
+					hour12: false,
+					timeZone: 'Asia/Ho_Chi_Minh' 
+				};
+				date = new Intl.DateTimeFormat('vi', options).format(new Date(data));
+			}
+
+			return date;
+		}
+
+		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2, minimumFractionDigits=2) {
+			var price = ""
+			if(!!data) {
+				price= parseFloat(data).toLocaleString(locales, { style: 'currency', currency: currency, maximumFractionDigits: maximumFractionDigits, minimumFractionDigits: minimumFractionDigits });
+			}
+
+			return price;
 		}
 	
 	</script>

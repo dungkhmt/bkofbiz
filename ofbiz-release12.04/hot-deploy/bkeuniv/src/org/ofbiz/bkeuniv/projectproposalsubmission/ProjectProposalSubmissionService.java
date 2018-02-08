@@ -452,7 +452,7 @@ public class ProjectProposalSubmissionService {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		
 		String researchProjectProposalId = request.getParameter("researchProjectProposalId");
-		String staffId = request.getParameter("staffId");
+		String staffId = request.getParameter("staffId[]");
 		String content = request.getParameter("content");
 		String sworkingdays = request.getParameter("workingdays");
 		Long workingdays = Long.valueOf(sworkingdays);
@@ -474,13 +474,11 @@ public class ProjectProposalSubmissionService {
 			gv.put("budget", budget);
 			
 			delegator.create(gv);
+			Map<String, Object> context = FastMap.newInstance();
+			context.put("projectProposalContentItems", gv);
+			context.put("message", "Create new row");
 			
-			String rs = "{\"result\":\"OK\"}";
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			PrintWriter out = response.getWriter();
-			out.write(rs);
-			out.close();
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(context), response, 200);
 			
 		}catch(Exception ex){
 			ex.printStackTrace();

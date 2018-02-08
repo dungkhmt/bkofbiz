@@ -1,112 +1,188 @@
-<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+<body>
 
-  <head>
-
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
-
-    
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    
-    
-    <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
-    
-    <meta charset="utf-8" />
-    
-    <title>DataTables - Context menu integration</title>
-  
-  </head>
-  
-<@Loader handleToggle="loader">
-	<@IconSpinner/>
-</@Loader>
+<#--  Project Proposal ID = ${projectProposalId}  -->
 
 <script>
-  	loader.open();
-  </script>
-
-<a href="/bkeuniv/control/form-add-workpackages-of-project-proposals?researchProjectProposalId=${projectProposalId}">Them moi package ${projectProposalId}</a>
-<div id="table-list" style="overflow-y: auto; padding: 2em;">
-	<table id="list" cellspacing="0" width="100%" class="display dataTable">
-		<thead>
-			<tr>
-				<th style="display: none"></th>
-				<th style="display: none"></th>
-				<th>Noi dung</th>
-				<th>Thanh vien</th>
-				<th>ngay lam viec</th>
-				<th>kinh phi</th>
-			</tr>
-		</thead>
-	<tbody>
-	<#list resultContentItems.projectProposalContentItems as ci>
-		<tr>
-			<td style="display: none">${ci.researchProjectProposalId}</td>
-			<td style="display: none">${ci.contentItemSeq}</td>
-			<#if ci.content?exists>
-				<td>${ci.content}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if ci.staffId?exists>
-				<td>${ci.staffId}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if ci.workingDays?exists>
-				<td>${ci.workingDays}</td>
-			<#else>
-				<td></td>
-			</#if>
-			
-			<#if ci.budget?exists>
-				<td>${ci.budget}</td>
-			<#else>
-				<td></td>
-			</#if>
-			
-		</tr>
-	</#list>
-	</tbody>
-	</table>
-	
-</div>
-<script>
-var obj;
-
-$(document).ready(function() {
-  loader.close();
-  var oTable = $('#list').dataTable({
-    "bJQueryUI": true,
-    "sDom": 'l<"H"Rf>t<"F"ip>'
-  });
-  $(document).contextmenu({
-    delegate: ".dataTable td",
-    menu: [
-      {title: "Delete", cmd: "delete"},
-      {title: "Edit", cmd: "edit"}
-    ],
-    select: function(event, ui) {
-        switch(ui.cmd){
-            case "delete":
-                $(ui.target).parent().remove();
-                break;
-            case "edit":
-				obj = ui;
+	var modal;
+	var span;
+	var selectedEntry;
+	function createContextMenu(id) {
+		
+		$(document).contextmenu({
+			    delegate: "#"+id+"-content td",
+			menu: [
+			  {title: '${uiLabel.ViewDetail}', cmd: "viewdetail", uiIcon: "glyphicon glyphicon-list-alt"},
+			],
+			select: function(event, ui) {
 				var el = ui.target.parent();
-				var paperId = el.children()[0].innerHTML;
-				alert('edit paper ' + paperId);
-			    break;
-        }
-    },
-    beforeOpen: function(event, ui) {
-        var $menu = ui.menu,
-            $target = ui.target
-        ui.menu.zIndex(0);
-    }
-  });
-    
-} );
+				var data = jqDataTable.table.row( el ).data();
+				switch(ui.cmd){
+					case "viewdetail":
+						jqViewDetail(data);
+						break;
+						
+					}		
+				},
+				beforeOpen: function(event, ui) {
+					var $menu = ui.menu,
+						$target = ui.target,
+						extraData = ui.extraData;
+					ui.menu.zIndex(9999);
+			    }
+			  });
+	}
+				
+	function 	jqViewDetail(data){
+		alert(data.researchProjectProposalId);
+		//window.location.href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=" + data.researchProjectProposalId;
+	}
+
 </script>
+
+<div class="body">
+	<#assign columns=[
+		{
+			"name": "Nội dung"?j_string,
+			"data": "content"
+		},
+		{
+			"name": "Thành viên"?j_string,
+			"data": "staffId"
+		},
+		{
+			"name": "Ngày làm việc"?j_string,
+			"data": "workingDays"
+		},
+		{
+			"name": "Kinh phí"?j_string,
+			"data": "budget"
+		}
+	] />
+
+	<#assign fields=[
+		"researchProjectProposalId",
+		"contentItemSeq",
+		"content",
+		"staffId",
+		"workingDays",
+		"budget"
+	] />
+<#--  	
+	<#assign roleTypeList=[]/>
+	<#list resultRoleTypes.projectProposalRoleTypes as rt>
+		<#if rt?has_content>
+             <#assign op = { "name": rt.roleTypeName?j_string ,"value": rt.roleTypeId?j_string } />
+						<#assign roleTypeList = roleTypeList + [op] />
+		</#if>
+	</#list>
+	
+	<#assign staffs=[]/>
+	<#list resultStaffs.staffs as st>
+		<#if st? has_content>
+			<#assign op={"name": st.staffName? j_string, "value": st.staffId?j_string}/>
+			<#assign staffs = staffs + [op]/>
+		</#if>
+	</#list>  -->
+
+	<#assign columnsChange=[
+		{
+			"name": "Nội dung"?j_string,
+			"value": "content"
+		},
+		{
+			"name": "Thành viên"?j_string,
+			"value": "staffId"
+		},
+		{
+			"name": "Ngày làm việc"?j_string,
+			"value": "workingDays"
+		},
+		{
+			"name": "Kinh phí"?j_string,
+			"value": "budget"
+		}
+	] />
+
+	<#assign members=[]/> 
+	<#list resultMembers.members as m> 
+		<#if m?has_content> 
+				<#assign op = { "name": m.staffName?j_string ,"value": m.staffId?j_string } /> 
+				<#assign members = members + [op] /> 
+		</#if> 
+	</#list>
+
+	<#assign columnsNew=[
+		{
+			"name": "Người thực hiện"?j_string,
+			"value": "staffId",
+			"type": "select",
+			"option":{
+				"source": members,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": "Nội dung"?j_string,
+			"value": "content"
+		},
+		{
+			"name": "Ngày làm việc"?j_string,
+			"value": "workingdays"
+		},
+		{
+			"name": "Chi phí"?j_string,
+			"value": "budget"
+		}
+		]
+	 />
+
+
+
+	<#--  $.ajax({
+			url: "/bkeuniv/control/add-a-workpackage-project-proposal",
+			type: 'POST',
+			data: {
+				"researchProjectProposalId": researchProjectProposalId,
+				"staffId": staffId,
+				"content": content,
+				"workingdays": workingdays,
+				"budget": budget
+			},
+			success: function(rs){
+				window.location.href = "/bkeuniv/control/workpackages-of-project-proposals?researchProjectProposalId=" + researchProjectProposalId;
+				console.log(rs.result);
+			}
+		})  -->
+	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	
+	<@jqDataTable
+		urlData="/bkeuniv/control/get-project-proposal-content-item"
+		optionData={
+			"data": {
+				"researchProjectProposalId": projectProposalId?j_string
+			}
+		}
+		columns=columns 
+		dataFields=fields 
+		sizeTable=sizeTable
+		columnsChange=columnsChange 
+		columnsNew=columnsNew 
+		urlUpdate="" 
+		urlAdd="/bkeuniv/control/add-a-workpackage-project-proposal" 
+		optionDataAdd={
+			"data": {
+				"researchProjectProposalId": projectProposalId?j_string
+			}
+		}
+		urlDelete="" 
+		keysId=["researchProjectProposalId"] 
+		fieldDataResult = "projectProposalContentItems" 
+		titleChange=""
+		titleNew=""
+		titleDelete=""
+		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
+		contextmenu=false
+	/>
+</div>
