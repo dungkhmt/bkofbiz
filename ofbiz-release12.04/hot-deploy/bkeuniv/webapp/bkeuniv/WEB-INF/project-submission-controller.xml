@@ -18,6 +18,13 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
+	<request-map uri="get-project-proposal-content-item">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getProjectProposalContentItem"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 
 	<request-map uri="create-a-project-submission">
 		<security https="true" auth="true"/>

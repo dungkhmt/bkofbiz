@@ -110,6 +110,7 @@ modal.prototype.setting = function(option) {
 	this.option = option;
 	this._data = option.data;
 	this.columns = option.columns;
+	this._optionAjax = option.optionAjax||{};
 	this._action = option.action;
 	for(var i = 0, len = this.columns.length; i < len; ++i) {
 		var column = this.columns[i];
@@ -151,25 +152,29 @@ modal.prototype.setting = function(option) {
 modal.prototype.action = function() {
 	var _ = this;
 	openLoader();
-	$.ajax({
+	var option = {
 	    url: _._action.url,
 	    type: 'post',
-	    data: _.data(),
 	    datatype:"json",
-	    success: function(data) {
-	    	if(!!_._action.update && typeof _._action.update === "function") {
-	    		_._action.update(data)
-	    	} else {
-	    		_._updateDefault(data[_._action.fieldDataResult], data.message);
-	    	}
-	    }, error: function(err) {
-			setTimeout(function() {
-				closeLoader();
-				alertify.error(JSON.stringify(err));
-			}, 500);
-			console.log(err);
+	};
+
+	option = Object.assign({}, option, this._optionAjax);
+	option.data = Object.assign({},_.data(), this._optionAjax.data||{})
+	option.success = function(data) {
+		if(!!_._action.update && typeof _._action.update === "function") {
+			_._action.update(data)
+		} else {
+			_._updateDefault(data[_._action.fieldDataResult], data.message);
 		}
-	})
+	};
+	option.error =  function(err) {
+		setTimeout(function() {
+			closeLoader();
+			alertify.error(JSON.stringify(err));
+		}, 500);
+		console.log(err);
+	}
+	$.ajax(option);
 }
 	
 modal.prototype._updateDefault = function(data, message) {
