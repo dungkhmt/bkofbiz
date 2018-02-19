@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of BkEuniv Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+
+	<!-- Hoi nghi SV NCKH -->
+	<entity entity-name="StudentResearchConferenceCall" package-name="org.ofbiz.bkeuniv">
+		<field name="studentResearchCallId" type="id-ne"></field>
+		<field name="studentResearchCallName" type="very-long"></field>
+		<field name="date" type="date"></field>
+		<prim-key field="studentResearchCallId"/>
+	</entity>
+	<entity entity-name="Student" package-name="org.ofbiz.bkeuniv">
+		<field name="studentId" type="id-ne"></field>
+		<field name="userLoginId" type="id-vlong"></field>
+		<field name="studentName" type="very-long"></field>
+		<field name="email" type="email"></field>
+		<field name="promotion" type="very-long"></field>
+		<field name="class" type="very-long"></field>
+		<prim-key field="studentId"/>		
+	</entity>
+	
+	<entity entity-name="StudentResearchReportSubmission" package-name="org.ofbiz.bkeuniv">
+		<field name="studentResearchReportSubmissionId" type="id-ne"></field>
+		<field name="studentResearchReportSubmissionName" type="very-long"></field>
+		<field name="description" type="very-long"></field>
+		<field name="uploadSourceFilename" type="very-long"></field>
+		<field name="studentId" type="id-ne"></field>
+		
+		<prim-key field="studentResearchReportSubmissionId"/>
+	</entity>
+	
+	<entity entity-name="JuryStudentResearchConference" package-name="org.ofbiz.bkeuniv">
+		<field name="juryStudentResearchConferenceId" type="id-ne"></field>
+		<field name="studentResearchCallId" type="id-ne"></field>
+		<field name="facultyId" type="id-ne"></field>
+		<prim-key field="juryStudentResearchConferenceId"/>
+	</entity>
+	<entity entity-name="JuryStudentResearchConferenceMember" package-name="org.ofbiz.bkeuniv">
+		<field name="juryStudentResearchConferenceId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="juryRoleTypeId" type="id-vlong"></field>
+		<prim-key field="juryStudentResearchConferenceId"/>
+		<prim-key field="staffId"/>
+	</entity>	
+	
+	<!-- ket thuc Hoi nghi SV NCKH -->
+
+	
+	
+</entitymodel>
