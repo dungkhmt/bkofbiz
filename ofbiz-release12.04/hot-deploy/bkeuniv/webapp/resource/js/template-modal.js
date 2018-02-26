@@ -3,8 +3,16 @@ var modal = function (id) {
 }
 
 modal.prototype._getDate = function (selector, format) {
-    const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
-    return $.datepicker.formatDate(format, new Date(year, month - 1, day))
+	var value = $([this.id,selector].join(" ")).datepicker( "getDate" );
+	console.log(value, typeof value)
+	if(isNaN(value.getTime())){
+		console.log(value, typeof value)
+		return ;
+	} else {
+		return (new Date(value)).getTime();
+	}
+    // const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
+    // return $.datepicker.formatDate(format, new Date(year, month - 1, day))
 }
 
 modal.prototype._getText = function (selector) {
@@ -21,12 +29,12 @@ modal.prototype._getSelect = function (selector) {
     return _data_select;
 }
 
-modal.prototype._date = function(value, edit, id){
+modal.prototype._date = function(value, edit, id, defaultValue=""){
 	var _id = "#"+id;
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled ") +
-					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value||Date.now())) + '"'+
+					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?defaultValue:new Date(value))) + '"'+
 					'placeholder="dd/mm/yyyy"'+
 					'>' +
     			'<script type="text/javascript">'+
@@ -69,9 +77,42 @@ modal.prototype._select = function(value, edit, id, option) {
 	return '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'>'+option.join("")+'</select></div>'+script;
 }
 
-modal.prototype._select_server_side = function(edit, id, option) {
+modal.prototype._select_server_side = function(value, edit, id, option, column) {
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
+	var render;
+	if(typeof option.render === "function") {
+		render =  option.render.toString();
+	} else {
+		render = 'function(r){return {id: r.'+option.value+', text: r.'+option.name+'}}';
+	}
+
+	var selected = "";
+	if(!!value) {
+		selected = 
+		'$.ajax({'+
+			'"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement",'+
+			'"method": "POST",'+
+			'"content-type": "application/json",'+
+			'"data": {'+
+				'"filter": \'{"field": "'+column.value+'", "value": "'+value+'", "operation": \"EQUAL\" }\','+
+				'"pagesize": "-1",'+
+			'},'+
+			'success: function(r) {'+
+				'var data = r.results.map('+render+');'+
+				'var options = data.map(function(d) { return new Option(d.text, d.id, true, true); });'+
+				'$("'+[this.id, _id].join(" ")+'").append(options).trigger("change");'+
+				'$("'+[this.id, _id].join(" ")+'").trigger({'+
+					'type: "select2:select",'+
+					'params: {'+
+						'data: data'+
+					'}'+
+				'});'+
+			'}'+
+		'});';
+
+	}
+
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
 						'$("'+[this.id, _id].join(" ")+'").select2({'+
@@ -90,7 +131,7 @@ modal.prototype._select_server_side = function(edit, id, option) {
 								'},'+
 								'processResults: function (data) {'+
 								'return {'+
-									'results: data.results.map(function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}),'+
+									'results: data.results.map('+render+'),'+
 									'"pagination": {'+
 										'"more": true,'+
 									'},'+
@@ -99,6 +140,7 @@ modal.prototype._select_server_side = function(edit, id, option) {
 							'},'+
 							(maxItem>1?'maximumSelectionLength: ' + maxItem:"")+
 						'});'+
+						selected+
 					'});'+
 				'</script>';
 	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
@@ -130,7 +172,7 @@ modal.prototype.setting = function(option) {
 		    	el = this._select(column._data, column.edit, column.id, column.option);
 				break;
 			case "select_server_side":
-		    	el = this._select_server_side(column.edit, column.id, column.option);
+		    	el = this._select_server_side(column._data, column.edit, column.id, column.option, column);
 				break;
 		    case "custom":
 		    	el = column.el;

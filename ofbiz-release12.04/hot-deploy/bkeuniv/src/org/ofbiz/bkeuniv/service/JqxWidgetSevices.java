@@ -147,21 +147,27 @@ public class JqxWidgetSevices {
 				if (resultList instanceof EntityListIterator) {
 					EntityListIterator tmpList = (EntityListIterator) resultList;
 					List<GenericValue> listGenericValue = null;
-					if (UtilValidate.isEmpty(totalRows)) {
+					if(iSize == -1) {
 						totalRows = String.valueOf(tmpList.getResultsTotalSize());
-						if (iSize != 0) {
-							if (iIndex == 0) {
-								listGenericValue = tmpList.getPartialList(0, iSize);
+						listGenericValue = tmpList.getCompleteList();
+					} else {
+						if (UtilValidate.isEmpty(totalRows)) {
+							totalRows = String.valueOf(tmpList.getResultsTotalSize());
+							if (iSize != 0) {
+								if (iIndex == 0) {
+									listGenericValue = tmpList.getPartialList(0, iSize);
+								} else {
+									listGenericValue = tmpList.getPartialList(iIndex
+											* iSize + 1, iSize);
+								}
 							} else {
-								listGenericValue = tmpList.getPartialList(iIndex
-										* iSize + 1, iSize);
+								listGenericValue = tmpList.getCompleteList();
 							}
 						} else {
 							listGenericValue = tmpList.getCompleteList();
 						}
-					} else {
-						listGenericValue = tmpList.getCompleteList();
 					}
+					
 					
 					// get Translated value
 					Locale locale = (Locale) context.get("locale");

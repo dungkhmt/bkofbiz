@@ -81,7 +81,8 @@
 		fieldDataResult="result"
 		titleChange=""
 		titleNew=""
-		titleDelete=""
+		subTitleDelete="You confirm you want to delete"
+		titleDelete="Confirm"
 		jqTitle=""
 		contextmenu=true
 	>
@@ -394,7 +395,7 @@
 		}
 		
 		function jqDelete(data) {
-			alertify.confirm("Confirm", '${titleDelete}',
+			alertify.confirm('${titleDelete}', "${subTitleDelete}",
 			function(){
 				openLoader();
 				$.ajax({

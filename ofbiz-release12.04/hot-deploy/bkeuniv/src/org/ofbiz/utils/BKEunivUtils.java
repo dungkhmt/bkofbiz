@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -305,6 +307,27 @@ public class BKEunivUtils {
 			response.setStatus(500);
 			Debug.logError(e, module);
 		}
+	}
+	
+	public static Map<String, Object> buildObject(GenericValue object) {
+		Set<String> keys = object.keySet();
+		
+		Map<String, Object> result = FastMap.newInstance();
+		try {
+			for(String key: keys) {
+				System.out.println("Debug 22: ..." + key);
+				Object element = object.get(key);
+				if(element instanceof Date) {
+					result.put(key, ((Date) element).getTime());
+					continue;
+				}
+				result.put(key, element);
+			}
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+		}
+		
+		return result;
 	}
 
 }

@@ -76,19 +76,6 @@
 		</#if>
 	</#list>  -->
 
-	<#assign columnsChange=[
-		{
-			"name": "Staff Name"?j_string,
-			"value": "staffId"
-		
-		},
-		{
-			"name": "Role Type Name"?j_string,
-			"value": "roleTypeName"
-		}
-	
-	] />
-	
 	<#assign roleTypeList=[]/>
   <#list resultRoleTypes.projectProposalRoleTypes as rt>
     <#if rt?has_content>
@@ -97,6 +84,31 @@
     </#if>
   </#list>
 
+
+	<#assign columnsChange=[
+		{
+			"name": "Staff Name"?j_string,
+			"value": "staffId",
+			"type":"select_server_side",
+			"option":{
+				"maxItem": 1,
+				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+			}
+		},
+		{
+			"name": "Role Type"?j_string,
+			"value": "roleTypeId",
+			"type": "select",
+			"option":{
+				"source": roleTypeList,
+				"maxItem": 1
+			}
+		}
+	
+	] />
+	
+
 	<#assign columnsNew=[
 		{
 			"name": "Staff Name"?j_string,
@@ -104,6 +116,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
+				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
 				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},

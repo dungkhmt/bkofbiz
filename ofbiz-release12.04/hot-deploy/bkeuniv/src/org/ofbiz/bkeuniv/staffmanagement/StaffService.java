@@ -21,6 +21,7 @@ import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityFunction;
 import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.util.EntityFindOptions;
@@ -105,14 +106,16 @@ public class StaffService {
 			opts.setDistinct(true);
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 			
-			if(parameters.get("q") != null) {
+			if(parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
 				String q = (String)parameters.get("q")[0];
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"staffId", "staffEmail", "staffName", "facultyName", "departmentName", "genderName", "facultyName"}; 
 				
 				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
 				for(String key: searchKeys) {
-					EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, "%" + q + "%");
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+//							EntityCondition.makeCondition(, EntityOperator.LIKE, "%" + q + "%");
 					condSearch.add(condition);
 				}
 				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
@@ -122,18 +125,10 @@ public class StaffService {
 				listAllConditions.add(filter);				
 			}
 			
-			EntityCondition condition = null;
 			
-			if(listAllConditions.size() > 1) {
-				System.out.println("2. debug ::::::::::");
-				condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
-			} else {
-				if(listAllConditions.size() == 1) {
-					System.out.println("3. debug ::::::::::");
-					condition = listAllConditions.get(0);
-				}
-			}
-			System.out.println(condition.toString());
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			System.out.println("4. debug ::::::::::"  + userLoginId);
 			staffs = delegator.find("StaffView", condition, null, null, sort, opts);
 			
 			//int total = staffs.getResultsSizeAfterPartialList();

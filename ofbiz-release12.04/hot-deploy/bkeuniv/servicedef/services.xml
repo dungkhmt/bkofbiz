@@ -62,6 +62,14 @@
     <service name="JQGetListStaffs" engine="java" invoke="JQGetListStaffs" location="org.ofbiz.bkeuniv.staffmanagement.StaffService">
         <implements service="jqxGetListInterface"/>
    	</service>
+   	
+   	<service name="JQGetListResearchDomainManagement" engine="java" invoke="JQGetListResearchDomainManagement" location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="JQGetListStaffResearchDomainManagement" engine="java" invoke="JQGetListStaffResearchDomainManagement" location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement">
+        <implements service="jqxGetListInterface"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
             location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">

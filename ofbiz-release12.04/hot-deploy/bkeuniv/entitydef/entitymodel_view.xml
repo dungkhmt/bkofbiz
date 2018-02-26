@@ -53,4 +53,22 @@
 		
 		
 	</view-entity>
+	
+	<view-entity entity-name="StaffResearchDomainView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="SRD" entity-name="StaffResearchDomain"></member-entity>
+		<member-entity entity-alias="RD" entity-name="ResearchDomain"></member-entity>
+		<member-entity entity-alias="S" entity-name="Staff"></member-entity>
+		
+		<alias-all entity-alias="SRD" ></alias-all>
+		<alias name="researchDomainName" entity-alias="RD"></alias>
+		<alias name="staffName" entity-alias="S"></alias>
+		
+		<view-link rel-entity-alias="S" entity-alias="SRD" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="RD" entity-alias="SRD" rel-optional="true">
+			<key-map rel-field-name="researchDomainId" field-name="researchDomainId"/>
+		</view-link>	
+	</view-entity>	
+	
 </entitymodel>
