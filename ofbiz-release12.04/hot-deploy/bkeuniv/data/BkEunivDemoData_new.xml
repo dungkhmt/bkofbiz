@@ -10,6 +10,9 @@
 <SecurityGroup groupId="BIZSTUDENT" description="ordinary student"/>
 <SecurityGroupPermission groupId="BIZSTUDENT" permissionId="OFBTOOLS_VIEW"/>
 
+<SecurityGroup groupId="BIZMASTERCOURSE" description="manager master training"/>
+<SecurityGroupPermission groupId="BIZMASTERCOURSE" permissionId="OFBTOOLS_VIEW"/>
+
 <!-- Quan ly phan quyen he thong -->
 <Function functionId="PERMISSION_MANAGEMENT" uiLabelId="permission_management" vnLabel="Quản lý phân quyền" enLabel="permission management" parentFunctionId="NULL" index="1"/>
 
@@ -24,6 +27,15 @@
 <Function functionId="DISABLE_SECURITY_GROUP_USER" uiLabelId="disable_security_group_user" target="disable-security-group-user" vnLabel="Xoá người khỏi vào nhóm quyền" enLabel="Disable security group user" parentFunctionId="PERMISSION_MANAGEMENT" index="5"/>
 
 <!-- ket thuc quan ly phan quyen he thong -->
+
+<!-- Quan ly van ban phap quy-->
+<Function functionId="OFFICIAL_DOCUMENT_MANAGEMENT" uiLabelId="official_document_management" vnLabel="Quản lý văn bản pháp quy" enLabel="official document management" parentFunctionId="NULL" index="7"/>
+<Function functionId="UPLOAD_OFFICIAL_DOCUMENT" uiLabelId="upload_official_document" vnLabel="Upload văn bản pháp quy" enLabel="upload official document" parentFunctionId="OFFICIAL_DOCUMENT_MANAGEMENT" target="upload-official-document" index="1"/>
+<Function functionId="VIEW_OFFICIAL_DOCUMENT" uiLabelId="view_official_document" vnLabel="Danh mục văn bản pháp quy" enLabel="view official document" parentFunctionId="OFFICIAL_DOCUMENT_MANAGEMENT" target="view-official-document" index="2"/>
+
+<!-- KET THUC Quan ly van ban phap quy -->
+
+
 
 <!-- Quan ly lich giang day cao hoc -->
 <Function functionId="MASTER_COURSE_CLASS_MANAGEMENT" uiLabelId="master_course_class_management" vnLabel="Quản lý lịch giảng dạy cao học" enLabel="master course management" parentFunctionId="NULL" index="6"/>
@@ -98,8 +110,10 @@
 <Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
 <Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
-<Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="12"/>
-<Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="13"/>
+<Function functionId="STUDENT_SUPERVISION" uiLabelId="student_supervision" vnLabel="Hướng dẫn sau đại học" enLabel="graduate supervion" target="student-supervision" parentFunctionId="PROFILE_MANAGEMENT" index="12"/>
+
+<Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="13"/>
+<Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="14"/>
 
 
 
@@ -118,11 +132,32 @@
 <Function functionId="STAFF_LIST" uiLabelId="staff_list" vnLabel="Danh sách cán bộ" enLabel="list of staffs" target="staff-management" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
 <Function functionId="STAFF_RESEARCH_SPECIALITY" uiLabelId="staff_research_speciality" vnLabel="Lĩnh vực và Chuyên ngành nghiên cứu" enLabel="research speciality of staffs" target="staff-research-speciality" parentFunctionId="STAFF_MANAGEMENT" index="1"/>
 
+<!-- Quan ly budget -->
+<Function functionId="BUDGET_MANAGEMENT" uiLabelId="budget_management" vnLabel="Quản lý ngân sách" enLabel="budget management" parentFunctionId="NULL" index="1"/>
 
+<Function functionId="LIST_BUDGET_IN_OUT" uiLabelId="list_budget_in_out" target="list_budget_in_out" vnLabel="Danh sách ngân sách thu/chi" enLabel="List budget in/out" parentFunctionId="BUDGET_MANAGEMENT" index="1"/>
+
+
+<!-- BIZ_MASTER_COURSE -->
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_CLASS_MANAGEMENT" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_CLASS_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_CLASS_MANAGEMENT_PERIOD" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_CLASS_MANAGEMENT_PERIOD" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_CLASS_MANAGEMENT_CLASS" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_CLASS_MANAGEMENT_CLASS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_CLASS_MANAGEMENT_COURSE" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_CLASS_MANAGEMENT_COURSE" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_CLASS_MANAGEMENT_CLASS_COURSE_PERIOD" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_CLASS_MANAGEMENT_CLASS_COURSE_PERIOD" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_REGISTER_CALENDAR" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_REGISTER_CALENDAR" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_VIEW_CALENDAR" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_VIEW_CALENDAR" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
 
 
 
 <!-- BIZ_STUDENT -->
+<GroupFunction groupFunctionId="BIZSTUDENT_STUDENT_RESEARCH_MANAGEMENT" securityGroupId="BIZSTUDENT" functionId="STUDENT_RESEARCH_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
 <GroupFunction groupFunctionId="BIZSTUDENT_STUDENT_RESEARCH_RESULT_PRODUCT_SUBMISION" securityGroupId="BIZSTUDENT" functionId="STUDENT_RESEARCH_RESULT_PRODUCT_SUBMISION" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
 
 <GroupFunction groupFunctionId="BIZSTUDENT_STUDENT_RESEARCH_VIEW_RESULT_PRODUCT_SUBMISION" securityGroupId="BIZSTUDENT" functionId="STUDENT_RESEARCH_VIEW_RESULT_PRODUCT_SUBMISION" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
@@ -178,6 +213,26 @@
 
     <GroupFunction groupFunctionId="BIZADMIN_SUBMIT_PROPOSAL" securityGroupId="BIZADMIN" functionId="SUBMIT_PROPOSAL" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.803" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.803" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZADMIN_WORK_PROGRESS" securityGroupId="BIZADMIN" functionId="WORK_PROGRESS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+	
+    <GroupFunction groupFunctionId="BIZADMIN_STUDENT_RESEARCH_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STUDENT_RESEARCH_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+    <GroupFunction groupFunctionId="BIZADMIN_STUDENT_RESEARCH_JURY_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STUDENT_RESEARCH_JURY_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+    <GroupFunction groupFunctionId="BIZADMIN_STUDENT_RESEARCH_CONFERENCE_CALL_MANAGEMENT" securityGroupId="BIZADMIN" functionId="STUDENT_RESEARCH_CONFERENCE_CALL_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+	
+    <GroupFunction groupFunctionId="BIZADMIN_STUDENT_RESEARCH_EVALUATE_RESULT" securityGroupId="BIZADMIN" functionId="STUDENT_RESEARCH_EVALUATE_RESULT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+	
+    <GroupFunction groupFunctionId="BIZADMIN_OFFICIAL_DOCUMENT_MANAGEMENT" securityGroupId="BIZADMIN" functionId="OFFICIAL_DOCUMENT_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+	
+    <GroupFunction groupFunctionId="BIZADMIN_UPLOAD_OFFICIAL_DOCUMENT" securityGroupId="BIZADMIN" functionId="UPLOAD_OFFICIAL_DOCUMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+    <GroupFunction groupFunctionId="BIZADMIN_VIEW_OFFICIAL_DOCUMENT" securityGroupId="BIZADMIN" functionId="VIEW_OFFICIAL_DOCUMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+	
+    <GroupFunction groupFunctionId="BIZADMIN_BUDGET_MANAGEMENT" securityGroupId="BIZADMIN" functionId="BUDGET_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+	
+    <GroupFunction groupFunctionId="BIZADMIN_LIST_BUDGET_IN_OUT" securityGroupId="BIZADMIN" functionId="LIST_BUDGET_IN_OUT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.928" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.928" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+	
+	
     <GroupFunction groupFunctionId="BIZSTAFF_APPLIED_PROJECT_DECLARATION_STAFF" securityGroupId="BIZSTAFF" functionId="APPLIED_PROJECT_DECLARATION_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.943" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.943" createdTxStamp="2017-08-13 18:06:03.916"/>
     <GroupFunction groupFunctionId="BIZSTAFF_AWARD" securityGroupId="BIZSTAFF" functionId="AWARD" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-21 14:27:01.88" lastUpdatedTxStamp="2017-10-21 14:27:01.861" createdStamp="2017-10-21 14:27:01.88" createdTxStamp="2017-10-21 14:27:01.861"/>
     <GroupFunction groupFunctionId="BIZSTAFF_CV_PDF" securityGroupId="BIZSTAFF" functionId="CV_PDF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-11-04 21:19:34.781" lastUpdatedTxStamp="2017-11-04 21:19:34.712" createdStamp="2017-11-04 21:19:34.781" createdTxStamp="2017-11-04 21:19:34.712"/>
@@ -191,7 +246,9 @@
     <GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_SPECIALITY_STAFF" securityGroupId="BIZSTAFF" functionId="RESEARCH_SPECIALITY_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.938" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.938" createdTxStamp="2017-08-13 18:06:03.916"/>
   
     <GroupFunction groupFunctionId="BIZSTAFF_RESEARCH_DOMAIN_STAFF" securityGroupId="BIZSTAFF" functionId="RESEARCH_DOMAIN_STAFF" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.938" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.938" createdTxStamp="2017-08-13 18:06:03.916"/>
+    <GroupFunction groupFunctionId="BIZSTAFF_STUDENT_SUPERVISION" securityGroupId="BIZSTAFF" functionId="STUDENT_SUPERVISION" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.938" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.938" createdTxStamp="2017-08-13 18:06:03.916"/>
 
+	
   <GroupFunction groupFunctionId="BIZSTAFF_SCIENTIFIC_SERVICES" securityGroupId="BIZSTAFF" functionId="SCIENTIFIC_SERVICES" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-12 19:38:24.154" lastUpdatedTxStamp="2017-08-12 19:38:24.085" createdStamp="2017-08-12 19:38:24.154" createdTxStamp="2017-08-12 19:38:24.085"/>
     <GroupFunction groupFunctionId="BIZSTAFF_SUBMIT_PROPOSAL" securityGroupId="BIZSTAFF" functionId="SUBMIT_PROPOSAL" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-10-20 18:33:45.809" lastUpdatedTxStamp="2017-10-20 18:33:45.762" createdStamp="2017-10-20 18:33:45.809" createdTxStamp="2017-10-20 18:33:45.762"/>
     <GroupFunction groupFunctionId="BIZSTAFF_WORK_PROGRESS" securityGroupId="BIZSTAFF" functionId="WORK_PROGRESS" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.937" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.937" createdTxStamp="2017-08-13 18:06:03.916"/>
@@ -4064,6 +4121,10 @@
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hai.phamvan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 
 
+<UserLoginSecurityGroup groupId="BIZMASTERCOURSE" userLoginId="dung.phamquang@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
+
+
+
 <ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
 <ForeignLanguageCatalog foreignLanguageCatalogId="french" foreignLanguageCatalogName="Tiếng Pháp"/>
 <ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
@@ -6818,6 +6879,16 @@
 	<MasterCourseSlotType masterCourseSlotTypeId="EVENING" masterCourseSlotTypeName="Tối"/>
 	
 	<!-- end of Master-Class-Course-Calendar -->
+	
+	<OfficialDocumentTypes officialDocumentTypeId="RESEARCH_PROPOSAL_FORM" officialDocumentTypeName="Biểu mẫu thuyết minh đề tài"/>
+	<OfficialDocumentTypes officialDocumentTypeId="ANNOUNCEMENT" officialDocumentTypeName="Công Văn"/>
+	
+	<StudentSupervisionType studentSupervisionTypeId="MASTER" studentSupervisionTypeName="Học viên cao học"/>
+	<StudentSupervisionType studentSupervisionTypeId="PHD" studentSupervisionTypeName="Nghiên cứu sinh tiến sỹ"/>
+	
+	<StudentSupervisionStatus studentSupervisionStatusId="DEFENSED" studentSupervisionStatusName="Đã bảo vệ"/>
+	<StudentSupervisionStatus studentSupervisionStatusId="NOTDEFENSED" studentSupervisionStatusName="Chưa bảo vệ"/>
+	
 	
 	
 </entity-engine-xml

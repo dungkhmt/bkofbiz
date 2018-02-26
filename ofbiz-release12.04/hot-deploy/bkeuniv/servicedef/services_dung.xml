@@ -221,6 +221,11 @@
     	<attribute name="q" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="staffs" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getAllStaffs" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getAllStaffs">
+    	<attribute name="staffs" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="getStaffInfo" engine="java" 
     		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
     	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	

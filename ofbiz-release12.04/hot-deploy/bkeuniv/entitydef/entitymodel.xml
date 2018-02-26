@@ -9,6 +9,82 @@
     <copyright></copyright>
     <version></version>
 
+	<!-- Quan ly dang ky lich day cao hoc -->
+	
+	<entity entity-name="MasterClass" package-name="org.ofbiz.bkeuniv">
+		<field name="classId" type="id-ne"></field>
+		<field name="className" type="very-long"></field>
+		<prim-key field="classId"/>
+	</entity>
+	<entity entity-name="MasterCourse" package-name="org.ofbiz.bkeuniv">
+		<field name="courseId" type="id-ne"></field>
+		<field name="courseName" type="very-long"></field>
+		<field name="nbSessions" type="numeric"></field>
+		<prim-key field="courseId"/>
+	</entity>
+	<entity entity-name="MasterTrainingPeriod" package-name="org.ofbiz.bkeuniv">
+		<field name="periodId" type="id-ne"></field>
+		<field name="periodName" type="very-long"></field>
+		<field name="fromDate" type="date"></field>
+		<field name="thruDate" type="date"></field>
+		<prim-key field="periodId"/>
+	</entity>
+	<entity entity-name="MasterCoursePeriod" package-name="org.ofbiz.bkeuniv">
+		<field name="coursePeriodId" type="id-ne"></field>
+		<field name="courseId" type="id-ne"></field>
+		<field name="periodId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<prim-key field="coursePeriodId"/>
+		<relation rel-entity-name="MasterTrainingPeriod" type="one">
+			<key-map field-name="periodId"/>
+		</relation>
+		<relation rel-entity-name="MasterCourse" type="one">
+			<key-map field-name="courseId"/>
+		</relation>
+		
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>		
+	</entity>
+	<entity entity-name="MasterClassCoursePeriod" package-name="org.ofbiz.bkeuniv">
+		<field name="classCoursePeriodId" type="id-ne"></field>
+		<field name="classId" type="id-ne"></field>
+		<field name="coursePeriodId" type="id-ne"></field>
+		
+		<prim-key field="classCoursePeriodId"/>
+		
+		<relation rel-entity-name="MasterCoursePeriod" type="one">
+			<key-map field-name="coursePeriodId"/>
+		</relation>
+		<relation rel-entity-name="MasterClass" type="one">
+			<key-map field-name="classId"/>
+		</relation>
+		
+	</entity>
+	<entity entity-name="MasterCourseSlotType" package-name="org.ofbiz.bkeuniv">
+		<field name="masterCourseSlotTypeId" type="id-ne"></field>
+		<field name="masterCourseSlotTypeName" type="very-long"></field>
+		<prim-key field="masterCourseSlotTypeId"/>
+	</entity>
+	
+	<entity entity-name="MasterCourseClassPeriodCalendar" package-name="org.ofbiz.bkeuniv">
+		<field name="masterCourseClassPeriodCalendarId" type="id-ne"></field>
+		<field name="coursePeriodId" type="id-ne"></field>
+		<field name="date" type="date"></field>
+		<field name="slot" type="masterCourseSlotTypeId"></field>
+		<prim-key field="masterCourseClassPeriodCalendarId"/>
+		
+		<relation rel-entity-name="MasterCoursePeriod" type="one">
+			<key-map field-name="coursePeriodId"/>
+		</relation>
+		
+		<relation rel-entity-name="MasterCourseSlotType" type="one">
+			<key-map field-name="masterCourseSlotTypeId"/>
+		</relation>
+		
+	</entity>
+	
+	<!-- Ket thuc Quan ly dang ky lich day cao hoc -->
 
 	<!-- Submit đề tài nghiên cứu -->
 	
@@ -520,7 +596,7 @@
 		<prim-key field="functionId"/>
 	</entity>
 	<entity entity-name="GroupFunction" package-name="org.ofbiz.bkeuniv">
-		<field name="groupFunctionId" type="id-long"></field>
+		<field name="groupFunctionId" type="id-vlong"></field>
 		<field name="securityGroupId" type="id"></field>
 		<field name="functionId" type="id-vlong"></field>
 		<field name="fromDate" type="date-time"></field>
@@ -940,5 +1016,49 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="StudentSupervisionType" package-name="org.ofbiz.bkeuniv">
+		<field name="studentSupervisionTypeId" type="id-ne"></field>
+		<field name="studentSupervisionTypeName" type="very-long"></field>
+		<prim-key field="studentSupervisionTypeId"/>
+	</entity>
+	<entity entity-name="StudentSupervisionStatus" package-name="org.ofbiz.bkeuniv">
+		<field name="studentSupervisionStatusId" type="id-ne"></field>
+		<field name="studentSupervisionStatusName" type="very-long"></field>
+		<prim-key field="studentSupervisionStatusId"/>
+	</entity>
+	
+	
+	<entity entity-name="StudentSupervision" package-name="org.ofbiz.bkeuniv">
+		<field name="studentSupervisionId" type="id-ne"></field>
+		<field name="studentName" type="very-long"></field>
+		<field name="thesisTitle" type="very-long"></field>
+		<field name="researchSpecialityCode" type="id"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="studentSupervisionTypeId" type="id-ne"></field>
+		<field name="studentSupervisionStatusId" type="id-ne"></field>
+		<field name="graduateYear" type="numeric"></field>
+		<field name="isMainSupervisor" type="indicator"><description>"Y or N"</description></field>
+		<prim-key field="studentSupervisionId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="StudentSupervisionType" type="one">
+			<key-map field-name="studentSupervisionTypeId"/>
+		</relation>
+		<relation rel-entity-name="StudentSupervisionStatus" type="one">
+			<key-map field-name="studentSupervisionStatusId"/>
+		</relation>
+		
+	</entity>
+	
+	
+	<entity entity-name="BudgetInOut" package-name="org.ofbiz.bkeuniv">
+		<field name="budgetInOutId" type="id-ne"></field>
+		<field name="description" type="very-long"></field>
+		<field name="amount" type="numeric"></field>
+		<field name="date" type="date"></field>
+		<field name="inOutFlag" type="indicator"><description>"I: thu, O: chi"</description></field>
+		<prim-key field="budgetInOutId"/>
+	</entity>
 	
 </entitymodel>

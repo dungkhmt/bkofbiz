@@ -204,11 +204,40 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+
+	public static Map<String, Object> getAllStaffs(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		//String staffId = (String)context.get("authorStaffId");
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String staffId = (String)userLogin.get("userLoginId");
+		
+		Debug.log(module + "::getAllStaffs, authorStaffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<GenericValue> staffs = delegator.findList("StaffView", 
+					null,null, null, null, false);
+			
+		
+			retSucc.put("staffs", staffs);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	
 	public static Map<String, Object> getCVProfileOfStaff(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
-		String staffId = (String)userLogin.get("userLoginId");
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+				staffId = (String)userLogin.get("userLoginId");
 		LocalDispatcher dispatcher = ctx.getDispatcher();
+		Debug.log(module + "::getCVProfileOfStaff, staffId = " + staffId);
 		
 		try{
 			Map<String, Object> cv = FastMap.newInstance();
