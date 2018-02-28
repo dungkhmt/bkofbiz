@@ -40,9 +40,19 @@
 				</div>
 				<div class="dropdown-content hidden">
 					<a class="dropdown-item" onClick='goto("/bkeuniv/control/user")'>${uiLabelMap.BkEunivPersonalInformation}</a>
+					<a class="dropdown-item" onClick="changePassWord()">Doi mat khau</a>
 					<a class="dropdown-item" onClick="logout()">${uiLabelMap.BkEunivLogout}</a>
+					
+					
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+function changePassWord(){
+	//alert('Doi mat khau');
+	window.location.href = "/bkeuniv/control/formchangepassword";
+}
+
+</script>

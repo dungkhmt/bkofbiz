@@ -26,7 +26,7 @@ import org.ofbiz.entity.GenericValue;
 
 public class BKEunivPermissionService {
 	public static String module = BKEunivPermissionService.class.getName();
-	
+	public static String STATUS_ENABLED = "ENABLED";
 	
 	public static List<GenericValue> getFunctionsOfASecurityGroup(Delegator delegator, String groupId){
 		try{
@@ -363,6 +363,7 @@ public class BKEunivPermissionService {
 			GenericValue gv = delegator.makeValue("SecurityGroup");
 			gv.put("groupId", groupId);
 			gv.put("description", description);
+			gv.put("status", STATUS_ENABLED);
 			delegator.create(gv);
 		
 			response.setContentType("application/json");
@@ -380,9 +381,12 @@ public class BKEunivPermissionService {
 	public static Map<String, Object> getListSecurityGroups(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("status",EntityOperator.EQUALS,STATUS_ENABLED));
+			
 			Delegator delegator = ctx.getDelegator();
 			List<GenericValue> securityGroups = delegator.findList("SecurityGroup", 
-					null, 
+					EntityCondition.makeCondition(conds), 
 					null, 
 					null, 
 					null, 

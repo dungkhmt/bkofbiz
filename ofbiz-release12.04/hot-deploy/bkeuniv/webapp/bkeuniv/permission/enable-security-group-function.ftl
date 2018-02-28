@@ -18,7 +18,7 @@
 </div>
 
 <div id="form-security-group-function">	
-	<div id="list-functions">
+	<div id="list-functions" style="overflow-y: auto; height:500px;">
 	</div>
 
 	<!--

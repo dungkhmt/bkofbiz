@@ -289,7 +289,7 @@
 
 	<service name="updatePassword" engine="java"
 		location="org.ofbiz.common.login.LoginServices" invoke="directUpdatePassword">
-		<attribute name="staffId" mode="IN" type="String"></attribute>
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="password" mode="IN" type="String"></attribute>
 		<attribute name="result" mode="OUT" type="String"></attribute>
 	</service>

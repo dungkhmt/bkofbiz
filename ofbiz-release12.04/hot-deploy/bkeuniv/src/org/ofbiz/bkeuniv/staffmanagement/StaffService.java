@@ -13,7 +13,6 @@ import java.util.Set;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
-//import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.service.DispatchContext;
@@ -667,7 +666,21 @@ public class StaffService {
 		}
 		return retSucc;
 	}
-
+	/*
+	public static void changePassword(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String pwd = request.getParameter("password");
+		String staffId = request.getParameter("staffId");
+		String hashedPassword = LoginServices.hashPassword(pwd);
+		Debug.log(module + "::changePassword, pwd = " + pwd + ", staffId = " + staffId + ", hashedPassword = " + hashedPassword);
+		try{
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	*/
 	@SuppressWarnings({ "unchecked" })
 	public static void updateStaffInfo(
 			HttpServletRequest request, HttpServletResponse response) {
