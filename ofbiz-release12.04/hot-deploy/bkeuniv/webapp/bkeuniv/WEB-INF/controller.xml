@@ -220,9 +220,9 @@
     	<response name="success" type="view" value="view-applied-project-declaration-staff"></response>
     </request-map>
     
-    <request-map uri="get-scientificserviceexperience">
+    <request-map uri="get-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="getscientificserviceexperience"></event>
+		<event type="service" invoke="getScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -255,9 +255,9 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
-	<request-map uri="create-scientificserviceexperience">
+	<request-map uri="create-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="createscientificserviceexperience"></event>
+		<event type="service" invoke="createScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -284,9 +284,9 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
-	<request-map uri="update-scientificserviceexperience">
+	<request-map uri="update-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="updatescientificserviceexperience"></event>
+		<event type="service" invoke="updateScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -319,9 +319,9 @@
 		<response name="error" type="request" value="json"></response>
     </request-map>
 	
-	<request-map uri="delete-scientificserviceexperience">
+	<request-map uri="delete-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="deletescientificserviceexperience"></event>
+		<event type="service" invoke="deleteScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
