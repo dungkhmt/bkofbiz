@@ -33,7 +33,7 @@ public class ScientificServiceExperience {
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS, staffId));
-			List<GenericValue> listSSE = delegator.findList("ScientificServiceExperience", 
+			List<GenericValue> listSSE = delegator.findList("ScientificServiceExperienceView", 
 																EntityCondition.makeCondition(conds), 
 																null, null, null, false);
 			
@@ -42,6 +42,7 @@ public class ScientificServiceExperience {
 				Map<String, Object> map = FastMap.newInstance();
 					map.put("scientificServiceExperienceId", gv.getString("scientificServiceExperienceId"));
 					map.put("staffId", gv.getString("staffId"));
+					map.put("staffName", gv.getString("staffName"));
 					map.put("description", gv.getString("description"));
 					map.put("quantity", gv.getString("quantity"));
 				
@@ -75,7 +76,16 @@ public class ScientificServiceExperience {
 				gv.put("quantity", quantity);
 			delegator.create(gv);
 			
-			retSucc.put("scientificServiceExperiences", gv);
+			GenericValue result = delegator.findOne("ScientificServiceExperienceView", false, UtilMisc.toMap("scientificServiceExperienceId",
+					gv.get("scientificServiceExperienceId")));
+			Map<String,  Object> map = FastMap.newInstance();
+				map.put("scientificServiceExperienceId", result.getString("scientificServiceExperienceId"));
+				map.put("staffId", result.getString("staffId"));
+				map.put("staffName", result.getString("staffName"));
+				map.put("description", result.getString("description"));
+				map.put("quantity", result.getString("quantity"));
+			
+			retSucc.put("scientificServiceExperiences", map);
 			retSucc.put("message", "Successfully");
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -103,7 +113,16 @@ public class ScientificServiceExperience {
 				gv.put("quantity", quantity);
 				delegator.store(gv);
 				
-				retSucc.put("scientificServiceExperiences", gv);
+				GenericValue result = delegator.findOne("ScientificServiceExperienceView", false, UtilMisc.toMap("scientificServiceExperienceId",
+						gv.get("scientificServiceExperienceId")));
+				Map<String,  Object> map = FastMap.newInstance();
+					map.put("scientificServiceExperienceId", result.getString("scientificServiceExperienceId"));
+					map.put("staffId", result.getString("staffId"));
+					map.put("staffName", result.getString("staffName"));
+					map.put("description", result.getString("description"));
+					map.put("quantity", result.getString("quantity"));
+				
+				retSucc.put("scientificServiceExperiences", map);
         		retSucc.put("message", "Updated record with id: " + scientificServiceExperienceId);
         	} else {
         		retSucc.put("message", "Not found record with id: " + scientificServiceExperienceId);

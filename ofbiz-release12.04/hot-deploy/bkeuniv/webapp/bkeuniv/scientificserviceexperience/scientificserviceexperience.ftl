@@ -4,7 +4,7 @@
 	<#assign columns=[
 		{
 			"name": sseLabels.BkEunivSSESID?j_string,
-			"data": "staffId"
+			"data": "staffName"
 		},
 		{
 			"name": sseLabels.BkEunivSSESDescription?j_string,
@@ -19,6 +19,7 @@
 	<#assign fields=[
 		"scientificServiceExperienceId",
 		"staffId",
+		"staffName",
 		"description",
 		"quantity"
 	] />

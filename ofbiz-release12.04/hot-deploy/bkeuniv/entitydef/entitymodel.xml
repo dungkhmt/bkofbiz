@@ -1005,6 +1005,18 @@
 		</relation>
 	</entity>
 	
+	<view-entity entity-name="ScientificServiceExperienceView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="SE" entity-name="ScientificServiceExperience"></member-entity>
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<alias-all entity-alias="SE"></alias-all>
+		<alias name="staffName" entity-alias="ST"></alias>
+		
+		<view-link rel-entity-alias="ST" entity-alias="SE" rel-optional="true">
+			<key-map field-name="staffId" rel-field-name="staffId"/>
+		</view-link>
+		
+	</view-entity>
+	
 	<entity entity-name="Patent" package-name="org.ofbiz.bkeuniv">
 		<field name="patentId" type="id-ne"></field>
 		<field name="patentName" type="very-long"></field>
