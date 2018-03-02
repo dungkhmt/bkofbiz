@@ -102,4 +102,65 @@
         <value xml:lang="en">Index</value>
         <value xml:lang="vi">STT</value>
     </property>
+    
+    <property key="BkEunivChange">
+        <value xml:lang="en">Change</value>
+        <value xml:lang="vi">Chỉnh sửa</value>
+    </property>
+    
+    <property key="BkEunivNew">
+        <value xml:lang="en">New</value>
+        <value xml:lang="vi">Tạo mới</value>
+    </property>
+    
+    <property key="BkEunivDelete">
+        <value xml:lang="en">Delete</value>
+        <value xml:lang="vi">Xóa</value>
+    </property>
+    
+    <property key="BkEunivManage">
+        <value xml:lang="en">Manage</value>
+        <value xml:lang="vi">Quản lý</value>
+    </property>
+    
+    <property key="BkEunivResearchSpeciality">
+        <value xml:lang="en">Research speciality</value>
+        <value xml:lang="vi">Chuyên ngành nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivFromDate">
+        <value xml:lang="en">From date</value>
+        <value xml:lang="vi">Từ ngày</value>
+    </property>
+    
+    <property key="BkEunivThruDate">
+        <value xml:lang="en">Thru date</value>
+        <value xml:lang="vi">Đến ngày</value>
+    </property>
+    
+    <property key="BkEunivResearchDomain">
+        <value xml:lang="en">Research domain</value>
+        <value xml:lang="vi">Lĩnh vực nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivResearchSubDomain">
+        <value xml:lang="en">Research sub domain</value>
+        <value xml:lang="vi">Lĩnh vực nghiên cứu con</value>
+    </property>
+    
+    <property key="BkEunivManage">
+        <value xml:lang="en">Manage</value>
+        <value xml:lang="vi">Quản lý</value>
+    </property>
+    
+    <property key="BkEunivManage">
+        <value xml:lang="en">Manage</value>
+        <value xml:lang="vi">Quản lý</value>
+    </property>
+    
+    <property key="BkEunivManage">
+        <value xml:lang="en">Manage</value>
+        <value xml:lang="vi">Quản lý</value>
+    </property>
+    
 </resource>

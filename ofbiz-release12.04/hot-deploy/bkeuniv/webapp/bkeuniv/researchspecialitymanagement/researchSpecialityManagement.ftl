@@ -3,16 +3,16 @@
 <div class="body">
 	<#assign columns=[
 		{
-			"name": "Chuyên ngành nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchSpeciality?j_string,
 			"data": "researchSpecialityName"
 		},
 		{
-			"name": "Từ ngày",
+			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"data": "fromDate",
 			"type": "date"
 		},
 		{
-			"name": "Đến ngày",
+			"name": uiLabelMap.BkEunivThruDate?j_string,
 			"data": "thruDate",
 			"type": "date"
 		}
@@ -34,7 +34,7 @@
 
 	<#assign columnsChange=[
 		{
-			"name": "Lĩnh vực nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchDomain?j_string,
 			"value": "researchDomainId",
 			"type":"select_server_side",
 			"option":{
@@ -45,7 +45,7 @@
 			}
 		},
 		{
-			"name": "Lĩnh vực nghiên cứu con",
+			"name": uiLabelMap.BkEunivResearchSubDomain?j_string,
 			"value": "researchSubDomainSeqId",
 			"type":"select_server_side",
 			"option":{
@@ -58,7 +58,7 @@
 			}
 		},
 		{
-			"name": "Chuyên ngành nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchSpeciality?j_string,
 			"value": "researchSpecialitySeqId",
 			"type":"select_server_side",
 			"option":{
@@ -72,13 +72,12 @@
 			}
 		},
 		{
-			"name": "Từ ngày",
+			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"value": "fromDate",
-			"type": "date",
-			"defaultValue": .now
+			"type": "date"
 		},
 		{
-			"name": "Đến ngày",
+			"name": uiLabelMap.BkEunivThruDate?j_string,
 			"value": "thruDate",
 			"type": "date"
 		}
@@ -86,7 +85,7 @@
 
 	<#assign columnsNew=[
 		{
-			"name": "Lĩnh vực nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchDomain?j_string,
 			"value": "researchDomainId",
 			"type":"select_server_side",
 			"option":{
@@ -97,7 +96,7 @@
 			}
 		},
 		{
-			"name": "Lĩnh vực nghiên cứu con",
+			"name": uiLabelMap.BkEunivResearchSubDomain?j_string,
 			"value": "researchSubDomainSeqId",
 			"type":"select_server_side",
 			"option":{
@@ -110,7 +109,7 @@
 			}
 		},
 		{
-			"name": "Chuyên ngành nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchSpeciality?j_string,
 			"value": "researchSpecialitySeqId",
 			"type":"select_server_side",
 			"option":{
@@ -124,13 +123,13 @@
 			}
 		},
 		{
-			"name": "Từ ngày",
+			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"value": "fromDate",
 			"type": "date",
 			"defaultValue": .now
 		},
 		{
-			"name": "Đến ngày",
+			"name": uiLabelMap.BkEunivThruDate?j_string,
 			"value": "thruDate",
 			"type": "date"
 		}
@@ -155,10 +154,10 @@
 		urlDelete="/bkeuniv/control/delete-staff-research-speciality" 
 		keysId=["staffResearchSpecialityId"]
 		fieldDataResult = "results" 
-		titleChange="Chỉnh sửa"
-		titleNew="Tạo mới"
-		titleDelete="Xoá"
-		jqTitle="Quản lý"
+		titleChange=uiLabelMap.BkEunivChange
+		titleNew=uiLabelMap.BkEunivNew
+		titleDelete=uiLabelMap.BkEunivDelete
+		jqTitle=uiLabelMap.BkEunivManage
 		contextmenu=true
 	/>
 </div>
