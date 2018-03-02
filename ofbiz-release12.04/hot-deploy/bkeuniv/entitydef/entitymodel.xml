@@ -517,12 +517,14 @@
 	</entity>
 	
 	<entity entity-name="ResearchSpeciality" title="Chuyên ngành nghiên cứu" package-name="org.ofbiz.bkeuniv">
+		<field name="researchSpecialityId" type="id-ne"></field>
 		<field name="researchDomainId" type="id-ne"></field>
 		<field name="researchSubDomainSeqId" type="id"></field>
 		<field name="researchSpecialitySeqId" type="id-ne"></field>
 		<field name="researchSpecialityName" type="very-long"></field>
 		<field name="researchSpecialityCode" type="id-ne"></field>
 		
+		<prim-key field="researchSpecialityId"/>
 		<prim-key field="researchSpecialitySeqId"/>
 		<prim-key field="researchSubDomainSeqId"/>
 		<prim-key field="researchDomainId"/>

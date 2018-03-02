@@ -34,7 +34,7 @@ modal.prototype._date = function(value, edit, id, defaultValue=""){
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled ") +
-					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?defaultValue:new Date(value))) + '"'+
+					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?(!defaultValue?defaultValue:new Date(defaultValue)):new Date(value))) + '"'+
 					'placeholder="dd/mm/yyyy"'+
 					'>' +
     			'<script type="text/javascript">'+
@@ -77,10 +77,105 @@ modal.prototype._select = function(value, edit, id, option) {
 	return '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'>'+option.join("")+'</select></div>'+script;
 }
 
+modal.prototype._buildScriptObject = function(object = {}, result = "") {
+	fields_build = object.build_script||[];
+	result+= "{";
+	var that = this;
+	console.log(Object.keys(object), object)
+	Object.keys(object).forEach(function(key, index, array){
+		var dot = ",";
+		if(index == array.length - 1||((index == array.length -2)&&(array[index+1]==="build_script"))) {
+			dot = "";
+		}
+
+		if(key === "build_script") {
+			return;
+		}
+
+		result += '\'' + key + '\'' + ":";
+
+		var value = object[key];
+
+		if(!!fields_build.find(function(e){return e==key})) {
+			result += 'eval(\'' + value + '\')'+dot;
+			return;
+		}
+
+		
+		if(value instanceof Array) {
+			result += that._buildScriptArray(value) + dot;
+			return;
+		}
+
+		if(value instanceof Object) {
+			result += that._buildScriptObject(value) + dot;
+			return;
+		}
+
+		if(typeof value == "function") {
+			result += '\'' + value.toString() + '\'' + dot;
+			return;
+		}
+
+		result += '\'' + value + '\'' + dot;
+	});
+	result+= "}";
+	return result;
+}
+
+modal.prototype._buildScriptArray = function(array = [], result = "") {
+	result+= "[";
+	indexs_build = object.build_script||[];
+	var that = this;
+
+	array.forEach(function (value, index, array) {
+		var dot = ",";
+		if(index == array.length - 1||((index == array.length -2)&&(array[index+1]==="build_script"))) {
+			dot = "";
+		}
+
+		if(key === "build_script") {
+			return;
+		}
+
+		if(!!indexs_build.find(function(e){return e==index})) {
+			result += 'eval(\'' + value + '\')' + dot;
+			return;
+		}
+		
+		if(value instanceof Array) {
+			result += that._buildScriptArray(value) + dot;
+			return;
+		}
+
+		if(value instanceof Object) {
+			result += that._buildScriptObject(value) + dot;
+			return;
+		}
+
+		if(typeof value == "function") {
+			result += '\'' + value.toString() + '\'' + dot;
+			return;
+		}
+
+		result += '\'' + value + '\'' + dot;
+	});
+
+	result+= "]";
+	return result;
+}
+
 modal.prototype._select_server_side = function(value, edit, id, option, column) {
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
 	var render;
+
+	var query_custom = '{}';
+	if(!!option.query) {
+		query_custom = this._buildScriptObject(option.query||{});
+	}
+	
+
 	if(typeof option.render === "function") {
 		render =  option.render.toString();
 	} else {
@@ -91,7 +186,7 @@ modal.prototype._select_server_side = function(value, edit, id, option, column) 
 	if(!!value) {
 		selected = 
 		'$.ajax({'+
-			'"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement",'+
+			'url: "'+option.url+'",'+
 			'"method": "POST",'+
 			'"content-type": "application/json",'+
 			'"data": {'+
@@ -112,7 +207,7 @@ modal.prototype._select_server_side = function(value, edit, id, option, column) 
 		'});';
 
 	}
-
+	
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
 						'$("'+[this.id, _id].join(" ")+'").select2({'+
@@ -124,16 +219,18 @@ modal.prototype._select_server_side = function(value, edit, id, option, column) 
 								'data: function (params) {'+
 									'var query = {'+
 										'q: params.term||"",'+
-										'pagenum:0,'+
+										'pagenum:params.page-1||0,'+
 										'pagesize:10,'+
 									'};'+
+									'query = Object.assign(query, '+query_custom+');'+
+									'Object.keys(query).forEach(function(key){if(query[key] instanceof Object){query[key] = JSON.stringify(query[key]);}});'+
 									'return query;'+
 								'},'+
 								'processResults: function (data) {'+
 								'return {'+
 									'results: data.results.map('+render+'),'+
 									'"pagination": {'+
-										'"more": true,'+
+										'"more": !(data.results.length<10||data.results.length==data.totalRows),'+
 									'},'+
 								'};'+
 								'},'+
@@ -163,7 +260,7 @@ modal.prototype.setting = function(option) {
 		var el;
 		switch(column.type) {
 		    case "date":
-		    	el = this._date(column._data, column.edit, column.id);
+		    	el = this._date(column._data, column.edit, column.id, column.defaultValue);
 		    	break;
 		    case "text":
 		    	el = this._text(column._data, column.edit, column.id);

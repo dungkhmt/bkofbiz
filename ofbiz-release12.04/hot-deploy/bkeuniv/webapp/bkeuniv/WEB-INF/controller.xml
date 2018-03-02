@@ -584,6 +584,33 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	
+	<request-map uri="research-speciality-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-staff-research-speciality"></response>
+    </request-map>
+    
+    <request-map uri="create-staff-research-speciality">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-staff-research-speciality">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-staff-research-speciality">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="export-excel-work-progress">
 		<security auth="true" https="true" />
 		<event type="java" path="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
@@ -615,8 +642,9 @@
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
-   <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
-   <view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
+	<view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
+	<view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
+	<view-map name="view-staff-research-speciality" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchSpeciality"/>
     
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     
