@@ -457,8 +457,11 @@ public class BKEunivPermissionService {
 			
 			for(GenericValue gv: userLoginSecurityGroup){
 				String securityGroupId = (String)gv.get("groupId");
+				cond.clear();
+				cond.add(EntityCondition.makeCondition("securityGroupId", EntityOperator.EQUALS, securityGroupId));
+				cond.add(EntityCondition.makeCondition("thruDate", EntityOperator.EQUALS, null));
 				List<GenericValue> funcs = delegator.findList("GroupFunction", 
-						EntityCondition.makeCondition(EntityCondition.makeCondition("securityGroupId", EntityOperator.EQUALS, securityGroupId)), 
+						EntityCondition.makeCondition(cond), 
 						null, null, null, false);
 				for(GenericValue f: funcs){
 					String functionId = (String)f.get("functionId");
