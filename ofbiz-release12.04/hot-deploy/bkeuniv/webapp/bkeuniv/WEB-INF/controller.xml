@@ -348,13 +348,27 @@
     	<response name="success" type="view" value="profile-science-PDF"></response>
     </request-map>
     
-
+	
     <request-map uri="update-password">
 		<security https="true" auth="false"/>
 		<event type="service" invoke="updatePassword"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+    <request-map uri="formchangepassword">
+		<security https="true" auth="false"/>
+		<response name="success" type="view" value="view-form-change-password"></response>
+	</request-map>
+	<!-- 
+	<request-map uri="change-password">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.bkeuniv.staffmanagement.StaffService" 
+                     invoke="updateStaffInfo"/>
+            <response name="AttachementSuccess" type="view" value="CHANGEPASSWORD"/>
+           
+    </request-map>    
+	 -->
     
     <request-map uri="download-file-paper">
 		<security auth="true" https="true" />
@@ -648,6 +662,9 @@
     
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     
+    
+   
+   <view-map name="view-form-change-password" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageChangePassword"/>
    
     
 </site-conf>
