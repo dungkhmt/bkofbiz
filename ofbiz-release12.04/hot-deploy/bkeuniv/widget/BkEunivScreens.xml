@@ -433,6 +433,33 @@
 		</section>
 	</screen>
 	
+
+	<screen name="researchDomain">
+        <section>
+            <actions>
+                <entity-condition list="listStaffs" entity-name="ResearchDomain"></entity-condition>
+                <property-map resource="BkEunivResearchDomainUiLabels" map-name="researchDomainUiLabelMap" global="true"/>
+                
+            </actions>
+            <widgets>
+                <decorator-screen name="bkeuniv-global-decorator"
+                    location="component://bkeuniv/widget/CommonScreens.xml">
+                    <decorator-section name="body">
+
+                        <platform-specific>
+                            <html>
+                                <html-template
+                                    location="component://bkeuniv/webapp/bkeuniv/researchdomain/research-domain.ftl" />
+                            </html>
+                        </platform-specific>
+
+                    </decorator-section>
+                </decorator-screen>
+
+            </widgets>
+        </section>
+    </screen>				
+
 	<screen name="pageProjectDeclaration">
 		<section>
 			<actions>
@@ -449,6 +476,7 @@
 						<platform-specific>
 							<html>
 								<html-template
+
 									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-declaration.ftl" />
 							</html>
 						</platform-specific>
@@ -513,6 +541,7 @@
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/workprogress/workprogress.ftl" />
+
 							</html>
 						</platform-specific>
 

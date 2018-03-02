@@ -429,6 +429,25 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="research-domain-management">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-research-domain-management"/>    
+    </request-map>
+    
+    <request-map uri="get-research-domain-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+    
+    <request-map uri="create-research-domain-management">
+		<security https="true" auth="true"/>		
+		<event type="service" invoke="createResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>		 
+
 	<request-map uri="project-declaration-staff">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-project-declaration-staff"></response>
@@ -499,9 +518,23 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="update-research-domain-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
 	<request-map uri="update-work-progress">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="updateWorkProgress"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-research-domain-management">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteResearchDomain"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -540,9 +573,8 @@
     <view-map name="view-summary-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclaration"/>
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
+    <view-map name="view-research-domain-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#researchDomain"/>
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
    <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
-    
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
-    
 </site-conf>

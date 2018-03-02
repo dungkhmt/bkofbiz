@@ -11,5 +11,39 @@
         </description>
     </service> 
     
+    <service name="getResearchDomain" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchdomain.ResearchDomain" invoke="getResearchDomain">
+    	<attribute name="researchDomainId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchDomainName" mode="IN" type="String" optional="true"></attribute>   	
+    	<attribute name="researchDomain" mode="OUT" type="List"></attribute>
+    	<attribute name="result" mode="OUT" type="List"></attribute>
+    	<attribute name="count" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="createResearchDomain" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchdomain.ResearchDomain" invoke="createResearchDomain">
+    	<attribute name="researchDomainId" mode="IN" type="String"></attribute>   
+    	<attribute name="researchDomainName" mode="IN" type="String"></attribute>   	
+    	<attribute name="researchDomain" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateResearchDomain" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchdomain.ResearchDomain" invoke="updateResearchDomain">
+    	<attribute name="researchDomainId" mode="IN" type="String"></attribute>
+    	<attribute name="researchDomainName" mode="IN" type="String"></attribute>   	
+    	
+    	<attribute name="researchDomain" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
+      <service name="deleteResearchDomain" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.researchdomain.ResearchDomain" invoke="deleteResearchDomain">
+    	<attribute name="researchDomainId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
+    
     
 </services>
