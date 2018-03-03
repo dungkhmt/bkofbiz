@@ -575,18 +575,20 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
-				<set field="idxEducationProgress" from-field="${parameters.idxEducationProgress}" />
-				<set field="idxPatent" from-field="${parameters.idxPatent}"/>
-				<set field="idxProjectsApplied" from-field="${parameters.idxProjectsApplied}"/>
-				<set field="idxPhDDefensed" from-field="${parameters.idxPhDDefensed}"/>
-				<set field="idxGraduateStudents" from-field="${parameters.idxGraduateStudents}"/>
+				<set field="sections" from-field="parameters.sections" type="List"/>
 				
-				<set field="idxPublications" from-field="${parameters.idxPublications}"/>
-				<set field="idxWorkProgress" from-field="${parameters.idxWorkProgress}"/>
-				<set field="idxRecent5YearProjects" from-field="${parameters.idxRecent5YearProjects}"/>
-				<set field="idxAward" from-field="${parameters.idxAward}"/>
-				<set field="idxScientificService" from-field="${parameters.idxScientificService}"/>
-				<set field="staffId" from-field="${parameters.staffId}"/>
+				<!-- <set field="idxEducationProgress" from-field="${parameters.idxEducationProgress}" type="Integer" default-value="-1"/>
+				<set field="idxPatent" from-field="${parameters.idxPatent}" type="Integer" default-value="-1"/>
+				<set field="idxProjectsApplied" from-field="${parameters.idxProjectsApplied}" type="Integer" default-value="-1"/>
+				<set field="idxPhDDefensed" from-field="${parameters.idxPhDDefensed}" type="Integer" default-value="-1"/>
+				<set field="idxGraduateStudents" from-field="${parameters.idxGraduateStudents}" type="Integer" default-value="-1"/>
+				
+				<set field="idxPublications" from-field="${parameters.idxPublications}" type="Integer" default-value="-1"/>
+				<set field="idxWorkProgress" from-field="${parameters.idxWorkProgress}" type="Integer" default-value="-1"/>
+				<set field="idxRecent5YearProjects" from-field="${parameters.idxRecent5YearProjects}" type="Integer" default-value="-1"/>
+				<set field="idxAward" from-field="${parameters.idxAward}" type="Integer" default-value="-1"/>
+				<set field="idxScientificService" from-field="${parameters.idxScientificService}" type="Integer" default-value="-1"/> -->
+				<!-- <set field="staffId" from-field="${parameters.staffId}"/> -->
 				<!-- 
 				<service service-name="getEducationProgressOfLoginStaff" result-map="educationProgress"></service>
 				 -->

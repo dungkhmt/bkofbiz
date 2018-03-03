@@ -152,32 +152,60 @@
 
 <script>
 function viewPDF(){
-	var idxEducationProgess = document.getElementById("education-progess").value;
-	var idxProjectsApplied = document.getElementById("projects-applied").value;
-	var idxPhDDefensed = document.getElementById("phd-defensed").value;
-	var idxGraduateStudents = document.getElementById("current-graduate-students").value;
-	var idxPatent = document.getElementById("patent").value;
-	
-	var idxPublications = document.getElementById("publications").value;
-	var idxWorkProgress = document.getElementById("work-progress").value;
-	var idxRecent5YearProjects = document.getElementById("recent5year-projects").value;
-	var idxAward = document.getElementById("award").value;
-	var idxScientificService = document.getElementById("scientific-service").value;
-	
-	window.location.href="/bkeuniv/control/profile-science-pdf?"
-					+ "idxEducationProgress=" + idxEducationProgess
-					+ "&idxPublications=" + idxPublications
-					+ "&idxWorkProgress=" + idxWorkProgress
-					+ "&idxRecent5YearProjects=" + idxRecent5YearProjects
-					+ "&idxAward=" + idxAward
-					+ "&idxScientificService=" + idxScientificService
-					
-					+ "&idxPatent=" + idxPatent
-					+ "&idxProjectsApplied=" + idxProjectsApplied
-					+ "&idxPhDDefensed=" + idxPhDDefensed
-					+ "&idxGraduateStudents=" + idxGraduateStudents
-					
-					;
+
+	var sections=[
+		{
+			name: "education-progress",
+			index: document.getElementById("education-progess").value
+		},
+		{
+			name: "patent",
+			index: document.getElementById("patent").value
+		},
+		{
+			name: "projects-applied",
+			index: document.getElementById("projects-applied").value
+		},
+		{
+			name: "phd-defensed",
+			index: document.getElementById("phd-defensed").value
+		},
+		{
+			name: "graduate-students",
+			index: document.getElementById("current-graduate-students").value
+		},
+		{
+			name: "publications",
+			index: document.getElementById("publications").value
+		},
+		{
+			name: "work-progress",
+			index: document.getElementById("work-progress").value
+		},
+		{
+			name: "recent-5-year-projects",
+			index: document.getElementById("recent5year-projects").value
+		},
+		{
+			name: "award",
+			index: document.getElementById("award").value
+		},
+		{
+			name: "scientific-service",
+			index: document.getElementById("scientific-service").value
+		}
+	];
+
+	sections = sections.map(function(section) {
+		section.index=parseInt(section.index)
+		return section
+	}).filter(function(section) {
+		return !!section.index
+	}).sort(function(a, b) {
+		return a.index - b.index
+	})
+
+	window.location.href="/bkeuniv/control/profile-science-pdf?"+sections.map(function(s) { return "sections="+s.name }).join("&");
 }
 
 </script>

@@ -1,8 +1,5 @@
 
 <#escape x as x?xml>
-	
-	
-	
 	<#assign stt=1 />
 	<#assign fullName=resultCV.cv.info.staffName />
 	<#assign BkEunivBirthday=resultCV.cv.info.staffDateOfBirth?if_exists />
@@ -706,42 +703,79 @@
        		 </fo:table-cell>
      	 </fo:table-row>
  	
+ 	<#if sections??>
+ 		<#assign indexS=9 />
+		<#list sections as section>
+			<#switch section>
+                <#case "education-progress">
+                    <#include "pdf-education-progress.fo.ftl"/>
+                    <#break>
+                <#case "patent">
+                    <#include "pdf-patents.fo.ftl"/>
+                    <#break>
+                <#case "projects-applied">
+                    <#include "pdf-projects-applied.fo.ftl"/>
+                    <#break>
+                <#case "phd-defensed">
+                    <#include "pdf-phd-defensed.fo.ftl"/>
+                    <#break>
+                <#case "graduate-students">
+                    <#include "pdf-current-graduate-students.fo.ftl"/>
+                    <#break>
+                <#case "publications">
+                    <#include "pdf-publications.fo.ftl"/>
+                    <#break>
+                <#case "work-progress">
+                    <#include "pdf-business-progress.fo.ftl"/>
+                    <#break>
+                <#case "recent-5-year-projects">
+                    <#include "pdf-5-years-recent-projects.fo.ftl"/>
+                    <#break>
+                <#case "award">
+                    <#include "pdf-awards.fo.ftl"/>
+                    <#break>
+                <#case "scientific-service">
+                    <#include "pdf-scientific-service-experience.fo.ftl"/>
+                    <#break>
+			</#switch>
+	 		<#assign indexS=indexS+1 />
+	 	</#list>
+	</#if>
  	
  	
-  	
-  	<#list 1..20 as idx>
+  	<#--  <#list 1..20 as idx>
  		<#if idx==idxEducationProgress>
  			<#include "pdf-education-progress.fo.ftl"/>
  		</#if>
- 		<#if idx=idxPatent>
+ 		<#if idx==idxPatent>
  			<#include "pdf-patents.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxProjectsApplied>
+ 		<#if idx==idxProjectsApplied>
  			<#include "pdf-projects-applied.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxPhDDefensed>
+ 		<#if idx==idxPhDDefensed>
  			<#include "pdf-phd-defensed.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxGraduateStudents>
+ 		<#if idx==idxGraduateStudents>
  			<#include "pdf-current-graduate-students.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxPublications>
+ 		<#if idx==idxPublications>
  			<#include "pdf-publications.fo.ftl"/>
  		</#if>
- 		<#if idx=idxWorkProgress>
+ 		<#if idx==idxWorkProgress>
  			<#include "pdf-business-progress.fo.ftl"/>
  		</#if>
- 		<#if idx=idxRecent5YearProjects>
+ 		<#if idx==idxRecent5YearProjects>
  			<#include "pdf-5-years-recent-projects.fo.ftl"/>
  		</#if>
- 		<#if idx=idxAward>
+ 		<#if idx==idxAward>
  			<#include "pdf-awards.fo.ftl"/>
  		</#if>
- 		<#if idx=idxScientificService>
+ 		<#if idx==idxScientificService>
  			 <#include "pdf-scientific-service-experience.fo.ftl"/>
  		</#if>
  		
- 	</#list>
+ 	</#list>  -->
 
    	     	 
      
@@ -766,9 +800,8 @@
 						//STT
 		       <fo:table-cell />
 		        <fo:table-cell>
-			      	<fo:block >${stt}.</fo:block>
+			      	<fo:block >${indexS}.</fo:block>
 			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block >${Information1}</fo:block>

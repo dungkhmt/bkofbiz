@@ -10,9 +10,8 @@
 		      <fo:table-row>
 			
 		        <fo:table-cell>
-			      	<fo:block font-weight="bold">${stt}.</fo:block>
+			      	<fo:block font-weight="bold"><#if indexS??>${indexS}</#if>.</fo:block>
 			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block font-weight="bold">${BussinessProgress}</fo:block>
