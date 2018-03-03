@@ -3,17 +3,17 @@
 <div class="body">
 	<#assign columns=[
 		{
-			"name": "Lĩnh vực nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchDomain?j_string,
 			"data": "researchDomainName"
 		},
 		
 		{
-			"name": "Từ ngày",
+			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"data": "fromDate",
 			"type": "date"
 		},
 		{
-			"name": "Đến ngày",
+			"name": uiLabelMap.BkEunivThruDate?j_string,
 			"data": "thruDate",
 			"type": "date"
 		}
@@ -31,7 +31,7 @@
 
 	<#assign columnsChange=[
 		{
-			"name": "Lĩnh vực nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchDomain?j_string,
 			"value": "researchDomainId",
 			"type":"select_server_side",
 			"option":{
@@ -42,12 +42,12 @@
 			}
 		},
 		{
-			"name": "Từ ngày",
+			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"value": "fromDate",
 			"type": "date"
 		},
 		{
-			"name": "Đến ngày",
+			"name": uiLabelMap.BkEunivThruDate?j_string,
 			"value": "thruDate",
 			"type": "date"
 		}
@@ -55,7 +55,7 @@
 
 	<#assign columnsNew=[
 		{
-			"name": "Lĩnh vực nghiên cứu",
+			"name": uiLabelMap.BkEunivResearchDomain?j_string,
 			"value": "researchDomainId",
 			"type":"select_server_side",
 			"option":{
@@ -66,12 +66,12 @@
 			}
 		},
 		{
-			"name": "Từ ngày",
+			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"value": "fromDate",
 			"type": "date"
 		},
 		{
-			"name": "Đến ngày",
+			"name": uiLabelMap.BkEunivThruDate?j_string,
 			"value": "thruDate",
 			"type": "date"
 		}
@@ -94,12 +94,13 @@
 		urlUpdate="/bkeuniv/control/update-staff-research-domain" 
 		urlAdd="/bkeuniv/control/create-staff-research-domain" 
 		urlDelete="/bkeuniv/control/delete-staff-research-domain" 
-		keysId=["staffResearchDomainId"] 
-		fieldDataResult = "results" 
-		titleChange="Chỉnh sửa"
-		titleNew="Tạo mới"
-		titleDelete="Xoá"
-		jqTitle="Quản lý"
+		keysId=["staffResearchDomainId"]
+		fieldDataResult = "results"
+		titleChange=uiLabelMap.BkEunivChange
+		titleNew=uiLabelMap.BkEunivNew
+		titleDelete=uiLabelMap.BkEunivDelete
+		jqTitle=uiLabelMap.BkEunivManage
+		subTitleDelete=uiLabelMap.BkEunivConfirmToDelete
 		contextmenu=true
 	/>
 </div>

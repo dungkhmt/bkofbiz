@@ -148,19 +148,49 @@
         <value xml:lang="vi">Lĩnh vực nghiên cứu con</value>
     </property>
     
-    <property key="BkEunivManage">
-        <value xml:lang="en">Manage</value>
-        <value xml:lang="vi">Quản lý</value>
+    <property key="BkEunivOK">
+        <value xml:lang="en">OK</value>
+        <value xml:lang="vi">Đồng ý</value>
     </property>
     
-    <property key="BkEunivManage">
-        <value xml:lang="en">Manage</value>
-        <value xml:lang="vi">Quản lý</value>
+    <property key="BkEunivCancel">
+        <value xml:lang="en">Cancel</value>
+        <value xml:lang="vi">Hủy bỏ</value>
     </property>
     
-    <property key="BkEunivManage">
-        <value xml:lang="en">Manage</value>
-        <value xml:lang="vi">Quản lý</value>
+    <property key="BkEunivConfirmToDelete">
+        <value xml:lang="en">You confirm you want to delete</value>
+        <value xml:lang="vi">Bạn xác nhận xóa bản ghi</value>
+    </property>
+    
+    <property key="BkEunivStaffName">
+        <value xml:lang="en">Staff name</value>
+        <value xml:lang="vi">Tên thành viên</value>
+    </property>
+    
+    <property key="BkEunivStaff">
+        <value xml:lang="en">Staff</value>
+        <value xml:lang="vi">Thành viên</value>
+    </property>
+    
+    <property key="BkEunivRoleType">
+        <value xml:lang="en">Role type</value>
+        <value xml:lang="vi">Chức vụ</value>
+    </property>
+    
+    <property key="BkEunivContent">
+        <value xml:lang="en">Content</value>
+        <value xml:lang="vi">Nội dung</value>
+    </property>
+    
+    <property key="BkEunivWorkingDays">
+        <value xml:lang="en">Working days</value>
+        <value xml:lang="vi">Ngày làm việc</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh phí</value>
     </property>
     
 </resource>

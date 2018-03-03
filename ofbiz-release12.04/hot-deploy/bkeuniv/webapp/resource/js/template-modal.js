@@ -49,7 +49,14 @@ modal.prototype._text = function(value, edit, id){
 					'id="' + id + '"' +
 					(edit?"":"disabled ") +
 					'value="' + value + '"'+
-					'>';
+					'/>';
+}
+
+modal.prototype._textarea = function(value, edit, id){
+	return '<textarea class="form-control"' +
+					'id="' + id + '"' +
+					(edit?"":"disabled ") +
+					'>'+value+'</textarea>';
 }
 
 modal.prototype._select = function(value, edit, id, option) {
@@ -264,6 +271,9 @@ modal.prototype.setting = function(option) {
 		    	break;
 		    case "text":
 		    	el = this._text(column._data, column.edit, column.id);
+				break;
+			case "textarea":
+		    	el = this._textarea(column._data, column.edit, column.id);
 		        break;
 		    case "select":
 		    	el = this._select(column._data, column.edit, column.id, column.option);
@@ -420,6 +430,9 @@ modal.prototype.data = function() {
 			    	column._data = _._getDate("#"+column.id, "yy-mm-dd");
 			    	break;
 			    case "text":
+			    	column._data = _._getText("#"+column.id);
+					break;
+				case "textarea":
 			    	column._data = _._getText("#"+column.id);
 			        break;
 			    case "select":

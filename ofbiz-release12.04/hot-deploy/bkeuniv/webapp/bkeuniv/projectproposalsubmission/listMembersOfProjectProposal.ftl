@@ -43,11 +43,11 @@
 <div class="body">
 	<#assign columns=[
 		{
-			"name": "Staff Name"?j_string,
+			"name": uiLabelMap.BkEunivStaffName?j_string,
 			"data": "staffName"
 		},
 		{
-			"name": "Role Type"?j_string,
+			"name": uiLabelMap.BkEunivRoleType?j_string,
 			"data": "roleTypeName"
 		}
 	] />
@@ -87,7 +87,7 @@
 
 	<#assign columnsChange=[
 		{
-			"name": "Staff Name"?j_string,
+			"name": uiLabelMap.BkEunivStaffName?j_string,
 			"value": "staffId",
 			"type":"select_server_side",
 			"option":{
@@ -97,7 +97,7 @@
 			}
 		},
 		{
-			"name": "Role Type"?j_string,
+			"name": uiLabelMap.BkEunivRoleType?j_string,
 			"value": "roleTypeId",
 			"type": "select",
 			"option":{
@@ -111,7 +111,7 @@
 
 	<#assign columnsNew=[
 		{
-			"name": "Staff Name"?j_string,
+			"name": uiLabelMap.BkEunivStaffName?j_string,
 			"value": "staffId",
 			"type":"select_server_side",
 			"option":{
@@ -121,7 +121,7 @@
 			}
 		},
 		{
-			"name": "Role Type"?j_string,
+			"name": uiLabelMap.BkEunivRoleType?j_string,
 			"value": "roleTypeId",
 			"type": "select",
 			"option":{
@@ -146,9 +146,10 @@
 		urlDelete="" 
 		keysId=["researchProjectProposalId","staffId"] 
 		fieldDataResult = "members" 
-		titleChange=""
-		titleNew=""
-		titleDelete=""
+		titleChange=uiLabelMap.BkEunivChange
+		titleNew=uiLabelMap.BkEunivNew
+		titleDelete=uiLabelMap.BkEunivDelete
+		jqTitle=uiLabelMap.BkEunivManage
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
 		contextmenu=false
 		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
