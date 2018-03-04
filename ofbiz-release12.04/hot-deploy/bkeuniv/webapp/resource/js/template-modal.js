@@ -44,10 +44,12 @@ modal.prototype._date = function(value, edit, id, defaultValue=""){
         		'</script>'
 }
 
-modal.prototype._text = function(value, edit, id){
+modal.prototype._text = function(value, edit, id, column){
+	console.log(column)
 	return '<input type="text" class="form-control"' +
 					'id="' + id + '"' +
-					(edit?"":"disabled ") +
+					(!!edit?"":"disabled ") +
+					(!column.pattern?"":(' pattern="'+column.pattern+'" title="'+column.title + '" ')) +
 					'value="' + value + '"'+
 					'/>';
 }
@@ -270,7 +272,7 @@ modal.prototype.setting = function(option) {
 		    	el = this._date(column._data, column.edit, column.id, column.defaultValue);
 		    	break;
 		    case "text":
-		    	el = this._text(column._data, column.edit, column.id);
+		    	el = this._text(column._data, column.edit, column.id, column);
 				break;
 			case "textarea":
 		    	el = this._textarea(column._data, column.edit, column.id);
@@ -389,7 +391,7 @@ modal.prototype.render = function() {
 		        	'<h4 class="modal-title">'+this.option.title+'</h4>'+
 		      '</div>'+
 		      '<div class="modal-body">'+
-		      	'<div class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'</div>'+
+		      	'<form id="'+ [this.id, "form"].join("") +'" action="javascript:void(0);" class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'<button id="submit" style="display: none" type="submit">Click Me!</button></form>'+
 		      '</div>'+
 		      '<div class="modal-footer">'+
 		      	'<button type="button" class="btn btn-success" id="modal-action">'+(this._action.name||"Action")+'</button>'+
@@ -412,11 +414,14 @@ modal.prototype.render = function() {
 	
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
-	  if(!!_._action.type&&_._action.type=="custom") {
-		  _._action.update(_.data());
-	  } else {
-		  _.action();		  
-	  }
+		$([_.id, "#submit"].join(" ")).click();
+		if(document.getElementById([_.id, "form"].join("")).checkValidity()) {
+			if(!!_._action.type&&_._action.type=="custom") {
+				_._action.update(_.data());
+			} else {
+				_.action();		  
+			}
+		}
 	});
 	return this;
 }
