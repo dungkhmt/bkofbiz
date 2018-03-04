@@ -27,7 +27,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="education-progess" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="1"/>
 	</div>
 </div>
 </td>
@@ -38,7 +38,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="patent" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="8"/>
 	</div>
 </div>
 </td>
@@ -50,7 +50,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="projects-applied" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="7"/>
 	</div>
 </div>
 </td>
@@ -62,7 +62,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="phd-defensed" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="9"/>
 	</div>
 </div>
 </td>
@@ -74,7 +74,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="current-graduate-students" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="10"/>
 	</div>
 </div>
 </td>
@@ -89,7 +89,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="publications" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="3"/>
 	</div>
 </div>
 </td>
@@ -101,7 +101,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="work-progress" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="2"/>
 	</div>
 </div>
 </td>
@@ -113,7 +113,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="recent5year-projects" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="4"/>
 	</div>
 </div>
 </td>
@@ -125,7 +125,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="award" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="5"/>
 	</div>
 </div>
 </td>
@@ -137,7 +137,7 @@
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="scientific-service" style="width: 100%" type="text" width="1000" 
-		value=""/>
+		value="6"/>
 	</div>
 </div>
 </td>

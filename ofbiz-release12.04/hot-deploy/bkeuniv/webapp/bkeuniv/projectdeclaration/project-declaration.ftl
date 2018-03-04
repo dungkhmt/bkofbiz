@@ -497,6 +497,7 @@
 		{
 			"name": projectDeclarationUiLabelMap.ProjectHourOfStaff?j_string,
 			"value": "hourOfStaff"
+			
 		}
 		<#-- 
 		,

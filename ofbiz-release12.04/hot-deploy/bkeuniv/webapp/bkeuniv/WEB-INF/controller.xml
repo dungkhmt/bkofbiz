@@ -493,7 +493,7 @@
     </request-map>
     
     <request-map uri="get-project-declaration">
-    	<security https="true" auth="true"/>
+    	<security https="true" auth="false"/>
     	<event type="service" invoke="getProjectDeclaration"></event>
     	<response name="success" type="request" value="json"></response>
     	<response name="error" type="request" value="json"></response>
