@@ -110,7 +110,7 @@
 	<#assign Information2 = "Linh vuc nghien cuu trong 5 nam gan day" />
 	<#assign Information3 = "Cac huong nghien cuu cho NCS va HV cao hoc" />
 	<#assign Information4 = "Toi xin cam doan nhung thong tin duoc ghi o tren la hoan toan chinh xac" />
-	<#assign Information5 = "Ha Noi, ngay ... thang ... nam 2016" />
+	<#assign Information5 = "..., ngay ... thang ... nam ..." />
 	<#assign Information6 = "Nguoi khai" />
 	<#assign Information7 = "(Ky va ghi ro ho ten)" />
 	
@@ -254,20 +254,152 @@
           //Full name
           <fo:table table-layout="fixed">
 			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(8)"/>
+			<fo:table-column column-width="proportional-column-width(11)"/>
+			<fo:table-column column-width="proportional-column-width(2)"/>
 			<fo:table-column column-width="proportional-column-width(1)"/>
+			<fo:table-column column-width="proportional-column-width(11)"/>
+			<fo:table-column column-width="proportional-column-width(2)"/>
 			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(12)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(8)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
+			<fo:table-column column-width="proportional-column-width(11)"/>
+			<fo:table-column column-width="proportional-column-width(2)"/>
 							
 			<fo:table-body >
-				<fo:table-row border-bottom-style="dotted" height="20pt" >
+				<#assign researchDomain = resultCV.cv.researchDomain />
+				<#assign size = researchDomain?size/>
+				<#assign n = (size/3)?ceiling - 1  />
+				<#list 0..n as i>
+					<fo:table-row border-bottom-style="dotted" height="20pt" >
+					<#list 0..2 as j>
+						<#if i*3+j < size>
+							<#assign rd = researchDomain[i*3+j] />
+							<fo:table-cell />
+
+							<fo:table-cell>
+								<fo:block>${rd.researchDomainName}
+								</fo:block>
+							</fo:table-cell>
+							
+							<#if j==2>
+								<fo:table-cell padding="3">
+									<#if rd.check>
+										<fo:table table-layout="fixed">
+											<fo:table-column column-width="proportional-column-width(1)"/>
+											
+											<fo:table-body>
+												<fo:table-row>
+													//STT
+													<fo:table-cell>
+														<fo:block font-size="14pt" font-family="wingdings" >&#254;</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+									<#--  <fo:block font-size="14pt" border-style="solid" font-family="wingdings" >
+												&#254;
+									</fo:block>  -->
+									<#else>
+									<fo:table table-layout="fixed">
+										<fo:table-column column-width="proportional-column-width(1)"/>
+										
+										<fo:table-body>
+											<fo:table-row>
+												//STT
+												<fo:table-cell>
+													<fo:block font-size="14pt" font-family="wingdings" >&#111;</fo:block>
+												</fo:table-cell>
+											</fo:table-row>
+										</fo:table-body>
+									</fo:table>
+									</#if>
+								</fo:table-cell>
+							<#else>
+								<fo:table-cell border-right-style = "solid" padding="3">
+										<#if rd.check>
+											<fo:table table-layout="fixed">
+												<fo:table-column column-width="proportional-column-width(1)"/>
+												
+												<fo:table-body>
+													<fo:table-row>
+														//STT
+														<fo:table-cell>
+															<fo:block font-size="14pt" font-family="wingdings" >&#254;</fo:block>
+														</fo:table-cell>
+													</fo:table-row>
+												</fo:table-body>
+											</fo:table>
+									<#else>
+										<fo:table table-layout="fixed">
+											<fo:table-column column-width="proportional-column-width(1)"/>
+											
+											<fo:table-body>
+												<fo:table-row>
+													//STT
+													<fo:table-cell>
+														<fo:block font-size="14pt" font-family="wingdings" >&#111;</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+									</#if>
+								</fo:table-cell>
+							</#if>
+						<#else>
+							<fo:table-cell />
+							<fo:table-cell />
+							<#if j==2>
+								<fo:table-cell />
+							<#else>
+								<fo:table-cell border-right-style = "solid" />
+							</#if>
+						</#if>
+						
+					</#list>
+					</fo:table-row>
+				</#list>
+
+				<#--  <fo:table-row border-bottom-style="dotted" height="20pt" >
+					<fo:table-cell />
+
+					<fo:table-cell>
+						<fo:block>${NatureScience}</fo:block>
+					</fo:table-cell>
+					
+					<fo:table-cell/>
+					
+					<fo:table-cell border-right-style = "solid">
+							<#if rd.check>
+								<fo:block font-size="14pt" font-family="wingdings">
+								&#254;
+								</fo:block>
+							<#else>
+								<fo:block font-size="14pt" font-family="wingdings">
+									&#111;
+								</fo:block>
+							</#if>
+					</fo:table-cell>
+
+					<fo:table-cell />
+
+					<fo:table-cell>
+						<fo:block>${AgriculturalScience}</fo:block>
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					
+					<fo:table-cell border-right-style = "solid">
+						 <#if rd.check>
+							<fo:block font-size="14pt" font-family="wingdings">
+							&#254;
+							</fo:block>
+						<#else>
+							<fo:block font-size="14pt" font-family="wingdings">
+								&#111;
+							</fo:block>
+						</#if>
+					</fo:table-cell>
+				</fo:table-row>  -->
+
+				<#--  <fo:table-row border-bottom-style="dotted" height="20pt" >
 					//STT
 					<fo:table-cell />
 						
@@ -337,7 +469,7 @@
 						      </fo:table-row>
 						    </fo:table-body>
 						  </fo:table>
-					</fo:table-cell>
+					</fo:table-cell>  
 				</fo:table-row>
 					
 				<fo:table-row border-bottom-style="dotted" height="20pt" >
@@ -409,7 +541,7 @@
 						    </fo:table-body>
 						  </fo:table>
 					</fo:table-cell>
-				</fo:table-row>
+				</fo:table-row>-->
 																										
 				</fo:table-body>
 		  	</fo:table>
@@ -702,9 +834,8 @@
 				</fo:table>
        		 </fo:table-cell>
      	 </fo:table-row>
- 	
+ 	<#assign indexS=9 />
  	<#if sections??>
- 		<#assign indexS=9 />
 		<#list sections as section>
 			<#switch section>
                 <#case "education-progress">
@@ -800,7 +931,7 @@
 						//STT
 		       <fo:table-cell />
 		        <fo:table-cell>
-			      	<fo:block >${indexS}.</fo:block>
+			      	<fo:block ><#if indexS??>${indexS}</#if>.</fo:block>
 			    	</fo:table-cell>
 
 		        <fo:table-cell >

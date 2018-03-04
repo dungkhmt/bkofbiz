@@ -51,8 +51,7 @@ public class ResearchDomainManagement {
 		Map<String,Object> result = FastMap.newInstance();
 		EntityListIterator researchDomain = null;
 		try {
-			GenericValue userLogin = (GenericValue) context.get("userLogin");
-			String userLoginId = userLogin.getString("userLoginId");
+			
 			opts = opts != null  ? opts : new EntityFindOptions();
 			opts.setDistinct(true);
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
