@@ -11,6 +11,13 @@
         </description>
     </service> 
     
+    <service name="getPapersStatistic" engine="java"
+    	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
+		invoke="getPapersStatistic">
+		<attribute name="years" mode="OUT" type="List"></attribute>
+		<attribute name="count" mode="OUT" type="List"></attribute>
+    </service>
+    
     
     
     <service name="updateCountResearchProposalSubmission" engine="java"

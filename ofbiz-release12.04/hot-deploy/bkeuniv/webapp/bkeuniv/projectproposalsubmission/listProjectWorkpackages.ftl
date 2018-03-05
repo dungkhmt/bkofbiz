@@ -43,19 +43,19 @@
 <div class="body">
 	<#assign columns=[
 		{
-			"name": "Nội dung"?j_string,
+			"name": uiLabelMap.BkEunivContent?j_string,
 			"data": "content"
 		},
 		{
-			"name": "Thành viên"?j_string,
+			"name": uiLabelMap.BkEunivStaff?j_string,
 			"data": "staffId"
 		},
 		{
-			"name": "Ngày làm việc"?j_string,
+			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"data": "workingDays"
 		},
 		{
-			"name": "Kinh phí"?j_string,
+			"name": uiLabelMap.BkEunivBudget?j_string,
 			"data": "budget"
 		}
 	] />
@@ -87,19 +87,19 @@
 
 	<#assign columnsChange=[
 		{
-			"name": "Nội dung"?j_string,
+			"name": uiLabelMap.BkEunivContent?j_string,
 			"value": "content"
 		},
 		{
-			"name": "Thành viên"?j_string,
+			"name": uiLabelMap.BkEunivStaff?j_string,
 			"value": "staffId"
 		},
 		{
-			"name": "Ngày làm việc"?j_string,
+			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"value": "workingDays"
 		},
 		{
-			"name": "Kinh phí"?j_string,
+			"name": uiLabelMap.BkEunivBudget?j_string,
 			"value": "budget"
 		}
 	] />
@@ -114,7 +114,7 @@
 
 	<#assign columnsNew=[
 		{
-			"name": "Người thực hiện"?j_string,
+			"name": uiLabelMap.BkEunivStaff?j_string,
 			"value": "staffId",
 			"type": "select",
 			"option":{
@@ -123,15 +123,16 @@
 			}
 		},
 		{
-			"name": "Nội dung"?j_string,
-			"value": "content"
+			"name": uiLabelMap.BkEunivContent?j_string,
+			"value": "content",
+			"type": "textarea"
 		},
 		{
-			"name": "Ngày làm việc"?j_string,
+			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"value": "workingdays"
 		},
 		{
-			"name": "Chi phí"?j_string,
+			"name": uiLabelMap.BkEunivBudget?j_string,
 			"value": "budget"
 		}
 		]
@@ -179,9 +180,9 @@
 		urlDelete="" 
 		keysId=["researchProjectProposalId"] 
 		fieldDataResult = "projectProposalContentItems" 
-		titleChange=""
-		titleNew=""
-		titleDelete=""
+		titleChange=uiLabelMap.BkEunivChange
+		titleNew=uiLabelMap.BkEunivNew
+		titleDelete=uiLabelMap.BkEunivDelete
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
 		contextmenu=false
 	/>

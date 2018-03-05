@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -284,6 +285,65 @@ public class StaffService {
 			param.put("staffId", staffId);
 			Map<String, Object> result_wp = dispatcher.runSync("getWorkProgress", param);
 			cv.put("workProgress", result_wp.get("workProgress"));
+			
+			param.clear();
+			
+			param.put("userLogin", userLogin);
+			param.put("parameters", FastMap.newInstance());
+			param.put("opts", new EntityFindOptions(true,
+					EntityFindOptions.TYPE_SCROLL_INSENSITIVE,
+					EntityFindOptions.CONCUR_READ_ONLY, false));
+			
+			Map<String, Object> result_rsd = dispatcher.runSync("JQGetListResearchDomainManagement", param);
+			EntityListIterator tmpList = (EntityListIterator) result_rsd.get("listIterator");
+			
+			List<GenericValue> listGenericValue = (List<GenericValue>)tmpList.getCompleteList();
+			tmpList.close();
+			
+			Map<String, Object> result_srsd = dispatcher.runSync("JQGetListStaffResearchDomainManagement", param);
+			tmpList = (EntityListIterator) result_srsd.get("listIterator");
+			List<GenericValue> list_srsd = (List<GenericValue>)tmpList.getCompleteList();
+			tmpList.close();
+			List<Map<String, Object>> srsd = new ArrayList<Map<String,Object>>();
+			for(GenericValue s1: listGenericValue) {
+				Collection<String> keys = s1.getAllKeys();
+				Map<String, Object> s = FastMap.newInstance();
+				for(String key: keys) {
+					s.put(key, s1.get(key));
+				}
+				for(GenericValue s2: list_srsd) {
+					if(s1.get("researchDomainId").equals(s2.get("researchDomainId"))) {
+						s.put("check", true);
+					} else {
+						s.put("check", false);
+					}
+				}
+				srsd.add(s);
+			}
+			
+			cv.put("researchDomain", srsd);
+			
+			
+
+			param.clear();
+			
+			param.put("userLogin", userLogin);
+			param.put("parameters", FastMap.newInstance());
+			param.put("opts", new EntityFindOptions(true,
+					EntityFindOptions.TYPE_SCROLL_INSENSITIVE,
+					EntityFindOptions.CONCUR_READ_ONLY, false));
+			
+			Map<String, Object> result_rss = dispatcher.runSync("JQGetListResearchSpecialityManagement", param);
+			EntityListIterator tmpListRSS = (EntityListIterator) result_rss.get("listIterator");
+			
+			List<GenericValue> listGenericValueRSS = (List<GenericValue>)tmpListRSS.getCompleteList();
+			tmpListRSS.close();
+			List<Map<String, Object>> RSS = new ArrayList<Map<String,Object>>();
+			if(listGenericValueRSS.size() > 0) {
+				RSS.add(listGenericValueRSS.get(0));				
+			}
+			cv.put("researchSpeciality", RSS);
+			
 			
 			retSucc.put("cv", cv);
 			

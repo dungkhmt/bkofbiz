@@ -2,8 +2,8 @@
 <style>
 .floating-box {
     display: inline-block;
-    width: 300px;
-    height: 175px;
+    width: 200px;
+    height: 50px;
     margin: 20px;
     border: 3px solid #73AD21;  
     cursor: pointer;
@@ -54,7 +54,7 @@
 
 /* The Close Button */
 .close {
-    color: white;
+    color: black;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -69,7 +69,7 @@
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: lightgreen;
     color: white;
 }
 
@@ -128,7 +128,7 @@
 	function openModalKV04() {
 		//alert("openModelKV01");
 		model = document.getElementById('model-kv04');
-		span = document.getElementsByClassName("close")[0];
+		span = document.getElementsByClassName("close")[1];
 		span.onclick = function(){
 			model.style.display = "none";
 		}	
@@ -167,7 +167,7 @@
 
 	function openModalISI() {
 		model = document.getElementById('model-isi');
-		span = document.getElementsByClassName("close")[1];
+		span = document.getElementsByClassName("close")[2];
 		span.onclick = function(){
 			model.style.display = "none";
 		}	
@@ -206,7 +206,7 @@
 
 	function openModalBomon010203() {
 		model = document.getElementById('model-bm-01-02-03');
-		span = document.getElementsByClassName("close")[2];
+		span = document.getElementsByClassName("close")[3];
 		span.onclick = function(){
 			model.style.display = "none";
 		}	

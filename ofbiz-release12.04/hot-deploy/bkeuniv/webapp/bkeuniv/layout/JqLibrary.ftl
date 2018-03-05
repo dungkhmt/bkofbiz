@@ -34,7 +34,7 @@
 				<#elseif a?is_string>
 					'${a?replace("\n|\t", "", "r")}',
 				<#else>
-					'${a}',
+					'${a?j_string}',
 				</#if>
 			</#list>
 		</#if>
@@ -54,7 +54,7 @@
 				<#elseif object[k]?is_string>
 					'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
 				<#else>
-					'${k}': '${object[k]}',
+					'${k}': '${object[k]?j_string}',
 				</#if>
 			</#list>
 		</#if>
