@@ -9,8 +9,8 @@
         <value xml:lang="vi">Thêm</value>
     </property>
     <property key="BkEunivSSESID">
-        <value xml:lang="en">StaffID</value>
-        <value xml:lang="vi">Mã nhân viên</value>
+        <value xml:lang="en">Staff</value>
+        <value xml:lang="vi">Nhân viên</value>
     </property>
     <property key="BkEunivSSESDescription">
         <value xml:lang="en">Description</value>
@@ -21,7 +21,7 @@
         <value xml:lang="vi">Số lượng</value>
     </property>
     <property key="BkEunivSSESConfirmDelete">
-        <value xml:lang="en">Are you sure to delete record id </value>
+        <value xml:lang="en">Are you sure to delete record id? </value>
         <value xml:lang="vi">Bạn có chắc chắn muốn xóa kinh nghiệm </value>
     </property>
     
