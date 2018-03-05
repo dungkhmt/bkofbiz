@@ -356,269 +356,65 @@
 					</#list>
 					</fo:table-row>
 				</#list>
-
-				<#--  <fo:table-row border-bottom-style="dotted" height="20pt" >
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${NatureScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell/>
-					
-					<fo:table-cell border-right-style = "solid">
-							<#if rd.check>
-								<fo:block font-size="14pt" font-family="wingdings">
-								&#254;
-								</fo:block>
-							<#else>
-								<fo:block font-size="14pt" font-family="wingdings">
-									&#111;
-								</fo:block>
-							</#if>
-					</fo:table-cell>
-
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${AgriculturalScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <#if rd.check>
-							<fo:block font-size="14pt" font-family="wingdings">
-							&#254;
-							</fo:block>
-						<#else>
-							<fo:block font-size="14pt" font-family="wingdings">
-								&#111;
-							</fo:block>
-						</#if>
-					</fo:table-cell>
-				</fo:table-row>  -->
-
-				<#--  <fo:table-row border-bottom-style="dotted" height="20pt" >
-					//STT
-					<fo:table-cell />
-						
-
-					<fo:table-cell>
-						<fo:block>${NatureScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-
-					<fo:table-cell />
-
-					<fo:table-cell >
-						<fo:block>${ScienceAndTechnology}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${MedicalScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>  
-				</fo:table-row>
-					
-				<fo:table-row border-bottom-style="dotted" height="20pt" >
-					<fo:table-cell />
-
-					<fo:table-cell >
-						<fo:block>${SocialScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${HumanScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${AgriculturalScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-				</fo:table-row>-->
-																										
+														
 				</fo:table-body>
 		  	</fo:table>
 		  
         </fo:table-cell>
       </fo:table-row>
-      
+      <#assign researchSpeciality = resultCV.cv.researchSpeciality />
       <fo:table-row>
        	<fo:table-cell height="20pt" display-align="center" border-left-style="solid" border-right-style= "solid" border-bottom-style="dotted" >
           
           //Full name
           <fo:table table-layout="fixed">
           	<fo:table-column column-width="proportional-column-width(1)"/>
-          	<fo:table-column column-width="proportional-column-width(9)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(15)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		        <fo:table-cell />
+          	<fo:table-column column-width="proportional-column-width(10)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
 
-		        <fo:table-cell >
-		          <fo:block>${CodeOfScience}</fo:block>
-		        </fo:table-cell>
-		        
-		       <fo:table-cell border-right-style="solid" />
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID1}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID0}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell  border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID3}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell   border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID0}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell  border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID2}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell />
-		        
-		         <fo:table-cell>
-		          <fo:block>${uiLabelMap.BkEunivName}: ${BkEunivName}</fo:block>
-		        </fo:table-cell>
-		        
-		      </fo:table-row>
-		    </fo:table-body>
-		  </fo:table>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						
+						<fo:table-column column-width="proportional-column-width(10)"/>
+						<fo:table-body>
+							<#list researchSpeciality as rs>
+								<#assign code = (rs.researchSpecialityCode)?split("", "r")>
+
+								<fo:table-row>
+									<fo:table-cell />
+
+									<fo:table-cell >
+										<fo:block>${CodeOfScience}</fo:block>
+									</fo:table-cell>
+
+									<fo:table-cell />
+									
+									<#list code as c>
+										<#if c!="">
+											<fo:table-cell padding="3" border-style="solid">
+												<fo:block text-align="center">${c}</fo:block>
+											</fo:table-cell>
+										</#if>
+									</#list>
+									
+									
+									<fo:table-cell />
+									
+									<fo:table-cell padding="1">
+										<fo:block>${uiLabelMap.BkEunivName}: ${rs.researchSpecialityName}</fo:block>
+									</fo:table-cell>
+									
+								</fo:table-row>
+
+							</#list>
+							
+						</fo:table-body>
+					</fo:table>
         </fo:table-cell>
       </fo:table-row>
       
@@ -630,19 +426,19 @@
           //Full name
           <fo:table table-layout="fixed">
           	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(30)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		        <fo:table-cell />
+						<fo:table-column column-width="proportional-column-width(30)"/>
+						<fo:table-body>
+							<fo:table-row>
+								//STT
+								<fo:table-cell />
 
-		        <fo:table-cell>
-		          <fo:block>${Additional}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
-		    </fo:table-body>
-		  </fo:table>
-        </fo:table-cell>
+								<fo:table-cell>
+									<fo:block>${Additional}</fo:block>
+								</fo:table-cell>
+							</fo:table-row>
+						</fo:table-body>
+					</fo:table>
+				</fo:table-cell>
       </fo:table-row>
       
       <fo:table-row>

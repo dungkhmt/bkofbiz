@@ -324,6 +324,27 @@ public class StaffService {
 			cv.put("researchDomain", srsd);
 			
 			
+
+			param.clear();
+			
+			param.put("userLogin", userLogin);
+			param.put("parameters", FastMap.newInstance());
+			param.put("opts", new EntityFindOptions(true,
+					EntityFindOptions.TYPE_SCROLL_INSENSITIVE,
+					EntityFindOptions.CONCUR_READ_ONLY, false));
+			
+			Map<String, Object> result_rss = dispatcher.runSync("JQGetListResearchSpecialityManagement", param);
+			EntityListIterator tmpListRSS = (EntityListIterator) result_rss.get("listIterator");
+			
+			List<GenericValue> listGenericValueRSS = (List<GenericValue>)tmpListRSS.getCompleteList();
+			tmpListRSS.close();
+			List<Map<String, Object>> RSS = new ArrayList<Map<String,Object>>();
+			if(listGenericValueRSS.size() > 0) {
+				RSS.add(listGenericValueRSS.get(0));				
+			}
+			cv.put("researchSpeciality", RSS);
+			
+			
 			retSucc.put("cv", cv);
 			
 		}catch(Exception ex){

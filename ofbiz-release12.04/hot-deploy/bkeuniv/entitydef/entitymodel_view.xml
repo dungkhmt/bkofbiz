@@ -82,6 +82,8 @@
 		<alias name="researchDomainName" entity-alias="RD"></alias>
 		<alias name="researchSubDomainName" entity-alias="RSD"></alias>
 		<alias name="researchSpecialityName" entity-alias="RS"></alias>
+		<alias name="researchSpecialityCode" entity-alias="RS"></alias>
+		
 		<alias name="staffName" entity-alias="S"></alias>
 		
 		<view-link rel-entity-alias="S" entity-alias="SRS" rel-optional="true">

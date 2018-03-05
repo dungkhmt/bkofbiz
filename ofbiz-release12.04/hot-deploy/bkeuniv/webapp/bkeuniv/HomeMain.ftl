@@ -19,11 +19,11 @@
 <script> <!--doan nay de ve bieu do cot len canvas-->
 
 var barData = {
-	labels : [<#list papers.years as y>'${y}'</#list>],
+	labels : [<#list papers.years as y>'${y}',</#list>],
 	datasets : [
 		{
 			fillColor : "#48A497", 
-			data : [<#list papers.count as c>'${c}'</#list>]
+			data : [<#list papers.count as c>'${c}',</#list>]
 		}		
 		]
 	}
