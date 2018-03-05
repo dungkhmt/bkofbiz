@@ -125,6 +125,45 @@
 				})
 	}
 
+	function openModalKV04() {
+		//alert("openModelKV01");
+		model = document.getElementById('model-kv04');
+		span = document.getElementsByClassName("close")[0];
+		span.onclick = function(){
+			model.style.display = "none";
+		}	
+		
+		$.ajax({
+					url: "/bkeuniv/control/get-academic-years-faculties",
+					type: 'POST',
+					data: {
+						"universityId": "HUST"
+					},
+					success:function(rs){
+						console.log(rs);
+						var select_years = document.getElementById("reportyear-kv04");
+						var select_faculty = document.getElementById("facultyId-kv04");
+						
+						var lst_years = rs.years;
+						var lst_faculties = rs.faculties;
+						
+						for(i = 0; i < lst_years.length; i++){	
+							var o = document.createElement("option");
+							o.text = lst_years[i].name;
+							o.value = lst_years[i].id;
+							select_years.appendChild(o);
+						}
+						for(i = 0; i < lst_faculties.length; i++){
+							var o = document.createElement("option");
+							o.text = lst_faculties[i].name;
+							o.value = lst_faculties[i].id;
+							select_faculty.appendChild(o);
+						}
+						model.style.display = "block";
+
+					}
+				})
+	}
 
 	function openModalISI() {
 		model = document.getElementById('model-isi');
@@ -245,6 +284,8 @@
 	<div class="floating-box" onClick='openModalKV01()'>EXPORT KV01</div>
 	<div class="floating-box" onClick='openModalISI()'>EXPORT ISI</div>
 	<div class="floating-box" onClick='openModalBomon010203()'>EXPORT Bo mon 01-02-03</div>
+	<div class="floating-box" onClick='openModalKV04()'>EXPORT KV04</div>
+	
 	
 	<div id="model-kv01" class="modal-export-excel">
 	  <div class="modal-content">
@@ -261,6 +302,25 @@
 			 </select>
 			         
 			 <input type="submit" value="export KV01"/>
+			</form>
+	    </div>
+	  </div>
+	</div>
+	<div id="model-kv04" class="modal-export-excel">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <span class="close">&times;</span>
+	      <h2>Export KV04</h2>
+	    </div>
+	    
+	    <div class="modal-body">
+	     
+	       <form action="<@ofbizUrl>export-excel-kv04</@ofbizUrl>" method="post">
+	         <select id="reportyear-kv04" name="reportyear-kv04" width="50px"></select><br>
+			 <select id="facultyId-kv04" name="facultyId-kv04" width="100px">
+			 </select>
+			         
+			 <input type="submit" value="export KV04"/>
 			</form>
 	    </div>
 	  </div>

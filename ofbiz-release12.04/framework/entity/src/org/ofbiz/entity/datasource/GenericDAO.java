@@ -91,6 +91,34 @@ public class GenericDAO {
         }
         return newGenericDAO;
     }
+    
+    public long selectCount(String query, EntityFindOptions findOptions) throws GenericEntityException {
+    	SQLProcessor sqlP = new SQLProcessor(helperInfo);
+    	StringBuilder sqlBuffer = new StringBuilder("SELECT COUNT(1) FROM (");
+    	sqlBuffer.append(query);
+    	sqlBuffer.append(") AS TMP_TABLE");
+    	if(findOptions != null){
+	        sqlP.prepareStatement(sqlBuffer.toString(), findOptions.getSpecifyTypeAndConcur(), findOptions.getResultSetType(),
+	                findOptions.getResultSetConcurrency(), findOptions.getFetchSize(), findOptions.getMaxRows());
+    	}else{
+    		sqlP.prepareStatement(sqlBuffer.toString(), true, findOptions.TYPE_FORWARD_ONLY,
+	                findOptions.CONCUR_READ_ONLY, 1, 1);
+    	}
+        try {
+            sqlP.executeQuery();
+            long count = 0;
+            ResultSet resultSet = sqlP.getResultSet();
+            if (resultSet.next()) {
+                count = resultSet.getLong(1);
+            }
+            return count;
+
+        } catch (SQLException e) {
+            throw new GenericDataSourceException("Error getting count value", e);
+        } finally {
+            sqlP.close();
+        }
+    }
 
     public GenericDAO(GenericHelperInfo helperInfo) {
         this.helperInfo = helperInfo;
@@ -791,6 +819,7 @@ public class GenericDAO {
         if (Debug.timingOn()) {
             queryStartTime = System.currentTimeMillis();
         }
+        String tmp = sqlP.getPreparedStatement().toString();
         sqlP.executeQuery();
         if (Debug.timingOn()) {
             long queryEndTime = System.currentTimeMillis();
@@ -799,7 +828,9 @@ public class GenericDAO {
                 Debug.logTiming("Ran query in " + queryTotalTime + " milli-seconds: " + " EntityName: " + modelEntity.getEntityName() + " Sql: " + sql + " where clause:" + whereEntityConditionParams, module);
             }
         }
-        return new EntityListIterator(sqlP, modelEntity, selectFields, modelFieldTypeReader, this, whereEntityCondition, havingEntityCondition, findOptions.getDistinct());
+        EntityListIterator iterator = new EntityListIterator(sqlP, modelEntity, selectFields, modelFieldTypeReader, this, whereEntityCondition, havingEntityCondition, findOptions.getDistinct());
+        iterator.setQuery(tmp);
+        return iterator;
     }
 
     @Deprecated

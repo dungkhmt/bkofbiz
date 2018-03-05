@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.patentstaff;
+package org.ofbiz.bkeuniv.patentstaff;
 
 import java.util.ArrayList;
 import java.util.Arrays;

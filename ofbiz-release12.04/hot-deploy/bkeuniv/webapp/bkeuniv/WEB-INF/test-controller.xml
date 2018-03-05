@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    
+
+    <description>BkEuniv Test controller</description>
+	
+    <!-- Events to run on every request before security (chains exempt) -->
+    <!--
+    <preprocessor>
+    </preprocessor>
+    -->
+    <!-- Events to run on every request after all other processing (chains exempt) -->
+    <!--
+    <postprocessor>
+        <event name="test" type="java" path="org.ofbiz.webapp.event.TestEvent" invoke="test"/>
+    </postprocessor>
+    -->
+
+    <!-- Request Mappings -->
+    <request-map uri="material-ui">
+	    <security https="true" auth="false"/>
+	    <response name="success" type="view" value="material-ui"/>
+    </request-map>
+    
+    <!-- View Mappings -->
+    <view-map name="material-ui" type="screen" page="component://bkeuniv/widget/BkEunivScreensTest.xml#material-ui"/>
+    
+</site-conf>

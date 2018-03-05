@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.paperdeclaration;
+package org.ofbiz.bkeuniv.paperdeclaration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,7 +38,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import src.org.ofbiz.utils.BKEunivUtils;
+import org.ofbiz.utils.BKEunivUtils;
 
 import java.util.List;
 
@@ -90,6 +90,41 @@ public class PaperDeclarationService {
 		try {
 
 			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV01(delegator, year, facultyId);
+			
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelKV04(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String)request.getParameter("reportyear-kv04");
+		String facultyId = (String)request.getParameter("facultyId-kv04");
+		Debug.log(module + "::exportExcelKV04, academic year = " + year);
+		
+		String filename = "KV04";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV04(delegator, year, facultyId);
 			
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
@@ -612,13 +647,15 @@ public class PaperDeclarationService {
 	public static Map<String, Object> getPapersOfStaff(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
-		// String staffId = (String)context.get("authorStaffId");
+		String authoStaffId = (String)context.get("authorStaffId");
 
 		Map<String, Object> userLogin = (Map<String, Object>) context
 				.get("userLogin");
 		// String userLoginId =
 		// (String)context.get("userId");//(String)userLogin.get("userLoginId");
-		String staffId = (String) userLogin.get("userLoginId");
+		String staffId = authoStaffId;
+		if(staffId == null)
+			staffId = (String) userLogin.get("userLoginId");
 
 		Debug.log(module + "::getPapersOfStaff, authorStaffId = " + staffId);
 		Delegator delegator = ctx.getDelegator();
@@ -669,7 +706,8 @@ public class PaperDeclarationService {
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
-			List<GenericValue> papers = delegator.findList("PapersStaffView",
+			//List<GenericValue> papers = delegator.findList("PapersStaffView",
+			List<GenericValue> papers = delegator.findList("PaperView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			for (GenericValue gv : papers) {
@@ -824,8 +862,8 @@ public class PaperDeclarationService {
 			Map<String, Object> rs = dispatcher.runSync(
 					"createStaffPaperDeclaration", input);
 
-			List<GenericValue> papers = FastList.newInstance();
-			papers.add(p);
+			//List<GenericValue> papers = FastList.newInstance();
+			//papers.add(p);
 			retSucc.put("papers", p);
 			retSucc.put("message", "Successfully");
 		} catch (Exception ex) {
@@ -870,10 +908,20 @@ public class PaperDeclarationService {
 			academicYearId = (String) (academicYearIds.get(0));
 
 		Debug.log(module + "::updatePaper, authorStaffId = " + staffId
-				+ ", paperId = " + paperId);
+				+ ", paperId = " + paperId + ", paperCategoryId = " + paperCategoryId + ", month = " + month + ", year = " + year);
 		Delegator delegator = ctx.getDelegator();
 
 		try {
+			List<GenericValue> cat = delegator.findList("PaperCategory",
+					null, null, null, null, false);
+			String paperCategoryName = "";
+			for(GenericValue c: cat){
+				String pc = (String)c.get("paperCategoryId"); 
+				if(pc.equals(paperCategoryId)){
+					paperCategoryName = (String)c.get("paperCategoryName");
+				}
+			}
+			
 			List<GenericValue> papers = delegator.findList("PaperDeclaration",
 					EntityCondition.makeCondition(EntityCondition
 							.makeCondition("paperId", EntityOperator.EQUALS,
@@ -883,6 +931,7 @@ public class PaperDeclarationService {
 						+ gv.get("paperName") + ", new Name = " + paperName + ", category = " + paperCategoryId);
 			}
 			GenericValue p = papers.get(0);
+			
 			if(paperName != null && !paperName.equals(""))
 				p.put("paperName", paperName);
 			if(paperCategoryId != null && !paperCategoryId.equals(""))
@@ -906,12 +955,38 @@ public class PaperDeclarationService {
 			if(academicYearId != null && !academicYearId.equals(""))
 				p.put("academicYearId", academicYearId);
 
+			
+			
 			delegator.store(p);
 
-			retSucc.put("papers", p);
+			/*
+			Map<String, Object> ret_paper = FastMap.newInstance();
+			ret_paper.put("paperName", p.get("paperName"));
+			ret_paper.put("paperCategoryId", p.get("paperCategoryId"));
+			ret_paper.put("journalConferenceName", p.get("journalConferenceName"));
+			ret_paper.put("volumn", p.get("volumn"));
+			ret_paper.put("year", p.get("year"));
+			ret_paper.put("month", p.get("month"));
+			ret_paper.put("ISSN", p.get("ISSN"));
+			ret_paper.put("authors", p.get("authors"));
+			ret_paper.put("academicYearId", p.get("academicYearId"));
+'			ret_paper.put("paperCategoryName", paperCategoryName);
+			*/
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId", EntityOperator.EQUALS,p.get("paperId")));
+			List<GenericValue> ret_paper = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds),
+					null, null, null, false
+					);
+			
+			
+			GenericValue pv = ret_paper.get(0);
+			retSucc.put("papers", pv);
+			
 			retSucc.put("message", "Update Row Success");
 
-			Debug.log(module + "::updatePaper FINISHED");
+			Debug.log(module + "::updatePaper FINISHED, journal-conference = " + (String)pv.get("categoryName"));
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

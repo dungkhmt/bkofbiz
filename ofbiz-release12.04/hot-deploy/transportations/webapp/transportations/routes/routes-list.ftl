@@ -32,7 +32,7 @@ Route management
         <tr>
         	<td>
         	<div class="button-bar">
-          	  <input type="submit" value="${uiLearningMap.CreateARoute}"/>
+          	  <input type="submit" value="Them moi route"/>
        		 </div>
        		 </td>
         </tr>

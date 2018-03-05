@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.common;
+package org.ofbiz.bkeuniv.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

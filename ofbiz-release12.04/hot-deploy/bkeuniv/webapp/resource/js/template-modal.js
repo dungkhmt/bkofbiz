@@ -3,8 +3,16 @@ var modal = function (id) {
 }
 
 modal.prototype._getDate = function (selector, format) {
-    const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
-    return $.datepicker.formatDate(format, new Date(year, month - 1, day))
+	var value = $([this.id,selector].join(" ")).datepicker( "getDate" );
+	console.log(value, typeof value)
+	if(isNaN(value.getTime())){
+		console.log(value, typeof value)
+		return ;
+	} else {
+		return (new Date(value)).getTime();
+	}
+    // const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
+    // return $.datepicker.formatDate(format, new Date(year, month - 1, day))
 }
 
 modal.prototype._getText = function (selector) {
@@ -12,15 +20,21 @@ modal.prototype._getText = function (selector) {
 }
 
 modal.prototype._getSelect = function (selector) {
-    return $([this.id,selector].join(" ")).val();
+	var _data_select = ($([this.id,selector].join(" ")).val());
+	
+	if(typeof _data_select == "string") {
+		_data_select = [_data_select];
+	}
+	
+    return _data_select;
 }
 
-modal.prototype._date = function(value, edit, id){
+modal.prototype._date = function(value, edit, id, defaultValue=""){
 	var _id = "#"+id;
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled ") +
-					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value||Date.now())) + '"'+
+					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?defaultValue:new Date(value))) + '"'+
 					'placeholder="dd/mm/yyyy"'+
 					'>' +
     			'<script type="text/javascript">'+
@@ -63,10 +77,82 @@ modal.prototype._select = function(value, edit, id, option) {
 	return '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'>'+option.join("")+'</select></div>'+script;
 }
 
+modal.prototype._select_server_side = function(value, edit, id, option, column) {
+	var _id = "#"+id;
+	var maxItem = option.maxItem||1;
+	var render;
+	if(typeof option.render === "function") {
+		render =  option.render.toString();
+	} else {
+		render = 'function(r){return {id: r.'+option.value+', text: r.'+option.name+'}}';
+	}
+
+	var selected = "";
+	if(!!value) {
+		selected = 
+		'$.ajax({'+
+			'"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement",'+
+			'"method": "POST",'+
+			'"content-type": "application/json",'+
+			'"data": {'+
+				'"filter": \'{"field": "'+column.value+'", "value": "'+value+'", "operation": \"EQUAL\" }\','+
+				'"pagesize": "-1",'+
+			'},'+
+			'success: function(r) {'+
+				'var data = r.results.map('+render+');'+
+				'var options = data.map(function(d) { return new Option(d.text, d.id, true, true); });'+
+				'$("'+[this.id, _id].join(" ")+'").append(options).trigger("change");'+
+				'$("'+[this.id, _id].join(" ")+'").trigger({'+
+					'type: "select2:select",'+
+					'params: {'+
+						'data: data'+
+					'}'+
+				'});'+
+			'}'+
+		'});';
+
+	}
+
+	var script = '<script type="text/javascript">'+
+					'$(function () {'+
+						'$("'+[this.id, _id].join(" ")+'").select2({'+
+							'language: "vi",'+
+							'ajax: {' +
+								'url: "'+option.url+'",'+
+								'delay: 250,'+
+								'cache: true,'+
+								'data: function (params) {'+
+									'var query = {'+
+										'q: params.term||"",'+
+										'pagenum:0,'+
+										'pagesize:10,'+
+									'};'+
+									'return query;'+
+								'},'+
+								'processResults: function (data) {'+
+								'return {'+
+									'results: data.results.map('+render+'),'+
+									'"pagination": {'+
+										'"more": true,'+
+									'},'+
+								'};'+
+								'},'+
+							'},'+
+							(maxItem>1?'maximumSelectionLength: ' + maxItem:"")+
+						'});'+
+						selected+
+					'});'+
+				'</script>';
+	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
+	console.log(a)
+	return a;
+}
+
 modal.prototype.setting = function(option) {
 	this.option = option;
 	this._data = option.data;
 	this.columns = option.columns;
+	this._optionAjax = option.optionAjax||{};
 	this._action = option.action;
 	for(var i = 0, len = this.columns.length; i < len; ++i) {
 		var column = this.columns[i];
@@ -84,7 +170,10 @@ modal.prototype.setting = function(option) {
 		        break;
 		    case "select":
 		    	el = this._select(column._data, column.edit, column.id, column.option);
-		    	break;
+				break;
+			case "select_server_side":
+		    	el = this._select_server_side(column._data, column.edit, column.id, column.option, column);
+				break;
 		    case "custom":
 		    	el = column.el;
 		    	break;
@@ -105,25 +194,29 @@ modal.prototype.setting = function(option) {
 modal.prototype.action = function() {
 	var _ = this;
 	openLoader();
-	$.ajax({
+	var option = {
 	    url: _._action.url,
 	    type: 'post',
-	    data: _.data(),
 	    datatype:"json",
-	    success: function(data) {
-	    	if(!!_._action.update && typeof _._action.update === "function") {
-	    		_._action.update(data)
-	    	} else {
-	    		_._updateDefault(data[_._action.fieldDataResult], data.message);
-	    	}
-	    }, error: function(err) {
-			setTimeout(function() {
-				closeLoader();
-				alertify.error(JSON.stringify(err));
-			}, 500);
-			console.log(err);
+	};
+
+	option = Object.assign({}, option, this._optionAjax);
+	option.data = Object.assign({},_.data(), this._optionAjax.data||{})
+	option.success = function(data) {
+		if(!!_._action.update && typeof _._action.update === "function") {
+			_._action.update(data)
+		} else {
+			_._updateDefault(data[_._action.fieldDataResult], data.message);
 		}
-	})
+	};
+	option.error =  function(err) {
+		setTimeout(function() {
+			closeLoader();
+			alertify.error(JSON.stringify(err));
+		}, 500);
+		console.log(err);
+	}
+	$.ajax(option);
 }
 	
 modal.prototype._updateDefault = function(data, message) {
@@ -141,12 +234,15 @@ modal.prototype._updateDefault = function(data, message) {
 		var element = table.rows().indexes().data()[elementIndex];
 		
 		if(!!element&&(typeof element == "object")) {
-			element = Object.assign(element, data)
-			// Object.keys(element).forEach(function(key, index){
-			// 		element[key] = data[key];
-			// })
+			//element = Object.assign(data, element)
+			 Object.keys(element).forEach(function(key, index){
+				 if(data.hasOwnProperty(key)) {
+					 element[key] = data[key]
+				 }
+			 		
+			 })
 			
-			table.row(elementIndex).data(element);
+			table.row(elementIndex).data(element).draw();
 			$([_.id, "#modal-template"].join(" ")).modal('hide');
 
 	    	setTimeout(function() {
@@ -231,7 +327,10 @@ modal.prototype.data = function() {
 			        break;
 			    case "select":
 			    	column._data = _._getSelect("#"+column.id);
-			    	break;
+					break;
+				case "select_server_side":
+			    	column._data = _._getSelect("#"+column.id);
+					break;
 			    case "custom":
 			    	if(typeof column.getData == "function") {
 			    		column._data = column.getData("#"+column.id);

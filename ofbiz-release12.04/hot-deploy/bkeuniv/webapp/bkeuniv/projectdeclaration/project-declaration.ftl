@@ -253,10 +253,12 @@
 
 <div class="body">
 	<#assign columns=[
+		<#-- 
 		{
 			"name": projectDeclarationUiLabelMap.ProjectDeclarationId?j_string,
 			"data": "projectDeclarationId"
 		},
+		 -->
 		{
 			"name": projectDeclarationUiLabelMap.ProjectCategoryId?j_string,
 			"data": "projectCategoryName"
@@ -286,9 +288,24 @@
 			"data": "projectParticipationRoleName"
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ProjectTotalHour?j_string,
+			"data": "totalhour"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.ProjectHourOfStaff?j_string,
+			"data": "hourOfStaff"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.ProjectAcademicYear?j_string,
+			"data": "academicYearName"
+		}
+		<#-- 
+		,
+		{
 			"name": projectDeclarationUiLabelMap.ApproverStaffId?j_string,
 			"data": "staffName"
 		}
+		 -->
 	] />
 	
 	<#assign fields=[
@@ -304,10 +321,24 @@
 		"declarationStaffId",
 		"projectParticipationRoleId",
 		"projectParticipationRoleName",
+		"hourOfStaff",
+		"totalhour",
 		"approverStaffId",
+		"academicYearId",
+		"academicYearName",
+		"sponsor",
+		"budget",
 		"staffName"
 	] />
 	
+	<#assign sourceAcademicYear = [] />
+	<#list resultAcademicYears.academicYears as y>
+		<#if y?has_content>
+             <#assign opy = { "name": y.academicYearName?j_string ,"value": y.academicYearId?j_string } />
+						<#assign sourceAcademicYear = sourceAcademicYear + [opy] />
+		</#if>
+	</#list>
+
 	<#assign listProjectCategory = [] />
 	<#list projectCategory.projectCategorys as project>
 		<#if project?has_content>
@@ -343,6 +374,15 @@
 			}
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ProjectAcademicYear?j_string,
+			"value": "academicYearId",
+			"type": "select",
+			"option": {
+				"source": sourceAcademicYear,
+				"maxItem": 1
+			}
+		},
+		{
 			"name": projectDeclarationUiLabelMap.ProjectName?j_string,
 			"value": "projectName"
 		},
@@ -379,9 +419,20 @@
 			}
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ProjectTotalHour?j_string,
+			"value": "totalhour"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.ProjectHourOfStaff?j_string,
+			"value": "hourOfStaff"
+		}
+		<#-- 
+		,
+		{
 			"name": projectDeclarationUiLabelMap.ApproverStaffId?j_string,
 			"value": "approverStaffId"
 		}
+		 -->
 	] />
 	
 	<#assign columnsNew=[
@@ -395,6 +446,15 @@
 			}
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ProjectAcademicYear?j_string,
+			"value": "academicYearId",
+			"type": "select",
+			"option": {
+				"source": sourceAcademicYear,
+				"maxItem": 1
+			}
+		},
+		{
 			"name": projectDeclarationUiLabelMap.ProjectName?j_string,
 			"value": "projectName"
 		},
@@ -430,6 +490,16 @@
 				"maxItem": 1
 			}
 		},
+		{
+			"name": projectDeclarationUiLabelMap.ProjectTotalHour?j_string,
+			"value": "totalhour"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.ProjectHourOfStaff?j_string,
+			"value": "hourOfStaff"
+		}
+		<#-- 
+		,
 		{
 			"name": projectDeclarationUiLabelMap.ApproverStaffId?j_string,
 			"value": "approverStaffId",
@@ -453,6 +523,7 @@
 				return getDataFile(id);
 			}'
 		}
+		 -->
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />

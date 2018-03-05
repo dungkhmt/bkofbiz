@@ -65,9 +65,28 @@ public class EntityListIterator implements ListIterator<GenericValue> {
 
     private boolean haveShowHasNextWarning = false;
     private Integer resultSize = null;
+    
+    private String query;
 
     public EntityListIterator(SQLProcessor sqlp, ModelEntity modelEntity, List<ModelField> selectFields, ModelFieldTypeReader modelFieldTypeReader) {
         this(sqlp, modelEntity, selectFields, modelFieldTypeReader, null, null, null, false);
+    }
+    
+    public void setQuery(String query) {
+    	this.query = query;
+    }
+    
+    public int getResultsTotalSize() throws GenericEntityException {
+        if (genericDAO != null) {
+            if (resultSize == null) {
+                resultSize = (int) genericDAO.selectCount(query, null);
+            }
+            return resultSize;
+        } else if (this.last()) {
+            return this.currentIndex();
+        } else {
+            return 0;
+        }
     }
 
     public EntityListIterator(SQLProcessor sqlp, ModelEntity modelEntity, List<ModelField> selectFields, ModelFieldTypeReader modelFieldTypeReader, GenericDAO genericDAO, EntityCondition whereCondition, EntityCondition havingCondition, boolean distinctQuery) {

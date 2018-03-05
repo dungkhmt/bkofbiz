@@ -1,4 +1,4 @@
-<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/jqServerSide.ftl"/>
 <body>
 
 <script>
@@ -265,7 +265,7 @@
 	
 	<@jqDataTable
 		id="jqDataTable"
-		urlData="/bkeuniv/control/get-staffs" 
+		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs" 
 		columns=columns 
 		dataFields=fields
 		sizeTable=sizeTable

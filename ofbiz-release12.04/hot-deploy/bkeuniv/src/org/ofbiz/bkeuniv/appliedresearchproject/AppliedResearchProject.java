@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.appliedresearchproject;
+package org.ofbiz.bkeuniv.appliedresearchproject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +22,36 @@ import org.ofbiz.service.ServiceUtil;
 
 public class AppliedResearchProject {
 	public final static String module = AppliedResearchProject.class.getName();
+	
+	public static Map<String, Object> getAppliedProjects(DispatchContext ctx, Map<String, ? extends Object> context){
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		
+		String staffId = (String) context.get("staffId");
+		if(staffId == null){
+			Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+			staffId = (String)userLogin.get("userLoginId");
+		}
+		try{
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+				List<GenericValue> list = delegator.findList("AppliedResearchProject", 
+						EntityCondition.makeCondition(conditions), 
+						null, null, 
+						null, false);
+				
+				Map<String, Object> result = ServiceUtil.returnSuccess();
+				result.put("projects", list);
+				
+				return result;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+	}
+
 	public static Map<String, Object> getProject(DispatchContext ctx, Map<String, ? extends Object> context){
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();

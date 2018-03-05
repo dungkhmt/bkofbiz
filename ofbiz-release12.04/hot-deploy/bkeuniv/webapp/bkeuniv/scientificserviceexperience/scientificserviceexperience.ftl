@@ -1,56 +1,69 @@
-<head>
-	<!-- import DataTable -->
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
-	
-	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/dataTables.bootstrap.min.js"></script>
-	
-	
-	
-	<!-- import css component -->
-	<link rel="stylesheet" href="/resource/bkeuniv/css/ssEmanagement.css">
-		
-
-</head>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 <body>
-<script>
-var SID='${sseLabels.BkEunivSSESID}';
-var Description='${sseLabels.BkEunivSSESDescription}';
-var Quantity='${sseLabels.BkEunivSSESQuantity}';
-var edit='${uiLabelMap.BkEunivEdit}'
-var remove='${uiLabelMap.BkEunivRemove}'
-var addCaption='${uiLabelMap.BkEunivAddRow}'
-var updateCaption='${uiLabelMap.BkEunivUpdate}'
-var failStr='${uiLabelMap.BkEunivFail}'
-var deleteconfirm='${sseLabels.BkEunivSSESConfirmDelete}'
-var addTitle='${sseLabels.BkEunivSSESAddTitle}';
-var updateTitle='${sseLabels.BkEunivSSESUpdateTitle}';
-</script>
-<script src="/resource/bkeuniv/js/ssEManagement.js"></script>
 <div class="body">
-<div class="scientificserviceexperience-management">
-		<div class="title">
-			<a href="#" class="title-hyperlink">
-				${sseLabels.BkEunivEMSATA}
-			</a>
-		</div>
-		<div id="button-add-scientificserviceexperience" onClick="newScientificServiceExperience()">
-			${sseLabels.BkEunivAdd}
-		</div>
-		
-		<table id="table-scientificserviceexperience-management" class="table table-striped table-bordered">
-			<thead>
-				<td>ID</td>
-				<td>${sseLabels.BkEunivSSESID}</td>
-				<td>${sseLabels.BkEunivSSESDescription}</td>
-				<td>${sseLabels.BkEunivSSESQuantity}</td>
-				
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-	</div></div>
-<div class="loader hidden-loading"></div>
-<div id="add-scientificserviceexperience"></div>
-<div id="change-scientificserviceexperience"></div>
+	<#assign columns=[
+		{
+			"name": sseLabels.BkEunivSSESID?j_string,
+			"data": "staffName"
+		},
+		{
+			"name": sseLabels.BkEunivSSESDescription?j_string,
+			"data": "description"
+		},
+		{
+			"name": sseLabels.BkEunivSSESQuantity?j_string,
+			"data": "quantity"
+		}
+	] />
+	
+	<#assign fields=[
+		"scientificServiceExperienceId",
+		"staffId",
+		"staffName",
+		"description",
+		"quantity"
+	] />
+	
+	<#assign columnsChange=[
+		{
+			"name": sseLabels.BkEunivSSESDescription?j_string,
+			"value": "description"
+		},
+		{
+			"name": sseLabels.BkEunivSSESQuantity?j_string,
+			"value": "quantity"
+		}
+	] />
+	
+	<#assign columnsNew=[
+		{
+			"name": sseLabels.BkEunivSSESDescription?j_string,
+			"value": "description"
+		},
+		{
+			"name": sseLabels.BkEunivSSESQuantity?j_string,
+			"value": "quantity"
+		}
+	] />
+	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	
+	<@jqDataTable
+		urlData="/bkeuniv/control/get-scientific-service-experience" 
+		columns=columns 
+		dataFields=fields 
+		sizeTable=sizeTable
+		columnsChange=columnsChange 
+		columnsNew=columnsNew 
+		urlUpdate="/bkeuniv/control/update-scientific-service-experience" 
+		urlAdd="/bkeuniv/control/create-scientific-service-experience" 
+		urlDelete="/bkeuniv/control/delete-scientific-service-experience" 
+		keysId=["scientificServiceExperienceId"] 
+		fieldDataResult = "scientificServiceExperiences" 
+		titleChange=sseLabels.BkEunivSSESUpdateTitle?j_string
+		titleNew=sseLabels.BkEunivSSESAddTitle?j_string
+		titleDelete=sseLabels.BkEunivSSESConfirmDelete?j_string
+		jqTitle=sseLabels.BkEunivEMSATA?j_string
+		contextmenu=true
+	/>
+</div>

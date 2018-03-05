@@ -21,6 +21,10 @@
         <value xml:lang="zh">不允许你浏览这个页面。</value>
     </property>
     
+    <property key="SecurityGroup">
+        <value xml:lang="en">Security Group</value>
+        <value xml:lang="vi">Nhóm phân quyền</value>
+    </property>
     
     <property key="BkEunivHomePage">
         <value xml:lang="en">Home Page</value>
@@ -54,6 +58,10 @@
     <property key="BkEunivStore">
         <value xml:lang="en">Store</value>
         <value xml:lang="vi">Lưu</value>
+    </property>
+    <property key="BkEunivConfirm">
+        <value xml:lang="en">Confirm</value>
+        <value xml:lang="vi">Xác nhận</value>
     </property>
     <property key="BkEunivCancel">
         <value xml:lang="en">Cancel</value>

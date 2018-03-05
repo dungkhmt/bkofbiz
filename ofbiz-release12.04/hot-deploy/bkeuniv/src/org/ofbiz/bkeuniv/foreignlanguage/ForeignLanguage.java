@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.foreignlanguage;
+package org.ofbiz.bkeuniv.foreignlanguage;
 
 public class ForeignLanguage {
 

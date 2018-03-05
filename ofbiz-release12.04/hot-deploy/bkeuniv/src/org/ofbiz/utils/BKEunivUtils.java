@@ -1,10 +1,11 @@
-package src.org.ofbiz.utils;
+package org.ofbiz.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -185,6 +187,45 @@ public class BKEunivUtils {
 
 	}
 
+	@SuppressWarnings({ "unchecked" })
+	public static void getListStaffsOfDepartmentJSON(
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String departmentId = (String)request.getParameter("departmentId");
+		Debug.log(module + "::getListStaffsOfDepartmentJSON, departmentId = " + departmentId);
+		
+		try {
+
+			List<GenericValue> staffs = getListStaffsOfDepartment(delegator, departmentId);
+			
+			String rs = "{\"staffs\":[";
+			for (int i = 0; i < staffs.size(); i++) {
+				GenericValue st = staffs.get(i);
+				rs += "{\"id\":\"" + st.get("staffId")
+						+ "\",\"name\":\"" + st.get("staffName") + "\"}";
+				if (i < staffs.size() - 1)
+					rs += ",";
+
+			}
+			rs += "]";
+			rs += "}";
+			
+			Debug.log(module + "::getListStaffsOfDepartmentJSON, json = " + rs);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+	}
+
 	public static JSONObject parseJSONObject(Map<String, Object> map) {
 		JSONObject result = new JSONObject();
 		Set<String> keys = map.keySet();
@@ -266,6 +307,27 @@ public class BKEunivUtils {
 			response.setStatus(500);
 			Debug.logError(e, module);
 		}
+	}
+	
+	public static Map<String, Object> buildObject(GenericValue object) {
+		Set<String> keys = object.keySet();
+		
+		Map<String, Object> result = FastMap.newInstance();
+		try {
+			for(String key: keys) {
+				System.out.println("Debug 22: ..." + key);
+				Object element = object.get(key);
+				if(element instanceof Date) {
+					result.put(key, ((Date) element).getTime());
+					continue;
+				}
+				result.put(key, element);
+			}
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+		}
+		
+		return result;
 	}
 
 }

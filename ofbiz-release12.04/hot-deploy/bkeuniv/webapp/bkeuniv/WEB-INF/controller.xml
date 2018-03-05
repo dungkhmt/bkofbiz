@@ -8,6 +8,8 @@
     <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/dpt-controller.xml"/>
     <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/faculty-controller.xml"/>
 	<include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/controller_permission.xml"/>
+	<include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/test-controller.xml"/>
+	<include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/project-submission-controller.xml"/>
 
     <description>BkEuniv Component Site Configuration File</description>
 	
@@ -22,6 +24,13 @@
         <event name="test" type="java" path="org.ofbiz.webapp.event.TestEvent" invoke="test"/>
     </postprocessor>
     -->
+
+	<request-map uri="jqxGeneralServicer">
+		<event type="java" invoke="jqxEventProcessor" path="org.ofbiz.bkeuniv.events.JqxEvents"
+			global-transaction="false" />
+		<response name="success" type="none" />
+		<response name="error" type="none" />
+	</request-map>
 
     <!-- Request Mappings -->
     <request-map uri="main">
@@ -149,7 +158,7 @@
 		<!-- 
 		<event type="service" invoke="createEducationProgress"></event>
 		 -->
-		<event type="java" invoke="createEducationProgressRequestResponse" path="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress"></event>
+		<event type="java" invoke="createEducationProgressRequestResponse" path="org.ofbiz.bkeuniv.educationprogress.EducationProgress"></event>
 		 
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
@@ -171,7 +180,7 @@
 	
 	<request-map uri="setSessionLocale">
         <security https="true" auth="false"/>
-        <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
+        <event type="java" path="org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
         <response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
     </request-map>
@@ -211,9 +220,9 @@
     	<response name="success" type="view" value="view-applied-project-declaration-staff"></response>
     </request-map>
     
-    <request-map uri="get-scientificserviceexperience">
+    <request-map uri="get-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="getscientificserviceexperience"></event>
+		<event type="service" invoke="getScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -246,9 +255,9 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
-	<request-map uri="create-scientificserviceexperience">
+	<request-map uri="create-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="createscientificserviceexperience"></event>
+		<event type="service" invoke="createScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -275,9 +284,9 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
-	<request-map uri="update-scientificserviceexperience">
+	<request-map uri="update-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="updatescientificserviceexperience"></event>
+		<event type="service" invoke="updateScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -305,14 +314,14 @@
 	
 	<request-map uri="setSessionLocale">
         <security https="true" auth="false"/>
-        <event type="java" path="src.org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
+        <event type="java" path="org.ofbiz.bkeuniv.common.Events" invoke="setSessionLocale"/>
         <response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
     </request-map>
 	
-	<request-map uri="delete-scientificserviceexperience">
+	<request-map uri="delete-scientific-service-experience">
 		<security https="false" auth="false"/>
-		<event type="service" invoke="deletescientificserviceexperience"></event>
+		<event type="service" invoke="deleteScientificServiceExperience"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -324,27 +333,52 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="profile-science-staffs-list">
+    	<security auth="true" https="true"/>
+    	<response name="success" type="view" value="view-profile-science-staffs-list"></response>
+    </request-map>
+
 	<request-map uri="profile-science">
+    	<security auth="true" https="true"/>
+    	<response name="success" type="view" value="profile-science-setting"></response>
+    </request-map>
+
+	<request-map uri="profile-science-pdf">
     	<security auth="true" https="true"/>
     	<response name="success" type="view" value="profile-science-PDF"></response>
     </request-map>
-
+    
+	
     <request-map uri="update-password">
 		<security https="true" auth="false"/>
 		<event type="service" invoke="updatePassword"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+    <request-map uri="formchangepassword">
+		<security https="true" auth="false"/>
+		<response name="success" type="view" value="view-form-change-password"></response>
+	</request-map>
+	<!-- 
+	<request-map uri="change-password">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.bkeuniv.staffmanagement.StaffService" 
+                     invoke="updateStaffInfo"/>
+            <response name="AttachementSuccess" type="view" value="CHANGEPASSWORD"/>
+           
+    </request-map>    
+	 -->
     
     <request-map uri="download-file-paper">
 		<security auth="true" https="true" />
-		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
 		invoke="downloadFile"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	<request-map uri="upload-file-paper">
             <security https="true" auth="true"/>
-           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
            invoke="uploadFile"/>
             <response name="AttachementSuccess" type="view" value="UploadFile"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
@@ -352,7 +386,7 @@
 	<request-map uri="get-academic-years">
             <security https="true" auth="true"/>
           
-            <event type="java" path="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+            <event type="java" path="org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
                      invoke="getListAcademicYears"/>
             <response name="AttachementSuccess" type="view" value="YEARS"/>
            
@@ -360,24 +394,43 @@
 	<request-map uri="get-academic-years-faculties">
             <security https="true" auth="true"/>
           
-            <event type="java" path="src.org.ofbiz.utils.BKEunivUtils" 
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
                      invoke="getListAcademicYearsFaculties"/>
             <response name="AttachementSuccess" type="view" value="YEARSFACULTIES"/>
            
     </request-map>    
+	
 	<request-map uri="get-departments-of-faculty">
             <security https="true" auth="true"/>
           
-            <event type="java" path="src.org.ofbiz.utils.BKEunivUtils" 
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
                      invoke="getListDepartmentsOfFacultyJSON"/>
             <response name="AttachementSuccess" type="view" value="DEPARTMENTSFACULTY"/>
+           
+    </request-map>    
+    
+	<request-map uri="get-staffs-of-department">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
+                     invoke="getListStaffsOfDepartmentJSON"/>
+            <response name="AttachementSuccess" type="view" value="STAFFSDEPARTMENT"/>
+           
+    </request-map>    
+
+	<request-map uri="update-staff-info">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.bkeuniv.staffmanagement.StaffService" 
+                     invoke="updateStaffInfo"/>
+            <response name="AttachementSuccess" type="view" value="STAFFINFO"/>
            
     </request-map>    
 	
 	<!-- 
 	<request-map uri="get-staffs">
             <security https="true" auth="true"/>
-           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
            invoke="getStaffs"/>
             <response name="AttachementSuccess" type="view" value="STAFFS"/>
             
@@ -385,7 +438,7 @@
 	 -->
 	<request-map uri="get-staffs-of-paper">
             <security https="true" auth="true"/>
-           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
            invoke="getStaffsOfPaper"/>
             <response name="AttachementSuccess" type="view" value="STAFFS"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
@@ -398,7 +451,7 @@
 
 	<request-map uri="update-staffs-of-paper">
             <security https="true" auth="true"/>
-           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
            invoke="updateStaffsOfPaper"/>
             <response name="AttachementSuccess" type="view" value="STAFFS"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
@@ -406,7 +459,7 @@
     
 	<request-map uri="create-staffs-paper">
             <security https="true" auth="true"/>
-           <event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
            invoke="createStaffPaperDeclaration"/>
             <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
@@ -414,18 +467,23 @@
     
     <request-map uri="export-excel-kv01">
 		<security auth="true" https="true" />
-		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV01"></event>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV01"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+    <request-map uri="export-excel-kv04">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV04"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
     <request-map uri="export-excel-isi">
 		<security auth="true" https="true" />
-		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelISI"></event>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelISI"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
     <request-map uri="export-excel-bm-01-02-03">
 		<security auth="true" https="true" />
-		<event type="java" path="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelBM010203"></event>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelBM010203"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
@@ -476,7 +534,7 @@
     
     <request-map uri="export-excel-project-declaration">
 		<security auth="true" https="true" />
-		<event type="java" path="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="exportExcel"></event>
+		<event type="java" path="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="exportExcel"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
@@ -513,14 +571,41 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	
+	<request-map uri="staff-research-domain">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-staff-research-domain"></response>
+    </request-map>
+    
+    <request-map uri="create-staff-research-domain">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createStaffResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-staff-research-domain">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateStaffResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-staff-research-domain">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteStaffResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="export-excel-work-progress">
 		<security auth="true" https="true" />
-		<event type="java" path="src.org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
+		<event type="java" path="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 
 	<request-map uri="toJson">
-		<event type="java" path="src.org.ofbiz.bkeuniv.common.Events"
+		<event type="java" path="org.ofbiz.bkeuniv.common.Events"
 			invoke="wrapStatusResponse" />
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
@@ -537,12 +622,21 @@
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
     <view-map name="profile-science-PDF" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDF" content-type="application/pdf" encoding="none"/>
+    <view-map name="profile-science-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFSetting"/>
+    <view-map name="view-profile-science-staffs-list" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFStaffsList"/>
+
     <view-map name="view-summary-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclaration"/>
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
    <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
+   <view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
     
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
+    
+    
+   
+   <view-map name="view-form-change-password" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageChangePassword"/>
+   
     
 </site-conf>

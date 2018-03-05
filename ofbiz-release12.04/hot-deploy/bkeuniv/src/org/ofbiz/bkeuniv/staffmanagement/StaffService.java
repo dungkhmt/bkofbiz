@@ -1,23 +1,35 @@
-package src.org.ofbiz.bkeuniv.staffmanagement;
+package org.ofbiz.bkeuniv.staffmanagement;
 
+import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Set;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
-//import org.ofbiz.common.login.LoginServices;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityFunction;
+import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
@@ -76,6 +88,64 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+	
+	public static Map<String,Object> JQGetListStaffs(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator staffs = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String)parameters.get("q")[0];
+				System.out.println("1. debug ::::::::::" +q);
+				String[] searchKeys = {"staffId", "staffEmail", "staffName", "facultyName", "departmentName", "genderName", "facultyName"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+//							EntityCondition.makeCondition(, EntityOperator.LIKE, "%" + q + "%");
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			System.out.println("4. debug ::::::::::"  + userLoginId);
+			staffs = delegator.find("StaffView", condition, null, null, sort, opts);
+			
+			//int total = staffs.getResultsSizeAfterPartialList();
+			//System.out.println("Size Staff ::::::::" + staffs.getCompleteList().size());
+						
+			result.put("listIterator", staffs);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list staffs");
+		} finally {
+//			if(staffs != null){
+//				staffs.close();
+//			}
+		}
+		return result;
+	}
+
 
 	public static Map<String, Object> getStaffs(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -90,6 +160,20 @@ public class StaffService {
 		try{
 			List<GenericValue> staffs = delegator.findList("StaffView", 
 					null,null, null, null, false);
+			
+			String q = (String)context.get("q");
+			
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
+			
+			String[] searchKeys = {"departmentName", "genderName", "facultyName"}; 
+			
+			for(String key: searchKeys) {
+				EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, q);
+				conditions.add(condition);
+			}
+		
+			staffs = delegator.findList("StaffView", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
 		
 			List<Map<String, Object>> ret_staffs = FastList.newInstance();
 					
@@ -119,6 +203,204 @@ public class StaffService {
 		}
 		return retSucc;
 	}
+
+	public static Map<String, Object> getAllStaffs(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		//String staffId = (String)context.get("authorStaffId");
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String staffId = (String)userLogin.get("userLoginId");
+		
+		Debug.log(module + "::getAllStaffs, authorStaffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<GenericValue> staffs = delegator.findList("StaffView", 
+					null,null, null, null, false);
+			
+		
+			retSucc.put("staffs", staffs);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	
+	public static Map<String, Object> getCVProfileOfStaff(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+				staffId = (String)userLogin.get("userLoginId");
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		Debug.log(module + "::getCVProfileOfStaff, staffId = " + staffId);
+		
+		try{
+			Map<String, Object> cv = FastMap.newInstance();
+			
+			// get general info of staff
+			Map<String, Object> param = FastMap.newInstance();
+			param.put("staffId", staffId);
+			Map<String, Object> result_staff = dispatcher.runSync("getStaffInfo", param);
+			cv.put("info", result_staff.get("staff"));
+			
+			// get Education Progress
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_ep = dispatcher.runSync("getEducationProgress", param);
+			cv.put("educationProgress", result_ep.get("educationProgress"));
+			
+			// get papers
+			param.clear();
+			param.put("authorStaffId", staffId);
+			Map<String, Object> result_papers = dispatcher.runSync("getPapersOfStaff", param);
+			cv.put("papers", result_papers.get("papers"));
+			List<GenericValue> lstPapers = (List<GenericValue>)cv.get("papers");
+			Debug.log(module + "::getCVProfileOfStaff, publications = " + lstPapers.size());
+			
+			// get patents
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_patent = dispatcher.runSync("getPatent", param);
+			cv.put("patents", result_patent.get("patent"));
+			
+			// get applied projects
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_projects = dispatcher.runSync("getAppliedProjects", param);
+			cv.put("projects", result_projects.get("projects"));
+			
+			// get awards
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_awards = dispatcher.runSync("getAward", param);
+			cv.put("awards", result_awards.get("award"));
+			
+			// get work progress
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_wp = dispatcher.runSync("getWorkProgress", param);
+			cv.put("workProgress", result_wp.get("workProgress"));
+			
+			retSucc.put("cv", cv);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> getStaffInfo(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.get("userLoginId");
+		
+		Debug.log(module + "::getStaffInfo, staffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS,staffId));
+			
+			List<GenericValue> staffs = delegator.findList("StaffView", 
+					EntityCondition.makeCondition(conds),
+					null, null, null, false);
+			if(staffs != null && staffs.size() > 0){
+				GenericValue st = staffs.get(0);
+				retSucc.put("staff", st);
+				
+				String deptId = (String)st.get("departmentId");
+				String facultyId = "";
+				conds.clear();
+				
+				List<GenericValue> all_departments = delegator.findList("Department", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				
+				List<GenericValue> all_faculty = delegator.findList("Faculty", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				
+				
+				for(GenericValue d: all_departments){
+					String dId = (String)d.get("departmentId");
+					if(dId.equals(deptId)){
+						facultyId = (String)d.get("facultyId");
+						break;
+					}
+				}
+				
+				
+				
+				conds.add(EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS,facultyId));
+				List<GenericValue> sel_departments = delegator.findList("Department", 
+						EntityCondition.makeCondition(conds), 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				List<GenericValue> genders = delegator.findList("Gender", 
+						null, 
+						null, 
+						null, 
+						null, 
+						false);
+				
+				retSucc.put("departments", sel_departments);
+				retSucc.put("faculties", all_faculty);
+				retSucc.put("selected_department_id", deptId);
+				retSucc.put("selected_faculty_id", facultyId);
+				retSucc.put("genders", genders);
+				
+			}
+			
+			
+			/*
+			List<Map<String, Object>> ret_staffs = FastList.newInstance();
+					
+			for(GenericValue gv: staffs){
+				//Debug.log(module + "::getStaffs, staff " + gv.get("staffName"));
+				Map<String, Object> rs = FastMap.newInstance();
+				rs.put("staffId", gv.getString("staffId"));
+				rs.put("staffId", gv.getString("staffId"));
+				rs.put("staffName", gv.getString("staffName"));
+				rs.put("staffEmail", gv.getString("staffEmail"));
+				rs.put("departmentId", gv.getString("departmentId"));
+				rs.put("staffGenderId", gv.getString("staffGenderId"));
+				rs.put("staffDateOfBirth", gv.getString("staffDateOfBirth"));
+				rs.put("staffPhone", gv.getString("staffPhone"));
+				rs.put("departmentName", gv.getString("departmentName"));
+				rs.put("genderName", gv.getString("genderName"));
+				rs.put("facultyId", gv.getString("facultyId"));
+				rs.put("facultyName", gv.getString("facultyName"));
+				ret_staffs.add(rs);
+			}
+		
+			retSucc.put("staffs", ret_staffs);
+			*/
+		}catch(Exception ex){
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> removeAStaff(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -384,5 +666,59 @@ public class StaffService {
 		}
 		return retSucc;
 	}
-	
+	/*
+	public static void changePassword(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String pwd = request.getParameter("password");
+		String staffId = request.getParameter("staffId");
+		String hashedPassword = LoginServices.hashPassword(pwd);
+		Debug.log(module + "::changePassword, pwd = " + pwd + ", staffId = " + staffId + ", hashedPassword = " + hashedPassword);
+		try{
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	*/
+	@SuppressWarnings({ "unchecked" })
+	public static void updateStaffInfo(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String staffId = request.getParameter("staffId");
+		String departmentId = request.getParameter("departmentId");
+		String genderId = request.getParameter("genderId");
+		String email = request.getParameter("email");
+		String birthDate = request.getParameter("birthDate");
+		String staffName = request.getParameter("staffName");
+		String phone = request.getParameter("phone");
+		
+		Debug.log(module + "::updateStaffInfo, staffId = " + staffId + ", staffName = " + staffName
+				+ ", departmentId = " + departmentId + ", email = " + email + ", phone = " + phone
+				+ ", birthDate = " + birthDate + ", genderId = " + genderId);
+		
+		try{
+			GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",staffId), false);
+			if(st != null){
+				st.put("staffName", staffName);
+				st.put("staffEmail", email);
+				st.put("departmentId", departmentId);
+				st.put("staffGenderId", genderId);
+				st.put("staffDateOfBirth", Date.valueOf(birthDate));
+				st.put("staffPhone", phone);
+				delegator.store(st);
+				
+				String rs = "{\"result\":\"OK\"}";
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				PrintWriter out = response.getWriter();
+				out.write(rs);
+				out.close();
+				
+				Debug.log(module + "::updateStaffInfo, rs = " + rs);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 }

@@ -1548,14 +1548,7 @@ input[type="week"][disabled] {
 .button-style-2 ul a:focus, 
 .button-style-2 a:focus, 
 .smallSubmit:focus,
-button:focus,
-button:active,
-input:focus,
-input:active,
-select:focus,
-select:active,
-textarea:focus,
-textarea:active {
+{
 	-moz-box-shadow: #5c809c 0 0 5px;
 	-webkit-box-shadow: #5c809c 0 0 5px;
 	box-shadow: #5c809c 0 0 5px;

@@ -1,3 +1,4 @@
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 <#macro jqMinimumLib >
 	<!-- import jqMinimumLib lib css-->
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
@@ -63,8 +64,10 @@
 
 <#macro jqDataTable 
 		urlData="" 
-		urlUpdate="" 
-		urlAdd="" 
+		optionData={}
+		urlUpdate=""
+		urlAdd=""
+		optionDataAdd={}
 		urlDelete="" 
 		keysId=[]
 		fnInfoCallback=""
@@ -78,21 +81,17 @@
 		fieldDataResult="result"
 		titleChange=""
 		titleNew=""
-		titleDelete=""
+		subTitleDelete="You confirm you want to delete"
+		titleDelete="Confirm"
 		jqTitle=""
 		contextmenu=true
 	>
 	<@jqMinimumLib />
 	
 	<style>
-		#${id} {
-			width: 96%;
-			top: 0;
-			bottom: 0;
-			left: 2%;
-			right: 2%;
-			padding: 1em;
-			position: absolute;
+
+		th {
+			transition: .2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
 		}
 		
 		#${id} .jqDataTable-title {
@@ -117,12 +116,19 @@
 		#${id}-content tbody tr:hover td:first-child {
 		     border-left: 2px #0014ff solid;			
 		}
+
+		.dataTables_scrollHeadInner {
+			width: 100%!important;
+		}
+
+		.dataTables_scrollHeadInner table {
+			width: 100%!important;
+		}
 		
 		
 		.ui-menu-item {
 		    list-style: none;
 		    padding: 5px 10px 5px 10px;
-		    width: 100px;
 		    
 		    padding-left: 2em;
 		    position: relative;
@@ -227,17 +233,25 @@
 			<#assign index=index+1>
 			var c${index} = {
 				name: '${column.name}',
+				<#if column.type??>
+				type: '${column.type}',
+				</#if>
 				data: '${column.data}'
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
 		
 		$(document).ready(function(){
-			$.ajax({
+			document.getElementById("jqTitlePage").innerHTML = titlePage;
+			
+			loader.open();
+			$.ajax(Object.assign(<@pfObject object=optionData />, {
 			    url: "${urlData}",
 			    type: 'post',
 			    dataType: "json",
 			    success: function(data) {
+					setTimeout(function(){ loader.close();}, 500);
+					
 			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>
@@ -249,23 +263,38 @@
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
 					columns: jqDataTable.columns,
+					deferRender: true,
 					"columnDefs": [
-					{
-						"targets": 0,
-						"render": function ( data, type, row, meta ) {
-							
-							var row = meta.row;
-							if( Object.prototype.toString.call( row ) === '[object Array]' ) {
-								if(row.length > 0) {
-									return row[0] + 1
-								} else {
-									return jqDataTable.data.length
+						{
+							"targets": 0,
+							"render": function ( data, type, row, meta ) {
+								
+								var row = meta.row;
+								if( Object.prototype.toString.call( row ) === '[object Array]' ) {
+									if(row.length > 0) {
+										return row[0] + 1
+									} else {
+										return jqDataTable.data.length
+									}
 								}
+								
+								return meta.row + 1;					      
 							}
-							
-							return meta.row + 1;					      
-					    }
-					},
+						},
+					<#assign index= 1 />
+					<#list columns as column>
+					<#if column.type??>
+						<#if !column.render??>
+						{
+							"targets": ${index},
+							"render": function ( data, type, row, meta ) {
+								return jqDataTable.buildColumn(data, '${column.type}', row, meta);					      
+							}
+						},
+						</#if>
+					</#if>
+						<#assign index=index+1 />
+					</#list>
 					<#assign index = 1 />
 					<#list columns as column>
 						<#assign c = {} />
@@ -285,8 +314,6 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
-					"scrollY": ${sizeTable} - 220,
-					"scrollCollapse": true,
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
 					</#if>
@@ -320,7 +347,7 @@
 						  });
 					</#if>
 			    }
-			});
+			}));
 		});
 		
 		function jqChange(data) {
@@ -350,7 +377,7 @@
 				resolve(new modal("#jqModalAdd").setting({
 					data: {},
 					columns: <@pfArray array=columnsNew />,
-					
+					optionAjax: <@pfObject object=optionDataAdd />,
 			        title: '${titleNew}',
 			        action: {
 						name: '${uiLabelMap.BkEunivAddRow}',
@@ -368,7 +395,7 @@
 		}
 		
 		function jqDelete(data) {
-			alertify.confirm("Confirm", '${titleDelete}',
+			alertify.confirm('${titleDelete}', "${subTitleDelete}",
 			function(){
 				openLoader();
 				$.ajax({
@@ -420,6 +447,27 @@
 			});
 		}
 		
+		function JqRefresh() {
+			loader.open();
+			$.ajax({
+			    url: "${urlData}",
+			    type: 'post',
+			    dataType: "json",
+			    success: function(data) {
+					setTimeout(function(){ loader.close();}, 500);
+					jqDataTable.table.clear().draw();
+					jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
+			    		var r = new Object();
+				    	<#list dataFields as field>
+				    		r.${field} = d.${field}||"";
+				    	</#list>		
+				    	return r;
+			    	});
+			    	jqDataTable.table.rows.add(jqDataTable.data).draw();
+			    }
+			});
+		}
+
 		function openLoader() {
 			if($(".loader").hasClass("hidden-loading")) {
 				$(".loader").removeClass("hidden-loading");
@@ -431,22 +479,108 @@
 				$(".loader").addClass("hidden-loading");
 			}
 		}
+
+		jqDataTable.buildColumn = function(data, type, row, meta) {
+			console.log(data, type, row, meta)
+			var value = data;
+			switch(type) {
+				case "date":
+					value = parseDate(data);
+					break;
+				case "datetime":
+					value = parseDateTime(data);
+					break;
+				default:
+					value = data;
+			}
+			return value;
+		}
+
+		function parseDate(data) {
+			var date = "";
+			if(!!data) {
+				date = new Date(data).toLocaleDateString('vi');
+			}
+
+			return date;
+		}
+
+		function parseDateTime(data) {
+			var date = "";
+			if(!!data) {
+				options = {
+					year: 'numeric', month: 'numeric', day: 'numeric',
+					hour: 'numeric', minute: 'numeric', second: 'numeric',
+					hour12: false,
+					timeZone: 'Asia/Ho_Chi_Minh' 
+				};
+				date = new Intl.DateTimeFormat('vi', options).format(new Date(data));
+			}
+
+			return date;
+		}
+
+		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2, minimumFractionDigits=2) {
+			var price = ""
+			if(!!data) {
+				price= parseFloat(data).toLocaleString(locales, { style: 'currency', currency: currency, maximumFractionDigits: maximumFractionDigits, minimumFractionDigits: minimumFractionDigits });
+			}
+
+			return price;
+		}
 	
 	</script>
 	<!-- html -->
-	<div id="${id}">
-		<div id="jqDataTable-button-add" onClick="jqNew()">
-			${uiLabelMap.BkEunivAdd}
-		</div>
-		
-		<table id="${id}-content" class="table table-striped">
-			<thead>
-				<td>STT</td>
-				<#list columns as column>
-					<td>${column.name}</td>
-				</#list>
+	<@Loader handleToggle="loader">
+		<@IconSpinner/>
+	</@Loader>
+
+	<div id="${id}" style="flex: 1 1 0%; padding: 2em 3em 6em 3em; width: 100%;overflow-y: auto; height: 100%;background-color: rgb(237, 236, 236);">
+		<div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; z-index: 1; opacity: 1;padding: 1em;">
+			<div style="display: flex; justify-content: space-between;">
+				<div class="title" style="padding: 16px; position: relative;">
+					<span style="font-size: 24px; color: rgba(0, 0, 0, 0.87); display: block; line-height: 36px;">
+						<span id="jqTitlePage">${titlePage?if_exists}</span>
+					</span>
+					<span style="font-size: 14px; color: rgba(0, 0, 0, 0.54); display: block;"></span>
+				</div>
+
+				<div style="padding: 8px; position: relative; z-index: 2; display: flex; justify-content: flex-end; flex-wrap: wrap;">
+					<@FlatButton id="JqNewRecord" onClick="jqNew()" style="color: rgb(0, 188, 212); text-transform: uppercase;width: 100px">
+						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+							<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+						</svg>
+						${uiLabelMap.BkEunivAdd}
+					</@FlatButton>
+
+					<@FlatButton id="JqRefresh" onClick="JqRefresh()" style="color: rgb(0, 188, 212); text-transform: uppercase;width: 120px">
+						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
+						</svg>
+						Làm mới
+					</@FlatButton>
+				</div>
+			</div>
+			
+			<table id="${id}-content" style="width: 100%!important;" class="table table-striped">
+			 <thead>
+				<tr>
+					<th>
+						<@FlatButton id="STT" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+							STT
+						</@FlatButton>
+					</th>
+					<#list columns as column>
+						<th>
+							<@FlatButton id="${column.data}" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+								${column.name}
+							</@FlatButton>
+						</th>
+					</#list>
+				</tr>
 			</thead>
-		</table>
+			</table>
+		</div>
 	</div>
 	
 	<div class="loader hidden-loading"></div>

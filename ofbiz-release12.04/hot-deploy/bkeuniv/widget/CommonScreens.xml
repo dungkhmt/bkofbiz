@@ -23,8 +23,6 @@
 					</html>
 				</platform-specific>
 				
-				<decorator-section-include name="body"/>
-				
 				<platform-specific>
 					<html>
 						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/navBar.ftl"/>
@@ -36,6 +34,8 @@
 						<html-template location="component://bkeuniv/webapp/bkeuniv/layout/sideBar.ftl"/>
 					</html>
 				</platform-specific>
+				
+				<decorator-section-include name="body"/>
 				
 				<platform-specific>
 					<html>

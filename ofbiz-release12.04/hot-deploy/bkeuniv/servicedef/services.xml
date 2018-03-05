@@ -10,9 +10,22 @@
             Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
         </description>
     </service> 
-    
+<!--     
+     <service name="getProjectCategory" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectCategory">
+    	<attribute name="projectCategorys" mode="OUT" type="List"></attribute>
+    </service>
+        <service name="getProjectStatus" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectStatus">
+    	<attribute name="projectStatuss" mode="OUT" type="List"></attribute>
+    </service>    
+    <service name="getProjectParticipationRole" engine="java" 
+    		location="src.org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectParticipationRole">
+    	<attribute name="projectParticipationRoles" mode="OUT" type="List"></attribute>
+    </service>
+ -->    
 	<service name="getPapersOfStaff" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDecalarationService" invoke="getPapersOfStaff">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDecalarationService" invoke="getPapersOfStaff">
 		<!-- 
 		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
 		 -->
@@ -28,25 +41,60 @@
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
  -->    
+ 
+ 	<service name="jqxGetListInterface" engine="interface" >
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="org.ofbiz.entity.util.EntityListIterator" optional="true"></attribute>
+   </service>
+ 
+ 	<service name="jqxGridGeneralServicer" engine="java"
+            location="org.ofbiz.bkeuniv.service.JqxWidgetSevices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
+        <attribute name="request" mode="IN" type="javax.servlet.http.HttpServletRequest" optional="true"></attribute>
+        <attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+        <attribute name="results" mode="OUT" type="List" ></attribute>
+        <attribute name="totalRows" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="JQGetListStaffs" engine="java" invoke="JQGetListStaffs" location="org.ofbiz.bkeuniv.staffmanagement.StaffService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="JQGetListResearchDomainManagement" engine="java" invoke="JQGetListResearchDomainManagement" location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="JQGetListStaffResearchDomainManagement" engine="java" invoke="JQGetListStaffResearchDomainManagement" location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement">
+        <implements service="jqxGetListInterface"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
-            location="src.org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
+            location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
        <attribute name="permissionFunctions" mode="OUT" type="List"></attribute>
     </service>
     
     <service name="svrDeleteADepartment" engine="java"
-            location="src.org.ofbiz.department.DepartmentService" invoke="deleteADepartment">
+            location="org.ofbiz.department.DepartmentService" invoke="deleteADepartment">
        <attribute name="idofdepartment" mode="IN" type="String"></attribute>       
     </service>
     
     <service name="getDepartments" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
+    		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartment">
     	<attribute name="facultyId" mode="IN" type="String"></attribute>
     	<attribute name="departments" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getFaculties" engine="java" 
+    		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getFaculties">
+    	<attribute name="universityId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="faculties" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="getAward" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.award.Award" invoke="getAward">
+    		location="org.ofbiz.bkeuniv.award.Award" invoke="getAward">
     	<attribute name="awardId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="description" mode="IN" type="String" optional="true"></attribute>
@@ -56,7 +104,7 @@
     </service>
     
      <service name="createAward" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.award.Award" invoke="createAward">
+    		location="org.ofbiz.bkeuniv.award.Award" invoke="createAward">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="description" mode="IN" type="String"></attribute>
     	<attribute name="year" mode="IN" type="String"></attribute>
@@ -66,7 +114,7 @@
     </service>
     
     <service name="updateAward" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.award.Award" invoke="updateAward">
+    		location="org.ofbiz.bkeuniv.award.Award" invoke="updateAward">
     	<attribute name="awardId" mode="IN" type="String"></attribute>
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="description" mode="IN" type="String"></attribute>
@@ -77,47 +125,14 @@
     </service>
     
     <service name="deleteAward" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.award.Award" invoke="deleteAward">
+    		location="org.ofbiz.bkeuniv.award.Award" invoke="deleteAward">
     	<attribute name="awardId" mode="IN" type="String"></attribute>
     	
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
-
-    <service name="getscientificserviceexperience" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="getScientificServiceExperience">
-    	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="description" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="quantity" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="listScientificServiceExperience" type="List" mode="OUT"></attribute>
-    </service>
-    
-	<service name="createscientificserviceexperience" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="createScientificServiceExperience">
-		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="description" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="quantity" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="object" type="Map" mode="OUT"></attribute>
-    </service> 
-    
-    <service name="updatescientificserviceexperience" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="updateScientificServiceExperience">
-    	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="description" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="quantity" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="object" type="Map" mode="OUT"></attribute>
-    </service>
-    
-    <service name="deletescientificserviceexperience" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="deleteScientificServiceExperience">
-    	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
-		
-		<attribute name="id" type="String" mode="OUT"></attribute>
-    </service>
     
     <service name="getEducationProgress" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="getEducationProgress">
+    		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="getEducationProgress">
     	<attribute name="educationProgressId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="educationType" mode="IN" type="String" optional="true"></attribute>
@@ -126,9 +141,23 @@
     	<attribute name="graduateDate" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
     </service>
+
+    <service name="getEducationProgressOfLoginStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="getEducationProgressOfLoginStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
+    </service>
+    
+    
+    <service name="getCVProfileOfStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getCVProfileOfStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="cv" mode="OUT" type="Map"></attribute>
+    </service>
+    
     
     <service name="createEducationProgress" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="createEducationProgress">
+    		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="createEducationProgress">
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="institution" mode="IN" type="String"></attribute>
     	<attribute name="speciality" mode="IN" type="String"></attribute>
@@ -139,7 +168,7 @@
     </service>
     
     <service name="updateEducationProgress" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="updateEducationProgress">
+    		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="updateEducationProgress">
     	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
     	<attribute name="staffId" mode="IN" type="String"></attribute>
     	<attribute name="institution" mode="IN" type="String"></attribute>
@@ -152,14 +181,14 @@
     </service>
     
     <service name="deleteEducationProgress" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="deleteEducationProgress">
+    		location="org.ofbiz.bkeuniv.educationprogress.EducationProgress" invoke="deleteEducationProgress">
     	<attribute name="educationProgressId" mode="IN" type="String"></attribute>
     	
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
     
     <service name="getPaperCategory" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperCategory">
+    		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperCategory">
     	<attribute name="paperCategoryId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="paperCategoryName" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="paperCategoryCode" mode="IN" type="String" optional="true"></attribute>
@@ -170,20 +199,20 @@
     </service>
     
     <service name="getPapersOfStaff" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
-		<!-- 
-		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
-		 -->
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
+		
+		<attribute name="authorStaffId" mode="IN" type="String" optional="true"></attribute>
+		
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
 
     <service name="getPaperDeclarations" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperDeclarations">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperDeclarations">
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
 
 	<service name="updatePaper" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="paperName" mode="IN" type="String"></attribute>
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
@@ -200,7 +229,7 @@
     
     
     <service name="createPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
 		<attribute name="paperName" mode="IN" type="String"></attribute>
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="journalConferenceName" mode="IN" type="String"  optional="true"></attribute>
@@ -214,18 +243,18 @@
 		<attribute name="message" mode="OUT" type="String"></attribute>	
 	</service>
     <service name="deletePaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deletePaperDeclaration">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deletePaperDeclaration">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 	</service>
 	
     <service name="deleteStaffPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deleteStaffPaperDeclaration">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deleteStaffPaperDeclaration">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="staffId" mode="IN" type="String"></attribute>
 	</service>
 
     <service name="createStaffPaperDeclaration" engine="java" 
-		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="jcreateStaffPaperDeclaration">
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="jcreateStaffPaperDeclaration">
 		<attribute name="staffId" mode="IN" type="String"></attribute>
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="message" mode="OUT" type="String"></attribute>
@@ -234,7 +263,7 @@
 	
 		
     <service name="getListAcademicYears" engine="java" 
-		location="src.org.ofbiz.bkeuniv.academicyear.AcademicYearService" invoke="getListAcademicYears">
+		location="org.ofbiz.bkeuniv.academicyear.AcademicYearService" invoke="getListAcademicYears">
 		<attribute name="academicYears" mode="OUT" type="List"></attribute>
 	</service>
 	
