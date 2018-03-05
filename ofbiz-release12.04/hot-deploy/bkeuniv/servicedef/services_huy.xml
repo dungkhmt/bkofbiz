@@ -123,7 +123,7 @@
 		<attribute name="description" type="String" mode="IN"></attribute>
 		<attribute name="quantity" type="String" mode="IN"></attribute>
 		
-		<attribute name="scientificServiceExperiences" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service> 
     
@@ -133,7 +133,7 @@
 		<attribute name="description" type="String" mode="IN"></attribute>
 		<attribute name="quantity" type="String" mode="IN"></attribute>
 		
-		<attribute name="scientificServiceExperiences" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     
