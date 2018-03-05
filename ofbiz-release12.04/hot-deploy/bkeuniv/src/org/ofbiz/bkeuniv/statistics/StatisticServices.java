@@ -22,13 +22,18 @@ public class StatisticServices {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 		try{
+			List<GenericValue> allYears = delegator.findList("AcademicYear", null, null, null, null, false);
+			
 			List<GenericValue> papers = delegator.findList("PaperDeclaration", 
 					null, null, null, null, false);
 			Debug.log(module + "::getPapersStatistic, total = " + papers.size());
 			Set<String> years = FastSet.newInstance();
-			for(GenericValue p: papers){
-				if(p.get("academicYearId") != null)
-					years.add((String)p.get("academicYearId"));
+			//for(GenericValue p: papers){
+			//	if(p.get("academicYearId") != null)
+			//		years.add((String)p.get("academicYearId"));
+			//}
+			for(GenericValue y: allYears){
+				years.add((String)y.get("academicYearId"));
 			}
 			String[] years_list = new String[years.size()];
 			int idx = -1;
