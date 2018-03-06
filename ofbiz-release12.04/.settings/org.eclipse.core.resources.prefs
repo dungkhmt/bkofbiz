@@ -1,8 +1,6 @@
 eclipse.preferences.version=1
-<<<<<<< HEAD
+encoding//hot-deploy/bkeuniv/webapp/bkeuniv/award/award.ftl=UTF-8
 encoding//hot-deploy/bkeuniv/webapp/bkeuniv/exportPDF/profileScience.fo.ftl=UTF-8
 encoding//hot-deploy/bkeuniv/webapp/bkeuniv/exportPDF/profileTitle.fo.ftl=UTF-8
-=======
-encoding//hot-deploy/bkeuniv/webapp/bkeuniv/award/award.ftl=UTF-8
 encoding//hot-deploy/bkeuniv/webapp/bkeuniv/patentstaff/patent.ftl=UTF-8
->>>>>>> 9f9281c679fd5dfefcb7649f9f1889f5070bf6ba
+encoding//hot-deploy/bkeuniv/webapp/bkeuniv/scientificserviceexperience/scientificserviceexperience.ftl=UTF-8

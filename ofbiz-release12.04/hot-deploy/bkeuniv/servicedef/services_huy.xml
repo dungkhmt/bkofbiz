@@ -113,4 +113,35 @@
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
     
+    <service name="getScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="getScientificServiceExperience">
+		<attribute name="scientificServiceExperiences" type="List" mode="OUT"></attribute>
+    </service>
+    
+    <service name="createScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="createScientificServiceExperience">
+		<attribute name="description" type="String" mode="IN"></attribute>
+		<attribute name="quantity" type="String" mode="IN"></attribute>
+		
+		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service> 
+    
+    <service name="updateScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="updateScientificServiceExperience">
+    	<attribute name="scientificServiceExperienceId" type="String" mode="IN"></attribute>
+		<attribute name="description" type="String" mode="IN"></attribute>
+		<attribute name="quantity" type="String" mode="IN"></attribute>
+		
+		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="deleteScientificServiceExperience">
+    	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
+		
+		<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
 </services>
