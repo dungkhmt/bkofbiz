@@ -10,11 +10,6 @@
 			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"data": "fromDate",
 			"type": "date"
-		},
-		{
-			"name": uiLabelMap.BkEunivThruDate?j_string,
-			"data": "thruDate",
-			"type": "date"
 		}
 	] />
 
@@ -70,16 +65,6 @@
 				"render": 'function(r){return {id: r.researchSpecialitySeqId, text: "[" + r.researchSpecialityCode + "] "+ r.researchSpecialityName}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSpecialityManagement"
 			}
-		},
-		{
-			"name": uiLabelMap.BkEunivFromDate?j_string,
-			"value": "fromDate",
-			"type": "date"
-		},
-		{
-			"name": uiLabelMap.BkEunivThruDate?j_string,
-			"value": "thruDate",
-			"type": "date"
 		}
 	] />
 
@@ -121,17 +106,6 @@
 				"render": 'function(r){return {id: r.researchSpecialitySeqId, text: "[" + r.researchSpecialityCode + "] "+ r.researchSpecialityName}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSpecialityManagement"
 			}
-		},
-		{
-			"name": uiLabelMap.BkEunivFromDate?j_string,
-			"value": "fromDate",
-			"type": "date",
-			"defaultValue": .now
-		},
-		{
-			"name": uiLabelMap.BkEunivThruDate?j_string,
-			"value": "thruDate",
-			"type": "date"
 		}
 	] />
 

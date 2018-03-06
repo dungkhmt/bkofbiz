@@ -6,15 +6,9 @@
 			"name": uiLabelMap.BkEunivResearchDomain?j_string,
 			"data": "researchDomainName"
 		},
-		
 		{
 			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"data": "fromDate",
-			"type": "date"
-		},
-		{
-			"name": uiLabelMap.BkEunivThruDate?j_string,
-			"data": "thruDate",
 			"type": "date"
 		}
 	] />
@@ -40,16 +34,6 @@
 				"name": "researchDomainName",
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement"
 			}
-		},
-		{
-			"name": uiLabelMap.BkEunivFromDate?j_string,
-			"value": "fromDate",
-			"type": "date"
-		},
-		{
-			"name": uiLabelMap.BkEunivThruDate?j_string,
-			"value": "thruDate",
-			"type": "date"
 		}
 	] />
 
@@ -64,16 +48,6 @@
 				"name": "researchDomainName",
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement"
 			}
-		},
-		{
-			"name": uiLabelMap.BkEunivFromDate?j_string,
-			"value": "fromDate",
-			"type": "date"
-		},
-		{
-			"name": uiLabelMap.BkEunivThruDate?j_string,
-			"value": "thruDate",
-			"type": "date"
 		}
 	] />
 

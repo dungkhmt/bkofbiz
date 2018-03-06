@@ -237,7 +237,7 @@
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
 			    	<#assign stt=stt+1 />
-
+<#assign researchDomain = resultCV.cv.researchDomain />
 		        <fo:table-cell>
 		          <fo:block font-weight="bold">${ResearchDomain}</fo:block>
 		        </fo:table-cell>
@@ -246,7 +246,7 @@
 		  </fo:table>
         </fo:table-cell>
       </fo:table-row>
-      
+
       <fo:table-row>
         <fo:table-cell height="20pt" display-align="center" border-style="dotted" border-left-style = "solid" 
         border-right-style = "solid" >
@@ -294,9 +294,6 @@
 												</fo:table-row>
 											</fo:table-body>
 										</fo:table>
-									<#--  <fo:block font-size="14pt" border-style="solid" font-family="wingdings" >
-												&#254;
-									</fo:block>  -->
 									<#else>
 									<fo:table table-layout="fixed">
 										<fo:table-column column-width="proportional-column-width(1)"/>
@@ -362,6 +359,7 @@
 		  
         </fo:table-cell>
       </fo:table-row>
+			
       <#assign researchSpeciality = resultCV.cv.researchSpeciality />
       <fo:table-row>
        	<fo:table-cell height="20pt" display-align="center" border-left-style="solid" border-right-style= "solid" border-bottom-style="dotted" >
@@ -417,7 +415,7 @@
 					</fo:table>
         </fo:table-cell>
       </fo:table-row>
-      
+
       
       
       <fo:table-row>

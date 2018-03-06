@@ -1,4 +1,89 @@
+<#include "component://bkeuniv/webapp/bkeuniv/layout/jqServerSide.ftl"/>
+<body>
 
+<script>
+	var modalChangePassword;
+	function createContextMenu(id) {
+	
+	}
+				
+	function jqPDF(data){
+		console.log(data);
+	}
+	
+</script>
+
+<div class="body">
+	<div id = "modelChangePassword">
+	
+	</div>
+	
+	<#assign columns=[
+		{
+			"name": staffManagementUiLabelMap.BkEunivFullName?j_string,
+			"data": "staffName"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivEmail?j_string,
+			"data": "staffEmail"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivDepartment?j_string,
+			"data": "departmentName"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivFaculty?j_string,
+			"data": "facultyName"
+		},
+    {
+			"name": "CV"?j_string,
+			"data": "staffId",
+      "render": 'function(value, name, dataColumns, id) {
+				return \'<a href="/bkeuniv/control/profile-science-pdf?sections=education-progress&sections=work-progress&sections=publications&sections=recent-5-year-projects&sections=award&sections=scientific-service&sections=projects-applied&sections=patent&sections=phd-defensed&sections=graduate-students&staffId=\'+value+\'" target="_blank">CV PDF</a>\';
+			}'
+		}
+	] />
+	
+	<#assign fields=[
+		"staffId",
+		"staffName",
+		"staffEmail",
+		"genderName",
+		"staffGenderId",
+		"staffDateOfBirth",
+		"staffPhone",
+		"departmentName",
+		"departmentId",
+		"facultyName",
+		"facultyId"
+		
+	] />
+	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	
+	<@jqDataTable
+		id="jqDataTable"
+		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs" 
+		columns=columns 
+		dataFields=fields
+		sizeTable=sizeTable
+		urlUpdate="/bkeuniv/control/update-a-staff" 
+		urlAdd="/bkeuniv/control/create-a-staff" 
+		urlDelete="/bkeuniv/control/remove-a-staff" 
+		keysId=["staffId"] 
+		fieldDataResult = "results" 
+		titleChange=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		titleNew=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		titleDelete=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		jqTitle=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		contextmenu=false
+		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
+	/>
+</div>
+
+
+
+<#--  
 
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
@@ -93,4 +178,4 @@ $(document).ready(function() {
   });
     
 } );
-</script>
+</script>  -->

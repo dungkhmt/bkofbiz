@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
@@ -34,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+
 import org.ofbiz.utils.BKEunivUtils;
 
 public class ResearchSpecialityManagement {
@@ -104,6 +106,10 @@ public class ResearchSpecialityManagement {
 			opts.setDistinct(true);
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 			
+			if(context.get("staffId") != null) {
+				userLoginId = (String) context.get("staffId");
+			}
+			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
 				String q = (String)parameters.get("q")[0];
@@ -121,6 +127,13 @@ public class ResearchSpecialityManagement {
 			if(filter != null) {
 				listAllConditions.add(filter);				
 			}
+			
+			Timestamp nowTimestamp = UtilDateTime.nowTimestamp();
+			List<EntityCondition> cond = new ArrayList<EntityCondition>();
+			cond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.GREATER_THAN, new Date(nowTimestamp.getTime())));
+			cond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.EQUALS, null));
+			
+			listAllConditions.add(EntityCondition.makeCondition(cond, EntityOperator.OR));
 			
 			listAllConditions.add(EntityCondition.makeCondition(EntityFunction.UPPER_FIELD("staffId"), EntityOperator.EQUALS, EntityFunction.UPPER(userLoginId)));
 			
@@ -145,12 +158,35 @@ public class ResearchSpecialityManagement {
 		try {
 			GenericValue userLogin = (GenericValue) context.get("userLogin");
 			String userLoginId = userLogin.getString("userLoginId");
+
+			Timestamp nowTimestamp = UtilDateTime.nowTimestamp();
+			List<EntityCondition> cond = new ArrayList<EntityCondition>();
+			cond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.GREATER_THAN, new Date(nowTimestamp.getTime())));
+			cond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.EQUALS, null));
+			
+			List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+			listAllConditions.add(EntityCondition.makeCondition(cond, EntityOperator.OR));
+			
+			listAllConditions.add(EntityCondition.makeCondition(EntityFunction.UPPER_FIELD("staffId"), EntityOperator.EQUALS, EntityFunction.UPPER(userLoginId)));
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			List<GenericValue> list = delegator.findList("StaffResearchSpeciality", 
+					condition,
+					null, null, 
+					null, false);
+			
+			for(GenericValue l: list) {
+				l.put("thruDate", new Date(nowTimestamp.getTime()));
+				delegator.store(l);
+			}
+			
+			
 			
 			String researchDomainId = (String) ((List) context.get("researchDomainId[]")).get(0);
 			String researchSubDomainSeqId = (String) ((List) context.get("researchSubDomainSeqId[]")).get(0);
 			String researchSpecialitySeqId = (String) ((List) context.get("researchSpecialitySeqId[]")).get(0);
 			
-			Long fromDate = (Long) context.get("fromDate");
 			
 			GenericValue gvs = delegator.makeValue("StaffResearchSpeciality");
 			String StaffResearchSpecialityId = delegator.getNextSeqId("StaffResearchSpeciality");
@@ -159,13 +195,9 @@ public class ResearchSpecialityManagement {
 			gvs.put("researchDomainId", researchDomainId);
 			gvs.put("researchSubDomainSeqId", researchSubDomainSeqId);
 			gvs.put("researchSpecialitySeqId", researchSpecialitySeqId);
-			System.out.println("Debug ::createStaffResearchSpeciality:"+userLoginId +", "+researchDomainId +", "+researchSubDomainSeqId +", "+researchSpecialitySeqId + ", " + fromDate.toString() + ", " + StaffResearchSpecialityId);
-			gvs.put("fromDate", new Date(fromDate));
+			System.out.println("Debug ::createStaffResearchSpeciality:"+userLoginId +", "+researchDomainId +", "+researchSubDomainSeqId +", "+researchSpecialitySeqId + ", "  + ", " + StaffResearchSpecialityId);
 			
-			if(context.containsKey("thruDate")) {
-				Long thruDate = (Long) context.get("thruDate");
-				gvs.put("thruDate", new Date(thruDate));		
-			}
+			gvs.put("fromDate", new Date(nowTimestamp.getTime()));
 			
 			delegator.create(gvs);
 			
@@ -193,8 +225,6 @@ public class ResearchSpecialityManagement {
 			String researchSubDomainSeqId = (String) ((List) context.get("researchSubDomainSeqId[]")).get(0);
 			String researchSpecialitySeqId = (String) ((List) context.get("researchSpecialitySeqId[]")).get(0);
 			
-			Long fromDate = (Long) context.get("fromDate");
-			Long thruDate = (Long) context.get("thruDate");
 			
 			GenericValue gv = delegator.findOne("StaffResearchSpeciality", UtilMisc.toMap("staffResearchSpecialityId",staffResearchSpecialityId), false);
 			if(gv != null){
@@ -203,11 +233,9 @@ public class ResearchSpecialityManagement {
 					return result;
 				}
 				
-				gv.put("fromDate", new Date(fromDate));
+				Timestamp nowTimestamp = UtilDateTime.nowTimestamp();
 				
-				if(context.containsKey("thruDate")) {
-					gv.put("thruDate", new Date(thruDate));				
-				}
+				gv.put("fromDate", new Date(nowTimestamp.getTime()));
 				
 				gv.put("researchDomainId", researchDomainId);
 				gv.put("researchSubDomainSeqId", researchSubDomainSeqId);
@@ -249,7 +277,12 @@ public class ResearchSpecialityManagement {
 					return result;
 				}
         		
-        		delegator.removeValue(gv);
+        		Timestamp nowTimestamp = UtilDateTime.nowTimestamp();
+				
+				gv.put("thruDate", new Date(nowTimestamp.getTime()));
+				
+				delegator.store(gv);
+        		
         		result.put("result", "Deleted record with id: " + staffResearchSpecialityId);
         	} else {
         		result.put("result", "Not found record with id: " + staffResearchSpecialityId);
