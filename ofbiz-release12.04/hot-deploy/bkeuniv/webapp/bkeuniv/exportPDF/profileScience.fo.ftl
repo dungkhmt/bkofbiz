@@ -634,36 +634,45 @@
 			<#switch section>
                 <#case "education-progress">
                     <#include "pdf-education-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "patent">
                     <#include "pdf-patents.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "projects-applied">
                     <#include "pdf-projects-applied.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "phd-defensed">
                     <#include "pdf-phd-defensed.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "graduate-students">
                     <#include "pdf-current-graduate-students.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "publications">
                     <#include "pdf-publications.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "work-progress">
                     <#include "pdf-business-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "recent-5-year-projects">
                     <#include "pdf-5-years-recent-projects.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "award">
                     <#include "pdf-awards.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "scientific-service">
                     <#include "pdf-scientific-service-experience.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
 			</#switch>
-	 		<#assign indexS=indexS+1 />
 	 	</#list>
 	</#if>
  	
