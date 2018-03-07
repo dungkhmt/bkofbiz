@@ -299,7 +299,7 @@ public class StaffService {
 			
 			List<GenericValue> listGenericValue = (List<GenericValue>)tmpList.getCompleteList();
 			tmpList.close();
-			
+			param.put("staffId", staffId);
 			Map<String, Object> result_srsd = dispatcher.runSync("JQGetListStaffResearchDomainManagement", param);
 			tmpList = (EntityListIterator) result_srsd.get("listIterator");
 			List<GenericValue> list_srsd = (List<GenericValue>)tmpList.getCompleteList();
@@ -311,11 +311,11 @@ public class StaffService {
 				for(String key: keys) {
 					s.put(key, s1.get(key));
 				}
+				s.put("check", false);
 				for(GenericValue s2: list_srsd) {
 					if(s1.get("researchDomainId").equals(s2.get("researchDomainId"))) {
 						s.put("check", true);
-					} else {
-						s.put("check", false);
+						break;
 					}
 				}
 				srsd.add(s);
@@ -332,8 +332,8 @@ public class StaffService {
 			param.put("opts", new EntityFindOptions(true,
 					EntityFindOptions.TYPE_SCROLL_INSENSITIVE,
 					EntityFindOptions.CONCUR_READ_ONLY, false));
-			
-			Map<String, Object> result_rss = dispatcher.runSync("JQGetListResearchSpecialityManagement", param);
+			param.put("staffId", staffId);
+			Map<String, Object> result_rss = dispatcher.runSync("JQGetListStaffResearchSpecialityManagement", param);
 			EntityListIterator tmpListRSS = (EntityListIterator) result_rss.get("listIterator");
 			
 			List<GenericValue> listGenericValueRSS = (List<GenericValue>)tmpListRSS.getCompleteList();

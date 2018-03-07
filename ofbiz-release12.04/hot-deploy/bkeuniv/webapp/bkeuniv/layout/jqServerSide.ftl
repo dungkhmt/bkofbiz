@@ -32,9 +32,9 @@
 				<#elseif (a?string)?index_of("function")==0>
 					${a?replace("\n|\t", "", "r")},
 				<#elseif a?is_string>
-					'${a?replace("\n|\t", "", "r")}',
+					'${a?j_string?replace("\n|\t", "", "r")}',
 				<#else>
-					'${a}',
+					${a},
 				</#if>
 			</#list>
 		</#if>
@@ -52,9 +52,9 @@
 				<#elseif (object[k]?string)?index_of("function") == 0>
 					'${k}': ${object[k]?replace("\n|\t", "", "r")},
 				<#elseif object[k]?is_string>
-					'${k}': '${object[k]?string?replace("\n|\t", "", "r")}',
+					'${k}': '${object[k]?j_string?replace("\n|\t", "", "r")}',
 				<#else>
-					'${k}': '${object[k]}',
+					'${k}': ${object[k]},
 				</#if>
 			</#list>
 		</#if>

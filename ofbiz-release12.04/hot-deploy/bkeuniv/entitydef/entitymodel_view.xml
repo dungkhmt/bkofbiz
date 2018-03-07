@@ -49,9 +49,6 @@
 		<view-link rel-entity-alias="F" entity-alias="D">
 			<key-map rel-field-name="facultyId" field-name="facultyId"/>
 		</view-link>
-		
-		
-		
 	</view-entity>
 	
 	<view-entity entity-name="StaffResearchDomainView" package-name="org.ofbiz.bkeuniv">

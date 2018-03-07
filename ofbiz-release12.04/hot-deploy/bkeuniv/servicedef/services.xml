@@ -43,6 +43,7 @@
  -->    
  
  	<service name="jqxGetListInterface" engine="interface" >
+ 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
    		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
    		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
    		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>

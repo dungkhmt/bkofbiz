@@ -122,8 +122,6 @@
     <service name="createStaffResearchDomain" engine="java" 
     		location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement" invoke="createStaffResearchDomain">
     	<attribute name="researchDomainId[]" mode="IN" type="List"></attribute>
-    	<attribute name="fromDate" mode="IN" type="Long"></attribute>
-    	<attribute name="thruDate" mode="IN" type="Long" optional="true"></attribute>
     	
     	<attribute name="results" mode="OUT" type="java.util.Map" optional="true"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -133,8 +131,6 @@
     		location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement" invoke="updateStaffResearchDomain">
     	<attribute name="staffResearchDomainId" mode="IN" type="String"></attribute>
     	<attribute name="researchDomainId[]" mode="IN" type="List"></attribute>
-    	<attribute name="fromDate" mode="IN" type="Long"></attribute>
-    	<attribute name="thruDate" mode="IN" type="Long" optional="true"></attribute>
     	
     	<attribute name="results" mode="OUT" type="java.util.Map" optional="true"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -152,8 +148,6 @@
     	<attribute name="researchDomainId[]" mode="IN" type="List"></attribute>
     	<attribute name="researchSubDomainSeqId[]" mode="IN" type="List"></attribute>
     	<attribute name="researchSpecialitySeqId[]" mode="IN" type="List"></attribute>
-    	<attribute name="fromDate" mode="IN" type="Long"></attribute>
-    	<attribute name="thruDate" mode="IN" type="Long" optional="true"></attribute>
     	
     	<attribute name="results" mode="OUT" type="java.util.Map" optional="true"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -165,8 +159,6 @@
     	<attribute name="researchDomainId[]" mode="IN" type="List"></attribute>
     	<attribute name="researchSubDomainSeqId[]" mode="IN" type="List"></attribute>
     	<attribute name="researchSpecialitySeqId[]" mode="IN" type="List"></attribute>
-    	<attribute name="fromDate" mode="IN" type="Long"></attribute>
-    	<attribute name="thruDate" mode="IN" type="Long" optional="true"></attribute>
     	
     	<attribute name="results" mode="OUT" type="java.util.Map" optional="true"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>

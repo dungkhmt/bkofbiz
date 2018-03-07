@@ -237,7 +237,7 @@
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
 			    	<#assign stt=stt+1 />
-
+<#assign researchDomain = resultCV.cv.researchDomain />
 		        <fo:table-cell>
 		          <fo:block font-weight="bold">${ResearchDomain}</fo:block>
 		        </fo:table-cell>
@@ -246,7 +246,7 @@
 		  </fo:table>
         </fo:table-cell>
       </fo:table-row>
-      
+
       <fo:table-row>
         <fo:table-cell height="20pt" display-align="center" border-style="dotted" border-left-style = "solid" 
         border-right-style = "solid" >
@@ -294,9 +294,6 @@
 												</fo:table-row>
 											</fo:table-body>
 										</fo:table>
-									<#--  <fo:block font-size="14pt" border-style="solid" font-family="wingdings" >
-												&#254;
-									</fo:block>  -->
 									<#else>
 									<fo:table table-layout="fixed">
 										<fo:table-column column-width="proportional-column-width(1)"/>
@@ -362,6 +359,7 @@
 		  
         </fo:table-cell>
       </fo:table-row>
+			
       <#assign researchSpeciality = resultCV.cv.researchSpeciality />
       <fo:table-row>
        	<fo:table-cell height="20pt" display-align="center" border-left-style="solid" border-right-style= "solid" border-bottom-style="dotted" >
@@ -417,7 +415,7 @@
 					</fo:table>
         </fo:table-cell>
       </fo:table-row>
-      
+
       
       
       <fo:table-row>
@@ -636,36 +634,45 @@
 			<#switch section>
                 <#case "education-progress">
                     <#include "pdf-education-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "patent">
                     <#include "pdf-patents.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "projects-applied">
                     <#include "pdf-projects-applied.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "phd-defensed">
                     <#include "pdf-phd-defensed.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "graduate-students">
                     <#include "pdf-current-graduate-students.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "publications">
                     <#include "pdf-publications.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "work-progress">
                     <#include "pdf-business-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "recent-5-year-projects">
                     <#include "pdf-5-years-recent-projects.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "award">
                     <#include "pdf-awards.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "scientific-service">
                     <#include "pdf-scientific-service-experience.fo.ftl"/>
+										<#assign indexS=indexS+1 />
                     <#break>
 			</#switch>
-	 		<#assign indexS=indexS+1 />
 	 	</#list>
 	</#if>
  	

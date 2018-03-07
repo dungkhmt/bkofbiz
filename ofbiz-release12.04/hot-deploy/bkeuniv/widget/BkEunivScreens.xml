@@ -494,7 +494,7 @@
 			<actions>
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
 				<service service-name="getAllStaffs" result-map="resultStaffs"></service>
-				
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -589,8 +589,8 @@
 				<set field="idxRecent5YearProjects" from-field="${parameters.idxRecent5YearProjects}" type="Integer" default-value="-1"/>
 				<set field="idxAward" from-field="${parameters.idxAward}" type="Integer" default-value="-1"/>
 				<set field="idxScientificService" from-field="${parameters.idxScientificService}" type="Integer" default-value="-1"/> -->
-				<!-- <set field="staffId" from-field="${parameters.staffId}"/> -->
-				<!-- 
+				<set field="staffId" from-field="parameters.staffId"/> -->
+				
 				<service service-name="getEducationProgressOfLoginStaff" result-map="educationProgress"></service>
 				 -->
 				 <service service-name="getCVProfileOfStaff" result-map="resultCV">
