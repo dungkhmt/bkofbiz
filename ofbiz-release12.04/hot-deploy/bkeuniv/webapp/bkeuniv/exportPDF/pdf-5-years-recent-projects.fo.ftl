@@ -67,50 +67,7 @@
 					</fo:table-cell>
 					
 				</fo:table-row>	
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+				
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
 					<fo:table-cell />
@@ -155,30 +112,7 @@
 					<fo:table-cell >
 						<fo:block>${Status2}</fo:block>
 					</fo:table-cell>
-				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+				</fo:table-row>
 				
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT

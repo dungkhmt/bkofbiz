@@ -8,32 +8,32 @@
 	<#assign BkEunivYearAcademic="" />
 	<#assign BkEunivDegree="" />
 	<#assign BkEunivYearDegree="" />
-	<#assign ResearchDomain="Linh vuc nghien cuu trong 5 nam gan day" />
+	<#assign ResearchDomain=uiLabelMap.BkEunivRecentResearchDomain />
 	<#assign NatureScience="Khoa hoc va tu nhien"/>
 	<#assign ScienceAndTechnology="Khoa hoc Ky thuat va Cong nghe"/>
 	<#assign MedicalScience="Khoa hoc Y duoc"/>
 	<#assign SocialScience="Khoa hoc Xa hoi"/>
 	<#assign HumanScience="Khoa hoc Nhan van"/>
 	<#assign AgriculturalScience="Khoa hoc Nong nghiep"/>
-	<#assign CodeOfScience="Ma chuyen nganh KH-CN"/>
+	<#assign CodeOfScience=uiLabelMap.BkEunivCodeOfScience/>
 	<#assign BkEunivNumber=""/>
 	<#assign BkEunivName=""/>
 	<#assign Additional=""/>
-	<#assign BkEunivResearchSpecial=" "/>	
-	<#assign BkEunivCurrentPosition=" "/>	
-	<#assign BkEunivAdrressHome="Dia chi nha rieng "/>
+	<#assign BkEunivResearchSpecial=" "/>
+	<#assign BkEunivCurrentPosition=" "/>
+	<#assign BkEunivAdrressHome=uiLabelMap.BkEunivAdrressHome/>
 	<#assign BkEunivPhoneAddress = ""/>	
 	<#assign BkEunivCQ = ""/>	
 	<#assign BkEunivMobile = ""/>
 	<#assign BkEunivEmail = ""/>	
-	<#assign agencyWork = "Co quan cong tac"/>
+	<#assign agencyWork = uiLabelMap.BkEunivAgencyWork/>
 	<#assign BkEunivCompanyName = "" />
 	<#assign BkEunivNameLeader = "" />
 	<#assign BkEunivCompanyAddress = "" />
 	<#assign BkEnuivPhone = "" />
 	<#assign BkEnuivFax = "" />
-	<#assign EducationProgress = "Qua trinh dao tao" />
-	<#assign ForeignLanguage = "Trinh do ngoai ngu (moi muc de nghi ghi ro muc do: Tot/Kha/TB)" /> 
+	<#assign EducationProgress = uiLabelMap.BkEunivEducationProgress />
+	<#assign ForeignLanguage = uiLabelMap.BkEunivForeignLanguageSuggest /> 
 	<#assign EducationType = "Bac dao tao" />
 	<#assign Institution = "Noi dao tao" />
 	<#assign Speciality = "Chuyen nganh" />
@@ -410,6 +410,30 @@
 								</fo:table-row>
 
 							</#list>
+
+							<#if researchSpeciality?size==0>
+								<fo:table-row>
+									<fo:table-cell />
+
+									<fo:table-cell >
+										<fo:block>${CodeOfScience}</fo:block>
+									</fo:table-cell>
+
+									<fo:table-cell />
+									
+									<#list 1..5 as idx>
+										<fo:table-cell padding="3" border-style="solid">
+											<fo:block text-align="center"></fo:block>
+										</fo:table-cell>
+									</#list>
+									<fo:table-cell />
+									
+									<fo:table-cell padding="1">
+										<fo:block>${uiLabelMap.BkEunivName}: </fo:block>
+									</fo:table-cell>
+									
+								</fo:table-row>
+							</#if>
 							
 						</fo:table-body>
 					</fo:table>

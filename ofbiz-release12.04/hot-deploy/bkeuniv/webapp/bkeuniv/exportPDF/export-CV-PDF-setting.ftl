@@ -6,136 +6,6 @@
 	<script src="/resource/bkeuniv/js/lib/dragula.min.js"></script>
 </head>
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
-<#--  
-<div id="form-setting-export-cv-pdf">
-<table>
-<tr>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	Qua trinh dao tao
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="education-progess" style="width: 100%" type="text" width="1000" 
-		value="1"/>
-	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	Sang che
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="patent" style="width: 100%" type="text" width="1000" 
-		value="8"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	De tai, du an co ung dung trong thuc te
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="projects-applied" style="width: 100%" type="text" width="1000" 
-		value="7"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	NCS da bao ve thanh cong
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="phd-defensed" style="width: 100%" type="text" width="1000" 
-		value="9"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	NCS, hoc vien cao hoc dang huong dan
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="current-graduate-students" style="width: 100%" type="text" width="1000" 
-		value="10"/>
-	</div>
-</div>
-</td>
-
-</tr>
-
-<tr>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	Cong trinh khoa hoc cong bo
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="publications" style="width: 100%" type="text" width="1000" 
-		value="3"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	Qua trinh cong tac
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="work-progress" style="width: 100%" type="text" width="1000" 
-		value="2"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	De tai, du an, nhiem vu KHCN da chu tri 5 nam gan day
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="recent5year-projects" style="width: 100%" type="text" width="1000" 
-		value="4"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	Giai thuong KHCN
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="award" style="width: 100%" type="text" width="1000" 
-		value="5"/>
-	</div>
-</div>
-</td>
-
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	Kinh nghiem quan ly, danh gia KHCN
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="scientific-service" style="width: 100%" type="text" width="1000" 
-		value="6"/>
-	</div>
-</div>
-</td>
-
-</tr>
-
-</table>  -->
-
 
 <body>
 <style>
@@ -165,91 +35,97 @@
 						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
 							<path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"></path>
 						</svg>
-						Xuat PDF
+						${uiLabelMap.BkEunivExportPDF}
 					</@FlatButton>
 				</div>
 			</div>
 			
 		<div class='wrapper row'>
-			<ul id='left-events' style="border: solid 1px #00000038; padding-right: 0px; min-height: 600px;" class="col-sm-6 collapsible collapsible-accordion" data-collapsible="accordion">
+			<div class="col-sm-6" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; text-align: center; font-size: 16px; font-weight: 500; padding: 0.7em;">
+				${uiLabelMap.BkEunivSectionOrder}
+			</div>
+			<div class="col-sm-6" style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; text-align: center; font-size: 16px; font-weight: 500; padding: 0.7em;">
+				${uiLabelMap.BkEunivSectionList}
+			</div>
+			<ul id='left-events' style="margin: 0;border: solid 1px #00000038; padding-right: 0px; min-height: 600px;" class="col-sm-6 collapsible collapsible-accordion" data-collapsible="accordion">
 				<li style="list-style-type: none;" id="information">
-					<div class="collapsible-header" style="background-color: #0000000d;"><div class="index">1.&nbsp;</div> Thong tin co ban</div>
+					<div class="collapsible-header" style="background-color: #0000000d;"><div class="index">1.&nbsp;</div>${uiLabelMap.BkEunivBasicInformation}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/Infor.png" alt="Thong tin co ban" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/Infor.png" alt="${uiLabelMap.BkEunivBasicInformation}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="education-progress">
-					<div class="collapsible-header"><div class="index">2.&nbsp;</div>Qua trinh dao tao</div>
+					<div class="collapsible-header"><div class="index">2.&nbsp;</div>${uiLabelMap.BkEunivEducationProgress}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/education-progress.png" alt="Qua trinh dao tao" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/education-progress.png" alt="${uiLabelMap.BkEunivEducationProgress}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="work-progress">
-					<div class="collapsible-header"><div class="index">3.&nbsp;</div> Qua trinh cong tac</div>
+					<div class="collapsible-header"><div class="index">3.&nbsp;</div>${uiLabelMap.BkEunivWorkProgress}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/work-progress.png" alt="Qua trinh cong tac" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/work-progress.png" alt="${uiLabelMap.BkEunivWorkProgress}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="publications">
-					<div class="collapsible-header"><div class="index">4.&nbsp;</div> Cong trinh khoa hoc cong bo</div>
+					<div class="collapsible-header"><div class="index">4.&nbsp;</div>${uiLabelMap.BkEunivPublications}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/publications.png" alt="Cong trinh khoa hoc cong bo" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/publications.png" alt="${uiLabelMap.BkEunivPublications}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="recent5year-projects">
-					<div class="collapsible-header"><div class="index">5.&nbsp;</div> De tai, du an, nhiem vu KHCN da chu tri 5 nam gan day</div>
+					<div class="collapsible-header"><div class="index">5.&nbsp;</div>${uiLabelMap.BkEunivRecent5YearProjects}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/recent5year-projects.png" alt="De tai, du an, nhiem vu KHCN da chu tri 5 nam gan day" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/recent5year-projects.png" alt="${uiLabelMap.BkEunivRecent5YearProjects}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="award">
-					<div class="collapsible-header"><div class="index">6.&nbsp;</div> Giai thuong KHCN</div>
+					<div class="collapsible-header"><div class="index">6.&nbsp;</div>${uiLabelMap.BkEunivAward}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/award.png" alt="Giai thuong KHCN" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/award.png" alt="${uiLabelMap.BkEunivAward}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="scientific-service">
-					<div class="collapsible-header"><div class="index">7.&nbsp;</div> Kinh nghiem quan ly, danh gia KHCN</div>
+					<div class="collapsible-header"><div class="index">7.&nbsp;</div>${uiLabelMap.BkEunivScientificService}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/scientific-service.png" alt="Kinh nghiem quan ly, danh gia KHCN" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/scientific-service.png" alt="${uiLabelMap.BkEunivScientificService}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="projects-applied">
-					<div class="collapsible-header"><div class="index">8.&nbsp;</div> De tai, du an co ung dung trong thuc te</div>
+					<div class="collapsible-header"><div class="index">8.&nbsp;</div>${uiLabelMap.BkEunivProjectsApplied}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/projects-applied.png" alt="De tai, du an co ung dung trong thuc te" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/projects-applied.png" alt="${uiLabelMap.BkEunivProjectsApplied}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="patent">
-					<div class="collapsible-header"><div class="index">9.&nbsp;</div> Sang che</div>
+					<div class="collapsible-header"><div class="index">9.&nbsp;</div>${uiLabelMap.BkEunivPatent}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/patent.png" alt="Sang che" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/patent.png" alt="${uiLabelMap.BkEunivPatent}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="phd-defensed">
-					<div class="collapsible-header"><div class="index">10.&nbsp;</div> NCS da bao ve thanh cong</div>
+					<div class="collapsible-header"><div class="index">10.&nbsp;</div>${uiLabelMap.BkEunivPHDDefensed}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/phd-defensed.png" alt="NCS da bao ve thanh cong" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/phd-defensed.png" alt="${uiLabelMap.BkEunivPHDDefensed}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="graduate-students">
-					<div class="collapsible-header"><div class="index">11.&nbsp;</div> NCS, hoc vien cao hoc dang huong dan</div>
+					<div class="collapsible-header"><div class="index">11.&nbsp;</div>${uiLabelMap.BkEunivGraduateStudents}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/current-graduate-students.png" alt="NCS, hoc vien cao hoc dang huong dan" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/current-graduate-students.png" alt="${uiLabelMap.BkEunivGraduateStudents}" height="auto" width="100%">
 					</div>
 				</li>
 			</ul>
-			<div id='right-events' style="border: solid 1px #00000038; padding-right: 0px; padding-left: 0px; min-height: 600px;" class="col-sm-6 collapsible collapsible-accordion" data-collapsible="accordion">
+			<div id='right-events' style="margin: 0;border: solid 1px #00000038; padding-right: 0px; padding-left: 0px; min-height: 600px;" class="col-sm-6 collapsible collapsible-accordion" data-collapsible="accordion">
 			</div>
 		</div>
 		<script>
