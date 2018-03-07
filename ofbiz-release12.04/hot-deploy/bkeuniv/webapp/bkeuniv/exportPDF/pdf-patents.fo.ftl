@@ -98,10 +98,19 @@
 								<fo:block ></fo:block>
 							</#if>
 						</fo:table-cell>
-					
-					</fo:table-row>	
-
+					</fo:table-row>
 				</#list>
+
+					<fo:table-row height="20pt" >
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted"/>
+					</fo:table-row>
 				
 				
 			</fo:table-body>

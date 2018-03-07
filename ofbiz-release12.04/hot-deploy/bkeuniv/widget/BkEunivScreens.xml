@@ -576,6 +576,7 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
 				<set field="sections" from-field="parameters.sections" type="List"/>
 				
 				<!-- <set field="idxEducationProgress" from-field="${parameters.idxEducationProgress}" type="Integer" default-value="-1"/>

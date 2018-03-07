@@ -122,6 +122,21 @@
 					</fo:table-row>	
 					
 				</#list>
+
+					<fo:table-row height="20pt" >
+						//STT
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted"/>
+					</fo:table-row>	
 			
 				
 			</fo:table-body>
