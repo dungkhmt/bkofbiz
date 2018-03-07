@@ -31,7 +31,9 @@
 		},
 		{
 			"name": sseLabels.BkEunivSSESQuantity?j_string,
-			"value": "quantity"
+			"value": "quantity",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong nho hon 999"
 		}
 	] />
 	
@@ -42,7 +44,9 @@
 		},
 		{
 			"name": sseLabels.BkEunivSSESQuantity?j_string,
-			"value": "quantity"
+			"value": "quantity",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong nho hon 999"
 		}
 	] />
 	
