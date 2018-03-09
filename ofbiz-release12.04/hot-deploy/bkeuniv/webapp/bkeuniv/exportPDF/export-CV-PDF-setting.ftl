@@ -1,9 +1,5 @@
-
 <head>
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dragula.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/materialize.min.css">
-	<script src="/resource/bkeuniv/js/lib/materialize.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/dragula.min.js"></script>
 </head>
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
@@ -76,7 +72,7 @@
 					</div>
 				</li>
 
-				<li style="list-style-type: none;" id="recent5year-projects">
+				<li style="list-style-type: none;" id="recent-5-year-projects">
 					<div class="collapsible-header"><div class="index">5.&nbsp;</div>${uiLabelMap.BkEunivRecent5YearProjects}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/recent5year-projects.png" alt="${uiLabelMap.BkEunivRecent5YearProjects}" height="auto" width="100%">

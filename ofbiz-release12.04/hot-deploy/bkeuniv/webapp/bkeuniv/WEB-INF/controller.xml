@@ -571,8 +571,7 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
-	
-	<request-map uri="staff-research-domain">
+	<request-map uri="research-domain-staff">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-staff-research-domain"></response>
     </request-map>
