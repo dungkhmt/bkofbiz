@@ -9,12 +9,13 @@
     <copyright></copyright>
     <version></version>
 
-
+	
 	<entity entity-name="OfficialDocumentTypes" package-name="org.ofbiz.bkeuniv">
 		<field name="officialDocumentTypeId" type="id-vlong"></field>
 		<field name="officialDocumentTypeName" type="very-long"></field>
 		<prim-key field="officialDocumentTypeId"/>
-	</entity>	
+	</entity>
+		
 	<entity entity-name="OfficialDocuments" package-name="org.ofbiz.bkeuniv">
 		<field name="officialDocumentId" type="id-ne"></field>
 		<field name="officialDocumentName" type="very-long"></field>

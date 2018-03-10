@@ -17,7 +17,7 @@
     
     <property key="BkEunivPaperAuthors">
         <value xml:lang="en">Authors</value>
-        <value xml:lang="vi">Tác giả</value>
+        <value xml:lang="vi">Tác giả (cách nhau bởi dấu phảy)</value>
     </property>
     
     <property key="BkEunivPaperCategory">
@@ -32,7 +32,7 @@
    
     <property key="BkEunivPaperVolumn">
         <value xml:lang="en">Volumn</value>
-        <value xml:lang="vi">Số</value>
+        <value xml:lang="vi">Số, Trang (ví dụ: vol. 21, pp 13-25)</value>
     </property>
    
     <property key="BkEunivPaperISSN">

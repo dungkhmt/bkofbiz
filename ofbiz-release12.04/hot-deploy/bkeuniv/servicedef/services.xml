@@ -118,7 +118,7 @@
     
      <service name="createAward" engine="java" 
     		location="org.ofbiz.bkeuniv.award.Award" invoke="createAward">
-    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="description" mode="IN" type="String"></attribute>
     	<attribute name="year" mode="IN" type="String"></attribute>
     	
@@ -129,7 +129,7 @@
     <service name="updateAward" engine="java" 
     		location="org.ofbiz.bkeuniv.award.Award" invoke="updateAward">
     	<attribute name="awardId" mode="IN" type="String"></attribute>
-    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="description" mode="IN" type="String"></attribute>
     	<attribute name="year" mode="IN" type="String"></attribute>
     	

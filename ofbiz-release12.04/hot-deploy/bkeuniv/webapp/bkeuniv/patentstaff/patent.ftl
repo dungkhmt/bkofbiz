@@ -32,13 +32,17 @@
 			"name": uiPatentLabelMap.BkEunivPatentName?j_string,
 			"value": "patentName"
 		},
+		<!--
 		{
 			"name": uiPatentLabelMap.BkEunivStaffId?j_string,
 			"value": "staffId"
 		},
+		-->
 		{
 			"name": uiPatentLabelMap.BkEunivYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "Nam phai la so nguyen duong"
 		}
 	]/>
 	
@@ -47,13 +51,17 @@
 			"name": uiPatentLabelMap.BkEunivPatentName?j_string,
 			"value": "patentName"
 		},
+		<!--
 		{
 			"name": uiPatentLabelMap.BkEunivStaffId?j_string,
 			"value": "staffId"
 		},
+		-->
 		{
 			"name": uiPatentLabelMap.BkEunivYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "Nam phai la so nguyen duong"
 		}
 	] />
 	
