@@ -287,6 +287,12 @@
         <value xml:lang="en">Foreign language</value>
         <value xml:lang="vi">Trình độ ngoại ngữ (mỗi mục đề nghị ghi rõ mục đó: Tốt/Khá/TB)</value>
     </property>
+
+    <property key="BkEunivSetting">
+        <value xml:lang="en">Setting</value>
+        <value xml:lang="vi">Thiết lập cài đặt</value>
+    </property>
+    
 <!--     
     <property key="BkEunivBudget">
         <value xml:lang="en">Budget</value>

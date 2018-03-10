@@ -1,14 +1,6 @@
-<head>
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/materialize.min.css">
-</head>
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
 <body>
-<style>
-	.index {
-		font-weight: bold;
-	}
-</style>
 
 <div class="body">
 	<div style="flex: 1 1 0%; padding: 2em 3em 6em 3em; width: 100%;overflow-y: auto; height: 100%;background-color: rgb(237, 236, 236);">
@@ -45,77 +37,77 @@
 			</div>
 			<ul id='left-events' style="margin: 0;border: solid 1px #00000038; padding-right: 0px; min-height: 600px;" class="col-sm-6 collapsible collapsible-accordion" data-collapsible="accordion">
 				<li style="list-style-type: none;" id="information">
-					<div class="collapsible-header" style="background-color: #0000000d;"><div class="index">1.&nbsp;</div>${uiLabelMap.BkEunivBasicInformation}</div>
+					<div class="collapsible-header" style="background-color: #0000000d;"><div style="font-weight: bold;">1.&nbsp;</div>${uiLabelMap.BkEunivBasicInformation}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/Infor.png" alt="${uiLabelMap.BkEunivBasicInformation}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="education-progress">
-					<div class="collapsible-header"><div class="index">2.&nbsp;</div>${uiLabelMap.BkEunivEducationProgress}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">2.&nbsp;</div>${uiLabelMap.BkEunivEducationProgress}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/education-progress.png" alt="${uiLabelMap.BkEunivEducationProgress}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="work-progress">
-					<div class="collapsible-header"><div class="index">3.&nbsp;</div>${uiLabelMap.BkEunivWorkProgress}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">3.&nbsp;</div>${uiLabelMap.BkEunivWorkProgress}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/work-progress.png" alt="${uiLabelMap.BkEunivWorkProgress}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="publications">
-					<div class="collapsible-header"><div class="index">4.&nbsp;</div>${uiLabelMap.BkEunivPublications}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">4.&nbsp;</div>${uiLabelMap.BkEunivPublications}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/publications.png" alt="${uiLabelMap.BkEunivPublications}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="recent-5-year-projects">
-					<div class="collapsible-header"><div class="index">5.&nbsp;</div>${uiLabelMap.BkEunivRecent5YearProjects}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">5.&nbsp;</div>${uiLabelMap.BkEunivRecent5YearProjects}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/recent5year-projects.png" alt="${uiLabelMap.BkEunivRecent5YearProjects}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="award">
-					<div class="collapsible-header"><div class="index">6.&nbsp;</div>${uiLabelMap.BkEunivAward}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">6.&nbsp;</div>${uiLabelMap.BkEunivAward}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/award.png" alt="${uiLabelMap.BkEunivAward}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="scientific-service">
-					<div class="collapsible-header"><div class="index">7.&nbsp;</div>${uiLabelMap.BkEunivScientificService}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">7.&nbsp;</div>${uiLabelMap.BkEunivScientificService}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/scientific-service.png" alt="${uiLabelMap.BkEunivScientificService}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="projects-applied">
-					<div class="collapsible-header"><div class="index">8.&nbsp;</div>${uiLabelMap.BkEunivProjectsApplied}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">8.&nbsp;</div>${uiLabelMap.BkEunivProjectsApplied}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/projects-applied.png" alt="${uiLabelMap.BkEunivProjectsApplied}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="patent">
-					<div class="collapsible-header"><div class="index">9.&nbsp;</div>${uiLabelMap.BkEunivPatent}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">9.&nbsp;</div>${uiLabelMap.BkEunivPatent}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/patent.png" alt="${uiLabelMap.BkEunivPatent}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="phd-defensed">
-					<div class="collapsible-header"><div class="index">10.&nbsp;</div>${uiLabelMap.BkEunivPHDDefensed}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">10.&nbsp;</div>${uiLabelMap.BkEunivPHDDefensed}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/phd-defensed.png" alt="${uiLabelMap.BkEunivPHDDefensed}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="graduate-students">
-					<div class="collapsible-header"><div class="index">11.&nbsp;</div>${uiLabelMap.BkEunivGraduateStudents}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">11.&nbsp;</div>${uiLabelMap.BkEunivGraduateStudents}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/current-graduate-students.png" alt="${uiLabelMap.BkEunivGraduateStudents}" height="auto" width="100%">
 					</div>
@@ -156,7 +148,6 @@
 					params.push('sections=' + el.id);
 				});
 				window.open("/bkeuniv/control/profile-science-pdf?" + params.join("&"), "_blank");
-				window.location.href="/bkeuniv/control/profile-science-pdf?"+sections.map(function(s) { return "sections="+s.name }).join("&");
 			}
 		</script>
 		</div>
@@ -167,67 +158,5 @@
 			$('.collapsible').collapsible();
 		});
 	</script>
-
-	<#--  <@buttonConfirm text="${uiLabelMap.viewPDF}" action="viewPDF"/>  -->
 	</div>
-
-	<script>
-	function viewPDF(){
-
-		var sections=[
-			{
-				name: "education-progress",
-				index: document.getElementById("education-progess").value
-			},
-			{
-				name: "patent",
-				index: document.getElementById("patent").value
-			},
-			{
-				name: "projects-applied",
-				index: document.getElementById("projects-applied").value
-			},
-			{
-				name: "phd-defensed",
-				index: document.getElementById("phd-defensed").value
-			},
-			{
-				name: "graduate-students",
-				index: document.getElementById("current-graduate-students").value
-			},
-			{
-				name: "publications",
-				index: document.getElementById("publications").value
-			},
-			{
-				name: "work-progress",
-				index: document.getElementById("work-progress").value
-			},
-			{
-				name: "recent-5-year-projects",
-				index: document.getElementById("recent5year-projects").value
-			},
-			{
-				name: "award",
-				index: document.getElementById("award").value
-			},
-			{
-				name: "scientific-service",
-				index: document.getElementById("scientific-service").value
-			}
-		];
-
-		sections = sections.map(function(section) {
-			section.index=parseInt(section.index)
-			return section
-		}).filter(function(section) {
-			return !!section.index
-		}).sort(function(a, b) {
-			return a.index - b.index
-		})
-
-		window.location.href="/bkeuniv/control/profile-science-pdf?"+sections.map(function(s) { return "sections="+s.name }).join("&");
-	}
-
-	</script>
 </div>

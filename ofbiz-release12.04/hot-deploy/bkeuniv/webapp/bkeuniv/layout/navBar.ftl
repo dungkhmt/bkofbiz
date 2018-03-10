@@ -1,9 +1,9 @@
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/button.ftl"/>
 <#assign pageName = "H&#x1EC7; th&#x1ED1;ng qu&#x1EA3;n l&#xFD; khoa h&#x1ECD;c c&#xF4;ng ngh&#x1EC7;" />
 
-<#if title??>
+<#--  <#if title??>
 	<#assign pageName = uiLabelMap[title] />
-</#if>
+</#if>  -->
 <div class="nav">
 	<span class="icon-side-bar" onClick="openSideBar()">
 		<@IconButton id="side-bar-199921" size="40px" icon="M4 15h16v-2H4v2zm0 4h16v-2H4v2zm0-8h16V9H4v2zm0-6v2h16V5H4z" style="height: 40px">
@@ -13,7 +13,7 @@
 	</span>
 
 	<div class="app-name">
-		<h1 style="font-size: 1.7vw;">${pageName}</h1>
+		<h1 style="font-size: 1.5vw;">${pageName}</h1>
 	</div>
 	<div class="change-language">
 		<select id="select-language" onchange="changeLanguage()" placeholder="Select a language...">

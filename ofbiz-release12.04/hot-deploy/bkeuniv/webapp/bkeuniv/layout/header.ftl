@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dragula.css">
-		
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/materialize.min.css">
 		<!-- import css -->
 		<#list layoutSettings.stylesheets as sheet>
 			<link rel="stylesheet" href="${StringUtil.wrapString(sheet)}">
