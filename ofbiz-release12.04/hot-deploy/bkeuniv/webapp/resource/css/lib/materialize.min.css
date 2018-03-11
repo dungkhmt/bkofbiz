@@ -6554,13 +6554,13 @@ form p:last-child {
     margin-bottom: 0
 }
 
-[type="checkbox"]:not(:checked),
+/* [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
     position: absolute;
     opacity: 0;
     pointer-events: none
-}
-
+} */
+/* 
 [type="checkbox"]+label {
     position: relative;
     padding-left: 35px;
@@ -6744,7 +6744,7 @@ form p:last-child {
 [type="checkbox"].filled-in:disabled:checked+label:after {
     background-color: #949494;
     border-color: #949494
-}
+} */
 
 .switch,
 .switch * {
