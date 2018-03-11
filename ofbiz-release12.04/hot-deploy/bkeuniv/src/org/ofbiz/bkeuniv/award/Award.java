@@ -42,6 +42,9 @@ public class Award {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
 		String staffId = (String) context.get("staffId");
+		if(staffId == null){
+			staffId = (String)userLogin.getString("userLoginId");
+		}
 		String description = (String) context.get("description");
 		String year = (String) context.get("year");
 		
@@ -54,7 +57,7 @@ public class Award {
 			
 			delegator.create(gv);
 		}catch(Exception ex){
-			System.out.println("aaa");
+			//System.out.println("aaa");
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
@@ -113,7 +116,8 @@ public class Award {
 			return result;
 		
 		} catch (Exception e) {
-			System.out.print("Error");
+			//System.out.print("Error");
+			e.printStackTrace();
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}
@@ -150,10 +154,13 @@ public class Award {
 		
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatch = ctx.getDispatcher();
-		
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		String description = (String) context.get("description");
 		String year = (String) context.get("year");
 		String staffId = (String) context.get("staffId");
+		if(staffId == null){
+			staffId = (String)userLogin.getString("userLoginId");
+		}
 		String awardId = (String) context.get("awardId");
 		
 		try{

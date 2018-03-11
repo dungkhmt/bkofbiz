@@ -88,6 +88,9 @@ public class patentStaff {
 		
 		String patentName = (String) context.get("patentName");
 		String staffId = (String) context.get("staffId");
+		if(staffId == null){
+			staffId = (String)userLogin.getString("userLoginId");
+		}
 		String year = (String) context.get("year");
 		
 		GenericValue gv = delegator.makeValue("Patent");
@@ -141,10 +144,13 @@ public class patentStaff {
 		
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatch = ctx.getDispatcher();
-		
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		String patentName = (String) context.get("patentName");
 		String year = (String) context.get("year");
 		String staffId = (String) context.get("staffId");
+		if(staffId == null){
+			staffId = (String)userLogin.getString("userLoginId");
+		}
 		String patentId = (String) context.get("patentId");
 		
 		try{

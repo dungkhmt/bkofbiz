@@ -210,7 +210,7 @@
     
     <property key="BkEunivSectionList">
         <value xml:lang="en">Section list</value>
-        <value xml:lang="vi">Danh sách đề mục</value>
+        <value xml:lang="vi">Danh sách đề mục không hiển thị</value>
     </property>
     
     <property key="BkEunivEducationProgress">

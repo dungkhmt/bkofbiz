@@ -676,7 +676,9 @@
 				"source": sourceAcademicYear,
 				"maxItem": 1
 			}
-		},
+		}
+		<!--
+		,
 		{
 			"name": "Up load file",
 			"value": "fileName",
@@ -688,6 +690,7 @@
 				return getDataFile(id);
 			}'
 		}
+		-->
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />

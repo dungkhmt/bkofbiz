@@ -10,6 +10,11 @@
 			"name": uiLabelMap.BkEunivFromDate?j_string,
 			"data": "fromDate",
 			"type": "date"
+		},
+		{
+			"name": uiLabelMap.BkEunivThruDate?j_string,
+			"data": "thruDate",
+			"type": "date"
 		}
 	] />
 
