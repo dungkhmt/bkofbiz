@@ -68,28 +68,36 @@
 					
 				</fo:table-row>	
 				
+				<#assign index = 0>
+				<#list resultCV.cv.projects_role_director as p>
+					<#assign index = index + 1>
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
+						<fo:block >${p.projectName}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<fo:block>${p.startDate} - ${p.endDate}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<#if p.researchProgram?exists>
+							<fo:block>${p.researchProgram}</fo:block>
+						<#else>
+							<fo:block></fo:block>
+						</#if>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
+						<fo:block>${p.projectStatusName}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
+				</#list>
 				
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
@@ -114,28 +122,37 @@
 					</fo:table-cell>
 				</fo:table-row>
 				
+				<#assign index = 0>
+				<#list resultCV.cv.projects_role_member as p>
+					<#assign index = index + 1>
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
+						<fo:block >${p.projectName}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<fo:block>${p.startDate} - ${p.endDate}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<#if p.researchProgram?exists>
+							<fo:block>${p.researchProgram}</fo:block>
+						<#else>
+							<fo:block></fo:block>
+						</#if>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
+						<fo:block>${p.projectStatusName}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
+				</#list>
+					
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>

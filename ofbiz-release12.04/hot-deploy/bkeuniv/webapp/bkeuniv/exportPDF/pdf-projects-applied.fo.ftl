@@ -70,7 +70,7 @@
 				</fo:table-row>	
 				
 				<#assign index = 0>
-				<#list resultCV.cv.projects as p>
+				<#list resultCV.cv.appliedProjects as p>
 					<#assign index = index+1>
 					<fo:table-row height="20pt" border-top-style="dotted" >
 					//STT

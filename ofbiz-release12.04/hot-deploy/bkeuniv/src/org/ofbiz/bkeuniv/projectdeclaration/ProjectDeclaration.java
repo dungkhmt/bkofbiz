@@ -39,7 +39,9 @@ public class ProjectDeclaration {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
 		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
-		String staffId = (String)userLogin.get("userLoginId");
+		String staffId = (String)context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.get("userLoginId");
 		
 		Delegator delegator = ctx.getDelegator();
 		try{
@@ -115,6 +117,9 @@ public class ProjectDeclaration {
 				gv.put("academicYearId", academicYearId.get(0));
 			
 			gv.put("projectName", projectName);
+			
+			Debug.log(module + "::createProjectDeclaration, startDate = " + startDate + ", endDate = " + endDate);
+			
 			if(startDate != null && !startDate.equals(""))
 				gv.put("startDate", Date.valueOf(startDate));
 			if(endDate != null && !endDate.equals(""))

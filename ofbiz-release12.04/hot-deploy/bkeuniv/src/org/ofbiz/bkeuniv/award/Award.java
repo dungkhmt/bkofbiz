@@ -76,13 +76,16 @@ public class Award {
 		//if(u1 == null) u1 = "NULL";
 		//if(u2 == null) u2 = "NULL";
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
-		String staffId = (String)userLogin.getString("userLoginId");
+		String staffId = null;
+		if(userLogin != null)
+			staffId = (String)userLogin.getString("userLoginId");
 		
 		String[] keys = {"awardId", "description", "year", "staffId"};
 		String[] search = {""};
 		try {
 			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
-			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			if(staffId != null)
+				conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
 			
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			for(String key: keys) {

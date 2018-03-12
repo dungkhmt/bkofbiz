@@ -13,6 +13,7 @@
     
     <service name="getProjectDeclaration" engine="java" 
     		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectDeclarationOfStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
     </service>
     
@@ -115,6 +116,7 @@
     
     <service name="getScientificServiceExperience" engine="java" 
     		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="getScientificServiceExperience">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="scientificServiceExperiences" type="List" mode="OUT"></attribute>
     </service>
     

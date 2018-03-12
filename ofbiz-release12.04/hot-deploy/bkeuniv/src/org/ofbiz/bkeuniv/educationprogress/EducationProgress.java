@@ -62,7 +62,8 @@ public class EducationProgress {
 		//String u1 = (String)ctx.getAttribute("userLoginId");
 		//String u2 = (String)context.get("userLoginId");
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
-		String staffId = (String)userLogin.getString("userLoginId");
+		String staffId = null;
+		if(userLogin != null) staffId = (String)userLogin.getString("userLoginId");
 		
 		//if(u1 == null) u1 = "NULL";
 		//if(u2 == null) u2 = "NULL";
@@ -75,7 +76,8 @@ public class EducationProgress {
 		String[] search = {"institution"};
 		try {
 			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
-			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			if(staffId != null)
+				conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
 			
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			for(String key: keys) {
