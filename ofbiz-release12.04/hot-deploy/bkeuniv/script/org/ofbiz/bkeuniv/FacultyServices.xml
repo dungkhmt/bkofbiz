@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.ofbiz.org/dtds/simple-methods.xsd">
+	<simple-method method-name="getFacultyAjax"
+		login-required="false" short-description="get faculty">
+		
+		<set field="ctx.entityName" value="FacultyDetail"/>
+		<set field="ctx.noConditionFind" value="Y" />
+		
+		<set field="ctx.inputFields.facultyId_op" value="contains" />
+		<set field="ctx.inputFields.facultyId" from-field="parameters.facultyId" default-value="" />
+
+		<set field="ctx.inputFields.facultyName_ic" value="Y" />
+		<set field="ctx.inputFields.facultyName_op" value="contains" />
+		<set field="ctx.inputFields.facultyName" from-field="parameters.facultyName" default-value="" />
+
+		<set field="ctx.inputFields.universityId_op" value="equals" />
+		<set field="ctx.inputFields.universityId" from-field="parameters.universityId" default-value="" />
+
+    <set field="ctx.inputFields.universityName_ic" value="Y" />
+		<set field="ctx.inputFields.universityName_op" value="contains" />
+		<set field="ctx.inputFields.universityName" from-field="parameters.universityName" default-value="" />
+		
+		<set field="ctx.orderBy" from-field="parameters.orderBy" default-value="facultyId" />
+		<set field="ctx.viewIndex" type="Integer" from-field="parameters.viewIndex" default-value="0" />
+		<set field="ctx.viewSize" type="Integer" from-field="parameters.viewSize" default-value="20" />
+		
+		<call-service service-name="performFindList" in-map-name="ctx">
+			<result-to-field result-name="list" field="result.items"/>
+			<result-to-field result-name="listSize" field="result.paging.totalSize"/>
+		</call-service>
+		
+		<set field="result.paging.viewIndex" from-field="ctx.viewIndex"/>
+		<set field="result.paging.viewSize" from-field="ctx.viewSize"/>
+		
+		<field-to-result field="result" />
+	</simple-method>
+</simple-methods>

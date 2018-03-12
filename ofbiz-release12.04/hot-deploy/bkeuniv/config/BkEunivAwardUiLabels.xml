@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivAwardId">
+        <value xml:lang="en">Award ID</value>
+        <value xml:lang="vi">Mã giải thưởng</value>
+    </property>
+   
+   <property key="BkEunivAward">
+        <value xml:lang="en">Awards</value>
+        <value xml:lang="vi">Danh sách giải thưởng</value>
+    </property>
+   
+   <property key="BkEunivStaffId">
+        <value xml:lang="en">Staff ID</value>
+        <value xml:lang="vi">Mã nhân viên</value>
+    </property>
+    
+    <property key="BkEunivDescription">
+        <value xml:lang="en">Description</value>
+        <value xml:lang="vi">Mô tả</value>
+    </property>
+    
+    <property key="BkEunivYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="vi">Năm</value>
+    </property>
+    
+    <property key="BkEunivTitleEditAward">
+        <value xml:lang="en">Edit a Award</value>
+        <value xml:lang="vi">Chỉnh sửa giải thưởng</value>
+    </property>
+    
+    <property key="BkEunivAddRow">
+        <value xml:lang="en">Add a new Adward</value>
+        <value xml:lang="vi">Thêm mới giải thưởng</value>
+    </property>
+    
+    <property key="BkEunivTitleNewAward">
+        <value xml:lang="en">Add a new Award</value>
+        <value xml:lang="vi">Thêm mới giải thưởng</value>
+    </property>
+    
+    <property key="BkEunivTitleDeleteAward">
+        <value xml:lang="en">Delete a Award</value>
+        <value xml:lang="vi">Xoá một giải thưởng?</value>
+    </property>
+    
+</resource>

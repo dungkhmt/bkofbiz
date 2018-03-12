@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of BkEuniv Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+
+	
+	<entity entity-name="OfficialDocumentTypes" package-name="org.ofbiz.bkeuniv">
+		<field name="officialDocumentTypeId" type="id-vlong"></field>
+		<field name="officialDocumentTypeName" type="very-long"></field>
+		<prim-key field="officialDocumentTypeId"/>
+	</entity>
+		
+	<entity entity-name="OfficialDocuments" package-name="org.ofbiz.bkeuniv">
+		<field name="officialDocumentId" type="id-ne"></field>
+		<field name="officialDocumentName" type="very-long"></field>
+		<field name="officialDocumentTypeId" type="id-vlong"></field>
+		<field name="sourceFileName" type="very-long"></field>
+		<field name="uploadDate" type="date"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<prim-key field="officialDocumentId"/>
+		
+		<relation rel-entity-name="OfficialDocumentTypes" type="one">
+			<key-map field-name="officialDocumentTypeId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		
+	</entity>	
+	
+</entitymodel>

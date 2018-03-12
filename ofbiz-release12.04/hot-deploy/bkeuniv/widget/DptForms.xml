@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+  <form name="EditDpt" type="single" target="updateDepartment" default-map-name="department" default-entity-name="Department">
+    <actions>
+        <entity-one entity-name="Department" value-field="department" auto-field-map="false">
+            <field-map field-name="departmentId" from-field="parameters.departmentId"/>
+        </entity-one>
+    </actions>
+    <alt-target use-when="department==null" target="createDepartment"/>
+    <field use-when="department==null" name="departmentId" title="${uiLabelMap.BkEunivDepartmentId}" required-field="true" widget-style="required">
+      <text />
+    </field>
+    <field use-when="department!=null" name="departmentId" title="${uiLabelMap.BkEunivDepartmentId}">
+      <display />
+    </field>
+    <field name="departmentName" title="${uiLabelMap.BkEunivDepartmentName}" required-field="true" widget-style="required">
+      <text />
+    </field>
+    <field name="facultyId" title="${uiLabelMap.BkEunivFacultyName}">
+        <drop-down allow-empty="false">
+            <entity-options entity-name="Faculty" key-field-name="facultyId" description="${facultyName}">
+                <entity-order-by field-name="facultyName" />
+            </entity-options>
+        </drop-down>
+    </field>
+    <field name="submitButton" use-when="department==null" title="${uiLabelMap.CommonCreate}">
+      <submit button-type="button"/>
+    </field>
+    <field name="submitButton" use-when="department!=null" title="${uiLabelMap.CommonUpdate}">
+      <submit button-type="button"/>
+    </field>
+  </form>
+
+  <form name="FindDpt" style="basic-form" type="single" target="FindDepartment" default-entity-name="Department">
+      <field name="noConditionFind"><hidden value="Y"/></field>
+      <field name="departmentId_op"><hidden value="contains"/></field>
+      <field name="departmentId_ic"><hidden value="Y"/></field>
+      <field name="departmentName_op"><hidden value="contains"/></field>
+      <field name="departmentName_ic"><hidden value="Y"/></field>
+      <field name="departmentId" title="${uiLabelMap.BkEunivDepartmentId}"><text/></field>
+      <field name="departmentName" title="${uiLabelMap.BkEunivDepartmentName}"><text/></field>
+      <field name="facultyId" title="${uiLabelMap.BkEunivFacultyName}">
+          <drop-down allow-empty="true" current-description="">
+              <entity-options description="${facultyName}" key-field-name="facultyId" entity-name="Faculty">
+                  <entity-order-by field-name="facultyName"/>
+              </entity-options>
+          </drop-down>
+      </field>
+      <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+        <submit button-type="button" image-location="/images/icons/magnifier.png"/>
+      </field>
+  </form>
+
+  <form name="ListDpt" type="list" list-name="listIt" paginate-target="FindDepartment" default-entity-name="Department"
+    header-row-style="header-row" default-table-style="table table-bordered table-striped table-hover">
+    <actions>
+        <service service-name="performFind" result-map="result" result-map-list="listIt">
+            <field-map field-name="inputFields" from-field="dptCtx"/>
+            <field-map field-name="entityName" value="Department"/>
+            <field-map field-name="orderBy" from-field="parameters.sortField"/>
+            <field-map field-name="viewIndex" from-field="viewIndex"/>
+            <field-map field-name="viewSize" from-field="viewSize"/>
+        </service>
+    </actions>
+    <!--<field name="departmentId" title="${uiLabelMap.BkEunivDepartmentId}" sort-field="true">
+      <display/>
+    </field>-->
+    <field name="departmentId" title="${uiLabelMap.BkEunivDepartmentId}" sort-field="true">
+        <hyperlink also-hidden="false" description="${departmentId}" target="EditDepartment">
+            <parameter param-name="departmentId"/>
+        </hyperlink>
+    </field>
+    <field name="departmentName" title="${uiLabelMap.BkEunivDepartmentName}" sort-field="true">
+      <display/>
+    </field>
+    <field name="facultyId" title="${uiLabelMap.BkEunivFacultyName}" sort-field="true">
+      <display-entity entity-name="Faculty" description="${facultyName}" />
+    </field>
+  </form>
+</forms>
+

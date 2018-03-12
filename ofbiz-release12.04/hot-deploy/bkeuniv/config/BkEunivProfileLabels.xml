@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <property key="BkEunivFullName">
+        <value xml:lang="en">Full name</value>
+        <value xml:lang="vi">Họ và tên</value>
+    </property>
+    
+    <property key="BkEunivBirthday">
+        <value xml:lang="en">Birthday</value>
+        <value xml:lang="vi">Ngày sinh</value>
+    </property>
+    
+    <property key="BkEunivGender">
+        <value xml:lang="en">Gender</value>
+        <value xml:lang="vi">Giới tính</value>
+    </property>
+    
+    <property key="BkEunivAcademic">
+        <value xml:lang="en">Academic</value>
+        <value xml:lang="vi">Học hàm</value>
+    </property>
+    
+    <property key="BkEunivYearAcademic">
+        <value xml:lang="en">Year academic</value>
+        <value xml:lang="vi">Năm được phong</value>
+    </property>
+    
+    <property key="BkEunivDegree">
+        <value xml:lang="en">Degree</value>
+        <value xml:lang="vi">Học vị</value>
+    </property>
+    
+    <property key="BkEunivYearDegree">
+        <value xml:lang="en">Year degree</value>
+        <value xml:lang="vi">Năm đạt học vị</value>
+    </property>
+    
+    <property key="BkEunivName">
+        <value xml:lang="en">Name</value>
+        <value xml:lang="vi">Tên gọi</value>
+    </property>
+   
+    
+     <property key="BkEunivResearchSpecial">
+        <value xml:lang="en">Research Special</value>
+        <value xml:lang="vi">Chức danh nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivCurrentPosition">
+        <value xml:lang="en">Current Position</value>
+        <value xml:lang="vi">Chức vụ hiện nay</value>
+    </property>
+    
+    <property key="BkEunivPhoneAddress">
+        <value xml:lang="en">Phone Address</value>
+        <value xml:lang="vi">Điện thoại nhà riêng</value>
+    </property>
+    
+    <property key="BkEunivCQ">
+        <value xml:lang="en">CQ</value>
+        <value xml:lang="vi">CQ</value>
+    </property>
+    
+    <property key="BkEunivMobile">
+        <value xml:lang="en">Mobile</value>
+        <value xml:lang="vi">Mobile</value>
+    </property>
+    
+    <property key="BkEunivEmail">
+    	<value xml:lang="en">Email</value>
+    	<Value xml:lang="vi">Email</Value>
+    </property>
+    
+     <property key="BkEunivCompanyName">
+    	<value xml:lang="en">Company Name</value>
+    	<Value xml:lang="vi">Tên cơ quan</Value>
+    </property>
+    
+    <property key="BkEunivNameLeader">
+    	<value xml:lang="en">Name Leader</value>
+    	<Value xml:lang="vi">Tên người đứng đầu</Value>
+    </property>
+    
+    <property key="BkEunivCompanyAddress">
+    	<value xml:lang="en">Company Address</value>
+    	<Value xml:lang="vi">Địa chỉ cơ quan</Value>
+    </property>
+    
+    <property key="BkEnuivPhone">
+    	<value xml:lang="en">Phone</value>
+    	<Value xml:lang="vi">Điện thoại</Value>
+    </property>
+    
+    <property key="BkEnuivFax">
+    	<value xml:lang="en">Fax</value>
+    	<Value xml:lang="vi">Fax</Value>
+    </property>
+    
+    <property key="ViewPDF">
+    	<value xml:lang="en">View PDF</value>
+    	<Value xml:lang="vi">Xem PDF</Value>
+    </property>
+    
+</resource>

@@ -1,0 +1,94 @@
+.main-wrapper {
+  width: 100%;
+}
+
+.main-header {
+  background-color: #ddd;
+  padding: 15px;
+}
+
+.main-title {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+.main-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.main-body {
+  background-color: #fff;
+  padding: 20px;
+}
+
+.item-detail {
+  margin-bottom: 20px;
+}
+
+.form-item {
+  min-width: 300px;
+  display: flex;
+}
+
+.form-item .form-key {
+  min-width: 20%;
+  border-right: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.form-item .form-value {
+  flex: 1;
+}
+
+.form-item .form-key, .form-item .form-value {
+  padding: 5px 0;
+}
+.form-item .form-value {
+  padding-left: 10px;
+}
+
+.table-view thead {
+  background-color: #eee;
+}
+
+
+/*table data*/
+.table-data .nav-pager ul {
+  list-style-type: none;
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0;
+  width: 100%;
+  text-align: right;
+}
+
+.table-data .nav-pager ul li {
+  display: inline;
+}
+
+.table-data .nav-pager li span, .table-data .nav-pager li a {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #337ab7;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.table-data .nav-pager li span:hover, .table-data .nav-pager li a:hover {
+  z-index: 2;
+  color: #23527c;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.table-data .nav-pager li.nav-displaying {
+  float: left;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+}

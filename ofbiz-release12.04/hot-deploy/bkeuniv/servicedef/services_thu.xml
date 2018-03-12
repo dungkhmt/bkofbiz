@@ -11,5 +11,84 @@
         </description>
     </service> 
     
+    <service name="getPatent" engine="java" 
+    		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="getPatent">
+    	<attribute name="patentId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="patentName" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="year" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="patent" mode="OUT" type="List"></attribute>
+    </service>
     
+     <service name="getProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="getProject">
+		
+		<attribute name="project" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getAppliedProjects" engine="java" 
+    		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="getAppliedProjects">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projects" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="createPatent" engine="java" 
+    		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="createPatent">
+    	<attribute name="patentName" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="year" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="patent" mode="OUT" type="Map"></attribute>
+		<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="createProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="createProject">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="name" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="period" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="project" mode="OUT" type="Map"></attribute>
+		<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updatePatent" engine="java" 
+    		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="updatePatent">
+    	<attribute name="patentId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="patentName" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="patent" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="updateProject">
+    	<attribute name="appliedResearchProjectId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="name" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="period" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="project" mode="OUT" type="Map"></attribute>
+		<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deletePatent" engine="java" 
+    		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="deletePatent">
+    	<attribute name="patentId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="patent" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="deleteProject">
+    	<attribute name="appliedResearchProjectId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="project" mode="OUT" type="String"></attribute>
+    </service>
+     
 </services>

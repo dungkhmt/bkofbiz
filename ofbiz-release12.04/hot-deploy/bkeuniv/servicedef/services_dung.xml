@@ -11,9 +11,294 @@
         </description>
     </service> 
     
+    <service name="getPapersStatistic" engine="java"
+    	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
+		invoke="getPapersStatistic">
+		<attribute name="years" mode="OUT" type="List"></attribute>
+		<attribute name="count" mode="OUT" type="List"></attribute>
+    </service>
+    
+    
+    
+    <service name="updateCountResearchProposalSubmission" engine="java"
+    	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
+		invoke="updateCountResearchProposalSubmission">
+		<attribute name="msg" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="getMembersOfResearchProjectProposalJury" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getMembersOfResearchProjectProposalJury">
+		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="members" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListJuryRoleTypes" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListJuryRoleTypes">
+		<attribute name="juryRoleTypes" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getProjectProposalsOfStaff" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalsOfStaff">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getListProjectProposalJuries" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposalJuries">
+		
+		<attribute name="projectproposaljuries" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListProjectProposals" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposals">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getProjectProposal" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposal">
+		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long"></attribute>
+		<attribute name="projectproposal" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+	</service>
+	
+    <service name="getMembersOfProjectProposal" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getMembersOfProjectProposal">
+		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="members" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getProjectProposalContentItem" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalContentItem">
+		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="projectProposalContentItems" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getProjectProposalProducts" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalProducts">
+		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="projectProposalProducts" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListProjectProposalRoleTypes" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposalRoleTypes">
+		
+		<attribute name="projectProposalRoleTypes" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getListProjectProposalProductTypes" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposalProductTypes">
+		
+		<attribute name="projectProposalProductTypes" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getListProjectProposalsAssignedForReview" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectProposalsAssignedForReview">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+    
+    <service name="getReviewProjectProposal" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getReviewProjectProposal">
+		<attribute name="reviewerResearchProposalId" mode="IN" type="String"></attribute>
+		
+		<attribute name="reviewprojectproposal" mode="OUT" type="Map"></attribute>	
+	</service>
+    
+    <service name="getListReviewsOfProjectProposal" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListReviewsOfProjectProposal">
+		<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+		
+		<attribute name="reviewprojectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListProjectCalls" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getListProjectCalls">
+		
+		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
+	</service>
+
+	<service name="createProjectProposalContentItem" engine="java"
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"
+    	 invoke="createProjectProposalContentItem">
+    
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="content" mode="IN" type="String"></attribute>
+    	<attribute name="workingDays" mode="IN" type="String"></attribute>
+    	<attribute name="budget" mode="IN" type="BigDecimal"></attribute>
+    	
+    	<attribute name="projectProposalContentItem" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+    	
+	</service>
+    
+    <service name="createAMemberOfProjectProposal" engine="java"
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"
+    	 invoke="createAMemberOfProjectProposal">
+    	
+    	<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="roleTypeId[]" mode="IN" type="List" optional="true"></attribute>
+
+    	<attribute name="members" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+	</service>
+
+	
+	
+    <service name="createAProjectProposalSubmission" engine="java"
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="createAProjectProposalSubmission">
+    	
+    	<attribute name="researchProjectProposalName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectCallId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="totalBudget" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="statusId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="sourceFileUpload" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="facultyId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="deliverable" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="materialBudget" mode="IN" type="String" optional="true"></attribute>
+    	
+    	
+    	<attribute name="projectproposals" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+	
+    </service>
+    
+    <service name="updateAProjectProposalSubmission" engine="java"
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="updateAProjectProposalSubmission">
+    	<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+    	<attribute name="researchProjectProposalName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectCallId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="totalBudget" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="statusId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="sourceFileUpload" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="facultyId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="deliverable" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="materialBudget" mode="IN" type="String" optional="true"></attribute>
+    	
+    	
+    	<attribute name="projects" mode="OUT" type="Map"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+	
+    </service>
+
+    <service name="deleteAProjectProposalSubmission" engine="java"
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="deleteAProjectProposalSubmission">
+    	<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+	</service>
+	
+    <service name="getListSecurityGroups" engine="java"
+    	location="org.ofbiz.permission.BKEunivPermissionService" invoke="getListSecurityGroups">
+    	<attribute name="securityGroups" mode="OUT" type="List"></attribute>
+    </service>
+    <service name="getListFunctions" engine="java"
+    	location="org.ofbiz.permission.BKEunivPermissionService" invoke="getListFunctions">
+    	<attribute name="functions" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="updateSecurityGroupFunction" engine="java"
+    	location="org.ofbiz.permission.BKEunivPermissionService" invoke="updateSecurityGroupFunction">
+    	<attribute name="groupId" mode="IN" type="String"></attribute>
+    	<attribute name="functions[]" mode="IN" type="List"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
     <service name="getStaffs" engine="java" 
-    		location="src.org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffs">
+    	<attribute name="q" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="staffs" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getAllStaffs" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getAllStaffs">
+    	<attribute name="staffs" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getStaffInfo" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getStaffInfo">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
+    	<attribute name="staff" mode="OUT" type="Map"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
+    	<attribute name="faculties" mode="OUT" type="List"></attribute>
+    	<attribute name="genders" mode="OUT" type="List"></attribute>
+    	<attribute name="selected_department_id" mode="OUT" type="String"></attribute>
+    	<attribute name="selected_faculty_id" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="getGenders" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getGenders">
+    	<attribute name="genders" mode="OUT" type="List"></attribute>
+    </service>
+	
+    <service name="updateStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="updateStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="staffEmail" mode="IN" type="String"></attribute>
+    	<attribute name="staffDateOfBirth" mode="IN" type="String"></attribute>
+    	<attribute name="staffPhone" mode="IN" type="String"></attribute>
+    	<attribute name="departmentId[]" mode="IN" type="List"></attribute>
+    	<attribute name="staffGenderId[]" mode="IN" type="List"></attribute>
+    	
+    	<attribute name="staffs" mode="OUT" type="Map"></attribute> 
+    </service>
+    <service name="removeAStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="removeAStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+
+    <service name="createAStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="createAStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="password" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="staffDateOfBirth" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="departmentId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="staffGenderId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="groupId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="staffs" mode="OUT" type="Map"></attribute> 
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    <service name="addPermissionGroupStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="addPermissionGroupStaff">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="groupId" mode="IN" type="String"></attribute>
+    </service>
+    
+    <service name="getDepartments" engine="java" 
+    		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getDepartments">
+    	<attribute name="facultyId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="departments" mode="OUT" type="List"></attribute>
+    </service>
+	
+
+	<service name="updatePassword" engine="java"
+		location="org.ofbiz.common.login.LoginServices" invoke="directUpdatePassword">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="password" mode="IN" type="String"></attribute>
+		<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
 	
 </services>

@@ -89,6 +89,28 @@ the location of this file.
                <font-triplet name="Arial" style="normal" weight="normal"/>
                <font-triplet name="arial" style="normal" weight="normal"/>
         </font>
+        
+        <font kerning="yes" embed-url="wingdings.ttf">
+               <font-triplet name="Wingdings" style="normal" weight="bold"/>
+               <font-triplet name="wingdings" style="normal" weight="normal"/>
+        </font>
+        
+        <font kerning="yes" embed-url="TIMES.TTF">
+        	<font-triplet name="Times" style="normal" weight="normal"/>
+          	<font-triplet name="'Times New Roman'" style="normal" weight="normal"/>
+        </font>
+        <font kerning="yes" embed-url="TIMESBD.TTF">
+        	<font-triplet name="Times" style="normal" weight="bold"/>
+          	<font-triplet name="'Times New Roman'" style="normal" weight="bold"/>
+        </font>
+        <font kerning="yes" embed-url="TIMESBI.TTF">
+        	<font-triplet name="Times" style="italic" weight="bold"/>
+          	<font-triplet name="'Times New Roman'" style="italic" weight="bold"/>
+        </font>
+        <font kerning="yes" embed-url="TIMESI.TTF">
+        	<font-triplet name="Times" style="italic" weight="normal"/>
+          	<font-triplet name="'Times New Roman'" style="italic" weight="normal"/>
+        </font>
 
         <!--
         <font metrics-url="arial.xml" kerning="yes" embed-url="arial.ttf">

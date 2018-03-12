@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <property key="TitleProjectDeclaration">
+        <value xml:lang="en">Manage project declaration</value>
+        <value xml:lang="vi">Quản lý kê khai đề tài</value>
+    </property>
+    
+    <property key="ProjectDeclarationId">
+        <value xml:lang="en">Project declaration</value>
+        <value xml:lang="vi">Dự án</value>
+    </property>
+    
+    <property key="ProjectCategoryId">
+        <value xml:lang="en">Project category</value>
+        <value xml:lang="vi">Phân loại</value>
+    </property>
+    
+    <property key="ProjectName">
+        <value xml:lang="en">Project name</value>
+        <value xml:lang="vi">Tên dự án</value>
+    </property>
+    
+    <property key="StartDate">
+        <value xml:lang="en">Start date</value>
+        <value xml:lang="vi">Ngày bắt đầu</value>
+    </property>
+    
+    <property key="EndDate">
+        <value xml:lang="en">End date</value>
+        <value xml:lang="vi">Ngày kết thúc</value>
+    </property>
+    
+    <property key="ProjectStatusId">
+        <value xml:lang="en">Project status</value>
+        <value xml:lang="vi">Trạng thái</value>
+    </property>
+    
+    <property key="ResearchProgram">
+        <value xml:lang="en">Research program</value>
+        <value xml:lang="vi">Chương trình nghiên cứu</value>
+    </property>
+    
+    <property key="DeclarationStaffId">
+        <value xml:lang="en">Project declaration</value>
+        <value xml:lang="vi">Nhân viên tham gia</value>
+    </property>
+    
+    <property key="ProjectParticipationRoleId">
+        <value xml:lang="en">Project participation role </value>
+        <value xml:lang="vi">Vai trò</value>
+    </property>
+    
+    <property key="ProjectTotalHour">
+        <value xml:lang="en">Total hour </value>
+        <value xml:lang="vi">Tổng số giờ đề tài</value>
+    </property>
+
+    <property key="ProjectHourOfStaff">
+        <value xml:lang="en">Hour of staff</value>
+        <value xml:lang="vi">Số giờ tính cho thành viên</value>
+    </property>
+    
+    <property key="ProjectAcademicYear">
+        <value xml:lang="en">Academic Year</value>
+        <value xml:lang="vi">Năm kê khai</value>
+    </property>
+
+    <property key="ApproverStaffId">
+        <value xml:lang="en">Approver staff</value>
+        <value xml:lang="vi">Nhân viên phê duyệt</value>
+    </property>
+    
+    <property key="TitleNewProjectDeclaration">
+        <value xml:lang="en">New project declaration</value>
+        <value xml:lang="vi">Thêm mới đề tài</value>
+    </property>
+    
+    <property key="TitleEditProjectDeclaration">
+        <value xml:lang="en">Edit project declaration</value>
+        <value xml:lang="vi">Chỉnh sửa đề tài</value>
+    </property>
+    
+     <property key="TitleDeleteProjectDeclaration">
+        <value xml:lang="en">Delete project declaration</value>
+        <value xml:lang="vi">Xóa đề tài</value>
+    </property>
+    
+    <property key="DowloadPDF">
+        <value xml:lang="en">Dowload PDF</value>
+        <value xml:lang="vi">Tải PDF</value>
+    </property>
+    
+    <property key="ExportExcel">
+        <value xml:lang="en">Export Excel</value>
+        <value xml:lang="vi">Xuất Excel</value>
+    </property>
+    
+</resource>

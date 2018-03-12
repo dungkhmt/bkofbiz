@@ -1,4 +1,4 @@
-package src.org.ofbiz.bkeuniv.educationprogress;
+package org.ofbiz.bkeuniv.educationprogress;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
-import src.org.ofbiz.utils.BKEunivUtils;
+import org.ofbiz.utils.BKEunivUtils;
 
 public class EducationProgress {
 	public final static String module = EducationProgress.class.getName();
@@ -35,10 +35,12 @@ public class EducationProgress {
 		LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		Locale locale = UtilHttp.getLocale(request);
+		
 		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
 		System.out.println("EducationProgress::createEducatinoProgressRequestResponse, Staff = " + staff.get("staffEmail"));
 		Map<String, Object> context = FastMap.newInstance();
+		
 		context.put("staffId",staff.get("staffId"));
 		context.put("institution",request.getParameter("institution"));
 		context.put("speciality",request.getParameter("speciality"));
@@ -90,7 +92,10 @@ public class EducationProgress {
 				}
 			}
 			
-			List<GenericValue> list = delegator.findList("EducationProgress", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
+			List<GenericValue> list = delegator.findList("EducationProgress", 
+					EntityCondition.makeCondition(conditions), 
+					null, null, 
+					findOptions, false);
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 			
 			List<Map> listEducationProgress = FastList.newInstance();
@@ -108,7 +113,38 @@ public class EducationProgress {
 			return result;
 		
 		} catch (Exception e) {
-			System.out.print("Education Progress Error");
+			e.printStackTrace();
+			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
+			return rs;
+		}
+	}
+	public static Map<String, Object> getEducationProgressOfLoginStaff(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String userLoginId = (String)userLogin.get("userLoginId");
+		
+		
+		
+		Debug.log(module + "::getEducationProgress, userLoginId = " + userLoginId);
+		
+		
+		try {
+			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,userLoginId));
+			List<GenericValue> list = delegator.findList("EducationProgress", 
+					EntityCondition.makeCondition(conditions), 
+					null, null, 
+					null, false);
+			Map<String, Object> result = ServiceUtil.returnSuccess();
+			
+			result.put("educationProgress", list);
+			return result;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
 		}
@@ -119,13 +155,13 @@ public class EducationProgress {
 
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
-
-		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		Locale locale = (Locale) context.get("locale");
 
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
-		String staffId = (String) context.get("staffId");
+		//String staffId = (String) context.get("staffId");
+		String staffId = (String)context.get("staffId");
+		
 		String educationType = (String) context.get("educationType");
 		String institution = (String) context.get("institution");
 		String speciality = (String) context.get("speciality");

@@ -3,8 +3,16 @@ var modal = function (id) {
 }
 
 modal.prototype._getDate = function (selector, format) {
-    const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
-    return $.datepicker.formatDate(format, new Date(year, month - 1, day))
+	var value = $([this.id,selector].join(" ")).datepicker( "getDate" );
+	console.log(value, typeof value)
+	if(isNaN(value.getTime())){
+		console.log(value, typeof value)
+		return ;
+	} else {
+		return (new Date(value)).getTime();
+	}
+    // const [day, month, year] = $([this.id,selector].join(" ")).val().split(/\/|-|_|\|\s/);
+    // return $.datepicker.formatDate(format, new Date(year, month - 1, day))
 }
 
 modal.prototype._getText = function (selector) {
@@ -12,15 +20,21 @@ modal.prototype._getText = function (selector) {
 }
 
 modal.prototype._getSelect = function (selector) {
-    return $([this.id,selector].join(" ")).val();
+	var _data_select = ($([this.id,selector].join(" ")).val());
+	
+	if(typeof _data_select == "string") {
+		_data_select = [_data_select];
+	}
+	
+    return _data_select;
 }
 
-modal.prototype._date = function(value, edit, id){
+modal.prototype._date = function(value, edit, id, defaultValue=""){
 	var _id = "#"+id;
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled ") +
-					'value="' + $.datepicker.formatDate('dd/mm/yy', new Date(value||Date.now())) + '"'+
+					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?(!defaultValue?defaultValue:new Date(defaultValue)):new Date(value))) + '"'+
 					'placeholder="dd/mm/yyyy"'+
 					'>' +
     			'<script type="text/javascript">'+
@@ -30,12 +44,21 @@ modal.prototype._date = function(value, edit, id){
         		'</script>'
 }
 
-modal.prototype._text = function(value, edit, id){
+modal.prototype._text = function(value, edit, id, column){
+	console.log(column)
 	return '<input type="text" class="form-control"' +
 					'id="' + id + '"' +
-					(edit?"":"disabled ") +
+					(!!edit?"":"disabled ") +
+					(!column.pattern?"":(' pattern="'+column.pattern+'" title="'+column.title + '" ')) +
 					'value="' + value + '"'+
-					'>';
+					'/>';
+}
+
+modal.prototype._textarea = function(value, edit, id){
+	return '<textarea class="form-control"' +
+					'id="' + id + '"' +
+					(edit?"":"disabled ") +
+					'>'+value+'</textarea>';
 }
 
 modal.prototype._select = function(value, edit, id, option) {
@@ -43,9 +66,8 @@ modal.prototype._select = function(value, edit, id, option) {
 	var maxItem = option.maxItem||1;
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
-						'$("'+[this.id, _id].join(" ")+'").selectize({'+
-							'maxItems: ' + maxItem + ', '+
-							'sortField: "text"'+
+						'$("'+[this.id, _id].join(" ")+'").select2({'+
+							(maxItem>1?'maximumSelectionLength: ' + maxItem:"")+
 						'});'+
 					'});'+
 				'</script>';
@@ -61,13 +83,182 @@ modal.prototype._select = function(value, edit, id, option) {
 			return '<option value="'+op.value+'" '+_selected+'>'+op.name+'</option>';
 		})	
 	}
-	return '<select style="width: 70%" id="'+id+'" multiple>'+option.join("")+'</select>'+script;
+	return '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'>'+option.join("")+'</select></div>'+script;
+}
+
+modal.prototype._buildScriptObject = function(object = {}, result = "") {
+	fields_build = object.build_script||[];
+	result+= "{";
+	var that = this;
+	console.log(Object.keys(object), object)
+	Object.keys(object).forEach(function(key, index, array){
+		var dot = ",";
+		if(index == array.length - 1||((index == array.length -2)&&(array[index+1]==="build_script"))) {
+			dot = "";
+		}
+
+		if(key === "build_script") {
+			return;
+		}
+
+		result += '\'' + key + '\'' + ":";
+
+		var value = object[key];
+
+		if(!!fields_build.find(function(e){return e==key})) {
+			result += 'eval(\'' + value + '\')'+dot;
+			return;
+		}
+
+		
+		if(value instanceof Array) {
+			result += that._buildScriptArray(value) + dot;
+			return;
+		}
+
+		if(value instanceof Object) {
+			result += that._buildScriptObject(value) + dot;
+			return;
+		}
+
+		if(typeof value == "function") {
+			result += '\'' + value.toString() + '\'' + dot;
+			return;
+		}
+
+		result += '\'' + value + '\'' + dot;
+	});
+	result+= "}";
+	return result;
+}
+
+modal.prototype._buildScriptArray = function(array = [], result = "") {
+	result+= "[";
+	indexs_build = object.build_script||[];
+	var that = this;
+
+	array.forEach(function (value, index, array) {
+		var dot = ",";
+		if(index == array.length - 1||((index == array.length -2)&&(array[index+1]==="build_script"))) {
+			dot = "";
+		}
+
+		if(key === "build_script") {
+			return;
+		}
+
+		if(!!indexs_build.find(function(e){return e==index})) {
+			result += 'eval(\'' + value + '\')' + dot;
+			return;
+		}
+		
+		if(value instanceof Array) {
+			result += that._buildScriptArray(value) + dot;
+			return;
+		}
+
+		if(value instanceof Object) {
+			result += that._buildScriptObject(value) + dot;
+			return;
+		}
+
+		if(typeof value == "function") {
+			result += '\'' + value.toString() + '\'' + dot;
+			return;
+		}
+
+		result += '\'' + value + '\'' + dot;
+	});
+
+	result+= "]";
+	return result;
+}
+
+modal.prototype._select_server_side = function(value, edit, id, option, column) {
+	var _id = "#"+id;
+	var maxItem = option.maxItem||1;
+	var render;
+
+	var query_custom = '{}';
+	if(!!option.query) {
+		query_custom = this._buildScriptObject(option.query||{});
+	}
+	
+
+	if(typeof option.render === "function") {
+		render =  option.render.toString();
+	} else {
+		render = 'function(r){return {id: r.'+option.value+', text: r.'+option.name+'}}';
+	}
+
+	var selected = "";
+	if(!!value) {
+		selected = 
+		'$.ajax({'+
+			'url: "'+option.url+'",'+
+			'"method": "POST",'+
+			'"content-type": "application/json",'+
+			'"data": {'+
+				'"filter": \'{"field": "'+column.value+'", "value": "'+value+'", "operation": \"EQUAL\" }\','+
+				'"pagesize": "-1",'+
+			'},'+
+			'success: function(r) {'+
+				'var data = r.results.map('+render+');'+
+				'var options = data.map(function(d) { return new Option(d.text, d.id, true, true); });'+
+				'$("'+[this.id, _id].join(" ")+'").append(options).trigger("change");'+
+				'$("'+[this.id, _id].join(" ")+'").trigger({'+
+					'type: "select2:select",'+
+					'params: {'+
+						'data: data'+
+					'}'+
+				'});'+
+			'}'+
+		'});';
+
+	}
+	
+	var script = '<script type="text/javascript">'+
+					'$(function () {'+
+						'$("'+[this.id, _id].join(" ")+'").select2({'+
+							'language: "vi",'+
+							'ajax: {' +
+								'url: "'+option.url+'",'+
+								'delay: 250,'+
+								'cache: true,'+
+								'data: function (params) {'+
+									'var query = {'+
+										'q: params.term||"",'+
+										'pagenum:params.page-1||0,'+
+										'pagesize:10,'+
+									'};'+
+									'query = Object.assign(query, '+query_custom+');'+
+									'Object.keys(query).forEach(function(key){if(query[key] instanceof Object){query[key] = JSON.stringify(query[key]);}});'+
+									'return query;'+
+								'},'+
+								'processResults: function (data) {'+
+								'return {'+
+									'results: data.results.map('+render+'),'+
+									'"pagination": {'+
+										'"more": !(data.results.length<10||data.results.length==data.totalRows),'+
+									'},'+
+								'};'+
+								'},'+
+							'},'+
+							(maxItem>1?'maximumSelectionLength: ' + maxItem:"")+
+						'});'+
+						selected+
+					'});'+
+				'</script>';
+	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
+	console.log(a)
+	return a;
 }
 
 modal.prototype.setting = function(option) {
 	this.option = option;
 	this._data = option.data;
 	this.columns = option.columns;
+	this._optionAjax = option.optionAjax||{};
 	this._action = option.action;
 	for(var i = 0, len = this.columns.length; i < len; ++i) {
 		var column = this.columns[i];
@@ -78,14 +269,20 @@ modal.prototype.setting = function(option) {
 		var el;
 		switch(column.type) {
 		    case "date":
-		    	el = this._date(column._data, column.edit, column.id);
+		    	el = this._date(column._data, column.edit, column.id, column.defaultValue);
 		    	break;
 		    case "text":
-		    	el = this._text(column._data, column.edit, column.id);
+		    	el = this._text(column._data, column.edit, column.id, column);
+				break;
+			case "textarea":
+		    	el = this._textarea(column._data, column.edit, column.id);
 		        break;
 		    case "select":
 		    	el = this._select(column._data, column.edit, column.id, column.option);
-		    	break;
+				break;
+			case "select_server_side":
+		    	el = this._select_server_side(column._data, column.edit, column.id, column.option, column);
+				break;
 		    case "custom":
 		    	el = column.el;
 		    	break;
@@ -106,25 +303,29 @@ modal.prototype.setting = function(option) {
 modal.prototype.action = function() {
 	var _ = this;
 	openLoader();
-	$.ajax({
+	var option = {
 	    url: _._action.url,
 	    type: 'post',
-	    data: _.data(),
 	    datatype:"json",
-	    success: function(data) {
-	    	if(!!_._action.update && typeof _._action.update === "function") {
-	    		_._action.update(data)
-	    	} else {
-	    		_._updateDefault(data[_._action.fieldDataResult], data.message);
-	    	}
-	    }, error: function(err) {
-			setTimeout(function() {
-				closeLoader();
-				alertify.error(JSON.stringify(err));
-			}, 500);
-			console.log(err);
+	};
+
+	option = Object.assign({}, option, this._optionAjax);
+	option.data = Object.assign({},_.data(), this._optionAjax.data||{})
+	option.success = function(data) {
+		if(!!_._action.update && typeof _._action.update === "function") {
+			_._action.update(data)
+		} else {
+			_._updateDefault(data[_._action.fieldDataResult], data.message);
 		}
-	})
+	};
+	option.error =  function(err) {
+		setTimeout(function() {
+			closeLoader();
+			alertify.error(JSON.stringify(err));
+		}, 500);
+		console.log(err);
+	}
+	$.ajax(option);
 }
 	
 modal.prototype._updateDefault = function(data, message) {
@@ -132,21 +333,25 @@ modal.prototype._updateDefault = function(data, message) {
 		var table = this._action.dataTable;
 		var _ = this;
 		var keys = this._action.keys||[];
-		var element = table.rows().indexes().data().filter(function(e, index) {
-			var check = keys.reduce(function(acc, curr) {
+		
+		var elementIndex = Array.from(table.rows().indexes().data()).findIndex(function(e, index) {
+			return keys.reduce(function(acc, curr) {
 				return acc&&(e[curr]==data[curr]);
 			}, true);
-			
-			if(check) {
-				e.index = index;
-				return true;
-			}
-		})[0]
+		});
+		
+		var element = table.rows().indexes().data()[elementIndex];
+		
 		if(!!element&&(typeof element == "object")) {
-			Object.keys(element).forEach(function(key, index){
-				element[key] = data[key];
-			})
-			table.row(element.index).data(element);
+			//element = Object.assign(data, element)
+			 Object.keys(element).forEach(function(key, index){
+				 if(data.hasOwnProperty(key)) {
+					 element[key] = data[key]
+				 }
+			 		
+			 })
+			
+			table.row(elementIndex).data(element).draw();
 			$([_.id, "#modal-template"].join(" ")).modal('hide');
 
 	    	setTimeout(function() {
@@ -186,7 +391,7 @@ modal.prototype.render = function() {
 		        	'<h4 class="modal-title">'+this.option.title+'</h4>'+
 		      '</div>'+
 		      '<div class="modal-body">'+
-		      	'<div class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'</div>'+
+		      	'<form id="'+ [this.id, "form"].join("") +'" action="javascript:void(0);" class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'<button id="submit" style="display: none" type="submit">Click Me!</button></form>'+
 		      '</div>'+
 		      '<div class="modal-footer">'+
 		      	'<button type="button" class="btn btn-success" id="modal-action">'+(this._action.name||"Action")+'</button>'+
@@ -209,7 +414,14 @@ modal.prototype.render = function() {
 	
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
-	  _.action();
+		$([_.id, "#submit"].join(" ")).click();
+		if(document.getElementById([_.id, "form"].join("")).checkValidity()) {
+			if(!!_._action.type&&_._action.type=="custom") {
+				_._action.update(_.data());
+			} else {
+				_.action();		  
+			}
+		}
 	});
 	return this;
 }
@@ -224,13 +436,23 @@ modal.prototype.data = function() {
 			    	break;
 			    case "text":
 			    	column._data = _._getText("#"+column.id);
+					break;
+				case "textarea":
+			    	column._data = _._getText("#"+column.id);
 			        break;
 			    case "select":
 			    	column._data = _._getSelect("#"+column.id);
-			    	break;
+					break;
+				case "select_server_side":
+			    	column._data = _._getSelect("#"+column.id);
+					break;
 			    case "custom":
-			    	acc = _._mergeData(acc, column._data);
-			    	return acc;
+			    	if(typeof column.getData == "function") {
+			    		column._data = column.getData("#"+column.id);
+			    	} else {
+			    		column._data = _._getText("#"+column.id);
+			    	}
+			    	break;
 			    case "render":
 			    	if(typeof column.getData == "function") {
 			    		column._data = column.getData("#"+column.id);

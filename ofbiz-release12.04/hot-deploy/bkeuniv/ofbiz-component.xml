@@ -7,7 +7,7 @@
 
     <!-- place the config directory on the classpath to access configuration files -->
     <classpath type="dir" location="config"/>
-    <classpath type="dir" location="dtd"/>
+    <classpath type="dir" location="script"/>
 
     <!-- load single or multiple external libraries -->
     <classpath type="jar" location="build/lib/*"/>
@@ -15,12 +15,16 @@
 
     <!-- entity resources: model(s), eca(s), group, and data definitions -->
     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_view.xml"/>
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_student_research.xml"/>
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_official_documents.xml"/>
     
     
     <!-- <entity-resource type="eca" reader-name="main" loader="main" location="entitydef/eecas.xml"/> -->
     <entity-resource type="data" reader-name="seed" loader="main" location="data/BkEunivTypeData.xml"/>
     <entity-resource type="data" reader-name="seed" loader="main" location="data/BkEunivSecurityData.xml"/>
-    <entity-resource type="data" reader-name="demo" loader="main" location="data/BkEunivDemoData.xml"/>
+    <entity-resource type="data" reader-name="demo" loader="main" location="data/BkEunivDemoData_new.xml"/>
+    
 
     <!-- service resources: model(s), eca(s) and group definitions -->
     <service-resource type="model" loader="main" location="servicedef/services.xml"/>
@@ -29,13 +33,16 @@
     <service-resource type="model" loader="main" location="servicedef/services_thu.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_huy.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_dung.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_dpt.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_faculty.xml"/>
 
     <!--
     <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
     <service-resource type="group" loader="main" location="servicedef/groups.xml"/>
     -->
 
-    <test-suite loader="main" location="testdef/BkEunivTests.xml"/>
+
+    <!-- <test-suite loader="main" location="testdef/BkEunivTests.xml"/> -->
 
     <!-- web applications; will be mounted when using the embedded container -->
     <webapp name="bkeuniv"

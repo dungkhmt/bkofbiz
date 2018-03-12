@@ -66,6 +66,11 @@
 		<response name="success" type="view" value="tspkdsolutionls" />
 	</request-map>
 	
+	<request-map uri="cvrp">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="view-cvrp" />
+	</request-map>
+
 	<request-map uri="vrp3d">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="uploadvrp3d" />
@@ -136,4 +141,7 @@
 	<view-map name="createsampledata" type="screen"
 		page="component://slp/widget/SlpScreens.xml#createsampledata" />
 		
+	<view-map name="view-cvrp" type="screen"
+		page="component://slp/widget/SlpScreens.xml#pageCVRP" />
+
 </site-conf>

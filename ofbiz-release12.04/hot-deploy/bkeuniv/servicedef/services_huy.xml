@@ -11,5 +11,137 @@
         </description>
     </service> 
     
+    <service name="getProjectDeclaration" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectDeclarationOfStaff">
+    	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getProjectCategory" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectCategory">
+    	<attribute name="projectCategorys" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getProjectStatus" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectStatus">
+    	<attribute name="projectStatuss" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getProjectParticipationRole" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="getProjectParticipationRole">
+    	<attribute name="projectParticipationRoles" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="createProjectDeclaration" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="createProjectDeclaration">
+    	<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="projectName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectStatusId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="researchProgram" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectParticipationRoleId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="approverStaffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="totalhour" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="hourOfStaff" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="budget" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="sponsor" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
+    	
+    	<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateProjectDeclaration" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="updateProjectDeclaration">
+    	<attribute name="projectDeclarationId" mode="IN" type="String"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="projectName" mode="IN" type="String"></attribute>
+    	<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectStatusId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="researchProgram" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectParticipationRoleId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="approverStaffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="totalhour" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="hourOfStaff" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="budget" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="sponsor" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
+    	
+    	<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteProjectDeclaration" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration" invoke="deleteProjectDeclaration">
+    	<attribute name="projectDeclarationId" mode="IN" type="String"></attribute>
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="getWorkProgress" engine="java" 
+    		location="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="getWorkProgress">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
+    	<attribute name="workProgress" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="createWorkProgress" engine="java" 
+    		location="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="createWorkProgress">
+    	<attribute name="period" mode="IN" type="String"></attribute>
+    	<attribute name="position" mode="IN" type="String"></attribute>
+    	<attribute name="specialization" mode="IN" type="String"></attribute>
+    	<attribute name="institution" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="workProgress" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateWorkProgress" engine="java" 
+    		location="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="updateWorkProgress">
+    	<attribute name="workProgressId" mode="IN" type="String"></attribute>
+    	<attribute name="period" mode="IN" type="String"></attribute>
+    	<attribute name="position" mode="IN" type="String"></attribute>
+    	<attribute name="specialization" mode="IN" type="String"></attribute>
+    	<attribute name="institution" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="workProgress" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteWorkProgress" engine="java" 
+    		location="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="deleteWorkProgress">
+    	<attribute name="workProgressId" mode="IN" type="String"></attribute>
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="getScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="getScientificServiceExperience">
+		<attribute name="scientificServiceExperiences" type="List" mode="OUT"></attribute>
+    </service>
+    
+    <service name="createScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="createScientificServiceExperience">
+		<attribute name="description" type="String" mode="IN"></attribute>
+		<attribute name="quantity" type="String" mode="IN"></attribute>
+		
+		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service> 
+    
+    <service name="updateScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="updateScientificServiceExperience">
+    	<attribute name="scientificServiceExperienceId" type="String" mode="IN"></attribute>
+		<attribute name="description" type="String" mode="IN"></attribute>
+		<attribute name="quantity" type="String" mode="IN"></attribute>
+		
+		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteScientificServiceExperience" engine="java" 
+    		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="deleteScientificServiceExperience">
+    	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
+		
+		<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
     
 </services>

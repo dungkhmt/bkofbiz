@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <!-- The controller elements that are common to all OFBiz components
+         can be found in the following xml file. A component can override the
+         elements found in the common-controller.xml file. -->
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/dpt-controller.xml"/>
+    <include location="component://bkeuniv/webapp/bkeuniv/WEB-INF/faculty-controller.xml"/>
+
+    <description>BkEuniv Component Site Configuration File</description>
+	
+    <!-- Events to run on every request before security (chains exempt) -->
+    <!--
+    <preprocessor>
+    </preprocessor>
+    -->
+    <!-- Events to run on every request after all other processing (chains exempt) -->
+    <!--
+    <postprocessor>
+        <event name="test" type="java" path="org.ofbiz.webapp.event.TestEvent" invoke="test"/>
+    </postprocessor>
+    -->
+
+    <!-- Request Mappings -->
+    <request-map uri="user">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-user"/>
+    </request-map>
+
+    <request-map uri="enable-security-group-user">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-enable-security-group-user"/>
+    </request-map>
+
+    <request-map uri="create-security-group">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-create-security-group"/>
+    </request-map>
+    
+    <request-map uri="enable-security-group-function">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-enable-security-group-function"/>
+    </request-map>
+    
+    
+    <request-map uri="form-create-security-group">
+	    <security https="true" auth="true"/>
+	    <response name="success" type="view" value="view-form-create-security-group"/>
+    </request-map>
+<!--     
+    <request-map uri="update-security-group-function">
+            <security https="true" auth="true"/>
+           <event type="service" invoke="updateSecurityGroupFunction"/>
+           <response name="success" type="view" value="view-enable-security-group-function"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <response name="AttachementException" type="view" value="AttachementException"/>
+    </request-map>    
+ -->    
+    <request-map uri="add-new-security-group">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="addASecurityGroup"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+    <request-map uri="store-security-group-functions">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="storeSecurityGroupFunctions"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
+    <request-map uri="store-security-group-users">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="storeSecurityGroupUsers"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
+    <request-map uri="get-functions-of-security-group">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="getFunctionsOfASecurityGroup"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+    <request-map uri="get-staffs-of-security-group">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.permission.BKEunivPermissionService" 
+           invoke="getStaffsOfASecurityGroup"/>
+           <response name="AttachementSuccess" type="view" value="SECURITYGROUP"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
+   <view-map name="view-create-security-group" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageCreateSecurityGroup"/>
+   <view-map name="view-form-create-security-group" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormCreateSecurityGroup"/>
+   <view-map name="view-enable-security-group-function" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageEnableSecurityGroupFunction"/>
+   <view-map name="view-user" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewUser"/>
+    
+    <view-map name="view-enable-security-group-user" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageEnableSecurityGroupUser"/>
+</site-conf>

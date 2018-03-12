@@ -15,5 +15,64 @@
         <value xml:lang="vi">Tên bài báo</value>
     </property>
     
+    <property key="BkEunivPaperAuthors">
+        <value xml:lang="en">Authors</value>
+        <value xml:lang="vi">Tác giả (cách nhau bởi dấu phảy)</value>
+    </property>
     
+    <property key="BkEunivPaperCategory">
+        <value xml:lang="en">Category</value>
+        <value xml:lang="vi">Loại bài báo</value>
+    </property>
+    
+    <property key="BkEunivPaperJournalConference">
+        <value xml:lang="en">Journal/Conference</value>
+        <value xml:lang="vi">Tên tại chí, hội nghị</value>
+    </property>
+   
+    <property key="BkEunivPaperVolumn">
+        <value xml:lang="en">Volumn</value>
+        <value xml:lang="vi">Số, Trang (ví dụ: vol. 21, pp 13-25)</value>
+    </property>
+   
+    <property key="BkEunivPaperISSN">
+        <value xml:lang="en">ISSN</value>
+        <value xml:lang="vi">ISSN</value>
+    </property>
+
+    <property key="BkEunivPaperMonth">
+        <value xml:lang="en">Published Month</value>
+        <value xml:lang="vi">Tháng xuất bản</value>
+    </property>
+   
+    <property key="BkEunivPaperYear">
+        <value xml:lang="en">Published Year</value>
+        <value xml:lang="vi">Năm xuất bản</value>
+    </property>
+   
+    <property key="BkEunivPaperAcademicYear">
+        <value xml:lang="en">Academic Year</value>
+        <value xml:lang="vi">Năm kê khai</value>
+    </property>
+
+    <property key="BkEunivDownloadPaper">
+        <value xml:lang="en">Download</value>
+        <value xml:lang="vi">Tải bài báo</value>
+    </property>
+   
+    <property key="BkEunivPaperMembers">
+        <value xml:lang="en">Member of papers</value>
+        <value xml:lang="vi">Thành viên bài báo</value>
+    </property>
+   
+    <property key="BkEunivUpdatePaper">
+        <value xml:lang="en">Update information of the paper</value>
+        <value xml:lang="vi">Chỉnh sửa thông tin bài báo</value>
+    </property>
+    
+    <property key="BkEunivAddPaper">
+        <value xml:lang="en">Create a paper declaration</value>
+        <value xml:lang="vi">Thêm mới kê khai bài báo</value>
+    </property>
+   
 </resource>

@@ -116,7 +116,7 @@ under the License.
         <attribute name="viewNameId" type="String" mode="IN" optional="false"/>
         <attribute name="groupId" type="String" mode="IN" optional="false"/>
     </service>
-
+	
     <!-- permission check -->
     <service name="securityPermissionCheck" engine="simple"
              location="component://common/script/org/ofbiz/common/permission/CommonPermissionServices.xml" invoke="genericBasePermissionCheck">
