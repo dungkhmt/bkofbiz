@@ -97,6 +97,11 @@
         <value xml:lang="en">Logout</value>
         <value xml:lang="vi">Đăng xuất</value>
     </property>
+    
+    <property key="BkEunivChangePassword">
+        <value xml:lang="en">Change password</value>
+        <value xml:lang="vi">Đổi mật khẩu</value>
+    </property>
 
     <property key="BkEunivSTT">
         <value xml:lang="en">Index</value>
