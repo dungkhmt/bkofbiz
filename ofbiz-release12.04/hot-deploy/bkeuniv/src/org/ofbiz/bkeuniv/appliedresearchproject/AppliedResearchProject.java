@@ -56,17 +56,22 @@ public class AppliedResearchProject {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
-		String u1 = (String)ctx.getAttribute("userLoginId");
-		String u2 = (String)context.get("userLoginId");
+		//String u1 = (String)ctx.getAttribute("userLoginId");
+		//String u2 = (String)context.get("userLoginId");
 		
-		if(u1 == null) u1 = "NULL";
-		if(u2 == null) u2 = "NULL";
+		//(u1 == null) u1 = "NULL";
+		//if(u2 == null) u2 = "NULL";
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = (String)userLogin.getString("userLoginId");
 		
 		String[] keys = {"appliedResearchProjectId","staffId","name","description","period"};
 		String[] search = {"name"};
 		
 		try{
 			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			
+			
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			for(String key: keys){
 				Object el = context.get(key);

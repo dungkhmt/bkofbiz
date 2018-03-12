@@ -25,19 +25,24 @@ public class patentStaff {
 	public static Map<String, Object> getPatent(DispatchContext ctx, Map<String, ? extends Object> context){
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
-		System.out.println("1");
+		//System.out.println("1");
 		
-		String u1 = (String)ctx.getAttribute("userLoginId");
-		String u2 = (String)context.get("userLoginId");
+		//String u1 = (String)ctx.getAttribute("userLoginId");
+		//String u2 = (String)context.get("userLoginId");
 		
-		if(u1 == null) u1 = "NULL";
-		if(u2 == null) u2 = "NULL";
+		//if(u1 == null) u1 = "NULL";
+		//if(u2 == null) u2 = "NULL";
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = (String)userLogin.getString("userLoginId");
 		
 		String[] keys = {"patentId", "patentName", "year", "staffId"};
 		String[] search = {"patentName"};
 		
 		try{
 			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			
+			
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			System.out.println("2");
 			for(String key: keys){
