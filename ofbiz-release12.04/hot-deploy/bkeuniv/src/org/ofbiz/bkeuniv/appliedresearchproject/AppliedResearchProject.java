@@ -125,6 +125,9 @@ public class AppliedResearchProject {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
 		String staffId = (String) context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.getString("userLoginId");
+		
 		String name = (String) context.get("name");
 		String description = (String) context.get("description");
 		String period = (String) context.get("period");
@@ -179,8 +182,12 @@ public class AppliedResearchProject {
 		
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatch = ctx.getDispatcher();
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		
 		String staffId = (String) context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.getString("userLoginId");
+		
 		String name = (String) context.get("name");
 		String description = (String) context.get("description");
 		String period = (String) context.get("period");

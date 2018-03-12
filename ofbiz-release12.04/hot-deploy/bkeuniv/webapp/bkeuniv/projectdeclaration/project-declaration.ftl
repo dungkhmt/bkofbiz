@@ -118,8 +118,8 @@
 			    delegate: "#"+id+"-content td",
 				menu: [
 			  		{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  		{title: '${projectDeclarationUiLabelMap.DowloadPDF}', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
-			  		{title: '${projectDeclarationUiLabelMap.ExportExcel}', cmd: "csv", uiIcon: "glyphicon glyphicon-trash"},
+			  		//{title: '${projectDeclarationUiLabelMap.DowloadPDF}', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
+			  		//{title: '${projectDeclarationUiLabelMap.ExportExcel}', cmd: "csv", uiIcon: "glyphicon glyphicon-trash"},
 			  		{title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 				],
 				select: function(event, ui) {

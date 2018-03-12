@@ -121,9 +121,11 @@ public class ProjectDeclaration {
 			Debug.log(module + "::createProjectDeclaration, startDate = " + startDate + ", endDate = " + endDate);
 			
 			if(startDate != null && !startDate.equals(""))
-				gv.put("startDate", Date.valueOf(startDate));
+				//gv.put("startDate", Date.valueOf(startDate));
+				gv.put("startDate", new Date(Long.valueOf(startDate)));
 			if(endDate != null && !endDate.equals(""))
-				gv.put("endDate", Date.valueOf(endDate));
+				//gv.put("endDate", Date.valueOf(endDate));
+				gv.put("endDate", new Date(Long.valueOf(endDate)));
 			if(projectStatusId != null && projectStatusId.size() > 0)
 				gv.put("projectStatusId", projectStatusId.get(0));
 			
@@ -226,9 +228,12 @@ public class ProjectDeclaration {
 				
 				gv.put("projectName", projectName);
 				if(startDate != null && !startDate.equals(""))
-					gv.put("startDate", Date.valueOf(startDate));
+					//gv.put("startDate", Date.valueOf(startDate));
+					gv.put("startDate", new Date(Long.valueOf(startDate)));
 				if(endDate != null && !endDate.equals(""))
-					gv.put("endDate", Date.valueOf(endDate));
+					//gv.put("endDate", Date.valueOf(endDate));
+					gv.put("endDate", new Date(Long.valueOf(endDate)));
+				
 				if(projectStatusId != null && projectStatusId.size() > 0)
 					gv.put("projectStatusId", projectStatusId.get(0));
 				if(researchProgram != null && ! researchProgram.equals(""))

@@ -185,7 +185,10 @@ public class EducationProgress {
 			gv.put("educationType", educationType);
 			gv.put("institution", institution);
 			gv.put("speciality", speciality);
-			gv.put("graduateDate", Date.valueOf(graduateDate));
+			//gv.put("graduateDate", Date.valueOf(graduateDate));
+			if(graduateDate != null && !graduateDate.equals("")){
+				gv.put("graduateDate", new Date(Long.valueOf(graduateDate)));
+			}
 
 			delegator.create(gv);
 		} catch (Exception ex) {
@@ -244,7 +247,10 @@ public class EducationProgress {
 				gv.put("educationType", educationType);
 				gv.put("institution", institution);
 				gv.put("speciality", speciality);
-				gv.put("graduateDate", Date.valueOf(graduateDate));
+				//gv.put("graduateDate", Date.valueOf(graduateDate));
+				if(graduateDate != null && !graduateDate.equals("")){
+					gv.put("graduateDate", new Date(Long.valueOf(graduateDate)));
+				}
 				
 				delegator.store(gv);
 				
