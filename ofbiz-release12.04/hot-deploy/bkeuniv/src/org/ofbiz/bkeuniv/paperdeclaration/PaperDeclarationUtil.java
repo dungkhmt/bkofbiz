@@ -1267,8 +1267,9 @@ public class PaperDeclarationUtil {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("paperId",
 					EntityOperator.EQUALS, paperId));
-			conds.add(EntityCondition.makeCondition("statusId",
-					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			//conds.add(EntityCondition.makeCondition("statusId",
+			//		EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
 			List<GenericValue> staffsOfPaper = delegator.findList(
 					"StaffPaperDeclaration",
@@ -1290,8 +1291,8 @@ public class PaperDeclarationUtil {
 			conds.add(EntityCondition.makeCondition("staffId",
 					EntityOperator.EQUALS, staffId));
 
-			conds.add(EntityCondition.makeCondition("statusId",
-					EntityOperator.EQUALS, STATUS_ENABLED));
+			//conds.add(EntityCondition.makeCondition("statusId",
+			//		EntityOperator.EQUALS, STATUS_ENABLED));
 
 			List<GenericValue> staffsOfPaper = delegator.findList(
 					"StaffPaperDeclaration",

@@ -665,8 +665,9 @@ public class PaperDeclarationService {
 					EntityOperator.EQUALS, staffId));
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
-			conds.add(EntityCondition.makeCondition("statusStaffPaper",
-					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			//conds.add(EntityCondition.makeCondition("statusStaffPaper",
+			//		EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 			
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,

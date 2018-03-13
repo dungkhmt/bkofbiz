@@ -24,15 +24,15 @@
     	<attribute name="projectParticipationRoles" mode="OUT" type="List"></attribute>
     </service>
  -->    
+
+<!--  
 	<service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDecalarationService" invoke="getPapersOfStaff">
-		<!-- 
-		<attribute name="authorStaffId" mode="IN" type="String"></attribute>
-		 -->
 		<attribute name="papers" mode="OUT" type="List"></attribute>	
 			
 	</service>
-
+ -->
+ 
 <!-- 
 	<service name="updatePaper" engine="java" 
 		location="src.org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">

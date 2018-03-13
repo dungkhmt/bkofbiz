@@ -254,6 +254,7 @@
 					*/
 					
 					var tbl = document.getElementById("staffs-of-paper");
+					/*
 					//var len = tbl.rows.length;
 					//for(i = 0; i < len;i++)
 					//	tbl.deleteRow(0);
@@ -265,6 +266,27 @@
 						cell.innerHTML = s;
 						
 					}
+					*/
+					
+					var len = tbl.rows.length;
+					for(i = 0; i < len;i++)
+						tbl.deleteRow(0);
+					var lst_staffs = rs;	
+					for(i = 0; i < lst_staffs.staffsofpaper.length; i++){
+						var s = lst_staffs.staffsofpaper[i].name;
+						var row = tbl.insertRow(i);
+						console.log(row.__proto__)
+						row.setAttribute("id-staff", lst_staffs.staffsofpaper[i].id);
+						var cell = row.insertCell(0);
+						cell.innerHTML = s;
+						
+						var cell_action = row.insertCell(1);
+						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
+						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
+						cell_action.innerHTML = btn;
+					}
+
+					
 					
 					model.style.display = "block";
 
@@ -508,7 +530,10 @@
 	<#assign columns=[
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivStaffId?j_string,
+			<!--
 			"data": "staffName"
+			-->
+			"data": "declareStaffName"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
@@ -564,6 +589,7 @@
 	<#assign fields=[
 		"paperId",
 		"staffName",
+		"declareStaffName",
 		"volumn",
 		"authors",
 		"journalConferenceName",
