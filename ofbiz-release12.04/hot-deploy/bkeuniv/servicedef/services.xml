@@ -222,6 +222,12 @@
     	<attribute name="statuses" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getStaffPaperDeclarationRole" engine="java" 
+    		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getStaffPaperDeclarationRole">
+    	
+    	<attribute name="roles" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
 		
@@ -244,6 +250,7 @@
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="journalConferenceName" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
@@ -271,6 +278,7 @@
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
 		<attribute name="paperName" mode="IN" type="String"></attribute>
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+		<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="journalConferenceName" mode="IN" type="String"  optional="true"></attribute>
 		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="year" mode="IN" type="String"  optional="true"></attribute>
@@ -296,6 +304,7 @@
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="jcreateStaffPaperDeclaration">
 		<attribute name="staffId" mode="IN" type="String"></attribute>
 		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="roleId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="message" mode="OUT" type="String"></attribute>
 		
 	</service>

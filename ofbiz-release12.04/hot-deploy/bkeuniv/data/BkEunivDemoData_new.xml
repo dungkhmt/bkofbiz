@@ -6895,4 +6895,7 @@
 	<PaperDeclarationStatus paperDeclarationStatusId="APPROVED" paperDeclarationStatusName="Phê duyệt"/>
 	<PaperDeclarationStatus paperDeclarationStatusId="REJECTED" paperDeclarationStatusName="Không Phê duyệt"/>
 	
+	<StaffPaperDeclarationRole roleId="MAIN_AUTHOR" roleName="Tác giả chính"/>
+	<StaffPaperDeclarationRole roleId="CO_AUTHOR" roleName="Đồng tác giả"/>
+	
 </entity-engine-xml

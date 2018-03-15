@@ -182,7 +182,16 @@
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id = "staffs" width="30px"></select>
       		</div>
-      		
+      		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
+				Chon vai tro
+			</div>
+			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
+      			<select id = "roleId" width="30px">
+      				<#list paperRoles.roles as r>
+      					<option value=${r.roleId}>${r.roleName}</option>
+      				</#list>
+      			</select>
+      		</div>
       		<@buttonStore text="Them" action="addMemberPaper"/>
       	</div>
       <table id="staffs-of-paper" border = "1"></table>
@@ -321,13 +330,15 @@
 	function addMemberPaper(){
 		var paperId = selectedEntry.paperId;
 		var staffId = document.getElementById("staffs").value;
-		alert("them thanh vien bai bao, paperId = " + paperId + ", staffId = " + staffId);
+		var roleId = document.getElementById("roleId").value;
+		alert("them thanh vien bai bao, paperId = " + paperId + ", staffId = " + staffId + ", role = " + roleId);
 				$.ajax({
 					url: "/bkeuniv/control/create-staffs-paper",
 					type: 'POST',
 					data: {
 						"paperId": paperId,
-						"staffId": staffId
+						"staffId": staffId,
+						"roleId": roleId
 					},
 					success:function(rs){
 						console.log(rs);
@@ -370,7 +381,10 @@
 						var cell = row.insertCell(0);
 						cell.innerHTML = s;
 						
-						var cell_action = row.insertCell(1);
+						var cell_role = row.insertCell(1);
+						cell_role.innerHTML = lst_staffs.staffsofpaper[i].role;  
+						
+						var cell_action = row.insertCell(2);
 						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
 						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
 						cell_action.innerHTML = btn;
@@ -472,11 +486,15 @@
 						var cell = row.insertCell(0);
 						cell.innerHTML = s;
 						
-						var cell_action = row.insertCell(1);
+						var cell_role = row.insertCell(1);
+						cell_role.innerHTML = lst_staffs.staffsofpaper[i].role;  
+						
+						var cell_action = row.insertCell(2);
 						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
 						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
 						cell_action.innerHTML = btn;
 					}
+					
 					
 					model.style.display = "block";
 
@@ -652,6 +670,10 @@
 			"data": "paperName"
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
+			"data": "roleName"
+		},
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"data": "volumn"
 		},
@@ -698,9 +720,19 @@
 		</#if>
 	</#list>
 	
+	<#assign sourceRoles = [] />
+	<#list paperRoles.roles as r>
+		<#if r?has_content>
+             <#assign opr = { "name": r.roleName?j_string ,"value": r.roleId?j_string } />
+						<#assign sourceRoles = sourceRoles + [opr] />
+		</#if>
+	</#list>
+	
 	<#assign fields=[
 		"paperId",
 		"staffName",
+		"roleName",
+		"roleId",
 		"declareStaffName",
 		"volumn",
 		"authors",
@@ -718,6 +750,15 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
 			"value": "paperName"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
+			"value": "roleId",
+			"type": "select",
+			"option": {
+				"source": sourceRoles,
+				"maxItem": 1
+			}
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
@@ -774,6 +815,15 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
 			"value": "authors"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
+			"value": "roleId",
+			"type": "select",
+			"option": {
+				"source": sourceRoles,
+				"maxItem": 1
+			}
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,

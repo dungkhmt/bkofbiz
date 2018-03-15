@@ -318,7 +318,7 @@ public class PaperDeclarationService {
 
 			for (String staffId : addedStaffs) {
 				PaperDeclarationUtil.createStaffPaperDeclarationc(paperId,
-						staffId, delegator);
+						staffId, null, delegator);
 			}
 			for (String staffId : removedStaffs) {
 				PaperDeclarationUtil.deleteStaffPaperDeclaration(staffId,
@@ -348,6 +348,14 @@ public class PaperDeclarationService {
 		try {
 			
 			Map<String, String> mID2Name = FastMap.newInstance();
+			Map<String, String> mRoleID2Name = FastMap.newInstance();
+			
+			List<GenericValue> roles = delegator.findList("StaffPaperDeclarationRole",
+					null, null, null, null, false);
+			for(GenericValue r: roles){
+				mRoleID2Name.put(r.getString("roleId"), r.getString("roleName"));
+			}
+			
 			List<GenericValue> faculties = delegator.findList("Faculty",null,null,null,null,false);
 			
 			List<GenericValue> staffs = delegator.findList("Staff", null, null,
@@ -390,8 +398,8 @@ public class PaperDeclarationService {
 					GenericValue st = staffsOfPaper.get(i);
 					String id = (String) st.get("staffId");
 					String name = mID2Name.get(id);
-
-					rs += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"}";
+					String role = mRoleID2Name.get(st.getString("roleId"));
+					rs += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"role\":\"" + role + "\"}";
 
 					if (i < staffsOfPaper.size() - 1)
 						rs += ",";
@@ -857,14 +865,23 @@ public class PaperDeclarationService {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String paperId = request.getParameter("paperId");
 		String staffId = request.getParameter("staffId");
+		String roleId = request.getParameter("roleId");
 		Debug.log(module + "::createStaffPaperDeclaration, staffId = "
-				+ staffId + ", paperId = " + paperId);
+				+ staffId + ", paperId = " + paperId + ", roleId = " + roleId);
 		try {
+			Map<String, String> mRoleID2Name = FastMap.newInstance();
+			
+			List<GenericValue> roles = delegator.findList("StaffPaperDeclarationRole",
+					null, null, null, null, false);
+			for(GenericValue r: roles){
+				mRoleID2Name.put(r.getString("roleId"), r.getString("roleName"));
+			}
+			
 			List<GenericValue> lst = PaperDeclarationUtil.getStaffsOfPaper(
 					paperId, staffId, delegator);
 			if (lst == null || lst.size() == 0) {
 				Map<String, Object> rs = PaperDeclarationUtil
-						.createStaffPaperDeclarationc(paperId, staffId,
+						.createStaffPaperDeclarationc(paperId, staffId,roleId,
 								delegator);
 				GenericValue gv = (GenericValue) rs
 						.get("staffPaperDeclaration");
@@ -882,7 +899,8 @@ public class PaperDeclarationService {
 				id = stp.getString("staffId");
 				GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",id), false);
 				name = st.getString("staffName");
-				json += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"}";
+				String rId = mRoleID2Name.get(stp.getString("roleId")); 
+				json += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"" + ",\"role\":\"" + rId + "\" }";
 				if(i < lst.size()-1)
 					json += ",";
 			}
@@ -897,6 +915,19 @@ public class PaperDeclarationService {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	public static Map<String, Object> getStaffPaperDeclarationRole(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try{
+			List<GenericValue> list = delegator.findList("StaffPaperDeclarationRole", null, null, null, null, false);
+			retSucc.put("roles", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
 	}
 	public static Map<String, Object> getPaperDeclarationStatus(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -920,9 +951,10 @@ public class PaperDeclarationService {
 			Delegator delegator = ctx.getDelegator();
 			String paperId = (String) context.get("paperId");
 			String staffId = (String) context.get("staffId");
-
+			String roleId = (String) context.get("roleId");
+			
 			retSucc = PaperDeclarationUtil.createStaffPaperDeclarationc(
-					paperId, staffId, delegator);
+					paperId, staffId, roleId, delegator);
 
 			// retSucc.put("message", "Successfully");
 		} catch (Exception ex) {
@@ -949,9 +981,16 @@ public class PaperDeclarationService {
 		List<Object> paperCategoryIds = (List<Object>) context
 				.get("paperCategoryId[]");
 		String paperCategoryId = "NULL";
-		if (paperCategoryIds != null)
+		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
+		List<Object> roleIds = (List<Object>) context
+				.get("roleId[]");
+		String roleId = null;
+		if (roleIds != null && roleIds.size() > 0)
+			roleId = (String) (roleIds.get(0));
+		
+		
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
 		String volumn = (String) context.get("volumn");
@@ -965,7 +1004,7 @@ public class PaperDeclarationService {
 		List<Object> academicYears = (List<Object>) context
 				.get("academicYearId[]");
 		String academicYearId = "";
-		if (academicYears != null)
+		if (academicYears != null && academicYears.size() > 0)
 			academicYearId = (String) academicYears.get(0);
 
 		Debug.log(module + "::createPaperDeclaration, authorStaffId = "
@@ -1013,6 +1052,8 @@ public class PaperDeclarationService {
 			Map<String, Object> input = FastMap.newInstance();
 			input.put("staffId", staffId);
 			input.put("paperId", paperId);
+			if(roleId != null)
+				input.put("roleId", roleId);
 
 			Map<String, Object> rs = dispatcher.runSync(
 					"createStaffPaperDeclaration", input);
@@ -1048,6 +1089,12 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
+		List<Object> roleIds = (List<Object>) context
+				.get("roleId[]");
+		String roleId = "";
+		if (roleIds != null && roleIds.size() > 0)
+			roleId = (String) (roleIds.get(0));
+
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
 		String volumn = (String) context.get("volumn");
@@ -1064,7 +1111,7 @@ public class PaperDeclarationService {
 
 		Debug.log(module + "::updatePaper, authorStaffId = " + staffId
 				+ ", paperId = " + paperId + ", paperCategoryId = "
-				+ paperCategoryId + ", month = " + month + ", year = " + year);
+				+ paperCategoryId + ", month = " + month + ", year = " + year + ", role = " + roleId);
 		Delegator delegator = ctx.getDelegator();
 
 		try {
@@ -1112,8 +1159,28 @@ public class PaperDeclarationService {
 				p.put("authors", authors);
 			if (academicYearId != null && !academicYearId.equals(""))
 				p.put("academicYearId", academicYearId);
-
+			
+			
+			
 			delegator.store(p);
+
+			// update Role to entity StaffPaperDeclaration
+			if(roleId != null && !roleId.equals("")){
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("paperId",paperId));
+				conds.add(EntityCondition.makeCondition("staffId",staffId));
+				List<GenericValue> spl = delegator.findList("StaffPaperDeclaration",
+						EntityCondition.makeCondition(conds), 
+						null,null,null,false);
+				if(spl != null && spl.size() > 0){
+					//GenericValue sp = spl.get(0);
+					for(GenericValue sp: spl){
+						Debug.log(module + "::updatePaper, START update role");
+						sp.put("roleId", roleId);
+						delegator.store(sp);
+					}
+				}
+			}
 
 			/*
 			 * Map<String, Object> ret_paper = FastMap.newInstance();

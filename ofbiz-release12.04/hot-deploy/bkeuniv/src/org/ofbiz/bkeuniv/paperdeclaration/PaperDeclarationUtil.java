@@ -1244,7 +1244,7 @@ public class PaperDeclarationUtil {
 		return retSucc;
 	}
 	public static Map<String, Object> createStaffPaperDeclarationc(
-			String paperId, String staffId, Delegator delegator) {
+			String paperId, String staffId, String roleId, Delegator delegator) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
 		try {
@@ -1263,6 +1263,8 @@ public class PaperDeclarationUtil {
 			gv.put("staffPaperDeclarationId", id);
 			gv.put("staffId", staffId);
 			gv.put("paperId", paperId);
+			if(roleId != null)
+				gv.put("roleId", roleId);
 			gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
 
 			Debug.log(module + "::createStaffPaperDeclaration, staffId = "
