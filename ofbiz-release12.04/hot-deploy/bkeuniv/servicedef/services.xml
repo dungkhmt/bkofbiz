@@ -105,6 +105,11 @@
     	<attribute name="universityId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="faculties" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getFacultyOfStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getFacultyOfStaff">
+    	<attribute name="universityId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="faculties" mode="OUT" type="List"></attribute>
+    </service>
     
     <service name="getAward" engine="java" 
     		location="org.ofbiz.bkeuniv.award.Award" invoke="getAward">
@@ -211,6 +216,12 @@
     	<attribute name="count" mode="OUT" type="String"></attribute>
     </service>
     
+    <service name="getPaperDeclarationStatus" engine="java" 
+    		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperDeclarationStatus">
+    	
+    	<attribute name="statuses" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
 		
@@ -221,6 +232,11 @@
 
     <service name="getPaperDeclarations" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPaperDeclarations">
+		<attribute name="facultyId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="academicYearId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="paperCategoryId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="paperDeclarationStatusId" mode="IN" type="String" optional="true"></attribute>
+		
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
 	</service>
 
@@ -240,7 +256,17 @@
 		<attribute name="message" mode="OUT" type="String"></attribute>
 	</service>
     
+    <service name="approveAPaperDeclaration" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="approveAPaperDeclaration">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="staffId" mode="IN" type="String"></attribute>
+	</service>    
     
+    <service name="getUserLogin" engine="java" 
+		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getUserLogin">
+		<attribute name="userLoginId" mode="OUT" type="String"></attribute>
+	</service>    
+
     <service name="createPaperDeclaration" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
 		<attribute name="paperName" mode="IN" type="String"></attribute>

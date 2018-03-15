@@ -1260,7 +1260,16 @@ public class PaperDeclarationUtil {
 
 		return retSucc;
 	}
-
+	public static void approveAPaperDeclaration(Delegator delegator, String paperId, String staffId){
+		try{
+			GenericValue p = delegator.findOne("PaperDeclaration", UtilMisc.toMap("paperId",paperId), false);
+			p.put("approveStatusId", "APPROVED");
+			p.put("approverStaffId", staffId);
+			delegator.store(p);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	public static List<GenericValue> getStaffsOfPaper(String paperId,
 			Delegator delegator) {
 		try {

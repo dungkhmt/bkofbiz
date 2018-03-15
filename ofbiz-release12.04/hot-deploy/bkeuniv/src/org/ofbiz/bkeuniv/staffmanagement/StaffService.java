@@ -64,6 +64,19 @@ public class StaffService {
 		return retSucc;
 	}
 	*/
+	public static Map<String, Object> getUserLogin(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			GenericValue u = (GenericValue)context.get("userLogin");
+			retSucc.put("userLoginId", (String)u.getString("userLoginId"));
+			Debug.log(module + "::getUserLogin, GOT userLoginId = " + (String)u.getString("userLoginId"));
+			return retSucc;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+	}
+	
 	public static Map<String, Object> getGenders(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		

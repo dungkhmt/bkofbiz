@@ -93,7 +93,9 @@
 
 <Function functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL" uiLabelId="research_summary_template_excel" vnLabel="Tổng hợp mẫu Excel" enLabel="summary Excel" target="research-summary-excel" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="2"/>
 
-<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS" uiLabelId="research_summary_all_papers" vnLabel="Danh sách tất cả bài báo" enLabel="summary papers" target="research-summary-list-papers" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="3"/>
+<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS" uiLabelId="research_summary_all_papers" vnLabel="Danh sách bài báo" enLabel="summary papers" target="research-summary-list-papers-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="3"/>
+
+<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS_FACULTY" uiLabelId="research_summary_all_papers_faculty" vnLabel="Danh sách bài báo của khoa/viện" enLabel="summary papers" target="research-summary-list-papers-faculty-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="4"/>
 
 
 <!-- Quan ly li lich khoa hoc -->
@@ -6889,6 +6891,8 @@
 	<StudentSupervisionStatus studentSupervisionStatusId="DEFENSED" studentSupervisionStatusName="Đã bảo vệ"/>
 	<StudentSupervisionStatus studentSupervisionStatusId="NOTDEFENSED" studentSupervisionStatusName="Chưa bảo vệ"/>
 	
-	
+	<PaperDeclarationStatus paperDeclarationStatusId="CREATED" paperDeclarationStatusName="Tạo mới"/>
+	<PaperDeclarationStatus paperDeclarationStatusId="APPROVED" paperDeclarationStatusName="Phê duyệt"/>
+	<PaperDeclarationStatus paperDeclarationStatusId="REJECTED" paperDeclarationStatusName="Không Phê duyệt"/>
 	
 </entity-engine-xml

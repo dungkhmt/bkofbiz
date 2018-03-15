@@ -75,4 +75,14 @@
         <value xml:lang="vi">Thêm mới kê khai bài báo</value>
     </property>
    
+    <property key="BkEunivApprovePaper">
+        <value xml:lang="en">Approve</value>
+        <value xml:lang="vi">Phê duyệt</value>
+    </property>
+    <property key="BkEunivRejectPaper">
+        <value xml:lang="en">Reject</value>
+        <value xml:lang="vi">Không Phê duyệt</value>
+    </property>
+    
+   
 </resource>

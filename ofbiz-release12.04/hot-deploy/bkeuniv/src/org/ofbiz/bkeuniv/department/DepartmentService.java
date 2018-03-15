@@ -45,6 +45,37 @@ public class DepartmentService {
 			return rs;
 		}
 	}
+	public static Map<String, Object> getFacultyOfStaff(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher localDispatcher = ctx.getDispatcher();
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		GenericValue userLogin = (GenericValue)context.get("userLogin");
+		String staffId = (String)userLogin.getString("userLoginId");
+		String universityId = (String)context.get("universityId");
+		List<EntityCondition> conds = FastList.newInstance();
+		if(universityId == null)
+			universityId = "HUST";
+		
+		if(universityId != null && !universityId.equals("")){
+			conds.add(EntityCondition.makeCondition("universityId", EntityOperator.EQUALS,universityId));
+		}
+		
+		try{
+			GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId", staffId),false);
+			String departmentId = (String)st.get("departmentId");
+			GenericValue dept = delegator.findOne("Department", UtilMisc.toMap("departmentId",departmentId), false);
+			String facultyId = (String)dept.getString("facultyId");
+			GenericValue facul = delegator.findOne("Faculty", UtilMisc.toMap("facultyId", facultyId), false);
+			List<GenericValue> list = FastList.newInstance();
+			list.add(facul);
+			retSucc.put("faculties", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 	public static Map<String, Object> getFaculties(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
