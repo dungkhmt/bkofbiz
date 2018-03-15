@@ -1224,6 +1224,25 @@ public class PaperDeclarationUtil {
 		return retSucc;
 	}
 
+	public static Map<String, Object> removeStaffPaperDeclarationc(
+			String paperId, String staffId, Delegator delegator) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",paperId));
+			conds.add(EntityCondition.makeCondition("staffId",staffId));
+			
+			//GenericValue sp = delegator.findOne("StaffPaperDeclaration", 
+			//		UtilMisc.toMap("paperId",paperId,"staffId",staffId), false);
+			delegator.removeByCondition("StaffPaperDeclaration", EntityCondition.makeCondition(conds));
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 	public static Map<String, Object> createStaffPaperDeclarationc(
 			String paperId, String staffId, Delegator delegator) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();

@@ -346,8 +346,10 @@ public class PaperDeclarationService {
 		String paperId = request.getParameter("paperId");
 		Debug.log(module + "::getStaffsOfPaper, paperId = " + paperId);
 		try {
-
+			
 			Map<String, String> mID2Name = FastMap.newInstance();
+			List<GenericValue> faculties = delegator.findList("Faculty",null,null,null,null,false);
+			
 			List<GenericValue> staffs = delegator.findList("Staff", null, null,
 					null, null, false);
 
@@ -397,7 +399,21 @@ public class PaperDeclarationService {
 					Debug.log(module + "::getStaffsOfPaper, staffs " + name);
 				}
 			}
-			rs += "]}";
+			rs += "]";
+			
+			// faculties
+			rs += ",\"faculties\":[";
+			for(int i = 0; i < faculties.size(); i++){
+				GenericValue f = faculties.get(i);
+				rs += "{\"id\":\"" + f.getString("facultyId") + "\",\"name\":\"" + f.getString("facultyName") + "\"}";
+
+				if (i < faculties.size() - 1)
+					rs += ",";
+				
+			}
+			rs += "]";
+			
+			rs += "}";
 
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -813,7 +829,28 @@ public class PaperDeclarationService {
 		}
 		return retSucc;
 	}
-
+	@SuppressWarnings({ "unchecked" })
+	public static void removeStaffPaperDeclaration(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String paperId = request.getParameter("paperId");
+		String staffId = request.getParameter("staffId");
+		Debug.log(module + "::removeStaffPaperDeclaration, staffId = "
+				+ staffId + ", paperId = " + paperId);
+		try{
+			Map<String, Object> rs = PaperDeclarationUtil.removeStaffPaperDeclarationc(paperId, staffId, delegator);
+			
+			String json = "OK";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(json);
+			out.close();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
 	@SuppressWarnings({ "unchecked" })
 	public static void createStaffPaperDeclaration(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -835,12 +872,21 @@ public class PaperDeclarationService {
 			} else {
 
 			}
+			lst = PaperDeclarationUtil.getStaffsOfPaper(
+					paperId, delegator);
 			String json = "{\"staffsofpaper\":[";
 			String id = staffId;// (String) st.get("staffId");
 			String name = id;// mID2Name.get(id);
-
-			json += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"}";
-
+			for(int i = 0; i < lst.size(); i++){
+				GenericValue stp = lst.get(i);
+				id = stp.getString("staffId");
+				GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",id), false);
+				name = st.getString("staffName");
+				json += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"}";
+				if(i < lst.size()-1)
+					json += ",";
+			}
+			
 			json += "]}";
 
 			response.setContentType("application/json");

@@ -1,5 +1,5 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
-
+<#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 <body>
 
 <style>
@@ -123,7 +123,7 @@
 
 /* The Close Button */
 .close {
-    color: white;
+    color: black;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -138,8 +138,8 @@
 
 #myModal .modal-content .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
+    background-color: #ebebe0;
+    color: black;
 }
 
 #myModal .modal-content .modal-body {padding: 10px 26px;}
@@ -159,16 +159,37 @@
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
-      <h2>${paperDeclarationUiLabelMap.BkEunivPaperMembers}</h2>
+      <h4>${paperDeclarationUiLabelMap.BkEunivPaperMembers}</h4>
     </div>
     
     <div class="modal-body">
-     
-       <select id = "staffs" width="30px"></select>
-      <button onclick="addMemberPaper()">Them</button>
-      <table id="staffs-of-paper"></table>
+      	<div class="inline-box" style="width: 100%; padding: 10px 0px;">	
+      		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
+				Chon Khoa/vien 
+			</div>
+			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
+      			<select id="facultyId" style="width: 100%" onchange="changeFaculty()"></select>
+        	</div>
+        	<div style="display: inline-block;width: 30%; padding: 10px 0px;">
+				Chon Bo mon 
+			</div>
+			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
+      			<select id="departmentId" width=50px" onchange="changeDepartment()"></select>
+      		</div>
+      		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
+				Chon giang vien 
+			</div>
+			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
+      			<select id = "staffs" width="30px"></select>
+      		</div>
+      		
+      		<@buttonStore text="Them" action="addMemberPaper"/>
+      	</div>
+      <table id="staffs-of-paper" border = "1"></table>
       
+      <!--
       <button id="jqDataTable-button-update" onclick="updateMemberPaper()">Update</button>
+      -->
       
     </div>
    
@@ -223,7 +244,75 @@
 			    }
 			  });
 	}
+	function clearSelectBox(sel){
+		var i;
+		for(i = sel.options.length-1; i >= 0; i--){
+			sel.remove(i);
+		}
+	}
+
+	function changeFaculty(){
+		var fId = document.getElementById("facultyId").value;
+		//alert("SELECT " + fId);
+		$.ajax({
+					url: "/bkeuniv/control/get-departments-of-faculty",
+					type: 'POST',
+					data: {
+						"facultyId": fId
+					},
+					success:function(rs){
+						console.log(rs);
+						var select_department = document.getElementById("departmentId");
+						
+						clearSelectBox(select_department);
+						
+						var lst = rs.departments;
+						
+						
+						for(i = 0; i < lst.length; i++){	
+							var o = document.createElement("option");
+							o.text = lst[i].name;
+							o.value = lst[i].id;
+							select_department.appendChild(o);
+						}
+						
+						changeDepartment();
+					}
+				})
+		
+		
+	}
 				
+	function changeDepartment(){
+		var dId = document.getElementById("departmentId").value;
+		//alert("SELECT " + dId);
+		$.ajax({
+					url: "/bkeuniv/control/get-staffs-of-department",
+					type: 'POST',
+					data: {
+						"departmentId": dId
+					},
+					success:function(rs){
+						console.log(rs);
+						var select_staff = document.getElementById("staffs");
+						
+						clearSelectBox(select_staff);
+						
+						var lst = rs.staffs;
+						
+						
+						for(i = 0; i < lst.length; i++){	
+							var o = document.createElement("option");
+							o.text = lst[i].name;
+							o.value = lst[i].id;
+							select_staff.appendChild(o);
+						}
+					}
+				})
+		
+		
+	}
+
 	function jqPDF(data){
 		console.log(data);
 		window.open("/bkeuniv/control/download-file-paper?id-paper=" + data.paperId, "_blank")
@@ -271,6 +360,7 @@
 					var len = tbl.rows.length;
 					for(i = 0; i < len;i++)
 						tbl.deleteRow(0);
+					
 					var lst_staffs = rs;	
 					for(i = 0; i < lst_staffs.staffsofpaper.length; i++){
 						var s = lst_staffs.staffsofpaper[i].name;
@@ -359,6 +449,16 @@
 						select_staffs.appendChild(o);
 					}
 					
+					var select_faculty = document.getElementById("facultyId");
+					for(i = 0; i < rs.faculties.length; i++){	
+						var o = document.createElement("option");
+						o.text = rs.faculties[i].name;
+						o.value = rs.faculties[i].id;
+						select_faculty.appendChild(o);
+					}
+					
+					changeFaculty();
+					
 					
 					var tbl = document.getElementById("staffs-of-paper");
 					var len = tbl.rows.length;
@@ -388,6 +488,18 @@
 		item.parentElement.parentElement.remove()
 		console.log(paperId, staffId, item)
 		a = item;
+		
+		$.ajax({
+					url: "/bkeuniv/control/remove-staffs-paper",
+					type: 'POST',
+					data: {
+						"paperId": selectedEntry.paperId,
+						"staffId": staffId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
 	}
 	
 	function updateMemberPaper(){

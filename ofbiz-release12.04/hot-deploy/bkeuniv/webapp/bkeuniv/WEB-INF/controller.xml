@@ -480,6 +480,14 @@
             <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    <request-map uri="remove-staffs-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="removeStaffPaperDeclaration"/>
+            <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
     
     <request-map uri="export-excel-kv01">
 		<security auth="true" https="true" />
