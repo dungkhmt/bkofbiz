@@ -26,8 +26,13 @@
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 Chon khoa/vien
+<#assign LF = listFaculties.faculties?size>
 <select id="faculty" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
-		 	<option value="all" selected>Tat ca</option>
+		 	
+		 	<#if 1 < LF>
+		 		<option value="all" selected>Tat ca</option>
+		 	</#if>
+		 	
 		 	<#list listFaculties.faculties as f>
 		 		<option value="${f.facultyId}">${f.facultyName}</option>
 		 		 
