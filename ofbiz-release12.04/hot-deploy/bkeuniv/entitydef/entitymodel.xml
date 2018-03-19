@@ -71,7 +71,7 @@
 		<field name="masterCourseClassPeriodCalendarId" type="id-ne"></field>
 		<field name="coursePeriodId" type="id-ne"></field>
 		<field name="date" type="date"></field>
-		<field name="slot" type="masterCourseSlotTypeId"></field>
+		<field name="slot" type="numeric"></field>
 		<prim-key field="masterCourseClassPeriodCalendarId"/>
 		
 		<relation rel-entity-name="MasterCoursePeriod" type="one">
@@ -776,13 +776,26 @@
         
 	</entity>
 	
+	<entity entity-name="StaffPaperDeclarationRole" package-name="org.ofbiz.bkeuniv">
+		<field name="roleId" type="id-vlong"></field>
+		<field name="roleName" type="very-long"></field>
+		<prim-key field="roleId"/>
+	</entity>
+	
 	<entity entity-name="StaffPaperDeclaration" package-name="org.ofbiz.bkeuniv">
 		<field name="staffPaperDeclarationId" type="id-vlong"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="paperId" type="id-vlong"></field>
 		<field name="statusId" type="id-vlong"></field>
+		<field name="roleId" type="id-vlong"></field>
 		
 		<prim-key field="staffPaperDeclarationId"/>
+		<!-- 
+		<relation rel-entity-name="StaffPaperDeclarationRole" type="one">
+			<key-map field-name="roleId"/>
+		</relation>
+		 -->
+		 
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>
@@ -793,21 +806,34 @@
 	
 	<view-entity entity-name="PapersStaffView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="DST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="SPDR" entity-name="StaffPaperDeclarationRole"></member-entity>
 		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
+		<alias name="declareStaffName" entity-alias="DST" field="staffName"></alias>
 		<alias name="authorStaffId" entity-alias="ST" field="staffId"></alias>
 		<alias name="categoryName" entity-alias="PC" field="paperCategoryName"></alias>
 		<alias name="statusStaffPaper" entity-alias="SPD" field="statusId"></alias>
+		<alias name="roleId" entity-alias="SPD" field="roleId"></alias>
+		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
 		
+		
+		<view-link rel-entity-alias="SPDR" entity-alias="SPD" rel-optional="true">
+			<key-map rel-field-name="roleId" field-name="roleId"/>
+		</view-link>
 		<view-link rel-entity-alias="ST" entity-alias="SPD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
 		<view-link rel-entity-alias="PD" entity-alias="SPD">
 			<key-map field-name="paperId" rel-field-name="paperId"/>
 		</view-link>
+		<view-link rel-entity-alias="DST" entity-alias="PD">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		
 		<view-link rel-entity-alias="PC" entity-alias="PD" rel-optional="true">
 			<key-map field-name="paperCategoryId" rel-field-name="paperCategoryId"/>
 		</view-link>
@@ -817,17 +843,22 @@
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
+		<member-entity entity-alias="PDS" entity-name="PaperDeclarationStatus"></member-entity>
 		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST"></alias>
 		<alias name="paperCategoryName" entity-alias="PC"></alias>
+		<alias name="paperDeclarationStatusName" entity-alias="PDS"></alias>
+		
 		<view-link rel-entity-alias="ST" entity-alias="PD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
 		<view-link rel-entity-alias="PC" entity-alias="PD">
 			<key-map rel-field-name="paperCategoryId" field-name="paperCategoryId"/>
 		</view-link>
-		
+		<view-link rel-entity-alias="PDS" entity-alias="PD" rel-optional="true">
+			<key-map rel-field-name="paperDeclarationStatusId" field-name="approveStatusId"/>
+		</view-link>
 	</view-entity>
 	
 	

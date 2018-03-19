@@ -25,6 +25,8 @@
 	<@IconSpinner/>
 </@Loader>
 
+<input id="staffId" type="hidden" value="${login.userLoginId}"/>
+
 <script>
   	loader.open();
   </script>
@@ -42,6 +44,7 @@
 				<th>Vol. number</th>
 				<th>ISSN</th>
 				<th>Nam ke khai</th>
+				<th>Trang thai</th>
 			</tr>
 		</thead>
 	<tbody>
@@ -83,6 +86,11 @@
 				<td></td>
 			</#if>
 			<td>${p.academicYearId}</td>
+			<#if p.paperDeclarationStatusName?exists>
+				<td>${p.paperDeclarationStatusName}</td>
+			<#else>
+				<td></td>
+			</#if>
 		</tr>
 	</#list>
 	</tbody>
@@ -101,15 +109,24 @@ $(document).ready(function() {
   $(document).contextmenu({
     delegate: ".dataTable td",
     menu: [
-      {title: "Delete", cmd: "delete"},
-      {title: "Edit", cmd: "edit"}
-    ],
+      //{title: ${paperDeclarationUiLabelMap.BkEunivApprovePaper}, cmd: "approve"},
+      //{title: ${paperDeclarationUiLabelMap.BkEunivRejectPaper}, cmd: "reject"}
+   	  {title: "Phe duyet", cmd: "approve"},
+      {title: "Khong phe duyet", cmd: "reject"}
+   
+     ],
     select: function(event, ui) {
         switch(ui.cmd){
-            case "delete":
-                $(ui.target).parent().remove();
+            case "approve":
+                //$(ui.target).parent().remove();
+                obj = ui;
+				var el = ui.target.parent();
+				var paperId = el.children()[0].innerHTML;
+				//alert("phe duyet bai bao " + paperId);
+				approvePaper(paperId);
+				
                 break;
-            case "edit":
+            case "reject":
 				obj = ui;
 				var el = ui.target.parent();
 				var paperId = el.children()[0].innerHTML;
@@ -125,4 +142,24 @@ $(document).ready(function() {
   });
     
 } );
+
+function approvePaper(paperId){
+	var staffId = document.getElementById("staffId").value;
+	alert("approve paper staff = " + staffId);
+	$.ajax({
+					url: "/bkeuniv/control/approve-a-paper-declaration",
+					type: 'POST',
+					data: {
+						"paperId": paperId,
+						"staffId": staffId
+					},
+					success:function(rs){
+						console.log(rs);
+						alert("Bai bao da duoc phe duyet " + rs.status);
+					}
+	
+	});
+				
+}
+
 </script>

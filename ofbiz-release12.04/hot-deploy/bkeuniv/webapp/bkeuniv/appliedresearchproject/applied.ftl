@@ -33,10 +33,12 @@
 	]/>
 	
 	<#assign columnsNew=[
+		<!--
 		{
 			"name": uiApplied.BkEunivARPStaff?j_string,
 			"value": "staffId"
 		},
+		-->
 		{
 			"name": uiApplied.BkEunivARPName?j_string,
 			"value": "name"
@@ -52,10 +54,12 @@
 	]/>
 	
 	<#assign columnsChange=[
+		<!--
 		{
 			"name": uiApplied.BkEunivARPStaff?j_string,
 			"value": "staffId"
 		},
+		-->
 		{
 			"name": uiApplied.BkEunivARPName?j_string,
 			"value": "name"

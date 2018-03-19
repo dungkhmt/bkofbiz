@@ -34,10 +34,10 @@
 	<#assign BkEnuivFax = "" />
 	<#assign EducationProgress = uiLabelMap.BkEunivEducationProgress />
 	<#assign ForeignLanguage = uiLabelMap.BkEunivForeignLanguageSuggest /> 
-	<#assign EducationType = "Bac dao tao" />
-	<#assign Institution = "Noi dao tao" />
-	<#assign Speciality = "Chuyen nganh" />
-	<#assign GraduateDate = "Ngay/Thang/Nam tot nghiep (TS, Thac si, KS, CN,...)" />
+	<#assign EducationType = uiLabelMap.BkEunivEducationType />
+	<#assign Institution = uiLabelMap.BkEunivInstitution />
+	<#assign Speciality = uiLabelMap.BkEunivSpeciality />
+	<#assign GraduateDate = uiLabelMap.BkEunivGraduateDate />
 	<#assign University = "Dai hoc" />
 	<#assign Masters = "Thac si" />
 	<#assign Degree = "Tien si" />

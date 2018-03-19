@@ -97,6 +97,11 @@
         <value xml:lang="en">Logout</value>
         <value xml:lang="vi">Đăng xuất</value>
     </property>
+    
+    <property key="BkEunivChangePassword">
+        <value xml:lang="en">Change password</value>
+        <value xml:lang="vi">Đổi mật khẩu</value>
+    </property>
 
     <property key="BkEunivSTT">
         <value xml:lang="en">Index</value>
@@ -292,6 +297,28 @@
         <value xml:lang="en">Setting</value>
         <value xml:lang="vi">Thiết lập cài đặt</value>
     </property>
+    
+    <property key="BkEunivCVPDFTitle">
+        <value xml:lang="en">CV</value>
+        <value xml:lang="vi">LÝ LỊCH KHOA HỌC</value>
+    </property>
+    <property key="BkEunivEducationType">
+        <value xml:lang="en">EducationType</value>
+        <value xml:lang="vi">Bậc đào tạo</value>
+    </property>
+    <property key="BkEunivInstitution">
+        <value xml:lang="en">Institution</value>
+        <value xml:lang="vi">Nơi đào tạo</value>
+    </property>    
+    <property key="BkEunivSpeciality">
+        <value xml:lang="en">Speciality</value>
+        <value xml:lang="vi">Chuyên ngành</value>
+    </property>    
+    <property key="BkEunivGraduateDate">
+        <value xml:lang="en">GraduateDate</value>
+        <value xml:lang="vi">Ngày/tháng/năm tốt nghiệp (TS, Thạc sĩ, kỹ sư, cử nhân,...)</value>
+    </property>    
+    
     
 <!--     
     <property key="BkEunivBudget">

@@ -64,6 +64,19 @@ public class StaffService {
 		return retSucc;
 	}
 	*/
+	public static Map<String, Object> getUserLogin(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			GenericValue u = (GenericValue)context.get("userLogin");
+			retSucc.put("userLoginId", (String)u.getString("userLoginId"));
+			Debug.log(module + "::getUserLogin, GOT userLoginId = " + (String)u.getString("userLoginId"));
+			return retSucc;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+	}
+	
 	public static Map<String, Object> getGenders(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -170,8 +183,13 @@ public class StaffService {
 			String[] searchKeys = {"departmentName", "genderName", "facultyName"}; 
 			
 			for(String key: searchKeys) {
-				EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, q);
-				conditions.add(condition);
+				if(q == null || q.equals("")){
+					EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, q);
+					conditions.add(condition);
+				}else{
+					EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, q);
+					conditions.add(condition);
+				}
 			}
 		
 			staffs = delegator.findList("StaffView", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
@@ -271,8 +289,8 @@ public class StaffService {
 			// get applied projects
 			param.clear();
 			param.put("staffId", staffId);
-			Map<String, Object> result_projects = dispatcher.runSync("getAppliedProjects", param);
-			cv.put("projects", result_projects.get("projects"));
+			Map<String, Object> result_applied_projects = dispatcher.runSync("getAppliedProjects", param);
+			cv.put("appliedProjects", result_applied_projects.get("projects"));
 			
 			// get awards
 			param.clear();
@@ -285,6 +303,34 @@ public class StaffService {
 			param.put("staffId", staffId);
 			Map<String, Object> result_wp = dispatcher.runSync("getWorkProgress", param);
 			cv.put("workProgress", result_wp.get("workProgress"));
+			
+			// get projects
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_projects = dispatcher.runSync("getProjectDeclaration", param);
+			cv.put("projects", result_projects.get("projectDeclarations"));
+			
+			List<Map> projects_role_director = FastList.newInstance();
+			List<Map> projects_role_member = FastList.newInstance();
+			for(Map p: (List<Map>)cv.get("projects")){
+				String roleId = (String)p.get("projectParticipationRoleId"); 
+				if(roleId.equals("DIRECTOR")){
+					projects_role_director.add(p);
+				}else if(roleId.equals("MEMBER")){
+					projects_role_member.add(p);
+				}
+			}
+			cv.put("projects_role_director",projects_role_director);
+			cv.put("projects_role_member",projects_role_member);
+			
+			
+			// get scientific service experiences
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_scientific_experiences = dispatcher.runSync("getScientificServiceExperience", param);
+			cv.put("scientificExperiences", result_scientific_experiences.get("scientificServiceExperiences"));
+			
+			
 			
 			param.clear();
 			

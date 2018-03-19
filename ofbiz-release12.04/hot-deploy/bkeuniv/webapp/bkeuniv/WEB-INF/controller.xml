@@ -152,6 +152,14 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="approve-a-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="approveAPaperDeclaration"/>
+        <response name="AttachementSuccess" type="view" value="APPROVE_PAPER"/>
+	</request-map>
+	
+	
 	
 	<request-map uri="create-education-progress">
 		<security https="true" auth="true"/>
@@ -448,6 +456,14 @@
            <security https="true" auth="true"/>
           <response name="success" type="view" value="view-summary-paper-declaration"></response>
     </request-map>    
+	<request-map uri="research-summary-list-papers-setting">
+           <security https="true" auth="true"/>
+          <response name="success" type="view" value="view-summary-paper-declaration-setting"></response>
+    </request-map>    
+	<request-map uri="research-summary-list-papers-faculty-setting">
+           <security https="true" auth="true"/>
+          <response name="success" type="view" value="view-summary-paper-declaration-faculty-setting"></response>
+    </request-map>    
 
 	<request-map uri="update-staffs-of-paper">
             <security https="true" auth="true"/>
@@ -464,6 +480,14 @@
             <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    <request-map uri="remove-staffs-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="removeStaffPaperDeclaration"/>
+            <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
     
     <request-map uri="export-excel-kv01">
 		<security auth="true" https="true" />
@@ -652,6 +676,9 @@
     <view-map name="view-profile-science-staffs-list" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFStaffsList"/>
 
     <view-map name="view-summary-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclaration"/>
+    <view-map name="view-summary-paper-declaration-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclarationSetting"/>
+    <view-map name="view-summary-paper-declaration-faculty-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclarationFacultySetting"/>
+
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
