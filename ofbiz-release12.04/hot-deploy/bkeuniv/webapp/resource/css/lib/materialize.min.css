@@ -5112,6 +5112,38 @@ small {
 .btn:hover,
 .btn-large:hover {
     background-color: #2bbbad
+} */
+
+.btn-floating.disabled,
+.btn-floating:disabled,
+.btn-floating[disabled] {
+    pointer-events: none;
+    background-color: #DFDFDF !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #9F9F9F !important;
+    cursor: default
+}
+
+.btn-floating.disabled:hover,
+.btn-floating:disabled:hover,
+.btn-floating[disabled]:hover {
+    background-color: #DFDFDF !important;
+    color: #9F9F9F !important
+}
+
+.btn-floating {
+    font-size: 1rem;
+    outline: 0
+}
+
+.btn-floating {
+    font-size: 1rem;
+    outline: 0
+}
+
+.btn-floating:focus {
+    background-color: #1d7d74
 }
 
 .btn-floating {
@@ -5175,7 +5207,7 @@ small {
 
 button.btn-floating {
     border: none
-} */
+}
 
 .fixed-action-btn {
     position: fixed;
