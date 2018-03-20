@@ -159,6 +159,12 @@
         <response name="AttachementSuccess" type="view" value="APPROVE_PAPER"/>
 	</request-map>
 	
+	<request-map uri="reject-a-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="rejectAPaperDeclaration"/>
+        <response name="AttachementSuccess" type="view" value="APPROVE_PAPER"/>
+	</request-map>
 	
 	
 	<request-map uri="create-education-progress">

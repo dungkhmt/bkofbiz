@@ -21,7 +21,7 @@
   </head>
   
  <style>
-#form-excel {
+#form-add {
     margin-top: 20px;
     margin-left: 20px;
 }
@@ -38,8 +38,8 @@
   	loader.open();
   </script>
 
-<div id="form-excel">
-<@buttonStore text="EXCEL" action="excel()"/>
+<div id="form-add">
+<@buttonStore text="Them moi" action="addProjectProposal()"/>
 
 
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
@@ -90,8 +90,8 @@
 <script>
 var obj;
 
-function excel(){
-	alert("list project sumission excel");
+function addProjectProposal(){
+	alert("add a project proposal");
 }
 
 $(document).ready(function() {

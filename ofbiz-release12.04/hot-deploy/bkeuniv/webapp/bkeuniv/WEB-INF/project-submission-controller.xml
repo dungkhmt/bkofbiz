@@ -3,6 +3,14 @@
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
 
 
+    <request-map uri="close-project-call">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="closeProjectCall"/>
+            <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
 	<request-map uri="get-project-proposals-of-staff">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getProjectProposalsOfStaff"></event>
@@ -86,6 +94,26 @@
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-form-add-project-call" />
 		<response name="error" type="view" value="view-form-add-project-call" />
+	</request-map>
+
+	<request-map uri="create-a-project-call">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createAProjectCall"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="update-project-call">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateAProjectCall"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="remove-project-call">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="removeAProjectCall"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
 	</request-map>
 
 	<request-map uri="add-a-project-call">

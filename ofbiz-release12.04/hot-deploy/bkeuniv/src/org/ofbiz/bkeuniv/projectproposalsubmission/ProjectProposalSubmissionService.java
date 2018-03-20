@@ -205,6 +205,24 @@ public class ProjectProposalSubmissionService {
 		}
 	}
 
+	public static String closeProjectCall(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String)request.getParameter("projectCallId");
+		Debug.log(module + "::closeProjectCall, CLOSED projectCall " + projectCallId);
+		try{
+			GenericValue pc = delegator.findOne("ProjectCall", UtilMisc.toMap("projectCallId",projectCallId), false);
+			if(pc != null){
+				pc.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CLOSED);
+				delegator.store(pc);
+				Debug.log(module + "::closeProjectCall, CLOSED successfully projectCall " + projectCallId);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();return "failed";
+		}
+		return "success";
+	}
+	
 	public static void addProjectProposalJury(HttpServletRequest request, 
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -396,6 +414,7 @@ public class ProjectProposalSubmissionService {
 			gv.put("projectCallId", projectCallId);
 			gv.put("projectCallName", projectCallName);
 			gv.put("projectCategoryId", projectCategoryId);
+			gv.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
 			gv.put("year", year);
 			
 			delegator.create(gv);
@@ -625,6 +644,7 @@ public class ProjectProposalSubmissionService {
 			Delegator delegator = ctx.getDelegator();
 			
 			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
 			
 			List<GenericValue> projectCalls = delegator.findList("ProjectCallView", 
 					EntityCondition.makeCondition(conds), 
@@ -633,6 +653,77 @@ public class ProjectProposalSubmissionService {
 					null, 
 					false);
 			retSucc.put("projectCalls", projectCalls);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	public static Map<String, Object> getAProjectCall(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String projectCallId = (String)context.get("projectCallId");
+		String statusId = (String)context.get("statusId");
+		Debug.log(module + "::getAProjectCall, projectCallId = " + projectCallId + ", statusId = " + statusId);
+		try{
+			Delegator delegator = ctx.getDelegator();
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			//conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,ProjectProposalSubmissionServiceUtil.STATUS_CREATED));
+			if(statusId != null)
+				conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,statusId));
+			conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+			
+			List<GenericValue> projectCalls = delegator.findList("ProjectCallView", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			retSucc.put("projectCalls", projectCalls);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> getListProjectCallStatus(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			Delegator delegator = ctx.getDelegator();
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			
+			List<GenericValue> projectCalls = delegator.findList("ProjectCallStatus", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			retSucc.put("projectCallStatus", projectCalls);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	public static Map<String, Object> getListProjectCategory(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			Delegator delegator = ctx.getDelegator();
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			
+			List<GenericValue> projectCalls = delegator.findList("ProjectCategory", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			retSucc.put("projectCategory", projectCalls);
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -1020,7 +1111,86 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
+	public static Map<String, Object> createAProjectCall(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		String projectCallName = (String)context.get("projectCallName");
+		List<Object> projectCategoryIds = (List<Object>)context.get("projectCategoryId[]");
+		String projectCategoryId = null;
+		if(projectCategoryIds != null && projectCategoryIds.size() > 0)
+			projectCategoryId = (String)projectCategoryIds.get(0);
+		String year = (String)context.get("year");
+		try{
+			GenericValue pc = delegator.makeValue("ProjectCall");
+			String projectCallId = delegator.getNextSeqId("ProjectCall");
+			pc.put("projectCallId", projectCallId);
+			pc.put("projectCallName", projectCallName);
+			pc.put("projectCategoryId", projectCategoryId);
+			pc.put("year", year);
+			pc.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
+			delegator.create(pc);
+			
+			pc = delegator.findOne("ProjectCallView", UtilMisc.toMap("projectCallId",projectCallId), false);
+			retSucc.put("projectCalls", pc);
+			retSucc.put("message", "Successful");
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	public static Map<String, Object> updateAProjectCall(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		String projectCallName = (String)context.get("projectCallName");
+		String projectCallId = (String)context.get("projectCallId");
+		
+		List<Object> projectCategoryIds = (List<Object>)context.get("projectCategoryId[]");
+		String projectCategoryId = null;
+		if(projectCategoryIds != null && projectCategoryIds.size() > 0)
+			projectCategoryId = (String)projectCategoryIds.get(0);
+		String year = (String)context.get("year");
+		Debug.log(module + "::updateAProjectCall, projectCall " + projectCallId);
+		
+		try{
+			GenericValue pc = delegator.findOne("ProjectCall", UtilMisc.toMap("projectCallId",projectCallId), false);
+			pc.put("projectCallName", projectCallName);
+			pc.put("projectCategoryId", projectCategoryId);
+			pc.put("year", year);
+			//pc.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
+			delegator.store(pc);
+			Debug.log(module + "::updateAProjectCall, successfully projectCall " + projectCallId);
+			
+			pc = delegator.findOne("ProjectCallView", UtilMisc.toMap("projectCallId",projectCallId), false);
+			retSucc.put("projectCalls", pc);
+			retSucc.put("message", "Successful");
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 
+	public static Map<String, Object> removeAProjectCall(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		String projectCallId = (String)context.get("projectCallId");
+		Debug.log(module + "::removeAProjectCall, projectCallId = " + projectCallId); 
+		try{
+			GenericValue pc = delegator.findOne("ProjectCall", UtilMisc.toMap("projectCallId", projectCallId), false);
+			if(pc!=null){
+				pc.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED);
+				delegator.store(pc);
+				Debug.log(module + "::removeAProjectCall, remove successfully projectCall " + projectCallId);
+			}
+			retSucc.put("result", "Successful");
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 	public static Map<String, Object> updateAProjectProposalSubmission(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Map<String, Object> userLogin = (Map<String, Object>) context.get("userLogin");

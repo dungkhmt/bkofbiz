@@ -281,6 +281,29 @@ public class PaperDeclarationService {
 	}
 
 	@SuppressWarnings({ "unchecked" })
+	public static void rejectAPaperDeclaration(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String paperId = request.getParameter("paperId");
+			String staffId = request.getParameter("staffId");
+			Debug.log(module + "::approveAPaperDeclaration, paperId = "
+					+ paperId + ", staffId = " + staffId);
+			PaperDeclarationUtil.rejectAPaperDeclaration(delegator, paperId,
+					staffId);
+
+			String rs = "{\"status\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
 	public static void updateStaffsOfPaper(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");

@@ -64,7 +64,7 @@
 			<input id="birthDate" style="width: 100%" type="text" width="1000" value=""/>	
 		</#if>
 	</div>
-	<script type="text/javascript">$(function () {$("#birthDate").datepicker({format: "dd/mm/yyyy"});});</script>
+	<script type="text/javascript">$(function () {$("#birthDate").datepicker({format: "yyyy-mm-dd"});});</script>
 </div>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
@@ -198,7 +198,7 @@ function updateInfo(){
 				"phone": phone,
 			},
 			success: function(rs){
-				//window.location.href="/bkeuniv/control/enable-security-group-function";
+				window.location.href="/bkeuniv/control/main";
 				console.log(rs.result);
 			}
 		})

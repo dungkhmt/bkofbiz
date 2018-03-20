@@ -21,7 +21,7 @@
   </head>
   
  <style>
-#form-excel {
+#form-add {
     margin-top: 20px;
     margin-left: 20px;
 }
@@ -38,8 +38,8 @@
   	loader.open();
   </script>
 
-<div id="form-excel">
-<@buttonStore text="EXCEL" action="excel()"/>
+<div id="form-add">
+<@buttonStore text="Them moi" action="addProjectCall()"/>
 
 
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
@@ -47,37 +47,42 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten de tai</th>
-				<th>Chu nhiem</th>
-				<th>Dot goi de tai</th>
-				<th>Khoa/vien</th>
+				<th>Ten dot goi de tai</th>
+				<th>Loai hinh de tai</th>
+				<th>Nam</th>
+				<th>Trang thai</th>
+				<th></th>
 			</tr>
 		</thead>
 	<tbody>
-	<#list resultProjectProposals.projectproposals as p>
+	<#list resultProjectCalls.projectCalls as pc>
 		<tr>
-			<td style="display: none">${p.researchProjectProposalId}</td>
-			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+			<td style="display: none">${pc.projectCallName}</td>
+			<#if pc.projectCallName?exists>
+				<td>${pc.projectCallName}</td>
 			<#else>
 				<td></td>
 			</#if>
-			<#if p.createStaffName?exists>
-				<td>${p.createStaffName}</td>
+			<#if pc.projectCategoryName?exists>
+				<td>${pc.projectCategoryName}</td>
 			<#else>
 				<td></td>
 			</#if>
-			<#if p.projectCallName?exists>
-				<td>${p.projectCallName}</td>
+			<#if pc.year?exists>
+				<td>${pc.year}</td>
 			<#else>
 				<td></td>
 			</#if>
-			<#if p.facultyName?exists>
-				<td>${p.facultyName}</td>
+			<#if pc.statusName?exists>
+				<td>${pc.statusName}</td>
 			<#else>
 				<td></td>
 			</#if>
-			
+			<#if pc.statusId == "CREATED">
+				<td><a href="/bkeuniv/control/submit-proposal?projectCallId=${pc.projectCallId}">Nop thuyet minh</a></td>
+			<#else>
+				<td></td>
+			</#if>
 		</tr>
 	</#list>
 	</tbody>
@@ -90,8 +95,8 @@
 <script>
 var obj;
 
-function excel(){
-	alert("list project sumission excel");
+function addProjectCall(){
+	alert("them dot goi de tai");
 }
 
 $(document).ready(function() {

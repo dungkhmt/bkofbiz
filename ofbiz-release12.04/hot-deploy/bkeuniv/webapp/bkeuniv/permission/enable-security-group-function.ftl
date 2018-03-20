@@ -14,7 +14,7 @@
 			${bkEunivUiLabelMap.SecurityGroup}
 						<select id="groupId" name="groupId" onchange='changeGroup(this)'>
 							<#list securityGroup.securityGroups as sg>
-								<option value="${sg.groupId}">${sg.groupId}: ${sg.description}</option>
+								<option value="${sg.groupId}">${sg.description}</option>
 							</#list>
 						</select>		
 

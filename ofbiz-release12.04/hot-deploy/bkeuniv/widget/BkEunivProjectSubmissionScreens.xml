@@ -7,7 +7,14 @@
 			<actions>
 				
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
-				<service service-name="getListProjectCalls" result-map="projectCalls"></service>
+				<!-- <service service-name="getListProjectCalls" result-map="projectCalls"></service> -->
+				
+				<service service-name="getProjectProposalsOfStaff" result-map="resultProjectProposals"></service>
+				
+				<service service-name="getAProjectCall" result-map="projectCalls">
+					<field-map field-name="projectCallId" value="${parameters.projectCallId}"/>
+					<field-map field-name="statusId" value="CREATED"/>
+				</service>
 				<service service-name="getFaculties" result-map="faculties"></service>
 			</actions>
 			<widgets>
@@ -17,8 +24,13 @@
 
 						<platform-specific>
 							<html>
-								<html-template
+<!-- 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectSubmission.ftl" />
+ -->
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listMyProjectProposalSubmissions.ftl" />
+							
+							
 							</html>
 						</platform-specific>
 
@@ -250,8 +262,8 @@
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<service service-name="getListProjectCalls" result-map="resultProjectCalls"></service>
-					
-				
+				<service service-name="getListProjectCallStatus" result-map="listProjectCallStatus"></service>	
+				<service service-name="getListProjectCategory" result-map="listProjectCategory"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -260,9 +272,12 @@
 
 						<platform-specific>
 							<html>
-								<html-template
+<!-- 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/projectCallManagement.ftl" />
-							</html>
+ -->						
+ 									<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectCalls.ftl" />
+  							</html>
 						</platform-specific>
 
 					</decorator-section>

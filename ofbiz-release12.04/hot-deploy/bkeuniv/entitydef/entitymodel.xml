@@ -118,15 +118,25 @@
 		<relation rel-entity-name="ProjectCategory" type="one">
 			<key-map field-name="projectCategoryId"/>
 		</relation>
+		<relation rel-entity-name="ProjectCallStatus" type="one">
+			<key-map field-name="statusId"/>
+		</relation>
+		
 	</entity>
 	<view-entity entity-name="ProjectCallView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="PC" entity-name="ProjectCall"></member-entity>
 		<member-entity entity-alias="PCAT" entity-name="ProjectCategory"></member-entity>
+		<member-entity entity-alias="PCS" entity-name="ProjectCallStatus"></member-entity>
 		<alias-all entity-alias="PC" ></alias-all>
 		<alias name="projectCategoryName" field="projectCategoryName" entity-alias="PCAT"></alias>
+		<alias name="statusName" field="statusName" entity-alias="PCS"></alias>
 		<view-link rel-entity-alias="PCAT" entity-alias="PC">
 			<key-map rel-field-name="projectCategoryId" field-name="projectCategoryId"/>
 		</view-link>
+		<view-link rel-entity-alias="PCS" entity-alias="PC" rel-optional="true">
+			<key-map rel-field-name="statusId" field-name="statusId"/>
+		</view-link>
+		
 	</view-entity>	
 	
 	<entity entity-name="ProjectProposalStatus" package-name="org.ofbiz.bkeuniv">

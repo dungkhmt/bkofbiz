@@ -18,7 +18,33 @@
 		<attribute name="count" mode="OUT" type="List"></attribute>
     </service>
     
-    
+    <service name="createAProjectCall" engine="java" 
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+    	invoke="createAProjectCall">
+    	<attribute name="projectCallName" mode="IN" type="String"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<attribute name="projectCalls" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+    </service>
+    <service name="updateAProjectCall" engine="java" 
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+    	invoke="updateAProjectCall">
+    	<attribute name="projectCallId" mode="IN" type="String"></attribute>
+    	<attribute name="projectCallName" mode="IN" type="String"></attribute>
+    	<attribute name="projectCategoryId[]" mode="IN" type="List"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<attribute name="projectCalls" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+    </service>
+
+    <service name="removeAProjectCall" engine="java" 
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+    	invoke="removeAProjectCall">
+    	
+    	<attribute name="projectCallId" mode="IN" type="String"></attribute>
+		<attribute name="result" mode="OUT" type="String"></attribute>	
+    </service>
     
     <service name="updateCountResearchProposalSubmission" engine="java"
     	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
@@ -125,9 +151,32 @@
 	</service>
 
     <service name="getListProjectCalls" engine="java" 
-		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getListProjectCalls">
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectCalls">
 		
 		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getAProjectCall" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getAProjectCall">
+		<attribute name="projectCallId" mode="IN" type="String"></attribute>
+		<attribute name="statusId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getListProjectCallStatus" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectCallStatus">
+		
+		<attribute name="projectCallStatus" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="getListProjectCategory" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectCategory">
+		
+		<attribute name="projectCategory" mode="OUT" type="List"></attribute>	
 	</service>
 
 	<service name="createProjectProposalContentItem" engine="java"

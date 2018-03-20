@@ -16,6 +16,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String STATUS_CREATED = "CREATED";
 	public static String STATUS_CANCELLED = "CANCELLED";
 	public static String STATUS_APPROVED = "APPROVED";
+	public static String STATUS_CLOSED = "CLOSED";
 	
 
 	public static List<GenericValue> getListProjectProposals(Delegator delegator,

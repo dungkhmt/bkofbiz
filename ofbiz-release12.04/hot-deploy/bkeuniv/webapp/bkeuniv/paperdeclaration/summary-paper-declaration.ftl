@@ -1,5 +1,6 @@
 
-
+<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
   <head>
@@ -112,8 +113,8 @@ $(document).ready(function() {
       //{title: ${paperDeclarationUiLabelMap.BkEunivApprovePaper}, cmd: "approve"},
       //{title: ${paperDeclarationUiLabelMap.BkEunivRejectPaper}, cmd: "reject"}
    	  {title: "Phe duyet", cmd: "approve"},
-      {title: "Khong phe duyet", cmd: "reject"}
-   
+      {title: "Khong phe duyet", cmd: "reject"},
+   	  {title: 'Download minh chung', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
      ],
     select: function(event, ui) {
         switch(ui.cmd){
@@ -130,8 +131,17 @@ $(document).ready(function() {
 				obj = ui;
 				var el = ui.target.parent();
 				var paperId = el.children()[0].innerHTML;
-				alert('edit paper ' + paperId);
+				//alert('edit paper ' + paperId);
+				rejectPaper(paperId);
 			    break;
+			case "pdf":
+				obj = ui;
+				var el = ui.target.parent();
+				var paperId = el.children()[0].innerHTML;
+				//alert('download paper ' + paperId);
+				jqPDF(paperId);
+			    break;
+			   
         }
     },
     beforeOpen: function(event, ui) {
@@ -143,9 +153,14 @@ $(document).ready(function() {
     
 } );
 
+function jqPDF(paperId){
+		console.log(paperId);
+		window.open("/bkeuniv/control/download-file-paper?id-paper=" + paperId, "_blank")
+}	
+	
 function approvePaper(paperId){
 	var staffId = document.getElementById("staffId").value;
-	alert("approve paper staff = " + staffId);
+	//alert("approve paper staff = " + staffId);
 	$.ajax({
 					url: "/bkeuniv/control/approve-a-paper-declaration",
 					type: 'POST',
@@ -155,11 +170,28 @@ function approvePaper(paperId){
 					},
 					success:function(rs){
 						console.log(rs);
-						alert("Bai bao da duoc phe duyet " + rs.status);
+						//alert("Bai bao khong duoc phe duyet " + rs.status);
 					}
 	
 	});
 				
 }
-
+function rejectPaper(paperId){
+	var staffId = document.getElementById("staffId").value;
+	//alert("approve paper staff = " + staffId);
+	$.ajax({
+					url: "/bkeuniv/control/reject-a-paper-declaration",
+					type: 'POST',
+					data: {
+						"paperId": paperId,
+						"staffId": staffId
+					},
+					success:function(rs){
+						console.log(rs);
+						//alert("Bai bao da duoc phe duyet " + rs.status);
+					}
+	
+	});
+				
+}
 </script>

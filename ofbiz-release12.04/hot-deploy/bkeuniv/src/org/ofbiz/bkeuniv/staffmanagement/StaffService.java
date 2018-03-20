@@ -807,11 +807,17 @@ public class StaffService {
 			GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",staffId), false);
 			if(st != null){
 				st.put("staffName", staffName);
-				st.put("staffEmail", email);
-				st.put("departmentId", departmentId);
-				st.put("staffGenderId", genderId);
-				st.put("staffDateOfBirth", Date.valueOf(birthDate));
-				st.put("staffPhone", phone);
+				if(email != null)
+					st.put("staffEmail", email);
+				if(departmentId != null)
+					st.put("departmentId", departmentId);
+				if(genderId != null)
+					st.put("staffGenderId", genderId);
+				if(birthDate != null && !birthDate.equals(""))
+					st.put("staffDateOfBirth", Date.valueOf(birthDate));
+				if(phone != null)
+					st.put("staffPhone", phone);
+				
 				delegator.store(st);
 				
 				String rs = "{\"result\":\"OK\"}";

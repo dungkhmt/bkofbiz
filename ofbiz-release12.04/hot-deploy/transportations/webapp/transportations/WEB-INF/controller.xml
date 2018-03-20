@@ -79,12 +79,27 @@
 		<response name="success" type="view" value="GoogleMaps" />
 	</request-map>
     
+    <request-map uri="compute-sum">
+		<security auth="false" https="true" />
+		<event type="service" invoke="computeSum"></event>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+
+    <request-map uri="getSumGenerateDataTest">
+		<security auth="false" https="true" />
+		<event type="service" invoke="getSumGenerateDataTest"></event>
+		<response name="success" type="request" value="json"/>
+		<response name="error" type="request" value="json"/>
+	</request-map>
+
     <request-map uri="checkAccount">
 		<security auth="true" https="true"/>
 		<event type="java" invoke="checkAccount" path="org.ofbiz.routes.RouteService"/>
 		<response name="success" type="none"></response>
 		<response name="error" type="none"></response>
 	</request-map>
+	
 
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://transportations/widget/TransportationsScreens.xml#main"/>
