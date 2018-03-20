@@ -1,5 +1,8 @@
 package org.ofbiz.bkeuniv.paperdeclaration;
 
+import java.awt.Color;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -8,10 +11,13 @@ import java.util.Map;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import org.apache.poi.hssf.usermodel.HSSFBorderFormatting;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -20,6 +26,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.bkeuniv.department.DepartmentService;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -29,10 +36,12 @@ import org.ofbiz.service.ServiceUtil;
 
 import java.util.ArrayList;
 
-public class PaperDeclarationUtil {
+public class PaperDeclarationUtil extends java.lang.Object{
 	public static final String STATUS_ENABLED = "ENABLED";
 	public static final String STATUS_DISABLED = "DISABLED";
 	public static final String module = PaperDeclarationUtil.class.getName();
+	public static final String[] sSTT = new String[]{"I","II","III","IV","V","VI","VII","VIII"
+		, "IX", "X", "XI", "XII", "XIII", "XIV", "XV"};
 
 	public static List<GenericValue> getPapersOfStaff(Delegator delegator,
 			String staffId) {
@@ -363,30 +372,96 @@ public class PaperDeclarationUtil {
 
 		HSSFWorkbook wb = new HSSFWorkbook();
 
-		// sheet 01
+		// sheet KV01
 		Sheet sh = wb.createSheet("KV01");
-
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 3000);
+		sh.setColumnWidth(2, 12000);
+		sh.setColumnWidth(3, 6000);
+		sh.setColumnWidth(4, 6000);
+		sh.setColumnWidth(5, 6000);
 		int i_row = 0;
-
+		
+		//----style font in excel
+		HSSFCellStyle cellStyleBold = getFontBold(wb);
+		HSSFCellStyle cellStyleLeft = getAttributeLeftFullBoder(wb);
+		HSSFCellStyle cellStyleLeftBold = getAttributeLeftBoldFullBoder(wb);
+		HSSFCellStyle cellStyleRight = getAttributeRightFullBoder(wb);
+		HSSFCellStyle cellStyleCenterBoldFullBorder = getAttributeCenterBoldFullBorder(wb);
+		//----style font in excel
+		//----start header in excel 
+		i_row++; 
+		Row row_header = sh.createRow(i_row);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B2:I2"));//merged columns
+		String[] str_header = new String[]{"Bảng tổng hợp tính giờ chuẩn NCKH năm học "+academicYearId+" của cán bộ trường ĐH Bách Khoa Hà Nội"};
+		createRowInExcel(1, 1, str_header, row_header, cellStyleBold);
+		//----end header in excel
+		
+		//----start title in excel
+		i_row = i_row + 3;
+		Row row_title = sh.createRow(i_row);
+		String facultyName = getFacultyName(delegator, facultyId);
+		String[] str_title = new String[]{"Khoa/Viện : " + facultyName};
+		createRowInExcel(1, 1, str_title, row_title, cellStyleBold);
+		//----end title in excel
+		
+		//----start header_table 
+		i_row = i_row + 4;
+		System.out.println(i_row);
+		Row row_header_table = sh.createRow(i_row);
+		String[] str_header_table = new String[]{"STT", "Họ và tên", "Tổng số giờ quy đổi từ bài báo", 
+				"Tổng số giờ quy đổi từ đề tài NCKH", "Tổng cộng giờ quy đổi"};
+		createRowInExcel(1, 5, str_header_table, row_header_table, cellStyleCenterBoldFullBorder);
+		//----end header_table
+		
+		//----start index of table in excel 
+		int s=0;
 		for (GenericValue d : departments) {
-			String deptName = (String) d.get("departmentName");
 			i_row += 1;
 			Row r = sh.createRow(i_row);
-			Cell c = r.createCell(1);
-			c.setCellValue(deptName);
+			String[] str_stt = new String[]{sSTT[s]};
+			createRowInExcel(1, 1, str_stt, r, cellStyleCenterBoldFullBorder);
+			s++;
+			String deptName = (String) d.get("departmentName");
+			String[] str_departmentName = new String[]{deptName};
+			createRowInExcel(2, 2, str_departmentName, r, cellStyleLeftBold);
+			String[] str_1 = new String[]{"0", "0", "0"};
+			createRowInExcel(3, 5, str_1, r, cellStyleCenterBoldFullBorder);
 
 			List<GenericValue> staffs = mDepartment2Staffs.get(d);
+			int count = 0;
 			for (GenericValue st : staffs) {
 				String staffName = (String) st.get("staffName");
 				i_row += 1;
+				count++;
 				r = sh.createRow(i_row);
-				c = r.createCell(1);
-				c.setCellValue(staffName);
-				c = r.createCell(2);
-				c.setCellValue(mStaff2Hour.get(st) + "");
+				String[] str_sttt = new String[]{""+count};
+				createRowInExcel(1, 1, str_sttt, r, cellStyleRight);
+				String[] str_staffName = new String[]{staffName};
+				createRowInExcel(2, 2, str_staffName, r, cellStyleLeft);
+				String[] str_2 = new String[]{mStaff2Hour.get(st) + "", "0", "0"};
+				createRowInExcel(3, 5, str_2, r, cellStyleRight);
 			}
 		}
-
+		//----end table in excel
+		
+		//----start footer in excel
+		i_row = i_row + 3;
+		Row rowFooter = sh.createRow(i_row);
+		Date timeCurrent = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timeCurrent);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH) + 1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		String[] str_footer1 = new String[]{"Ngày "+day+" tháng "+month+" năm "+ year};
+		createRowInExcel(5, 5, str_footer1, rowFooter, cellStyleBold);
+		i_row = i_row + 2;//----
+		rowFooter = sh.createRow(i_row);
+		String[] str_footer2 = new String[]{"LÃNH ĐẠO KHOA/VIỆN"};
+		createRowInExcel(5, 5, str_footer2, rowFooter, cellStyleBold);
+		//----end footer in excel
+		
 		return wb;
 	}
 
@@ -626,15 +701,15 @@ public class PaperDeclarationUtil {
 		i_row = 10;
 		Row rh = sh.createRow(i_row);
 		Cell ch = rh.createCell(2);
-		ch.setCellValue("Họ và tên các tác giả");
+		ch.setCellValue("Há»� vÃ  tÃªn cÃ¡c tÃ¡c giáº£");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(3);
-		ch.setCellValue("Tên bài báo");
+		ch.setCellValue("TÃªn bÃ i bÃ¡o");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(4);
-		ch.setCellValue("Tạp chí, Proceedings");
+		ch.setCellValue("Táº¡p chÃ­, Proceedings");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(5);
@@ -646,38 +721,38 @@ public class PaperDeclarationUtil {
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(7);
-		ch.setCellValue("Mức hỗ trợ bài báo");
+		ch.setCellValue("Má»©c há»— trá»£ bÃ i bÃ¡o");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(8);
-		ch.setCellValue("Số đồng tác giá/bài báo");
+		ch.setCellValue("Sá»‘ Ä‘á»“ng tÃ¡c giÃ¡/bÃ i bÃ¡o");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(9);
-		ch.setCellValue("Số người thuộc đơn vị/bài báo");
+		ch.setCellValue("Sá»‘ ngÆ°á»�i thuá»™c Ä‘Æ¡n vá»‹/bÃ i bÃ¡o");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(10);
-		ch.setCellValue("Kinh phí hỗ trợ cho cán bộ của đơn vị/bài báo");
+		ch.setCellValue("Kinh phÃ­ há»— trá»£ cho cÃ¡n bá»™ cá»§a Ä‘Æ¡n vá»‹/bÃ i bÃ¡o");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(11);
-		ch.setCellValue("Tên người được nhận");
+		ch.setCellValue("TÃªn ngÆ°á»�i Ä‘Æ°á»£c nháº­n");
 		ch.setCellStyle(styleTitle);
 
 		ch = rh.createCell(12);
-		ch.setCellValue("Số tiền/người/bài báo");
+		ch.setCellValue("Sá»‘ tiá»�n/ngÆ°á»�i/bÃ i bÃ¡o");
 		ch.setCellStyle(styleTitle);
 
 		i_row += 1;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(4);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Tạp chí, proceedings");
+		ch.setCellValue("Táº¡p chÃ­, proceedings");
 
 		ch = rh.createCell(5);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Số tạp chí, thời gian xuất bản");
+		ch.setCellValue("Sá»‘ táº¡p chÃ­, thá»�i gian xuáº¥t báº£n");
 
 		ch = rh.createCell(6);
 		ch.setCellStyle(styleTitle);
@@ -704,7 +779,7 @@ public class PaperDeclarationUtil {
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(2);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Danh sách bài báo tạp chí quốc tế không trong danh mục ISI, Scopus");
+		ch.setCellValue("Danh sÃ¡ch bÃ i bÃ¡o táº¡p chÃ­ quá»‘c táº¿ khÃ´ng trong danh má»¥c ISI, Scopus");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
 		i_row = createSegmentKV04(list_paper_international_journals,
 				styleNormal, sh, i_row, delegator, mPaperCategory2Money,
@@ -714,7 +789,7 @@ public class PaperDeclarationUtil {
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(2);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Danh sách bài báo tạp chí trong nước");
+		ch.setCellValue("Danh sÃ¡ch bÃ i bÃ¡o táº¡p chÃ­ trong nÆ°á»›c");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
 		i_row = createSegmentKV04(list_paper_national_journals, styleNormal,
 				sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
@@ -723,7 +798,7 @@ public class PaperDeclarationUtil {
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(2);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Danh sách bài báo hội nghị quốc tế");
+		ch.setCellValue("Danh sÃ¡ch bÃ i bÃ¡o há»™i nghá»‹ quá»‘c táº¿");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
 		i_row = createSegmentKV04(list_paper_international_conferences,
 				styleNormal, sh, i_row, delegator, mPaperCategory2Money,
@@ -733,7 +808,7 @@ public class PaperDeclarationUtil {
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(2);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Danh sách bài báo hội nghị trong nước");
+		ch.setCellValue("Danh sÃ¡ch bÃ i bÃ¡o há»™i nghá»‹ trong nÆ°á»›c");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
 		i_row = createSegmentKV04(list_paper_national_conferences, styleNormal,
 				sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
@@ -826,67 +901,131 @@ public class PaperDeclarationUtil {
 			else
 				papers2.add(p);
 		}
-
+		System.out.println("aaaaaa"+papers1.size());
+		System.out.println("adadadada"+papers2.size());
 		// start renderExcel
 
 		HSSFWorkbook wb = new HSSFWorkbook();
 
+		// sheet ISI
 		Sheet sh = wb.createSheet("ISI");
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 3000);
+		sh.setColumnWidth(2, 12000);
+		sh.setColumnWidth(3, 12000);
+		sh.setColumnWidth(4, 6000);
+		sh.setColumnWidth(5, 6000);
+		sh.setColumnWidth(6, 6000);
 
+		//----create style font bold
+		HSSFCellStyle cellStyleBold = getFontBold(wb);
+		HSSFCellStyle cellStyleLeft = getAttributeLeftFullBoder(wb);
+		HSSFCellStyle cellStyleRight = getAttributeRightFullBoder(wb);
+		HSSFCellStyle cellStyleCenterBoldFullBorder = getAttributeCenterBoldFullBorder(wb);
 		int i_row = 0;
-		i_row += 10;
+		//----start header in excel
+		i_row++;
+		Row row_header = sh.createRow(i_row);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B2:I2"));
+		String[] str_header1 = new String[]{"DANH MỤC BÀI BÁO CỦA CÁN BỘ TRƯỜNG ĐHBKHN"};
+		createRowInExcel(1, 1, str_header1, row_header, cellStyleBold);
+		i_row++;
+		row_header = sh.createRow(i_row);
+		String[] str_header2 = new String[]{"ĐĂNG TRONG TẠP CHÍ QUỐC TẾ TRONG DANH MỤC SCI VÀ SCIE NĂM HỌC "+ academicYearId};
+		createRowInExcel(1, 1, str_header2, row_header, cellStyleBold);
+		//----end header in excel
+		//----start title in excel
+		i_row = i_row + 4;
+		Row row_title = sh.createRow(i_row);
+		String text_title = getFacultyName(delegator, facultyId);
+		String[] str_title = new String[]{"Khoa/viện: "+ text_title};
+		createRowInExcel(1, 1, str_title, row_title, cellStyleBold);
+		//----end title in excel
+		//----start header table in excel
+		i_row = i_row + 4;
+		int i_row_1 = i_row + 1;
+		int i_row_2 = i_row +2;
+		Row row_header_table= sh.createRow(i_row);
+		String[] str1 = new String[]{"STT","Họ và Tên tác giả","Tên bài báo","Tạp chí/Proceedings","",""};
+		createRowInExcel(1, 6, str1, row_header_table, cellStyleCenterBoldFullBorder);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B"+i_row_1+":B"+i_row_2));
+		sh.addMergedRegion(CellRangeAddress.valueOf("C"+i_row_1+":C"+i_row_2));
+		sh.addMergedRegion(CellRangeAddress.valueOf("D"+i_row_1+":D"+i_row_2));
+		sh.addMergedRegion(CellRangeAddress.valueOf("E"+i_row_1+":G"+i_row_1));
+		i_row++;
+		row_header_table= sh.createRow(i_row);
+		String[] str2= new String[]{"","","","Tên tạp chí","Số và thời gian xuất bản","Chỉ số ISSN"};
+		createRowInExcel(1, 6, str2, row_header_table, cellStyleCenterBoldFullBorder);
+		//----end header table in excel		
+		//----start table
+		String[] arrYear = academicYearId.split("-");
+		String year_start = arrYear[0]; 
+		String year_end = arrYear[1];
+		i_row++;
+		int i_row_t = i_row + 1; 
+		Row row_table = sh.createRow(i_row);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B"+i_row_t+":G"+i_row_t));
+		String[] str_1 = new String[]{"CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/"+year_start+" - 31/12/"+year_start,
+				"","","","",""};
+		createRowInExcel(1, 6, str_1, row_table, cellStyleLeft);
+		int m = 0;
 		for (GenericValue p : papers1) {
 			String authors = (String) p.get("authors");
 			String name = (String) p.get("paperName");
 			String journal = (String) p.get("journalConferenceName");
 			String vol = (String) p.get("volumn");
 			String issn = (String) p.get("ISSN");
-
-			i_row += 1;
+			String[] str_papers1 = new String[]{authors, name, journal, vol, issn};
+			m++;
+			i_row++;
 			Row r = sh.createRow(i_row);
 			Cell c = r.createCell(1);
-			c.setCellValue(authors);
-
-			c = r.createCell(2);
-			c.setCellValue(name);
-
-			c = r.createCell(3);
-			c.setCellValue(journal);
-
-			c = r.createCell(4);
-			c.setCellValue(vol);
-
-			c = r.createCell(5);
-			c.setCellValue(issn);
+			c.setCellStyle(cellStyleRight);
+			c.setCellValue(m);
+			
+			createRowInExcel(2, 6, str_papers1, r, cellStyleLeft);
 		}
-
-		i_row += 1;
-		// Row row = sh.createRow(i_row);
-
+		i_row++;
+		i_row_t = i_row + 1;
+		row_table = sh.createRow(i_row);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B"+i_row_t+":G"+i_row_t));
+		String[] str_2 = new String[]{"CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/"+year_end+" - 30/6/2017"+year_end,
+				"","","","",""};
+		createRowInExcel(1, 6, str_2, row_table, cellStyleLeft);
 		for (GenericValue p : papers2) {
 			String authors = (String) p.get("authors");
 			String name = (String) p.get("paperName");
 			String journal = (String) p.get("journalConferenceName");
 			String vol = (String) p.get("volumn");
 			String issn = (String) p.get("ISSN");
-
-			i_row += 1;
+			String[] str_papers2 = new String[]{authors, name, journal, vol, issn};
+			m++;
+			i_row++;
 			Row r = sh.createRow(i_row);
 			Cell c = r.createCell(1);
-			c.setCellValue(authors);
-
-			c = r.createCell(2);
-			c.setCellValue(name);
-
-			c = r.createCell(3);
-			c.setCellValue(journal);
-
-			c = r.createCell(4);
-			c.setCellValue(vol);
-
-			c = r.createCell(5);
-			c.setCellValue(issn);
+			c.setCellStyle(cellStyleRight);
+			c.setCellValue(m);
+			
+			createRowInExcel(2, 6, str_papers2, r, cellStyleLeft);
 		}
+		//----end table
+		
+		//----start footer in excel
+		i_row = i_row + 3;//----
+		Row rowFooter = sh.createRow(i_row);
+		Date timeCurrent = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timeCurrent);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH) + 1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		String[] str_footer1 = new String[]{"Ngày "+day+" tháng "+month+" năm "+ year};
+		createRowInExcel(5, 5, str_footer1, rowFooter, cellStyleBold);
+		i_row = i_row + 2;//----
+		rowFooter = sh.createRow(i_row);
+		String[] str_footer2 = new String[]{"LÃNH ĐẠO KHOA/VIỆN"};
+		createRowInExcel(5, 5, str_footer2, rowFooter, cellStyleBold);
+		//----end footer in excel
 
 		return wb;
 	}
@@ -953,185 +1092,272 @@ public class PaperDeclarationUtil {
 		}
 
 		// start renderExcel
-
 		HSSFWorkbook wb = new HSSFWorkbook();
 
-		CellStyle styleTitle = wb.createCellStyle();
-		Font fontTitle = wb.createFont();
-		fontTitle.setFontHeightInPoints((short) 12);
-		fontTitle.setFontName("Times New Roman");
-		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		fontTitle.setColor(HSSFColor.BLACK.index);
-		styleTitle.setFont(fontTitle);
-		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
-		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
-		styleTitle.setWrapText(true);
-		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
-		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
-		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
-		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
-
-		CellStyle styleNormal = wb.createCellStyle();
-		Font fontNormal = wb.createFont();
-		fontNormal.setFontHeightInPoints((short) 12);
-		fontNormal.setFontName("Times New Roman");
-		// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		fontNormal.setColor(HSSFColor.BLACK.index);
-		styleNormal.setFont(fontNormal);
-		styleNormal.setWrapText(true);
-		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
-		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
-		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
-		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
-
-		// render sheet 01
-		Sheet sh = wb.createSheet("01");
-
-		sh.setColumnWidth(0, 400);
-
-		int i_row = 10;
+		// sheet 01-BM
+		Sheet sh = wb.createSheet("01-BM");
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 6000);
+		sh.setColumnWidth(2, 6000);
+		sh.setColumnWidth(3, 6000);
+		sh.setColumnWidth(4, 6000);
+		sh.setColumnWidth(5, 6000);
+		int i_row = 0;
+		
+		//----style font in excel
+		HSSFCellStyle cellStyleBold = getFontBold(wb);
+		HSSFCellStyle cellStyleLeft = getAttributeLeftFullBoder(wb);
+		HSSFCellStyle cellStyleLeftBold = getAttributeLeftBoldFullBoder(wb);
+		HSSFCellStyle cellStyleRight = getAttributeRightFullBoder(wb);
+		HSSFCellStyle cellStyleCenterBoldFullBorder = getAttributeCenterBoldFullBorder(wb);
+		//----style font in excel
+		//----start header in excel 
+		i_row++; 
+		Row row_header = sh.createRow(i_row);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B2:I2"));//merged columns
+		String[] str_header1 = new String[]{"BẢNG TỔNG HỢP KÊ KHAI KHỐI LƯỢNG NGHIÊN CỨU KHOA HỌC  NĂM HỌC "+academicYearId};
+		createRowInExcel(1, 1, str_header1, row_header, cellStyleBold);
+		i_row++;
+		row_header = sh.createRow(i_row);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B3:E3"));//merged columns
+		String[] str_header2 = new String[]{"(BÀI BÁO KHOA HỌC)"};
+		createRowInExcel(1, 1, str_header2, row_header, cellStyleBold);
+		//----end header in excel
+		//----start title in excel
+		i_row = i_row + 2;
+		Row row_title = sh.createRow(i_row);
+		String departmentName = getDepartmentName(delegator, departmentId); 
+		String[] str_title1 = new String[]{"Bộ môn : " + departmentName};
+		createRowInExcel(1, 1, str_title1, row_title, cellStyleBold);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B5:C5"));//merged columns
+		String facultyName = getFacultyName(delegator, facultyId);
+		String[] str_title2 = new String[]{"Khoa(Viện, Trung tâm) : " + facultyName};
+		createRowInExcel(5, 5, str_title2, row_title, cellStyleBold);
+		sh.addMergedRegion(CellRangeAddress.valueOf("F5:I5"));//merged columns
+		//----end title in excel
+		//----start header_table 
+		i_row = i_row + 4;
+		int i_row_1 = i_row + 1;
+		int i_row_2 = i_row +2;
+		Row row_header_table = sh.createRow(i_row);
+		String[] str_header_table = new String[]{"STT", "Họ và tên", "Tổng số bài báo đăng tạp chí, Proceeding","", 
+				"Tổng số giờ quy đổi của người kê khai (I)"};
+		createRowInExcel(1, 5, str_header_table, row_header_table, cellStyleCenterBoldFullBorder);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B"+i_row_1+":B"+i_row_2));
+		sh.addMergedRegion(CellRangeAddress.valueOf("C"+i_row_1+":C"+i_row_2));
+		sh.addMergedRegion(CellRangeAddress.valueOf("D"+i_row_1+":E"+i_row_1));
+		sh.addMergedRegion(CellRangeAddress.valueOf("F"+i_row_1+":F"+i_row_2));
+		i_row++;
+		row_header_table= sh.createRow(i_row);
+		String[] str2= new String[]{"","","Tạp chí","Proceedings",""};
+		createRowInExcel(1, 5, str2, row_header_table, cellStyleCenterBoldFullBorder);
+		//----end header_table
+		//----start index of table in excel 
+		int count=0;
 		for (GenericValue st : staffs) {
 			String name = (String) st.get("staffName");
+			count++;
 			i_row += 1;
-			Row row = sh.createRow(i_row);
-			Cell c = row.createCell(1);
-			c.setCellValue(name);
-
-			c = row.createCell(2);
-			c.setCellValue(mStaff2NbrPaperJournal.get(st));
-
-			c = row.createCell(3);
-			c.setCellValue(mStaff2NbrPaperConference.get(st));
-
-			c = row.createCell(4);
-			c.setCellValue(mStaff2NbrHours.get(st));
-
+			Row r = sh.createRow(i_row);
+			String[] str_stt = new String[]{""+count};
+			createRowInExcel(1, 1, str_stt, r, cellStyleRight);
+			String[] str_1 = new String[]{name, ""+mStaff2NbrPaperJournal.get(st), 
+					""+mStaff2NbrPaperConference.get(st), ""+mStaff2NbrHours.get(st)};
+			createRowInExcel(2, 5, str_1, r, cellStyleLeft);
 		}
+		i_row++;
+		Row row_table= sh.createRow(i_row);
+		String[] str_total = new String[]{"", "Total", "", "", "0"};
+		createRowInExcel(1, 5, str_total, row_table, cellStyleCenterBoldFullBorder);
+		//----end table in excel
+		//----start footer in excel
+		i_row = i_row + 3;
+		Row rowFooter = sh.createRow(i_row);
+		String[] str_footer1 = new String[]{"Ghi chú:  Mục (I)  lấy từ bản kê khai của từng cá nhân"};
+		createRowInExcel(1, 1, str_footer1, rowFooter, cellStyleBold);
+		i_row = i_row + 4;
+		rowFooter = sh.createRow(i_row);
+		Date timeCurrent = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timeCurrent);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH) + 1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		String[] str_footer2 = new String[]{"Hà Nội, Ngày "+day+" tháng "+month+" năm "+ year};
+		createRowInExcel(4, 4, str_footer2, rowFooter, cellStyleBold);
+		i_row++;
+		rowFooter = sh.createRow(i_row);
+		String[] str_footer3 = new String[]{"TRƯỞNG BỘ MÔN", "", "", "TRƯỞNG KHOA/VIỆN/TT"};
+		createRowInExcel(1, 4, str_footer3, rowFooter, cellStyleBold);
+		//----end footer in excel 01-BM
+		
+		// sheet 02-BM
+		sh = wb.createSheet("02-BM");
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 3000);
+		sh.setColumnWidth(2, 6000);
+		sh.setColumnWidth(3, 6000);
+		sh.setColumnWidth(4, 6000);
+		sh.setColumnWidth(5, 6000);
+		sh.setColumnWidth(6, 6000);
+		sh.setColumnWidth(7, 6000);
+		sh.setColumnWidth(8, 6000);
+		sh.setColumnWidth(9, 6000);
+		int i_row_02_BM = 0;
+		//----start header in excel 
+		i_row_02_BM++; 
+		Row row_header_02_BM = sh.createRow(i_row_02_BM);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B2:I2"));//merged columns
+		String[] str_header_02_BM = new String[]{"BẢNG TỔNG HỢP KÊ KHAI KHỐI LƯỢNG NGHIÊN CỨU KHOA HỌC  NĂM HỌC "+academicYearId};
+		createRowInExcel(1, 1, str_header_02_BM, row_header_02_BM, cellStyleBold);
+		i_row_02_BM++;
+		row_header_02_BM = sh.createRow(i_row_02_BM);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B3:E3"));//merged columns
+		String[] str_header2_02_BM = new String[]{"(ĐỀ TÀI NGHIÊN CỨU KHOA HỌC CÁC CẤP – BẰNG ĐỘC QUYỀN SÁNG CHẾ/GIẢI PHÁP HỮU ÍCH)"};
+		createRowInExcel(1, 1, str_header2_02_BM, row_header_02_BM, cellStyleBold);
+		//----end header in excel
+		//----start title in excel
+		i_row_02_BM = i_row_02_BM + 2;
+		Row row_title_02_BM = sh.createRow(i_row_02_BM);
+		String[] str_title1_02_BM = new String[]{"Bộ môn : " + departmentName};
+		createRowInExcel(1, 1, str_title1_02_BM, row_title_02_BM, cellStyleBold);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B5:C5"));//merged columns;
+		String[] str_title2_02_BM = new String[]{"Khoa(Viện, Trung tâm) : " + facultyName};
+		createRowInExcel(5, 5, str_title2_02_BM, row_title_02_BM, cellStyleBold);
+		sh.addMergedRegion(CellRangeAddress.valueOf("F5:I5"));//merged columns
+		//----end title in excel
+		//----start header_table 
+		i_row_02_BM = i_row_02_BM + 4;
+		int i_row_1_02_BM = i_row_02_BM + 1;
+		int i_row_2_02_BM = i_row_02_BM +2;
+		Row row_header_table_02_BM = sh.createRow(i_row_02_BM);
+		String[] str_header_table_02_BM = new String[]{"STT", "Họ và tên", "Tổng số đề tài, dự án NCKH","", 
+				"", "", "", "", "Tổng số giờ quy đổi của người kê khai (I)"};
+		createRowInExcel(1, 9, str_header_table_02_BM, row_header_table_02_BM, cellStyleCenterBoldFullBorder);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B"+i_row_1_02_BM+":B"+i_row_2_02_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("C"+i_row_1_02_BM+":C"+i_row_2_02_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("J"+i_row_1_02_BM+":J"+i_row_2_02_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("D"+i_row_1_02_BM+":I"+i_row_1_02_BM));
+		i_row_02_BM++;
+		row_header_table_02_BM= sh.createRow(i_row_02_BM);
+		String[] str2_02_BM= new String[]{"","","Đề tài KHCN, dự án cấp Nhà nước","Đề tài, dự án  cấp Bộ, thành phố và tương đương",
+				"Đề tài thuộc quỹ Nafosted", "ĐT, dự án hợp tác quốc tế","TĐ cấp trường", "Bằng độc quyền Sáng chế/Giải pháp hữu ích", ""};
+		createRowInExcel(1, 9, str2_02_BM, row_header_table_02_BM, cellStyleCenterBoldFullBorder);
+		//----end header_table
+		//----start index of table in excel 
+		int count_02_BM=0;
+		for (GenericValue st : staffs) {
+			String name = (String) st.get("staffName");
+			count_02_BM++;
+			i_row_02_BM += 1;
+			Row r = sh.createRow(i_row_02_BM);
+			String[] str_stt = new String[]{""+count_02_BM};
+			createRowInExcel(1, 1, str_stt, r, cellStyleRight);
+			String[] str_1 = new String[]{name, "", "", "", "", ""
+					, "", "", ""};
+			createRowInExcel(2, 9, str_1, r, cellStyleLeft);
+		}
+		i_row_02_BM++;
+		Row row_table_= sh.createRow(i_row_02_BM);
+		String[] str_total_ = new String[]{"", "Total", "", "", "",
+				 "", "", "", "0"};
+		createRowInExcel(1, 9, str_total_, row_table_, cellStyleCenterBoldFullBorder);
+		//----end table in excel
+		//----start footer in excel
+		i_row_02_BM = i_row_02_BM + 3;
+		Row rowFooter_02_BM = sh.createRow(i_row_02_BM);
+		String[] str_footer1_02_BM = new String[]{"Ghi chú:  Mục (I)  lấy từ bản kê khai của từng cá nhân"};
+		createRowInExcel(1, 1, str_footer1_02_BM, rowFooter_02_BM, cellStyleBold);
+		i_row_02_BM = i_row_02_BM + 4;
+		rowFooter_02_BM = sh.createRow(i_row_02_BM);
+		String[] str_footer2_02_BM = new String[]{"Hà Nội, Ngày "+day+" tháng "+month+" năm "+ year};
+		createRowInExcel(4, 4, str_footer2_02_BM, rowFooter_02_BM, cellStyleBold);
+		i_row_02_BM++;
+		rowFooter_02_BM = sh.createRow(i_row_02_BM);
+		String[] str_footer3_02_BM = new String[]{"TRƯỞNG BỘ MÔN", "", "", "TRƯỞNG KHOA/VIỆN/TT"};
+		createRowInExcel(1, 4, str_footer3_02_BM, rowFooter_02_BM, cellStyleBold);
+		//----end footer in excel 02-BM
 
-		sh = wb.createSheet("03");
-
-		sh.setColumnWidth(0, 1500);
-		sh.setColumnWidth(1, 10000);
-		sh.setColumnWidth(2, 10000);
-		sh.setColumnWidth(3, 10000);
-
-		i_row = 1;
-		Row row_title = sh.createRow(i_row);
-		Cell cell_title = row_title.createCell(1);
-		// cell_title.setCellStyle(styleTitle);
-		cell_title
-				.setCellValue("BẢNG TỔNG HỢP CHI TIẾT KHỐI LƯỢNG NGHIÊN CỨU KHOA HỌC ĐƯỢC QUY ĐỔI TỪ BÀI BÁO");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
-
-		i_row = 10;
-		row_title = sh.createRow(i_row);
-
-		cell_title = row_title.createCell(0);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("STT");
-
-		cell_title = row_title.createCell(1);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Họ tên tác giả và đồng tác giả");
-
-		cell_title = row_title.createCell(2);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Tên bài báo");
-
-		cell_title = row_title.createCell(3);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Tạp chí, proceedings");
-
-		cell_title = row_title.createCell(4);
-		cell_title.setCellStyle(styleTitle);
-
-		cell_title = row_title.createCell(5);
-		cell_title.setCellStyle(styleTitle);
-
-		cell_title = row_title.createCell(6);
-		cell_title.setCellStyle(styleTitle);
-
-		cell_title = row_title.createCell(7);
-		cell_title.setCellStyle(styleTitle);
-
-		sh.addMergedRegion(new CellRangeAddress(i_row, // first row
-				i_row, // last row
-				3, // first column
-				6 // last column
-		));
-
-		i_row += 1;
-		row_title = sh.createRow(i_row);
-
-		cell_title = row_title.createCell(0);
-		cell_title.setCellStyle(styleTitle);
-
-		cell_title = row_title.createCell(1);
-		cell_title.setCellStyle(styleTitle);
-
-		cell_title = row_title.createCell(2);
-		cell_title.setCellStyle(styleTitle);
-
-		cell_title = row_title.createCell(3);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Tên tạp chí, proceedings");
-
-		cell_title = row_title.createCell(4);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Thời gian xuất bản");
-
-		cell_title = row_title.createCell(5);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Chỉ số ISSN");
-
-		cell_title = row_title.createCell(6);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Số giờ quy đổi của bài báo");
-
-		cell_title = row_title.createCell(7);
-		cell_title.setCellStyle(styleTitle);
-		cell_title.setCellValue("Số giờ quy đổi của người kê khai");
-
-		sh.addMergedRegion(new CellRangeAddress(i_row - 1, // first row
-				i_row, // last row
-				0, // first column
-				0 // last column
-		));
-
-		sh.addMergedRegion(new CellRangeAddress(i_row - 1, // first row
-				i_row, // last row
-				1, // first column
-				1 // last column
-		));
-
-		sh.addMergedRegion(new CellRangeAddress(i_row - 1, // first row
-				i_row, // last row
-				2, // first column
-				2 // last column
-		));
-
+		// sheet 03-BM
+		sh = wb.createSheet("03-BM");
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 3000);
+		sh.setColumnWidth(2, 6000);
+		sh.setColumnWidth(3, 6000);
+		sh.setColumnWidth(4, 6000);
+		sh.setColumnWidth(5, 6000);
+		sh.setColumnWidth(6, 6000);
+		sh.setColumnWidth(7, 6000);
+		sh.setColumnWidth(8, 6000);
+		sh.setColumnWidth(9, 6000);
+		int i_row_03_BM = 0;
+		//----start header in excel 
+		i_row_03_BM++; 
+		Row row_header_03_BM = sh.createRow(i_row_03_BM);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B2:I2"));//merged columns
+		String[] str_header_03_BM = new String[]{"BẢNG TỔNG HỢP CHI TIẾT KHỐI LƯỢNG NCKH ĐƯỢC QUY ĐỔI TỪ CÁC BÀI BÁO KHOA HỌC "};
+		createRowInExcel(1, 1, str_header_03_BM, row_header_03_BM, cellStyleBold);
+		i_row_03_BM++;
+		row_header_03_BM = sh.createRow(i_row_03_BM);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B3:I3"));//merged columns
+		String[] str_header2_03_BM = new String[]{"ĐĂNG  TRONG TẠP CHÍ VÀ KỶ YẾU HỘI NGHỊ KHOA HỌC NĂM HỌC "+academicYearId};
+		createRowInExcel(1, 1, str_header2_03_BM, row_header_03_BM, cellStyleBold);
+		//----end header in excel
+		//----start title in excel
+		i_row_03_BM = i_row_03_BM + 2;
+		Row row_title_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_title1_03_BM = new String[]{"Bộ môn : " + departmentName};
+		createRowInExcel(1, 1, str_title1_03_BM, row_title_03_BM, cellStyleBold);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B5:C5"));//merged columns;
+		String[] str_title2_03_BM = new String[]{"Khoa(Viện, Trung tâm) : " + facultyName};
+		createRowInExcel(5, 5, str_title2_03_BM, row_title_03_BM, cellStyleBold);
+		sh.addMergedRegion(CellRangeAddress.valueOf("F5:I5"));//merged columns
+		//----end title in excel
+		//----start header_table 
+		i_row_03_BM = i_row_03_BM + 4;
+		int i_row_1_03_BM = i_row_03_BM + 1;
+		int i_row_2_03_BM = i_row_03_BM +2;
+		Row row_header_table_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_header_table_03_BM = new String[]{"STT", "Họ và tên tác giả và các đồng tác giả", "Tên bài báo","Tạp chí, Proceedings", 
+				"", "", "", "", "Số giờ quy đổi của người kê khai", "Ghi chú"};
+		createRowInExcel(1, 10, str_header_table_03_BM, row_header_table_03_BM, cellStyleCenterBoldFullBorder);
+		sh.addMergedRegion(CellRangeAddress.valueOf("B"+i_row_1_03_BM+":B"+i_row_2_03_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("C"+i_row_1_03_BM+":C"+i_row_2_03_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("D"+i_row_1_03_BM+":D"+i_row_2_03_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("J"+i_row_1_03_BM+":J"+i_row_2_03_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("K"+i_row_1_03_BM+":K"+i_row_2_03_BM));
+		sh.addMergedRegion(CellRangeAddress.valueOf("E"+i_row_1_03_BM+":I"+i_row_1_03_BM));
+		i_row_03_BM++;
+		row_header_table_03_BM= sh.createRow(i_row_03_BM);
+		String[] str2_03_BM= new String[]{"","","","Tên tạp chí, Proceedings", "Thời gian xuất bản",
+				"Chỉ số ISSN", "Hệ số IF","Số giờ quy đổi của bài báo", "", ""};
+		createRowInExcel(1, 10, str2_03_BM, row_header_table_03_BM, cellStyleCenterBoldFullBorder);
+		//----end header_table
+		//----start index of table in excel 
+//		int count_03_BM=0;
+//		for (GenericValue st : staffs) {
+//			String name = (String) st.get("staffName");
+//			count_03_BM++;
+//			i_row_03_BM += 1;
+//			Row r = sh.createRow(i_row_03_BM);
+//			String[] str_stt = new String[]{""+count_03_BM};
+//			createRowInExcel(1, 1, str_stt, r, cellStyleRight);
+//			String[] str_1 = new String[]{name, "", "", "", "", ""
+//					, "", "", ""};
+//			createRowInExcel(2, 9, str_1, r, cellStyleLeft);
+//		}
 		for (GenericValue st : staffs) {
 			String name = (String) st.get("staffName");
 			List<GenericValue> papers = mStaff2Papers.get(st);
-
-			if (papers == null || papers.size() == 0)
-				continue;
-
-			i_row += 1;
-			Row row = sh.createRow(i_row);
-			Cell c = row.createCell(1);
-			c.setCellValue(name);
-			c.setCellStyle(styleTitle);
-
-			for (int i = 2; i <= 7; i++) {
-				c = row.createCell(i);
-				c.setCellStyle(styleTitle);
-			}
-
-			int idx = 0;
-			for (GenericValue p : papers) {
-				idx++;
-
+//			if (papers == null || papers.size() == 0)
+//				continue;
+			i_row_03_BM++;
+			Row r = sh.createRow(i_row_03_BM);
+			String[] str_1 = new String[]{"", name, "", "", "", ""
+					, "", "0", "0",""};
+			createRowInExcel(1, 10, str_1, r, cellStyleCenterBoldFullBorder);
+			int count_03_BM = 0;
+			for(GenericValue p : papers){
 				String authors = (String) p.get("authors");
 				String paperName = (String) p.get("paperName");
 				String journalConference = (String) p
@@ -1142,49 +1368,56 @@ public class PaperDeclarationUtil {
 				long hour = 0;
 				if (mCategory2Hour.get(paperCategoryId) != null)
 					hour = mCategory2Hour.get(paperCategoryId);
-
-				i_row += 1;
-				row = sh.createRow(i_row);
-
-				c = row.createCell(0);
-				c.setCellValue(idx + "");
-				c.setCellStyle(styleNormal);
-
-				c = row.createCell(1);
-				c.setCellValue(authors);
-				c.setCellStyle(styleNormal);
-
-				c = row.createCell(2);
-				c.setCellValue(paperName);
-				c.setCellStyle(styleNormal);
-
-				c = row.createCell(3);
-				c.setCellValue(journalConference);
-				c.setCellStyle(styleNormal);
-
-				c = row.createCell(4);
-				c.setCellValue(pub_year);
-				c.setCellStyle(styleNormal);
-
-				c = row.createCell(5);
-				c.setCellValue(issn);
-				c.setCellStyle(styleNormal);
-
-				c = row.createCell(6);
-				c.setCellValue(hour + "");
-				c.setCellStyle(styleNormal);
-
+				i_row_03_BM++;
+				count_03_BM++;
+				r = sh.createRow(i_row_03_BM);
+				String[] str_1ss = new String[]{""+count_02_BM};
+				createRowInExcel(1, 1, str_1ss, r, cellStyleRight);
+				String[] str_2ss = new String[]{authors, paperName, journalConference};
+				createRowInExcel(2, 4, str_2ss, r, cellStyleLeft);
+				String[] str_3ss = new String[]{pub_year};
+				createRowInExcel(5, 5, str_3ss, r, cellStyleRight);
+				String[] str_4ss = new String[]{issn, ""};
+				createRowInExcel(6, 7, str_4ss, r, cellStyleLeft);
 				int sz = 1;
 				if (authors != null) {
 					String[] s = authors.split(",");
 					sz = s.length;
 				}
-
-				c = row.createCell(7);
-				c.setCellValue(hour / sz + "");
-				c.setCellStyle(styleNormal);
+				String[] str_5ss = new String[]{""+hour, ""+hour / sz };
+				createRowInExcel(8, 9, str_5ss, r, cellStyleRight);
+				String[] str_6ss = new String[]{""};
+				createRowInExcel(10, 10, str_6ss, r, cellStyleLeft);
 			}
 		}
+		i_row_03_BM++;
+		Row row_table_03_BM= sh.createRow(i_row_03_BM);
+		String[] str_total_03_Bm = new String[]{"", "Total", "", "", "",
+				 "", "", "0", "0",""};
+		createRowInExcel(1, 10, str_total_03_Bm, row_table_03_BM, cellStyleCenterBoldFullBorder);
+		//----end table in excel
+		//----start footer in excel
+		i_row_03_BM = i_row_03_BM + 3;
+		Row rowFooter_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_footer1_03_BM = new String[]{"Ghi chú:"};
+		createRowInExcel(1, 1, str_footer1_03_BM, rowFooter_03_BM, cellStyleBold);
+		i_row_03_BM++;
+		rowFooter_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_footer1_03_BM1 = new String[]{"(*): Cộng tổng giờ bài báo khoa học cho từng cá nhân"};
+		createRowInExcel(1, 1, str_footer1_03_BM1, rowFooter_03_BM, cellStyleBold);
+		i_row_03_BM++;
+		rowFooter_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_footer1_03_BM2 = new String[]{"(**): Cộng tổng giờ bài báo khoa học của Bộ môn"};
+		createRowInExcel(1, 1, str_footer1_03_BM2, rowFooter_03_BM, cellStyleBold);
+		i_row_03_BM = i_row_03_BM + 4;
+		rowFooter_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_footer2_03_BM = new String[]{"Hà Nội, Ngày "+day+" tháng "+month+" năm "+ year};
+		createRowInExcel(4, 4, str_footer2_03_BM, rowFooter_03_BM, cellStyleBold);
+		i_row_03_BM++;
+		rowFooter_03_BM = sh.createRow(i_row_03_BM);
+		String[] str_footer3_03_BM = new String[]{"TRƯỞNG BỘ MÔN", "", "", "TRƯỞNG KHOA/VIỆN/TT"};
+		createRowInExcel(1, 4, str_footer3_03_BM, rowFooter_03_BM, cellStyleBold);
+		//----end footer in excel 03-BM
 
 		return wb;
 	}
@@ -1303,5 +1536,109 @@ public class PaperDeclarationUtil {
 		}
 		return null;
 	}
-
+	
+	public static String getFacultyName(Delegator delegator,
+			String facultyId) {
+		try {
+			GenericValue faculty = delegator.findByPrimaryKey("Faculty", UtilMisc.toMap("facultyId", facultyId));
+			String facultyName = (String) faculty.get("facultyName");
+			return facultyName;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String getDepartmentName(Delegator delegator,
+			String departmentId) {
+		try {
+			GenericValue department = delegator.findByPrimaryKey("Department", UtilMisc.toMap("departmentId", departmentId));
+			String departmentName = (String) department.get("departmentName");
+			return departmentName;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static HSSFCellStyle getFontBold(HSSFWorkbook wb) {
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		HSSFFont font = wb.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setFontHeightInPoints((short) 13);
+		font.setFontName("Times New Roman");
+		cellStyle.setFont(font);
+		return cellStyle;
+	}
+	
+	public static HSSFCellStyle getAttributeLeftFullBoder(HSSFWorkbook wb) {
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		HSSFFont font = wb.createFont();
+		cellStyle.setFont(font);
+		allBorderForCell(cellStyle);
+		cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+		return cellStyle;
+	}
+	
+	public static HSSFCellStyle getAttributeLeftBoldFullBoder(HSSFWorkbook wb) {
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		HSSFFont font = wb.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		cellStyle.setFont(font);
+		allBorderForCell(cellStyle);
+		cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+		return cellStyle;
+	}
+	
+	public static HSSFCellStyle getAttributeRightFullBoder(HSSFWorkbook wb) {
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		HSSFFont font = wb.createFont();
+		cellStyle.setFont(font);
+		allBorderForCell(cellStyle);
+		cellStyle.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+		return cellStyle;
+	}
+	
+	public static HSSFCellStyle getAttributeCenterBoldFullBorder(HSSFWorkbook wb) {
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+		HSSFFont font = wb.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setFontName("Times New Roman");
+		cellStyle.setFont(font);
+		allBorderForCell(cellStyle);
+		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		cellStyle.setWrapText(true);
+		return cellStyle;
+	}
+	
+	public static void allBorderForCell(HSSFCellStyle cellStyle){
+		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+	}
+	
+	public static void setHeaderColumnsOfRow(int indexStart, int numCols, String[] str, 
+			Row row, HSSFCellStyle cellStyle){
+		int m = 0;
+		for(int i=indexStart; i<=numCols;i++){
+			Cell cell = row.createCell(i);
+			cell.setCellStyle(cellStyle);
+			cell.setCellValue(str[m]);
+			m++;
+		}
+	}
+	
+	public static void createRowInExcel(int indexStart, int numCols, String[] str, 
+			Row row, HSSFCellStyle cellStyle){
+		int m = 0;
+		for(int i=indexStart; i<=numCols;i++){
+			Cell cell = row.createCell(i);
+			cell.setCellStyle(cellStyle);
+			cell.setCellValue(str[m]);
+			m++;
+		}
+	}
+	
 }
