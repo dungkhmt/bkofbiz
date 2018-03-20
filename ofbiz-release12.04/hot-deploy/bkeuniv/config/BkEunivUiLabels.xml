@@ -97,9 +97,288 @@
         <value xml:lang="en">Logout</value>
         <value xml:lang="vi">Đăng xuất</value>
     </property>
+    
+    <property key="BkEunivChangePassword">
+        <value xml:lang="en">Change password</value>
+        <value xml:lang="vi">Đổi mật khẩu</value>
+    </property>
 
     <property key="BkEunivSTT">
         <value xml:lang="en">Index</value>
         <value xml:lang="vi">STT</value>
     </property>
+    
+    <property key="BkEunivChange">
+        <value xml:lang="en">Change</value>
+        <value xml:lang="vi">Chỉnh sửa</value>
+    </property>
+    
+    <property key="BkEunivNew">
+        <value xml:lang="en">New</value>
+        <value xml:lang="vi">Tạo mới</value>
+    </property>
+    
+    <property key="BkEunivDelete">
+        <value xml:lang="en">Delete</value>
+        <value xml:lang="vi">Xóa</value>
+    </property>
+    
+    <property key="BkEunivManage">
+        <value xml:lang="en">Manage</value>
+        <value xml:lang="vi">Quản lý</value>
+    </property>
+    
+    <property key="BkEunivResearchSpeciality">
+        <value xml:lang="en">Research speciality</value>
+        <value xml:lang="vi">Chuyên ngành nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivFromDate">
+        <value xml:lang="en">From date</value>
+        <value xml:lang="vi">Từ ngày</value>
+    </property>
+    
+    <property key="BkEunivThruDate">
+        <value xml:lang="en">Thru date</value>
+        <value xml:lang="vi">Đến ngày</value>
+    </property>
+    
+    <property key="BkEunivResearchDomain">
+        <value xml:lang="en">Research domain</value>
+        <value xml:lang="vi">Lĩnh vực nghiên cứu</value>
+    </property>
+    
+    <property key="BkEunivRecentResearchDomain">
+        <value xml:lang="en">Recent 5 year research domain</value>
+        <value xml:lang="vi">Lĩnh vực nghiên cứu trong 5 năm gần đây</value>
+    </property>
+    
+    <property key="BkEunivResearchSubDomain">
+        <value xml:lang="en">Research sub domain</value>
+        <value xml:lang="vi">Lĩnh vực nghiên cứu con</value>
+    </property>
+    
+    <property key="BkEunivOK">
+        <value xml:lang="en">OK</value>
+        <value xml:lang="vi">Đồng ý</value>
+    </property>
+    
+    <property key="BkEunivCancel">
+        <value xml:lang="en">Cancel</value>
+        <value xml:lang="vi">Hủy bỏ</value>
+    </property>
+    
+    <property key="BkEunivConfirmToDelete">
+        <value xml:lang="en">You confirm you want to delete</value>
+        <value xml:lang="vi">Bạn xác nhận xóa bản ghi</value>
+    </property>
+    
+    <property key="BkEunivStaffName">
+        <value xml:lang="en">Staff name</value>
+        <value xml:lang="vi">Tên thành viên</value>
+    </property>
+    
+    <property key="BkEunivStaff">
+        <value xml:lang="en">Staff</value>
+        <value xml:lang="vi">Thành viên</value>
+    </property>
+    
+    <property key="BkEunivRoleType">
+        <value xml:lang="en">Role type</value>
+        <value xml:lang="vi">Chức vụ</value>
+    </property>
+    
+    <property key="BkEunivContent">
+        <value xml:lang="en">Content</value>
+        <value xml:lang="vi">Nội dung</value>
+    </property>
+    
+    <property key="BkEunivWorkingDays">
+        <value xml:lang="en">Working days</value>
+        <value xml:lang="vi">Ngày làm việc</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh phí</value>
+    </property>
+    
+    <property key="BkEunivExportPDF">
+        <value xml:lang="en">Export PDF</value>
+        <value xml:lang="vi">Xuất PDF</value>
+    </property>
+    
+    <property key="BkEunivSectionOrder">
+        <value xml:lang="en">Section order</value>
+        <value xml:lang="vi">Thứ tự đề mục</value>
+    </property>
+    
+    <property key="BkEunivSectionList">
+        <value xml:lang="en">Section list</value>
+        <value xml:lang="vi">Danh sách đề mục không hiển thị</value>
+    </property>
+    
+    <property key="BkEunivEducationProgress">
+        <value xml:lang="en">Education progress</value>
+        <value xml:lang="vi">Quá trình đào tạo</value>
+    </property>
+    
+    <property key="BkEunivWorkProgress">
+        <value xml:lang="en">Work progress</value>
+        <value xml:lang="vi">Quá trình công tác</value>
+    </property>
+    
+    <property key="BkEunivPublications">
+        <value xml:lang="en">Publications</value>
+        <value xml:lang="vi">Công trình khoa học công bố</value>
+    </property>
+    
+    <property key="BkEunivRecent5YearProjects">
+        <value xml:lang="en">Recent 5 year projects</value>
+        <value xml:lang="vi">Đề tài, dự án, nhiệm vụ KHCN đã chủ trì 5 năm gần đây</value>
+    </property>
+    
+    <property key="BkEunivAward">
+        <value xml:lang="en">Award</value>
+        <value xml:lang="vi">Giải thưởng KHCN</value>
+    </property>
+    
+    <property key="BkEunivScientificService">
+        <value xml:lang="en">Scientific service</value>
+        <value xml:lang="vi">Kinh nghiệm quản lý, đánh giá KHCN</value>
+    </property>
+    
+    <property key="BkEunivProjectsApplied">
+        <value xml:lang="en">Projects applied</value>
+        <value xml:lang="vi">Đề tài, dự án có ứng dụng trong thực tế</value>
+    </property>
+    
+    <property key="BkEunivPatent">
+        <value xml:lang="en">Patent</value>
+        <value xml:lang="vi">Sáng chế</value>
+    </property>
+    
+    <property key="BkEunivPHDDefensed">
+        <value xml:lang="en">PHD Defensed</value>
+        <value xml:lang="vi">Nghiên cứu sinh đã bảo vệ thành công</value>
+    </property>
+    
+    <property key="BkEunivGraduateStudents">
+        <value xml:lang="en">Graduate students</value>
+        <value xml:lang="vi">Nghiên cứu sinh, học viên cao học đang hướng dẫn</value>
+    </property>
+    
+    <property key="BkEunivBasicInformation">
+        <value xml:lang="en">Information</value>
+        <value xml:lang="vi">Thông tin cơ bản</value>
+    </property>
+    
+    <property key="BkEunivCodeOfScience">
+        <value xml:lang="en">Code of science</value>
+        <value xml:lang="vi">Mã chuyên ngành KH-CN</value>
+    </property>
+    
+    <property key="BkEunivAdrressHome">
+        <value xml:lang="en">Adrress home</value>
+        <value xml:lang="vi">Địa chỉ nhà riêng</value>
+    </property>
+    
+    <property key="BkEunivAgencyWork">
+        <value xml:lang="en">Agency work</value>
+        <value xml:lang="vi">Cơ quan công tác</value>
+    </property>
+    
+    <property key="BkEunivForeignLanguageSuggest">
+        <value xml:lang="en">Foreign language</value>
+        <value xml:lang="vi">Trình độ ngoại ngữ (mỗi mục đề nghị ghi rõ mục đó: Tốt/Khá/TB)</value>
+    </property>
+
+    <property key="BkEunivSetting">
+        <value xml:lang="en">Setting</value>
+        <value xml:lang="vi">Thiết lập cài đặt</value>
+    </property>
+    
+    <property key="BkEunivCVPDFTitle">
+        <value xml:lang="en">CV</value>
+        <value xml:lang="vi">LÝ LỊCH KHOA HỌC</value>
+    </property>
+    <property key="BkEunivEducationType">
+        <value xml:lang="en">EducationType</value>
+        <value xml:lang="vi">Bậc đào tạo</value>
+    </property>
+    <property key="BkEunivInstitution">
+        <value xml:lang="en">Institution</value>
+        <value xml:lang="vi">Nơi đào tạo</value>
+    </property>    
+    <property key="BkEunivSpeciality">
+        <value xml:lang="en">Speciality</value>
+        <value xml:lang="vi">Chuyên ngành</value>
+    </property>    
+    <property key="BkEunivGraduateDate">
+        <value xml:lang="en">GraduateDate</value>
+        <value xml:lang="vi">Ngày/tháng/năm tốt nghiệp (TS, Thạc sĩ, kỹ sư, cử nhân,...)</value>
+    </property>    
+    
+    
+<!--     
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property>
+    
+    <property key="BkEunivBudget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh</value>
+    </property> -->
+    
 </resource>

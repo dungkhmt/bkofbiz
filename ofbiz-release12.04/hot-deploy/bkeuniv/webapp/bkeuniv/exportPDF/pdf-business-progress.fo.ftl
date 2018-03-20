@@ -10,9 +10,8 @@
 		      <fo:table-row>
 			
 		        <fo:table-cell>
-			      	<fo:block font-weight="bold">${stt}.</fo:block>
+			      	<fo:block font-weight="bold"><#if indexS??>${indexS}</#if>.</fo:block>
 			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block font-weight="bold">${BussinessProgress}</fo:block>
@@ -106,29 +105,6 @@
 					</fo:table-cell>
 				</fo:table-row>	
 				</#list>
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
 				
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				

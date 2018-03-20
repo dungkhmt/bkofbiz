@@ -42,14 +42,24 @@
 		<field name="facultyId" type="id-ne"></field>
 		<prim-key field="juryStudentResearchConferenceId"/>
 	</entity>
+	<!-- 
 	<entity entity-name="JuryStudentResearchConferenceMember" package-name="org.ofbiz.bkeuniv">
 		<field name="juryStudentResearchConferenceId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="juryRoleTypeId" type="id-vlong"></field>
 		<prim-key field="juryStudentResearchConferenceId"/>
 		<prim-key field="staffId"/>
+		
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="JuryStudentResearchConference" type="one">
+			<key-map field-name="juryStudentResearchConferenceId"/>
+		</relation>
+		
 	</entity>	
-	
+	 -->
+	 
 	<!-- ket thuc Hoi nghi SV NCKH -->
 
 	

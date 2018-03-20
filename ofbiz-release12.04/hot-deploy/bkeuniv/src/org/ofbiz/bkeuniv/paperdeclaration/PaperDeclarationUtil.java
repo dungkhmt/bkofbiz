@@ -1224,8 +1224,27 @@ public class PaperDeclarationUtil {
 		return retSucc;
 	}
 
-	public static Map<String, Object> createStaffPaperDeclarationc(
+	public static Map<String, Object> removeStaffPaperDeclarationc(
 			String paperId, String staffId, Delegator delegator) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",paperId));
+			conds.add(EntityCondition.makeCondition("staffId",staffId));
+			
+			//GenericValue sp = delegator.findOne("StaffPaperDeclaration", 
+			//		UtilMisc.toMap("paperId",paperId,"staffId",staffId), false);
+			delegator.removeByCondition("StaffPaperDeclaration", EntityCondition.makeCondition(conds));
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	public static Map<String, Object> createStaffPaperDeclarationc(
+			String paperId, String staffId, String roleId, Delegator delegator) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 
 		try {
@@ -1244,6 +1263,8 @@ public class PaperDeclarationUtil {
 			gv.put("staffPaperDeclarationId", id);
 			gv.put("staffId", staffId);
 			gv.put("paperId", paperId);
+			if(roleId != null)
+				gv.put("roleId", roleId);
 			gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
 
 			Debug.log(module + "::createStaffPaperDeclaration, staffId = "
@@ -1260,15 +1281,25 @@ public class PaperDeclarationUtil {
 
 		return retSucc;
 	}
-
+	public static void approveAPaperDeclaration(Delegator delegator, String paperId, String staffId){
+		try{
+			GenericValue p = delegator.findOne("PaperDeclaration", UtilMisc.toMap("paperId",paperId), false);
+			p.put("approveStatusId", "APPROVED");
+			p.put("approverStaffId", staffId);
+			delegator.store(p);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	public static List<GenericValue> getStaffsOfPaper(String paperId,
 			Delegator delegator) {
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("paperId",
 					EntityOperator.EQUALS, paperId));
-			conds.add(EntityCondition.makeCondition("statusId",
-					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			//conds.add(EntityCondition.makeCondition("statusId",
+			//		EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
 			List<GenericValue> staffsOfPaper = delegator.findList(
 					"StaffPaperDeclaration",
@@ -1290,8 +1321,8 @@ public class PaperDeclarationUtil {
 			conds.add(EntityCondition.makeCondition("staffId",
 					EntityOperator.EQUALS, staffId));
 
-			conds.add(EntityCondition.makeCondition("statusId",
-					EntityOperator.EQUALS, STATUS_ENABLED));
+			//conds.add(EntityCondition.makeCondition("statusId",
+			//		EntityOperator.EQUALS, STATUS_ENABLED));
 
 			List<GenericValue> staffsOfPaper = delegator.findList(
 					"StaffPaperDeclaration",

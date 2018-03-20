@@ -57,7 +57,7 @@
     <service name="updatePatent" engine="java" 
     		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="updatePatent">
     	<attribute name="patentId" mode="IN" type="String"></attribute>
-    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="patentName" mode="IN" type="String"></attribute>
     	<attribute name="year" mode="IN" type="String"></attribute>
     	

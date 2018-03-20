@@ -118,8 +118,8 @@
 			    delegate: "#"+id+"-content td",
 				menu: [
 			  		{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  		{title: '${projectDeclarationUiLabelMap.DowloadPDF}', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
-			  		{title: '${projectDeclarationUiLabelMap.ExportExcel}', cmd: "csv", uiIcon: "glyphicon glyphicon-trash"},
+			  		//{title: '${projectDeclarationUiLabelMap.DowloadPDF}', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
+			  		//{title: '${projectDeclarationUiLabelMap.ExportExcel}', cmd: "csv", uiIcon: "glyphicon glyphicon-trash"},
 			  		{title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 				],
 				select: function(event, ui) {
@@ -420,11 +420,15 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ProjectTotalHour?j_string,
-			"value": "totalhour"
+			"value": "totalhour",
+			"pattern": "[1-9]([0-9]{0,6})",
+			"title": "Phai la so nguyen duon nho hon 9999999"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ProjectHourOfStaff?j_string,
-			"value": "hourOfStaff"
+			"value": "hourOfStaff",
+			"pattern": "[1-9]([0-9]{0,6})",
+			"title": "Phai la so nguyen duon nho hon 9999999"
 		}
 		<#-- 
 		,
@@ -492,11 +496,16 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ProjectTotalHour?j_string,
-			"value": "totalhour"
+			"value": "totalhour",
+			"pattern": "[1-9]([0-9]{0,6})",
+			"title": "Phai la so nguyen duon nho hon 9999999"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ProjectHourOfStaff?j_string,
-			"value": "hourOfStaff"
+			"value": "hourOfStaff",
+			"pattern": "[1-9]([0-9]{0,6})",
+			"title": "Phai la so nguyen duon nho hon 9999999"
+			
 		}
 		<#-- 
 		,

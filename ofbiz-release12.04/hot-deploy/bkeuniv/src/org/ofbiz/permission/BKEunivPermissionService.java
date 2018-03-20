@@ -457,8 +457,11 @@ public class BKEunivPermissionService {
 			
 			for(GenericValue gv: userLoginSecurityGroup){
 				String securityGroupId = (String)gv.get("groupId");
+				cond.clear();
+				cond.add(EntityCondition.makeCondition("securityGroupId", EntityOperator.EQUALS, securityGroupId));
+				cond.add(EntityCondition.makeCondition("thruDate", EntityOperator.EQUALS, null));
 				List<GenericValue> funcs = delegator.findList("GroupFunction", 
-						EntityCondition.makeCondition(EntityCondition.makeCondition("securityGroupId", EntityOperator.EQUALS, securityGroupId)), 
+						EntityCondition.makeCondition(cond), 
 						null, null, null, false);
 				for(GenericValue f: funcs){
 					String functionId = (String)f.get("functionId");
@@ -492,6 +495,7 @@ public class BKEunivPermissionService {
 					mFunction2ChildrenFunctions.put(f, new ArrayList<GenericValue>());
 				}else{
 					
+					
 				}
 			}
 			parent_functions = sort(parent_functions);
@@ -500,6 +504,12 @@ public class BKEunivPermissionService {
 				String parentFunctionId = (String)f.get("parentFunctionId");
 				if(!parentFunctionId.equals("NULL")){
 					GenericValue pf = mId2Function.get(parentFunctionId);
+					if(pf == null){
+						pf = delegator.findOne("Function", false, 
+								UtilMisc.toMap("functionId",parentFunctionId));
+						mId2Function.put(parentFunctionId, pf);
+						mFunction2ChildrenFunctions.put(pf, new ArrayList<GenericValue>());
+					}
 					mFunction2ChildrenFunctions.get(pf).add(f);
 				}
 			}

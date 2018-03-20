@@ -74,7 +74,7 @@ public class LoginServices {
 		Delegator delegator = ctx.getDelegator();
 		try{
 			GenericValue u = delegator.findOne("UserLogin", false, UtilMisc.toMap("userLoginId", staffId));
-			Debug.log(module + "::changePassword, staffId = " + staffId + ", password = " + newPassword + 
+			Debug.log(module + "::directUpdatePassword, staffId = " + staffId + ", password = " + newPassword + 
 					", current Hashed Password = " + u.get("currentPassword"));
 			
 			u.put("currentPassword", hashedPassword);

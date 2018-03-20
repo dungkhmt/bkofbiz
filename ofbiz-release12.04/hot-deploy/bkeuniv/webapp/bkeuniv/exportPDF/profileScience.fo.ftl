@@ -1,8 +1,5 @@
 
 <#escape x as x?xml>
-	
-	
-	
 	<#assign stt=1 />
 	<#assign fullName=resultCV.cv.info.staffName />
 	<#assign BkEunivBirthday=resultCV.cv.info.staffDateOfBirth?if_exists />
@@ -11,36 +8,36 @@
 	<#assign BkEunivYearAcademic="" />
 	<#assign BkEunivDegree="" />
 	<#assign BkEunivYearDegree="" />
-	<#assign ResearchDomain="Linh vuc nghien cuu trong 5 nam gan day" />
+	<#assign ResearchDomain=uiLabelMap.BkEunivRecentResearchDomain />
 	<#assign NatureScience="Khoa hoc va tu nhien"/>
 	<#assign ScienceAndTechnology="Khoa hoc Ky thuat va Cong nghe"/>
 	<#assign MedicalScience="Khoa hoc Y duoc"/>
 	<#assign SocialScience="Khoa hoc Xa hoi"/>
 	<#assign HumanScience="Khoa hoc Nhan van"/>
 	<#assign AgriculturalScience="Khoa hoc Nong nghiep"/>
-	<#assign CodeOfScience="Ma chuyen nganh KH-CN"/>
+	<#assign CodeOfScience=uiLabelMap.BkEunivCodeOfScience/>
 	<#assign BkEunivNumber=""/>
 	<#assign BkEunivName=""/>
 	<#assign Additional=""/>
-	<#assign BkEunivResearchSpecial=" "/>	
-	<#assign BkEunivCurrentPosition=" "/>	
-	<#assign BkEunivAdrressHome="Dia chi nha rieng "/>
+	<#assign BkEunivResearchSpecial=" "/>
+	<#assign BkEunivCurrentPosition=" "/>
+	<#assign BkEunivAdrressHome=uiLabelMap.BkEunivAdrressHome/>
 	<#assign BkEunivPhoneAddress = ""/>	
 	<#assign BkEunivCQ = ""/>	
 	<#assign BkEunivMobile = ""/>
 	<#assign BkEunivEmail = ""/>	
-	<#assign agencyWork = "Co quan cong tac"/>
+	<#assign agencyWork = uiLabelMap.BkEunivAgencyWork/>
 	<#assign BkEunivCompanyName = "" />
 	<#assign BkEunivNameLeader = "" />
 	<#assign BkEunivCompanyAddress = "" />
 	<#assign BkEnuivPhone = "" />
 	<#assign BkEnuivFax = "" />
-	<#assign EducationProgress = "Qua trinh dao tao" />
-	<#assign ForeignLanguage = "Trinh do ngoai ngu (moi muc de nghi ghi ro muc do: Tot/Kha/TB)" /> 
-	<#assign EducationType = "Bac dao tao" />
-	<#assign Institution = "Noi dao tao" />
-	<#assign Speciality = "Chuyen nganh" />
-	<#assign GraduateDate = "Ngay/Thang/Nam tot nghiep (TS, Thac si, KS, CN,...)" />
+	<#assign EducationProgress = uiLabelMap.BkEunivEducationProgress />
+	<#assign ForeignLanguage = uiLabelMap.BkEunivForeignLanguageSuggest /> 
+	<#assign EducationType = uiLabelMap.BkEunivEducationType />
+	<#assign Institution = uiLabelMap.BkEunivInstitution />
+	<#assign Speciality = uiLabelMap.BkEunivSpeciality />
+	<#assign GraduateDate = uiLabelMap.BkEunivGraduateDate />
 	<#assign University = "Dai hoc" />
 	<#assign Masters = "Thac si" />
 	<#assign Degree = "Tien si" />
@@ -113,7 +110,7 @@
 	<#assign Information2 = "Linh vuc nghien cuu trong 5 nam gan day" />
 	<#assign Information3 = "Cac huong nghien cuu cho NCS va HV cao hoc" />
 	<#assign Information4 = "Toi xin cam doan nhung thong tin duoc ghi o tren la hoan toan chinh xac" />
-	<#assign Information5 = "Ha Noi, ngay ... thang ... nam 2016" />
+	<#assign Information5 = "..., ngay ... thang ... nam ..." />
 	<#assign Information6 = "Nguoi khai" />
 	<#assign Information7 = "(Ky va ghi ro ho ten)" />
 	
@@ -240,7 +237,7 @@
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
 			    	<#assign stt=stt+1 />
-
+<#assign researchDomain = resultCV.cv.researchDomain />
 		        <fo:table-cell>
 		          <fo:block font-weight="bold">${ResearchDomain}</fo:block>
 		        </fo:table-cell>
@@ -249,7 +246,7 @@
 		  </fo:table>
         </fo:table-cell>
       </fo:table-row>
-      
+
       <fo:table-row>
         <fo:table-cell height="20pt" display-align="center" border-style="dotted" border-left-style = "solid" 
         border-right-style = "solid" >
@@ -257,242 +254,192 @@
           //Full name
           <fo:table table-layout="fixed">
 			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(8)"/>
+			<fo:table-column column-width="proportional-column-width(11)"/>
+			<fo:table-column column-width="proportional-column-width(2)"/>
 			<fo:table-column column-width="proportional-column-width(1)"/>
+			<fo:table-column column-width="proportional-column-width(11)"/>
+			<fo:table-column column-width="proportional-column-width(2)"/>
 			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(12)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(8)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
-			<fo:table-column column-width="proportional-column-width(1)"/>
+			<fo:table-column column-width="proportional-column-width(11)"/>
+			<fo:table-column column-width="proportional-column-width(2)"/>
 							
 			<fo:table-body >
-				<fo:table-row border-bottom-style="dotted" height="20pt" >
-					//STT
-					<fo:table-cell />
+				<#assign researchDomain = resultCV.cv.researchDomain />
+				<#assign size = researchDomain?size/>
+				<#assign n = (size/3)?ceiling - 1  />
+				<#list 0..n as i>
+					<fo:table-row border-bottom-style="dotted" height="20pt" >
+					<#list 0..2 as j>
+						<#if i*3+j < size>
+							<#assign rd = researchDomain[i*3+j] />
+							<fo:table-cell />
+
+							<fo:table-cell>
+								<fo:block>${rd.researchDomainName}
+								</fo:block>
+							</fo:table-cell>
+							
+							<#if j==2>
+								<fo:table-cell padding="3">
+									<#if rd.check>
+										<fo:table table-layout="fixed">
+											<fo:table-column column-width="proportional-column-width(1)"/>
+											
+											<fo:table-body>
+												<fo:table-row>
+													//STT
+													<fo:table-cell>
+														<fo:block font-size="14pt" font-family="wingdings" >&#254;</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+									<#else>
+									<fo:table table-layout="fixed">
+										<fo:table-column column-width="proportional-column-width(1)"/>
+										
+										<fo:table-body>
+											<fo:table-row>
+												//STT
+												<fo:table-cell>
+													<fo:block font-size="14pt" font-family="wingdings" >&#111;</fo:block>
+												</fo:table-cell>
+											</fo:table-row>
+										</fo:table-body>
+									</fo:table>
+									</#if>
+								</fo:table-cell>
+							<#else>
+								<fo:table-cell border-right-style = "solid" padding="3">
+										<#if rd.check>
+											<fo:table table-layout="fixed">
+												<fo:table-column column-width="proportional-column-width(1)"/>
+												
+												<fo:table-body>
+													<fo:table-row>
+														//STT
+														<fo:table-cell>
+															<fo:block font-size="14pt" font-family="wingdings" >&#254;</fo:block>
+														</fo:table-cell>
+													</fo:table-row>
+												</fo:table-body>
+											</fo:table>
+									<#else>
+										<fo:table table-layout="fixed">
+											<fo:table-column column-width="proportional-column-width(1)"/>
+											
+											<fo:table-body>
+												<fo:table-row>
+													//STT
+													<fo:table-cell>
+														<fo:block font-size="14pt" font-family="wingdings" >&#111;</fo:block>
+													</fo:table-cell>
+												</fo:table-row>
+											</fo:table-body>
+										</fo:table>
+									</#if>
+								</fo:table-cell>
+							</#if>
+						<#else>
+							<fo:table-cell />
+							<fo:table-cell />
+							<#if j==2>
+								<fo:table-cell />
+							<#else>
+								<fo:table-cell border-right-style = "solid" />
+							</#if>
+						</#if>
 						
-
-					<fo:table-cell>
-						<fo:block>${NatureScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-
-					<fo:table-cell />
-
-					<fo:table-cell >
-						<fo:block>${ScienceAndTechnology}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${MedicalScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-				</fo:table-row>
-					
-				<fo:table-row border-bottom-style="dotted" height="20pt" >
-					<fo:table-cell />
-
-					<fo:table-cell >
-						<fo:block>${SocialScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${HumanScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-
-					<fo:table-cell>
-						<fo:block>${AgriculturalScience}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					
-					<fo:table-cell border-right-style = "solid">
-						 <fo:table table-layout="fixed">
-				          	<fo:table-column column-width="proportional-column-width(1)"/>
-						  	
-						    <fo:table-body>
-						      <fo:table-row>
-										//STT
-						        <fo:table-cell border-style="solid" width="10" height="10">
-						          <fo:block font-weight="bold"></fo:block>
-						        </fo:table-cell>
-						      </fo:table-row>
-						    </fo:table-body>
-						  </fo:table>
-					</fo:table-cell>
-				</fo:table-row>
-																										
+					</#list>
+					</fo:table-row>
+				</#list>
+														
 				</fo:table-body>
 		  	</fo:table>
 		  
         </fo:table-cell>
       </fo:table-row>
-      
+			
+      <#assign researchSpeciality = resultCV.cv.researchSpeciality />
       <fo:table-row>
        	<fo:table-cell height="20pt" display-align="center" border-left-style="solid" border-right-style= "solid" border-bottom-style="dotted" >
           
           //Full name
           <fo:table table-layout="fixed">
           	<fo:table-column column-width="proportional-column-width(1)"/>
-          	<fo:table-column column-width="proportional-column-width(9)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(15)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		        <fo:table-cell />
+          	<fo:table-column column-width="proportional-column-width(10)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
 
-		        <fo:table-cell >
-		          <fo:block>${CodeOfScience}</fo:block>
-		        </fo:table-cell>
-		        
-		       <fo:table-cell border-right-style="solid" />
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID1}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID0}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell  border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID3}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell   border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID0}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell border-top-style="solid" border-bottom-style="solid" />
-		        
-		        <fo:table-cell  border-right-style="solid" border-top-style="solid" border-bottom-style="solid">
-		          <fo:block>${ID2}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell />
-		        
-		         <fo:table-cell>
-		          <fo:block>${uiLabelMap.BkEunivName}: ${BkEunivName}</fo:block>
-		        </fo:table-cell>
-		        
-		      </fo:table-row>
-		    </fo:table-body>
-		  </fo:table>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+
+						<fo:table-column column-width="proportional-column-width(1)"/>
+						
+						<fo:table-column column-width="proportional-column-width(10)"/>
+						<fo:table-body>
+							<#list researchSpeciality as rs>
+								<#assign code = (rs.researchSpecialityCode)?split("", "r")>
+
+								<fo:table-row>
+									<fo:table-cell />
+
+									<fo:table-cell >
+										<fo:block>${CodeOfScience}</fo:block>
+									</fo:table-cell>
+
+									<fo:table-cell />
+									
+									<#list code as c>
+										<#if c!="">
+											<fo:table-cell padding="3" border-style="solid">
+												<fo:block text-align="center">${c}</fo:block>
+											</fo:table-cell>
+										</#if>
+									</#list>
+									
+									
+									<fo:table-cell />
+									
+									<fo:table-cell padding="1">
+										<fo:block>${uiLabelMap.BkEunivName}: ${rs.researchSpecialityName}</fo:block>
+									</fo:table-cell>
+									
+								</fo:table-row>
+
+							</#list>
+
+							<#if researchSpeciality?size==0>
+								<fo:table-row>
+									<fo:table-cell />
+
+									<fo:table-cell >
+										<fo:block>${CodeOfScience}</fo:block>
+									</fo:table-cell>
+
+									<fo:table-cell />
+									
+									<#list 1..5 as idx>
+										<fo:table-cell padding="3" border-style="solid">
+											<fo:block text-align="center"></fo:block>
+										</fo:table-cell>
+									</#list>
+									<fo:table-cell />
+									
+									<fo:table-cell padding="1">
+										<fo:block>${uiLabelMap.BkEunivName}: </fo:block>
+									</fo:table-cell>
+									
+								</fo:table-row>
+							</#if>
+							
+						</fo:table-body>
+					</fo:table>
         </fo:table-cell>
       </fo:table-row>
-      
+
       
       
       <fo:table-row>
@@ -501,19 +448,19 @@
           //Full name
           <fo:table table-layout="fixed">
           	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(30)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		        <fo:table-cell />
+						<fo:table-column column-width="proportional-column-width(30)"/>
+						<fo:table-body>
+							<fo:table-row>
+								//STT
+								<fo:table-cell />
 
-		        <fo:table-cell>
-		          <fo:block>${Additional}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
-		    </fo:table-body>
-		  </fo:table>
-        </fo:table-cell>
+								<fo:table-cell>
+									<fo:block>${Additional}</fo:block>
+								</fo:table-cell>
+							</fo:table-row>
+						</fo:table-body>
+					</fo:table>
+				</fo:table-cell>
       </fo:table-row>
       
       <fo:table-row>
@@ -705,43 +652,88 @@
 				</fo:table>
        		 </fo:table-cell>
      	 </fo:table-row>
+ 	<#assign indexS=9 />
+ 	<#if sections??>
+		<#list sections as section>
+			<#switch section>
+                <#case "education-progress">
+                    <#include "pdf-education-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "patent">
+                    <#include "pdf-patents.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "projects-applied">
+                    <#include "pdf-projects-applied.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "phd-defensed">
+                    <#include "pdf-phd-defensed.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "graduate-students">
+                    <#include "pdf-current-graduate-students.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "publications">
+                    <#include "pdf-publications.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "work-progress">
+                    <#include "pdf-business-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "recent-5-year-projects">
+                    <#include "pdf-5-years-recent-projects.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "award">
+                    <#include "pdf-awards.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+                <#case "scientific-service">
+                    <#include "pdf-scientific-service-experience.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+			</#switch>
+	 	</#list>
+	</#if>
  	
  	
- 	
-  	
-  	<#list 1..20 as idx>
+  	<#--  <#list 1..20 as idx>
  		<#if idx==idxEducationProgress>
  			<#include "pdf-education-progress.fo.ftl"/>
  		</#if>
- 		<#if idx=idxPatent>
+ 		<#if idx==idxPatent>
  			<#include "pdf-patents.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxProjectsApplied>
+ 		<#if idx==idxProjectsApplied>
  			<#include "pdf-projects-applied.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxPhDDefensed>
+ 		<#if idx==idxPhDDefensed>
  			<#include "pdf-phd-defensed.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxGraduateStudents>
+ 		<#if idx==idxGraduateStudents>
  			<#include "pdf-current-graduate-students.fo.ftl"/>
  		</#if> 		
- 		<#if idx=idxPublications>
+ 		<#if idx==idxPublications>
  			<#include "pdf-publications.fo.ftl"/>
  		</#if>
- 		<#if idx=idxWorkProgress>
+ 		<#if idx==idxWorkProgress>
  			<#include "pdf-business-progress.fo.ftl"/>
  		</#if>
- 		<#if idx=idxRecent5YearProjects>
+ 		<#if idx==idxRecent5YearProjects>
  			<#include "pdf-5-years-recent-projects.fo.ftl"/>
  		</#if>
- 		<#if idx=idxAward>
+ 		<#if idx==idxAward>
  			<#include "pdf-awards.fo.ftl"/>
  		</#if>
- 		<#if idx=idxScientificService>
+ 		<#if idx==idxScientificService>
  			 <#include "pdf-scientific-service-experience.fo.ftl"/>
  		</#if>
  		
- 	</#list>
+ 	</#list>  -->
 
    	     	 
      
@@ -766,9 +758,8 @@
 						//STT
 		       <fo:table-cell />
 		        <fo:table-cell>
-			      	<fo:block >${stt}.</fo:block>
+			      	<fo:block ><#if indexS??>${indexS}</#if>.</fo:block>
 			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block >${Information1}</fo:block>

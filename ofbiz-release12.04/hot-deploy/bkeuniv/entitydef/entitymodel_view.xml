@@ -49,9 +49,6 @@
 		<view-link rel-entity-alias="F" entity-alias="D">
 			<key-map rel-field-name="facultyId" field-name="facultyId"/>
 		</view-link>
-		
-		
-		
 	</view-entity>
 	
 	<view-entity entity-name="StaffResearchDomainView" package-name="org.ofbiz.bkeuniv">
@@ -69,6 +66,38 @@
 		<view-link rel-entity-alias="RD" entity-alias="SRD" rel-optional="true">
 			<key-map rel-field-name="researchDomainId" field-name="researchDomainId"/>
 		</view-link>	
+	</view-entity>	
+	
+	<view-entity entity-name="StaffResearchSpecialityView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RD" entity-name="ResearchDomain"></member-entity>
+		<member-entity entity-alias="RSD" entity-name="ResearchSubDomain"></member-entity>
+		<member-entity entity-alias="RS" entity-name="ResearchSpeciality"></member-entity>
+		<member-entity entity-alias="SRS" entity-name="StaffResearchSpeciality"></member-entity>
+		<member-entity entity-alias="S" entity-name="Staff"></member-entity>
+		
+		<alias-all entity-alias="SRS" ></alias-all>
+		<alias name="researchDomainName" entity-alias="RD"></alias>
+		<alias name="researchSubDomainName" entity-alias="RSD"></alias>
+		<alias name="researchSpecialityName" entity-alias="RS"></alias>
+		<alias name="researchSpecialityCode" entity-alias="RS"></alias>
+		
+		<alias name="staffName" entity-alias="S"></alias>
+		
+		<view-link rel-entity-alias="S" entity-alias="SRS" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="RD" entity-alias="SRS" rel-optional="true">
+			<key-map rel-field-name="researchDomainId" field-name="researchDomainId"/>
+		</view-link>
+		<view-link rel-entity-alias="RSD" entity-alias="SRS" rel-optional="true">
+			<key-map rel-field-name="researchSubDomainSeqId" field-name="researchSubDomainSeqId"/>
+			<key-map rel-field-name="researchDomainId" field-name="researchDomainId"/>
+		</view-link>
+		<view-link rel-entity-alias="RS" entity-alias="SRS" rel-optional="true">
+			<key-map rel-field-name="researchSpecialitySeqId" field-name="researchSpecialitySeqId"/>
+			<key-map rel-field-name="researchDomainId" field-name="researchDomainId"/>
+			<key-map rel-field-name="researchSubDomainSeqId" field-name="researchSubDomainSeqId"/>
+		</view-link>
 	</view-entity>	
 	
 </entitymodel>

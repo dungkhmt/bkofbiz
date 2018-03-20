@@ -11,9 +11,8 @@
 		      <fo:table-row>
 						//STT
 		        <fo:table-cell>
-			      	<fo:block font-weight="bold">${stt}.</fo:block>
+			      	<fo:block font-weight="bold"><#if indexS??>${indexS}</#if>.</fo:block>
 			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block font-weight="bold">${NumberOfConstruction}</fo:block>
@@ -71,7 +70,7 @@
 				</fo:table-row>	
 				
 				<#assign index = 0>
-				<#list resultCV.cv.projects as p>
+				<#list resultCV.cv.appliedProjects as p>
 					<#assign index = index+1>
 					<fo:table-row height="20pt" border-top-style="dotted" >
 					//STT
@@ -109,6 +108,20 @@
 					</fo:table-row>	
 					
 				</#list>
+
+				<fo:table-row height="20pt" border-top-style="dotted" >
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted"/>
+					</fo:table-row>	
 				
 			</fo:table-body>
 		</fo:table>

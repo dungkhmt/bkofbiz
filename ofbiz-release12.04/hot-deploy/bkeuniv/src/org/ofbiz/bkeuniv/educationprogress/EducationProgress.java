@@ -59,20 +59,26 @@ public class EducationProgress {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
-		String u1 = (String)ctx.getAttribute("userLoginId");
-		String u2 = (String)context.get("userLoginId");
+		//String u1 = (String)ctx.getAttribute("userLoginId");
+		//String u2 = (String)context.get("userLoginId");
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = null;
+		if(userLogin != null) staffId = (String)userLogin.getString("userLoginId");
 		
-		if(u1 == null) u1 = "NULL";
-		if(u2 == null) u2 = "NULL";
+		//if(u1 == null) u1 = "NULL";
+		//if(u2 == null) u2 = "NULL";
 		
-		System.out.println(module + "::getEducationProgress, System.out.println u1 = " + u1 + ", u2 = " + u2);
-		Debug.log(module + "::getEducationProgress, Debug.log u1 = " + u1 + ", u2 = " + u2);
+		//System.out.println(module + "::getEducationProgress, System.out.println u1 = " + u1 + ", u2 = " + u2);
+		Debug.log(module + "::getEducationProgress, staffId = " + staffId);
 		
 		
 		String[] keys = {"educationProgressId", "staffId", "educationType", "institution", "speciality", "graduateDate"};
 		String[] search = {"institution"};
 		try {
 			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			if(staffId != null)
+				conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			for(String key: keys) {
 				Object el = context.get(key);
@@ -179,7 +185,10 @@ public class EducationProgress {
 			gv.put("educationType", educationType);
 			gv.put("institution", institution);
 			gv.put("speciality", speciality);
-			gv.put("graduateDate", Date.valueOf(graduateDate));
+			//gv.put("graduateDate", Date.valueOf(graduateDate));
+			if(graduateDate != null && !graduateDate.equals("")){
+				gv.put("graduateDate", new Date(Long.valueOf(graduateDate)));
+			}
 
 			delegator.create(gv);
 		} catch (Exception ex) {
@@ -238,7 +247,10 @@ public class EducationProgress {
 				gv.put("educationType", educationType);
 				gv.put("institution", institution);
 				gv.put("speciality", speciality);
-				gv.put("graduateDate", Date.valueOf(graduateDate));
+				//gv.put("graduateDate", Date.valueOf(graduateDate));
+				if(graduateDate != null && !graduateDate.equals("")){
+					gv.put("graduateDate", new Date(Long.valueOf(graduateDate)));
+				}
 				
 				delegator.store(gv);
 				

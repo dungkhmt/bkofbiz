@@ -152,6 +152,14 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="approve-a-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="approveAPaperDeclaration"/>
+        <response name="AttachementSuccess" type="view" value="APPROVE_PAPER"/>
+	</request-map>
+	
+	
 	
 	<request-map uri="create-education-progress">
 		<security https="true" auth="true"/>
@@ -448,6 +456,14 @@
            <security https="true" auth="true"/>
           <response name="success" type="view" value="view-summary-paper-declaration"></response>
     </request-map>    
+	<request-map uri="research-summary-list-papers-setting">
+           <security https="true" auth="true"/>
+          <response name="success" type="view" value="view-summary-paper-declaration-setting"></response>
+    </request-map>    
+	<request-map uri="research-summary-list-papers-faculty-setting">
+           <security https="true" auth="true"/>
+          <response name="success" type="view" value="view-summary-paper-declaration-faculty-setting"></response>
+    </request-map>    
 
 	<request-map uri="update-staffs-of-paper">
             <security https="true" auth="true"/>
@@ -464,6 +480,14 @@
             <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    <request-map uri="remove-staffs-paper">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="removeStaffPaperDeclaration"/>
+            <response name="AttachementSuccess" type="view" value="STAFFPAPER"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    
     
     <request-map uri="export-excel-kv01">
 		<security auth="true" https="true" />
@@ -493,7 +517,7 @@
     </request-map>
     
     <request-map uri="get-project-declaration">
-    	<security https="true" auth="true"/>
+    	<security https="true" auth="false"/>
     	<event type="service" invoke="getProjectDeclaration"></event>
     	<response name="success" type="request" value="json"></response>
     	<response name="error" type="request" value="json"></response>
@@ -571,8 +595,7 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
-	
-	<request-map uri="staff-research-domain">
+	<request-map uri="research-domain-staff">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-staff-research-domain"></response>
     </request-map>
@@ -594,6 +617,33 @@
 	<request-map uri="delete-staff-research-domain">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="deleteStaffResearchDomain"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+	<request-map uri="research-speciality-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-staff-research-speciality"></response>
+    </request-map>
+    
+    <request-map uri="create-staff-research-speciality">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-staff-research-speciality">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateStaffResearchSpeciality"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-staff-research-speciality">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteStaffResearchSpeciality"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -626,11 +676,15 @@
     <view-map name="view-profile-science-staffs-list" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFStaffsList"/>
 
     <view-map name="view-summary-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclaration"/>
+    <view-map name="view-summary-paper-declaration-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclarationSetting"/>
+    <view-map name="view-summary-paper-declaration-faculty-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#summaryPaperDeclarationFacultySetting"/>
+
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
-   <view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
-   <view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
+	<view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
+	<view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
+	<view-map name="view-staff-research-speciality" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchSpeciality"/>
     
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     

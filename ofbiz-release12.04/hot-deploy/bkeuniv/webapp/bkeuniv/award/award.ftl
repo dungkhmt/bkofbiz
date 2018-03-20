@@ -29,32 +29,40 @@
 	] />
 	
 	<#assign columnsChange=[
+		<!--
 		{
 			"name": uiAwardLabelMap.BkEunivStaffId?j_string,
 			"value": "staffId"
 		},
+		-->
 		{
 			"name": uiAwardLabelMap.BkEunivDescription?j_string,
 			"value": "description"
 		},
 		{
 			"name": uiAwardLabelMap.BkEunivYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "Nam phai la so nguyen duong"
 		}
 	]/>
 	
 	<#assign columnsNew=[
+		<!--
 		{
 			"name": uiAwardLabelMap.BkEunivStaffId?j_string,
 			"value": "staffId"
 		},
+		-->
 		{
 			"name": uiAwardLabelMap.BkEunivDescription?j_string,
 			"value": "description"
 		},
 		{
 			"name": uiAwardLabelMap.BkEunivYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "Nam phai la so nguyen duong"
 		}
 	] />
 	

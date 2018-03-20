@@ -56,17 +56,25 @@ public class AppliedResearchProject {
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
 		
-		String u1 = (String)ctx.getAttribute("userLoginId");
-		String u2 = (String)context.get("userLoginId");
+		//String u1 = (String)ctx.getAttribute("userLoginId");
+		//String u2 = (String)context.get("userLoginId");
 		
-		if(u1 == null) u1 = "NULL";
-		if(u2 == null) u2 = "NULL";
+		//(u1 == null) u1 = "NULL";
+		//if(u2 == null) u2 = "NULL";
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = null;
+		if(userLogin != null)
+			staffId = (String)userLogin.getString("userLoginId");
 		
 		String[] keys = {"appliedResearchProjectId","staffId","name","description","period"};
 		String[] search = {"name"};
 		
 		try{
 			List<EntityCondition> conditions = new ArrayList<EntityCondition>();
+			if(staffId != null)
+				conditions.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			
+			
 			EntityFindOptions findOptions = new EntityFindOptions(true, EntityFindOptions.TYPE_SCROLL_INSENSITIVE, EntityFindOptions.CONCUR_READ_ONLY, true);
 			for(String key: keys){
 				Object el = context.get(key);
@@ -117,6 +125,9 @@ public class AppliedResearchProject {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
 		String staffId = (String) context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.getString("userLoginId");
+		
 		String name = (String) context.get("name");
 		String description = (String) context.get("description");
 		String period = (String) context.get("period");
@@ -171,8 +182,12 @@ public class AppliedResearchProject {
 		
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatch = ctx.getDispatcher();
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		
 		String staffId = (String) context.get("staffId");
+		if(staffId == null)
+			staffId = (String)userLogin.getString("userLoginId");
+		
 		String name = (String) context.get("name");
 		String description = (String) context.get("description");
 		String period = (String) context.get("period");

@@ -7,8 +7,8 @@
 			    delegate: "#"+id+"-content td",
 				menu: [
 			  		{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  		{title: '${workProgressUiLabelMap.DowloadPDF}', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
-			  		{title: '${workProgressUiLabelMap.ExportExcel}', cmd: "csv", uiIcon: "glyphicon glyphicon-trash"},
+			  		//{title: '${workProgressUiLabelMap.DowloadPDF}', cmd: "pdf", uiIcon: "glyphicon glyphicon-trash"},
+			  		//{title: '${workProgressUiLabelMap.ExportExcel}', cmd: "csv", uiIcon: "glyphicon glyphicon-trash"},
 			  		{title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 				],
 				select: function(event, ui) {

@@ -16,8 +16,16 @@
 <!--
 ID: ${staff.staff.staffId}
 -->
+<style>
+.form-change-password {
+    margin: auto;
+    width: 30%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+</style>
 
-<div id="form-change-password">
+<div id="form-change-password" class="form-change-password">
 	<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 		<div style="display: inline-block;width: 30%;">
 			Mat Khau 
@@ -49,12 +57,14 @@ function updateInfo(){
 	var pwd = document.getElementById("password").value;
 	var confirmpwd = document.getElementById("confirm-password").value;
 	var staffId = document.getElementById("staff-id").value;
-	if(pwd == null || pwd.length == 0 || pwd == ""){
-		alert('Ban phai cung cap mat khau');
+	if(pwd == null || pwd.length < 4 || pwd == ""){
+		alert('Ban phai cung cap mat khau do dai it nhat 4 ky tu');
 		return;
 	}
 	if(pwd != confirmpwd){
 		alert('Mat khau phai NHAT QUAN!!!!');
+		document.getElementById("password").value = "";
+		document.getElementById("confirm-password").value = "";
 		return;
 	}
 	

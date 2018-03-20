@@ -4,10 +4,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="/resource/bkeuniv/image/logo_soict2-75x75.png" />
 		<!-- import lib -->
+		
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
 		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
-
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dragula.css">
+		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/materialize.min.css">
 		<!-- import css -->
 		<#list layoutSettings.stylesheets as sheet>
 			<link rel="stylesheet" href="${StringUtil.wrapString(sheet)}">
@@ -15,7 +17,9 @@
 		
 		<!-- import js -->
 		<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/materialize.min.js"></script>
 		<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/dragula.min.js"></script>
 		<script src="/resource/bkeuniv/js/common.js"></script>
 		
 		<#list layoutSettings.scripts as script>

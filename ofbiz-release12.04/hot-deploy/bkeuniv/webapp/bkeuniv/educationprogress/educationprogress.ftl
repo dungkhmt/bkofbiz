@@ -87,10 +87,10 @@
 		urlDelete="/bkeuniv/control/delete-education-progress" 
 		keysId=["educationProgressId"] 
 		fieldDataResult = "educationProgress" 
-		titleChange="test"
-		titleNew="test"
-		titleDelete="test"
-		jqTitle="test"
+		titleChange=uiLabelMap.BkEunivChange
+		titleNew=uiLabelMap.BkEunivNew
+		titleDelete=uiLabelMap.BkEunivDelete
+		jqTitle=uiLabelMap.BkEunivManage
 		contextmenu=true
 	/>
 </div>

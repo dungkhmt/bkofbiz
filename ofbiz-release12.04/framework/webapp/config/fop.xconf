@@ -90,6 +90,11 @@ the location of this file.
                <font-triplet name="arial" style="normal" weight="normal"/>
         </font>
         
+        <font kerning="yes" embed-url="wingdings.ttf">
+               <font-triplet name="Wingdings" style="normal" weight="bold"/>
+               <font-triplet name="wingdings" style="normal" weight="normal"/>
+        </font>
+        
         <font kerning="yes" embed-url="TIMES.TTF">
         	<font-triplet name="Times" style="normal" weight="normal"/>
           	<font-triplet name="'Times New Roman'" style="normal" weight="normal"/>

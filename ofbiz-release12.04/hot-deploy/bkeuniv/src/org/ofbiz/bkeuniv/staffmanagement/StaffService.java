@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,6 +64,19 @@ public class StaffService {
 		return retSucc;
 	}
 	*/
+	public static Map<String, Object> getUserLogin(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			GenericValue u = (GenericValue)context.get("userLogin");
+			retSucc.put("userLoginId", (String)u.getString("userLoginId"));
+			Debug.log(module + "::getUserLogin, GOT userLoginId = " + (String)u.getString("userLoginId"));
+			return retSucc;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+	}
+	
 	public static Map<String, Object> getGenders(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -169,8 +183,13 @@ public class StaffService {
 			String[] searchKeys = {"departmentName", "genderName", "facultyName"}; 
 			
 			for(String key: searchKeys) {
-				EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, q);
-				conditions.add(condition);
+				if(q == null || q.equals("")){
+					EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.EQUALS, q);
+					conditions.add(condition);
+				}else{
+					EntityCondition condition = EntityCondition.makeCondition(key, EntityOperator.LIKE, q);
+					conditions.add(condition);
+				}
 			}
 		
 			staffs = delegator.findList("StaffView", EntityCondition.makeCondition(conditions), null, null, findOptions, false);
@@ -270,8 +289,8 @@ public class StaffService {
 			// get applied projects
 			param.clear();
 			param.put("staffId", staffId);
-			Map<String, Object> result_projects = dispatcher.runSync("getAppliedProjects", param);
-			cv.put("projects", result_projects.get("projects"));
+			Map<String, Object> result_applied_projects = dispatcher.runSync("getAppliedProjects", param);
+			cv.put("appliedProjects", result_applied_projects.get("projects"));
 			
 			// get awards
 			param.clear();
@@ -284,6 +303,93 @@ public class StaffService {
 			param.put("staffId", staffId);
 			Map<String, Object> result_wp = dispatcher.runSync("getWorkProgress", param);
 			cv.put("workProgress", result_wp.get("workProgress"));
+			
+			// get projects
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_projects = dispatcher.runSync("getProjectDeclaration", param);
+			cv.put("projects", result_projects.get("projectDeclarations"));
+			
+			List<Map> projects_role_director = FastList.newInstance();
+			List<Map> projects_role_member = FastList.newInstance();
+			for(Map p: (List<Map>)cv.get("projects")){
+				String roleId = (String)p.get("projectParticipationRoleId"); 
+				if(roleId.equals("DIRECTOR")){
+					projects_role_director.add(p);
+				}else if(roleId.equals("MEMBER")){
+					projects_role_member.add(p);
+				}
+			}
+			cv.put("projects_role_director",projects_role_director);
+			cv.put("projects_role_member",projects_role_member);
+			
+			
+			// get scientific service experiences
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_scientific_experiences = dispatcher.runSync("getScientificServiceExperience", param);
+			cv.put("scientificExperiences", result_scientific_experiences.get("scientificServiceExperiences"));
+			
+			
+			
+			param.clear();
+			
+			param.put("userLogin", userLogin);
+			param.put("parameters", FastMap.newInstance());
+			param.put("opts", new EntityFindOptions(true,
+					EntityFindOptions.TYPE_SCROLL_INSENSITIVE,
+					EntityFindOptions.CONCUR_READ_ONLY, false));
+			
+			Map<String, Object> result_rsd = dispatcher.runSync("JQGetListResearchDomainManagement", param);
+			EntityListIterator tmpList = (EntityListIterator) result_rsd.get("listIterator");
+			
+			List<GenericValue> listGenericValue = (List<GenericValue>)tmpList.getCompleteList();
+			tmpList.close();
+			param.put("staffId", staffId);
+			Map<String, Object> result_srsd = dispatcher.runSync("JQGetListStaffResearchDomainManagement", param);
+			tmpList = (EntityListIterator) result_srsd.get("listIterator");
+			List<GenericValue> list_srsd = (List<GenericValue>)tmpList.getCompleteList();
+			tmpList.close();
+			List<Map<String, Object>> srsd = new ArrayList<Map<String,Object>>();
+			for(GenericValue s1: listGenericValue) {
+				Collection<String> keys = s1.getAllKeys();
+				Map<String, Object> s = FastMap.newInstance();
+				for(String key: keys) {
+					s.put(key, s1.get(key));
+				}
+				s.put("check", false);
+				for(GenericValue s2: list_srsd) {
+					if(s1.get("researchDomainId").equals(s2.get("researchDomainId"))) {
+						s.put("check", true);
+						break;
+					}
+				}
+				srsd.add(s);
+			}
+			
+			cv.put("researchDomain", srsd);
+			
+			
+
+			param.clear();
+			
+			param.put("userLogin", userLogin);
+			param.put("parameters", FastMap.newInstance());
+			param.put("opts", new EntityFindOptions(true,
+					EntityFindOptions.TYPE_SCROLL_INSENSITIVE,
+					EntityFindOptions.CONCUR_READ_ONLY, false));
+			param.put("staffId", staffId);
+			Map<String, Object> result_rss = dispatcher.runSync("JQGetListStaffResearchSpecialityManagement", param);
+			EntityListIterator tmpListRSS = (EntityListIterator) result_rss.get("listIterator");
+			
+			List<GenericValue> listGenericValueRSS = (List<GenericValue>)tmpListRSS.getCompleteList();
+			tmpListRSS.close();
+			List<Map<String, Object>> RSS = new ArrayList<Map<String,Object>>();
+			if(listGenericValueRSS.size() > 0) {
+				RSS.add(listGenericValueRSS.get(0));				
+			}
+			cv.put("researchSpeciality", RSS);
+			
 			
 			retSucc.put("cv", cv);
 			

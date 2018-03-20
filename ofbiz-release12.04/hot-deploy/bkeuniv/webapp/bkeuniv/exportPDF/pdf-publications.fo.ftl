@@ -7,9 +7,8 @@
 		    <fo:table-body>
 		      <fo:table-row>
 		        <fo:table-cell>
-			      	<fo:block font-weight="bold">${stt}.</fo:block>
+			      	<fo:block font-weight="bold"><#if indexS??>${indexS}</#if>.</fo:block>
 		    	</fo:table-cell>
-		    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block font-weight="bold">${ResearchConstruction}</fo:block>
@@ -96,8 +95,8 @@
 					
 						<fo:table-cell  border-bottom-style="dotted"/>
 						<fo:table-cell border-right-style="solid" border-bottom-style="dotted">
-							<#if p.paperName?exists>
-								<fo:block></fo:block>
+							<#if p.roleName?exists>
+								<fo:block>${p.roleName}</fo:block>
 							<#else>
 								<fo:block></fo:block>
 							</#if>
@@ -123,6 +122,21 @@
 					</fo:table-row>	
 					
 				</#list>
+
+					<fo:table-row height="20pt" >
+						//STT
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+					
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-right-style="solid" border-bottom-style="dotted"/>
+						<fo:table-cell  border-bottom-style="dotted"/>
+						<fo:table-cell border-bottom-style="dotted"/>
+					</fo:table-row>	
 			
 				
 			</fo:table-body>

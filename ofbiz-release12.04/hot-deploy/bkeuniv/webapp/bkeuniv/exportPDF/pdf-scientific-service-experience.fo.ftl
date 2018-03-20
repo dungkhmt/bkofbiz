@@ -11,9 +11,8 @@
 		      <fo:table-row>
 						//STT
 		        <fo:table-cell>
-			      	<fo:block font-weight="bold">${stt}.</fo:block>
+			      	<fo:block font-weight="bold"><#if indexS??>${indexS}</#if>.</fo:block>
 			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell >
 		          <fo:block font-weight="bold">${ExperienceManagement1}</fo:block>
@@ -74,41 +73,29 @@
 					
 				</fo:table-row>	
 				
+				<#assign index = 0>
+				<#list resultCV.cv.scientificExperiences as se>
+					<#assign index = index + 1>
 				<fo:table-row height="20pt" border-top-style="dotted" >
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID1}</fo:block>
+						<fo:block >${index}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<fo:block>${se.description}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
+						<fo:block>${se.quantity}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
+				</#list>
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID2}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-					
-					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>
-				</fo:table-row>	
+				
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>
