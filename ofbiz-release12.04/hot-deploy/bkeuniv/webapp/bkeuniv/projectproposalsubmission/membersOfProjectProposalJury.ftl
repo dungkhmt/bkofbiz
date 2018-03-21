@@ -12,10 +12,15 @@
 
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
+<style>
+#form-style {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+</style>
 
-<div>
-
-JURY ${juryId}
+<div id="form-style">
+<a href="/bkeuniv/control/detail-jury-proposal?juryId=${juryId}">Quay ve hoi dong</a>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
@@ -83,6 +88,9 @@ JURY ${juryId}
 
 
 <script>
+$( document ).ready(function() {
+    changeFaculty();
+});
 function clearSelectBox(tbl){
 	var i;
 	for(i = tbl.length-1; i >= 0; i--){
@@ -112,6 +120,7 @@ function changeFaculty(){
 					opt.innerHTML = name;
 					tbldepartment.appendChild(opt);
 				}
+				changeDepartment();
 			}
 		})
 	

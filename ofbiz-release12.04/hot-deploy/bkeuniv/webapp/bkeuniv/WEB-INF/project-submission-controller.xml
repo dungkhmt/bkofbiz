@@ -161,6 +161,12 @@
 		<response name="error" type="view" value="view-detail-research-project-proposals" />
 	</request-map>
 	
+	<request-map uri="detail-jury-proposal">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-detail-jury-proposal" />
+		<response name="error" type="view" value="view-detail-jury-proposal" />
+	</request-map>
+
 	<request-map uri="upload-file-research-project-proposal">
         <security https="true" auth="true"/>
         <event type="java" invoke="uploadFileProposal" 
@@ -199,6 +205,12 @@
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-research-project-jury" />
 		<response name="error" type="view" value="view-research-project-jury" />
+	</request-map>
+	
+	<request-map uri="research-project-jury-school">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-research-project-jury-school" />
+		<response name="error" type="view" value="view-research-project-jury-school" />
 	</request-map>
 
 	<request-map uri="form-add-project-proposal-jury">
@@ -286,11 +298,14 @@
   <view-map name="view-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectSubmissionManagement"/>
   <view-map name="view-detail-research-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposal"/>
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>
+  <view-map name="view-detail-jury-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailJuryProposal"/>
     
   <view-map name="view-project-call-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallManagement"/>
   <view-map name="view-form-add-project-call" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProjectCall"/>
 
   <view-map name="view-research-project-jury" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ResearchProjectProposalJury"/>
+  <view-map name="view-research-project-jury-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ResearchProjectProposalJurySchool"/>
+  
   <view-map name="view-form-add-project-proposal-jury" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProjectProposalJury"/>
     
   <view-map name="view-research-project-jury-members" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#MembersOfProjectProposalJury"/>

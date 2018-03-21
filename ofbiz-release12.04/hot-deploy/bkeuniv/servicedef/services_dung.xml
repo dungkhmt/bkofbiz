@@ -78,6 +78,13 @@
 		<attribute name="projectproposaljuries" mode="OUT" type="List"></attribute>	
 	</service>
 
+    <service name="getProjectProposalJury" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getProjectProposalJury">
+		<attribute name="juryId" mode="IN" type="String"></attribute>
+		<attribute name="projectproposaljury" mode="OUT" type="GenericValue"></attribute>	
+	</service>
+
     <service name="getListProjectProposals" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getListProjectProposals">
@@ -153,10 +160,17 @@
     <service name="getListProjectCalls" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getListProjectCalls">
-		
+		<attribute name="projectCallId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
 	</service>
 	
+    <service name="getListProjectCallsAndProposalJuriesSchool" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectCallsAndProposalJuriesSchool">
+		
+		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
+	</service>
+
     <service name="getAProjectCall" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getAProjectCall">

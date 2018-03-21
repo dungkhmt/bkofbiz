@@ -74,15 +74,21 @@
 
 <Function functionId="SUBMIT_PROPOSAL" uiLabelId="submit_proposal" vnLabel="Nộp thuyết minh đề tài" enLabel="Submit proposal" target="submit-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="2"/>
 
-<Function functionId="RESEARCH_PROJECT_JURY" uiLabelId="research_project_jury" vnLabel="Hội đồng duyệt thuyết mình đề tài" enLabel="Jury of research proposal" target="research-project-jury" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
+<Function functionId="RESEARCH_PROJECT_JURY" uiLabelId="research_project_jury" vnLabel="Hội đồng duyệt thuyết minh đề tài" enLabel="Jury of research proposal" target="research-project-jury" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
+
+<Function functionId="RESEARCH_PROJECT_JURY_SCHOOL" uiLabelId="research_project_jury_school" vnLabel="Hội đồng duyệt thuyết minh đề tài cơ sở phân cấp (khoa/viện)" enLabel="Jury (school) of research proposal" target="research-project-jury-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
 
 <Function functionId="RESEARCH_PROJECT_JURY_MEMBERS" uiLabelId="research_project_jury_members" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Members of juries of research proposal" target="research-project-jury-members" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
+
+<Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_SCHOOL" uiLabelId="research_project_jury_members_school" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài cơ sở phân cấp" enLabel="Members of juries (school) of research proposal" target="research-project-jury-members-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
 
 <Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_ASSIGNMENT" uiLabelId="research_project_jury_members_assignment" vnLabel="Phân công thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Assignment of members of juries to research proposal" target="research-project-jury-members-assignment" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="6"/>
 
 <Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_EVALUATE" uiLabelId="research_project_jury_members_evaluate" vnLabel="Nhận xét đánh giá thuyết mình đề tài" enLabel="Evaluate of research proposal" target="research-project-jury-members-evaluate" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="7"/>
 
 <Function functionId="RESEARCH_PROJECT_SUMMARY" uiLabelId="research_project_summary" vnLabel="Danh sách thuyết mình đề tài" enLabel="List of research proposal" target="list-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="3"/>
+
+<Function functionId="RESEARCH_PROJECT_SUMMARY_SCHOOL" uiLabelId="research_project_summary_school" vnLabel="Danh sách thuyết mình đề tài cơ sở phân cấp (khoa/viện)" enLabel="List of research proposal of school" target="list-research-project-proposal-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="3"/>
 
 <Function functionId="RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" uiLabelId="research_project_evaluation_result_summary" vnLabel="Danh sách kết quả duyệt đánh giá thuyết mình đề tài" enLabel="Research proposal evaluation results" target="list-research-project-proposal-evaluation-result" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="8"/>
 

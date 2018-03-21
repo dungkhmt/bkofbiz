@@ -13,13 +13,19 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
 <style>
-
+#form-style {
+    margin-top: 20px;
+    margin-left: 20px;
+    overflow: scroll;
+}
 </style>
+
+<div id="form-style">
 
 ${reviewerResearchProposalId}<br>
 
 
-<div id="form-evaluate-project-proposal">
+<div id="form-style">
 <table>
 <tr>
 <td>
@@ -219,6 +225,7 @@ function updateReviewProjectProposal(){
 			success: function(rs){
 				//window.location.href = "/bkeuniv/control/research-project-jury-members-evaluate";
 				//console.log(rs.result);
+				alert('Da luu diem danh gia');
 			}
 		})
 }
@@ -234,6 +241,7 @@ function confirmReviewProjectProposal(){
 			success: function(rs){
 				//window.location.href = "/bkeuniv/control/research-project-jury-members-evaluate";
 				//console.log(rs.result);
+				alert('Da confirm diem danh gia');
 			}
 		})
 }

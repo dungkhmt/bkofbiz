@@ -12,13 +12,21 @@
 
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
-JURY ${juryId}
+<style>
+#form-style {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+</style>
+
+<div id="form-style">
+<a href="/bkeuniv/control/detail-jury-proposal?juryId=${juryId}">Quay ve hoi dong</a>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
 		Thanh vien
 	</div>
-	<div style="display: inline-block;width: 69%;">
+	<div style="display: inline-block;width: 100%;">
 		<select id="staffId" style="width: 100%" type="text" width="1000" onchange="changeStaff()">
 			<#list resultMembers.members as m>
 		 		<option value="${m.staffId}">${m.staffName}</option>
@@ -26,14 +34,14 @@ JURY ${juryId}
 		</select> 
 	</div>
 
-<@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="updateAssignment"/>
+
 
 </div>
-	
-
-
 <div id="tbl-project-proposals">
 </div>
+<@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="updateAssignment"/>
+</div>
+
 <!--
 <table>
 <#list resultProposals.projectproposals as p>
@@ -48,6 +56,9 @@ JURY ${juryId}
 -->
 
 <script>
+$( document ).ready(function() {
+    changeStaff();
+});
 
 function changeStaff(){
 	var staffId = document.getElementById("staffId").value;
