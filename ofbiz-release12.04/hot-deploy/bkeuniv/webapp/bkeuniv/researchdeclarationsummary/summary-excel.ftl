@@ -67,24 +67,32 @@
 
 	function save() {
 		var modal_content_eL = $("#modal-body");
-		var data = {};
-		var url = modal_content_eL.attr('submit-url');
+		var url = modal_content_eL.attr('action');
+		
+		var form = document.createElement("form");
+
+		form.method = "POST";
+		form.action = url;   
+
 		modal_content_eL.children().map(function() {
 			var el = this.children[1];
 			var id = el.id||"";
 			var value = eval(el.getAttribute("modal-value")||"");
-			data[id] = value;
+			
+			var element = document.createElement("input");
+			element.value=value;
+			element.name=id;
+			form.appendChild(element);
 		});
-		$.ajax({
-			url: url,
-			type: 'POST',
-			data: data,
-			success:function(rs){
-				console.log(rs.__proto__)
-				//window.open(rs.__pr, "_blank");
-				alertify.success('File dang duoc tai xuong');
-			}
-		})
+
+		document.body.appendChild(form);
+
+		alertify.success('File dang duoc tai xuong');
+		form.submit();
+
+		form.remove();
+		setTimeout(function(){ $("#modal-setting-export").modal("hide"); }, 500);
+		
 	}
 
 	function openModalKV01() {
@@ -102,7 +110,7 @@
 				var millis = Date.now() - start;
 				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
 				var modal_content_eL = $("#modal-body");
-				$("#modal-content").attr('action','/bkeuniv/control/export-excel-kv01');
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-kv01');
 
 				var els = modal_content_eL.children();
 				for(var i = 0; i < els.length; ++i) {
@@ -157,7 +165,7 @@
 				var millis = Date.now() - start;
 				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
 				var modal_content_eL = $("#modal-body");
-				$("#modal-content").attr('action','/bkeuniv/control/export-excel-kv04');
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-kv04');
 
 				var els = modal_content_eL.children();
 				for(var i = 0; i < els.length; ++i) {
@@ -212,7 +220,7 @@
 				var millis = Date.now() - start;
 				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
 				var modal_content_eL = $("#modal-body");
-				$("#modal-content").attr('action','/bkeuniv/control/export-excel-isi');
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-isi');
 
 				var els = modal_content_eL.children();
 				for(var i = 0; i < els.length; ++i) {
@@ -267,7 +275,7 @@
 				var millis = Date.now() - start;
 				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
 				var modal_content_eL = $("#modal-body");
-				$("#modal-content").attr('action','/bkeuniv/control/export-excel-bm-01-02-03');
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-bm-01-02-03');
 
 				var els = modal_content_eL.children();
 				for(var i = 0; i < els.length; ++i) {
@@ -514,7 +522,7 @@
 	<div class="modal fade" style="margin-top: 5%;" id="modal-setting-export" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
-			<form class="modal-content" id="modal-content" method="post">
+			<div class="modal-content" id="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">Cài đặt</h4>
@@ -523,10 +531,10 @@
 					<p>Some text in the modal.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Export</button>
+					<button type="button" class="btn btn-primary" onClick="save()">Export</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
-			</form>
+			</div>
 
 		</div>
 	</div>
