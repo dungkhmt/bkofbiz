@@ -16,12 +16,19 @@
             <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALL"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    <request-map uri="approve-project-proposal">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="approveProjectProposal"/>
+            <response name="AttachementSuccess" type="view" value="APPROVEPROJECTPROPOSAL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
     
     <request-map uri="open-project-call-for-submission">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
            invoke="openProjectCallForSubmission"/>
-            <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALL"/>
+            <response name="AttachementSuccess" type="view" value="OPENPROJECTCALL"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
 
@@ -89,6 +96,12 @@
 		<response name="success" type="view" value="view-list-research-project-proposal-university" />
 		<response name="error" type="view" value="view-list-research-project-proposal-university" />
 	</request-map>
+	<request-map uri="decision-research-project-proposal-school">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-decision-research-project-proposal-school" />
+		<response name="error" type="view" value="view-decision-research-project-proposal-school" />
+	</request-map>
+	
 
 	<request-map uri="submit-proposal">
 		 <security https="true" auth="true"/>
@@ -204,6 +217,12 @@
 		<response name="error" type="view" value="view-detail-research-project-proposals" />
 	</request-map>
 	
+	<request-map uri="detail-research-project-proposal-for-decision">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-detail-research-project-proposals-for-decision" />
+		<response name="error" type="view" value="view-detail-research-project-proposals-for-decision" />
+	</request-map>
+
 	<request-map uri="detail-jury-proposal">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-detail-jury-proposal" />
@@ -230,6 +249,12 @@
 		<response name="error" type="view" value="view-list-research-project-proposal" />
 	</request-map>
 	
+	<request-map uri="list-research-project-proposal-for-decision">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-list-research-project-proposal-for-decision" />
+		<response name="error" type="view" value="view-list-research-project-proposal-for-decision" />
+	</request-map>
+
 	<request-map uri="project-call-management">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-project-call-management" />
@@ -340,6 +365,7 @@
 
   <view-map name="view-list-research-project-proposal-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalSchoolSetting"/>
   <view-map name="view-list-research-project-proposal-university" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalUniversitySetting"/>
+  <view-map name="view-decision-research-project-proposal-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#decisionProjectProposalSchoolSetting"/>
 
   <view-map name="view-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectSubmissionManagement"/>
   <view-map name="view-project-call-for-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallForProjectSubmissionManagement"/>
@@ -347,7 +373,12 @@
   <view-map name="view-create-a-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#createAProjectProposal"/>
 
   <view-map name="view-detail-research-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposal"/>
+  <view-map name="view-detail-research-project-proposals-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForDecision"/>
+
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>
+  <view-map name="view-list-research-project-proposal-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposalsForDecision"/>
+
+
   <view-map name="view-detail-jury-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailJuryProposal"/>
     
   <view-map name="view-project-call-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallManagement"/>

@@ -57,8 +57,9 @@ public class ProjectProposalSubmissionServiceUtil {
 	}
 	
 	public static List<GenericValue> getListFilteredProjectProposals(Delegator delegator,
-			String projectCallId, String facultyId){
-		Debug.log(module + "::getListFilteredProjectProposals, facultyId = " + facultyId + ", projectCallId = " + projectCallId);
+			String projectCallId, String facultyId, String projectProposalStatusId){
+		Debug.log(module + "::getListFilteredProjectProposals, facultyId = " + facultyId + 
+				", projectCallId = " + projectCallId + ", projectProposalStatusId = " + projectProposalStatusId);
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			if(facultyId != null && !facultyId.equals("all")){
@@ -66,6 +67,9 @@ public class ProjectProposalSubmissionServiceUtil {
 			}
 			if(projectCallId != null && !projectCallId.equals("all")){
 				conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+			}
+			if(projectProposalStatusId != null && !projectProposalStatusId.equals("all")){
+				conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,projectProposalStatusId));
 			}
 			
 			List<GenericValue> prj = delegator.findList("ResearchProjectProposalView", 

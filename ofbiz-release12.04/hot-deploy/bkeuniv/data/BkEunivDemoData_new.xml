@@ -94,6 +94,8 @@
 
 <Function functionId="RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" uiLabelId="research_project_evaluation_result_summary" vnLabel="Danh sách kết quả duyệt đánh giá thuyết mình đề tài" enLabel="Research proposal evaluation results" target="list-research-project-proposal-evaluation-result" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="8"/>
 
+<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài" enLabel="Research proposal decision" target="decision-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="9"/>
+
 <!-- Tong hop ke khai KL NCKH -->
 <Function functionId="RESEARCH_DECLARATION_MANAGEMENT" uiLabelId="research_declaration_management" vnLabel="Quản lý kê khai khối lượng nghiên cứu khoa học" enLabel="research declaration management" parentFunctionId="NULL" index="1"/>
 

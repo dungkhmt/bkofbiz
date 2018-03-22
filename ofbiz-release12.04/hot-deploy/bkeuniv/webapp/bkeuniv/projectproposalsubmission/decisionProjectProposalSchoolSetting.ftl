@@ -71,7 +71,7 @@ Trang thai
 
 
 <@buttonView text="Xem danh sach" action="listProposals"/>
-<@buttonExportExcel text="Xuat Excel" action="exportProposalsExcel"/>
+
 
 </div>
 
@@ -81,7 +81,7 @@ function exportProposalsExcel(){
 	var projectCallId = document.getElementById("projectCallId").value;
 	var projectProposalStatusId = document.getElementById("projectProposalStatusId").value;
 	
-	//alert('Xuat excel projectCallId = ' + projectCallId);
+	alert('Xuat excel projectCallId = ' + projectCallId + ', projectProposalStatusId = ' + projectProposalStatusId);
 	window.location.href = "/bkeuniv/control/export-excel-project-proposals?facultyId=" + facultyId +
 				"&projectCallId=" + projectCallId +
 				"&projectProposalStatusId=" + projectProposalStatusId;
@@ -93,7 +93,7 @@ function listProposals(){
 	var projectProposalStatusId = document.getElementById("projectProposalStatusId").value;
 	//alert("facultyId = " + facultyId + ", projectCallId = " + projectCallId);
 	
-	window.location.href="/bkeuniv/control/list-research-project-proposal?facultyId=" + facultyId
+	window.location.href="/bkeuniv/control/list-research-project-proposal-for-decision?facultyId=" + facultyId
 											+ "&projectCallId=" + projectCallId +
 											"&projectProposalStatusId=" + projectProposalStatusId;
 }
