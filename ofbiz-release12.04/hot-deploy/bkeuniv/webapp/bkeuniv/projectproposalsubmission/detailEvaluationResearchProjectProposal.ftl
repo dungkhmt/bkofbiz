@@ -1,6 +1,13 @@
 
+<style>
+#form-view {
+    margin-top: 20px;
+    margin-left: 20px;
+    overflow: scroll;
+}
+</style>
 
-
+<div id="form-view">
 <table border = "1">
 <#list resultEvaluation.reviewprojectproposals as e>
 <tr>
@@ -69,3 +76,4 @@
 </tr>
 </#list>
 </table>
+</div>

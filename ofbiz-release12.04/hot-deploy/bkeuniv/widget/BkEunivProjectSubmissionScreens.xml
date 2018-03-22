@@ -149,6 +149,35 @@
 			</widgets>
 		</section>
 	</screen>
+	
+	<screen name="createAProjectProposal">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="projectCallId" from-field="${parameters.projectCallId}" type="PlainString"/>
+				<service service-name="getFaculties" result-map="resultFaculties"></service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/createAProjectProposal.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
 	<screen name="FormAddProductsOfProjectProposal">
 		<section>
 			<actions>
@@ -157,7 +186,8 @@
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<set field="projectProposalId" from-field="${parameters.researchProjectProposalId}"/>
 				<service service-name="getListProjectProposalProductTypes" auto-field-map="true" 
-					result-map="resultProductTypes"></service>
+					result-map="resultProductTypes">
+				</service>
 				
 			</actions>
 			<widgets>
@@ -232,9 +262,11 @@
 				
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
-				<set field="researchProjectProposalId" from-field="${parameters.researchProjectProposalId}"/>
-				<service service-name="getListProjectProposals" result-map="resultProjectProposals"></service>
-					
+				
+				<service service-name="getListFilteredProjectProposals" result-map="resultProjectProposals">
+					<field-map field-name="facultyId" value="${parameters.facultyId}"/>
+					<field-map field-name="projectCallId" value="${parameters.projectCallId}"/>
+				</service>
 				
 			</actions>
 			<widgets>
@@ -272,9 +304,42 @@
 
 						<platform-specific>
 							<html>
-<!-- 								<html-template
+								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/projectCallManagement.ftl" />
- -->						
+<!-- 
+ 									<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectCalls.ftl" />
+ -->
+  							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="ProjectCallForProjectSubmissionManagement">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<service service-name="getListProjectCalls" result-map="resultProjectCalls"></service>
+				<service service-name="getListProjectCallStatus" result-map="listProjectCallStatus"></service>	
+				<service service-name="getListProjectCategory" result-map="listProjectCategory"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+<!-- 
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/projectCallManagement.ftl" />
+ -->
  									<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectCalls.ftl" />
   							</html>
@@ -591,4 +656,66 @@
 		</section>
 	</screen>
 
+	
+	<screen name="listProjectProposalSchoolSetting">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<service service-name="getFacultyOfStaff" result-map="listFaculties">
+					<field-map field-name="universityId" value="HUST"/>
+				</service>
+				<service service-name="getListProjectCalls" result-map="resultProjectCalls">
+				</service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectProposalSchoolSetting.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="listProjectProposalUniversitySetting">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<service service-name="getFaculties" result-map="listFaculties">
+				</service>
+				<service service-name="getListProjectCalls" result-map="resultProjectCalls">
+				</service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectProposalSchoolSetting.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+		
 </screens>

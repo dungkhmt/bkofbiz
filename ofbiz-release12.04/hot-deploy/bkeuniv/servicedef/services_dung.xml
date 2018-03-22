@@ -90,7 +90,14 @@
 		invoke="getListProjectProposals">
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="juryId" mode="IN" type="String" optional="true"></attribute>
-		
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListFilteredProjectProposals" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListFilteredProjectProposals">
+		<attribute name="facultyId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projectCallId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
 	</service>
 

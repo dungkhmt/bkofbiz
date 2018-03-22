@@ -2,6 +2,12 @@
 <site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
 
+    <request-map uri="export-excel-project-proposals">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="exportExcelProjectProposals"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
 
     <request-map uri="close-project-call">
             <security https="true" auth="true"/>
@@ -11,6 +17,14 @@
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
     
+    <request-map uri="open-project-call-for-submission">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="openProjectCallForSubmission"/>
+            <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
 	<request-map uri="get-project-proposals-of-staff">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getProjectProposalsOfStaff"></event>
@@ -65,12 +79,35 @@
 	</request-map>
 	
 
+	<request-map uri="list-research-project-proposal-school">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-list-research-project-proposal-school" />
+		<response name="error" type="view" value="view-list-research-project-proposal-school" />
+	</request-map>
+	<request-map uri="list-research-project-proposal-university">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-list-research-project-proposal-university" />
+		<response name="error" type="view" value="view-list-research-project-proposal-university" />
+	</request-map>
+
 	<request-map uri="submit-proposal">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-project-call-for-project-submission-management" />
+		<response name="error" type="view" value="view-project-call-for-project-submission-management" />
+	</request-map>
+	
+	<request-map uri="my-project-proposal">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-project-submission-management" />
 		<response name="error" type="view" value="view-project-submission-management" />
 	</request-map>
-	
+
+	<request-map uri="create-a-proposal">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-create-a-proposal" />
+		<response name="error" type="view" value="view-create-a-proposal" />
+	</request-map>
+
 	<request-map uri="members-of-project-proposals">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-members-of-project-proposals" />
@@ -123,6 +160,12 @@
 		<response name="AttachementSuccess" type="view" value="ADDPROJECTCALL"/>
 	</request-map>
 	
+	<request-map uri="add-a-project-proposal">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="addProjectProposal" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDPROJECTCALL"/>
+	</request-map>
 	
 	<request-map uri="add-a-workpackage-project-proposal">
 		<security https="true" auth="true"/>
@@ -295,7 +338,14 @@
   <view-map name="view-products-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProductsOfProjectProposal"/>
   <view-map name="view-form-add-products-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProductsOfProjectProposal"/>
 
+  <view-map name="view-list-research-project-proposal-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalSchoolSetting"/>
+  <view-map name="view-list-research-project-proposal-university" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalUniversitySetting"/>
+
   <view-map name="view-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectSubmissionManagement"/>
+  <view-map name="view-project-call-for-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallForProjectSubmissionManagement"/>
+
+  <view-map name="view-create-a-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#createAProjectProposal"/>
+
   <view-map name="view-detail-research-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposal"/>
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>
   <view-map name="view-detail-jury-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailJuryProposal"/>

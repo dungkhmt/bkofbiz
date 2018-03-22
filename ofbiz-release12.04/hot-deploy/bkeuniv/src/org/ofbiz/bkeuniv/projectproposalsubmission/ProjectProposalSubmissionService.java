@@ -23,15 +23,23 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.sl.usermodel.Sheet;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService;
+import org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationUtil;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.utils.BKEunivUtils;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.DelegatorFactory;
+import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityOperator;
@@ -134,6 +142,39 @@ public class ProjectProposalSubmissionService {
 		}
 	}
 
+	public static void exportExcelProjectProposals(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		//GenericDelegator delegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+		//LocalDispatcher dispatcher = org.ofbiz.service.ServiceDispatcher.getLocalDispatcher("default", delegator);
+		 
+		String facultyId = request.getParameter("facultyId");
+		String projectCallId = request.getParameter("projectCallId");
+		
+		String filename = "Danh sach thuyet minh de tai";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try{
+			List<GenericValue> listPrj = ProjectProposalSubmissionServiceUtil.getListFilteredProjectProposals(delegator, projectCallId, facultyId);
+			HSSFWorkbook wb = new HSSFWorkbook();
+			HSSFSheet sh = wb.createSheet(filename);
+			int i_row = 0;
+			for(GenericValue p: listPrj){
+				i_row++;
+				HSSFRow r = sh.createRow(i_row);
+				HSSFCell c = r.createCell(1);
+				c.setCellValue(p.getString("researchProjectProposalName"));
+			}
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
 	public static void storeReviewerProjectProposalsAssignment(HttpServletRequest request, 
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -169,6 +210,47 @@ public class ProjectProposalSubmissionService {
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
+		}
+	}
+	
+	
+	public static String addProjectProposal(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String facultyId = (String)request.getParameter("facultyId");
+		String projectProposalName = (String)request.getParameter("projectProposalName");
+		String projectCallId = (String)request.getParameter("projectCallId");
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		String staffId = (String)userLogin.getString("userLoginId");
+		
+		try{
+			/*
+			GenericValue gv = delegator.makeValue("ResearchProjectProposal");
+			String researchProjectProposalId = delegator.getNextSeqId("ResearchProjectProposal");
+			
+			gv.put("researchProjectProposalId", researchProjectProposalId);
+			
+			gv.put("facultyId", facultyId);
+			gv.put("projectCallId", projectCallId);
+			gv.put("projectProposalName", projectProposalName);
+			gv.put("createStaffId", staffId);
+			
+			delegator.create(gv);
+			*/
+			GenericValue pps = ProjectProposalSubmissionServiceUtil.createAProjectProposalSubmission(delegator,
+					projectProposalName, facultyId, projectCallId, staffId);
+			
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			return "successs";
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+			return "error";
 		}
 	}
 	
@@ -224,6 +306,23 @@ public class ProjectProposalSubmissionService {
 		return "success";
 	}
 	
+	public static String openProjectCallForSubmission(HttpServletRequest request, 
+			HttpServletResponse response){
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String)request.getParameter("projectCallId");
+		Debug.log(module + "::openProjectCallForSubmission,  projectCall " + projectCallId);
+		try{
+			GenericValue pc = delegator.findOne("ProjectCall", UtilMisc.toMap("projectCallId",projectCallId), false);
+			if(pc != null){
+				pc.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_OPEN);
+				delegator.store(pc);
+				Debug.log(module + "::openProjectCallForSubmission, OPEN successfully projectCall " + projectCallId);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();return "failed";
+		}
+		return "success";
+	}
 	public static void addProjectProposalJury(HttpServletRequest request, 
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -896,6 +995,70 @@ public class ProjectProposalSubmissionService {
 		
 	}
 
+	public static Map<String, Object> getListFilteredProjectProposals(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		String projectCallId = (String)context.get("projectCallId");
+		String facultyId = (String)context.get("facultyId");
+		Debug.log(module + "::getListFilteredProjectProposals, facultyId = " + facultyId + ", projectCallId = " + projectCallId);
+		try{
+			List<GenericValue> prj = ProjectProposalSubmissionServiceUtil.getListFilteredProjectProposals(delegator, projectCallId, facultyId);
+			
+			List<Map<String, Object>> retList = FastList.newInstance();
+			for(GenericValue p: prj){
+				String researchProjectProposalId = p.getString("researchProjectProposalId");
+				
+				// get evaluation of current project
+				Map<String, Object> in = FastMap.newInstance();
+				in.put("researchProjectProposalId", researchProjectProposalId);
+				Map<String, Object> retEvaluation = dispatcher.runSync("getListReviewsOfProjectProposal", in);
+				List<GenericValue> eval = (List<GenericValue>)retEvaluation.get("reviewprojectproposals");
+				Debug.log(module + "::getListFilteredProjectProposals, getEvaluation for project " + researchProjectProposalId
+						+ ", GOT list.sz = " + eval.size());
+				int count = eval.size();
+				long total = 0;
+				for(GenericValue e: eval){
+					long point = e.getLong("evaluationMotivation") +
+							     e.getLong("evaluationInnovation") +
+							     e.getLong("evaluationApplicability") +
+							     e.getLong("evaluationResearchMethod") +
+							     e.getLong("evaluationResearchContent") +
+							     e.getLong("evaluationPaper") +
+							     e.getLong("evaluationProduct") +
+							     e.getLong("evaluationPatent") +
+							     e.getLong("evaluationGraduateStudent") +
+							     e.getLong("evaluationYoungResearcher") +
+								 e.getLong("evaluationEducation") +
+								 e.getLong("evaluationReasonableBudget");
+					total += point;
+					Debug.log(module + "::getListFilteredProjectProposals, getEvaluation for project " + researchProjectProposalId
+							+ ", GOT list.sz = " + eval.size() + ", point = " + point + ", total = " + total);
+				}
+				if(count > 0){
+					total = total;
+				}
+				
+				Map<String, Object> item = FastMap.newInstance();
+				item.put("researchProjectProposalId", p.get("researchProjectProposalId"));
+				item.put("researchProjectProposalName", p.get("researchProjectProposalName"));
+				item.put("createStaffName", p.get("createStaffName"));
+				item.put("projectCallName", p.get("projectCallName"));
+				item.put("facultyName", p.get("facultyName"));
+				item.put("totalEvaluation", total);
+				item.put("numberEvaluations", count);
+				
+				retList.add(item);
+			}
+			
+			retSucc.put("projectproposals", retList);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 	public static Map<String, Object> getListProjectProposals(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
@@ -1200,8 +1363,16 @@ public class ProjectProposalSubmissionService {
 		String researchProjectProposalName = (String)context.get("researchProjectProposalName");
 		List<Object> listProjectCalls = (List<Object>)context.get("projectCallId[]");
 		List<Object> listFaculties = (List<Object>)context.get("facultyId[]");
-		
+		String projectCallId = null;
+		String facultyId = null;
+		if(listProjectCalls != null && listProjectCalls.size() > 0){
+			projectCallId= (String)listProjectCalls.get(0);
+		}
+		if(listFaculties != null && listFaculties.size() > 0){
+			facultyId = (String)listFaculties.get(0);
+		}
 		try{
+			/*
 			String partyId = delegator.getNextSeqId("Party");
 			
 			Map<String, Object> info = UtilMisc.toMap("partyId", partyId);
@@ -1227,7 +1398,10 @@ public class ProjectProposalSubmissionService {
 			
 			
 			delegator.create(pps);
+			*/
 			
+			GenericValue pps = ProjectProposalSubmissionServiceUtil.createAProjectProposalSubmission(delegator, 
+					researchProjectProposalName, facultyId, projectCallId, staffId);
 			
 			retSucc.put("projectproposals", pps);
 			retSucc.put("message", "Successfully");
