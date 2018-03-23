@@ -17,12 +17,22 @@ import org.ofbiz.service.ServiceUtil;
 public class ProjectProposalSubmissionServiceUtil {
 	
 	public static final String module = ProjectProposalSubmissionServiceUtil.class.getName();
-	public static String STATUS_CREATED = "CREATED";
-	public static String STATUS_OPEN = "OPEN";
+	public static String STATUS_PROJECT_CALL_CREATED = "CREATED";
+	public static String STATUS_PROJECT_CALL_OPEN = "OPEN";
+	public static String STATUS_PROJECT_CALL_CLOSED = "CLOSED";
+	public static String STATUS_PROJECT_CALL_CANCELLED = "CANCELLED";
+	public static String STATUS_PROJECT_CALL_OPEN_REVISED = "OPEN_REVISED";
+	public static String STATUS_PROJECT_CALL_CLOSED_REVISED = "CLOSED_REVISED";
 	
-	public static String STATUS_CANCELLED = "CANCELLED";
-	public static String STATUS_APPROVED = "APPROVED";
-	public static String STATUS_CLOSED = "CLOSED";
+	public static String STATUS_PROJECT_APPROVED = "APPROVED";
+	public static String STATUS_PROJECT_ACCEPT_REVISE = "ACCEPT_REVISE";
+	public static String STATUS_PROJECT_REJECTED = "REJECTED";
+	public static String STATUS_PROJECT_CANCELLED = "CANCELLED";
+	public static String STATUS_PROJECT_ASSIGNED_REVIEWER = "ASSIGNED_REVIEWER";
+	public static String STATUS_PROJECT_SUBMITTED = "SUBMITTED";
+	public static String STATUS_PROJECT_CREATED = "CREATED";
+	
+	
 	
 	public static GenericValue createAProjectProposalSubmission(Delegator delegator, String projectProposalName,
 			String facultyId, String projectCallId, String staffId){
@@ -40,7 +50,7 @@ public class ProjectProposalSubmissionServiceUtil {
 			pps.put("researchProjectProposalName", projectProposalName);
 			pps.put("createStaffId", staffId);
 			pps.put("partyId", partyId);
-			pps.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
+			pps.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CREATED);
 			
 			pps.put("projectCallId", projectCallId);
 			pps.put("facultyId", facultyId);
@@ -108,7 +118,7 @@ public class ProjectProposalSubmissionServiceUtil {
 			if(facultyId != null)
 				conds.add(EntityCondition.makeCondition("facultyId", EntityOperator.EQUALS,facultyId));
 			
-			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,STATUS_CANCELLED));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,STATUS_PROJECT_CANCELLED));
 			
 			List<GenericValue> prj = delegator.findList("ResearchProjectProposalView", 
 					EntityCondition.makeCondition(conds), 

@@ -24,6 +24,21 @@
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
     
+    <request-map uri="not-approve-project-proposal">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="notApproveProjectProposal"/>
+            <response name="AttachementSuccess" type="view" value="NOTAPPROVEPROJECTPROPOSAL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+    <request-map uri="accept-revise-project-proposal">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="acceptReviseProjectProposal"/>
+            <response name="AttachementSuccess" type="view" value="ACCEPTREVISEPROJECTPROPOSAL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
     <request-map uri="open-project-call-for-submission">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
@@ -211,6 +226,12 @@
 		<response name="AttachementSuccess" type="view" value="ADDPROJECTPROPOSALJURYMEMBER"/>
 	</request-map>
 
+	<request-map uri="detail-research-project-proposal-update">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-detail-research-project-proposals-update" />
+		<response name="error" type="view" value="view-detail-research-project-proposals-update" />
+	</request-map>
+	
 	<request-map uri="detail-research-project-proposal">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-detail-research-project-proposals" />
@@ -371,8 +392,11 @@
   <view-map name="view-project-call-for-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallForProjectSubmissionManagement"/>
 
   <view-map name="view-create-a-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#createAProjectProposal"/>
-
-  <view-map name="view-detail-research-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposal"/>
+ 
+  <view-map name="view-detail-research-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalView"/>
+ 
+  <view-map name="view-detail-research-project-proposals-update" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForModify"/>
+   
   <view-map name="view-detail-research-project-proposals-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForDecision"/>
 
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>

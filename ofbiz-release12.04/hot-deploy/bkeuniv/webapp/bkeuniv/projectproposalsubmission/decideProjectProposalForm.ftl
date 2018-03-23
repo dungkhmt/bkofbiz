@@ -31,7 +31,7 @@
 <script>
 function approve(){
 	var researchProjectProposalId = document.getElementById("researchProjectProposalId").value;
-	alert('approve ' + researchProjectProposalId);
+	//alert('approve ' + researchProjectProposalId);
 	$.ajax({
 					url: "/bkeuniv/control/approve-project-proposal",
 					type: 'POST',
@@ -40,15 +40,40 @@ function approve(){
 					},
 					success:function(rs){
 						console.log(rs);
+						alert('Da phe duyet de tai ' + researchProjectProposalId);
 					}
 				})
 }
 function notApprove(){
 	var researchProjectProposalId = document.getElementById("researchProjectProposalId").value;
-	alert('notApprove ' + researchProjectProposalId);
+	//alert('notApprove ' + researchProjectProposalId);
+	$.ajax({
+					url: "/bkeuniv/control/not-approve-project-proposal",
+					type: 'POST',
+					data: {
+						"researchProjectProposalId": researchProjectProposalId
+					},
+					success:function(rs){
+						console.log(rs);
+						alert('Khong phe duyet de tai ' + researchProjectProposalId);
+					}
+				})
+
 }
 function revise(){
 	var researchProjectProposalId = document.getElementById("researchProjectProposalId").value;
-	alert('revise ' + researchProjectProposalId);
+	//alert('revise ' + researchProjectProposalId);
+	$.ajax({
+					url: "/bkeuniv/control/accept-revise-project-proposal",
+					type: 'POST',
+					data: {
+						"researchProjectProposalId": researchProjectProposalId
+					},
+					success:function(rs){
+						console.log(rs);
+						alert('Yeu cau chinh sua de tai ' + researchProjectProposalId);
+					}
+				})
+
 }
 </script>

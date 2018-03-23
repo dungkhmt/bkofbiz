@@ -59,7 +59,7 @@
 		<tr>
 			<td style="display: none">${p.researchProjectProposalId}</td>
 			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				<td><a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
 			<#else>
 				<td></td>
 			</#if>

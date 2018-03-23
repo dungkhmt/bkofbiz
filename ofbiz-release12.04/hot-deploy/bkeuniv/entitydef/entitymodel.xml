@@ -190,6 +190,7 @@
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="PCV" entity-name="ProjectCallView"></member-entity>
 		<member-entity entity-alias="F" entity-name="Faculty"></member-entity>
+		<member-entity entity-alias="PPS" entity-name="ProjectProposalStatus"></member-entity>
 		<!-- 
 		
 		<member-entity entity-alias="PS" entity-name="ProjectProposalStatus"></member-entity>
@@ -198,7 +199,7 @@
 		<alias name="createStaffName" field="staffName" entity-alias="ST"></alias>
 		<alias name="projectCallName" field="projectCallName" entity-alias="PCV"></alias>
 		<alias name="facultyName" field="facultyName" entity-alias="F"></alias>
-		
+		<alias name="statusName" field="statusName" entity-alias="PPS"></alias>
 		<!-- 
 		<alias name="statusName" field="statusName" entity-alias="PS"></alias>
 		<alias name="projectCategoryName" field="projectCategoryName" entity-alias="PCV"></alias>
@@ -214,6 +215,9 @@
 		
 		<view-link rel-entity-alias="ST" entity-alias="RPP" rel-optional="true">
 			<key-map rel-field-name="staffId" field-name="createStaffId"/>
+		</view-link>
+		<view-link rel-entity-alias="PPS" entity-alias="RPP" rel-optional="true">
+			<key-map rel-field-name="statusId" field-name="statusId"/>
 		</view-link>
 		
 	</view-entity>

@@ -345,7 +345,7 @@ public class ProjectProposalSubmissionService {
 					UtilMisc.toMap("projectCallId", projectCallId), false);
 			if (pc != null) {
 				pc.put("statusId",
-						ProjectProposalSubmissionServiceUtil.STATUS_CLOSED);
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CLOSED);
 				delegator.store(pc);
 				Debug.log(module
 						+ "::closeProjectCall, CLOSED successfully projectCall "
@@ -368,7 +368,49 @@ public class ProjectProposalSubmissionService {
 					UtilMisc.toMap("researchProjectProposalId", researchProjectProposalId), false);
 			if (pc != null) {
 				pc.put("statusId",
-						ProjectProposalSubmissionServiceUtil.STATUS_APPROVED);
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_APPROVED);
+				delegator.store(pc);
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
+	public static String notApproveProjectProposal(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String researchProjectProposalId = (String) request.getParameter("researchProjectProposalId");
+		Debug.log(module + "::notApproveProjectProposal, researchProjectProposalId "
+				+ researchProjectProposalId);
+		try {
+			GenericValue pc = delegator.findOne("ResearchProjectProposal",
+					UtilMisc.toMap("researchProjectProposalId", researchProjectProposalId), false);
+			if (pc != null) {
+				pc.put("statusId",
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_REJECTED);
+				delegator.store(pc);
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
+	public static String acceptReviseProjectProposal(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String researchProjectProposalId = (String) request.getParameter("researchProjectProposalId");
+		Debug.log(module + "::acceptReviseProjectProposal, researchProjectProposalId "
+				+ researchProjectProposalId);
+		try {
+			GenericValue pc = delegator.findOne("ResearchProjectProposal",
+					UtilMisc.toMap("researchProjectProposalId", researchProjectProposalId), false);
+			if (pc != null) {
+				pc.put("statusId",
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_ACCEPT_REVISE);
 				delegator.store(pc);
 				
 			}
@@ -390,7 +432,7 @@ public class ProjectProposalSubmissionService {
 					UtilMisc.toMap("projectCallId", projectCallId), false);
 			if (pc != null) {
 				pc.put("statusId",
-						ProjectProposalSubmissionServiceUtil.STATUS_OPEN);
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_OPEN);
 				delegator.store(pc);
 				Debug.log(module
 						+ "::openProjectCallForSubmission, OPEN successfully projectCall "
@@ -472,7 +514,7 @@ public class ProjectProposalSubmissionService {
 					researchProjectProposalId));
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS,
-					ProjectProposalSubmissionServiceUtil.STATUS_APPROVED));
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_APPROVED));
 
 			List<GenericValue> list = delegator.findList(
 					"ReviewerResearchProposalView",
@@ -584,7 +626,7 @@ public class ProjectProposalSubmissionService {
 							reviewerResearchProposalId), false);
 
 			gv.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_APPROVED);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_APPROVED);
 
 			delegator.store(gv);
 
@@ -619,7 +661,7 @@ public class ProjectProposalSubmissionService {
 			gv.put("projectCallName", projectCallName);
 			gv.put("projectCategoryId", projectCategoryId);
 			gv.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CREATED);
 			gv.put("year", year);
 
 			delegator.create(gv);
@@ -905,7 +947,7 @@ public class ProjectProposalSubmissionService {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.NOT_EQUAL,
-					ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
 			if (projectCallId != null)
 				conds.add(EntityCondition.makeCondition("projectCallId",
 						EntityOperator.EQUALS, projectCallId));
@@ -946,7 +988,7 @@ public class ProjectProposalSubmissionService {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.NOT_EQUAL,
-					ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
 
 			List<GenericValue> projectCalls = delegator.findList(
 					"ProjectCallView", EntityCondition.makeCondition(conds),
@@ -1099,7 +1141,7 @@ public class ProjectProposalSubmissionService {
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS,researchProjectProposalId));
-			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.NOT_EQUAL,ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED));
 			
 			List<GenericValue> prj = delegator.findList("ResearchProjectProposalView", 
 					EntityCondition.makeCondition(conds), 
@@ -1145,7 +1187,7 @@ public class ProjectProposalSubmissionService {
 					EntityOperator.EQUALS, staffId));
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.NOT_EQUAL,
-					ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED));
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED));
 
 			List<GenericValue> prj = delegator.findList(
 					"ResearchProjectProposalView",
@@ -1623,7 +1665,7 @@ public class ProjectProposalSubmissionService {
 			pc.put("projectCategoryId", projectCategoryId);
 			pc.put("year", year);
 			pc.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_CREATED);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CREATED);
 			delegator.create(pc);
 
 			pc = delegator.findOne("ProjectCallView",
@@ -1688,7 +1730,7 @@ public class ProjectProposalSubmissionService {
 					UtilMisc.toMap("projectCallId", projectCallId), false);
 			if (pc != null) {
 				pc.put("statusId",
-						ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED);
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED);
 				delegator.store(pc);
 				Debug.log(module
 						+ "::removeAProjectCall, remove successfully projectCall "
@@ -1766,7 +1808,7 @@ public class ProjectProposalSubmissionService {
 					UtilMisc.toMap("researchProjectProposalId",
 							researchProjectProposalId), false);
 			pps.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_CANCELLED);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED);
 
 			delegator.store(pps);
 
