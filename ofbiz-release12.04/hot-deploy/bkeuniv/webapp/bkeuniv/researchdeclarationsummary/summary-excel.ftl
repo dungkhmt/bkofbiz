@@ -303,8 +303,8 @@
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
 						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-bm-01-02-03", faculties)+
-					'</div>'+
-					script_facultie
+						script_facultie +
+					'</div>'
 				);
 
 				var script_department = 
@@ -313,17 +313,18 @@
 						'$("#departmentId-bm-01-02-03_select2").select2({'+
 							
 						'});'+
+						'changeFacultyBM010203($("#facultyId-bm-01-02-03_select2").val());'+
 					'});'+
 				'<\/script>';
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
 						'<label id="title-modal-input">Department</label>'+
-						'<div style="width: 70%; display: inline-block;" id="departmentId-bm-01-02-03" name="facultyId-kv01" modal-value="$(&quot;#facultyId-kv01_select2&quot;).val()">'+
+						'<div style="width: 70%; display: inline-block;" id="departmentId-bm-01-02-03" name="facultyId-kv01" modal-value=\'$("#departmentId-bm-01-02-03_select2").val()\'>'+
 							'<select class="form-control" style="width: 100%" id="departmentId-bm-01-02-03_select2">'+
 							'</select>'+
+							script_department+
 						'</div>'+
-						script_department+
 					'</div>'
 				);
 
