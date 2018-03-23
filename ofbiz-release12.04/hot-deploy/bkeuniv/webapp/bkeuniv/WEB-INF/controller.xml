@@ -517,6 +517,7 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+
 	<request-map uri="project-declaration-staff">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-project-declaration-staff"></response>

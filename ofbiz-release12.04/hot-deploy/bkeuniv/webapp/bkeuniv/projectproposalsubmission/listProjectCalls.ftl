@@ -39,8 +39,9 @@
   </script>
 
 <div id="form-add">
+<!--
 <@buttonStore text="Them moi" action="addProjectCall()"/>
-
+-->
 
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
 	<table id="list" cellspacing="0" width="100%" class="display dataTable">
@@ -78,8 +79,8 @@
 			<#else>
 				<td></td>
 			</#if>
-			<#if pc.statusId == "CREATED">
-				<td><a href="/bkeuniv/control/submit-proposal?projectCallId=${pc.projectCallId}">Nop thuyet minh</a></td>
+			<#if pc.statusId == "OPEN">
+				<td><a href="/bkeuniv/control/create-a-proposal?projectCallId=${pc.projectCallId}">Nop thuyet minh</a></td>
 			<#else>
 				<td></td>
 			</#if>
@@ -105,6 +106,8 @@ $(document).ready(function() {
     "bJQueryUI": true,
     "sDom": 'l<"H"Rf>t<"F"ip>'
   });
+  
+  /*
   $(document).contextmenu({
     delegate: ".dataTable td",
     menu: [
@@ -130,6 +133,7 @@ $(document).ready(function() {
         ui.menu.zIndex(0);
     }
   });
+  */
     
 } );
 </script>

@@ -124,9 +124,8 @@
 			menu: [
 			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
-			  {title: 'Dong dot goi de tai', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"}
-			 
-			
+			  {title: 'Dong dot goi de tai', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
+			  {title: 'Mo dot goi de tai cho dang ky moi', cmd: "openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"}
 			],
 			select: function(event, ui) {
 				var el = ui.target.parent();
@@ -141,6 +140,9 @@
 					case "closeprojectcall":
 						closeProjectCall(data);
 						break;
+					case "openprojectcallforsubmission":
+						openProjectCallForSubmission(data);
+						break;	
 					
 					}		
 					
@@ -176,6 +178,30 @@
 		});
 		
 	}
+
+	function openProjectCallForSubmission(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan mo de tai', "Ban co muon thuc su muon mo khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/open-project-call-for-submission",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
 </script>
 
 <#--      

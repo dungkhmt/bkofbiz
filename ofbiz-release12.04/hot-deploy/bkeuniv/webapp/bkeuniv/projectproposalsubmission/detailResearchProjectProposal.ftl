@@ -17,13 +17,17 @@
 	<tr>
 		<td>
 		<table>
+			<#if resultProjectProposal.projectCallStatusId == "OPEN">
 			<tr>
 				<td><a href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">Thanh vien de tai</a></td>
 				<td><a href = "/bkeuniv/control/workpackages-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">Noi dung cong viec</a></td>
 				<td><a href = "/bkeuniv/control/products-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">San pham de tai</a></td>
-				<td><a href = "/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Download thuyet minh</a></td>
 				<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
 				<td><@buttonStore text="Upload thuyet minh" action="uploadFileProposal()"/></td>
+			</tr>
+			</#if>
+			<tr>
+				<td><a href = "/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Download thuyet minh</a></td>
 			</tr>
 		</table>
 		
