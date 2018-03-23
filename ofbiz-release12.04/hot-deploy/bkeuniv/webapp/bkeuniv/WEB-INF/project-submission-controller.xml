@@ -69,6 +69,13 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
+	<request-map uri="get-project-proposal-products">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getProjectProposalProducts"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 
 	<request-map uri="create-a-project-submission">
 		<security https="true" auth="true"/>
@@ -201,6 +208,14 @@
 		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
 		<response name="AttachementSuccess" type="view" value="ADDWORKPACKAGEPROJECT"/>
 	</request-map>
+	
+	<request-map uri="add-a-project-proposal-product-type">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="addProjectProposalType" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="ADDWORKPACKAGEPROJECT"/>
+	</request-map>
+	
 
 	<request-map uri="products-of-project-proposals">
 		 <security https="true" auth="true"/>

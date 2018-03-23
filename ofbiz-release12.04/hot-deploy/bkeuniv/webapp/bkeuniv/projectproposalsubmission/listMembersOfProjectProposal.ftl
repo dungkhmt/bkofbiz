@@ -41,6 +41,8 @@
 </script>
 
 <div class="body">
+<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
+
 	<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivStaffName?j_string,

@@ -1,3 +1,4 @@
+
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
@@ -13,6 +14,7 @@
 </style>
 
 <div>
+Trang thai dot goi de tai: ${pResultProjectProposal.projectCallStatusName}
 <table>
 	<tr>
 		<td>

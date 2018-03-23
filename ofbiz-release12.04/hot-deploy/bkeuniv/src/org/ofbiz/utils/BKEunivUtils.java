@@ -240,6 +240,7 @@ public class BKEunivUtils {
 					if (value instanceof List) {
 						result.put(key, parseJSONArray((List<Object>) value));
 					} else {
+						Debug.log("parseJSONObject, key = " + key + ", value = " + value);
 						result.put(key, value.toString());
 					}
 				}

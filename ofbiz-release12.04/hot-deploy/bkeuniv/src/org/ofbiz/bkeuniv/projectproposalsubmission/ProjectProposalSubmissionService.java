@@ -713,7 +713,44 @@ public class ProjectProposalSubmissionService {
 		}
 
 	}
+	
+	public static void addProjectProposalType(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
+		String researchProjectProposalId = request
+				.getParameter("researchProjectProposalId");
+		String researchProductTypeId = request
+				.getParameter("researchProductTypeId[]");
+		String sQuantity = request
+				.getParameter("quantity");
+		Long quantity = Long.valueOf(sQuantity);
+		Debug.log(module + "::addProjectProposalType, researchProjectProposalId= " + researchProjectProposalId
+				+ ", researchProductTypeId = " + researchProductTypeId + ", quantity = " + quantity);
+		try{
+			GenericValue gv = delegator.makeValue("ResearchProposalProduct");
+			String researchProductId = delegator.getNextSeqId("ResearchProposalProduct");
+			
+			gv.put("researchProductId", researchProductId);
+			gv.put("researchProductTypeId", researchProductTypeId);
+			gv.put("researchProjectProposalId", researchProjectProposalId);
+			gv.put("quantity", quantity);
+			gv.put("researchProductName", "-");
+			gv.put("sourcePathUpload", "-");
+			
+			delegator.create(gv);
+			
+			Map<String, Object> context = FastMap.newInstance();
+			context.put("projectProposalProducts", gv);
+			context.put("message", "Create new row");
+			BKEunivUtils.writeJSONtoResponse(
+					BKEunivUtils.parseJSONObject(context), response, 200);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+	}
+	
 	public static void addWorkpackageProject(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -1155,9 +1192,11 @@ public class ProjectProposalSubmissionService {
 				retSucc.put("projectproposal", pp);
 			
 				String projectCallId = (String)pp.getString("projectCallId");
-				GenericValue pc = delegator.findOne("ProjectCall", UtilMisc.toMap("projectCallId", projectCallId), false);
+				GenericValue pc = delegator.findOne("ProjectCallView", UtilMisc.toMap("projectCallId", projectCallId), false);
 				String projectCallStatusId = (String)pc.getString("statusId");
+				String projectCallStatusName = (String)pc.getString("statusName");
 				retSucc.put("projectCallStatusId", projectCallStatusId);
+				retSucc.put("projectCallStatusName", projectCallStatusName);
 				
 			}
 		}catch(Exception ex){
