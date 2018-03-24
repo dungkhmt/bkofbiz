@@ -1,4 +1,5 @@
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
   <head>
 
@@ -19,6 +20,17 @@
   
   </head>
   
+ <style>
+#form-excel {
+    margin-top: 20px;
+    margin-left: 20px;
+    overflow: scroll;
+}
+</style>
+
+
+
+  
 <@Loader handleToggle="loader">
 	<@IconSpinner/>
 </@Loader>
@@ -26,6 +38,11 @@
 <script>
   	loader.open();
   </script>
+
+<div id="form-excel">
+<!--
+<@buttonStore text="EXCEL" action="excel()"/>
+-->
 
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
 	<table id="list" cellspacing="0" width="100%" class="display dataTable">
@@ -36,6 +53,9 @@
 				<th>Chu nhiem</th>
 				<th>Dot goi de tai</th>
 				<th>Khoa/vien</th>
+				<th>Tong diem</th>
+				<th>So thanh vien danh gia</th>
+				<th>Diem trung binh</th>
 			</tr>
 		</thead>
 	<tbody>
@@ -62,15 +82,38 @@
 			<#else>
 				<td></td>
 			</#if>
-			
-		</tr>
+			<#if p.totalEvaluation?exists>
+				<td>${p.totalEvaluation}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<#assign average = 0>
+			<#if p.numberEvaluations?exists>
+				<td>${p.numberEvaluations}</td>
+				<#if 0 < p.numberEvaluations>
+					<#assign average = p.totalEvaluation/p.numberEvaluations/>
+				</#if>
+
+			<#else>
+				<td></td>
+			</#if>
+			<td>${average}</td>
+
+			</tr>
 	</#list>
 	</tbody>
 	</table>
 	
 </div>
+
+</div>
+
 <script>
 var obj;
+
+function excel(){
+	alert("list project sumission excel");
+}
 
 $(document).ready(function() {
   loader.close();
@@ -78,6 +121,8 @@ $(document).ready(function() {
     "bJQueryUI": true,
     "sDom": 'l<"H"Rf>t<"F"ip>'
   });
+  
+  /*
   $(document).contextmenu({
     delegate: ".dataTable td",
     menu: [
@@ -103,6 +148,7 @@ $(document).ready(function() {
         ui.menu.zIndex(0);
     }
   });
+  */
     
 } );
 </script>

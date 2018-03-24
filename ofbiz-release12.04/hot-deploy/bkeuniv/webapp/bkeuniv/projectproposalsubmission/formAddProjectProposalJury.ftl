@@ -83,7 +83,7 @@ function addProjectProposalJury(){
 				"projectCallId": projectCallId
 			},
 			success: function(rs){
-				window.location.href = "/bkeuniv/control/research-project-jury";
+				window.location.href = "/bkeuniv/control/research-project-jury-school";
 				console.log(rs.result);
 			}
 		})

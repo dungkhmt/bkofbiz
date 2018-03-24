@@ -1,246 +1,349 @@
-<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<header>
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/selectize.default.css">
+	<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
+	<script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+</header>
 <style>
-.floating-box {
+.card {
     display: inline-block;
     width: 200px;
-    height: 50px;
     margin: 20px;
-    border: 3px solid #73AD21;  
     cursor: pointer;
 }
 
-.after-box {
-    border: 3px solid red; 
+#title-modal-input {
+	padding: 5px;
+    line-height: 1.5;
+    flex: 1 1 auto;
+    display: inline-block;
+    width: 30%;
 }
 
-.modal-export-excel {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 50%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-/* Modal Content */
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
+.modal-dialog {
+    width: 60%!important;
+    margin-left: 20%!important;
 }
 
-/* Add Animation */
-@-webkit-keyframes animatetop {
-    from {top:-300px; opacity:0} 
-    to {top:0; opacity:1}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes animatetop {
-    from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
-}
-
-/* The Close Button */
-.close {
-    color: black;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-header {
-    padding: 2px 16px;
-    background-color: lightgreen;
-    color: white;
-}
-
-.modal-body {padding: 10px 26px;}
-
-.modal-footer {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/resource/bkeuniv/css/fonts/materialicons.woff2) format('woff2');
 }
 </style>
 <script>
-	function openModal(template) {
-		alert(template);
-	}
-	function openModalKV01() {
-		//alert("openModelKV01");
-		model = document.getElementById('model-kv01');
-		span = document.getElementsByClassName("close")[0];
-		span.onclick = function(){
-			model.style.display = "none";
-		}	
+	var URL_SUBMIT="";
+	function buildSelect2(id, data, maxItem=1) {
+		var _id = id + "_select2";
+		var script = '<script type="text/javascript">'+
+						'$(function () {'+
+							'$("#'+_id+'").select2({'+
+								(maxItem>1?'maximumSelectionLength: ' + maxItem + ',':"")+
+								'data:' + JSON.stringify(data) +
+							'});'+
+						'});'+
+					'<\/script>';
 		
-		$.ajax({
-					url: "/bkeuniv/control/get-academic-years-faculties",
-					type: 'POST',
-					data: {
-						"universityId": "HUST"
-					},
-					success:function(rs){
-						console.log(rs);
-						var select_years = document.getElementById("reportyear-kv01");
-						var select_faculty = document.getElementById("facultyId-kv01");
-						
-						var lst_years = rs.years;
-						var lst_faculties = rs.faculties;
-						
-						for(i = 0; i < lst_years.length; i++){	
-							var o = document.createElement("option");
-							o.text = lst_years[i].name;
-							o.value = lst_years[i].id;
-							select_years.appendChild(o);
-						}
-						for(i = 0; i < lst_faculties.length; i++){
-							var o = document.createElement("option");
-							o.text = lst_faculties[i].name;
-							o.value = lst_faculties[i].id;
-							select_faculty.appendChild(o);
-						}
-						model.style.display = "block";
+		return '<div style="width: 70%; display: inline-block;" id='+id+' name="'+id+'" modal-value=\'$("#'+_id+'").val()\'><select class="js-states form-control" style="width: 100%" id="'+_id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
+	}
 
-					}
-				})
+	function save() {
+		var modal_content_eL = $("#modal-body");
+		var url = modal_content_eL.attr('action');
+		
+		var form = document.createElement("form");
+
+		form.method = "POST";
+		form.action = url;   
+
+		modal_content_eL.children().map(function() {
+			var el = this.children[1];
+			var id = el.id||"";
+			var value = eval(el.getAttribute("modal-value")||"");
+			
+			var element = document.createElement("input");
+			element.value=value;
+			element.name=id;
+			form.appendChild(element);
+		});
+
+		document.body.appendChild(form);
+
+		alertify.success('File dang duoc tai xuong');
+		form.submit();
+
+		form.remove();
+		setTimeout(function(){ $("#modal-setting-export").modal("hide"); }, 500);
+		
+	}
+
+	function openModalKV01() {
+		var start = Date.now();
+		loader.open();
+
+		$.ajax({
+			url: "/bkeuniv/control/get-academic-years-faculties",
+			type: 'POST',
+			data: {
+				"universityId": "HUST"
+			},
+			success:function(rs){
+				console.log(rs);
+				var millis = Date.now() - start;
+				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
+				var modal_content_eL = $("#modal-body");
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-kv01');
+
+				var els = modal_content_eL.children();
+				for(var i = 0; i < els.length; ++i) {
+					els[i].remove();
+				}
+
+				
+				var faculties = rs.faculties.map(function(faculty) {
+					return {
+						id: faculty.id,
+        				text: faculty.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-kv01", faculties)+
+					'</div>'
+				);
+
+				var years = rs.years.map(function(year) {
+					return {
+						id: year.id,
+        				text: year.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-kv01", years)+
+					'</div>'
+				);
+
+				$("#modal-setting-export").modal("show");
+			}
+		})
 	}
 
 	function openModalKV04() {
-		//alert("openModelKV01");
-		model = document.getElementById('model-kv04');
-		span = document.getElementsByClassName("close")[1];
-		span.onclick = function(){
-			model.style.display = "none";
-		}	
-		
-		$.ajax({
-					url: "/bkeuniv/control/get-academic-years-faculties",
-					type: 'POST',
-					data: {
-						"universityId": "HUST"
-					},
-					success:function(rs){
-						console.log(rs);
-						var select_years = document.getElementById("reportyear-kv04");
-						var select_faculty = document.getElementById("facultyId-kv04");
-						
-						var lst_years = rs.years;
-						var lst_faculties = rs.faculties;
-						
-						for(i = 0; i < lst_years.length; i++){	
-							var o = document.createElement("option");
-							o.text = lst_years[i].name;
-							o.value = lst_years[i].id;
-							select_years.appendChild(o);
-						}
-						for(i = 0; i < lst_faculties.length; i++){
-							var o = document.createElement("option");
-							o.text = lst_faculties[i].name;
-							o.value = lst_faculties[i].id;
-							select_faculty.appendChild(o);
-						}
-						model.style.display = "block";
 
-					}
-				})
+		var start = Date.now();
+		loader.open();
+
+		$.ajax({
+			url: "/bkeuniv/control/get-academic-years-faculties",
+			type: 'POST',
+			data: {
+				"universityId": "HUST"
+			},
+			success:function(rs){
+				console.log(rs);
+				var millis = Date.now() - start;
+				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
+				var modal_content_eL = $("#modal-body");
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-kv04');
+
+				var els = modal_content_eL.children();
+				for(var i = 0; i < els.length; ++i) {
+					els[i].remove();
+				}
+
+				
+				var faculties = rs.faculties.map(function(faculty) {
+					return {
+						id: faculty.id,
+        				text: faculty.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-kv04", faculties)+
+					'</div>'
+				);
+
+				var years = rs.years.map(function(year) {
+					return {
+						id: year.id,
+        				text: year.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-kv04", years)+
+					'</div>'
+				);
+
+				$("#modal-setting-export").modal("show");
+			}
+		})
 	}
 
 	function openModalISI() {
-		model = document.getElementById('model-isi');
-		span = document.getElementsByClassName("close")[2];
-		span.onclick = function(){
-			model.style.display = "none";
-		}	
-		
-		$.ajax({
-					url: "/bkeuniv/control/get-academic-years-faculties",
-					type: 'POST',
-					data: {
-						"universityId": "HUST"
-					},
-					success:function(rs){
-						console.log(rs);
-						var select_years = document.getElementById("reportyear-isi");
-						var select_faculty = document.getElementById("facultyId-isi");
-						
-						var lst_years = rs.years;
-						var lst_faculties = rs.faculties;
-						
-						for(i = 0; i < lst_years.length; i++){	
-							var o = document.createElement("option");
-							o.text = lst_years[i].name;
-							o.value = lst_years[i].id;
-							select_years.appendChild(o);
-						}
-						for(i = 0; i < lst_faculties.length; i++){
-							var o = document.createElement("option");
-							o.text = lst_faculties[i].name;
-							o.value = lst_faculties[i].id;
-							select_faculty.appendChild(o);
-						}
-						model.style.display = "block";
 
-					}
-				})
+		var start = Date.now();
+		loader.open();
+
+		$.ajax({
+			url: "/bkeuniv/control/get-academic-years-faculties",
+			type: 'POST',
+			data: {
+				"universityId": "HUST"
+			},
+			success:function(rs){
+				console.log(rs);
+				var millis = Date.now() - start;
+				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
+				var modal_content_eL = $("#modal-body");
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-isi');
+
+				var els = modal_content_eL.children();
+				for(var i = 0; i < els.length; ++i) {
+					els[i].remove();
+				}
+
+				
+				var faculties = rs.faculties.map(function(faculty) {
+					return {
+						id: faculty.id,
+        				text: faculty.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-isi", faculties)+
+					'</div>'
+				);
+
+				var years = rs.years.map(function(year) {
+					return {
+						id: year.id,
+        				text: year.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-isi", years)+
+					'</div>'
+				);
+
+				$("#modal-setting-export").modal("show");
+			}
+		})
 	}
 
-	function openModalBomon010203() {
-		model = document.getElementById('model-bm-01-02-03');
-		span = document.getElementsByClassName("close")[3];
-		span.onclick = function(){
-			model.style.display = "none";
-		}	
-		
-		$.ajax({
-					url: "/bkeuniv/control/get-academic-years-faculties",
-					type: 'POST',
-					data: {
-						"universityId": "HUST"
-					},
-					success:function(rs){
-						console.log(rs);
-						var select_years = document.getElementById("reportyear-bm-01-02-03");
-						var select_faculty = document.getElementById("facultyId-bm-01-02-03");
-						
-						var lst_years = rs.years;
-						var lst_faculties = rs.faculties;
-						
-						for(i = 0; i < lst_years.length; i++){	
-							var o = document.createElement("option");
-							o.text = lst_years[i].name;
-							o.value = lst_years[i].id;
-							select_years.appendChild(o);
-						}
-						for(i = 0; i < lst_faculties.length; i++){
-							var o = document.createElement("option");
-							o.text = lst_faculties[i].name;
-							o.value = lst_faculties[i].id;
-							select_faculty.appendChild(o);
-						}
-						model.style.display = "block";
+	function openModalBomon010203() { 
+			 
+		var start = Date.now();
+		loader.open();
 
-					}
-				})
+		$.ajax({
+			url: "/bkeuniv/control/get-academic-years-faculties",
+			type: 'POST',
+			data: {
+				"universityId": "HUST"
+			},
+			success:function(rs){
+				console.log(rs);
+				var millis = Date.now() - start;
+				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
+				var modal_content_eL = $("#modal-body");
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-bm-01-02-03');
+
+				var els = modal_content_eL.children();
+				for(var i = 0; i < els.length; ++i) {
+					els[i].remove();
+				}
+
+				
+				var faculties = rs.faculties.map(function(faculty) {
+					return {
+						id: faculty.id,
+        				text: faculty.name
+					};
+				});
+
+				var script_facultie = 
+				'<script type="text/javascript">'+
+					'$(function () {'+
+						'$("#facultyId-bm-01-02-03_select2").on("change", function(e) { '+
+							'var facultyId = $("#facultyId-bm-01-02-03_select2").val();'+
+							'changeFacultyBM010203(facultyId);'+
+						'});'+
+					'});'+
+				'<\/script>';
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-bm-01-02-03", faculties)+
+						script_facultie +
+					'</div>'
+				);
+
+				var script_department = 
+				'<script type="text/javascript">'+
+					'$(function () {'+
+						'$("#departmentId-bm-01-02-03_select2").select2({'+
+							
+						'});'+
+						'changeFacultyBM010203($("#facultyId-bm-01-02-03_select2").val());'+
+					'});'+
+				'<\/script>';
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Department</label>'+
+						'<div style="width: 70%; display: inline-block;" id="departmentId-bm-01-02-03" name="facultyId-kv01" modal-value=\'$("#departmentId-bm-01-02-03_select2").val()\'>'+
+							'<select class="form-control" style="width: 100%" id="departmentId-bm-01-02-03_select2">'+
+							'</select>'+
+							script_department+
+						'</div>'+
+					'</div>'
+				);
+
+				var years = rs.years.map(function(year) {
+					return {
+						id: year.id,
+        				text: year.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-bm-01-02-03", years)+
+					'</div>'
+				);
+
+				$("#modal-setting-export").modal("show");
+			}
+		})
 	}
 
 	function clearSelectBox(sel){
@@ -250,53 +353,49 @@
 		}
 	}
 	
-	function changeFacultyBM010203(){
-		var fId = document.getElementById("facultyId-bm-01-02-03").value;
+	function changeFacultyBM010203(facultyId){
 		$.ajax({
 					url: "/bkeuniv/control/get-departments-of-faculty",
 					type: 'POST',
 					data: {
-						"facultyId": fId
+						"facultyId": facultyId
 					},
 					success:function(rs){
-						console.log(rs);
-						var select_department = document.getElementById("departmentId-bm-01-02-03");
+						var departments = rs.departments.map(function(department) {
+							return {
+								id: department.id,
+								text: department.name
+							};
+						});
+
+						console.log(departments)
+						$("#departmentId-bm-01-02-03_select2").html('').select2();
+						$("#departmentId-bm-01-02-03_select2").select2({
+							data: departments
+						});
 						
-						clearSelectBox(select_department);
-						
-						var lst = rs.departments;
-						
-						
-						for(i = 0; i < lst.length; i++){	
-							var o = document.createElement("option");
-							o.text = lst[i].name;
-							o.value = lst[i].id;
-							select_department.appendChild(o);
-						}
 					}
 				})
 		
 	}
 </script>
 <body>
-<div class="body">
+<div class="body" style="flex: 1 1 0%;padding: 2em 3em 6em 3em;width: 100%;overflow-y: auto;height: 100%;background-color: rgb(237, 236, 236);">
+
+
+
+<#--  	
+
+
+<div id="model-kv01" class="modal-export-excel">
+	<div class="modal-content">
+	<div class="modal-header">
+		<span class="close">&times;</span>
+		<h2>Export KV01</h2>
+	</div>
 	
-	<div class="floating-box" onClick='openModalKV01()'>EXPORT KV01</div>
-	<div class="floating-box" onClick='openModalISI()'>EXPORT ISI</div>
-	<div class="floating-box" onClick='openModalBomon010203()'>EXPORT Bo mon 01-02-03</div>
-	<div class="floating-box" onClick='openModalKV04()'>EXPORT KV04</div>
-	
-	
-	<div id="model-kv01" class="modal-export-excel">
-	  <div class="modal-content">
-	    <div class="modal-header">
-	      <span class="close">&times;</span>
-	      <h2>Export KV01</h2>
-	    </div>
-	    
-	    <div class="modal-body">
-	     
-	       <form action="<@ofbizUrl>export-excel-kv01</@ofbizUrl>" method="post">
+	<div class="modal-body">
+		
 	         <select id="reportyear-kv01" name="reportyear-kv01" width="50px"></select><br>
 			 <select id="facultyId-kv01" name="facultyId-kv01" width="100px">
 			 </select>
@@ -367,6 +466,78 @@
 			</form>
 	    </div>
 	  </div>
+	</div>  -->
+
+	<@Loader handleToggle="loader">
+		<@IconSpinner/>
+	</@Loader>
+
+	<div class="card" onclick="openModalKV01()">
+		<div class="card-image">
+		<img src="/resource/bkeuniv/image/Infor.png">
+		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>
+		</div>
+		<div class="card-content" style="padding: 24px 10px 24px 10px;">
+			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+				EXPORT KV01
+			</span>
+		</div>
+	</div>
+
+	<div class="card" onClick="openModalISI()">
+		<div class="card-image">
+		<img src="/resource/bkeuniv/image/Infor.png">
+		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>
+		</div>
+		<div class="card-content" style="padding: 24px 10px 24px 10px;">
+			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+				EXPORT ISI
+			</span>
+		</div>
+	</div>
+
+	<div class="card" onClick="openModalBomon010203()">
+		<div class="card-image">
+		<img src="/resource/bkeuniv/image/Infor.png">
+		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>
+		</div>
+		<div class="card-content" style="padding: 24px 10px 24px 10px;">
+			<span class="card-title" style="font-size: 16px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+				EXPORT Bo mon 01-02-03
+			</span>
+		</div>
+	</div>
+
+	<div class="card" onClick="openModalKV04()">
+		<div class="card-image">
+		<img src="/resource/bkeuniv/image/Infor.png">
+		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>
+		</div>
+		<div class="card-content" style="padding: 24px 10px 24px 10px;">
+			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+				EXPORT KV04
+			</span>
+		</div>
+	</div>
+
+	<div class="modal fade" style="margin-top: 5%;" id="modal-setting-export" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content" id="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Cài đặt</h4>
+				</div>
+				<div class="modal-body" id="modal-body">
+					<p>Some text in the modal.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onClick="save()">Export</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
 	</div>
 
 </div>

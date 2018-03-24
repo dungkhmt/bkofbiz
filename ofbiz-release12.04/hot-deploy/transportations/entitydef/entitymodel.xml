@@ -37,4 +37,32 @@
 			<key-map field-name="vehicleId"/>
 		</relation>
 	</entity>
+	
+	<entity entity-name="TestSumGroupBy" package-name="">
+		<field name="id" type="id-ne"></field>
+		<field name="glAccountId" type="id-vlong"></field>
+		<field name="partyId" type="id-vlong"></field>
+		<field name="drAmount" type="currency-amount"></field>
+		<field name="crAmount" type="currency-amount"></field>
+		<field name="transactionDate" type="id-vlong"></field>
+		<prim-key field="id"/>
+	</entity>
+	<entity entity-name="TestSumGroupBy1" package-name="">
+		<field name="id" type="id-ne"></field>
+		<field name="glAccountId" type="id-vlong"></field>
+		<field name="partyId" type="id-vlong"></field>
+		<field name="drAmount" type="currency-amount"></field>
+		<field name="crAmount" type="currency-amount"></field>
+		<field name="transactionDate" type="date-time"></field>
+		<prim-key field="id"/>
+	</entity>
+	
+	<view-entity entity-name="ViewTestSumGroupBy" package-name="">
+		<member-entity entity-alias="TSGB" entity-name="TestSumGroupBy"></member-entity>
+		<alias name="glAccountId" entity-alias="TSGB" group-by="true" ></alias>
+		<alias name="partyId" entity-alias="TSGB" group-by="true"></alias>
+		<alias name="drAmount" entity-alias="TSGB" function="sum"></alias>
+		<alias name="crAmount" entity-alias="TSGB" function="sum"></alias>
+		<!-- <alias name="transactionDate" entity-alias="TSGB" group-by="false"></alias> -->
+	</view-entity>
 </entitymodel>

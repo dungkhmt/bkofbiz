@@ -193,6 +193,16 @@
         <value xml:lang="vi">Nội dung</value>
     </property>
     
+    <property key="BkEunivProductType">
+        <value xml:lang="en">Product Type</value>
+        <value xml:lang="vi">Loại sản phẩm</value>
+    </property>
+    <property key="BkEunivQuantity">
+        <value xml:lang="en">Quantity</value>
+        <value xml:lang="vi">Số lượng</value>
+    </property>
+    
+
     <property key="BkEunivWorkingDays">
         <value xml:lang="en">Working days</value>
         <value xml:lang="vi">Ngày làm việc</value>

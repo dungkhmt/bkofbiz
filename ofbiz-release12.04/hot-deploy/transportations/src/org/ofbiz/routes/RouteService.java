@@ -2,7 +2,8 @@ package org.ofbiz.routes;
 
 import java.util.Locale;
 import java.util.Map;
-
+import java.util.ArrayList;
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -12,6 +13,7 @@ import org.ofbiz.service.ServiceUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.io.FileOutputStream;
@@ -35,6 +37,8 @@ import org.ofbiz.service.ServiceUtil;
 
 import java.util.List;
 import java.io.*;
+
+import javolution.util.FastList;
 
 public class RouteService {
 	public final static String module = RouteService.class.getName();
@@ -255,6 +259,104 @@ public class RouteService {
 		// Uploading the file content - End
 	}
 
+	public static Map<String, Object> getSumGenerateDataTest(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+
+		Delegator delegator = ctx.getDelegator();
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			Debug.log("getSumGenerateDataTest, START..................");
+			double t0 = System.currentTimeMillis();
+			List<GenericValue> lst = delegator.findList("ViewTestSumGroupBy"
+					,null,null,null,null,false);
+			t0 = System.currentTimeMillis() - t0;
+			Debug.log("getSumGenerateDataTest, GOT " + lst.size() + ", time = " + (t0*0.001) + " (s)");
+			retSucc.put("result", lst);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> generateDataTest(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+
+		Delegator delegator = ctx.getDelegator();
+		String size = (String)context.get("size");
+		int MAX = 100000;
+		try{
+			MAX = Integer.valueOf(size);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		Debug.log("GENERATE, MAX = " + MAX);
+		
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		List<String> glAccounts = new ArrayList<String>();
+		for(int i = 0; i < 500; i++){
+			glAccounts.add(i + "");
+		}
+		List<String> partyIds = new ArrayList<String>();
+		for(int i = 0; i < 100; i++){
+			partyIds.add(i + "");
+		}
+		
+		java.util.Random R = new java.util.Random();
+		int count = 0;
+		double t0 = System.currentTimeMillis();
+		try{
+			
+			for(int i = 0; i < MAX; i++){
+				int idx = R.nextInt(glAccounts.size());
+				String glAccountId = glAccounts.get(idx);
+				idx = R.nextInt(partyIds.size());
+				String partyId = partyIds.get(idx);
+				
+				String id = delegator.getNextSeqId("TestSumGroupBy1");
+				int drAmount = R.nextInt(1000000) + 100000;
+				int crAmount = R.nextInt(1000000) + 100000;
+				BigDecimal bd = new BigDecimal(drAmount);
+				BigDecimal bc = new BigDecimal(crAmount);
+				//String transactionDate = "dd-mm-yyyy";
+				java.sql.Timestamp transactionDate =  new java.sql.Timestamp(System.currentTimeMillis());
+				int d = R.nextInt(100) + 0;
+				transactionDate.setDate(transactionDate.getDate() + d);
+				GenericValue gv = delegator.makeValue("TestSumGroupBy1");
+				gv.put("id", id);
+				gv.put("glAccountId", glAccountId);
+				gv.put("partyId", partyId);
+				gv.put("drAmount", bd);
+				gv.put("crAmount", bc);
+				gv.put("transactionDate", transactionDate);
+				delegator.create(gv);
+				count++;
+				Debug.log("GENERATE item " + i + ", finished");
+			}
+			t0 = System.currentTimeMillis() - t0;
+			
+					
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		retSucc.put("result", count + "");
+		Debug.log("GENERATE FINISHED, count = " + count + ", time = " + (t0*0.001) + " (s)");
+		return retSucc;
+	}
+	
+	public static Map<String, Object> computeSum(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+
+		Delegator delegator = ctx.getDelegator();
+		String arr = (String)context.get("array");
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Debug.log("API, arr = " + arr);
+		String s = arr + arr + arr;
+		retSucc.put("sum", s);
+		return retSucc;
+	}
+	
 	public static Map<String, Object> createARoute(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 
