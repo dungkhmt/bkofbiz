@@ -228,9 +228,54 @@
         <value xml:lang="vi">Quá trình công tác</value>
     </property>
     
+    <property key="BkEunivTime">
+    	<value xml:lang="en">Time(from ... to ...)</value>
+    	<value xml:lang="vi">Thời gian (từ năm... đến năm...)</value>
+    </property>
+    
+    <property key="BkEunivPositionBussiness">
+    	<value xml:lang="en">Position Bussiness</value>
+    	<value xml:lang="vi">Vị trí công tác</value>
+    </property>
+    
+    <property key="BkEunivDomain">
+    	<value xml:lang="en">Domain</value>
+    	<value xml:lang="vi">Lĩnh vực chuyên môn</value>
+    </property>
+    
+    <property key="BkEunivCompany">
+    	<value xml:lang="en">Company</value>
+    	<value xml:lang="vi">Cơ quan công tác</value>
+    </property>
+    
     <property key="BkEunivPublications">
         <value xml:lang="en">Publications</value>
-        <value xml:lang="vi">Công trình khoa học công bố</value>
+        <value xml:lang="vi">Công trình khoa học và công nghệ chủ yếu được công bố, sách chuyên khảo</value>
+    </property>
+    
+    <property key="BkEunivPublic">
+    	<value xml:lang="en">List the research in the last 5 years</value>
+    	<value xml:lang="vi">Liệt kê công trình tiêu biểu đã công bố trong 5 năm gần nhất</value>
+    </property>
+    
+    <property key="BkEunivConstructionName">
+    	<value xml:lang="en">Construction Name</value>
+    	<value xml:lang="vi">Tên công trình (bài báo, công trình,...)</value>
+    </property>
+    
+    <property key="BkEunivPublic">
+    	<value xml:lang="en">Public place</value>
+    	<value xml:lang="vi">Nơi công bố (tên tạp chí đã đăng/nhà xuất bản)</value>
+    </property>
+    
+    <property key="BkEunivYear">
+    	<value xml:lang="en">Year</value>
+    	<value xml:lang="vi">Năm công bố</value>
+    </property>
+    
+    <property key="BkEunivAuthor">
+    	<value xml:lang="en">Be the author or co-author of the project</value>
+    	<value xml:lang="vi">Là tác giả hoặc đồng là tác giả công trình</value>
     </property>
     
     <property key="BkEunivRecent5YearProjects">
@@ -238,14 +283,79 @@
         <value xml:lang="vi">Đề tài, dự án, nhiệm vụ KHCN đã chủ trì 5 năm gần đây</value>
     </property>
     
+    <property key="BkEunivTopic1">
+    	<value xml:lang="en">The topics have been presided over</value>
+    	<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH-CN đã chủ trì</value>
+    </property>
+    
+    <property key="BkEunivTime">
+    	<value xml:lang="en">Time (from ... to ...)</value>
+    	<value xml:lang="vi">Thời gian (bắt đầu - kết thúc)</value>
+    </property>
+    
+    <property key="BkEunivProgram">
+    	<value xml:lang="en">Program</value>
+    	<value xml:lang="vi">Thuộc chương trình (nếu có)</value>
+    </property>
+    
+    <property key="BkEunivStatus1">
+    	<value xml:lang="en">Status</value>
+    	<value xml:lang="vi">Tình trạng (đã nghiệm thu - xếp loại, chưa nghiệm thu)</value>
+    </property>
+    
     <property key="BkEunivAward">
         <value xml:lang="en">Award</value>
         <value xml:lang="vi">Giải thưởng KHCN</value>
     </property>
     
-    <property key="BkEunivScientificService">
+    <property key="BkEunivModelAndContent">
+    	<value xml:lang="en">Model And Content</value>
+    	<value xml:lang="vi">Hình thức và nội dung giải thưởng</value>
+    </property>
+    
+    <property key="BkEunivYearOfAward">
+    	<value xml:lang="en">Year Of Award</value>
+    	<value xml:lang="vi">Năm tặng thưởng</value>
+    </property>
+    
+    <property key="BkEunivScientificService1">
         <value xml:lang="en">Scientific service</value>
-        <value xml:lang="vi">Kinh nghiệm quản lý, đánh giá KHCN</value>
+        <value xml:lang="vi">Kinh nghiệm quản lý, đánh giá KHCN(số lượng các Hội đồng tư vấn, xét duyệt, nghiệm thu,</value>
+    </property>
+    
+    <property key="BkEunivScientificService2">
+    	<value xml:lang="en">in 5 years recently</value>
+    	<value xml:lang="vi"> đánh giá các chương trình, đề tài, dự án KH-CN cấp quốc gia hoặc tương đương trong và ngoài nước đã tham gia trong 5 năm gần đây)</value>
+    </property>
+    
+    <property key="BkEunivModelCouncil">
+    	<value xml:lang="en">Model Council</value>
+    	<value xml:lang="vi">Hình thức hội đồng</value>
+    </property>
+    
+    <property key="BkEunivTime">
+    	<value xml:lang="en">Times</value>
+    	<value xml:lang="vi">Số lần</value>
+    </property>
+    
+    <property key="BkEunivNumberOfConstruction">
+    	<value xml:lang="en">Number of projects applied</value>
+    	<value xml:lang="vi">Số lượng công trình, kết quả nghiên cứu được áp dụng trong thực tiễn</value>
+    </property>
+    
+    <property key="BkEunivNameOfConstruction">
+    	<value xml:lang="en">Name Of Construction</value>
+    	<value xml:lang="vi">Tên công trình</value>
+    </property>
+    
+    <property key="BkEunivModel">
+    	<value xml:lang="en">Model</value>
+    	<value xml:lang="vi">Hình thức quy mô, địa chỉ áp dụng</value>
+    </property>
+    
+    <property key="BkEunivTimeConstruction">
+    	<value xml:lang="en">Time</value>
+    	<value xml:lang="vi">Thời gian</value>
     </property>
     
     <property key="BkEunivProjectsApplied">
@@ -253,19 +363,79 @@
         <value xml:lang="vi">Đề tài, dự án có ứng dụng trong thực tế</value>
     </property>
     
-    <property key="BkEunivPatent">
-        <value xml:lang="en">Patent</value>
-        <value xml:lang="vi">Sáng chế</value>
+    <property key="BkEunivPatent1">
+        <value xml:lang="en">number of patent/ utility solution/ plant variety protection certificate</value>
+        <value xml:lang="vi">Số lượng văn bằng độc quyền sáng chế/ giải pháp hữu ích/ văn bằng bảo hộ</value>
+    </property>
+    
+    <property key="BkEunivPatent2">
+    	<value xml:lang="en">integrated circuit layout design has been issued</value>
+    	<value xml:lang="vi"> giống cây trồng/ thiết kế bố trí mạch tích hợp đã được cấp</value>
+    </property>
+    
+    <property key="BkEunivNameAndContent">
+    	<value xml:lang="en">Name And Content</value>
+    	<value xml:lang="vi">Tên và nội dung văn bằng</value>
+    </property>
+    
+    <property key="BkEunivYearDegree">
+    	<value xml:lang="en">Year Degree</value>
+    	<value xml:lang="vi">Năm cấp văn bằng</value>
     </property>
     
     <property key="BkEunivPHDDefensed">
         <value xml:lang="en">PHD Defensed</value>
-        <value xml:lang="vi">Nghiên cứu sinh đã bảo vệ thành công</value>
+        <value xml:lang="vi">Nghiên cứu sinh đã hướng dẫn bảo vệ thành công (nếu có)</value>
+    </property>
+    
+    <property key="BkEunivFirstAndLastName">
+    	<value xml:lang="en">First And Last Name </value>
+    	<value xml:lang="vi">Họ và tên</value>
+    </property>
+    
+    <property key="BkEunivGuide">
+    	<value xml:lang="en">Guide</value>
+    	<value xml:lang="vi">Hướng dẫn hoặc đồng hướng dẫn</value>
+    </property>
+    
+    <property key="BkEunivUnit">
+    	<value xml:lang="en">Unit</value>
+    	<value xml:lang="vi">Đơn vị công tác</value>
+    </property>
+    
+    <property key="BkEunivYearSuccess">
+    	<value xml:lang="en">Year Success</value>
+    	<value xml:lang="vi">Năm bảo vệ thành công</value>
     </property>
     
     <property key="BkEunivGraduateStudents">
         <value xml:lang="en">Graduate students</value>
         <value xml:lang="vi">Nghiên cứu sinh, học viên cao học đang hướng dẫn</value>
+    </property>
+    
+    <property key="BkEunivExperienceName">
+    	<value xml:lang="en">Experience Name</value>
+    	<value xml:lang="vi">Họ và tên học viên/NCS</value>
+    </property>
+    
+    <property key="BkEunivMainGuide">
+    	<value xml:lang="en">Main Guide</value>
+    	<value xml:lang="vi">Hướng dẫn chính/ Hướng dẫn phụ</value>
+    </property>
+    
+    <property key="BkEunivNameTopic">
+    	<value xml:lang="en">Name Topic</value>
+    	<value xml:lang="vi">Tên đề tài</value>
+    </property>
+    
+    <property key="BkEunivSpecialize">
+    	<value xml:lang="en">Specialize</value>
+    	<value xml:lang="vi">Chuyên ngành/ mã chuyên ngành</value>
+    </property>
+    
+    <property key="BkEunivTimeEducation">
+    	<value xml:lang="en">Time Education</value>
+    	<value xml:lang="vi">Thời gian đào tạo</value>
     </property>
     
     <property key="BkEunivBasicInformation">
@@ -288,6 +458,12 @@
         <value xml:lang="vi">Cơ quan công tác</value>
     </property>
     
+    <property key="BkEunivCompanyName">
+    	<value xml:lang="en">Company Name</value>
+    	<value xml:lang="vi">Tên cơ quan</value>
+    </property>
+    
+   
     <property key="BkEunivForeignLanguageSuggest">
         <value xml:lang="en">Foreign language</value>
         <value xml:lang="vi">Trình độ ngoại ngữ (mỗi mục đề nghị ghi rõ mục đó: Tốt/Khá/TB)</value>
@@ -319,6 +495,40 @@
         <value xml:lang="vi">Ngày/tháng/năm tốt nghiệp (TS, Thạc sĩ, kỹ sư, cử nhân,...)</value>
     </property>    
     
+    <property key="BkEunivInformation1">
+    	<value xml:lang="en">Other Information</value>
+    	<value xml:lang="vi">Thông tin khác</value>
+    </property>
+    
+    <property key="BkEunivInformation2">
+    	<value xml:lang="en">Field of study in recent 5 year</value>
+    	<value xml:lang="vi">Lĩnh vực nghiên cứu trong 5 năm gần đây</value>
+    </property>
+    
+    <property key="BkEunivInformation3">
+    	<value xml:lang="en">Research directions for students</value>
+    	<value xml:lang="vi">Các hướng nghiên cứu cho NCS và HV cao học</value>
+    </property>
+    
+    <property key="BkEunivInformation4">
+    	<value xml:lang="en">I declare that all the aboves is correct</value>
+    	<value xml:lang="vi">Tôi xin cam đoan những thông tin được ghi ở trên là hoàn toàn chính xác.</value>
+    </property>
+    
+     <property key="BkEunivInformation5">
+    	<value xml:lang="en">Hanoi, date ... month ... year ...</value>
+    	<value xml:lang="vi">Hà Nội, ngày ... tháng ... năm ...</value>
+    </property>
+    
+    <property key="BkEunivInformation6">
+    	<value xml:lang="en">Signature</value>
+    	<value xml:lang="vi">Người khai</value>
+    </property>
+    
+    <property key="BkEunivInformation7">
+    	<value xml:lang="en">(Signature full name)</value>
+    	<value xml:lang="vi">(Ký và ghi rõ họ tên)</value>
+    </property>
     
 <!--     
     <property key="BkEunivBudget">
