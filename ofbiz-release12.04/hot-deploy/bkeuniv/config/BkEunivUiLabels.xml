@@ -128,6 +128,20 @@
         <value xml:lang="vi">Quản lý</value>
     </property>
     
+    <property key="BkEunivOpenProjectCallForSubmission">
+        <value xml:lang="en">Open Project Call for Submission</value>
+        <value xml:lang="vi">Mở đợt gọi đề tài cho phép đăng ký thuyết minh</value>
+    </property>
+    <property key="BkEunivCloseProjectCall">
+        <value xml:lang="en">Close Project Call</value>
+        <value xml:lang="vi">Đóng đợt gọi đề tài không cho phép đăng ký thuyết minh</value>
+    </property>
+    <property key="BkEunivOpenProjectCallForRevision">
+        <value xml:lang="en">Open Project Call for Revision</value>
+        <value xml:lang="vi">Mở đợt gọi đề tài để chỉnh sửa thuyết minh</value>
+    </property>
+    
+
     <property key="BkEunivResearchSpeciality">
         <value xml:lang="en">Research speciality</value>
         <value xml:lang="vi">Chuyên ngành nghiên cứu</value>

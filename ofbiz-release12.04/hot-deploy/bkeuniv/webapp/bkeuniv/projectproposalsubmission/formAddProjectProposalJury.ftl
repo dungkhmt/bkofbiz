@@ -13,7 +13,7 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
 <style>
-#form-add-workpackage-project {
+#form-add-project-call {
     margin-top: 60px;
     margin-left: 100px;
 }
@@ -22,9 +22,9 @@
 
 <div id="form-add-project-call">
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-			jury name
+			Ten Hoi Dong
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="juryName" style="width: 100%" type="text" width="1000" value=""/>
@@ -32,7 +32,7 @@
 	
 </div>
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
 		dot goi de tai
 	</div>
@@ -46,7 +46,7 @@
 	</div>
 </div>
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
 		Khoa/vien
 	</div>

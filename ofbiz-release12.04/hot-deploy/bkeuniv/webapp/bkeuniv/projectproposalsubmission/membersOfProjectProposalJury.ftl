@@ -16,6 +16,7 @@
 #form-style {
     margin-top: 20px;
     margin-left: 20px;
+    overflow: scroll;
 }
 </style>
 
@@ -78,7 +79,13 @@
 			<tr>
 				<td>${m.staffName}</td>
 				<td>${m.juryRoleTypeName}</td>
-				<td>${m.juryName}</td>
+				<!--
+				<#if m.juryName?exists>
+					<td>${m.juryName}</td>
+				<#else>
+					<td></td>
+				</#if>
+				-->
 			</tr>
 		</#list>
 	</table>
@@ -169,8 +176,10 @@ function addMemberProjectProposalJury(){
 			},
 			success: function(rs){
 				var tbl = document.getElementById("tbl-jury-members");
-				$('#tbl-jury-members tr:last').after('<tr><td>' + staffId + '</td><td>' + juryRoleTypeId + 
-				'</td><td>' + juryId + '</td></tr>');
+				$('#tbl-jury-members tr:last').after('<tr><td>' + rs.staffName + '</td><td>' + rs.juryRoleTypeName + 
+				'</td>'
+				 //+ '<td>' + juryId + '</td></tr>'
+				 );
 			}
 		})
 		

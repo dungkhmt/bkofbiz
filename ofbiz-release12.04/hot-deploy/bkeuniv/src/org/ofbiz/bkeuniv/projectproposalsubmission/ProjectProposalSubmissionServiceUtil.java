@@ -32,6 +32,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String STATUS_PROJECT_SUBMITTED = "SUBMITTED";
 	public static String STATUS_PROJECT_CREATED = "CREATED";
 	
+	public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
 	
 	
 	public static GenericValue createAProjectProposalSubmission(Delegator delegator, String projectProposalName,

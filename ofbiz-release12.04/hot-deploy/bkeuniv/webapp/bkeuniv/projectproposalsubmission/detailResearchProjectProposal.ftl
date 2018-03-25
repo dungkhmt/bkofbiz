@@ -28,7 +28,12 @@
 			</#if>
 			-->
 			<tr>
-				<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
+				<#if resultProjectProposal.evaluation == "YES">
+					<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
+				<#else>
+					<td></td>
+				</#if>
+				
 			</tr>
 			<tr>
 				<td><a href = "/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Download thuyet minh</a></td>
