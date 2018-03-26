@@ -32,8 +32,8 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten de tai</th>
-				<th>Danh gia</th>
+				<th>${uiLabel.ProjectProposalName}</th>
+				<th>${uiLabel.Evaluation}</th>
 			</tr>
 		</thead>
 	<tbody>
@@ -48,7 +48,7 @@
 			</#if>
 			
 			<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
-			reviewerResearchProposalId=${p.reviewerResearchProposalId}">Danh gia</a></td>
+			reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.Evaluation}</a></td>
 		</tr>
 	</#list>
 	</tbody>

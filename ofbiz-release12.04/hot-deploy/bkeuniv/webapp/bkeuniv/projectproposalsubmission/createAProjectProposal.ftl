@@ -4,12 +4,14 @@
 #form-add {
     margin-top: 20px;
     margin-left: 20px;
+    width: 100%
+    overflow: scroll
 }
 </style>
 
 <div id="form-add">
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
 			
 	</div>
@@ -19,9 +21,9 @@
 	
 </div>
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-			Ten de tai
+			${uiLabel.ProjectProposalName}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="projectProposalName" style="width: 100%" type="text" width="1000" value=""/>
@@ -29,9 +31,9 @@
 	
 </div>
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+<div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Khoa/vien
+		${uiLabel.Faculty}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="facultyId" style="width: 100%" type="text" width="1000">

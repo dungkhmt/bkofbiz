@@ -16,6 +16,8 @@
 #form-style {
     margin-top: 20px;
     margin-left: 20px;
+    width: 100%;
+    overflow: scroll;
 }
 </style>
 
@@ -24,7 +26,7 @@
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Thanh vien
+		${uiLabel.JuryMembers}
 	</div>
 	<div style="display: inline-block;width: 100%;">
 		<select id="staffId" style="width: 100%" type="text" width="1000" onchange="changeStaff()">

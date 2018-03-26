@@ -14,20 +14,20 @@
 </style>
 
 <div>
-Trang thai dot goi de tai: ${pResultProjectProposal.projectCallStatusName}
+${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 <table>
 	<tr>
 		<td>
 		<table>
 			<#if pResultProjectProposal.projectCallStatusId == "OPEN" || pResultProjectProposal.projectCallStatusId == "OPEN_REVISED">
 			<tr>
-				<td><a href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">Thanh vien de tai</a></td>
-				<td><a href = "/bkeuniv/control/workpackages-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">Noi dung cong viec</a></td>
-				<td><a href = "/bkeuniv/control/products-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">San pham de tai</a></td>
+				<td><a href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.MembersOfProject}</a></td>
+				<td><a href = "/bkeuniv/control/workpackages-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.ListWorkPackages}</a></td>
+				<td><a href = "/bkeuniv/control/products-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.ListProducts}</a></td>
 				<!--
 				<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
 				-->
-				<td><@buttonStore text="Upload thuyet minh" action="uploadFileProposal()"/></td>
+				<td><@buttonStore text="${uiLabel.UploadProposal}" action="uploadFileProposal()"/></td>
 			</tr>
 			</#if>
 			

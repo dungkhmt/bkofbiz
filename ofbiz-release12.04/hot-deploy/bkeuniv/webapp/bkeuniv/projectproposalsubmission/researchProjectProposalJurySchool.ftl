@@ -47,10 +47,10 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten dot goi de tai</th>
-				<th>Loai hinh de tai</th>
-				<th>Nam</th>
-				<th>Trang thai</th>
+				<th>${uiLabel.ProjectCallName}</th>
+				<th>${uiLabel.Category}</th>
+				<th>${uiLabel.Year}</th>
+				<th>${uiLabel.Status}</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -81,7 +81,7 @@
 			<#if pc.juryId?exists>
 				<td><a href="/bkeuniv/control/detail-jury-proposal?juryId=${pc.juryId}">${pc.juryName}</a></td>
 			<#else>
-				<td><a href="/bkeuniv/control/form-add-project-proposal-jury?projectCallId=${pc.projectCallId}">Tao moi HD</a></td>
+				<td><a href="/bkeuniv/control/form-add-project-proposal-jury?projectCallId=${pc.projectCallId}">${uiLabel.CreateJury}</a></td>
 			</#if>
 			
 		</tr>

@@ -17,6 +17,7 @@
     margin-top: 20px;
     margin-left: 20px;
     overflow: scroll;
+    width: 100%
 }
 </style>
 
@@ -25,7 +26,7 @@
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		khoa/vien
+		${uiLabel.Faculty}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="facultyId" style="width: 100%" type="text" width="1000" onchange="changeFaculty()">
@@ -39,7 +40,7 @@
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Bo mon
+		${uiLabel.Department}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="departmentId" style="width: 100%" type="text" width="1000" onchange="changeDepartment()">
@@ -49,7 +50,7 @@
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Thanh vien
+		${uiLabel.FullName}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="staffId" style="width: 100%" type="text" width="1000">
@@ -59,7 +60,7 @@
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Vai tro
+		${uiLabel.Role}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="juryRoleTypeId" style="width: 100%" type="text" width="1000">

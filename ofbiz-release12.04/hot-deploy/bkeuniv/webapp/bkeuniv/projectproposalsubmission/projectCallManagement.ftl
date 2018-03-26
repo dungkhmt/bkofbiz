@@ -20,21 +20,21 @@
 	
 	<#assign columns=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"data": "projectCallName"
 		},
 		
 		{
-			"name": "Loai hinh de tai",
+			"name": "${uiLabel.Category}",
 			"data": "projectCategoryName"
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"data": "year"
 		}
 		,
 		{
-			"name": "Trang thai",
+			"name": "${uiLabel.Status}",
 			"data": "statusName"
 		}
 	] />

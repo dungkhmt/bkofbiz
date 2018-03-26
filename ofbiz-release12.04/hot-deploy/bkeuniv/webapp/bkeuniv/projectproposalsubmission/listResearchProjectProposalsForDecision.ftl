@@ -25,6 +25,7 @@
     margin-top: 20px;
     margin-left: 20px;
     overflow: scroll;
+    width: 100%;
 }
 </style>
 
@@ -49,13 +50,13 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten de tai</th>
-				<th>Chu nhiem</th>
-				<th>Dot goi de tai</th>
-				<th>Khoa/vien</th>
-				<th>Tong diem</th>
-				<th>So thanh vien danh gia</th>
-				<th>Diem trung binh</th>
+				<th>${uiLabel.ProjectProposalName}</th>
+				<th>${uiLabel.ProjectDirector}</th>
+				<th>${uiLabel.ProjectCallName}</th>
+				<th>${uiLabel.Faculty}</th>
+				<th>${uiLabel.TotalEvaluation}</th>
+				<th>${uiLabel.NumberReviewers}</th>
+				<th>${uiLabel.AverageEvaluation}</th>
 			</tr>
 		</thead>
 	<tbody>

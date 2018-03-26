@@ -3,6 +3,8 @@
 #form-style {
     margin-top: 20px;
     margin-left: 20px;
+    overflow: scroll;
+    width: 100%
 }
 </style>
 
@@ -10,11 +12,11 @@
 
 <table>
 	<tr>
-		<td><a href = "/bkeuniv/control/research-project-jury-members?juryId=${resultJury.projectproposaljury.juryId}">Thanh vien HD phan bien</a></td>
+		<td><a href = "/bkeuniv/control/research-project-jury-members?juryId=${resultJury.projectproposaljury.juryId}">${uiLabel.JuryMembers}</a></td>
 	</tr>
 
 	<tr>
-		<td><a href = "/bkeuniv/control/research-project-jury-assgin-reviewer?juryId=${resultJury.projectproposaljury.juryId}">Phan cong phan bien</a></td>
+		<td><a href = "/bkeuniv/control/research-project-jury-assgin-reviewer?juryId=${resultJury.projectproposaljury.juryId}">${uiLabel.AssignEvaluation}</a></td>
 	</tr>
 	
 	
@@ -24,9 +26,9 @@
 	<tr>
 		<table>
 			<tr>
-				<td>Thanh vien</td>
-				<td>Vai tro</td>
-				<td>Danh sach de tai duoc phan cong phan bien</td>
+				<td>${uiLabel.FullName}</td>
+				<td>${uiLabel.Role}</td>
+				<td>${uiLabel.ListAssignedProposalForEvaluation}</td>
 			</tr>
 			<#list resultMembers.members as m>
 				<tr>
