@@ -1,6 +1,9 @@
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
-
+<script src="/resource/bkeuniv/js/lib/dropify.min.js"></script>
+<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dropify.min.css">
+<link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
+<script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
 <style>
 	.info-table{
 		width: 100%;
@@ -9,6 +12,10 @@
 	}
 	.info-box{
 		padding:15px
+	}
+	.modal-dialog {
+		width: 60%!important;
+		margin-left: 20%!important;
 	}
 </style>
 
@@ -119,37 +126,3 @@
 		</td>
 	</tr>
 </table>
-<input class="input" id="upload" style="display:none" type="file" onChange="uploadFile(event)">
-</div>
-
-<script>
-	 
-	function uploadFileProposal(){
-		//alert('upload file thuyet minh');
-		document.getElementById("upload").click();
-	}
-	function uploadFile(e){
-		var file = e.target.files || e.dataTransfer.files;
-		
-		var reader = new FileReader();
-		if(e.target.files.length !== 0) {
-			test = e
-			var formData = new FormData();
-			formData.append("researchProjectProposalId", ${researchProjectProposalId});
-			formData.append("file", e.target.files[0]);
-			
-			$.ajax({
-					url: "/bkeuniv/control/upload-file-research-project-proposal",
-					type: 'POST',
-					method: 'POST',
-					contentType: false,
-    				processData: false,
-					data: formData,
-					success:function(rs){
-						console.log(rs);
-					}
-				})
-		}
-	}
-	
-</script>

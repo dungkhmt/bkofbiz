@@ -1,6 +1,7 @@
 
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/loader.ftl"/>
 
 <style>
 	.info-table{
@@ -27,7 +28,7 @@ Trang thai dot goi de tai: ${pResultProjectProposal.projectCallStatusName}
 				<!--
 				<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
 				-->
-				<td><@buttonStore text="Upload thuyet minh" action="uploadFileProposal()"/></td>
+				<td><@buttonStore text="Upload thuyet minh" action="uploadFileProposal"/></td>
 			</tr>
 			</#if>
 			
@@ -36,24 +37,57 @@ Trang thai dot goi de tai: ${pResultProjectProposal.projectCallStatusName}
 		</td>
 	</tr>
 </table>
-<input class="input" id="upload" style="display:none" type="file" onChange="uploadFile(event)">
+
+
+<div class="modal fade" style="margin-top: 5%;" id="modal-upload" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content" id="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Cài đặt</h4>
+			</div>
+			<div class="modal-body" id="modal-body">
+				<input type="file" id="input-upload-file" class="dropify" accept=".doc, .docx, .pdf, .csv, .xls, .xlsx" data-default-file="" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onClick="uploadFile()">Upload</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
 </div>
 
+<@Loader handleToggle="loading" backgroundColor="rgba(0, 0, 0, 0.6)">
+	<div style="margin-left: 17%; margin-right: 17%;">
+		<div class="progress">
+			<div class="determinate" id="liner-upload" style="width: 0%"></div>
+		</div>
+	</div>
+	<div style="font-size: 20px; text-align: center; color: #fffffff2; font-weight: 400;" id="infor-liner-upload">
+		Đang tải ...
+	</div>
+</@Loader>
+
 <script>
+	$(document).ready(function(){
+		$('#input-upload-file').dropify();
+	})
 	 
 	function uploadFileProposal(){
 		//alert('upload file thuyet minh');
-		document.getElementById("upload").click();
+		<#--  document.getElementById("upload").click();  -->
+		$("#modal-upload").modal("show");
 	}
-	function uploadFile(e){
-		var file = e.target.files || e.dataTransfer.files;
+	function uploadFile(){
+		var files = document.getElementById("input-upload-file").files;
 		
 		var reader = new FileReader();
-		if(e.target.files.length !== 0) {
-			test = e
+		if(files.length !== 0) {
 			var formData = new FormData();
 			formData.append("researchProjectProposalId", ${researchProjectProposalId});
-			formData.append("file", e.target.files[0]);
+			formData.append("file", files[0]);
 			
 			$.ajax({
 					url: "/bkeuniv/control/upload-file-research-project-proposal",
@@ -62,11 +96,46 @@ Trang thai dot goi de tai: ${pResultProjectProposal.projectCallStatusName}
 					contentType: false,
     				processData: false,
 					data: formData,
+					xhr: function() {
+							var myXhr = $.ajaxSettings.xhr();
+							if(myXhr.upload){
+								loading.open();
+								myXhr.upload.addEventListener('progress',progress, false);
+							}
+							console.log(myXhr)
+							return myXhr;
+					},
 					success:function(rs){
-						console.log(rs);
+						alertify.success("Tải lên thành công");
+						setTimeout(function(){
+							$("#modal-upload").modal("hide");
+						}, 300);
 					}
 				})
 		}
+	}
+
+
+	function progress(e){
+
+		if(e.lengthComputable){
+			var max = e.total;
+			var current = e.loaded;
+
+			var Percentage = Math.floor((current * 100)/max);
+
+			if(Percentage >= 100)
+			{
+				document.getElementById("liner-upload").style.width="100%";
+				document.getElementById("infor-liner-upload").innerHTML="Tải lên thành công";
+				setTimeout(function(){
+					loading.close();
+				}, 300);
+			} else {
+				document.getElementById("liner-upload").style.width=Percentage+"%";
+				document.getElementById("infor-liner-upload").innerHTML="Tải lên " + Percentage+"%";
+			}
+		}  
 	}
 	
 </script>
