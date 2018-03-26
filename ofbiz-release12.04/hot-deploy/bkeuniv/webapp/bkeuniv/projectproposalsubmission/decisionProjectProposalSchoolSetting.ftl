@@ -24,13 +24,15 @@
 #form-view {
     margin-top: 20px;
     margin-left: 20px;
+    width:100%;
+    overflow: scroll;
 }
 </style>
 
 <div id="form-view">
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
-Chon khoa/vien
+${uiLabel.Faculty}
 <#assign LF = listFaculties.faculties?size>
 <select id="faculty" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	
@@ -49,7 +51,7 @@ Chon khoa/vien
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
-Chon dot goi de tai
+${uiLabel.ProjectCallName}
 <select id="projectCallId" style="width: 100%" type="text" width="1000" onChange='changeProjectCall()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list resultProjectCalls.projectCalls as pc>
@@ -60,7 +62,7 @@ Chon dot goi de tai
 		
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
-Trang thai
+${uiLabel.Status}
 <select id="projectProposalStatusId" style="width: 100%" type="text" width="1000">
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list resultProjectProposalStatus.projectProposalStatus as pps>
@@ -70,7 +72,7 @@ Trang thai
 </div>
 
 
-<@buttonView text="Xem danh sach" action="listProposals"/>
+<@buttonView text="${uiLabel.ViewList}" action="listProposals"/>
 
 
 </div>

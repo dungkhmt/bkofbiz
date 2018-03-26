@@ -20,21 +20,21 @@
 	
 	<#assign columns=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"data": "projectCallName"
 		},
 		
 		{
-			"name": "Loai hinh de tai",
+			"name": "${uiLabel.Category}",
 			"data": "projectCategoryName"
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"data": "year"
 		}
 		,
 		{
-			"name": "Trang thai",
+			"name": "${uiLabel.Status}",
 			"data": "statusName"
 		}
 	] />
@@ -124,8 +124,9 @@
 			menu: [
 			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
-			  {title: 'Dong dot goi de tai', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
-			  {title: 'Mo dot goi de tai cho dang ky moi', cmd: "openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"}
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForSubmission}', cmd: "openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivCloseProjectCall}', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"}
 			],
 			select: function(event, ui) {
 				var el = ui.target.parent();
@@ -142,6 +143,9 @@
 						break;
 					case "openprojectcallforsubmission":
 						openProjectCallForSubmission(data);
+						break;	
+					case "openprojectcallforrevision":
+						openProjectCallForRevision(data);
 						break;	
 					
 					}		
@@ -187,6 +191,29 @@
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
 					url: "/bkeuniv/control/open-project-call-for-submission",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
+	function openProjectCallForRevision(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan mo lai dot goi de tai', "Ban co muon thuc su muon mo khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/open-project-call-for-revision",
 					type: 'POST',
 					data: {
 						"projectCallId": data.projectCallId

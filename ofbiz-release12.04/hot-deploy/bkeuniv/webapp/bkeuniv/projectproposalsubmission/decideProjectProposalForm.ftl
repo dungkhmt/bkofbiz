@@ -17,9 +17,9 @@
 		<td>
 		<table>
 			<tr>
-				<td><@buttonStore text="Phe duyet" action="approve()"/></td>
-				<td><@buttonStore text="Khong phe duyet" action="notApprove()"/></td>
-				<td><@buttonStore text="Yeu cau chinh sua" action="revise()"/></td>
+				<td><@buttonStore text="${uiLabel.Approve}" action="approve()"/></td>
+				<td><@buttonStore text="${uiLabel.Reject}" action="notApprove()"/></td>
+				<td><@buttonStore text="${uiLabel.RequirementRevise}" action="revise()"/></td>
 			</tr>
 		</table>
 		

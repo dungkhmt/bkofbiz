@@ -24,6 +24,8 @@
 #form-add {
     margin-top: 20px;
     margin-left: 20px;
+    width: 100%;
+    overflow: scroll;
 }
 </style>
 
@@ -48,10 +50,10 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten de tai</th>
-				<th>Chu nhiem</th>
-				<th>Dot goi de tai</th>
-				<th>Khoa/vien</th>
+				<th>${uiLabel.ProjectProposalName}</th>
+				<th>${uiLabel.ProjectDirector}</th>
+				<th>${uiLabel.ProjectCallName}</th>
+				<th>${uiLabel.Faculty}</th>
 			</tr>
 		</thead>
 	<tbody>

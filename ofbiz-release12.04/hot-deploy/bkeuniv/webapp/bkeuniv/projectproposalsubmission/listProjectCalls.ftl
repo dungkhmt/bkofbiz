@@ -48,10 +48,10 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten dot goi de tai</th>
-				<th>Loai hinh de tai</th>
-				<th>Nam</th>
-				<th>Trang thai</th>
+				<th>${uiLabel.ProjectCallName}</th>
+				<th>${uiLabel.ProjectCategoryName}</th>
+				<th>${uiLabel.Year}</th>
+				<th>${uiLabel.Status}</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -80,7 +80,7 @@
 				<td></td>
 			</#if>
 			<#if pc.statusId == "OPEN">
-				<td><a href="/bkeuniv/control/create-a-proposal?projectCallId=${pc.projectCallId}">Nop thuyet minh</a></td>
+				<td><a href="/bkeuniv/control/create-a-proposal?projectCallId=${pc.projectCallId}">${uiLabel.SubmitProposal}</a></td>
 			<#else>
 				<td></td>
 			</#if>

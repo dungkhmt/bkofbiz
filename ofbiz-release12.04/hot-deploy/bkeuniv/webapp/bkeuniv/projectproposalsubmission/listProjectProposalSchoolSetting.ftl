@@ -30,12 +30,12 @@
 <div id="form-view">
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
-Chon khoa/vien
+${uiLabel.Faculty}
 <#assign LF = listFaculties.faculties?size>
 <select id="faculty" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	
 		 	<#if 1 < LF>
-		 		<option value="all" selected>Tat ca</option>
+		 		<option value="all" selected>${uiLabel.All}</option>
 		 	</#if>
 		 	
 		 	<#list listFaculties.faculties as f>
@@ -49,9 +49,9 @@ Chon khoa/vien
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
-Chon dot goi de tai
+${uiLabel.ProjectCallName}
 <select id="projectCallId" style="width: 100%" type="text" width="1000" onChange='changeProjectCall()'>
-		 	<option value="all" selected>Tat ca</option>
+		 	<option value="all" selected>${uiLabel.All}</option>
 		 	<#list resultProjectCalls.projectCalls as pc>
 		 		<option value="${pc.projectCallId}">${pc.projectCallName}</option>
 		 	</#list>
@@ -60,9 +60,9 @@ Chon dot goi de tai
 		
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
-Trang thai
+${uiLabel.Status}
 <select id="projectProposalStatusId" style="width: 100%" type="text" width="1000">
-		 	<option value="all" selected>Tat ca</option>
+		 	<option value="all" selected>${uiLabel.All}</option>
 		 	<#list resultProjectProposalStatus.projectProposalStatus as pps>
 		 		<option value="${pps.statusId}">${pps.statusName}</option>
 		 	</#list>
@@ -70,8 +70,8 @@ Trang thai
 </div>
 
 
-<@buttonView text="Xem danh sach" action="listProposals"/>
-<@buttonExportExcel text="Xuat Excel" action="exportProposalsExcel"/>
+<@buttonView text="${uiLabel.ViewList}" action="listProposals"/>
+<@buttonExportExcel text="${uiLabel.Excel}" action="exportProposalsExcel"/>
 
 </div>
 

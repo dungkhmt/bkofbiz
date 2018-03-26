@@ -35,10 +35,15 @@
 			</#if>
 			-->
 			<tr>
-				<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
+				<#if resultProjectProposal.evaluation == "YES">
+					<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.DetailEvaluation}</a></td>
+				<#else>
+					<td></td>
+				</#if>
+				
 			</tr>
 			<tr>
-				<td><a href = "/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Download thuyet minh</a></td>
+				<td><a href = "/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.DownloadProposal}</a></td>
 			</tr>
 		</table>
 		
@@ -49,7 +54,7 @@
 	<tr>
 		<td>		
 		<div class="info-box">
-			Ten de tai: ${resultProjectProposal.projectproposal.researchProjectProposalName}
+			${uiLabel.ProjectProposalName}: ${resultProjectProposal.projectproposal.researchProjectProposalName}
 		</div>
 		</td>
 		
@@ -57,18 +62,18 @@
 	<tr>
 		<td>		
 		<div class="info-box">
-			Tinh trang: ${resultProjectProposal.projectproposal.statusName}
+			${uiLabel.Status}: ${resultProjectProposal.projectproposal.statusName}
 		</div>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<div class="info-box">
-			Danh sach thanh vien cua de tai
+			${uiLabel.MembersOfProject}
 			<table border=1>
 				<thead>
-					<td>Ho va ten</td>
-					<td>Vai tro</td>
+					<td>${uiLabel.FullName}</td>
+					<td>${uiLabel.Role}</td>
 				</thead>
 			<#list resultMembers.members as m>
 				<tr>
@@ -85,13 +90,13 @@
 	<tr>
 		<td>
 			<div class="info-box">
-			Noi dung cong viec
+			${uiLabel.ListWorkPackages}
 			<table border = 1>
 				<thead>
-					<td width="200">Ho va ten</td>
-					<td width="400">Noi dung</td>
-					<td width="100">So ngay cong</td>
-					<td width="100">Kinh phi</td>
+					<td width="200">${uiLabel.FullName}</td>
+					<td width="400">${uiLabel.WorkPackage}</td>
+					<td width="100">${uiLabel.Workingdays}</td>
+					<td width="100">${uiLabel.Budget}</td>
 				</thead>
 			<#list resultContentItems.projectProposalContentItems as ci>
 				<tr>
@@ -109,11 +114,11 @@
 	<tr>
 		<td>
 			<div class="info-box">
-			San pham
+			${uiLabel.ListProducts}
 			<table border=1>
 				<thead>
-					<td>Loai san pham</td>
-					<td>So luong</td>
+					<td>${uiLabel.Products}</td>
+					<td>${uiLabel.Quantity}</td>
 				</thead>
 			<#list resultProducts.projectProposalProducts as p>
 				<tr>

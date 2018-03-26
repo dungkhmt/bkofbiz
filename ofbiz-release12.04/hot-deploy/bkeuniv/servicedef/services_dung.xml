@@ -109,6 +109,7 @@
 		<attribute name="projectproposal" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="projectCallStatusId" mode="OUT" type="String"></attribute>
 		<attribute name="projectCallStatusName" mode="OUT" type="String"></attribute>
+		<attribute name="evaluation" mode="OUT" type="String"></attribute>
 	</service>
 	
     <service name="getMembersOfProjectProposal" engine="java" 

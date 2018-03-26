@@ -16,14 +16,15 @@
 #form-style {
     margin-top: 20px;
     margin-left: 20px;
+    width: 100%;
     overflow: scroll;
 }
 </style>
 
 <div id="form-style">
-
+<!--
 ${reviewerResearchProposalId}<br>
-
+-->
 
 <div id="form-style">
 <table>
@@ -31,7 +32,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Li do de tai
+	${uiLabel.Motivation}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationMotivation" style="width: 100%" type="text" width="1000" 
@@ -42,7 +43,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Tinh moi
+	${uiLabel.Innovation}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationInnovation" style="width: 100%" type="text" width="1000" 
@@ -56,7 +57,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Tinh ung dung
+	${uiLabel.Applicability}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationApplicability" style="width: 100%" type="text" width="1000" 
@@ -67,7 +68,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Phuong phap nghien cuu
+	${uiLabel.ResearchMethod}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationResearchMethod" style="width: 100%" type="text" width="1000" 
@@ -81,7 +82,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Noi dung nghien cuu
+	${uiLabel.ResearchContent}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationResearchContent" style="width: 100%" type="text" width="1000" 
@@ -92,7 +93,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Bai bao
+	${uiLabel.Papers}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationPaper" style="width: 100%" type="text" width="1000" 
@@ -106,7 +107,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	San pham
+	${uiLabel.Products}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationProduct" style="width: 100%" type="text" width="1000" 
@@ -117,7 +118,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Sang che
+	${uiLabel.Patent}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationPatent" style="width: 100%" type="text" width="1000" 
@@ -131,7 +132,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Dao tao sau DH
+	${uiLabel.GraduateStudentTraining}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationGraduateStudent" style="width: 100%" type="text" width="1000" 
@@ -142,7 +143,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	nghien cuu tre
+	${uiLabel.YoungResearcher}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationYoungResearcher" style="width: 100%" type="text" width="1000" 
@@ -156,7 +157,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Dao tao
+	${uiLabel.Training}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationEducation" style="width: 100%" type="text" width="1000" 
@@ -167,7 +168,7 @@ ${reviewerResearchProposalId}<br>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
-	Kinh phi hop li
+	${uiLabel.ReasonableBudget}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<input id="evaluationReasonableBudget" style="width: 100%" type="text" width="1000" 

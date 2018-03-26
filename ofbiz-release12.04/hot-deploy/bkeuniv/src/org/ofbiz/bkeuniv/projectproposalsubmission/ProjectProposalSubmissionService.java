@@ -445,6 +445,29 @@ public class ProjectProposalSubmissionService {
 		return "success";
 	}
 
+	public static String openProjectCallForRevision(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String) request.getParameter("projectCallId");
+		Debug.log(module + "::openProjectCallForRevision,  projectCall "
+				+ projectCallId);
+		try {
+			GenericValue pc = delegator.findOne("ProjectCall",
+					UtilMisc.toMap("projectCallId", projectCallId), false);
+			if (pc != null) {
+				pc.put("statusId",
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_OPEN_REVISED);
+				delegator.store(pc);
+				Debug.log(module
+						+ "::openProjectCallForRevision, OPEN successfully projectCall "
+						+ projectCallId);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
 	public static void addProjectProposalJury(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -514,7 +537,7 @@ public class ProjectProposalSubmissionService {
 					researchProjectProposalId));
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS,
-					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_APPROVED));
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_EVALUATION_CONFIRM));
 
 			List<GenericValue> list = delegator.findList(
 					"ReviewerResearchProposalView",
@@ -626,7 +649,7 @@ public class ProjectProposalSubmissionService {
 							reviewerResearchProposalId), false);
 
 			gv.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_APPROVED);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_EVALUATION_CONFIRM);
 
 			delegator.store(gv);
 
@@ -701,7 +724,13 @@ public class ProjectProposalSubmissionService {
 
 			delegator.create(gv);
 
-			String rs = "{\"result\":\"OK\"}";
+			GenericValue st = delegator.findOne("Staff",UtilMisc.toMap("staffId", staffId),false);
+			GenericValue rl = delegator.findOne("JuryRoleType", UtilMisc.toMap("juryRoleTypeId", juryRoleTypeId),false);
+			String rs = "{\"result\":\"OK\""
+					+ ",\"staffName\":" + "\"" + st.getString("staffName") + "\""
+					+ ",\"juryRoleTypeName\":" + "\"" + rl.getString("juryRoleTypeName") + "\""
+					+ "}";
+			Debug.log(module + "::addProjectProposalJuryMember, return JSON = " + rs);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
@@ -826,6 +855,7 @@ public class ProjectProposalSubmissionService {
 				Map<String, Object> item = FastMap.newInstance();
 				item.put("staffId", g.getString("staffId"));
 				item.put("staffName", g.getString("staffName"));
+				item.put("juryName", g.getString("juryName"));
 				item.put("juryRoleTypeName", g.getString("juryRoleTypeName"));
 				item.put("projectproposals", rs.get("projectproposals"));
 				retList.add(item);
@@ -1021,7 +1051,9 @@ public class ProjectProposalSubmissionService {
 			String facultyId = null;
 			if (fal != null && fal.size() > 0)
 				facultyId = (String) (fal.get(0).getString("facultyId"));
-
+			Debug.log(module + "::getListProjectCallsAndProposalJuriesSchool, staffId = " + staffId 
+					+ ", facultyId = " + facultyId);
+			
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.NOT_EQUAL,
@@ -1063,6 +1095,8 @@ public class ProjectProposalSubmissionService {
 
 					pcj.put("juryId", juryId);
 					pcj.put("juryName", juryName);
+					Debug.log(module + "::getListProjectCallsAndProposalJuriesSchool, staffId = " + staffId 
+							+ ", facultyId = " + facultyId + ", juryId = " + juryId + ", juryName = " + juryName);
 				}
 				resultList.add(pcj);
 			}
@@ -1170,7 +1204,7 @@ public class ProjectProposalSubmissionService {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		String researchProjectProposalId = context.get("researchProjectProposalId") + "";
 		Delegator delegator = ctx.getDelegator();
-		
+		LocalDispatcher dispatcher = ctx.getDispatcher();
 		Map<String, Object> userLogin = (Map<String, Object>) context.get("userLogin");
 		
 		Debug.log(module + "::getProjectProposal, researchProjectProposalId = " + researchProjectProposalId);
@@ -1198,6 +1232,25 @@ public class ProjectProposalSubmissionService {
 				retSucc.put("projectCallStatusId", projectCallStatusId);
 				retSucc.put("projectCallStatusName", projectCallStatusName);
 				
+				// get evaluation
+				/*
+				conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS,researchProjectProposalId));
+				List<GenericValue> lstEval = delegator.findList("ReviewerResearchProposal",
+						EntityCondition.makeCondition(conds),
+						null,null,null,false);
+				*/
+				Map<String, Object> in = FastMap.newInstance();
+				in.put("researchProjectProposalId", researchProjectProposalId);
+				Map<String, Object> retEvaluation = dispatcher.runSync(
+						"getListReviewsOfProjectProposal", in);
+				List<GenericValue> lstEval = (List<GenericValue>) retEvaluation
+						.get("reviewprojectproposals");
+				
+				if(lstEval != null && lstEval.size() > 0)
+					retSucc.put("evaluation", "YES");
+				else
+					retSucc.put("evaluation", "NO");
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
