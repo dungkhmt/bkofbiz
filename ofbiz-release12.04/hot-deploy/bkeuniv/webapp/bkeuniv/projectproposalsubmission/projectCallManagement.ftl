@@ -51,11 +51,11 @@
 
 	<#assign columnsChange=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"value": "projectCallName"
 		},
 		{
-			"name": "Loai hinh de tai",
+			"name": "${uiLabel.Category}",
 			"value": "projectCategoryId",
 			"type": "select",
 			"option": {
@@ -64,18 +64,18 @@
 			}
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"value": "year"
 		}
 	] />
 
 	<#assign columnsNew=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"value": "projectCallName"
 		},
 		{
-			"name": "Loai hinh de tai",
+			"name": "${uiLabel.Category}",
 			"value": "projectCategoryId",
 			"type": "select",
 			"option": {
@@ -84,7 +84,7 @@
 			}
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"value": "year"
 		}
 	] />
