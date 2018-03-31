@@ -310,8 +310,10 @@
 		<section>
 			<actions>
 				
-<!-- 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
-				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
+				<!-- 				
+				
 				<set field="researchProjectProposalId" from-field="${parameters.researchProjectProposalId}" global="true"/>
 				
 				<service service-name="getProjectProposal"

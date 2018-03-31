@@ -562,65 +562,50 @@
     	<value xml:lang="vi">(Ký và ghi rõ họ tên)</value>
     </property>
     
-<!--     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+     <property key="BkEunivRefresh">
+        <value xml:lang="en">Refresh</value>
+        <value xml:lang="vi">Làm mới</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivLoading">
+        <value xml:lang="en">Loading</value>
+        <value xml:lang="vi">Đang tải</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivLoaded">
+        <value xml:lang="en">Upload successfully</value>
+        <value xml:lang="vi">Tải lên thành công</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivUpload">
+        <value xml:lang="en">Upload</value>
+        <value xml:lang="vi">Tải lên</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivClose">
+        <value xml:lang="en">Close</value>
+        <value xml:lang="vi">Đóng</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivDropifyDefault">
+        <value xml:lang="en">Drag and drop a file here or click</value>
+        <value xml:lang="vi">Kéo và thả tệp ở đây hoặc nhấp vào</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivDropifyReplace">
+        <value xml:lang="en">Drag and drop a file or click to replace</value>
+        <value xml:lang="vi">Kéo và thả tệp hoặc nhấp để thay thế</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivDropifyRemove">
+        <value xml:lang="en">Remove</value>
+        <value xml:lang="vi">Xóa</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
+    <property key="BkEunivDropifyError">
+        <value xml:lang="en">Sorry, the file is too large</value>
+        <value xml:lang="vi">Xin lỗi, tệp quá lớn</value>
     </property>
     
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
-    </property>
-    
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
-    </property>
-    
-    <property key="BkEunivBudget">
-        <value xml:lang="en">Budget</value>
-        <value xml:lang="vi">Kinh</value>
-    </property> -->
     
 </resource>

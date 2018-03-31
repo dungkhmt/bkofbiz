@@ -95,7 +95,7 @@
 			"option":{
 				"maxItem": 1,
 				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
-				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
 		{
@@ -119,7 +119,7 @@
 			"option":{
 				"maxItem": 1,
 				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
-				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
 		{
