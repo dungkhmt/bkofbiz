@@ -1,4 +1,4 @@
-./ofbiz-release12.04/euniv-deploy
+./ofbiz-release12.04/euniv-deploy/*
 ./applications/*/build
 ./framework/*/build
 ./framework/base/lib/cobertura-*.jar
@@ -7,7 +7,6 @@
 ./specialpurpose/*/build
 ./applications/content/index/
 ./bin/
-./euniv-deploy/*
 ./ofbiz.jar
 ./changelog
 ./runtime/git-rebase/*
@@ -48,4 +47,6 @@
 ./.DS_Store
 ./.idea
 ./*.iml
+./ofbiz-release12.04/.settings/org.eclipse.wst.common.project.facet.core.xml
+
 
