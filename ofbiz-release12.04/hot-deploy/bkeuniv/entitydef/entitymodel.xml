@@ -223,19 +223,38 @@
 		
 	</view-entity>
 	
-	<entity entity-name="ResearchProjectProposalDeclarationYear" package-name="org.ofbiz.bkeuniv">
-		<field name="ResearchProjectProposalDeclarationYearId" type="id-ne"></field>
+	<entity entity-name="ResearchProgram" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProgramId" type="id-ne"></field>
+		<field name="researchProgramName" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="fromDate" type="date"></field>
+		<field name="thruDate" type="date"></field>
+		<prim-key field="researchProgramId"/>
+		
+		<relation rel-entity-name="Staff" type="one" fk-name="STAFF">
+			<key-map field-name="staffId"/>
+		</relation>
+		
+	</entity>
+	
+	<entity entity-name="ResearchProjectDeclarationYear" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectDeclarationYearId" type="id-ne"></field>
 		<field name="researchProjectProposalId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="workingdays" type="numeric"></field>
 		<field name="academicYearId" type="id-ne"></field>
-		<prim-key field="ResearchProjectProposalDeclarationYearId"/>
 		
-		<relation rel-entity-name="AcademicYear" type="one">
+		<prim-key field="researchProjectDeclarationYearId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one" fk-name="ACADEMICYEARRPDY">
 			<key-map field-name="academicYearId"/>
 		</relation>
-		<relation rel-entity-name="Staff" type="one">
+		<relation rel-entity-name="Staff" type="one" fk-name="STAFFRPDY">
 			<key-map field-name="staffId"/>
+		</relation>
+		 
+		<relation rel-entity-name="ResearchProjectProposal" type="one" fk-name="RESEARCHPROJECTPROPOSALDECLARATIONYEAR">
+			<key-map field-name="researchProjectProposalId"/>
 		</relation>
 		
 	</entity>
