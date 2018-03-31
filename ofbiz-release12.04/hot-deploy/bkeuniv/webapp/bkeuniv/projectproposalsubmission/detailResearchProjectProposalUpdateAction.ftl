@@ -28,7 +28,7 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 				<!--
 				<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">Xem danh gia chi tiet</a></td>
 				-->
-				<td><@buttonStore text="${uiLabel.UploadProposal}" action="uploadFileProposal()"/></td>
+				<td><@buttonStore text="${uiLabel.UploadProposal}" action="uploadFileProposal"/></td>
 			</tr>
 			</#if>
 			
@@ -45,14 +45,14 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 		<div class="modal-content" id="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Cài đặt</h4>
+				<h4 class="modal-title">${uiLabel.BkEunivSetting}</h4>
 			</div>
 			<div class="modal-body" id="modal-body">
 				<input type="file" id="input-upload-file" class="dropify" accept=".doc, .docx, .pdf, .csv, .xls, .xlsx" data-default-file="" />
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onClick="uploadFile()">Upload</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" onClick="uploadFile()">${uiLabel.BkEunivUpload}</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">${uiLabel.BkEunivClose}</button>
 			</div>
 		</div>
 
@@ -66,13 +66,23 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 		</div>
 	</div>
 	<div style="font-size: 20px; text-align: center; color: #fffffff2; font-weight: 400;" id="infor-liner-upload">
-		Đang tải ...
+		${uiLabel.BkEunivLoading} ...
 	</div>
 </@Loader>
 
 <script>
+	var uploadDropify;
+
 	$(document).ready(function(){
-		$('#input-upload-file').dropify();
+		uploadDropify = $('#input-upload-file').dropify({
+			messages: {
+				default: '${uiLabel.BkEunivDropifyDefault}',
+				replace: '${uiLabel.BkEunivDropifyReplace}',
+				remove:  '${uiLabel.BkEunivDropifyRemove}',
+				error:   '${uiLabel.BkEunivDropifyError}'
+			}
+		});
+		uploadDropify = uploadDropify.data('dropify');
 	})
 	 
 	function uploadFileProposal(){
@@ -88,7 +98,7 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 			var formData = new FormData();
 			formData.append("researchProjectProposalId", ${researchProjectProposalId});
 			formData.append("file", files[0]);
-			
+
 			$.ajax({
 					url: "/bkeuniv/control/upload-file-research-project-proposal",
 					type: 'POST',
@@ -106,10 +116,12 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 							return myXhr;
 					},
 					success:function(rs){
-						alertify.success("Tải lên thành công");
+						alertify.success('${uiLabel.BkEunivLoaded}');
+						uploadDropify.resetPreview();
+						uploadDropify.clearElement();
 						setTimeout(function(){
 							$("#modal-upload").modal("hide");
-						}, 300);
+						}, 500);
 					}
 				})
 		}
@@ -127,13 +139,13 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 			if(Percentage >= 100)
 			{
 				document.getElementById("liner-upload").style.width="100%";
-				document.getElementById("infor-liner-upload").innerHTML="Tải lên thành công";
+				document.getElementById("infor-liner-upload").innerHTML='${uiLabel.BkEunivLoaded}';
 				setTimeout(function(){
 					loading.close();
 				}, 300);
 			} else {
 				document.getElementById("liner-upload").style.width=Percentage+"%";
-				document.getElementById("infor-liner-upload").innerHTML="Tải lên " + Percentage+"%";
+				document.getElementById("infor-liner-upload").innerHTML='${uiLabel.BkEunivUpload} ' + Percentage+"%";
 			}
 		}  
 	}

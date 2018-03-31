@@ -79,9 +79,9 @@
 				</li>
 
 				<li style="list-style-type: none;" id="scientific-service">
-					<div class="collapsible-header"><div style="font-weight: bold;">7.&nbsp;</div>${uiLabelMap.BkEunivScientificService}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">7.&nbsp;</div>${uiLabelMap.BkEunivScientificService1}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/scientific-service.png" alt="${uiLabelMap.BkEunivScientificService}" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/scientific-service.png" alt="${uiLabelMap.BkEunivScientificService1}" height="auto" width="100%">
 					</div>
 				</li>
 
@@ -93,9 +93,9 @@
 				</li>
 
 				<li style="list-style-type: none;" id="patent">
-					<div class="collapsible-header"><div style="font-weight: bold;">9.&nbsp;</div>${uiLabelMap.BkEunivPatent}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">9.&nbsp;</div>${uiLabelMap.BkEunivPatent1}</div>
 					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/patent.png" alt="${uiLabelMap.BkEunivPatent}" height="auto" width="100%">
+						<img src="/resource/bkeuniv/image/patent.png" alt="${uiLabelMap.BkEunivPatent1}" height="auto" width="100%">
 					</div>
 				</li>
 
