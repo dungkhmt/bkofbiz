@@ -135,7 +135,11 @@
 
 <Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
+<Function functionId="RESEARCH_PROGRAM" uiLabelId="project_program" vnLabel="Chương trình nghiên cứu" enLabel="research programs" target="research-program" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+
 <Function functionId="PROJECT_DECLARATION" uiLabelId="project_declaration" vnLabel="Kê khai đề tài đang thực hiện" enLabel="declare running projects" target="project-declaration" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+
+<Function functionId="PROJECT_WORKING_HOUR_DECLARATION" uiLabelId="project_working_hour_declaration" vnLabel="Kê khai số giờ thực hiện đề tài" enLabel="declare working hour of running projects" target="project-working-hour-declaration" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
 <Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
@@ -2216,6 +2220,10 @@
 <UserLogin userLoginId="khoat.thanquang@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="hai.phamvan@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 
+
+<UserLogin userLoginId="20146685@student.hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
+
+
 <UserLoginSecurityGroup groupId="BIZSTUDENT" userLoginId="anonymousstudent" fromDate="2001-01-01 12:00:00.0"/>
 
 
@@ -4151,6 +4159,7 @@
 
 <UserLoginSecurityGroup groupId="BIZMASTERCOURSE" userLoginId="dung.phamquang@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 
+<UserLoginSecurityGroup groupId="BIZSTUDENT" userLoginId="20146685@student.hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 
 
 <ForeignLanguageCatalog foreignLanguageCatalogId="english" foreignLanguageCatalogName="Tiếng Anh"/>
@@ -4251,6 +4260,10 @@
 <Faculty facultyId="TTNN" facultyName="Trung tâm Ngoại ngữ" universityId="HUST"/>
 <Faculty facultyId="NXBBK" facultyName="Nhà xuất bản Bách Khoa Hà Nội" universityId="HUST"/>
 <Faculty facultyId="TTPVBK" facultyName="Trung tâm Phục vụ Bách khoa" universityId="HUST"/>
+
+<Faculty facultyId="STUDENT" facultyName="Sinh viên" universityId="HUST"/>
+
+
 <Department departmentId="GDQP-BMCTQP"  departmentName="Bm Công tác Quốc phòng"  facultyId="GDQP"/>
 <Department departmentId="GDQP-BMQSC"  departmentName="Bm Quân sự chung"  facultyId="GDQP"/>
 <Department departmentId="GDQP-BMDLQS"  departmentName="Bm Đường lối quân sự"  facultyId="GDQP"/>
@@ -4438,6 +4451,11 @@
 <Department departmentId="GDQP"  departmentName="Khoa Giáo dục Quốc phòng"  facultyId="GDQP"/>
 <Department departmentId="CKDL-BMKTTKTT"  departmentName="Bm Kỹ thuật Thuỷ khí và Tàu thuỷ"  facultyId="CKDL"/>
 <Department departmentId="NCPTUDHCTN-BMNCPTUDHCTN"  departmentName="Viện Nghiên cứu và Phát triển ứng dụng các hợp chất thiên nhiên"  facultyId="NCPTUDHCTN"/>
+
+
+<Department departmentId="STUDENT"  departmentName="Sinh viên"  facultyId="STUDENT"/>
+
+
 <Staff staffId="giang.nguyenthiha@hust.edu.vn" staffName="giang.nguyenthiha@hust.edu.vn" staffUserLoginId="giang.nguyenthiha@hust.edu.vn" staffEmail="giang.nguyenthiha@hust.edu.vn" staffGenderId="" departmentId="GDQP" staffPhone=""/>
 <Staff staffId="huong.doithilan@hust.edu.vn" staffName="huong.doithilan@hust.edu.vn" staffUserLoginId="huong.doithilan@hust.edu.vn" staffEmail="huong.doithilan@hust.edu.vn" staffGenderId="" departmentId="GDQP" staffPhone=""/>
 <Staff staffId="khoi.lechien@hust.edu.vn" staffName="khoi.lechien@hust.edu.vn" staffUserLoginId="khoi.lechien@hust.edu.vn" staffEmail="khoi.lechien@hust.edu.vn" staffGenderId="" departmentId="GDQP-BMCTQP" staffPhone=""/>
@@ -6362,6 +6380,12 @@
 <Staff staffId="minh.nguyenbinh@hust.edu.vn" staffName="Nguyễn Bình Minh" staffUserLoginId="minh.nguyenbinh@hust.edu.vn" staffEmail="minh.nguyenbinh@hust.edu.vn" staffGenderId="male" departmentId="SOICT-BMHTTT" staffPhone="0"/>
 <Staff staffId="khoat.thanquang@hust.edu.vn" staffName="Thân Quang Khoát" staffUserLoginId="khoat.thanquang@hust.edu.vn" staffEmail="khoat.thanquang@hust.edu.vn" staffGenderId="null" departmentId="SOICT-BMHTTT" staffPhone="0"/>
 <Staff staffId="hai.phamvan@hust.edu.vn" staffName="Phạm Văn Hải" staffUserLoginId="hai.phamvan@hust.edu.vn" staffEmail="hai.phamvan@hust.edu.vn" staffGenderId="null" departmentId="SOICT-BMHTTT" staffPhone="0"/>
+
+<!-- Staff Sinh vien -->
+<Staff staffId="20146685@student.hust.edu.vn" staffName="Trần Thị Hồng Thu" staffUserLoginId="20146685@student.hust.edu.vn" staffEmail="20146685@student.hust.edu.vn" staffGenderId="null" departmentId="STUDENT" staffPhone="0"/>
+
+<Student studentId="anonymousstudent" userLoginId="anonymousstudent" studentName="Anonymous Student"/>
+
 
 
 <JournalIndex journalIndexId="SCI" journalIndexName="Tạp chí quốc tế SCI"/>
