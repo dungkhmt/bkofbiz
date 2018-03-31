@@ -141,6 +141,10 @@
         <value xml:lang="vi">Mở đợt gọi đề tài để chỉnh sửa thuyết minh</value>
     </property>
     
+    <property key="BkEunivOpenEvaluation">
+        <value xml:lang="en">Open Evaluation</value>
+        <value xml:lang="vi">Công bố kết quả đánh giá thuyết minh</value>
+    </property>
 
     <property key="BkEunivResearchSpeciality">
         <value xml:lang="en">Research speciality</value>

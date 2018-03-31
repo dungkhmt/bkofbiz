@@ -88,6 +88,10 @@
         <value xml:lang="vi">Điểm trung bình</value>
     </property>
     
+    <property key="RequireUpdateProposal">
+        <value xml:lang="en">Require update</value>
+        <value xml:lang="vi">Yêu cầu chỉnh sửa</value>
+    </property>
 
     <property key="ProjectCategoryName">
         <value xml:lang="en">Project category name</value>
@@ -220,6 +224,10 @@
         <value xml:lang="vi">Kinh phí hợp lí</value>
     </property>
     
+    <property key="Comments">
+        <value xml:lang="en">Comments</value>
+        <value xml:lang="vi">Nhận xét, góp ý</value>
+    </property>
 
 
     <property key="WorkPackage">

@@ -163,6 +163,7 @@
 		<field name="endDate" type="date"></field>
 		<field name="deliverable" type="very-long"></field>
 		<field name="materialBudget" type="numeric"></field>
+		<field name="evaluationOpenFlag" type="indicator"></field>
 		
 		<prim-key field="researchProjectProposalId"/>
 		<relation rel-entity-name="Staff" type="one">
@@ -221,6 +222,23 @@
 		</view-link>
 		
 	</view-entity>
+	
+	<entity entity-name="ResearchProjectProposalDeclarationYear" package-name="org.ofbiz.bkeuniv">
+		<field name="ResearchProjectProposalDeclarationYearId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="workingdays" type="numeric"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<prim-key field="ResearchProjectProposalDeclarationYearId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		
+	</entity>
 	
 	<entity entity-name="ResearchProjectProposalDomain" package-name="org.ofbiz.bkeuniv">
 		<field name="researchProjectProposalId" type="id-ne"></field>
@@ -473,6 +491,7 @@
 		<field name="evaluationReasonableBudget" type="numeric"></field>
 		<field name="totalEvaluation" type="numeric"></field>
 		<field name="conclusion" type="very-long"></field>
+		<field name="comments" type="very-long"></field>
 		<field name="statusId" type="id-vlong"></field>
 		
 		<prim-key field="reviewerResearchProposalId"/>
@@ -772,6 +791,7 @@
 		<field name="approverStaffId" type="id-vlong"></field>
 		<field name="approveStatusId" type="id"></field>
 		<field name="statusId" type="id-vlong"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
 		
 		<prim-key field="paperId"/>
 		

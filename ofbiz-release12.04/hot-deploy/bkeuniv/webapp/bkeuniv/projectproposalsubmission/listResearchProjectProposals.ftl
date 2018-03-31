@@ -53,9 +53,12 @@
 				<th>${uiLabel.ProjectDirector}</th>
 				<th>${uiLabel.ProjectCallName}</th>
 				<th>${uiLabel.Faculty}</th>
+				<!--
 				<th>${uiLabel.TotalEvaluation}</th>
 				<th>${uiLabel.NumberReviewers}</th>
+				-->
 				<th>${uiLabel.AverageEvaluation}</th>
+				<th></th>
 			</tr>
 		</thead>
 	<tbody>
@@ -82,23 +85,30 @@
 			<#else>
 				<td></td>
 			</#if>
+			<!--
 			<#if p.totalEvaluation?exists>
 				<td>${p.totalEvaluation}</td>
 			<#else>
 				<td></td>
 			</#if>
+			-->
 			<#assign average = 0>
 			<#if p.numberEvaluations?exists>
+				<!--
 				<td>${p.numberEvaluations}</td>
+				-->
 				<#if 0 < p.numberEvaluations>
 					<#assign average = p.totalEvaluation/p.numberEvaluations/>
 				</#if>
 
 			<#else>
+				<!--
 				<td></td>
+				-->
 			</#if>
+			
 			<td>${average}</td>
-
+			<td><a href="/bkeuniv/control/require-update-proposal">${uiLabel.RequireUpdateProposal}</a></td>
 			</tr>
 	</#list>
 	</tbody>
