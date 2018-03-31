@@ -126,7 +126,10 @@
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
 			  {title: '${uiLabelMap.BkEunivOpenProjectCallForSubmission}', cmd: "openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"},
 			  {title: '${uiLabelMap.BkEunivCloseProjectCall}', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
-			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"}
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivOpenEvaluation}', cmd: "openevaluation", uiIcon: "glyphicon glyphicon-user"}
+			  
+			  
 			],
 			select: function(event, ui) {
 				var el = ui.target.parent();
@@ -147,6 +150,9 @@
 					case "openprojectcallforrevision":
 						openProjectCallForRevision(data);
 						break;	
+					case "openevaluation":
+						openEvaluation(data);
+						break;	
 					
 					}		
 					
@@ -160,12 +166,33 @@
 			  });
 	}
 	
+	function openEvaluation(data){
+		alertify.confirm('Xac nhan cong bo ket qua danh gia thuyet minh de tai', "Ban co muon thuc su dong khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/open-evaluation",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+	
+	}
+	
 	function closeProjectCall(data){
 		//alert("Dong dot goi de tai" + data.projectCallId);
 		
 		alertify.confirm('Xac nhan dong de tai', "Ban co muon thuc su dong khong?",
 		function(){
-				alert("Dong dot goi de tai" + data.projectCallId);
+				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
 					url: "/bkeuniv/control/close-project-call",
 					type: 'POST',

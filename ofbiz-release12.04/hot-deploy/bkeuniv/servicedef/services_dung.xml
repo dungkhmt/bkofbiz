@@ -125,7 +125,8 @@
 	</service>
 
     <service name="getProjectProposalProducts" engine="java" 
-		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalProducts">
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getProjectProposalProducts">
 		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
 		<attribute name="projectProposalProducts" mode="OUT" type="List"></attribute>	
 	</service>

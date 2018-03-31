@@ -7,6 +7,7 @@
 ./specialpurpose/*/build
 ./applications/content/index/
 ./bin/
+./euniv-deploy/
 ./ofbiz.jar
 ./changelog
 ./runtime/git-rebase/*
