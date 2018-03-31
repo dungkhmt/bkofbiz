@@ -103,9 +103,18 @@
 		
 	</service>
 
+    <service name="cloneProjectProposalWithNewStatus" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="cloneProjectProposalWithNewStatus">
+		<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+		<attribute name="newStatusId" mode="IN" type="String"></attribute>
+		<attribute name="projectproposal" mode="OUT" type="Map"></attribute>	
+		
+	</service>
+
     <service name="getProjectProposal" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposal">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
 		<attribute name="projectproposal" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="projectCallStatusId" mode="OUT" type="String"></attribute>
 		<attribute name="projectCallStatusName" mode="OUT" type="String"></attribute>
@@ -114,20 +123,20 @@
 	
     <service name="getMembersOfProjectProposal" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getMembersOfProjectProposal">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="members" mode="OUT" type="List"></attribute>	
 	</service>
 	
     <service name="getProjectProposalContentItem" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalContentItem">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectProposalContentItems" mode="OUT" type="List"></attribute>	
 	</service>
 
     <service name="getProjectProposalProducts" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getProjectProposalProducts">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectProposalProducts" mode="OUT" type="List"></attribute>	
 	</service>
 

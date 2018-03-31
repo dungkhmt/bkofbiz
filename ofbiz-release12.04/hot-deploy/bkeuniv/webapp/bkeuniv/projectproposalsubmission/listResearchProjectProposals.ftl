@@ -50,9 +50,12 @@
 			<tr>
 				<th style="display: none"></th>
 				<th>${uiLabel.ProjectProposalName}</th>
+				<th>Ma de tai</th>
 				<th>${uiLabel.ProjectDirector}</th>
 				<th>${uiLabel.ProjectCallName}</th>
 				<th>${uiLabel.Faculty}</th>
+				<th>Kinh phi</th>
+				<th>Trang thai</th>
 				<!--
 				<th>${uiLabel.TotalEvaluation}</th>
 				<th>${uiLabel.NumberReviewers}</th>
@@ -70,6 +73,12 @@
 			<#else>
 				<td></td>
 			</#if>
+			<#if p.researchProjectProposalCode?exists>
+				<td>${p.researchProjectProposalCode}</td>
+			<#else>
+				<td></td>
+			</#if>
+			
 			<#if p.createStaffName?exists>
 				<td>${p.createStaffName}</td>
 			<#else>
@@ -85,7 +94,19 @@
 			<#else>
 				<td></td>
 			</#if>
-			<!--
+			<#if p.budget?exists>
+				<td>${p.budget}</td>
+			<#else>
+				<td></td>
+			</#if>
+			
+			<#if p.statusName?exists>
+				<td>${p.statusName}</td>
+			<#else>
+				<td></td>
+			</#if>
+
+						<!--
 			<#if p.totalEvaluation?exists>
 				<td>${p.totalEvaluation}</td>
 			<#else>

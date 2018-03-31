@@ -167,11 +167,11 @@
 	}
 	
 	function openEvaluation(data){
-		alertify.confirm('Xac nhan cong bo ket qua danh gia thuyet minh de tai', "Ban co muon thuc su dong khong?",
+		alertify.confirm('Xac nhan cong bo ket qua danh gia thuyet minh de tai', "Ban co muon thuc su muon cong bo khong?",
 		function(){
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
-					url: "/bkeuniv/control/open-evaluation",
+					url: "/bkeuniv/control/open-evaluation-result",
 					type: 'POST',
 					data: {
 						"projectCallId": data.projectCallId

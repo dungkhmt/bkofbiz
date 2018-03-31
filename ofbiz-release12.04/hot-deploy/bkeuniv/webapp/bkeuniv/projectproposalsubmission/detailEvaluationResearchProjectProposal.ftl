@@ -16,7 +16,10 @@
 		<table border="1">
 			<tr>
 				<td> Thanh vien hoi dong </td>
+				<!--
 				<td>${e.staffName}</td>
+				-->
+				<td>Anonymous</td>
 			</tr>
 			<tr>	
 				<td> Li do de tai </td>

@@ -47,8 +47,13 @@
 				<td></td>
 			</#if>
 			
-			<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
-			reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.Evaluation}</a></td>
+			<#if p.statusId == "ASSIGNED_REVIEWER">
+				<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
+				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.Evaluation}</a></td>
+			<#else>
+				<td><a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?
+				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.ViewEvaluation}</a></td>
+			</#if>
 		</tr>
 	</#list>
 	</tbody>

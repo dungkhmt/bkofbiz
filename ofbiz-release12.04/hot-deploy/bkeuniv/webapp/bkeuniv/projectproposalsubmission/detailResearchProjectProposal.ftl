@@ -35,7 +35,14 @@
 			</#if>
 			-->
 			<tr>
-				<#if resultProjectProposal.evaluation == "YES">
+				<#assign evaluation = "NO">
+				<#if resultProjectProposal.projectproposal.evaluationOpenFlag?exists>
+				<#if resultProjectProposal.evaluation == "YES" && resultProjectProposal.projectproposal.evaluationOpenFlag == "Y">
+					<#assign evaluation = "YES">
+				</#if>
+					
+				</#if>
+				<#if evaluation == "YES">
 					<td><a href="/bkeuniv/control/detail-evaluation-project-proposal?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.DetailEvaluation}</a></td>
 				<#else>
 					<td></td>

@@ -63,6 +63,10 @@
         <value xml:lang="en">Confirm</value>
         <value xml:lang="vi">Xác nhận</value>
     </property>
+    <property key="BkEunivBack">
+        <value xml:lang="en">Back</value>
+        <value xml:lang="vi">Quay lại</value>
+    </property>
     <property key="BkEunivCancel">
         <value xml:lang="en">Cancel</value>
         <value xml:lang="vi">Huỷ</value>

@@ -367,27 +367,18 @@
 			<key-map  rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
 		</view-link>
 	</view-entity>
-	
+<!-- 	
 	<entity entity-name="ProjectProposalRole" package-name="org.ofbiz.bkeuniv">
 		<field name="researchProjectProposalId" type="id-ne"></field>	
-		<!-- 
-		<field name="partyId" type="id-ne"></field>
-		 -->
 		 <field name="staffId" type="id-vlong"></field>
 		<field name="roleTypeId" type="id-vlong"></field>
 		<field name="fromDate" type="date-time"></field>
 		<field name="thruDate" type="date-time"></field>
 		<prim-key field="researchProjectProposalId"/>
 		<prim-key field="staffId"/>
-		<!-- 
-		<prim-key field="fromDate"/>
-		 -->
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
 			<key-map field-name="researchProjectProposalId" rel-field-name="researchProjectProposalId"/>
 		</relation>
-		<!-- <relation rel-entity-name="Party" type="one">
-			<key-map field-name="partyId"/>
-		</relation> -->
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>		
@@ -409,7 +400,43 @@
 			<key-map rel-field-name="roleTypeId" field-name="roleTypeId"/>
 		</view-link>
 	</view-entity>
-	
+ -->	
+
+	<entity entity-name="ProjectProposalMember" package-name="org.ofbiz.bkeuniv">
+		<field name="projectProposalMemberId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>	
+		 <field name="staffId" type="id-vlong"></field>
+		<field name="roleTypeId" type="id-vlong"></field>
+		<field name="fromDate" type="date"></field>
+		<field name="thruDate" type="date"></field>
+		
+		<prim-key field="projectProposalMemberId"/>
+		
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId" rel-field-name="researchProjectProposalId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>		
+		<relation rel-entity-name="ProjectProposalRoleType" type="one">
+			<key-map field-name="roleTypeId"/>
+		</relation>
+	</entity>
+	<view-entity entity-name="ProjectProposalMemberView" package-name="">
+		<member-entity entity-alias="PPR" entity-name="ProjectProposalMember"></member-entity>
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="RT" entity-name="ProjectProposalRoleType"></member-entity>
+		<alias-all entity-alias="PPR"></alias-all>
+		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
+		<alias name="roleTypeName" field="roleTypeName" entity-alias="RT"></alias>
+		<view-link rel-entity-alias="ST" entity-alias="PPR">
+			<key-map  rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="RT" entity-alias="PPR">
+			<key-map rel-field-name="roleTypeId" field-name="roleTypeId"/>
+		</view-link>
+	</view-entity>
+
 	<entity entity-name="Jury" package-name="org.ofbiz.bkeuniv">
 		<field name="juryId" type="id-ne"></field>
 		<field name="juryName" type="very-long"></field>
