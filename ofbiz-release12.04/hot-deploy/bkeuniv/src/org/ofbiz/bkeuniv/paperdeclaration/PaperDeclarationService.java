@@ -421,7 +421,9 @@ public class PaperDeclarationService {
 					GenericValue st = staffsOfPaper.get(i);
 					String id = (String) st.get("staffId");
 					String name = mID2Name.get(id);
-					String role = mRoleID2Name.get(st.getString("roleId"));
+					String role = "";
+					if(st.getString("roleId") != null)
+						role = mRoleID2Name.get(st.getString("roleId"));
 					rs += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"role\":\"" + role + "\"}";
 
 					if (i < staffsOfPaper.size() - 1)

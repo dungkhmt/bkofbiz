@@ -4,4 +4,5 @@
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/component-loader.xsd">
     <load-component component-location="bkeuniv"/>
     <load-component component-location="transportations"/>
+    <load-component component-location="slp"/>
 </component-loader>

@@ -51,9 +51,6 @@ ${reviewerResearchProposalId}<br>
 	</div>
 </div>
 </td>
-</tr>
-
-<tr>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
@@ -101,9 +98,6 @@ ${reviewerResearchProposalId}<br>
 	</div>
 </div>
 </td>
-</tr>
-
-<tr>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
@@ -151,9 +145,6 @@ ${reviewerResearchProposalId}<br>
 	</div>
 </div>
 </td>
-</tr>
-
-<tr>
 <td>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
@@ -177,7 +168,22 @@ ${reviewerResearchProposalId}<br>
 </div>
 </td>
 </tr>
-
+<!--
+<tr>
+	<td>
+		<div class="inline-box" style="width: 200%; padding: 10px 0px;">
+			<div style="display: inline-block;width: 100%;">
+			${uiLabel.Comments}
+			</div>
+			<div style="display: inline-block;width: 100%;">
+			<textarea id="comments" 
+			value=<#if resultReviewProposal.reviewprojectproposal.comments?exists>"${resultReviewProposal.reviewprojectproposal.comments}"<#else>""</#if>/>
+			</div>
+		</div>		
+	</td>
+	
+</tr>
+-->
 </table>
 
 <@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="updateReviewProjectProposal"/>
