@@ -26,8 +26,8 @@
     -->
 
 	<request-map uri="jqxGeneralServicer">
-		<event type="java" invoke="jqxEventProcessor" path="org.ofbiz.bkeuniv.events.JqxEvents"
-			global-transaction="false" />
+		<event type="java" invoke="jqxEventProcessor" path="org.ofbiz.bkeuniv.events.JqxEvents"/>
+		<security https="true" auth="true"/>
 		<response name="success" type="none" />
 		<response name="error" type="none" />
 	</request-map>
@@ -69,6 +69,7 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-staff-management"/>
     </request-map>
+    
 	<request-map uri="update-a-staff">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="updateStaff"></event>

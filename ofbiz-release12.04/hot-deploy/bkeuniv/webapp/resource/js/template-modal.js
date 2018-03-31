@@ -223,6 +223,8 @@ modal.prototype._select_server_side = function(value, edit, id, option, column) 
 							'language: "vi",'+
 							'ajax: {' +
 								'url: "'+option.url+'",'+
+								'"method": "POST",'+
+								'"content-type": "application/json",'+
 								'delay: 250,'+
 								'cache: true,'+
 								'data: function (params) {'+
