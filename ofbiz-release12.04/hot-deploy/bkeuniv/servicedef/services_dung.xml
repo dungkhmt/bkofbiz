@@ -193,6 +193,13 @@
 		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
 	</service>
 
+    <service name="getListProjectCallsAndProposalJuriesUniversity" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectCallsAndProposalJuriesUniversity">
+		
+		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
+	</service>
+
     <service name="getAProjectCall" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getAProjectCall">

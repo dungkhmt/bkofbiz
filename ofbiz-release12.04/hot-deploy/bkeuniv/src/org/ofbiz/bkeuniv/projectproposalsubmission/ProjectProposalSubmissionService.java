@@ -1200,6 +1200,88 @@ public class ProjectProposalSubmissionService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> getListProjectCallsAndProposalJuriesUniversity(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = (String) userLogin.getString("userLoginId");
+
+		try {
+			Delegator delegator = ctx.getDelegator();
+			LocalDispatcher dispatcher = ctx.getDispatcher();
+
+			Map<String, Object> in = FastMap.newInstance();
+			/*
+			in.put("universityId", "HUST");
+			in.put("userLogin", userLogin);
+
+			Map<String, Object> rs = dispatcher
+					.runSync("getFacultyOfStaff", in);
+			List<GenericValue> fal = (List<GenericValue>) rs.get("faculties");
+			String facultyId = null;
+			if (fal != null && fal.size() > 0)
+				facultyId = (String) (fal.get(0).getString("facultyId"));
+			Debug.log(module + "::getListProjectCallsAndProposalJuriesSchool, staffId = " + staffId 
+					+ ", facultyId = " + facultyId);
+			*/
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
+
+			List<GenericValue> projectCalls = delegator.findList(
+					"ProjectCallView", EntityCondition.makeCondition(conds),
+					null, null, null, false);
+
+			String facultyId = "UNIVERSITY";
+			List<Map<String, Object>> resultList = FastList.newInstance();
+			for (GenericValue pc : projectCalls) {
+				Map<String, Object> pcj = FastMap.newInstance();
+
+				String projectCallId = (String) pc.getString("projectCallId");
+				String projectCallName = (String) pc
+						.getString("projectCallName");
+				String year = (String) pc.getString("year");
+				String projectCategoryName = (String) pc
+						.getString("projectCategoryName");
+				String statusName = (String) pc.getString("statusName");
+
+				pcj.put("projectCallId", projectCallId);
+				pcj.put("projectCallName", projectCallName);
+				pcj.put("year", year);
+				pcj.put("projectCategoryName", projectCategoryName);
+				pcj.put("statusName", statusName);
+
+				conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("projectCallId",
+						projectCallId));
+				conds.add(EntityCondition.makeCondition("facultyId", facultyId));
+				List<GenericValue> juries = delegator.findList("Jury",
+						EntityCondition.makeCondition(conds), null, null, null,
+						false);
+				if (juries != null && juries.size() > 0) {
+					GenericValue jury = juries.get(0);
+					String juryId = jury.getString("juryId");
+					String juryName = jury.getString("juryName");
+
+					pcj.put("juryId", juryId);
+					pcj.put("juryName", juryName);
+					Debug.log(module + "::getListProjectCallsAndProposalJuriesSchool, staffId = " + staffId 
+							+ ", facultyId = " + facultyId + ", juryId = " + juryId + ", juryName = " + juryName);
+				}
+				resultList.add(pcj);
+			}
+
+			retSucc.put("projectCalls", resultList);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> getAProjectCall(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();

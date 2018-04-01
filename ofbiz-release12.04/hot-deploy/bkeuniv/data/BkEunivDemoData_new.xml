@@ -80,6 +80,8 @@
 
 <Function functionId="RESEARCH_PROJECT_JURY_SCHOOL" uiLabelId="research_project_jury_school" vnLabel="Hội đồng duyệt thuyết minh đề tài cơ sở phân cấp (khoa/viện)" enLabel="Jury (school) of research proposal" target="research-project-jury-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
 
+<Function functionId="RESEARCH_PROJECT_JURY_UNIVERSITY" uiLabelId="research_project_jury_university" vnLabel="Hội đồng duyệt thuyết minh đề tài (toàn trường)" enLabel="Jury (university) of research proposal" target="research-project-jury-university" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="4"/>
+
 <Function functionId="RESEARCH_PROJECT_JURY_MEMBERS" uiLabelId="research_project_jury_members" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài" enLabel="Members of juries of research proposal" target="research-project-jury-members" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
 
 <Function functionId="RESEARCH_PROJECT_JURY_MEMBERS_SCHOOL" uiLabelId="research_project_jury_members_school" vnLabel="Thành viên hội đồng duyệt thuyết mình đề tài cơ sở phân cấp" enLabel="Members of juries (school) of research proposal" target="research-project-jury-members-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="5"/>
@@ -4197,6 +4199,9 @@
 <ProjectStatus projectStatusId="FINISH_FAIL" projectStatusName="Không được nghiệm thu"/>
 
 <University universityId="HUST" universityName="Trường Đại học Bách Khoa Hà Nội"/>
+
+<Faculty facultyId="UNIVERSITY" facultyName="Toàn trường" universityId="HUST"/>
+
 
 <Faculty facultyId="GDQP" facultyName="Khoa Giáo dục Quốc phòng" universityId="HUST"/>
 <Faculty facultyId="GDTC" facultyName="Khoa Giáo dục Thể chất" universityId="HUST"/>

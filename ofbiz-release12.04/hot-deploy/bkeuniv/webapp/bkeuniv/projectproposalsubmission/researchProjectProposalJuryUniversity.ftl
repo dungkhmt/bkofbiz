@@ -39,9 +39,8 @@
   </script>
 
 <div id="form-add">
-<!--
 <@buttonStore text="Them moi" action="addProjectCall()"/>
--->
+
 
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
 	<table id="list" cellspacing="0" width="100%" class="display dataTable">
@@ -49,7 +48,7 @@
 			<tr>
 				<th style="display: none"></th>
 				<th>${uiLabel.ProjectCallName}</th>
-				<th>${uiLabel.ProjectCategoryName}</th>
+				<th>${uiLabel.Category}</th>
 				<th>${uiLabel.Year}</th>
 				<th>${uiLabel.Status}</th>
 				<th></th>
@@ -79,15 +78,12 @@
 			<#else>
 				<td></td>
 			</#if>
-			<#if pc.statusId == "OPEN">
-				<#if pc.projectCategoryId == "INST_PROJ">
-					<td><a href="/bkeuniv/control/create-a-proposal?projectCallId=${pc.projectCallId}">${uiLabel.SubmitProposal}</a></td>
-				<#else>
-					<td><a href="/bkeuniv/control/create-a-proposal-ministry?projectCallId=${pc.projectCallId}&facultyId=UNIVERSITY">${uiLabel.SubmitProposal}</a></td>
-				</#if>
+			<#if pc.juryId?exists>
+				<td><a href="/bkeuniv/control/detail-jury-proposal?juryId=${pc.juryId}">${pc.juryName}</a></td>
 			<#else>
-				<td></td>
+				<td><a href="/bkeuniv/control/form-add-project-proposal-jury-university?projectCallId=${pc.projectCallId}&facultyId=UNIVERSITY">${uiLabel.CreateJury}</a></td>
 			</#if>
+			
 		</tr>
 	</#list>
 	</tbody>
@@ -110,8 +106,6 @@ $(document).ready(function() {
     "bJQueryUI": true,
     "sDom": 'l<"H"Rf>t<"F"ip>'
   });
-  
-  /*
   $(document).contextmenu({
     delegate: ".dataTable td",
     menu: [
@@ -137,7 +131,6 @@ $(document).ready(function() {
         ui.menu.zIndex(0);
     }
   });
-  */
     
 } );
 </script>
