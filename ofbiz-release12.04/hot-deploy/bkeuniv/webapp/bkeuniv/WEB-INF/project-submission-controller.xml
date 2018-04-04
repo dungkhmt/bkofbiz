@@ -69,6 +69,14 @@
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
 
+    <request-map uri="close-project-call-for-revision">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="closeProjectCallForRevision"/>
+            <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALLFORREVISION"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
 	<request-map uri="get-project-proposals-of-staff">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getProjectProposalsOfStaff"></event>

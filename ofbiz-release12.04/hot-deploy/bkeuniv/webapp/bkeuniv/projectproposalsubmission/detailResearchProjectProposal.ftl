@@ -52,6 +52,14 @@
 			<tr>
 				<td><a href = "/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.DownloadProposal}</a></td>
 			</tr>
+			
+			<#if resultProjectProposal.projectproposal.parentResearchProjectProposalId?exists>
+			<tr>
+				<td><a href = "/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${resultProjectProposal.projectproposal.parentResearchProjectProposalId}">Phien ban truoc do</a></td>
+			</tr>
+			
+			</#if>
+			
 		</table>
 		
 		</td>
@@ -107,10 +115,26 @@
 				</thead>
 			<#list resultContentItems.projectProposalContentItems as ci>
 				<tr>
-					<td width="200">${ci.staffName}</td>
-					<td width="400">${ci.content}</td>
-					<td width="100">${ci.workingDays}</td>
-					<td width="100">${ci.budget}</td>
+					<#if ci.staffName?exists>
+						<td width="200">${ci.staffName}</td>
+					<#else>
+						<td width="200"></td>
+					</#if>
+					<#if ci.content?exists>
+						<td width="400">${ci.content}</td>
+					<#else>
+						<td width="400"></td>
+					</#if>
+					<#if ci.workingDays?exists>
+						<td width="100">${ci.workingDays}</td>
+					<#else>
+						<td width="100"></td>
+					</#if>
+					<#if ci.budget?exists>
+						<td width="100">${ci.budget}</td>
+					<#else>
+						<td width="100"></td>
+					</#if>
 				</tr>
 			</#list>
 			</table>

@@ -144,6 +144,10 @@
         <value xml:lang="en">Open Project Call for Revision</value>
         <value xml:lang="vi">Mở đợt gọi đề tài để chỉnh sửa thuyết minh</value>
     </property>
+    <property key="BkEunivCloseProjectCallForRevision">
+        <value xml:lang="en">Close Project Call, Not Revision</value>
+        <value xml:lang="vi">Đóng thời hạn chỉnh sửa thuyết minh</value>
+    </property>
     
     <property key="BkEunivOpenEvaluation">
         <value xml:lang="en">Open Evaluation</value>

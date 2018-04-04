@@ -127,6 +127,7 @@
 			  {title: '${uiLabelMap.BkEunivOpenProjectCallForSubmission}', cmd: "openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"},
 			  {title: '${uiLabelMap.BkEunivCloseProjectCall}', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
 			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivCloseProjectCallForRevision}', cmd: "closeprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
 			  {title: '${uiLabelMap.BkEunivOpenEvaluation}', cmd: "openevaluation", uiIcon: "glyphicon glyphicon-user"}
 			  
 			  
@@ -149,6 +150,9 @@
 						break;	
 					case "openprojectcallforrevision":
 						openProjectCallForRevision(data);
+						break;	
+					case "closeprojectcallforrevision":
+						closeProjectCallForRevision(data);
 						break;	
 					case "openevaluation":
 						openEvaluation(data);
@@ -241,6 +245,29 @@
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
 					url: "/bkeuniv/control/open-project-call-for-revision",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
+	function closeProjectCallForRevision(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan dong dot goi de tai', "Ban co muon thuc su muon dong khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/close-project-call-for-revision",
 					type: 'POST',
 					data: {
 						"projectCallId": data.projectCallId

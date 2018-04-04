@@ -52,10 +52,11 @@ import javolution.util.FastSet;
 public class PaperDeclarationService {
 
 	public static String module = PaperDeclarationService.class.getName();
-	public static String dataFolder = "." + File.separator + "euniv-deploy";
+	//public static String dataFolder = "." + File.separator + "euniv-deploy";
 
 	public static String establishFullFilename(String staffId, String name) {
-		String path = dataFolder + File.separator + staffId + File.separator
+		
+		String path = BKEunivUtils.dataFolder + File.separator + staffId + File.separator
 				+ "papers";
 		System.out.println("\n\n\t****************************************\n\t"
 				+ path + "+\n\t");

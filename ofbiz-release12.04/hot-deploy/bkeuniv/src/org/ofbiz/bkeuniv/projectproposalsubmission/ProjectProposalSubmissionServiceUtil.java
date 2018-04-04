@@ -19,6 +19,7 @@ import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
+import org.ofbiz.utils.BKEunivUtils;
 
 public class ProjectProposalSubmissionServiceUtil {
 
@@ -39,11 +40,13 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String STATUS_PROJECT_ASSIGNED_REVIEWER = "ASSIGNED_REVIEWER";
 	public static String STATUS_PROJECT_SUBMITTED = "SUBMITTED";
 	public static String STATUS_PROJECT_CREATED = "CREATED";
+	public static String STATUS_PROJECT_UNDER_REVIEW = "UNDER_REVIEW";
 
 	public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
 
-	public static String dataFolder = "." + File.separator + "euniv-deploy";
-
+	//public static String dataFolder = "." + File.separator + "euniv-deploy";
+	//public static String dataFolder = "C:/DungPQ/projects/bkofbiz-github/euniv-deploy";
+	
 	public static String addPading(String idx, int len) {
 		String s = idx + "";
 		while (s.length() < len)
@@ -60,7 +63,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	}
 
 	public static String establishFullFilename(String staffId, String name) {
-		String path = dataFolder + File.separator + staffId + File.separator
+		String path = BKEunivUtils.dataFolder + File.separator + staffId + File.separator
 				+ "projects";
 		Debug.log(module + "::establishFullFilename, path = " + path);
 		String fullname = path + File.separator + name;
@@ -110,6 +113,10 @@ public class ProjectProposalSubmissionServiceUtil {
 			np.put("researchProjectProposalCode",
 					(String) p.get("researchProjectProposalCode"));
 			np.put("partyId", (String) p.get("partyId"));
+			np.put("parentResearchProjectProposalId", researchProjectProposalId);
+			
+			Debug.log(module + "::::cloneProjectProposalWithNewStatus, set parentProposal " + researchProjectProposalId);
+			
 			np.put("createStaffId", (String) p.get("createStaffId"));
 			np.put("projectCallId", (String) p.get("projectCallId"));
 			np.put("projectCategoryId", (String) p.get("projectCategoryId"));

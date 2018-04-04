@@ -547,6 +547,23 @@ public class ProjectProposalSubmissionService {
 				Debug.log(module
 						+ "::openProjectCallForRevision, OPEN successfully projectCall "
 						+ projectCallId);
+				
+				/*
+				// update status of all project proposal of this project call
+				
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+				conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_UNDER_REVIEW));
+				List<GenericValue> lstPrj = delegator.findList("ResearchProjectProposal", 
+						EntityCondition.makeCondition(conds), null,null,null, false);
+				for(GenericValue p: lstPrj){
+					p.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_ACCEPT_REVISE);
+					delegator.store(p);
+				}
+				*/
+				
+				
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -554,6 +571,47 @@ public class ProjectProposalSubmissionService {
 		}
 		return "success";
 	}
+	public static String closeProjectCallForRevision(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String) request.getParameter("projectCallId");
+		Debug.log(module + "::closeProjectCallForRevision,  projectCall "
+				+ projectCallId);
+		try {
+			GenericValue pc = delegator.findOne("ProjectCall",
+					UtilMisc.toMap("projectCallId", projectCallId), false);
+			if (pc != null) {
+				pc.put("statusId",
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CLOSED_REVISED);
+				delegator.store(pc);
+				Debug.log(module
+						+ "::openProjectCallForRevision, OPEN successfully projectCall "
+						+ projectCallId);
+				
+				/*
+				// update status of all project proposal of this project call
+				
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+				conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_UNDER_REVIEW));
+				List<GenericValue> lstPrj = delegator.findList("ResearchProjectProposal", 
+						EntityCondition.makeCondition(conds), null,null,null, false);
+				for(GenericValue p: lstPrj){
+					p.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_ACCEPT_REVISE);
+					delegator.store(p);
+				}
+				*/
+				
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
+
 	public static void addProjectProposalJury(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");

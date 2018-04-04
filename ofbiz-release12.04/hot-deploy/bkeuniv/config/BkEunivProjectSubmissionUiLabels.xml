@@ -11,6 +11,11 @@
         <value xml:lang="vi">Tên đề tài</value>
     </property>
     
+    <property key="Status">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng thái</value>
+    </property>
+
     <property key="ProjectDirector">
         <value xml:lang="en">Project director</value>
         <value xml:lang="vi">Chủ nhiệm đề tài</value>

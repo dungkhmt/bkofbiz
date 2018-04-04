@@ -6838,6 +6838,7 @@
 <ProjectProposalStatus statusId="CANCELLED" statusName="Đã huỷ"/>
 <ProjectProposalStatus statusId="SUBMITTED" statusName="Đã nộp"/>
 <ProjectProposalStatus statusId="CREATED" statusName="Tạo mới"/>
+<ProjectProposalStatus statusId="UNDER_REVIEW" statusName="Đang đánh giá phản biện"/>
 <ProjectProposalStatus statusId="REJECTED" statusName="Từ chối từ vòng khoa/viện"/>
 <ProjectProposalStatus statusId="ACCEPT_REVISE" statusName="Cần chỉnh sửa vòng khoa/viện"/>
 <ProjectProposalStatus statusId="APPROVED" statusName="Phê duyệt vòng khoa/viện"/>
@@ -6855,7 +6856,7 @@
 <ProjectCallStatus statusId="OPEN" statusName="Mở đăng ký mới"/>
 <ProjectCallStatus statusId="CLOSED" statusName="Đóng đăng ký mới"/>
 <ProjectCallStatus statusId="OPEN_REVISED" statusName="Mở cho phép chỉnh sửa"/>
-<ProjectCallStatus statusId="CLOSED_REVISED" statusName="Đóng cho phép chỉnh sửa"/>
+<ProjectCallStatus statusId="CLOSED_REVISED" statusName="Đóng thời hạn cho phép chỉnh sửa"/>
 
 <JuryRoleType juryRoleTypeId="PRESIDENT" juryRoleTypeName="Chủ tịch"/>
 <JuryRoleType juryRoleTypeId="SECRETARY" juryRoleTypeName="Thư ký"/>

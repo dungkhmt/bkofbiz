@@ -15,12 +15,23 @@
 </style>
 
 <div>
+<!--
 ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
+-->
+
 <table>
 	<tr>
 		<td>
 		<table>
+			<#assign view_update=0/>
 			<#if pResultProjectProposal.projectCallStatusId == "OPEN" || pResultProjectProposal.projectCallStatusId == "OPEN_REVISED">
+				<#if pResultProjectProposal.projectproposal.statusId == "CREATED" || 
+				pResultProjectProposal.projectproposal.statusId == "ACCEPT_REVISE" ||	
+				pResultProjectProposal.projectproposal.statusId == "ACCEPT_REVISE_UNIVERSITY">
+					<#assign view_update=1/>
+				</#if>
+			</#if>
+			<#if view_update==1>
 			<tr>
 				<td><a href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.MembersOfProject}</a></td>
 				<td><a href = "/bkeuniv/control/workpackages-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.ListWorkPackages}</a></td>

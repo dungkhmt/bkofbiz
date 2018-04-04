@@ -28,7 +28,9 @@ import org.ofbiz.entity.condition.EntityOperator;
 public class BKEunivUtils {
 
 	public static final String module = BKEunivUtils.class.getName();
-
+	
+	public static String dataFolder = "C:/DungPQ/projects/bkofbiz-github/euniv-deploy";
+	
 	public static List<GenericValue> getListDepartmentsOfFaculty(Delegator delegator,
 			String facultyId) {
 		try {

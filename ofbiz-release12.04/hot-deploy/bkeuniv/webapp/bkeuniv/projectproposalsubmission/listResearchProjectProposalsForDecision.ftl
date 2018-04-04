@@ -54,6 +54,7 @@
 				<th>${uiLabel.ProjectDirector}</th>
 				<th>${uiLabel.ProjectCallName}</th>
 				<th>${uiLabel.Faculty}</th>
+				<th>Trang thai</th>
 				<th>${uiLabel.TotalEvaluation}</th>
 				<th>${uiLabel.NumberReviewers}</th>
 				<th>${uiLabel.AverageEvaluation}</th>
@@ -83,6 +84,12 @@
 			<#else>
 				<td></td>
 			</#if>
+			<#if p.statusName?exists>
+				<td>${p.statusName}</td>
+			<#else>
+				<td></td>
+			</#if>
+
 			<#if p.totalEvaluation?exists>
 				<td>${p.totalEvaluation}</td>
 			<#else>

@@ -150,6 +150,7 @@
 		<field name="researchProjectProposalId" type="id-ne"></field>
 		<field name="researchProjectProposalCode" type="id-vlong"></field>
 		<field name="partyId" type="id-ne" ></field>
+		<field name="parentResearchProjectProposalId" type="id-ne" ></field>
 		<field name="createStaffId" type="id-vlong"></field>
 		<field name="projectCallId" type="id-vlong"></field>
 		<field name="projectCategoryId" type="id-vlong"></field>

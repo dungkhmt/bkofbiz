@@ -54,6 +54,7 @@
 				<th>${uiLabel.ProjectDirector}</th>
 				<th>${uiLabel.ProjectCallName}</th>
 				<th>${uiLabel.Faculty}</th>
+				<th>${uiLabel.Status}</th>
 			</tr>
 		</thead>
 	<tbody>
@@ -77,6 +78,12 @@
 			</#if>
 			<#if p.facultyName?exists>
 				<td>${p.facultyName}</td>
+			<#else>
+				<td></td>
+			</#if>
+			
+			<#if p.statusName?exists>
+				<td>${p.statusName}</td>
 			<#else>
 				<td></td>
 			</#if>
