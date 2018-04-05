@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.bkeuniv.config.ConfigParams;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
@@ -37,7 +38,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-
 import org.ofbiz.utils.BKEunivUtils;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class PaperDeclarationService {
 
 	public static String establishFullFilename(String staffId, String name) {
 		
-		String path = BKEunivUtils.dataFolder + File.separator + staffId + File.separator
+		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
 				+ "papers";
 		System.out.println("\n\n\t****************************************\n\t"
 				+ path + "+\n\t");

@@ -12,6 +12,7 @@ import javolution.util.FastList;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.bkeuniv.config.ConfigParams;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -63,7 +64,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	}
 
 	public static String establishFullFilename(String staffId, String name) {
-		String path = BKEunivUtils.dataFolder + File.separator + staffId + File.separator
+		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
 				+ "projects";
 		Debug.log(module + "::establishFullFilename, path = " + path);
 		String fullname = path + File.separator + name;

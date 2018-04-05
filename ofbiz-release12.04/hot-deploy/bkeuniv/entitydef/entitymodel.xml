@@ -95,6 +95,13 @@
 		<prim-key field="statisticId"/>
 	</entity>
 	
+	<entity entity-name="ConfigParams" package-name="org.ofbiz.bkeuniv">
+		<field name="paramId" type="id-ne"></field>
+		<field name="paramName" type="very-long"></field>
+		<field name="value" type="very-long"></field>
+		<prim-key field="paramId"/>
+	</entity>
+	
 	<entity entity-name="ProjectCategory" package-name="org.ofbiz.bkeuniv">
 		<field name="projectCategoryId" type="id-vlong"></field>
 		<field name="projectCategoryName" type="very-long"></field>
