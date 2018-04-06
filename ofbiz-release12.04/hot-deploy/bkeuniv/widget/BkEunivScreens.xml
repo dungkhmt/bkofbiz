@@ -798,6 +798,53 @@
 		</section>
 	</screen>
 	
+	<screen name="researchProgram">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProgramUiLabels" map-name="uiResearchProgramLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/researchprogram/researchProgram.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="research-program">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProgramUiLabels" map-name="uiResearchProgramLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+	
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/researchprogram/researchprogram.ftl" />
+							</html>
+						</platform-specific>
+	
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
 	
 
 </screens>

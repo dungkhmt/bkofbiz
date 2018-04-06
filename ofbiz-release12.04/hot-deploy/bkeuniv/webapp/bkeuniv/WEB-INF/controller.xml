@@ -668,6 +668,45 @@
 		<response name="error" type="request" value="json" />
 	</request-map>
 	
+	<request-map uri="research-program">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="research-program"/>
+    
+    </request-map>
+
+
+ <request-map uri="get-research-program">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getResearchProgram"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-research-program">
+		<security https="true" auth="true"/>
+		<!-- 
+		<event type="service" invoke="createEducationProgress"></event>
+		 -->
+		<event type="java" invoke="createResearchProgramRequestResponse" path="org.ofbiz.bkeuniv.researchprogram.researchProgram"></event>
+		 
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-research-program">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateResearchProgram"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-research-program">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteResearchProgram"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -692,6 +731,7 @@
 	<view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
 	<view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
 	<view-map name="view-staff-research-speciality" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchSpeciality"/>
+    <view-map name="research-program" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#researchProgram"/>
     
    <view-map name="view-dowload-pdf" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDowloadPDF" content-type="application/pdf" encoding="none"/>
     

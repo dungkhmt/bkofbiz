@@ -10,6 +10,46 @@
             Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
         </description>
     </service> 
+      <service name="getResearchProgram" engine="java" 
+    		location="org.ofbiz.bkeuniv.researchprogram.researchProgram" invoke="getResearchProgram">
+    	<attribute name="researchProgramId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchProgramName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="fromDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="thruDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchProgram" mode="OUT" type="List"></attribute>
+    </service>
+    
+    
+    <service name="createResearchProgram" engine="java" 
+    		location="org.ofbiz.bkeuniv.researchprogram.researchProgram" invoke="createResearchProgram">
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="researchProgramName" mode="IN" type="String"></attribute>
+    	<attribute name="fromDate" mode="IN" type="String"></attribute>
+    	<attribute name="thruDate" mode="IN" type="String"></attribute>
+    	<attribute name="researchProgram" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateResearchProgram" engine="java" 
+    		location="org.ofbiz.bkeuniv.researchprogram.researchProgram" invoke="updateResearchProgram">
+    	<attribute name="researchProgramId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId" mode="IN" type="String"></attribute>
+    	<attribute name="researchProgramName" mode="IN" type="String"></attribute>
+    	<attribute name="fromDate" mode="IN" type="String"></attribute>
+    	<attribute name="thruDate" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="researchProgram" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="deleteResearchProgram" engine="java" 
+    		location="org.ofbiz.bkeuniv.researchprogram.researchProgram" invoke="deleteResearchProgram">
+    	<attribute name="researchProgramId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String"></attribute>
+    </service>
+    
     
     
 </services>
