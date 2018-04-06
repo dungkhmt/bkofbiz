@@ -137,6 +137,11 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="detail-project-call">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-detail-project-call" />
+		<response name="error" type="view" value="view-detail-project-call" />
+	</request-map>
 
 	<request-map uri="list-research-project-proposal-school">
 		 <security https="true" auth="true"/>
@@ -460,6 +465,8 @@
   <view-map name="view-form-add-workpackages-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddWorkpackagesOfProjectProposal"/>
   <view-map name="view-products-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProductsOfProjectProposal"/>
   <view-map name="view-form-add-products-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProductsOfProjectProposal"/>
+
+  <view-map name="view-detail-project-call" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailProjectCall"/>
 
   <view-map name="view-list-research-project-proposal-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalSchoolSetting"/>
   <view-map name="view-list-research-project-proposal-university" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalUniversitySetting"/>

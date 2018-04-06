@@ -242,6 +242,38 @@
 		</section>
 	</screen>
 
+	<screen name="DetailProjectCall">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="projectCallId" type="PlainString" from-field="${parameters.projectCallId}" global="true"/>
+				
+				<service service-name="getAProjectCallFull" result-map="resultProjectCall">
+					<field-map field-name="projectCallId" value="${parameters.projectCallId}"/>
+				</service>	
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+ 
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailProjectCall.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+	
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="DetailResearchProjectProposal">
 		<section>
 			<actions>

@@ -113,6 +113,14 @@
 	/>
 </div>
 
+			  <!--
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForSubmission}', cmd: "=openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivCloseProjectCall}', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivCloseProjectCallForRevision}', cmd: "closeprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivOpenEvaluation}', cmd: "openevaluation", uiIcon: "glyphicon glyphicon-user"}
+			  -->
+
 <script>
 	var modal;
 	var span;
@@ -124,12 +132,7 @@
 			menu: [
 			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
-			  {title: '${uiLabelMap.BkEunivOpenProjectCallForSubmission}', cmd: "openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"},
-			  {title: '${uiLabelMap.BkEunivCloseProjectCall}', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
-			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
-			  {title: '${uiLabelMap.BkEunivCloseProjectCallForRevision}', cmd: "closeprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
-			  {title: '${uiLabelMap.BkEunivOpenEvaluation}', cmd: "openevaluation", uiIcon: "glyphicon glyphicon-user"}
-			  
+			  {title: '${uiLabelMap.BkEunivDetail}', cmd: "detail", uiIcon: "glyphicon glyphicon-th"}
 			  
 			],
 			select: function(event, ui) {
@@ -141,6 +144,9 @@
 						break;
 					case "delete":
 						jqDelete(data);
+						break;
+					case "detail":
+						viewDetail(data);
 						break;
 					case "closeprojectcall":
 						closeProjectCall(data);
@@ -189,6 +195,10 @@
 			//alert("ban da chon cancel");
 		});
 	
+	}
+	
+	function viewDetail(data){
+		window.location.href="/bkeuniv/control/detail-project-call?projectCallId="+data.projectCallId;
 	}
 	
 	function closeProjectCall(data){

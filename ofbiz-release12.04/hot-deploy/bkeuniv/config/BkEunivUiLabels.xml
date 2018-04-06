@@ -82,6 +82,11 @@
         <value xml:lang="vi">Xóa</value>
     </property>
     
+    <property key="BkEunivDetail">
+        <value xml:lang="en">Detail</value>
+        <value xml:lang="vi">Chi tiết</value>
+    </property>
+
     <property key="BkEunivUpdate">
         <value xml:lang="en">Update</value>
         <value xml:lang="vi">Cập nhật</value>
@@ -189,6 +194,7 @@
         <value xml:lang="vi">Đồng ý</value>
     </property>
     
+ 
     <property key="BkEunivCancel">
         <value xml:lang="en">Cancel</value>
         <value xml:lang="vi">Hủy bỏ</value>

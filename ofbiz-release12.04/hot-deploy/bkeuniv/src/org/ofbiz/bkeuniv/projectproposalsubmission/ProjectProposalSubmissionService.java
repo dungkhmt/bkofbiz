@@ -2241,6 +2241,37 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
+	
+	public static Map<String, Object> getAProjectCallFull(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		String projectCallId = (String) context.get("projectCallId");
+		Debug.log(module + "::getAProjectCallFull, projectCallId = "
+				+ projectCallId);
+		try {
+			GenericValue pc = delegator.findOne("ProjectCallView",
+					UtilMisc.toMap("projectCallId", projectCallId), false);
+			
+			Map<String, Object> in = FastMap.newInstance();
+			in.put("projectCallId", projectCallId);
+			Map<String, Object> rs = dispatcher.runSync("getListFilteredProjectProposals", in);
+			long numberSubmissions = 0;
+			List<GenericValue> lst = (List<GenericValue>)rs.get("projectproposals");
+			if(lst != null)
+				numberSubmissions = lst.size();
+			
+			retSucc.put("projectCall", pc);
+			retSucc.put("numberSubmissions", numberSubmissions);
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 
 	public static Map<String, Object> removeAProjectCall(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
