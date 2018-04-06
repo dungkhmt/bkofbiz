@@ -420,7 +420,16 @@
 				
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
-				
+				<set field="titlePage" value="Danh sach thuyet minh de tai" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/froala_editor.pkgd.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/froala_style.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/froala_editor.pkgd.min.js" global="true" />
+
+
+				<set field="layoutSettings.scripts[]" value="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/js/languages/vi.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/js/plugins/inline_style.min.js" global="true" />
+
+
 				<service service-name="getListFilteredProjectProposals" result-map="resultProjectProposals">
 					<field-map field-name="facultyId" value="${parameters.facultyId}"/>
 					<field-map field-name="projectCallId" value="${parameters.projectCallId}"/>

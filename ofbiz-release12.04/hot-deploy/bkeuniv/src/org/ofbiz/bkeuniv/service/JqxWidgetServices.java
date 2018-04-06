@@ -37,8 +37,8 @@ import org.ofbiz.service.LocalDispatcher;
  * TODO: seperate UI and functionality matters ! 
  Seperate business logic, do not access entity directly, please do it under a business logic service
  */
-public class JqxWidgetSevices {
-	public static final String module = JqxWidgetSevices.class.getName();
+public class JqxWidgetServices {
+	public static final String module = JqxWidgetServices.class.getName();
 	public static final String resource = "widgetUiLabels";
 	public static final String resourceError = "widgetErrorUiLabels";
 

@@ -255,7 +255,7 @@
 			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>
-				    		r.${field} = d.${field}||"";
+				    		r.${field} = d.${field};
 				    	</#list>		
 				    	return r;
 			    	})
@@ -574,7 +574,13 @@
 					</th>
 					<#list columns as column>
 						<th>
-							<@FlatButton id="${column.data}" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+							<#if column.pWidth??>
+								<#assign wd="width: "+column.pWidth/>
+							<#else>
+								<#assign wd="width: 100%"/>
+							</#if>
+							
+							<@FlatButton id="${column.data}" style="${wd}; padding-right: 30px; padding-left: 10px;">
 								${column.name}
 							</@FlatButton>
 						</th>

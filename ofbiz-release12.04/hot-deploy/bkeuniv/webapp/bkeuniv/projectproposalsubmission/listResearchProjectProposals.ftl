@@ -1,164 +1,226 @@
-<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
-<#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
-  <head>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+<body>
+<div class="body">
 
-    
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    
-    
-    <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
-    
-    <meta charset="utf-8" />
-    
-    <title>DataTables - Context menu integration</title>
-  
-  </head>
-  
- <style>
-#form-excel {
-    margin-top: 20px;
-    margin-left: 20px;
-    overflow: scroll;
-}
+	<#assign columns=[
+		{
+			"name": uiLabel.ProjectProposalName?j_string,
+			"data": "researchProjectProposalName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + dataColumns.researchProjectProposalName + "</a>";
+			}'
+		},
+		{
+			"name": uiLabel.ProjectDirector?j_string,
+			"data": "createStaffName"
+		},
+		{
+			"name": uiLabel.ProjectCallName?j_string,
+			"data": "projectCallName"
+		},
+		{
+			"name": uiLabel.Faculty?j_string,
+			"data": "facultyName"
+		},
+		{
+			"name": uiLabel.AverageEvaluation?j_string,
+			"data": "numberEvaluations",
+			"pWidth":"150px",
+			"render": 'function(value, name, dataColumns, id) {
+                if(dataColumns.totalEvaluation>0&&(!!value||value===0)) {
+                    return parseFloat(value/dataColumns.totalEvaluation).toFixed(2);
+                } else {
+					return "N/A"
+				}
+			}'
+		}
+		<#--  ,
+		{
+			"name": "",
+			"data": "graduateDate"
+		}   -->
+	] />
+	
+	<#assign fields=[
+		"researchProjectProposalId",
+		"researchProjectProposalName",
+		"createStaffName",
+		"projectCallName",
+		"facultyName",
+		"totalEvaluation",
+		"numberEvaluations"
+	] />
+	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	
+	<@jqDataTable
+		id="DataTable-filtered-project-proposals"
+		urlData="/bkeuniv/control/get-list-filtered-project-proposals" 
+		columns=columns 
+		dataFields=fields 
+		sizeTable=sizeTable
+		keysId=["researchProjectProposalId"] 
+		fieldDataResult = "projectproposals" 
+		contextmenu=false
+	/>
+</div>
+<script>
+	var titlePage='${titlePage}';
+	function sendEmail() {
+		var subject = document.getElementById("subject-message").value;
+		var to = document.getElementById("recipients-message").value;
+		var body = $('textarea#content').val();
+
+		if(!to) {
+			alertify
+			.alert("Lỗi", "Mục người gửi không được để trống", function(){
+				
+			});
+
+			return;
+		}
+
+		if(!subject) {
+			alertify
+			.alert("Lỗi", "Tiêu đề thư không được để trống", function(){
+
+			});
+
+			return;
+		}
+
+		if(!body) {
+			alertify
+			.alert("Lỗi", "Nội dung thư không được để trống", function(){
+
+			});
+
+			return;
+		}
+
+		$.ajax({
+			url: "/bkeuniv/control/test-send-email",
+			type: 'POST',
+			data: {
+				"to": to,
+				"subject": subject,
+				"body": body
+			},
+			success:function(rs){
+				alertify.success('Gửi email thành công');
+			},
+			error: function(err) {
+				alertify.error('Lỗi hệ thống <br>Vui lòng thử lại sau 5 phút');
+			}
+		});
+	}
+</script>
+<style>
+	.task-title {
+		position: absolute;
+    	right: 0px;
+	}
+
+	.task-title img {
+		opacity: .6;
+		position: relative;
+		top: 2px;
+		height: 30px;
+	}
+
+	.task-title i {
+		opacity: .6;
+		position: relative;
+		top: 2px;
+	}
+
+	.task-title .minimize {
+		background-size: 24px 882px;
+		width: 24px;
+    	height: 24px;
+		color: #fff;
+	}
+
+	.task-title .close_window {
+		background-size: 24px 882px;
+		width: 24px;
+    	height: 24px;
+		color: #fff;
+	}
+
+	.task-title .expand_window {
+		background-size: 24px 882px;
+		width: 24px;
+    	height: 24px;
+		color: #fff;
+	}
+
+	.header-message {
+		display: block;
+		width: 100%;
+		height: 34px;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		background-color: #fff;
+		background-image: none;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		font-family: arial,sans-serif;
+		color: #222;
+		background-color: white;
+		font-size: 13px;
+	}
+
+	.header-message:focus {
+		border-bottom: 1px solid #66afe9!important;
+		outline: 0;
+	}
+	
 </style>
 
-
-
-  
-<@Loader handleToggle="loader">
-	<@IconSpinner/>
-</@Loader>
-
-<script>
-  	loader.open();
-  </script>
-
-<div id="form-excel">
-<!--
-<@buttonStore text="EXCEL" action="excel()"/>
--->
-
-<div id="table-list" style="overflow-y: auto; padding: 2em;">
-	<table id="list" cellspacing="0" width="100%" class="display dataTable">
-		<thead>
-			<tr>
-				<th style="display: none"></th>
-				<th>${uiLabel.ProjectProposalName}</th>
-				<th>${uiLabel.ProjectDirector}</th>
-				<th>${uiLabel.ProjectCallName}</th>
-				<th>${uiLabel.Faculty}</th>
-				<!--
-				<th>${uiLabel.TotalEvaluation}</th>
-				<th>${uiLabel.NumberReviewers}</th>
-				-->
-				<th>${uiLabel.AverageEvaluation}</th>
-				<th></th>
-			</tr>
-		</thead>
-	<tbody>
-	<#list resultProjectProposals.projectproposals as p>
-		<tr>
-			<td style="display: none">${p.researchProjectProposalId}</td>
-			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if p.createStaffName?exists>
-				<td>${p.createStaffName}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if p.projectCallName?exists>
-				<td>${p.projectCallName}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if p.facultyName?exists>
-				<td>${p.facultyName}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<!--
-			<#if p.totalEvaluation?exists>
-				<td>${p.totalEvaluation}</td>
-			<#else>
-				<td></td>
-			</#if>
-			-->
-			<#assign average = 0>
-			<#if p.numberEvaluations?exists>
-				<!--
-				<td>${p.numberEvaluations}</td>
-				-->
-				<#if 0 < p.numberEvaluations>
-					<#assign average = p.totalEvaluation/p.numberEvaluations/>
-				</#if>
-
-			<#else>
-				<!--
-				<td></td>
-				-->
-			</#if>
-			
-			<td>${average}</td>
-			<td><a href="/bkeuniv/control/require-update-proposal">${uiLabel.RequireUpdateProposal}</a></td>
-			</tr>
-	</#list>
-	</tbody>
-	</table>
-	
+<div style="position: relative; top: 0; left: 0; right: 0; bottom: 0;">
+	<div style="width: 50%; float: right; height: 100%;">
+		<div style="position: absolute; bottom: 0; right: 0;margin: 0px 5px 2px 0px; -webkit-box-shadow: rgba(0,0,0,0.2) 0 2px 6px; box-shadow: rgba(0,0,0,0.2) 0 2px 6px;">	
+			<div class="title-message row" style="line-height: 2; margin: 0; background-color: #404040; height: 30px;">
+				<div class="col-xs-9" style="vertical-align: middle; color: #ffffff;">
+					New Message
+				</div>
+				<div class="col-xs-3">
+					<div class="task-title">
+						<i class="fa fa-window-minimize minimize" ></i>
+						<i class="fa fa-expand expand_window" ></i>
+						<i class="fa fa-times close_window" ></i>
+					</div>
+				</div>
+			</div>
+			<div class="content-message" style="background: #fff; border: 1px solid #ccc; overflow: hidden;">
+				<input type="text" class="header-message" placeholder="To" style="border-radius: unset; border: none; border-bottom: 1px solid #cfcfcf;" id="recipients-message">
+				<input type="text" class="header-message" placeholder="Subject" style="border-radius: unset; border: none;" id="subject-message">
+				<textarea id="content">
+				</textarea>
+				<script>
+					$(function() {
+						$('textarea#content').froalaEditor({
+							charCounterCount : false,
+							language: 'vi',
+							height: 300,
+							width: '500',
+							toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', '|', 'align', 'formatOL', 'formatUL', 'quote', '-', 'insertLink', 'insertImage', 'embedly', 'insertFile', 'insertTable', '|', 'clearFormatting', '|', 'spellChecker', 'help', 'html', '|', 'undo', 'redo']
+						});
+					});
+				</script>
+				<div class="action-message row" style="margin: 0; background-color: #f5f5f5; height: 45px;">
+					<div class="col-xs-1">
+						<button onClick="sendEmail()" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">Gui <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+					</div>
+					<div class="col-xs-10">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-</div>
-
-<script>
-var obj;
-
-function excel(){
-	alert("list project sumission excel");
-}
-
-$(document).ready(function() {
-  loader.close();
-  var oTable = $('#list').dataTable({
-    "bJQueryUI": true,
-    "sDom": 'l<"H"Rf>t<"F"ip>'
-  });
-  
-  /*
-  $(document).contextmenu({
-    delegate: ".dataTable td",
-    menu: [
-      {title: "Delete", cmd: "delete"},
-      {title: "Edit", cmd: "edit"}
-    ],
-    select: function(event, ui) {
-        switch(ui.cmd){
-            case "delete":
-                $(ui.target).parent().remove();
-                break;
-            case "edit":
-				obj = ui;
-				var el = ui.target.parent();
-				var paperId = el.children()[0].innerHTML;
-				alert('edit paper ' + paperId);
-			    break;
-        }
-    },
-    beforeOpen: function(event, ui) {
-        var $menu = ui.menu,
-            $target = ui.target
-        ui.menu.zIndex(0);
-    }
-  });
-  */
-    
-} );
-</script>

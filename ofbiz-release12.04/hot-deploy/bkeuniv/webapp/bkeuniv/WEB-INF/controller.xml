@@ -656,6 +656,13 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="get-list-filtered-project-proposals">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getListFilteredProjectProposals"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="export-excel-work-progress">
 		<security auth="true" https="true" />
 		<event type="java" path="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
@@ -667,6 +674,13 @@
 			invoke="wrapStatusResponse" />
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
+	</request-map>
+
+	<request-map uri="test-send-email">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.service.EmailService" invoke="sendEmail"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
     <!-- View Mappings -->
