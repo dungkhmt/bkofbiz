@@ -11,6 +11,11 @@
         <value xml:lang="vi">Tên đề tài</value>
     </property>
     
+    <property key="Status">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng thái</value>
+    </property>
+
     <property key="ProjectDirector">
         <value xml:lang="en">Project director</value>
         <value xml:lang="vi">Chủ nhiệm đề tài</value>
@@ -103,6 +108,11 @@
         <value xml:lang="vi">Đợt gọi đề tài</value>
     </property>
 
+    <property key="numberSubmissions">
+        <value xml:lang="en">Number of submissions</value>
+        <value xml:lang="vi">Số đề tài đã nộp</value>
+    </property>
+
     <property key="Year">
         <value xml:lang="en">Year</value>
         <value xml:lang="vi">Năm</value>
@@ -168,6 +178,11 @@
         <value xml:lang="vi">Đánh giá</value>
     </property>
     
+    <property key="ViewEvaluation">
+        <value xml:lang="en">View Evaluate</value>
+        <value xml:lang="vi">Xem Đánh giá</value>
+    </property>
+
     <property key="Motivation">
         <value xml:lang="en">Motivation</value>
         <value xml:lang="vi">Lí do lựa chọn đề tài</value>
@@ -278,6 +293,11 @@
     <property key="ViewList">
         <value xml:lang="en">View List</value>
         <value xml:lang="vi">Xem danh sách</value>
+    </property>
+
+    <property key="GenerateCode">
+        <value xml:lang="en">Generate Code</value>
+        <value xml:lang="vi">Sinh mã</value>
     </property>
 
     <property key="Excel">

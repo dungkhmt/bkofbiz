@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
@@ -52,8 +55,9 @@ public class ProjectProposalSubmissionService {
 	public static String module = ProjectProposalSubmissionService.class
 			.getName();
 
-	public static String dataFolder = "." + File.separator + "euniv-deploy";
+	//public static String dataFolder = "." + File.separator + "euniv-deploy";
 
+	/*
 	public static String establishFullFilename(String staffId, String name) {
 		String path = dataFolder + File.separator + staffId + File.separator
 				+ "projects";
@@ -74,7 +78,8 @@ public class ProjectProposalSubmissionService {
 
 		return fullname;
 	}
-
+	*/
+	
 	public static void enableReviewerProposalAssignment(Delegator delegator,
 			String juryId, String staffId, String researchProjectProposalId) {
 		try {
@@ -333,6 +338,73 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 		}
 	}
+	public static String openEvaluationResult(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String) request.getParameter("projectCallId");
+		Debug.log(module + "::openEvaluationResult, projectCall "
+				+ projectCallId);
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+			
+			List<GenericValue> list = delegator.findList("ResearchProjectProposal", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			for(GenericValue p: list){
+				p.put("evaluationOpenFlag","Y");
+				delegator.store(p);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return "success";
+	}
+	public static String generateCodeProjectProposals(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String) request.getParameter("projectCallId");
+		String prefix = "T-PC";
+		
+		Debug.log(module + "::generateCodeProjectProposals, projectCall "
+				+ projectCallId);
+		try {
+			GenericValue pc = delegator.findOne("ProjectCall", UtilMisc.toMap("projectCallId",projectCallId),false);
+			String year = (String)pc.get("year");
+			prefix = "T" + year + "-PC";
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_APPROVED_UNIVERSITY));
+			
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("facultyId");
+			
+			List<GenericValue> list = delegator.findList("ResearchProjectProposal", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					orderBy, 
+					null, 
+					false);
+			int idx = 0;
+			for(GenericValue p: list){
+				idx++;
+				String code = prefix + "-" + ProjectProposalSubmissionServiceUtil.addPading(idx + "", 3);
+				p.put("researchProjectProposalCode", code);
+				delegator.store(p);
+				
+				Debug.log(module + "::generateCodeProjectProposals, prjec " + p.getString("researchProjectProposalName")
+						+ " with code = " + code);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return "success";
+	}
 
 	public static String closeProjectCall(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -402,10 +474,17 @@ public class ProjectProposalSubmissionService {
 	public static String acceptReviseProjectProposal(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		//GenericDelegator gdelegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+		//LocalDispatcher dispatcher = org.ofbiz.service.ServiceDispatcher.getLocalDispatcher("default", gdelegator);
+		 
 		String researchProjectProposalId = (String) request.getParameter("researchProjectProposalId");
+		String newStatusId = ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_ACCEPT_REVISE;
 		Debug.log(module + "::acceptReviseProjectProposal, researchProjectProposalId "
 				+ researchProjectProposalId);
+		
 		try {
+			/*
 			GenericValue pc = delegator.findOne("ResearchProjectProposal",
 					UtilMisc.toMap("researchProjectProposalId", researchProjectProposalId), false);
 			if (pc != null) {
@@ -414,6 +493,13 @@ public class ProjectProposalSubmissionService {
 				delegator.store(pc);
 				
 			}
+			*/
+			//Map<String, Object> in = FastMap.newInstance();
+			//in.put("researchProjectProposalId", researchProjectProposalId);
+			//Map<String, Object> rs = 
+			ProjectProposalSubmissionServiceUtil.cloneProjectProposalWithNewStatus(delegator, researchProjectProposalId, newStatusId);
+			
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return "failed";
@@ -461,6 +547,23 @@ public class ProjectProposalSubmissionService {
 				Debug.log(module
 						+ "::openProjectCallForRevision, OPEN successfully projectCall "
 						+ projectCallId);
+				
+				/*
+				// update status of all project proposal of this project call
+				
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+				conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_UNDER_REVIEW));
+				List<GenericValue> lstPrj = delegator.findList("ResearchProjectProposal", 
+						EntityCondition.makeCondition(conds), null,null,null, false);
+				for(GenericValue p: lstPrj){
+					p.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_ACCEPT_REVISE);
+					delegator.store(p);
+				}
+				*/
+				
+				
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -468,6 +571,47 @@ public class ProjectProposalSubmissionService {
 		}
 		return "success";
 	}
+	public static String closeProjectCallForRevision(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String) request.getParameter("projectCallId");
+		Debug.log(module + "::closeProjectCallForRevision,  projectCall "
+				+ projectCallId);
+		try {
+			GenericValue pc = delegator.findOne("ProjectCall",
+					UtilMisc.toMap("projectCallId", projectCallId), false);
+			if (pc != null) {
+				pc.put("statusId",
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CLOSED_REVISED);
+				delegator.store(pc);
+				Debug.log(module
+						+ "::openProjectCallForRevision, OPEN successfully projectCall "
+						+ projectCallId);
+				
+				/*
+				// update status of all project proposal of this project call
+				
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+				conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,
+						ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_UNDER_REVIEW));
+				List<GenericValue> lstPrj = delegator.findList("ResearchProjectProposal", 
+						EntityCondition.makeCondition(conds), null,null,null, false);
+				for(GenericValue p: lstPrj){
+					p.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_ACCEPT_REVISE);
+					delegator.store(p);
+				}
+				*/
+				
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
+
 	public static void addProjectProposalJury(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -586,6 +730,8 @@ public class ProjectProposalSubmissionService {
 			Long evaluationReasonableBudget = Long.valueOf(request
 					.getParameter("evaluationReasonableBudget"));
 
+			String comments = (String)request.getParameter("comments");
+			
 			Long totalEvaluation = evaluationInnovation + evaluationMotivation
 					+ evaluationApplicability + evaluationResearchMethod
 					+ evaluationResearchContent + evaluationPaper
@@ -619,6 +765,8 @@ public class ProjectProposalSubmissionService {
 
 			gv.put("totalEvaluation", totalEvaluation);
 
+			gv.put("comments", comments);
+			
 			delegator.store(gv);
 
 			String rs = "{\"result\":\"OK\"}";
@@ -641,7 +789,7 @@ public class ProjectProposalSubmissionService {
 			String reviewerResearchProposalId = request
 					.getParameter("reviewerResearchProposalId");
 			Debug.log(module
-					+ "::updateReviewProjectProposal, reviewerResearchProposalId = "
+					+ "::confirmReviewProjectProposal, reviewerResearchProposalId = "
 					+ reviewerResearchProposalId);
 
 			GenericValue gv = delegator.findOne("ReviewerResearchProposal",
@@ -956,7 +1104,7 @@ public class ProjectProposalSubmissionService {
 					"researchProjectProposalId", EntityOperator.EQUALS,
 					researchProjectProposalId));
 			List<GenericValue> list = delegator.findList(
-					"ProjectProposalRoleView",
+					"ProjectProposalMemberView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			Debug.log(module + "::getMembersOfProjectProposal, list.sz = "
@@ -1110,6 +1258,88 @@ public class ProjectProposalSubmissionService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> getListProjectCallsAndProposalJuriesUniversity(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = (String) userLogin.getString("userLoginId");
+
+		try {
+			Delegator delegator = ctx.getDelegator();
+			LocalDispatcher dispatcher = ctx.getDispatcher();
+
+			Map<String, Object> in = FastMap.newInstance();
+			/*
+			in.put("universityId", "HUST");
+			in.put("userLogin", userLogin);
+
+			Map<String, Object> rs = dispatcher
+					.runSync("getFacultyOfStaff", in);
+			List<GenericValue> fal = (List<GenericValue>) rs.get("faculties");
+			String facultyId = null;
+			if (fal != null && fal.size() > 0)
+				facultyId = (String) (fal.get(0).getString("facultyId"));
+			Debug.log(module + "::getListProjectCallsAndProposalJuriesSchool, staffId = " + staffId 
+					+ ", facultyId = " + facultyId);
+			*/
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
+
+			List<GenericValue> projectCalls = delegator.findList(
+					"ProjectCallView", EntityCondition.makeCondition(conds),
+					null, null, null, false);
+
+			String facultyId = "UNIVERSITY";
+			List<Map<String, Object>> resultList = FastList.newInstance();
+			for (GenericValue pc : projectCalls) {
+				Map<String, Object> pcj = FastMap.newInstance();
+
+				String projectCallId = (String) pc.getString("projectCallId");
+				String projectCallName = (String) pc
+						.getString("projectCallName");
+				String year = (String) pc.getString("year");
+				String projectCategoryName = (String) pc
+						.getString("projectCategoryName");
+				String statusName = (String) pc.getString("statusName");
+
+				pcj.put("projectCallId", projectCallId);
+				pcj.put("projectCallName", projectCallName);
+				pcj.put("year", year);
+				pcj.put("projectCategoryName", projectCategoryName);
+				pcj.put("statusName", statusName);
+
+				conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("projectCallId",
+						projectCallId));
+				conds.add(EntityCondition.makeCondition("facultyId", facultyId));
+				List<GenericValue> juries = delegator.findList("Jury",
+						EntityCondition.makeCondition(conds), null, null, null,
+						false);
+				if (juries != null && juries.size() > 0) {
+					GenericValue jury = juries.get(0);
+					String juryId = jury.getString("juryId");
+					String juryName = jury.getString("juryName");
+
+					pcj.put("juryId", juryId);
+					pcj.put("juryName", juryName);
+					Debug.log(module + "::getListProjectCallsAndProposalJuriesSchool, staffId = " + staffId 
+							+ ", facultyId = " + facultyId + ", juryId = " + juryId + ", juryName = " + juryName);
+				}
+				resultList.add(pcj);
+			}
+
+			retSucc.put("projectCalls", resultList);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> getAProjectCall(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -1200,6 +1430,128 @@ public class ProjectProposalSubmissionService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> cloneProjectProposalWithNewStatus(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String researchProjectProposalId = context.get("researchProjectProposalId") + "";
+		String newStatusId = context.get("newStatusId") + "";
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		Map<String, Object> userLogin = (Map<String, Object>) context.get("userLogin");
+		Debug.log(module + "::cloneProjectProposalWithNewStatus, researchProjectProposalId = " +
+		researchProjectProposalId + ", newStatusId = " + newStatusId);
+		
+		try{
+			
+			ProjectProposalSubmissionServiceUtil.cloneProjectProposalWithNewStatus(delegator, 
+					researchProjectProposalId, newStatusId);
+			
+			/*
+			GenericValue p = delegator.findOne("ResearchProjectProposal", 
+					UtilMisc.toMap("researchProjectProposalId",researchProjectProposalId),false);
+			
+			// create a ResearchProjectProposal
+			String newResearchProjectProposalId = delegator.getNextSeqId("ResearchProjectProposal");
+			GenericValue np = delegator.makeValue("ResearchProjectProposal");
+			np.put("researchProjectProposalId", newResearchProjectProposalId);
+			np.put("statusId", newStatusId);
+			
+			np.put("researchProjectProposalCode", (String)p.get("researchProjectProposalCode"));
+			np.put("partyId", (String)p.get("partyId"));
+			np.put("createStaffId", (String)p.get("createStaffId"));
+			np.put("projectCallId", (String)p.get("projectCallId"));
+			np.put("projectCategoryId", (String)p.get("projectCategoryId"));
+			np.put("researchProjectProposalName", (String)p.get("researchProjectProposalName"));
+			np.put("totalBudget", (Long)p.get("totalBudget"));
+			np.put("approvedByStaffId", (String)p.get("approvedByStaffId"));
+			np.put("facultyId", (String)p.get("facultyId"));
+			np.put("startDate", (java.sql.Date)p.get("startDate"));
+			np.put("endDate", (java.sql.Date)p.get("endDate"));
+			np.put("deliverable", (String)p.get("deliverable"));
+			np.put("materialBudget", (Long)p.get("materialBudget"));
+			np.put("evaluationOpenFlag", (String)p.get("evaluationOpenFlag"));
+			
+			// clone uploaded file
+			String staffId = (String) p.get("createStaffId");
+			String filenameDB = (String) p.get("sourceFileUpload");
+			String fullFileName = ProjectProposalSubmissionServiceUtil.establishFullFilename(staffId, filenameDB);
+			
+			String ext = ProjectProposalSubmissionServiceUtil.getExtension(filenameDB);
+			java.util.Date currentDate = new java.util.Date();
+			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
+					"yyyyMMddHHmmss");
+			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+			String newFilenameDB = sCurrentDate + "." + ext;
+			String newFullFileName = ProjectProposalSubmissionServiceUtil.establishFullFilename(staffId, newFilenameDB);
+
+			Files.copy((new File(fullFileName)).toPath(), (new File(newFullFileName)).toPath(),StandardCopyOption.REPLACE_EXISTING);
+			np.put("sourceFileUpload", newFilenameDB);
+			
+			delegator.create(np);
+			
+			
+			
+			// clone content of project proposal
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId",EntityOperator.EQUALS,researchProjectProposalId));
+			
+			List<GenericValue> lstContents = delegator.findList("ResearchProposalContentItem",
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			for(GenericValue c: lstContents){
+				GenericValue nc = delegator
+						.makeValue("ResearchProposalContentItem");
+				String contentItemSeq = delegator
+						.getNextSeqId("ResearchProposalContentItem");
+
+				nc.put("researchProjectProposalId", newResearchProjectProposalId);
+				nc.put("contentItemSeq", contentItemSeq);
+				nc.put("staffId", (String)c.get("staffId"));
+				nc.put("content", (String)c.get("content"));
+				nc.put("workingDays", (Long)c.getLong("workingdays"));
+				nc.put("budget", (BigDecimal)c.getBigDecimal("budget"));
+
+				delegator.create(nc);
+			}
+			
+			// clone members of project proposal
+			List<GenericValue> lstMembers = delegator.findList("ProjectProposalMember",
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			for(GenericValue m: lstMembers){
+				GenericValue nm = delegator.makeValue("ProjectProposalMember");
+				String projectProposalMemberId = delegator.getNextSeqId("ProjectProposalMember");
+				
+				nm.put("projectProposalMemberId", projectProposalMemberId);
+				nm.put("researchProjectProposalId", newResearchProjectProposalId);
+				nm.put("staffId", (String)m.get("staffId"));
+				nm.put("roleTypeId", (String)m.get("roleTypeId"));
+				nm.put("fromDate", (java.sql.Date)m.get("fromDate"));
+				nm.put("thruDate", (java.sql.Date)m.get("thruDate"));
+				
+				delegator.create(nm);
+			}
+			
+			// clone products of project proposal
+			List<GenericValue> lstProducts = delegator.findList("ResearchProposalProduct",
+					EntityCondition.makeCondition(conds),null,null,null,false);
+			for(GenericValue pr: lstProducts){
+				String researchProductId = delegator.getNextSeqId("ResearchProposalProduct");
+				GenericValue npr = delegator.makeValue("ResearchProposalProduct");
+				
+				npr.put("researchProductId", researchProductId);
+				npr.put("researchProjectProposalId", newResearchProjectProposalId);
+				npr.put("researchProductTypeId", (String)pr.get("researchProductTypeId"));
+				npr.put("researchProductName", (String)pr.get("researchProductName"));
+				npr.put("quantity", (Long)pr.get("quantity"));
+				
+				delegator.create(npr);
+				
+			}
+			*/
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return retSucc;
+	}
 	public static Map<String, Object> getProjectProposal(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		String researchProjectProposalId = context.get("researchProjectProposalId") + "";
@@ -1354,11 +1706,29 @@ public class ProjectProposalSubmissionService {
 					total = total;
 				}
 
+				// get content for computing total budget
+				in.clear();
+				in.put("researchProjectProposalId", researchProjectProposalId);
+				Map<String, Object> retContent = dispatcher.runSync("getProjectProposalContentItem", in);
+				List<GenericValue> contentItems = (List<GenericValue>)retContent.get("projectProposalContentItems");
+				BigDecimal budget = BigDecimal.ZERO;
+				for(GenericValue ci: contentItems){
+					BigDecimal b = (BigDecimal)ci.get("budget");
+					budget = budget.add(b);
+				}
+				
+				
 				Map<String, Object> item = FastMap.newInstance();
 				item.put("researchProjectProposalId",
 						p.get("researchProjectProposalId"));
 				item.put("researchProjectProposalName",
 						p.get("researchProjectProposalName"));
+				item.put("researchProjectProposalCode",
+						p.get("researchProjectProposalCode"));
+				item.put("budget",budget);
+						
+				item.put("statusName",p.getString("statusName"));
+				
 				item.put("createStaffName", p.get("createStaffName"));
 				item.put("projectCallName", p.get("projectCallName"));
 				item.put("facultyName", p.get("facultyName"));
@@ -1616,7 +1986,7 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
-
+	/*
 	public static Map<String, Object> createAMemberOfProjectProposal(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -1673,7 +2043,69 @@ public class ProjectProposalSubmissionService {
 		return retSucc;
 
 	}
+	*/
 
+	public static Map<String, Object> createAMemberOfProjectProposal(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		String researchProjectProposalId = (String) context
+				.get("researchProjectProposalId");
+		List<Object> staffIds = (List<Object>) context.get("staffId[]");
+		List<Object> roleTypeIds = (List<Object>) context.get("roleTypeId[]");
+		Debug.log(module
+				+ "::createAMemberOfProjectProposal, researchProjectProposalId = "
+				+ researchProjectProposalId);
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			String staffName = "";
+			String roleTypeName = "";
+
+			GenericValue gv = delegator.makeValue("ProjectProposalMember");
+			String projectProposalMemberId = delegator.getNextSeqId("ProjectProposalMember");
+			
+			gv.put("projectProposalMemberId", projectProposalMemberId);
+			gv.put("researchProjectProposalId", researchProjectProposalId);
+			if (staffIds != null && staffIds.size() > 0) {
+				gv.put("staffId", (String) staffIds.get(0));
+				GenericValue st = delegator.findOne("Staff",
+						UtilMisc.toMap("staffId", gv.get("staffId")), false);
+				staffName = (String) st.get("staffName");
+			}
+			if (roleTypeIds != null && roleTypeIds.size() > 0) {
+				gv.put("roleTypeId", (String) roleTypeIds.get(0));
+				GenericValue rt = delegator.findOne("ProjectProposalRoleType",
+						UtilMisc.toMap("roleTypeId", gv.get("roleTypeId")),
+						false);
+				roleTypeName = (String) rt.get("roleTypeName");
+			}
+
+			Timestamp now = UtilDateTime.nowTimestamp();
+			java.sql.Date fromDate = new java.sql.Date(now.getTime());
+			
+			gv.put("fromDate", fromDate);
+
+			delegator.create(gv);
+
+			GenericValue rg = delegator.makeValue("ProjectProposalMemberView");
+
+			rg.put("researchProjectProposalId", researchProjectProposalId);
+			rg.put("staffId", (String) gv.get("staffId"));
+			rg.put("roleTypeId", (String) gv.get("roleTypeId"));
+			rg.put("staffName", staffName);
+			rg.put("roleTypeName", roleTypeName);
+
+			retSucc.put("members", rg);
+			retSucc.put("message", "Successfully");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+	
 	public static Map<String, Object> createAProjectProposalSubmission(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -1809,6 +2241,37 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
+	
+	public static Map<String, Object> getAProjectCallFull(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		String projectCallId = (String) context.get("projectCallId");
+		Debug.log(module + "::getAProjectCallFull, projectCallId = "
+				+ projectCallId);
+		try {
+			GenericValue pc = delegator.findOne("ProjectCallView",
+					UtilMisc.toMap("projectCallId", projectCallId), false);
+			
+			Map<String, Object> in = FastMap.newInstance();
+			in.put("projectCallId", projectCallId);
+			Map<String, Object> rs = dispatcher.runSync("getListFilteredProjectProposals", in);
+			long numberSubmissions = 0;
+			List<GenericValue> lst = (List<GenericValue>)rs.get("projectproposals");
+			if(lst != null)
+				numberSubmissions = lst.size();
+			
+			retSucc.put("projectCall", pc);
+			retSucc.put("numberSubmissions", numberSubmissions);
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 
 	public static Map<String, Object> removeAProjectCall(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
@@ -1910,7 +2373,7 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
-
+/*
 	public static String getExtension(String fn) {
 		Debug.log(module + "::getExtension, fn = " + fn);
 		String[] s = fn.split("\\.");
@@ -1918,7 +2381,7 @@ public class ProjectProposalSubmissionService {
 				+ s.length);
 		return s[s.length - 1];
 	}
-
+*/
 	public static void uploadFileProposal(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> m = FastMap.newInstance();
@@ -2024,14 +2487,14 @@ public class ProjectProposalSubmissionService {
 
 			Debug.log(module + "::uploadFileProposal, filename = " + file_name
 					+ ", staffId = " + staffId);
-			String ext = getExtension(file_name);
+			String ext = ProjectProposalSubmissionServiceUtil.getExtension(file_name);
 			java.util.Date currentDate = new java.util.Date();
 			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
-					"HHmmssddMMyyyy");
+					"yyyyMMddHHmmss");
 			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
 
 			String filenameDB = sCurrentDate + "." + ext;
-			String fullFileName = establishFullFilename(staffId, filenameDB);
+			String fullFileName = ProjectProposalSubmissionServiceUtil.establishFullFilename(staffId, filenameDB);
 
 			Debug.log(module + "::uploadFileProposal, filename = " + file_name
 					+ ", researchProjectProposalId = "
@@ -2085,7 +2548,7 @@ public class ProjectProposalSubmissionService {
 							researchProjectProposalId));
 			String staffId = (String) gv.get("createStaffId");
 			String filenameDB = (String) gv.get("sourceFileUpload");
-			String fullFileName = establishFullFilename(staffId, filenameDB);
+			String fullFileName = ProjectProposalSubmissionServiceUtil.establishFullFilename(staffId, filenameDB);
 
 			Debug.log(module
 					+ "::downloadFileProposal, researchProjectProposalId = "

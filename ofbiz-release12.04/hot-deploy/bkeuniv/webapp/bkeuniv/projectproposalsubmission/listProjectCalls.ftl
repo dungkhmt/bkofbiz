@@ -80,7 +80,11 @@
 				<td></td>
 			</#if>
 			<#if pc.statusId == "OPEN">
-				<td><a href="/bkeuniv/control/create-a-proposal?projectCallId=${pc.projectCallId}">${uiLabel.SubmitProposal}</a></td>
+				<#if pc.projectCategoryId == "INST_PROJ">
+					<td><a href="/bkeuniv/control/create-a-proposal?projectCallId=${pc.projectCallId}">${uiLabel.SubmitProposal}</a></td>
+				<#else>
+					<td><a href="/bkeuniv/control/create-a-proposal-ministry?projectCallId=${pc.projectCallId}&facultyId=UNIVERSITY">${uiLabel.SubmitProposal}</a></td>
+				</#if>
 			<#else>
 				<td></td>
 			</#if>

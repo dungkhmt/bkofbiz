@@ -63,6 +63,10 @@
         <value xml:lang="en">Confirm</value>
         <value xml:lang="vi">Xác nhận</value>
     </property>
+    <property key="BkEunivBack">
+        <value xml:lang="en">Back</value>
+        <value xml:lang="vi">Quay lại</value>
+    </property>
     <property key="BkEunivCancel">
         <value xml:lang="en">Cancel</value>
         <value xml:lang="vi">Huỷ</value>
@@ -78,6 +82,11 @@
         <value xml:lang="vi">Xóa</value>
     </property>
     
+    <property key="BkEunivDetail">
+        <value xml:lang="en">Detail</value>
+        <value xml:lang="vi">Chi tiết</value>
+    </property>
+
     <property key="BkEunivUpdate">
         <value xml:lang="en">Update</value>
         <value xml:lang="vi">Cập nhật</value>
@@ -140,6 +149,10 @@
         <value xml:lang="en">Open Project Call for Revision</value>
         <value xml:lang="vi">Mở đợt gọi đề tài để chỉnh sửa thuyết minh</value>
     </property>
+    <property key="BkEunivCloseProjectCallForRevision">
+        <value xml:lang="en">Close Project Call, Not Revision</value>
+        <value xml:lang="vi">Đóng thời hạn chỉnh sửa thuyết minh</value>
+    </property>
     
     <property key="BkEunivOpenEvaluation">
         <value xml:lang="en">Open Evaluation</value>
@@ -181,6 +194,7 @@
         <value xml:lang="vi">Đồng ý</value>
     </property>
     
+ 
     <property key="BkEunivCancel">
         <value xml:lang="en">Cancel</value>
         <value xml:lang="vi">Hủy bỏ</value>

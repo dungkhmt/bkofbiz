@@ -1,4 +1,5 @@
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
   <head>
 
@@ -19,6 +20,16 @@
   
   </head>
   
+ <style>
+#form-add {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+</style>
+
+
+
+  
 <@Loader handleToggle="loader">
 	<@IconSpinner/>
 </@Loader>
@@ -27,41 +38,67 @@
   	loader.open();
   </script>
 
+<div id="form-add">
+<@buttonStore text="Them moi" action="addProjectCall()"/>
+
+
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
 	<table id="list" cellspacing="0" width="100%" class="display dataTable">
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>${uiLabel.ProjectProposalName}</th>
-				<th>${uiLabel.Evaluation}</th>
+				<th>${uiLabel.ProjectCallName}</th>
+				<th>${uiLabel.Category}</th>
+				<th>${uiLabel.Year}</th>
+				<th>${uiLabel.Status}</th>
+				<th></th>
 			</tr>
 		</thead>
 	<tbody>
-	<#list resultProposals.projectproposals as p>
+	<#list resultProjectCalls.projectCalls as pc>
 		<tr>
-			<td style="display: none">${p.researchProjectProposalId}</td>
-			
-			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+			<td style="display: none">${pc.projectCallName}</td>
+			<#if pc.projectCallName?exists>
+				<td>${pc.projectCallName}</td>
 			<#else>
 				<td></td>
 			</#if>
-			
-			<#if p.statusId == "ASSIGNED_REVIEWER">
-				<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
-				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.Evaluation}</a></td>
+			<#if pc.projectCategoryName?exists>
+				<td>${pc.projectCategoryName}</td>
 			<#else>
-				<td><a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?
-				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.ViewEvaluation}</a></td>
+				<td></td>
 			</#if>
+			<#if pc.year?exists>
+				<td>${pc.year}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<#if pc.statusName?exists>
+				<td>${pc.statusName}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<#if pc.juryId?exists>
+				<td><a href="/bkeuniv/control/detail-jury-proposal?juryId=${pc.juryId}">${pc.juryName}</a></td>
+			<#else>
+				<td><a href="/bkeuniv/control/form-add-project-proposal-jury-university?projectCallId=${pc.projectCallId}&facultyId=UNIVERSITY">${uiLabel.CreateJury}</a></td>
+			</#if>
+			
 		</tr>
 	</#list>
 	</tbody>
 	</table>
 	
 </div>
+
+</div>
+
 <script>
 var obj;
+
+function addProjectCall(){
+	alert("them dot goi de tai");
+}
 
 $(document).ready(function() {
   loader.close();

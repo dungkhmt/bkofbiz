@@ -3,6 +3,7 @@ framework/*/build
 framework/base/lib/cobertura-*.jar
 framework/entity/lib/jdbc/postgresql-*.jar
 hot-deploy/*/build
+hot-deploy/bkeuniv/src/org/ofbiz/bkeuniv/config/*
 specialpurpose/*/build
 applications/content/index/
 bin/

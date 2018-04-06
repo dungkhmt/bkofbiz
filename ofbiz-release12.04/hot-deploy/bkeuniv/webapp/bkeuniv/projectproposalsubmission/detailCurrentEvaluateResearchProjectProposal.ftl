@@ -189,73 +189,17 @@ ${reviewerResearchProposalId}<br>
 </tr>
 </table>
 
-<@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="updateReviewProjectProposal"/>
-<@buttonConfirm text="${bkEunivUiLabelMap.BkEunivConfirm}" action="confirmReviewProjectProposal"/>
+<@buttonBack text="${bkEunivUiLabelMap.BkEunivBack}" action="back"/>
+
 </div>
 
 
 <script>
 
 
-function updateReviewProjectProposal(){
-	var evaluationMotivation = document.getElementById("evaluationMotivation").value;
-	var evaluationInnovation = document.getElementById("evaluationInnovation").value;
-	var evaluationApplicability = document.getElementById("evaluationApplicability").value;
-	var evaluationResearchMethod = document.getElementById("evaluationResearchMethod").value;
-	
-	var evaluationResearchContent = document.getElementById("evaluationResearchContent").value;
-	var evaluationPaper = document.getElementById("evaluationPaper").value;
-	var evaluationProduct = document.getElementById("evaluationProduct").value;
-	var evaluationPatent = document.getElementById("evaluationPatent").value;
-	var evaluationGraduateStudent = document.getElementById("evaluationGraduateStudent").value;
-	var evaluationYoungResearcher = document.getElementById("evaluationYoungResearcher").value;
-	var evaluationEducation = document.getElementById("evaluationEducation").value;
-	var evaluationReasonableBudget = document.getElementById("evaluationReasonableBudget").value;
-	
-	var comments = document.getElementById("comments").value;
-	
-	$.ajax({
-			url: "/bkeuniv/control/update-review-project-proposal",
-			type: 'POST',
-			data: {
-				"reviewerResearchProposalId": ${reviewerResearchProposalId},
-				"evaluationInnovation": evaluationInnovation,
-				"evaluationMotivation": evaluationMotivation,
-				"evaluationApplicability": evaluationApplicability,
-				"evaluationResearchMethod": evaluationResearchMethod,
-				
-				"evaluationResearchContent": evaluationResearchContent,
-				"evaluationPaper": evaluationPaper,
-				"evaluationProduct": evaluationProduct,
-				"evaluationPatent": evaluationPatent,
-				"evaluationGraduateStudent": evaluationGraduateStudent,
-				"evaluationYoungResearcher": evaluationYoungResearcher,
-				"evaluationEducation": evaluationEducation,
-				"evaluationReasonableBudget": evaluationReasonableBudget,
-				"comments": comments
-			},
-			success: function(rs){
-				window.location.href = "/bkeuniv/control/research-project-jury-members-evaluate";
-				//console.log(rs.result);
-				//alert('Da luu diem danh gia');
-				
-			}
-		})
-}
 
-function confirmReviewProjectProposal(){
+function back(){
 	
-	$.ajax({
-			url: "/bkeuniv/control/confirm-review-project-proposal",
-			type: 'POST',
-			data: {
-				"reviewerResearchProposalId": ${reviewerResearchProposalId}
-			},
-			success: function(rs){
-				window.location.href = "/bkeuniv/control/research-project-jury-members-evaluate";
-				//console.log(rs.result);
-				//alert('Da confirm diem danh gia');
-			}
-		})
+	window.location.href = "/bkeuniv/control/research-project-jury-members-evaluate";
 }
 </script>

@@ -27,6 +27,7 @@
     	<attribute name="projectCalls" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="message" mode="OUT" type="String"></attribute>	
     </service>
+    
     <service name="updateAProjectCall" engine="java" 
     	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
     	invoke="updateAProjectCall">
@@ -36,6 +37,14 @@
     	<attribute name="year" mode="IN" type="String"></attribute>
     	<attribute name="projectCalls" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="message" mode="OUT" type="String"></attribute>	
+    </service>
+
+    <service name="getAProjectCallFull" engine="java" 
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+    	invoke="getAProjectCallFull">
+    	<attribute name="projectCallId" mode="IN" type="String"></attribute>
+    	<attribute name="projectCall" mode="OUT" type="GenericValue"></attribute>
+    	<attribute name="numberSubmissions" mode="OUT" type="Long"></attribute>	
     </service>
 
     <service name="removeAProjectCall" engine="java" 
@@ -103,9 +112,18 @@
 		
 	</service>
 
+    <service name="cloneProjectProposalWithNewStatus" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="cloneProjectProposalWithNewStatus">
+		<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+		<attribute name="newStatusId" mode="IN" type="String"></attribute>
+		<attribute name="projectproposal" mode="OUT" type="Map"></attribute>	
+		
+	</service>
+
     <service name="getProjectProposal" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposal">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
 		<attribute name="projectproposal" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="projectCallStatusId" mode="OUT" type="String"></attribute>
 		<attribute name="projectCallStatusName" mode="OUT" type="String"></attribute>
@@ -114,20 +132,20 @@
 	
     <service name="getMembersOfProjectProposal" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getMembersOfProjectProposal">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="members" mode="OUT" type="List"></attribute>	
 	</service>
 	
     <service name="getProjectProposalContentItem" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalContentItem">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectProposalContentItems" mode="OUT" type="List"></attribute>	
 	</service>
 
     <service name="getProjectProposalProducts" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getProjectProposalProducts">
-		<attribute name="researchProjectProposalId" mode="IN" type="java.lang.Long" optional="true"></attribute>
+		<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectProposalProducts" mode="OUT" type="List"></attribute>	
 	</service>
 
@@ -180,6 +198,13 @@
     <service name="getListProjectCallsAndProposalJuriesSchool" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getListProjectCallsAndProposalJuriesSchool">
+		
+		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
+	</service>
+
+    <service name="getListProjectCallsAndProposalJuriesUniversity" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+		invoke="getListProjectCallsAndProposalJuriesUniversity">
 		
 		<attribute name="projectCalls" mode="OUT" type="List"></attribute>	
 	</service>
