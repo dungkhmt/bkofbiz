@@ -489,9 +489,7 @@
 				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/froala_style.min.css" global="true" />
                 <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/froala_editor.pkgd.min.js" global="true" />
 
-
-				<set field="layoutSettings.scripts[]" value="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/js/languages/vi.js" global="true" />
-				<set field="layoutSettings.scripts[]" value="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/js/plugins/inline_style.min.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/froala_editor_language_vi.js" global="true" />
 
 
 				<service service-name="getListFilteredProjectProposals" result-map="resultProjectProposals">
@@ -938,6 +936,13 @@
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<set field="reviewerResearchProposalId" from-field="${parameters.reviewerResearchProposalId}" type="PlainString"/>
+
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/froala_editor.pkgd.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/froala_style.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/froala_editor.pkgd.min.js" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/froala_editor_language_vi.js" global="true" />
+				
 				<service service-name="getReviewProjectProposal" result-map="resultReviewProposal">
 					<field-map field-name="reviewerResearchProposalId"/>
 				</service>
