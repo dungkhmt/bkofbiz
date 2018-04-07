@@ -175,13 +175,7 @@ ${reviewerResearchProposalId}<br>
 			${uiLabel.Comments}
 			</div>
 			<div style="display: inline-block;width: 100%;">
-				<textarea id="comments">
-					<#if resultReviewProposal.reviewprojectproposal.comments?exists>
-					${resultReviewProposal.reviewprojectproposal.comments}
-					<#else>
-					
-					</#if>	
-				</textarea>
+				<textarea id="comments"><#if resultReviewProposal.reviewprojectproposal.comments??>${resultReviewProposal.reviewprojectproposal.comments}</#if></textarea>
 			</div>
 		</div>		
 	</td>

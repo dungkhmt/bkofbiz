@@ -744,7 +744,8 @@ public class ProjectProposalSubmissionService {
 					+ reviewerResearchProposalId + ", evaluationInnovation = "
 					+ evaluationInnovation + ", evaluationMotivation = "
 					+ evaluationMotivation + ", evaluationApplicability = "
-					+ evaluationApplicability);
+					+ evaluationApplicability + ", comments="
+					+ comments);
 
 			GenericValue gv = delegator.findOne("ReviewerResearchProposal",
 					UtilMisc.toMap("reviewerResearchProposalId",
