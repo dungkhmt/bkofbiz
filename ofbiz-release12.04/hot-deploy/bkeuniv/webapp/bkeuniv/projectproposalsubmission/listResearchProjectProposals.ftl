@@ -116,6 +116,26 @@
 			}
 		});
 	}
+
+	function minimizeMessage(e) {
+		event.stopPropagation();
+		var top = document.getElementById("message").clientHeight - 30;
+		if(document.getElementById("message").style.transform != 'translate(0px, 0px)') {
+			expandMessage()
+		} else {
+			document.getElementById("message").style.transform = 'translate(0px,'+ top + "px"+')';
+			//document.getElementById("message").style.top=top + "px";
+		}
+	}
+
+	function expandMessage() {
+		document.getElementById("message").style.transform = 'translate(0px, 0px)';
+	}
+
+	function closeMessage() {
+		event.stopPropagation();
+		document.getElementById("message").style.transform = "translate(150%, 0px)";
+	}
 </script>
 <style>
 	.task-title {
@@ -141,6 +161,14 @@
 		width: 24px;
     	height: 24px;
 		color: #fff;
+	}
+
+	.task-title .minimize:hover {
+		opacity: 1;
+	}
+
+	.task-title .close_window:hover {
+		opacity: 1;
 	}
 
 	.task-title .close_window {
@@ -184,16 +212,16 @@
 
 <div style="position: relative; top: 0; left: 0; right: 0; bottom: 0;">
 	<div style="width: 50%; float: right; height: 100%;">
-		<div style="position: absolute; bottom: 0; right: 0;margin: 0px 5px 2px 0px; -webkit-box-shadow: rgba(0,0,0,0.2) 0 2px 6px; box-shadow: rgba(0,0,0,0.2) 0 2px 6px;">	
-			<div class="title-message row" style="line-height: 2; margin: 0; background-color: #404040; height: 30px;">
+		<div id="message" style="transform: translate(0px, 0px); transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; position: absolute; bottom: 0; right: 0;margin: 0px 5px 2px 0px; -webkit-box-shadow: rgba(0,0,0,0.2) 0 2px 6px; box-shadow: rgba(0,0,0,0.2) 0 2px 6px;">	
+			<div class="title-message row" style="line-height: 2; margin: 0; background-color: #404040; height: 30px;cursor: pointer;" onClick="expandMessage()">
 				<div class="col-xs-9" style="vertical-align: middle; color: #ffffff;">
 					New Message
 				</div>
 				<div class="col-xs-3">
 					<div class="task-title">
-						<i class="fa fa-window-minimize minimize" ></i>
+						<i class="fa fa-window-minimize minimize" style="cursor: pointer;" title="minimize" onClick="minimizeMessage(event)"></i>
 						<i class="fa fa-expand expand_window" ></i>
-						<i class="fa fa-times close_window" ></i>
+						<i class="fa fa-times close_window" style="cursor: pointer;" title="close" onClick="closeMessage()" ></i>
 					</div>
 				</div>
 			</div>
