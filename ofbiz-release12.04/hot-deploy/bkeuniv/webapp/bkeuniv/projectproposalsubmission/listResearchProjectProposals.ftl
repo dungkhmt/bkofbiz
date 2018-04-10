@@ -35,12 +35,14 @@
 					return "N/A"
 				}
 			}'
-		}
-		<#--  ,
+		},
 		{
 			"name": "",
-			"data": "graduateDate"
-		}   -->
+			"data": "researchProjectProposalId",
+			"render": 'function(value, name, dataColumns, id) {
+                return \'<button onClick="openMessage(\'+value+\')" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">${uiLabel.RequireUpdateProposal}</button>\';
+			}'
+		}
 	] />
 	
 	<#assign fields=[
@@ -136,6 +138,20 @@
 		event.stopPropagation();
 		document.getElementById("message").style.transform = "translate(150%, 0px)";
 	}
+
+	function openMessage(id) {
+		event.stopPropagation();
+		document.getElementById("message").style.transform = "translate(0px, 0px)";
+	}
+
+	function onKeyUpSubject(e) {
+		var subject = document.getElementById("subject-message").value;
+		if(!!subject) {
+			document.getElementById("title-message").innerHTML = subject;
+		} else {
+			document.getElementById("title-message").innerHTML = "New Message";
+		}
+	}
 </script>
 <style>
 	.task-title {
@@ -212,9 +228,9 @@
 
 <div style="position: relative; top: 0; left: 0; right: 0; bottom: 0;">
 	<div style="width: 50%; float: right; height: 100%;">
-		<div id="message" style="transform: translate(0px, 0px); transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; position: absolute; bottom: 0; right: 0;margin: 0px 5px 2px 0px; -webkit-box-shadow: rgba(0,0,0,0.2) 0 2px 6px; box-shadow: rgba(0,0,0,0.2) 0 2px 6px;">	
+		<div id="message" style="transform: translate(150%, 0px);z-index: 1000; transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; position: absolute; bottom: 0; right: 0;margin: 0px 5px 2px 0px; -webkit-box-shadow: rgba(0,0,0,0.2) 0 2px 6px; box-shadow: rgba(0,0,0,0.2) 0 2px 6px;">	
 			<div class="title-message row" style="line-height: 2; margin: 0; background-color: #404040; height: 30px;cursor: pointer;" onClick="expandMessage()">
-				<div class="col-xs-9" style="vertical-align: middle; color: #ffffff;">
+				<div id="title-message" class="col-xs-9" style="vertical-align: middle; color: #ffffff;">
 					New Message
 				</div>
 				<div class="col-xs-3">
@@ -227,7 +243,7 @@
 			</div>
 			<div class="content-message" style="background: #fff; border: 1px solid #ccc; overflow: hidden;">
 				<input type="text" class="header-message" placeholder="To" style="border-radius: unset; border: none; border-bottom: 1px solid #cfcfcf;" id="recipients-message">
-				<input type="text" class="header-message" placeholder="Subject" style="border-radius: unset; border: none;" id="subject-message">
+				<input type="text" class="header-message" onkeyup="onKeyUpSubject(event)" placeholder="Subject" style="border-radius: unset; border: none;" id="subject-message">
 				<textarea id="content">
 				</textarea>
 				<script>
@@ -243,7 +259,7 @@
 				</script>
 				<div class="action-message row" style="margin: 0; background-color: #f5f5f5; height: 45px;">
 					<div class="col-xs-1">
-						<button onClick="sendEmail()" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">Gui <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+						<button onClick="sendEmail()" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">Send <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 					</div>
 					<div class="col-xs-10">
 					</div>
