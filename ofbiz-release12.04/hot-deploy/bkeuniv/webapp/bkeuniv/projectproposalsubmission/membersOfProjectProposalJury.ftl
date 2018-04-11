@@ -12,14 +12,21 @@
 
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
+<style>
+#form-style {
+    margin-top: 20px;
+    margin-left: 20px;
+    overflow: scroll;
+    width: 100%
+}
+</style>
 
-<div>
-
-JURY ${juryId}
+<div id="form-style">
+<a href="/bkeuniv/control/detail-jury-proposal?juryId=${juryId}">Quay ve hoi dong</a>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		khoa/vien
+		${uiLabel.Faculty}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="facultyId" style="width: 100%" type="text" width="1000" onchange="changeFaculty()">
@@ -33,7 +40,7 @@ JURY ${juryId}
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Bo mon
+		${uiLabel.Department}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="departmentId" style="width: 100%" type="text" width="1000" onchange="changeDepartment()">
@@ -43,7 +50,7 @@ JURY ${juryId}
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Thanh vien
+		${uiLabel.FullName}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="staffId" style="width: 100%" type="text" width="1000">
@@ -53,7 +60,7 @@ JURY ${juryId}
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Vai tro
+		${uiLabel.Role}
 	</div>
 	<div style="display: inline-block;width: 69%;">
 		<select id="juryRoleTypeId" style="width: 100%" type="text" width="1000">
@@ -73,7 +80,13 @@ JURY ${juryId}
 			<tr>
 				<td>${m.staffName}</td>
 				<td>${m.juryRoleTypeName}</td>
-				<td>${m.juryName}</td>
+				<!--
+				<#if m.juryName?exists>
+					<td>${m.juryName}</td>
+				<#else>
+					<td></td>
+				</#if>
+				-->
 			</tr>
 		</#list>
 	</table>
@@ -83,6 +96,9 @@ JURY ${juryId}
 
 
 <script>
+$( document ).ready(function() {
+    changeFaculty();
+});
 function clearSelectBox(tbl){
 	var i;
 	for(i = tbl.length-1; i >= 0; i--){
@@ -112,6 +128,7 @@ function changeFaculty(){
 					opt.innerHTML = name;
 					tbldepartment.appendChild(opt);
 				}
+				changeDepartment();
 			}
 		})
 	
@@ -160,8 +177,10 @@ function addMemberProjectProposalJury(){
 			},
 			success: function(rs){
 				var tbl = document.getElementById("tbl-jury-members");
-				$('#tbl-jury-members tr:last').after('<tr><td>' + staffId + '</td><td>' + juryRoleTypeId + 
-				'</td><td>' + juryId + '</td></tr>');
+				$('#tbl-jury-members tr:last').after('<tr><td>' + rs.staffName + '</td><td>' + rs.juryRoleTypeName + 
+				'</td>'
+				 //+ '<td>' + juryId + '</td></tr>'
+				 );
 			}
 		})
 		

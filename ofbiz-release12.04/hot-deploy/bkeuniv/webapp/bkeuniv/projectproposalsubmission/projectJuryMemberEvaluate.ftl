@@ -32,8 +32,8 @@
 		<thead>
 			<tr>
 				<th style="display: none"></th>
-				<th>Ten de tai</th>
-				<th>Danh gia</th>
+				<th>${uiLabel.ProjectProposalName}</th>
+				<th>${uiLabel.Evaluation}</th>
 			</tr>
 		</thead>
 	<tbody>
@@ -42,13 +42,18 @@
 			<td style="display: none">${p.researchProjectProposalId}</td>
 			
 			<#if p.researchProjectProposalName?exists>
-				<td>${p.researchProjectProposalName}</td>
+				<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
 			<#else>
 				<td></td>
 			</#if>
 			
-			<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
-			reviewerResearchProposalId=${p.reviewerResearchProposalId}">Danh gia</a></td>
+			<#if p.statusId == "ASSIGNED_REVIEWER">
+				<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
+				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.Evaluation}</a></td>
+			<#else>
+				<td><a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?
+				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.ViewEvaluation}</a></td>
+			</#if>
 		</tr>
 	</#list>
 	</tbody>

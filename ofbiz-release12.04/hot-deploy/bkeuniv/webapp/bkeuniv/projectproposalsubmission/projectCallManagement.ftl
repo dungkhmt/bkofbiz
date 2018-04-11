@@ -1,19 +1,41 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 <body>
 <div class="body">
+
+	<#assign sourceProjectCallStatus = [] />
+	<#list listProjectCallStatus.projectCallStatus as pcs>
+		<#if pcs?has_content>
+             <#assign op = { "name": pcs.statusName?j_string ,"value": pcs.statusId?j_string } />
+						<#assign sourceProjectCallStatus = sourceProjectCallStatus + [op] />
+		</#if>
+	</#list>
+
+	<#assign sourceProjectCategory = [] />
+	<#list listProjectCategory.projectCategory as pc>
+		<#if pc?has_content>
+             <#assign op = { "name": pc.projectCategoryName?j_string ,"value": pc.projectCategoryId?j_string } />
+						<#assign sourceProjectCategory = sourceProjectCategory + [op] />
+		</#if>
+	</#list>
+	
 	<#assign columns=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"data": "projectCallName"
 		},
 		
 		{
-			"name": "Loai hinh de tai",
+			"name": "${uiLabel.Category}",
 			"data": "projectCategoryName"
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"data": "year"
+		}
+		,
+		{
+			"name": "${uiLabel.Status}",
+			"data": "statusName"
 		}
 	] />
 
@@ -23,38 +45,50 @@
 		"projectCategoryName",
 		"year",
 		"projectCategoryId",
-		"statusId"
+		"statusId",
+		"statusName"
 	] />
 
 	<#assign columnsChange=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"value": "projectCallName"
 		},
 		{
-			"name": "Loai hinh de tai",
-			"value": "projectCategoryName"
+			"name": "${uiLabel.Category}",
+			"value": "projectCategoryId",
+			"type": "select",
+			"option": {
+				"source": sourceProjectCategory,
+				"maxIterm": 1
+			}
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"value": "year"
 		}
 	] />
 
 	<#assign columnsNew=[
 		{
-			"name": "Ten dot goi de tai",
+			"name": "${uiLabel.ProjectCallName}",
 			"value": "projectCallName"
 		},
 		{
-			"name": "Loai hinh de tai",
-			"value": "projectCategoryName"
+			"name": "${uiLabel.Category}",
+			"value": "projectCategoryId",
+			"type": "select",
+			"option": {
+				"source": sourceProjectCategory,
+				"maxIterm": 1
+			}
 		},
 		{
-			"name": "Nam",
+			"name": "${uiLabel.Year}",
 			"value": "year"
 		}
 	] />
+	
 
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
 	<@jqDataTable
@@ -66,17 +100,201 @@
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-project-call" 
-		urlAdd="/bkeuniv/control/create-project-call" 
+		urlAdd="/bkeuniv/control/create-a-project-call" 
 		urlDelete="/bkeuniv/control/remove-project-call" 
 		keysId=["projectCallId"] 
 		fieldDataResult = "projectCalls" 
-		titleChange="Chỉnh sửa"
-		titleNew="Tạo mới"
-		titleDelete="Xoá"
-		jqTitle="Quản lý"
-		contextmenu=true
+		titleChange="Chinh sua"
+		titleNew="Tao moi"
+		titleDelete="Xoa"
+		jqTitle="Quan ly dot goi de tai"
+		contextmenu=false
+		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
 	/>
 </div>
+
+			  <!--
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForSubmission}', cmd: "=openprojectcallforsubmission", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivCloseProjectCall}', cmd: "closeprojectcall", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivOpenProjectCallForRevision}', cmd: "openprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivCloseProjectCallForRevision}', cmd: "closeprojectcallforrevision", uiIcon: "glyphicon glyphicon-user"},
+			  {title: '${uiLabelMap.BkEunivOpenEvaluation}', cmd: "openevaluation", uiIcon: "glyphicon glyphicon-user"}
+			  -->
+
+<script>
+	var modal;
+	var span;
+	var selectedEntry;
+	function createContextMenu(id) {
+		
+		$(document).contextmenu({
+			    delegate: "#"+id+"-content td",
+			menu: [
+			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
+			  {title: '${uiLabelMap.BkEunivDetail}', cmd: "detail", uiIcon: "glyphicon glyphicon-th"}
+			  
+			],
+			select: function(event, ui) {
+				var el = ui.target.parent();
+				var data = jqDataTable.table.row( el ).data();
+				switch(ui.cmd){
+					case "edit":
+						jqChange(data)
+						break;
+					case "delete":
+						jqDelete(data);
+						break;
+					case "detail":
+						viewDetail(data);
+						break;
+					case "closeprojectcall":
+						closeProjectCall(data);
+						break;
+					case "openprojectcallforsubmission":
+						openProjectCallForSubmission(data);
+						break;	
+					case "openprojectcallforrevision":
+						openProjectCallForRevision(data);
+						break;	
+					case "closeprojectcallforrevision":
+						closeProjectCallForRevision(data);
+						break;	
+					case "openevaluation":
+						openEvaluation(data);
+						break;	
+					
+					}		
+					
+				},
+				beforeOpen: function(event, ui) {
+					var $menu = ui.menu,
+						$target = ui.target,
+						extraData = ui.extraData;
+					ui.menu.zIndex(9999);
+			    }
+			  });
+	}
+	
+	function openEvaluation(data){
+		alertify.confirm('Xac nhan cong bo ket qua danh gia thuyet minh de tai', "Ban co muon thuc su muon cong bo khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/open-evaluation-result",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+	
+	}
+	
+	function viewDetail(data){
+		window.location.href="/bkeuniv/control/detail-project-call?projectCallId="+data.projectCallId;
+	}
+	
+	function closeProjectCall(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan dong de tai', "Ban co muon thuc su dong khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/close-project-call",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
+	function openProjectCallForSubmission(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan mo de tai', "Ban co muon thuc su muon mo khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/open-project-call-for-submission",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
+	function openProjectCallForRevision(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan mo lai dot goi de tai', "Ban co muon thuc su muon mo khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/open-project-call-for-revision",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
+	function closeProjectCallForRevision(data){
+		//alert("Dong dot goi de tai" + data.projectCallId);
+		
+		alertify.confirm('Xac nhan dong dot goi de tai', "Ban co muon thuc su muon dong khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/close-project-call-for-revision",
+					type: 'POST',
+					data: {
+						"projectCallId": data.projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+		
+	}
+
+</script>
+
 <#--      
 
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>

@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.bkeuniv.config.ConfigParams;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
@@ -37,7 +38,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-
 import org.ofbiz.utils.BKEunivUtils;
 
 import java.util.List;
@@ -52,10 +52,11 @@ import javolution.util.FastSet;
 public class PaperDeclarationService {
 
 	public static String module = PaperDeclarationService.class.getName();
-	public static String dataFolder = "." + File.separator + "euniv-deploy";
+	//public static String dataFolder = "." + File.separator + "euniv-deploy";
 
 	public static String establishFullFilename(String staffId, String name) {
-		String path = dataFolder + File.separator + staffId + File.separator
+		
+		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
 				+ "papers";
 		System.out.println("\n\n\t****************************************\n\t"
 				+ path + "+\n\t");
@@ -281,6 +282,29 @@ public class PaperDeclarationService {
 	}
 
 	@SuppressWarnings({ "unchecked" })
+	public static void rejectAPaperDeclaration(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String paperId = request.getParameter("paperId");
+			String staffId = request.getParameter("staffId");
+			Debug.log(module + "::approveAPaperDeclaration, paperId = "
+					+ paperId + ", staffId = " + staffId);
+			PaperDeclarationUtil.rejectAPaperDeclaration(delegator, paperId,
+					staffId);
+
+			String rs = "{\"status\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
 	public static void updateStaffsOfPaper(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -398,7 +422,9 @@ public class PaperDeclarationService {
 					GenericValue st = staffsOfPaper.get(i);
 					String id = (String) st.get("staffId");
 					String name = mID2Name.get(id);
-					String role = mRoleID2Name.get(st.getString("roleId"));
+					String role = "";
+					if(st.getString("roleId") != null)
+						role = mRoleID2Name.get(st.getString("roleId"));
 					rs += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"role\":\"" + role + "\"}";
 
 					if (i < staffsOfPaper.size() - 1)

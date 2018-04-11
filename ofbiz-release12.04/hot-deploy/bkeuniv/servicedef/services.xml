@@ -53,7 +53,7 @@
    </service>
  
  	<service name="jqxGridGeneralServicer" engine="java"
-            location="org.ofbiz.bkeuniv.service.JqxWidgetSevices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
+            location="org.ofbiz.bkeuniv.service.JqxWidgetServices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
         <attribute name="request" mode="IN" type="javax.servlet.http.HttpServletRequest" optional="true"></attribute>
         <attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
         <attribute name="results" mode="OUT" type="List" ></attribute>
@@ -103,11 +103,13 @@
     <service name="getFaculties" engine="java" 
     		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getFaculties">
     	<attribute name="universityId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="facultyId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="faculties" mode="OUT" type="List"></attribute>
     </service>
     <service name="getFacultyOfStaff" engine="java" 
     		location="org.ofbiz.bkeuniv.department.DepartmentService" invoke="getFacultyOfStaff">
     	<attribute name="universityId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="facultyId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="faculties" mode="OUT" type="List"></attribute>
     </service>
     

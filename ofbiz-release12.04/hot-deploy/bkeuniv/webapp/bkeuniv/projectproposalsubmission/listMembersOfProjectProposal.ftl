@@ -41,6 +41,8 @@
 </script>
 
 <div class="body">
+<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
+
 	<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivStaffName?j_string,
@@ -93,7 +95,7 @@
 			"option":{
 				"maxItem": 1,
 				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
-				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
 		{
@@ -117,7 +119,7 @@
 			"option":{
 				"maxItem": 1,
 				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
-				"url": "https://localhost:8443/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
 		{

@@ -1524,6 +1524,16 @@ public class PaperDeclarationUtil extends java.lang.Object{
 			ex.printStackTrace();
 		}
 	}
+	public static void rejectAPaperDeclaration(Delegator delegator, String paperId, String staffId){
+		try{
+			GenericValue p = delegator.findOne("PaperDeclaration", UtilMisc.toMap("paperId",paperId), false);
+			p.put("approveStatusId", "REJECTED");
+			p.put("approverStaffId", staffId);
+			delegator.store(p);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	public static List<GenericValue> getStaffsOfPaper(String paperId,
 			Delegator delegator) {
 		try {

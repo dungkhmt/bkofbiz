@@ -11,6 +11,93 @@
         <value xml:lang="vi">Tên đề tài</value>
     </property>
     
+    <property key="Status">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng thái</value>
+    </property>
+
+    <property key="ProjectDirector">
+        <value xml:lang="en">Project director</value>
+        <value xml:lang="vi">Chủ nhiệm đề tài</value>
+    </property>
+    
+    <property key="TotalEvaluation">
+        <value xml:lang="en">Total evaluation</value>
+        <value xml:lang="vi">Tổng điểm</value>
+    </property>
+    
+    <property key="DownloadProposal">
+        <value xml:lang="en">Download proposal</value>
+        <value xml:lang="vi">Download file thuyết minh</value>
+    </property>
+    
+    <property key="UploadProposal">
+        <value xml:lang="en">Upload proposal</value>
+        <value xml:lang="vi">Upload file thuyết minh</value>
+    </property>
+
+    <property key="SubmitProposal">
+        <value xml:lang="en">Submit proposal</value>
+        <value xml:lang="vi">Nộp thuyết minh đề tài</value>
+    </property>
+
+    <property key="CreateJury">
+        <value xml:lang="en">Create Jury</value>
+        <value xml:lang="vi">Tạo mới hội đồng</value>
+    </property>
+
+    <property key="MembersOfProject">
+        <value xml:lang="en">Members</value>
+        <value xml:lang="vi">Thành viên đề tài</value>
+    </property>
+    
+    <property key="ListAssignedProposalForEvaluation">
+        <value xml:lang="en">List of proposal assigned for evaluation</value>
+        <value xml:lang="vi">Danh sách đề tài được phân phản biện</value>
+    </property>
+    
+    <property key="JuryMembers">
+        <value xml:lang="en">Members of jury</value>
+        <value xml:lang="vi">Thành viên hội đồng phản biện</value>
+    </property>
+    
+    
+    <property key="AssignEvaluation">
+        <value xml:lang="en">Assign reviewers</value>
+        <value xml:lang="vi">Phân công phản biện</value>
+    </property>
+    
+
+    <property key="FullName">
+        <value xml:lang="en">Fullname</value>
+        <value xml:lang="vi">Họ Tên</value>
+    </property>
+    
+    <property key="Role">
+        <value xml:lang="en">Role</value>
+        <value xml:lang="vi">Vai trò</value>
+    </property>
+    
+    <property key="NumberReviewers">
+        <value xml:lang="en">Number of reviewers</value>
+        <value xml:lang="vi">Số phản biện</value>
+    </property>
+    
+    <property key="DetailEvaluation">
+        <value xml:lang="en">Detail evaluation</value>
+        <value xml:lang="vi">Xem đánh giá chi tiết</value>
+    </property>
+    
+    <property key="AverageEvaluation">
+        <value xml:lang="en">Average evaluation</value>
+        <value xml:lang="vi">Điểm trung bình</value>
+    </property>
+    
+    <property key="RequireUpdateProposal">
+        <value xml:lang="en">Require update</value>
+        <value xml:lang="vi">Yêu cầu chỉnh sửa</value>
+    </property>
+
     <property key="ProjectCategoryName">
         <value xml:lang="en">Project category name</value>
         <value xml:lang="vi">Loại hình đề tài</value>
@@ -19,6 +106,11 @@
     <property key="ProjectCallName">
         <value xml:lang="en">Project Call</value>
         <value xml:lang="vi">Đợt gọi đề tài</value>
+    </property>
+
+    <property key="numberSubmissions">
+        <value xml:lang="en">Number of submissions</value>
+        <value xml:lang="vi">Số đề tài đã nộp</value>
     </property>
 
     <property key="Year">
@@ -31,6 +123,26 @@
         <value xml:lang="vi">Loại hình</value>
     </property>
     
+    <property key="Status">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng Thái</value>
+    </property>
+
+    <property key="Approve">
+        <value xml:lang="en">Approve</value>
+        <value xml:lang="vi">Phê duyệt</value>
+    </property>
+    
+    <property key="Reject">
+        <value xml:lang="en">Reject</value>
+        <value xml:lang="vi">Không Phê duyệt</value>
+    </property>
+    
+    <property key="RequirementRevise">
+        <value xml:lang="en">Requirement Revise</value>
+        <value xml:lang="vi">Yêu cầu chỉnh sửa</value>
+    </property>
+
     <property key="CreateStaff">
         <value xml:lang="en">Created by</value>
         <value xml:lang="vi">Người tạo</value>
@@ -51,24 +163,146 @@
         <value xml:lang="vi">Khoa, viện</value>
     </property>
     
+    <property key="Department">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="vi">Bộ môn</value>
+    </property>
+
     <property key="Submit">
         <value xml:lang="en">Submit</value>
         <value xml:lang="vi">Nộp thuyết minh</value>
     </property>
     
+    <property key="Evaluation">
+        <value xml:lang="en">Evaluate</value>
+        <value xml:lang="vi">Đánh giá</value>
+    </property>
+    
+    <property key="ViewEvaluation">
+        <value xml:lang="en">View Evaluate</value>
+        <value xml:lang="vi">Xem Đánh giá</value>
+    </property>
+
+    <property key="Motivation">
+        <value xml:lang="en">Motivation</value>
+        <value xml:lang="vi">Lí do lựa chọn đề tài</value>
+    </property>
+
+    <property key="Innovation">
+        <value xml:lang="en">Innovation</value>
+        <value xml:lang="vi">Tính mới</value>
+    </property>
+    
+    <property key="Applicability">
+        <value xml:lang="en">Applicability</value>
+        <value xml:lang="vi">Tính ứng dụng</value>
+    </property>
+    
+    <property key="ResearchMethod">
+        <value xml:lang="en">ResearchMethod</value>
+        <value xml:lang="vi">Phương pháp nghiên cứu</value>
+    </property>
+    
+    <property key="ResearchContent">
+        <value xml:lang="en">ResearchContent</value>
+        <value xml:lang="vi">Nội dung nghiên cứu</value>
+    </property>
+    
+    <property key="Papers">
+        <value xml:lang="en">Papers</value>
+        <value xml:lang="vi">Bài báo</value>
+    </property>
+
+    <property key="Patent">
+        <value xml:lang="en">Patent</value>
+        <value xml:lang="vi">Sáng chế</value>
+    </property>
+
+    <property key="GraduateStudentTraining">
+        <value xml:lang="en">GraduateStudentTraining</value>
+        <value xml:lang="vi">Đào tạo sau đại học</value>
+    </property>
+
+    <property key="YoungResearcher">
+        <value xml:lang="en">YoungResearcher</value>
+        <value xml:lang="vi">Nhóm nghiên cứu trẻ</value>
+    </property>
+
+
+    <property key="Training">
+        <value xml:lang="en">Training</value>
+        <value xml:lang="vi">Đào tạo</value>
+    </property>
+    
+    <property key="ReasonableBudget">
+        <value xml:lang="en">Reasonable Budget</value>
+        <value xml:lang="vi">Kinh phí hợp lí</value>
+    </property>
+    
+    <property key="Comments">
+        <value xml:lang="en">Comments</value>
+        <value xml:lang="vi">Nhận xét, góp ý</value>
+    </property>
+
+
     <property key="WorkPackage">
         <value xml:lang="en">Work package</value>
         <value xml:lang="vi">Nội dung công việc</value>
     </property>
     
+    <property key="Workingdays">
+        <value xml:lang="en">Number of working days</value>
+        <value xml:lang="vi">Số ngày công</value>
+    </property>
+    
+    <property key="Budget">
+        <value xml:lang="en">Budget</value>
+        <value xml:lang="vi">Kinh phí</value>
+    </property>
+
+    <property key="ListWorkPackages">
+        <value xml:lang="en">List of Work packages</value>
+        <value xml:lang="vi">Danh sách nội dung công việc</value>
+    </property>
+
     <property key="Products">
         <value xml:lang="en">Products</value>
         <value xml:lang="vi">Sản phẩm</value>
     </property>
     
+    <property key="Quantity">
+        <value xml:lang="en">Quantity</value>
+        <value xml:lang="vi">Số lượng</value>
+    </property>
+
+    <property key="ListProducts">
+        <value xml:lang="en">List of Products</value>
+        <value xml:lang="vi">Danh sách Sản phẩm</value>
+    </property>
+
     <property key="ViewDetail">
         <value xml:lang="en">Detail</value>
         <value xml:lang="vi">Chi tiết thuyết minh đề tài</value>
+    </property>
+
+    <property key="All">
+        <value xml:lang="en">All</value>
+        <value xml:lang="vi">Tất cả</value>
+    </property>
+
+    <property key="ViewList">
+        <value xml:lang="en">View List</value>
+        <value xml:lang="vi">Xem danh sách</value>
+    </property>
+
+    <property key="GenerateCode">
+        <value xml:lang="en">Generate Code</value>
+        <value xml:lang="vi">Sinh mã</value>
+    </property>
+
+    <property key="Excel">
+        <value xml:lang="en">Excel</value>
+        <value xml:lang="vi">Excel</value>
     </property>
 
 </resource>

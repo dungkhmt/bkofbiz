@@ -125,6 +125,7 @@ function jqViewDetail(data){
 		{
 			"name": uiLabel.ProjectProposalName?j_string,
 			"data": "researchProjectProposalName"
+			
 		},
 		{
 			"name": uiLabel.ProjectCallName?j_string,

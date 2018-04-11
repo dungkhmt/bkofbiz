@@ -26,8 +26,8 @@
     -->
 
 	<request-map uri="jqxGeneralServicer">
-		<event type="java" invoke="jqxEventProcessor" path="org.ofbiz.bkeuniv.events.JqxEvents"
-			global-transaction="false" />
+		<event type="java" invoke="jqxEventProcessor" path="org.ofbiz.bkeuniv.events.JqxEvents"/>
+		<security https="true" auth="true"/>
 		<response name="success" type="none" />
 		<response name="error" type="none" />
 	</request-map>
@@ -69,6 +69,7 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-staff-management"/>
     </request-map>
+    
 	<request-map uri="update-a-staff">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="updateStaff"></event>
@@ -159,6 +160,12 @@
         <response name="AttachementSuccess" type="view" value="APPROVE_PAPER"/>
 	</request-map>
 	
+	<request-map uri="reject-a-paper-declaration">
+		<security https="true" auth="true"/>
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="rejectAPaperDeclaration"/>
+        <response name="AttachementSuccess" type="view" value="APPROVE_PAPER"/>
+	</request-map>
 	
 	
 	<request-map uri="create-education-progress">
@@ -511,6 +518,7 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+
 	<request-map uri="project-declaration-staff">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-project-declaration-staff"></response>
@@ -648,6 +656,13 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="get-list-filtered-project-proposals">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getListFilteredProjectProposals"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	<request-map uri="export-excel-work-progress">
 		<security auth="true" https="true" />
 		<event type="java" path="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="exportExcel"></event>
@@ -659,6 +674,13 @@
 			invoke="wrapStatusResponse" />
 		<response name="success" type="request" value="json" />
 		<response name="error" type="request" value="json" />
+	</request-map>
+
+	<request-map uri="test-send-email">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.service.EmailService" invoke="sendEmail"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
     <!-- View Mappings -->

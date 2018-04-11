@@ -255,7 +255,7 @@
 			    	jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
 			    		var r = new Object();
 				    	<#list dataFields as field>
-				    		r.${field} = d.${field}||"";
+				    		r.${field} = d.${field};
 				    	</#list>		
 				    	return r;
 			    	})
@@ -559,7 +559,7 @@
 						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
 							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
 						</svg>
-						Làm mới
+						${uiLabelMap.BkEunivRefresh}
 					</@FlatButton>
 				</div>
 			</div>
@@ -574,7 +574,13 @@
 					</th>
 					<#list columns as column>
 						<th>
-							<@FlatButton id="${column.data}" style="width: 100%; padding-right: 30px; padding-left: 10px;">
+							<#if column.pWidth??>
+								<#assign wd="width: "+column.pWidth/>
+							<#else>
+								<#assign wd="width: 100%"/>
+							</#if>
+							
+							<@FlatButton id="${column.data}" style="${wd}; padding-right: 30px; padding-left: 10px;">
 								${column.name}
 							</@FlatButton>
 						</th>

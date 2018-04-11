@@ -27,7 +27,7 @@
 	<#assign BkEunivMobile = ""/>
 	<#assign BkEunivEmail = ""/>	
 	<#assign agencyWork = uiLabelMap.BkEunivAgencyWork/>
-	<#assign BkEunivCompanyName = "" />
+	<#assign BkEunivCompanyName = uiLabelMap.BkEunivCompanyName />
 	<#assign BkEunivNameLeader = "" />
 	<#assign BkEunivCompanyAddress = "" />
 	<#assign BkEnuivPhone = "" />
@@ -38,6 +38,8 @@
 	<#assign Institution = uiLabelMap.BkEunivInstitution />
 	<#assign Speciality = uiLabelMap.BkEunivSpeciality />
 	<#assign GraduateDate = uiLabelMap.BkEunivGraduateDate />
+	<#assign BusinessProgress = uiLabelMap.BkEunivWorkProgress />
+	
 	<#assign University = "Dai hoc" />
 	<#assign Masters = "Thac si" />
 	<#assign Degree = "Tien si" />
@@ -51,17 +53,17 @@
 	<#assign Russia = "Tieng Nga" />
 	<#assign Level = "Tot" />
 	<#assign English = "Tieng Anh" />
-	<#assign BussinessProgress = "Qua trinh cong tac" />
-	<#assign Time = "Thoi gian (tu nam    den nam " />
-	<#assign PositionBussiness = "Vi tri cong tac" />
-	<#assign Domain = "Linh vuc chuyen mon" />
-	<#assign Company = "Co quan cong tac" />
-	<#assign ResearchConstruction = "Cac cong trinh KH-CN chu yeu duoc cong bo, sach chuyen khao " />
-	<#assign Construction = "(liet ke cong trinh tieu bieu da cong bo trong 5 nam gan nhat) " />
-	<#assign ConstructionName = "Ten cong trinh (bai bao, cong trinh ...) " />
-	<#assign Author = "La tac gia hoac la dong tac gia cong trinh" />
-	<#assign Public = "Noi cong bo (ten tap chi da dang/nha xuat ban) " />
-	<#assign Year = "Nam cong bo " />
+	<#assign BussinessProgress = uiLabelMap.BkEunivWorkProgress  />
+	<#assign Time = uiLabelMap.BkEunivTime />
+	<#assign PositionBussiness = uiLabelMap.BkEunivPositionBussiness />
+	<#assign Domain = uiLabelMap.BkEunivDomain />
+	<#assign Company = uiLabelMap.BkEunivCompany />
+	<#assign ResearchConstruction = uiLabelMap.BkEunivPublications />
+	<#assign Construction = (uiLabelMap.BkEunivPublic)  />
+	<#assign ConstructionName = uiLabelMap.BkEunivConstructionName />
+	<#assign Author = uiLabelMap.BkEunivAuthor />
+	<#assign Public = uiLabelMap.BkEunivPublic />
+	<#assign Year = uiLabelMap.BkEunivYear />
 	<#assign Internetional1 = "Tap chi Quoc te trong danh muc ISI" />
 	<#assign Internetional2 = "Tap chi Quoc te trong danh muc Scopus" />
 	<#assign Internetional3 = "Tap chi Quoc te khong trong danh muc ISI/Scopus" />
@@ -70,49 +72,51 @@
 	<#assign Internetional6 = "Ky yeu HN/HT trong nuoc" />
 	<#assign Internetional7 = "Sach chuyen khao" />
 	<#assign Internetional8 = "Sach giao trinh.Sach tham khao" />
-	<#assign NumberOfDegree1 = "So luong van bang doc quyen sang che/giai phap huu ich/van bang bao ho " /> 
-	<#assign NumberOfDegree2 = "giong cay trong/thiet ke bo tri mach tich hop da duoc cap (neu co)" />
-	<#assign NameAndContent = "Ten va noi dung van bang" />
-	<#assign YearDegree = "Nam cap van bang" />
-	<#assign NumberOfConstruction = "So luong cong trinh, ket qua nghien cuu duoc ap dung trong thuc tien" />
-	<#assign NameOfConstruction = "Ten cong trinh" />
-	<#assign Model = "Hinh thuc, quy mo, dia chi ap dung" />
-	<#assign TimeConstruction = "Thoi gian" /> 
-	<#assign Topic = "Cac de tai, du an, nhiem vu KH-CN da chu tri hoac tham gia trong 5 nam gan day" />
-	<#assign SubTopic1 = "Cac de tai, du an, nhiem vu KH-CN da chu tri" />
+	<#assign NumberOfDegree1 = uiLabelMap.BkEunivPatent1 /> 
+	<#assign NumberOfDegree2 = uiLabelMap.BkEunivPatent2 />
+	<#assign NameAndContent = uiLabelMap.BkEunivNameAndContent />
+	<#assign YearDegree = uiLabelMap.BkEunivYearDegree />
+	<#assign NumberOfConstruction = uiLabelMap.BkEunivNumberOfConstruction />
+	<#assign NameOfConstruction = uiLabelMap.BkEunivNameOfConstruction />
+	<#assign Model = uiLabelMap.BkEunivModel />
+	<#assign TimeConstruction = uiLabelMap.BkEunivTimeConstruction /> 
+	<#assign Topic = uiLabelMap.BkEunivRecent5YearProjects />
+	<#assign SubTopic1 = uiLabelMap.BkEunivTopic1  />
 	<#assign SubTopic2 = "Cac de tai, du an, nhiem vu KH-CN tham gia" />
-	<#assign TimeStart = "Thoi gian (bat dau - ket thuc) " />
-	<#assign Program = "Thuoc chuong trinh (neu co)" />
-	<#assign Status1 = "Tinh trang (da nghiem thu - xep loai, chua nghiem thu) " />
+	<#assign TimeStart = uiLabelMap.BkEunivTime  />
+	<#assign Program = uiLabelMap.BkEunivProgram />
+	<#assign Status1 = uiLabelMap.BkEunivStatus1 />
 	<#assign Status2 = "Tinh trang (da nghiem thu, chua nghiem thu)" />
-	<#assign Award = "Giai thuong (ve KH-CN, ve chat luong san pham, ...)" />
-	<#assign ModelAndContent = "Hinh thuc va noi dung giai thuong" />
-	<#assign YearOfAward = "Nam tang thuong" />
-	<#assign ExperienceManagement1 = "Kinh nghiem ve quan ly, danh gia KH-CN (so luong cac Hoi dong tu van, xet duyet, " />
-	<#assign ExperienceManagement2 = "nghiem thu, danh gia cac chuong trinh, de tai, du an KH-CN cap quoc gia hoac tuong
-		 duong trong va ngoai nuoc da tham gia trong 5 nam gan day)" />
-		 
-	<#assign ModelCouncil = "Hinh thuc hoi dong" />
-	<#assign Times = "So lan" />
-	<#assign ExperienceSuccess = "Nghien cuu sinh da huong dan bao ve thanh cong (neu co)" />
-	<#assign FirstAndLastName = "Ho va ten" />
-	<#assign Guide = "Huong dan hoac dong huong dan" />
-	<#assign Unit = "Don vi cong tac" />
-	<#assign YearSuccess = "Nam bao ve thanh cong" />
+	<#assign Award = uiLabelMap.BkEunivAward />
+	<#assign ModelAndContent = uiLabelMap.BkEunivModelAndContent />
+	<#assign YearOfAward = uiLabelMap.BkEunivYearOfAward />
+	<#assign ExperienceManagement1 = uiLabelMap.BkEunivScientificService1 />
+	<#assign ExperienceManagement2 = uiLabelMap.BkEunivScientificService2 />
 	
-	<#assign ExperienceGuide = "Nghien cuu sinh va hoc vien cao hoc dang huong dan" />
-	<#assign ExperienceName = "Ho va ten hoc vien/NCS" />
-	<#assign MainGuide = "Huong dan chinh/HD phu" />
-	<#assign NameTopic = "Ten de tai" />
-	<#assign Specialize = "Chuyen nganh/ma chuyen nganh"/>
-	<#assign TimeEducation = "Thoi gian dao tao" />
-	<#assign Information1 = "Thong tin khac" />
-	<#assign Information2 = "Linh vuc nghien cuu trong 5 nam gan day" />
-	<#assign Information3 = "Cac huong nghien cuu cho NCS va HV cao hoc" />
-	<#assign Information4 = "Toi xin cam doan nhung thong tin duoc ghi o tren la hoan toan chinh xac" />
-	<#assign Information5 = "..., ngay ... thang ... nam ..." />
-	<#assign Information6 = "Nguoi khai" />
-	<#assign Information7 = "(Ky va ghi ro ho ten)" />
+		 
+	<#assign ModelCouncil = uiLabelMap.BkEunivModelCouncil />
+	<#assign Times = uiLabelMap.BkEunivTime />
+	<#assign ExperienceSuccess = uiLabelMap.BkEunivPHDDefensed />
+	<#assign FirstAndLastName = uiLabelMap.BkEunivFirstAndLastName />
+	<#assign Guide = uiLabelMap.BkEunivGuide />
+	<#assign Unit = uiLabelMap.BkEunivUnit />
+	<#assign YearSuccess = uiLabelMap.BkEunivYearSuccess />
+	
+	<#assign ExperienceGuide = uiLabelMap.BkEunivGraduateStudents />
+	<#assign ExperienceName = uiLabelMap.BkEunivExperienceName />
+	<#assign MainGuide = uiLabelMap.BkEunivMainGuide />
+	<#assign NameTopic = uiLabelMap.BkEunivNameTopic />
+	<#assign Specialize = uiLabelMap.BkEunivSpecialize/>
+	<#assign TimeEducation = uiLabelMap.BkEunivTimeEducation/>
+	
+	
+	<#assign Information1 = uiLabelMap.BkEunivInformation1 />
+	<#assign Information2 = uiLabelMap.BkEunivInformation2 />
+	<#assign Information3 = uiLabelMap.BkEunivInformation3 />
+	<#assign Information4 = uiLabelMap.BkEunivInformation4 />
+	<#assign Information5 = uiLabelMap.BkEunivInformation5 />
+	<#assign Information6 = uiLabelMap.BkEunivInformation6 />
+	<#assign Information7 = uiLabelMap.BkEunivInformation7 />
 	
 	<#assign blank = "" />
 	<#assign ID0 = "0" />
@@ -610,7 +614,7 @@
 				//STT
 					<fo:table-cell />
 						<fo:table-cell>
-							<fo:block>${uiLabelMap.BkEunivCompanyName}: ${BkEunivCompanyName}</fo:block>
+							<fo:block>${BkEunivCompanyName}:</fo:block>
 						</fo:table-cell>
 						
 						</fo:table-row>
