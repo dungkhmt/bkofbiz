@@ -683,6 +683,72 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="project-declaration">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-declaration"></response>
+    </request-map>
+    
+    <request-map uri="get-project-declaration-new">
+    	<security https="true" auth="false"/>
+    	<event type="service" invoke="getProjectDeclarationNew"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="create-project-declaration-new">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectDeclarationNew"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-project-declaration-new">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateProjectDeclarationNew"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-project-declaration-new">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteProjectDeclarationNew"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="project-working-hour-declaration">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-working-hour-declaration"></response>
+    </request-map>
+    
+    <request-map uri="get-project-working-hour-declaration">
+    	<security https="true" auth="false"/>
+    	<event type="service" invoke="getProjectWorkingHourDeclaration"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="create-project-working-hour-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectWorkingHourDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-project-working-hour-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateProjectWorkingHourDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-project-working-hour-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteProjectWorkingHourDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -713,6 +779,7 @@
     
    
    <view-map name="view-form-change-password" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageChangePassword"/>
-   
+   <view-map name="view-project-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclarationNew"/>
+   <view-map name="view-project-working-hour-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectWorkingHourDeclaration"/>
     
 </site-conf>

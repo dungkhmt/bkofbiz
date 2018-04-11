@@ -1286,7 +1286,6 @@
 <UserLogin userLoginId="hong.nguyenvan@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="hung.phamkhac@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="lan.maithi@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
-<UserLogin userLoginId="minh.nguyenviet@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="nhan.nguyenthu@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="vinh.levan@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
 <UserLogin userLoginId="chien.nguyenxuan@hust.edu.vn" enabled="Y" currentPassword="{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a" passwordHint=""/>
@@ -3216,7 +3215,6 @@
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hong.nguyenvan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hung.phamkhac@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="lan.maithi@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
-<UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="minh.nguyenviet@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="nhan.nguyenthu@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="vinh.levan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="chien.nguyenxuan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>

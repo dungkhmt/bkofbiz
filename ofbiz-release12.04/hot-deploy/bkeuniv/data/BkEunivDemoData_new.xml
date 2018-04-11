@@ -3429,7 +3429,6 @@
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hong.nguyenvan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="hung.phamkhac@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="lan.maithi@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
-<UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="minh.nguyenviet@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="nhan.nguyenthu@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="vinh.levan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
 <UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="chien.nguyenxuan@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
@@ -5658,7 +5657,6 @@
 <Staff staffId="hong.nguyenvan@hust.edu.vn" staffName="hong.nguyenvan@hust.edu.vn" staffUserLoginId="hong.nguyenvan@hust.edu.vn" staffEmail="hong.nguyenvan@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLTH" staffPhone=""/>
 <Staff staffId="hung.phamkhac@hust.edu.vn" staffName="hung.phamkhac@hust.edu.vn" staffUserLoginId="hung.phamkhac@hust.edu.vn" staffEmail="hung.phamkhac@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLTH" staffPhone=""/>
 <Staff staffId="lan.maithi@hust.edu.vn" staffName="lan.maithi@hust.edu.vn" staffUserLoginId="lan.maithi@hust.edu.vn" staffEmail="lan.maithi@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLTH" staffPhone=""/>
-<Staff staffId="minh.nguyenviet@hust.edu.vn" staffName="minh.nguyenviet@hust.edu.vn" staffUserLoginId="minh.nguyenviet@hust.edu.vn" staffEmail="minh.nguyenviet@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLTH" staffPhone=""/>
 <Staff staffId="nhan.nguyenthu@hust.edu.vn" staffName="nhan.nguyenthu@hust.edu.vn" staffUserLoginId="nhan.nguyenthu@hust.edu.vn" staffEmail="nhan.nguyenthu@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLTH" staffPhone=""/>
 <Staff staffId="vinh.levan@hust.edu.vn" staffName="vinh.levan@hust.edu.vn" staffUserLoginId="vinh.levan@hust.edu.vn" staffEmail="vinh.levan@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLTH" staffPhone=""/>
 <Staff staffId="chien.nguyenxuan@hust.edu.vn" staffName="chien.nguyenxuan@hust.edu.vn" staffUserLoginId="chien.nguyenxuan@hust.edu.vn" staffEmail="chien.nguyenxuan@hust.edu.vn" staffGenderId="" departmentId="VLKT-BMVLDC" staffPhone=""/>
@@ -6817,7 +6815,6 @@
 <StaffPaperDeclaration  staffPaperDeclarationId="thang.huynhquyet@hust.edu.vn165" staffId="thang.huynhquyet@hust.edu.vn" paperId="165" statusId="ENABLED"/>
 <StaffPaperDeclaration  staffPaperDeclarationId="hung.nguyenthanh2@hust.edu.vn165" staffId="hung.nguyenthanh2@hust.edu.vn" paperId="165" statusId="ENABLED"/>
 
-
 <PaperCategoryHourBudget paperCategoryId="JINT_SCI" academicYearId="2016-2017" hour="900" budget="2000000"/>
 <PaperCategoryHourBudget paperCategoryId="JINT_SCIE" academicYearId="2016-2017" hour="900" budget="2000000"/>
 <PaperCategoryHourBudget paperCategoryId="JDOM_Other" academicYearId="2016-2017" hour="600" budget="1500000"/>
@@ -6898,14 +6895,13 @@
 	
 	<ProjectCall projectCallId="00001" projectCallName="Đề tài cơ sở phân cấp 2018" year="2018" projectCategoryId="INST_PROJ"/>
 
-	
 	<ResearchDomain researchDomainId="00001" researchDomainName="Khoa học tự nhiên"/>
 	<ResearchDomain researchDomainId="00002" researchDomainName="Khoa học kỹ thuật và công nghệ"/>
 	<ResearchDomain researchDomainId="00003" researchDomainName="Khoa học Y, Dược"/>
 	<ResearchDomain researchDomainId="00004" researchDomainName="Khoa học nông nghiệp"/>
 	<ResearchDomain researchDomainId="00005" researchDomainName="Khoa học xã hội"/>
 	<ResearchDomain researchDomainId="00006" researchDomainName="Khoa học nhân văn"/>
-	
+	<!--
 	<ResearchSubDomain  researchDomainId="00001" researchSubDomainSeqId="00001" researchSubDomainName="Toán học và Thống kê" researchSubDomainCode="101"/>
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00002" researchSubDomainName="Khoa học máy tính và thông tin" researchSubDomainCode="102"/>
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00003" researchSubDomainName="Vật lý" researchSubDomainCode="103" />
@@ -6924,10 +6920,9 @@
 	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Toán học cơ bản" researchSpecialityCode="10101"/>
 	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Toán học ứng dụng" researchSpecialityCode="10102"/>
 
-
 	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật kiến trúc" researchSpecialityCode="20101"/>
 	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật xây dựng" researchSpecialityCode="20102"/>
-	
+	-->
 	<!-- Master-Class-Course-Calendar-->
 	<MasterCourseSlotType masterCourseSlotTypeId="MORNING" masterCourseSlotTypeName="Sáng"/>
 	<MasterCourseSlotType masterCourseSlotTypeId="AFTERNOON" masterCourseSlotTypeName="Chiều"/>
@@ -6951,4 +6946,4 @@
 	<StaffPaperDeclarationRole roleId="MAIN_AUTHOR" roleName="Tác giả chính"/>
 	<StaffPaperDeclarationRole roleId="CO_AUTHOR" roleName="Đồng tác giả"/>
 	
-</entity-engine-xml
+</entity-engine-xml>
