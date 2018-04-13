@@ -237,9 +237,14 @@
 
     <property key="BkEunivWorkingDays">
         <value xml:lang="en">Working days</value>
-        <value xml:lang="vi">Ngày làm việc</value>
+        <value xml:lang="vi">Số ngày làm việc</value>
     </property>
     
+    <property key="BkEunivWorkingHours">
+        <value xml:lang="en">Working hours</value>
+        <value xml:lang="vi">Số giờ làm việc</value>
+    </property>
+
     <property key="BkEunivBudget">
         <value xml:lang="en">Budget</value>
         <value xml:lang="vi">Kinh phí</value>

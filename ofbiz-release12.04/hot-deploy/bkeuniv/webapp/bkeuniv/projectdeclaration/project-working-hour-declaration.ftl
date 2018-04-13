@@ -19,8 +19,10 @@
 			"data": "academicYearName"
 		},
 		{
-			"name": projectDeclarationUiLabelMap.WorkingDays?j_string,
-			"data": "workingdays"
+			"name": projectDeclarationUiLabelMap.BkEunivWorkingHours?j_string,
+			"data": "workinghours",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		}
 	] />
 	
@@ -29,7 +31,7 @@
 		"researchProjectProposalId",
 		"staffId",
 		"projectParticipationRoleId",
-		"workingdays",
+		"workinghours",
 		"academicYearId",
 		"academicYearName",
 		"staffName",
@@ -107,8 +109,10 @@
 			}
 		},
 		{
-			"name": projectDeclarationUiLabelMap.WorkingDays?j_string,
-			"value": "workingdays"
+			"name": projectDeclarationUiLabelMap.BkEunivWorkingHours?j_string,
+			"value": "workinghours",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		}
 	] />
 	
@@ -124,7 +128,12 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
-			"value": "staffId"
+			"value": "staffId",
+			"type": "select",
+			"option": {
+				"source": listStaff,
+				"maxItem": 1
+			}
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ProjectParticipationRoleId?j_string,
@@ -145,8 +154,10 @@
 			}
 		},
 		{
-			"name": projectDeclarationUiLabelMap.WorkingDays?j_string,
-			"value": "workingdays"
+			"name": projectDeclarationUiLabelMap.BkEunivWorkingHours?j_string,
+			"value": "workinghours",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		}
 	] />
 	
@@ -159,7 +170,7 @@
 		columnsChange=columnsChange 
 		dataFields=fields 
 		sizeTable=sizeTable
-		keysId=["researchProjectProposalId"] 
+		keysId=["researchProjectDeclarationYearId"] 
 		fieldDataResult = "projectDeclarations"
 		urlAdd="/bkeuniv/control/create-project-working-hour-declaration" 
 		urlUpdate="/bkeuniv/control/update-project-working-hour-declaration" 

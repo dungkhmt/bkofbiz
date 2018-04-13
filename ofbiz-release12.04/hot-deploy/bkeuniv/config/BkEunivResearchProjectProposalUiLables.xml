@@ -118,5 +118,9 @@
         <value xml:lang="en">Delete project working hour declaration</value>
         <value xml:lang="vi">Xóa thời gian thực hiện đề tài</value>
     </property>
+    <property key="BkEunivWorkingHours">
+        <value xml:lang="en">Working hours</value>
+        <value xml:lang="vi">Số giờ làm việc</value>
+    </property>
     
 </resource>

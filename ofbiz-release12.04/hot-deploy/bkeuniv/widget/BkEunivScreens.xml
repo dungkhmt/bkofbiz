@@ -464,6 +464,92 @@
 		</section>
 	</screen>
 	
+	
+	<screen name="pageDetailPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<set field="paper" from-field="resultPaper" global="true"/>
+			</actions>
+			<widgets>
+<!-- 			
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+ -->
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper.ftl" />
+							</html>
+						</platform-specific>
+<!-- 
+					</decorator-section>
+				</decorator-screen>
+ -->
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageViewDetailPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+					<include-screen name="pageDetailPaper"/>
+					
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageMembersOfAPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="paperId" value="${parameters.paperId}"/>
+				<service service-name="getStaffPaperDeclarationRole" result-map="resultRole">
+				</service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/members-of-a-paper.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="summaryPaperDeclaration">
 		<section>
 			<actions>

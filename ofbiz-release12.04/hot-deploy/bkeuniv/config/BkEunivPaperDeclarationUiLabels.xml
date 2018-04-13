@@ -69,6 +69,36 @@
         <value xml:lang="vi">Thành viên bài báo</value>
     </property>
    
+    <property key="BkEunivSelectFaculty">
+        <value xml:lang="en">Faculty</value>
+        <value xml:lang="vi">Khoa, viện</value>
+    </property>
+
+    <property key="BkEunivSelectDepartment">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="vi">Bộ môn</value>
+    </property>
+    
+    <property key="BkEunivSelectStaff">
+        <value xml:lang="en">Staff</value>
+        <value xml:lang="vi">Cán bộ</value>
+    </property>
+    
+    <property key="BkEunivSelectRole">
+        <value xml:lang="en">Role</value>
+        <value xml:lang="vi">Vai trò</value>
+    </property>
+
+    <property key="BkEunivAdd">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm</value>
+    </property>
+    
+    <property key="BkEunivRemove">
+        <value xml:lang="en">Remove</value>
+        <value xml:lang="vi">Loại bỏ</value>
+    </property>
+
     <property key="BkEunivUpdatePaper">
         <value xml:lang="en">Update information of the paper</value>
         <value xml:lang="vi">Chỉnh sửa thông tin bài báo</value>

@@ -4,39 +4,39 @@
 #form-add {
     margin-top: 20px;
     margin-left: 20px;
-    width: 100%
+    width: 100%;
     overflow: scroll
 }
 </style>
 
 <div id="form-add">
 
-<div class="inline-box" style="width: 100%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 30%;">
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 100%;">
 			
 	</div>
-	<div style="display: inline-block;width: 69%;">
+	<div style="display: inline-block;width: 100%;">
 		<input id="projectCallId" type="hidden" value="${parameters.projectCallId}"/>
 	</div>
 	
 </div>
 
-<div class="inline-box" style="width: 100%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 30%;">
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 100%;">
 			${uiLabel.ProjectProposalName}
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="projectProposalName" style="width: 100%" type="text" width="1000" value=""/>
+	<div style="display: inline-block;width: 100%;">
+		<input id="projectProposalName" style="width: 100%" type="text" value=""/>
 	</div>
 	
 </div>
 
-<div class="inline-box" style="width: 100%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 30%;">
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 100%;">
 		${uiLabel.Faculty}
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<select id="facultyId" style="width: 100%" type="text" width="1000">
+	<div style="display: inline-block;width: 100%;">
+		<select id="facultyId" style="width: 100%" type="text">
 		 	<#list resultFaculties.faculties as f>
 		 		<option value="${f.facultyId}">${f.facultyName}</option>
 		 	</#list>

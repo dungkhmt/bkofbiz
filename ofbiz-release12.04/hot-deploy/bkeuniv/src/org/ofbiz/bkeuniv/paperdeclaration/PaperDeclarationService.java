@@ -778,6 +778,20 @@ public class PaperDeclarationService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> getAPaperDeclaration(DispatchContext ctx,
+			Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		String paperId = (String)context.get("paperId");
+		try{
+			GenericValue p = delegator.findOne("PaperView", UtilMisc.toMap("paperId", paperId), false);
+			retSucc.put("paper", p);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 	public static Map<String, Object> getPaperDeclarations(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -990,6 +1004,20 @@ public class PaperDeclarationService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> createRecordDB(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		GenericValue g = (GenericValue)context.get("record");
+		try{
+			delegator.create(g);
+			retSucc.put("result", "success");
+			Debug.log(module + "::createRecordDB, CREATE successfully " + g);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 	public static Map<String, Object> createPaperDeclaration(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -1071,11 +1099,16 @@ public class PaperDeclarationService {
 				p.put("academicYearId", academicYearId);
 			p.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
 
-			delegator.create(p);
-
+			//delegator.create(p);
+			Map<String, Object> input = FastMap.newInstance();
+			input.put("record", p);
+			Map<String, Object> rsp = dispatcher.runSync("createRecordDB", input);
+			//if(rsp.get("result").equals("success"))
+				
 			// add an item to StaffPaperDeclaration corresponding to the current
 			// staffId
-			Map<String, Object> input = FastMap.newInstance();
+			//Map<String, Object> input = FastMap.newInstance();
+			input.clear();
 			input.put("staffId", staffId);
 			input.put("paperId", paperId);
 			if(roleId != null)
@@ -1086,7 +1119,13 @@ public class PaperDeclarationService {
 
 			// List<GenericValue> papers = FastList.newInstance();
 			// papers.add(p);
-			retSucc.put("papers", p);
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
+			List<GenericValue> lpv = delegator.findList("PapersStaffView", 
+					EntityCondition.makeCondition(conds),null,null,null, false);
+			if(lpv != null && lpv.size() > 0){
+				retSucc.put("papers", lpv.get(0));
+			}
 			retSucc.put("message", "Successfully");
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1364,6 +1403,160 @@ public class PaperDeclarationService {
 				paperId, delegator);
 
 		return retSucc;
+	}
+
+	public static Map<String, Object> getMembersOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String)context.get("paperId");
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
+			List<GenericValue> lst = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds),null,null,null,false);
+			
+			retSucc.put("staffs", lst);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+	public static Map<String, Object> createMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String)context.get("paperId");
+		List<String> list_staffId = (List<String>)context.get("staffId[]");
+		List<String> list_roleId = (List<String>)context.get("roleId[]");
+		Delegator delegator = ctx.getDelegator();
+		String staffId = list_staffId.get(0);
+		String roleId = list_roleId.get(0);
+		Debug.log(module + "::createMemberOfAPaper, paperId = " + paperId + ", staffId = " + staffId
+				+ ", roleId = " + roleId);
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
+			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,paperId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"ENABLED"));
+			List<GenericValue> lst = delegator.findList("PapersStaffView", 
+					EntityCondition.makeCondition(conds), null,null,null, false);
+			if(lst.size() > 0){
+				return ServiceUtil.returnError("Thanh vien bai bao da ton tai");
+			}
+			
+			String staffPaperDeclarationId = delegator.getNextSeqId("StaffPaperDeclaration");
+			GenericValue sp = delegator.makeValue("StaffPaperDeclaration");
+			sp.put("staffPaperDeclarationId", staffPaperDeclarationId);
+			sp.put("paperId", paperId);
+			sp.put("staffId", staffId);
+			sp.put("roleId", roleId);
+			sp.put("statusId", "ENABLED");
+			delegator.create(sp);
+		
+			Debug.log(module + "::createMemberOfAPaper, paperId = " + paperId + ", staffId = " + staffId
+					+ ", roleId = " + roleId + ", CREATED");
+			
+			GenericValue role = delegator.findOne("StaffPaperDeclarationRole", 
+					UtilMisc.toMap("roleId",roleId), false);
+			
+			GenericValue staff = delegator.findOne("Staff", 
+					UtilMisc.toMap("staffId",staffId), false);
+			
+			
+			GenericValue spv = delegator.makeValue("PapersStaffView");
+
+			spv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+			spv.put("staffId", (String) sp.get("staffId"));
+			spv.put("paperId", (String) sp.get("paperId"));
+			spv.put("roleId", (String) sp.get("roleId"));
+			spv.put("staffName", staff.getString("staffName"));
+			spv.put("roleName", role.getString("roleName"));
+
+			
+			retSucc.put("staffs", spv);
+			retSucc.put("message", "successfully");
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+
+	public static Map<String, Object> updateMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffPaperDeclarationId = (String)context.get("staffPaperDeclarationId");
+		List<String> list_staffId = (List<String>)context.get("staffId[]");
+		List<String> list_roleId = (List<String>)context.get("roleId[]");
+		Delegator delegator = ctx.getDelegator();
+		String staffId = list_staffId.get(0);
+		String roleId = list_roleId.get(0);
+		Debug.log(module + "::updateMemberOfAPaper, staffPaperDeclarationId = " + staffPaperDeclarationId + ", staffId = " + staffId
+				+ ", roleId = " + roleId);
+		try{
+			GenericValue sp = delegator.findOne("StaffPaperDeclaration", 
+					UtilMisc.toMap("staffPaperDeclarationId",staffPaperDeclarationId), false);
+			if(sp != null){
+				sp.put("staffId", staffId);
+				sp.put("roleId", roleId);
+				sp.put("statusId", "ENABLED");
+				delegator.store(sp);
+			
+				GenericValue role = delegator.findOne("StaffPaperDeclarationRole", 
+						UtilMisc.toMap("roleId",roleId), false);
+				
+				GenericValue staff = delegator.findOne("Staff", 
+						UtilMisc.toMap("staffId",staffId), false);
+				
+				
+				GenericValue spv = delegator.makeValue("PapersStaffView");
+
+				spv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				spv.put("staffId", (String) sp.get("staffId"));
+				spv.put("paperId", (String) sp.get("paperId"));
+				spv.put("roleId", (String) sp.get("roleId"));
+				spv.put("staffName", staff.getString("staffName"));
+				spv.put("roleName", role.getString("roleName"));
+
+				
+				retSucc.put("staffs", spv);
+				retSucc.put("message", "successfully");
+			}else{
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+				
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+
+	public static Map<String, Object> removeMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffPaperDeclarationId = (String)context.get("staffPaperDeclarationId");
+		Delegator delegator = ctx.getDelegator();
+		Debug.log(module + "::removeMemberOfAPaper, staffPaperDeclarationId = " + staffPaperDeclarationId);
+		try{
+			GenericValue sp = delegator.findOne("StaffPaperDeclaration", 
+					UtilMisc.toMap("staffPaperDeclarationId",staffPaperDeclarationId), false);
+			if(sp != null){
+				delegator.removeValue(sp);
+				retSucc.put("message", "successfully");
+			}else{
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+			
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
 	}
 
 	public static void main(String[] args) {

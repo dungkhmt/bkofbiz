@@ -249,6 +249,7 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="projectParticipationRoleId" type="id-vlong"></field>
 		<field name="workingdays" type="numeric"></field>
+		<field name="workinghours" type="numeric"></field>
 		<field name="academicYearId" type="id-ne"></field>
 		
 		<prim-key field="researchProjectDeclarationYearId"/>
@@ -280,6 +281,9 @@
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
 		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPP"></alias>
 		<alias name="projectParticipationRoleName" field="projectParticipationRoleName" entity-alias="PPR"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPP"></alias>
+		<alias name="createStaffId" field="createStaffId" entity-alias="RPP"></alias>
+		
 		
 		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true">
 			<key-map rel-field-name="academicYearId" field-name="academicYearId"/>
@@ -941,6 +945,8 @@
 		<alias name="statusStaffPaper" entity-alias="SPD" field="statusId"></alias>
 		<alias name="roleId" entity-alias="SPD" field="roleId"></alias>
 		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
+		<alias name="staffPaperDeclarationId" entity-alias="SPD"></alias>
+		<alias name="staffId" entity-alias="SPD"></alias>
 		
 		
 		<view-link rel-entity-alias="SPDR" entity-alias="SPD" rel-optional="true">

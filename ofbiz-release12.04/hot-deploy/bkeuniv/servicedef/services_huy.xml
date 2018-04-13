@@ -223,7 +223,7 @@
 		<attribute name="staffId[]" type="List" mode="IN" optional="true"></attribute>
 		<attribute name="projectParticipationRoleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
-		<attribute name="workingdays" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="workinghours" mode="IN" type="String" optional="true"></attribute>
 		
 		<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -233,10 +233,10 @@
     		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectWorkingHourDeclaration" invoke="updateProjectWorkingHourDeclaration">
 		<attribute name="researchProjectDeclarationYearId" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="researchProjectProposalId[]" mode="IN" type="List" optional="true"></attribute>
-		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="staffId[]" type="List" mode="IN" optional="true"></attribute>
 		<attribute name="projectParticipationRoleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="academicYearId[]" mode="IN" type="List" optional="true"></attribute>
-		<attribute name="workingdays" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="workinghours" mode="IN" type="String" optional="true"></attribute>
 		
 		<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>

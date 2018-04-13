@@ -9,6 +9,7 @@ import javolution.util.FastMap;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionServiceUtil;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -26,7 +27,7 @@ public class ResearchProjectProposal {
 	
 	public static Map<String, Object> getProjectDeclaration(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
-		
+			
 		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
 		String staffId = (String) userLogin.get("userLoginId");
 		System.out.println("staff id: "+staffId);
@@ -35,6 +36,8 @@ public class ResearchProjectProposal {
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
+			
 			List<GenericValue> listProjectDeclaration = delegator.findList("ResearchProjectProposalView", 
 																EntityCondition.makeCondition(conds), 
 																null, null, null, false);
@@ -82,7 +85,8 @@ public class ResearchProjectProposal {
 			gv.put("researchProjectProposalName", researchProjectProposalName);
 			long totalBudgetl = Long.valueOf(totalBudget);
 			gv.put("totalBudget", totalBudgetl);
-			gv.put("statusId", "RUNNING");
+			gv.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING);
+			
 			if (startDate != null) {
 				gv.put("startDate", new Date(Long.valueOf(startDate)));
 			}

@@ -330,6 +330,10 @@
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-list-research-project-proposal" />
 		<response name="error" type="view" value="view-list-research-project-proposal" />
+<!-- 
+		<response name="success" type="view" value="view-list-research-project-proposal-tmp" />
+		<response name="error" type="view" value="view-list-research-project-proposal-tmp" />
+ -->
 	</request-map>
 	
 	
@@ -487,6 +491,8 @@
   <view-map name="view-detail-research-project-proposals-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForDecision"/>
 
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>
+  
+  <view-map name="view-list-research-project-proposal-tmp" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposalsTMP"/>
   
   <view-map name="view-list-research-project-proposal-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposalsForDecision"/>
 

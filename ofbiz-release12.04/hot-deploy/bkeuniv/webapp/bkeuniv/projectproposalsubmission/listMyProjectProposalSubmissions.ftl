@@ -58,11 +58,18 @@
 			</tr>
 		</thead>
 	<tbody>
-	<#list resultProjectProposals.projectproposals as p>
+	<#list resultProjectProposals.projectproposals as pp>
+		<#assign p = pp.project/>
+		
 		<tr>
 			<td style="display: none">${p.researchProjectProposalId}</td>
 			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				<#if pp.role == "DIRECTOR">
+					<td><a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				<#else>
+					<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				</#if>
+				
 			<#else>
 				<td></td>
 			</#if>

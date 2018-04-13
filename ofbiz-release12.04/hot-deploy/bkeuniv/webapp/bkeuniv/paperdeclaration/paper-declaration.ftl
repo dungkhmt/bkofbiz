@@ -164,27 +164,50 @@
     
     <div class="modal-body">
       	<div class="inline-box" style="width: 100%; padding: 10px 0px;">	
+      		<table>
+      		<tr>
+      		<td>
       		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon Khoa/vien 
+				${paperDeclarationUiLabelMap.BkEunivSelectFaculty}
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id="facultyId" style="width: 100%" onchange="changeFaculty()"></select>
         	</div>
+        	</td>
+        	</tr>
+        	<tr>
+        	<td>
         	<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon Bo mon 
+				${paperDeclarationUiLabelMap.BkEunivSelectDepartment} 
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id="departmentId" width=50px" onchange="changeDepartment()"></select>
       		</div>
+      		</td>
+      		</tr>
+      		<tr>
+      		<td>
       		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon giang vien 
+				${paperDeclarationUiLabelMap.BkEunivSelectStaff}
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id = "staffs" width="30px"></select>
       		</div>
+      		</td>
+      		</tr>
+      		<tr>
+      		<td>
       		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon vai tro
+				${paperDeclarationUiLabelMap.BkEunivSelectRole}
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id = "roleId" width="30px">
       				<#list paperRoles.roles as r>
@@ -192,7 +215,15 @@
       				</#list>
       			</select>
       		</div>
-      		<@buttonStore text="Them" action="addMemberPaper"/>
+      		</td>
+      		</tr>
+      		<tr>
+      		<td>
+      		<@buttonStore text="${paperDeclarationUiLabelMap.BkEunivAdd}" action="addMemberPaper"/>
+      		</td>
+      		<td></td>
+      		</tr>
+      		</table>
       	</div>
       <table id="staffs-of-paper" border = "1"></table>
       
@@ -219,6 +250,7 @@
 			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
 			  {title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
+			  {title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
 			  {title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
 			  {title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
 			
@@ -238,6 +270,9 @@
 						break;
 					case "upload":
 						jqUploadFile(data);
+						break;
+					case "detailpaper":
+						jqDetailPaper(data);
 						break;
 					case "papermember":
 						jqPaperMember(data);
@@ -386,7 +421,7 @@
 						
 						var cell_action = row.insertCell(2);
 						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
-						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
+						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>${paperDeclarationUiLabelMap.BkEunivRemove}</button>';
 						cell_action.innerHTML = btn;
 					}
 
@@ -417,6 +452,10 @@
 		//form.submit();
 		
 	}			
+	
+	function jqDetailPaper(data){
+		window.location.href="/bkeuniv/control/detail-paper?paperId=" + data.paperId;
+	}
 	
 	function jqPaperMember(data){
 		/*
@@ -491,7 +530,7 @@
 						
 						var cell_action = row.insertCell(2);
 						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
-						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
+						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>${paperDeclarationUiLabelMap.BkEunivRemove}</button>';
 						cell_action.innerHTML = btn;
 					}
 					
@@ -784,12 +823,16 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"value": "month"
+			"value": "month",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong"
 			
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
@@ -845,12 +888,16 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"value": "month"
+			"value": "month",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong"
 			
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,

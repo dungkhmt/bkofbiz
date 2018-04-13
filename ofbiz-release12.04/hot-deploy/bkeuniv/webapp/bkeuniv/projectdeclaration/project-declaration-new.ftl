@@ -3,10 +3,6 @@
 <div class="body">
 	<#assign columns=[
 		{
-			"name": projectDeclarationUiLabelMap.partyId?j_string,
-			"data": "partyId"
-		},
-		{
 			"name": projectDeclarationUiLabelMap.ProjectCategoryId?j_string,
 			"data": "projectCategoryName"
 		},
@@ -17,7 +13,12 @@
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
 			"data": "startDate"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
+			"data": "totalBudget"
 		}
+		
 	] />
 	
 	<#assign fields=[
@@ -101,7 +102,9 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
-			"value": "totalBudget"
+			"value": "totalBudget",
+			"pattern": "[1-9]([0-9]{0,20})",
+			"title": "So nguyen duong"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
@@ -131,7 +134,9 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
-			"value": "totalBudget"
+			"value": "totalBudget",
+			"pattern": "[1-9]([0-9]{0,20})",
+			"title": "So nguyen duong"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,

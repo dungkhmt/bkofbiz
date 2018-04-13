@@ -230,12 +230,50 @@
     	<attribute name="roles" mode="OUT" type="List"></attribute>
     </service>
     
+    
     <service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
 		
 		<attribute name="authorStaffId" mode="IN" type="String" optional="true"></attribute>
 		
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+
+    <service name="getMembersOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getMembersOfAPaper">
+		
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		
+		<attribute name="staffs" mode="OUT" type="List"></attribute>		
+	</service>
+
+    <service name="createMemberOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createMemberOfAPaper">
+		
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
+		
+		<attribute name="staffs" mode="OUT" type="GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>
+	</service>
+	
+    <service name="updateMemberOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updateMemberOfAPaper">
+		
+		<attribute name="staffPaperDeclarationId" mode="IN" type="String"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
+		
+		<attribute name="staffs" mode="OUT" type="GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>
+	</service>
+
+    <service name="removeMemberOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="removeMemberOfAPaper">
+		
+		<attribute name="staffPaperDeclarationId" mode="IN" type="String"></attribute>
+		<attribute name="message" mode="OUT" type="String"></attribute>
 	</service>
 
     <service name="getPaperDeclarations" engine="java" 
@@ -246,6 +284,12 @@
 		<attribute name="paperDeclarationStatusId" mode="IN" type="String" optional="true"></attribute>
 		
 		<attribute name="papers" mode="OUT" type="List"></attribute>		
+	</service>
+
+    <service name="getAPaperDeclaration" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getAPaperDeclaration">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="paper" mode="OUT" type="GenericValue"></attribute>		
 	</service>
 
 	<service name="updatePaper" engine="java" 
@@ -278,7 +322,7 @@
 
     <service name="createPaperDeclaration" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createPaperDeclaration">
-		<attribute name="paperName" mode="IN" type="String"></attribute>
+		<attribute name="paperName" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="journalConferenceName" mode="IN" type="String"  optional="true"></attribute>
@@ -291,6 +335,12 @@
 		<attribute name="papers" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
 		<attribute name="message" mode="OUT" type="String"></attribute>	
 	</service>
+    <service name="createRecordDB" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createRecordDB">
+		<attribute name="record" mode="IN" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
+
     <service name="deletePaperDeclaration" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deletePaperDeclaration">
 		<attribute name="paperId" mode="IN" type="String"></attribute>

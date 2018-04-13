@@ -7,8 +7,11 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
+import javolution.util.FastSet;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -41,6 +44,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String STATUS_PROJECT_ASSIGNED_REVIEWER = "ASSIGNED_REVIEWER";
 	public static String STATUS_PROJECT_SUBMITTED = "SUBMITTED";
 	public static String STATUS_PROJECT_CREATED = "CREATED";
+	public static String STATUS_PROJECT_RUNNING = "RUNNING";
 	public static String STATUS_PROJECT_UNDER_REVIEW = "UNDER_REVIEW";
 
 	public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
@@ -268,6 +272,31 @@ public class ProjectProposalSubmissionServiceUtil {
 		}
 	}
 
+	public static List<GenericValue> filterActiveProjectProposal(List<GenericValue> prj){
+		Map<String, Boolean> hasChildProposal = FastMap.newInstance();
+		//Set<String> partyIdSet = FastSet.newInstance();
+		for(GenericValue p: prj){
+			String proposalId = p.getString("researchProjectProposalId");
+			String parentProposalId = p.getString("parentResearchProjectProposalId");
+			if(parentProposalId != null && !parentProposalId.equals("")){
+				hasChildProposal.put(parentProposalId, true);
+				Debug.log(module + "::getListFilteredProjectProposals, proposal " + parentProposalId + " has child proposal " + proposalId);
+			}else{
+				
+			}
+			//partyIdSet.add(partyId);
+		}
+		List<GenericValue> retList = FastList.newInstance();
+		for(GenericValue p: prj){
+			String proposalId = p.getString("researchProjectProposalId");
+			if(hasChildProposal.get(proposalId) == null){
+				retList.add(p);
+			}else{
+				Debug.log(module + "::getListFilteredProjectProposals, proposalId " + proposalId + " has child");
+			}
+		}
+		return retList;
+	}
 	public static List<GenericValue> getListFilteredProjectProposals(
 			Delegator delegator, String projectCallId, String facultyId,
 			String projectProposalStatusId) {
@@ -276,7 +305,7 @@ public class ProjectProposalSubmissionServiceUtil {
 				+ ", projectProposalStatusId = " + projectProposalStatusId);
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
-			if (facultyId != null && !facultyId.equals("all")) {
+			if (facultyId != null && !facultyId.equals("all") && !facultyId.equals("UNIVERSITY")) {
 				conds.add(EntityCondition.makeCondition("facultyId",
 						EntityOperator.EQUALS, facultyId));
 			}
@@ -294,8 +323,35 @@ public class ProjectProposalSubmissionServiceUtil {
 					"ResearchProjectProposalView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			return prj;
-
+			
+			/*
+			Map<String, Boolean> hasChildProposal = FastMap.newInstance();
+			//Set<String> partyIdSet = FastSet.newInstance();
+			for(GenericValue p: prj){
+				String proposalId = p.getString("researchProjectProposalId");
+				String parentProposalId = p.getString("parentResearchProjectProposalId");
+				if(parentProposalId != null && !parentProposalId.equals("")){
+					hasChildProposal.put(parentProposalId, true);
+					Debug.log(module + "::getListFilteredProjectProposals, proposal " + parentProposalId + " has child proposal " + proposalId);
+				}else{
+					
+				}
+				//partyIdSet.add(partyId);
+			}
+			List<GenericValue> retList = FastList.newInstance();
+			for(GenericValue p: prj){
+				String proposalId = p.getString("researchProjectProposalId");
+				if(hasChildProposal.get(proposalId) == null){
+					retList.add(p);
+				}else{
+					Debug.log(module + "::getListFilteredProjectProposals, proposalId " + proposalId + " has child");
+				}
+			}
+			*/
+			List<GenericValue> retList = filterActiveProjectProposal(prj);
+			//return prj;
+			
+			return retList;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;

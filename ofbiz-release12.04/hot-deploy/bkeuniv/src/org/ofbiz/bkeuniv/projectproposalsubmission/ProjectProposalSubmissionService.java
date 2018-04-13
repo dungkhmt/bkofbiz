@@ -15,12 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import javolution.util.FastSet;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -1638,9 +1640,55 @@ public class ProjectProposalSubmissionService {
 					"ResearchProjectProposalView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
+			prj = ProjectProposalSubmissionServiceUtil.filterActiveProjectProposal(prj);
+			
+			List<Map<String, Object>> retList = FastList.newInstance();
+			Set<String> pID = FastSet.newInstance();
+			for(GenericValue p: prj){
+				Map<String, Object> I = FastMap.newInstance();
+				I.put("project", p);
+				I.put("role", "DIRECTOR");
+				retList.add(I);
+				pID.add(p.getString("researchProjectProposalId"));
+			}
+			
+			conds.clear();
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			//conds.add(EntityCondition.makeCondition("statusId",
+			//		EntityOperator.NOT_EQUAL,
+			//		ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED));
 
-			retSucc.put("projectproposals", prj);
+			List<GenericValue> lst = delegator.findList("ResearchProposalContentItem", 
+					EntityCondition.makeCondition(conds), null,null,null, false);
+			Set<String> epID = FastSet.newInstance();// set of research proposal id such that current staffId is member
+			for(GenericValue p: lst){
+				String proposalId = p.getString("researchProjectProposalId");
+				if(!pID.contains(proposalId)){
+					epID.add(proposalId);
+				}
+			}
+			conds.clear();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId",
+					EntityOperator.IN, epID));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED));
 
+			lst = delegator.findList(
+					"ResearchProjectProposalView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			lst = ProjectProposalSubmissionServiceUtil.filterActiveProjectProposal(lst);
+			
+			for(GenericValue p: lst){
+				Map<String, Object> I = FastMap.newInstance();
+				I.put("project", p);
+				I.put("role", "MEMBER");
+				retList.add(I);
+			}
+			//retSucc.put("projectproposals", prj);
+			retSucc.put("projectproposals", retList);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

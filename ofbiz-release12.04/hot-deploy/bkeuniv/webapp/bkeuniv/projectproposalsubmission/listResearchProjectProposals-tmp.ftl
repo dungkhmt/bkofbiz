@@ -1,3 +1,4 @@
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 
@@ -62,28 +63,69 @@
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+<div id="table-list" style="overflow-y: auto; padding: 2em;">	
+	<table id="list" cellspacing="0" width="100%" class="display dataTable">
+		<thead>
+		<tr>
+			<th>
+				Ten de tai
+			</th>
+			<th>
+				Chu nhiem
+			</th>
+			<th>
+				Dot goi de tai
+			</th>
+			<th>
+				Khoa/vien
+			</th>
+			<th>
+				Trang thai
+			</th>
+			<th>
+				diem
+			</th>
+			<th>
+				
+			</th>
+		</tr>
+		</thead>
+		
+		<tbody>
+	<#list resultProjectProposals.projectproposals as p>
+		<tr>
+			<td>
+				${p.researchProjectProposalName}
+			</td>
+			<td>
+				${p.createStaffName}
+			</td>
+			<td>
+				${p.projectCallName}
+			</td>
+			<td>
+				${p.facultyName}
+			</td>
+			<td>
+				${p.statusName}
+			</td>
+			<td>
+				${p.totalEvaluation}
+			</td>
+			<td>
+				<button onClick="openMessage()" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">${uiLabel.RequireUpdateProposal}</button>
+			</td>			
+		</tr>
+	</#list>
+	</tbody>	
+	</table>
+</div>	
 	
-	<@jqDataTable
-		id="DataTable-filtered-project-proposals"
-		urlData="/bkeuniv/control/get-list-filtered-project-proposals"
-		optionData={
-			"data": {
-				"facultyId": parameters.facultyId?j_string,
-				"projectCallId": parameters.projectCallId?j_string,
-				"projectProposalStatusId": parameters.projectProposalStatusId?j_string
-			}
-		}
-		columns=columns 
-		dataFields=fields 
-		sizeTable=sizeTable
-		keysId=["researchProjectProposalId"] 
-		fieldDataResult = "projectproposals" 
-		contextmenu=false
-	/>
+	
 </div>
 <script>
 	var titlePage='${titlePage}';
-	function sendEmail(e) {
+	function sendEmail() {
 		var subject = document.getElementById("subject-message").value;
 		var to = document.getElementById("recipients-message").value;
 		var body = $('textarea#content').val();
@@ -115,7 +157,6 @@
 			return;
 		}
 
-		loader.open();
 		$.ajax({
 			url: "/bkeuniv/control/test-send-email",
 			type: 'POST',
@@ -126,14 +167,9 @@
 			},
 			success:function(rs){
 				alertify.success('Gửi email thành công');
-				setTimeout(function(){ 
-				loader.close();
-				closeMessage(e);
-			}, 300);
 			},
 			error: function(err) {
 				alertify.error('Lỗi hệ thống <br>Vui lòng thử lại sau 5 phút');
-				loader.close();
 			}
 		});
 	}
@@ -153,24 +189,13 @@
 		document.getElementById("message").style.transform = 'translate(0px, 0px)';
 	}
 
-	function closeMessage(e) {
-		e.stopPropagation();
+	function closeMessage() {
+		event.stopPropagation();
 		document.getElementById("message").style.transform = "translate(150%, 0px)";
 	}
 
 	function openMessage(id) {
 		event.stopPropagation();
-		
-		var table = jqDataTable.table;
-		var elementIndex = Array.from(table.rows().indexes().data()).findIndex(function(e, index) {
-			return e.researchProjectProposalId==id
-		});
-		
-		var element = table.rows().indexes().data()[elementIndex];
-		
-		console.log(element);
-		
-		document.getElementById("recipients-message").value = element.createStaffName;
 		document.getElementById("message").style.transform = "translate(0px, 0px)";
 	}
 
@@ -267,7 +292,7 @@
 					<div class="task-title">
 						<i class="fa fa-window-minimize minimize" style="cursor: pointer;" title="minimize" onClick="minimizeMessage(event)"></i>
 						<i class="fa fa-expand expand_window" ></i>
-						<i class="fa fa-times close_window" style="cursor: pointer;" title="close" onClick="closeMessage(event)" ></i>
+						<i class="fa fa-times close_window" style="cursor: pointer;" title="close" onClick="closeMessage()" ></i>
 					</div>
 				</div>
 			</div>
@@ -289,7 +314,7 @@
 				</script>
 				<div class="action-message row" style="margin: 0; background-color: #f5f5f5; height: 45px;">
 					<div class="col-xs-1">
-						<button onClick="sendEmail(event)" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">Send <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+						<button onClick="sendEmail()" type="button" class="btn btn-primary waves-effect waves-light" style="outline: none; font-size: 11px; outline: none; height: 30px; padding: 1px 20px 1px 20px; line-height: 30px; top: 7px">Send <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 					</div>
 					<div class="col-xs-10">
 					</div>
