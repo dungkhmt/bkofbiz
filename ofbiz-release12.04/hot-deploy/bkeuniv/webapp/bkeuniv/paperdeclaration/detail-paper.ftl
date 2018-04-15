@@ -1,3 +1,5 @@
+
+
 <table>
 <tr>
 	<td>
@@ -12,7 +14,9 @@
 		Tac gia
 	</td>
 	<td>
-	${resultPaper.paper.authors}
+		<#if resultPaper.paper.authors?exists>
+			${resultPaper.paper.authors}
+		</#if>
 	</td>
 </tr>
 <tr>
@@ -20,7 +24,9 @@
 		Hoi nghi, tap chi
 	</td>
 	<td>
-		${resultPaper.paper.journalConferenceName}
+		<#if resultPaper.paper.journalConferenceName?exists>
+			${resultPaper.paper.journalConferenceName}
+		</#if>
 	</td>
 </tr>
 <tr>
@@ -28,7 +34,15 @@
 		Nam xuat ban
 	</td>
 	<td>
-		${resultPaper.paper.year}
+		<#if resultPaper.paper.year?exists>
+			${resultPaper.paper.year}
+		</#if>
+	</td>
+</tr>
+<tr>
+	<td>
+		<a href="/bkeuniv/control/download-file-paper?id-paper=${resultPaper.paper.paperId}">Download file minh chung</a>
+
 	</td>
 </tr>
 

@@ -248,11 +248,11 @@
 			    delegate: "#"+id+"-content td",
 			menu: [
 			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
-			  {title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
-			  {title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
-			  {title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
-			  {title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
+			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+			  //{title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
+			  //{title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
+			  //{title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
+			  //{title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
 			
 			],
 			select: function(event, ui) {
@@ -706,7 +706,10 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"data": "paperName"
+			"data": "paperName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-paper?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
+			}'
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,

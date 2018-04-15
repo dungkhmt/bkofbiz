@@ -340,11 +340,11 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 		}
 	}
-	public static String openEvaluationResult(HttpServletRequest request,
+	public static String publishEvaluationResult(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String projectCallId = (String) request.getParameter("projectCallId");
-		Debug.log(module + "::openEvaluationResult, projectCall "
+		Debug.log(module + "::publishEvaluationResult, projectCall "
 				+ projectCallId);
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
@@ -365,6 +365,32 @@ public class ProjectProposalSubmissionService {
 		}
 		return "success";
 	}
+	public static String unpublishEvaluationResult(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String projectCallId = (String) request.getParameter("projectCallId");
+		Debug.log(module + "::unpublishEvaluationResult, projectCall "
+				+ projectCallId);
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("projectCallId",EntityOperator.EQUALS,projectCallId));
+			
+			List<GenericValue> list = delegator.findList("ResearchProjectProposal", 
+					EntityCondition.makeCondition(conds), 
+					null, 
+					null, 
+					null, 
+					false);
+			for(GenericValue p: list){
+				p.put("evaluationOpenFlag","N");
+				delegator.store(p);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return "success";
+	}
+
 	public static String generateCodeProjectProposals(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -2313,6 +2339,9 @@ public class ProjectProposalSubmissionService {
 			
 			retSucc.put("projectCall", pc);
 			retSucc.put("numberSubmissions", numberSubmissions);
+			
+			Debug.log(module + "::getAProjectCallFull, projectCallId = "
+					+ projectCallId + ", GOT projectCallId = " + pc.getString("projectCallId"));
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

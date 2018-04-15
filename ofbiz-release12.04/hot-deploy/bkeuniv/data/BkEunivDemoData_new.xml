@@ -30,6 +30,7 @@
 
 <!-- Quan ly van ban phap quy-->
 <Function functionId="OFFICIAL_DOCUMENT_MANAGEMENT" uiLabelId="official_document_management" vnLabel="Quản lý văn bản pháp quy" enLabel="official document management" parentFunctionId="NULL" index="7"/>
+<Function functionId="OFFICIAL_DOCUMENT_TYPE" uiLabelId="official_document_type" vnLabel="Loại văn bản pháp quy" enLabel="official document type" parentFunctionId="OFFICIAL_DOCUMENT_MANAGEMENT" target="official-document-type" index="1"/>
 <Function functionId="UPLOAD_OFFICIAL_DOCUMENT" uiLabelId="upload_official_document" vnLabel="Upload văn bản pháp quy" enLabel="upload official document" parentFunctionId="OFFICIAL_DOCUMENT_MANAGEMENT" target="upload-official-document" index="1"/>
 <Function functionId="VIEW_OFFICIAL_DOCUMENT" uiLabelId="view_official_document" vnLabel="Danh mục văn bản pháp quy" enLabel="view official document" parentFunctionId="OFFICIAL_DOCUMENT_MANAGEMENT" target="view-official-document" index="2"/>
 

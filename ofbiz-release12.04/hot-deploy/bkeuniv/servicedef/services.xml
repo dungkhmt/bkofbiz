@@ -367,5 +367,34 @@
 		<attribute name="academicYears" mode="OUT" type="List"></attribute>
 	</service>
 	
+	<service name="createRandomAcctgTransAndEntriesForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+    	invoke="createRandomAcctgTransAndEntriesForTesting" transaction-timeout="10000000">
+    	<attribute name="nbAcctg" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="nbAcctgEntry" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="month" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="year" mode="IN" type="String" optional="true"></attribute>
+    </service>
+	<service name="createRandomAcctgTransForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+    	invoke="createRandomAcctgTransForTesting" transaction-timeout="10000000">
+    	<attribute name="nbAcctg" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="nbAcctgEntry" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="month" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="year" mode="IN" type="String" optional="true"></attribute>
+    </service>
+	<service name="querySumPosted" engine="java"
+    	location="org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+    	invoke="querySumPosted" transaction-timeout="10000000">
+    	<attribute name="glAccountId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="fromDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="thruDate" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="result" mode="OUT" type="List"></attribute>
+    </service>
+    
+	<service name="createGlAccountOrganizationForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
+    	invoke="createGlAccountOrganizationForTesting" transaction-timeout="10000000">
+    </service>
 	
 </services>

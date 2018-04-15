@@ -16,13 +16,21 @@
             <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALL"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
-    <request-map uri="open-evaluation-result">
+    <request-map uri="publish-evaluation-result">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
-           invoke="openEvaluationResult"/>
+           invoke="publishEvaluationResult"/>
             <response name="AttachementSuccess" type="view" value="OPENEVALUATIONRESULT"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    <request-map uri="unpublish-evaluation-result">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="unpublishEvaluationResult"/>
+            <response name="AttachementSuccess" type="view" value="OPENEVALUATIONRESULT"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
     <request-map uri="generate-code-for-project-proposal">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 

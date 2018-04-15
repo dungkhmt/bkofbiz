@@ -26,6 +26,11 @@
     	<response name="success" type="view" value="main"/>
     </request-map>
     
+    <request-map uri="list-staffs">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-staffs"/>
+    </request-map>
+    
     <request-map uri="routes-management">
 		<security https="true" auth="true"/>
         <response name="success" type="view" value="RoutesView"/>
@@ -109,6 +114,8 @@
 	<view-map name="GoogleMaps" type="screen" page="component://transportations/widget/TransportationsScreens.xml#pageGoogleMaps"/>
 	<view-map name="routesPDF" type="screenfop" page="component://transportations/widget/TransportationsScreens.xml#pageRoutesPDF" content-type="application/pdf" encoding="none"/>
 	
+	
+	<view-map name="view-list-staffs" type="screen" page="component://transportations/widget/TransportationsScreens.xml#pageListStaffs"/>
 	
 	<!-- <view-map name="AttachmentError" type="ftl" page="file_attach_error.ftl"/>
 	<view-map name="AttachementException" type="ftl" page="file_attach_error.ftl"/>
