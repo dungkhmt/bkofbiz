@@ -494,6 +494,18 @@
 		</section>
 	</screen>
 
+	<screen name="UpdatePaperSection">
+		<section>
+			<widgets>
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+			</widgets>
+		</section>
+	</screen>
 	<screen name="pageViewDetailPaper">
 		<section>
 			<actions>
@@ -518,13 +530,15 @@
 
 					<include-screen name="pageDetailPaper"/>
 					
+					<include-screen name="UpdatePaperSection"/>
+			<!-- 		
 						<platform-specific>
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
 							</html>
 						</platform-specific>
-					
+			 -->		
 					</decorator-section>
 				</decorator-screen>
 

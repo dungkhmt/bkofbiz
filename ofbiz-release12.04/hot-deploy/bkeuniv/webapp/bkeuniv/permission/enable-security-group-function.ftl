@@ -54,6 +54,7 @@
 					},
 					success: function(rs){
 						//window.location.href="/bkeuniv/control/enable-security-group-function";
+						/*
 						var html = '';
 						for(i = 0; i < rs.functions.length; i++){
 							html += '<input type=' + '"' + 'checkbox' + '"' + 
@@ -62,6 +63,27 @@
 							if(rs.functions[i].checked === 1) html += ' checked';
 							html += '/>' + rs.functions[i].vnLabel + '<br>';
 						}
+						*/
+						var html = '<table>';
+						for(i = 0; i < rs.functions.length; i++){
+							html += '<tr>';
+							html += '<td>';
+							html += '<input type=' + '"' + 'checkbox' + '"' + 
+							'class=' + '"' + 'functions_bkeuniv' + '"' + 'name=' + '"' + 'functions' + '"'
+							+ 'value=' + '"' + rs.functions[i].functionId + '"';// 
+							if(rs.functions[i].checked === 1) html += ' checked';
+							html += '/>' + rs.functions[i].vnLabel + '<br>';
+							html += '</td>';
+							
+							html += '<td>';
+							if(rs.functions[i].parentFunctionId != null)
+								html += rs.functions[i].parentFunctionId;
+							else
+								html += ''
+							html += '</td>';
+							html += '</tr>';
+						}
+						html += '</table>'
 						console.log(html);
 						document.getElementById("list-functions").innerHTML = html;
 					}

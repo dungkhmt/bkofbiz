@@ -69,7 +69,7 @@
 
 
 <!-- Quan ly thuc hien de tai NCKH -->
-<Function functionId="RESEARCH_PROJECT_MANAGEMENT" uiLabelId="research_project_management" vnLabel="Quản lý thực hiện đề tài nghiên cứu khoa học" enLabel="research project management" parentFunctionId="NULL" index="1"/>
+<Function functionId="RESEARCH_PROJECT_MANAGEMENT" uiLabelId="research_project_management" vnLabel="Thực hiện đề tài nghiên cứu khoa học" enLabel="research project management" parentFunctionId="NULL" index="1"/>
 
 <Function functionId="RESEARCH_PROJECT_CALL_MANAGEMENT" uiLabelId="research_project_call_management" target="project-call-management" vnLabel="Quản lý đợt gọi đề tài" enLabel="research project call management" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="1"/>
 
@@ -113,7 +113,7 @@
 
 
 <!-- Tong hop ke khai KL NCKH -->
-<Function functionId="RESEARCH_DECLARATION_MANAGEMENT" uiLabelId="research_declaration_management" vnLabel="Quản lý kê khai khối lượng nghiên cứu khoa học" enLabel="research declaration management" parentFunctionId="NULL" index="1"/>
+<Function functionId="RESEARCH_DECLARATION_MANAGEMENT" uiLabelId="research_declaration_management" vnLabel="Kê khai khối lượng nghiên cứu khoa học" enLabel="research declaration management" parentFunctionId="NULL" index="1"/>
 
 <Function functionId="RESEARCH_SUMMARY_KV01" uiLabelId="research_summary_kv01" vnLabel="Tổng hợp mẫu KV01" enLabel="summary KV01" target="research-summary-kv01" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="1"/>
 
@@ -139,16 +139,17 @@
 <Function functionId="RESEARCH_DOMAIN_STAFF" uiLabelId="research_domain_staff" vnLabel="Lĩnh vực nghiên cứu" enLabel="research domain" target="research-domain-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
 
 <Function functionId="FOREIGN_LANGUAGE_STAFF" uiLabelId="foreign_language_staff" vnLabel="Trình độ ngoại ngữ" enLabel="foreign language" target="foreign-language-staff" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
-<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
-<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
+<Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="7"/>
 
-<Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="8"/>
+
+<Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="9"/>
 
 <Function functionId="RESEARCH_PROGRAM" uiLabelId="project_program" vnLabel="Chương trình nghiên cứu" enLabel="research programs" target="research-program" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
-<Function functionId="PROJECT_DECLARATION" uiLabelId="project_declaration" vnLabel="Kê khai đề tài đang thực hiện" enLabel="declare running projects" target="project-declaration" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+<Function functionId="PROJECT_DECLARATION" uiLabelId="project_declaration" vnLabel="Kê khai đề tài đang thực hiện" enLabel="declare running projects" target="project-declaration" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="9"/>
 
-<Function functionId="PROJECT_WORKING_HOUR_DECLARATION" uiLabelId="project_working_hour_declaration" vnLabel="Kê khai số giờ thực hiện đề tài" enLabel="declare working hour of running projects" target="project-working-hour-declaration" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+<Function functionId="PROJECT_WORKING_HOUR_DECLARATION" uiLabelId="project_working_hour_declaration" vnLabel="Kê khai số giờ thực hiện đề tài" enLabel="declare working hour of running projects" target="project-working-hour-declaration" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="9"/>
 
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
 <Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>

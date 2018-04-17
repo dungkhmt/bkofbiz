@@ -619,8 +619,9 @@ public class PaperDeclarationService {
 					+ ", staffId = " + staffId);
 			String ext = getExtension(file_name);
 			java.util.Date currentDate = new java.util.Date();
-			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
-					"HHmmssddMMyyyy");
+			//SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("HHmmssddMMyyyy");
+			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			
 			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
 
 			String filenameDB = sCurrentDate + "." + ext;

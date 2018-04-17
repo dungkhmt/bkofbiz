@@ -24,6 +24,11 @@
         <value xml:lang="vi">Tác giả (cách nhau bởi dấu phảy)</value>
     </property>
     
+    <property key="BkEunivAuthors">
+        <value xml:lang="en">Authors</value>
+        <value xml:lang="vi">Tác giả</value>
+    </property>
+
     <property key="BkEunivPaperCategory">
         <value xml:lang="en">Category</value>
         <value xml:lang="vi">Loại bài báo</value>
@@ -61,7 +66,7 @@
 
     <property key="BkEunivDownloadPaper">
         <value xml:lang="en">Download</value>
-        <value xml:lang="vi">Tải bài báo</value>
+        <value xml:lang="vi">Tải File bài báo</value>
     </property>
    
     <property key="BkEunivPaperMembers">
@@ -69,6 +74,11 @@
         <value xml:lang="vi">Thành viên bài báo</value>
     </property>
    
+    <property key="BkEunivPaperMembersHUST">
+        <value xml:lang="en">Member of papers</value>
+        <value xml:lang="vi">Thành viên bài báo là cán bộ trường</value>
+    </property>
+
     <property key="BkEunivSelectFaculty">
         <value xml:lang="en">Faculty</value>
         <value xml:lang="vi">Khoa, viện</value>

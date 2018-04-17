@@ -2,6 +2,39 @@
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
+	<screen name="ViewListVehicles">
+		<section>
+			<actions>
+				<set field="vehicleCode" value="${parameters.vehicleCode}"/>
+				<set field="description" value="${parameters.description}"/>
+				
+				<service service-name="createAVehicle">
+					<field-map field-name="vehicleCode" value="vehicleCode"/>
+					<field-map field-name="description" value="description"/>
+				</service>
+				
+			</actions>
+			
+			<widgets>
+				<decorator-screen name="transportation-global-decorator"
+					location="component://transportations/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://transportations/webapp/transportations/list-vehicles.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			
+			</widgets>
+			
+		</section>
+	</screen>
+
 	<screen name="main">
 		<section>
 			<actions>

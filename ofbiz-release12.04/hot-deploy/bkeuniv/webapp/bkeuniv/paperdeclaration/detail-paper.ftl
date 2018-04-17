@@ -1,9 +1,25 @@
 
+<style>
+	.info-table{
+		width: 100%;
+    	border: 1px solid black;
+    	overflow: scroll;
+	}
+	.info-box{
+		padding:15px
+	}
+	.modal-dialog {
+		width: 60%!important;
+		margin-left: 20%!important;
+	}
+</style>
+
+<div class="info-table">
 
 <table>
 <tr>
 	<td>
-	Ten bai bao
+		${paperDeclarationUiLabelMap.BkEunivPaperName}
 	</td>
 	<td>
 		${resultPaper.paper.paperName}
@@ -11,7 +27,7 @@
 </tr>
 <tr>
 	<td>
-		Tac gia
+		${paperDeclarationUiLabelMap.BkEunivAuthors}
 	</td>
 	<td>
 		<#if resultPaper.paper.authors?exists>
@@ -19,9 +35,21 @@
 		</#if>
 	</td>
 </tr>
+
 <tr>
 	<td>
-		Hoi nghi, tap chi
+		${paperDeclarationUiLabelMap.BkEunivPaperCategory}
+	</td>
+	<td>
+		<#if resultPaper.paper.paperCategoryName?exists>
+			${resultPaper.paper.paperCategoryName}
+		</#if>
+	</td>
+</tr>
+
+<tr>
+	<td>
+		${paperDeclarationUiLabelMap.BkEunivPaperJournalConference}
 	</td>
 	<td>
 		<#if resultPaper.paper.journalConferenceName?exists>
@@ -31,7 +59,7 @@
 </tr>
 <tr>
 	<td>
-		Nam xuat ban
+		${paperDeclarationUiLabelMap.BkEunivPaperYear}
 	</td>
 	<td>
 		<#if resultPaper.paper.year?exists>
@@ -41,9 +69,10 @@
 </tr>
 <tr>
 	<td>
-		<a href="/bkeuniv/control/download-file-paper?id-paper=${resultPaper.paper.paperId}">Download file minh chung</a>
+		<a href="/bkeuniv/control/download-file-paper?id-paper=${resultPaper.paper.paperId}">${paperDeclarationUiLabelMap.BkEunivDownloadPaper}</a>
 
 	</td>
 </tr>
 
 </table>
+
