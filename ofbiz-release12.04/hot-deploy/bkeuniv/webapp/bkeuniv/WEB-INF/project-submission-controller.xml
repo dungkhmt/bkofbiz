@@ -62,6 +62,14 @@
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
 
+    <request-map uri="delete-a-project-proposal">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="deleteAProjectProposal"/>
+            <response name="AttachementSuccess" type="view" value="DELETEPROJECTPROPOSAL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
     <request-map uri="open-project-call-for-submission">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
@@ -264,6 +272,13 @@
 		<response name="AttachementSuccess" type="view" value="ADDWORKPACKAGEPROJECT"/>
 	</request-map>
 	
+	<request-map uri="update-a-workpackage-project-proposal">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="updateWorkpackageProject" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="UPDATEWORKPACKAGEPROJECT"/>
+	</request-map>
+
 	<request-map uri="add-a-project-proposal-product-type">
 		<security https="true" auth="true"/>
 		<event type="java" invoke="addProjectProposalType" 

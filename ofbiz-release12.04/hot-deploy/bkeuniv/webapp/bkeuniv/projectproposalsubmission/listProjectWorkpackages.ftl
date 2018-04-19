@@ -87,14 +87,27 @@
 		</#if>
 	</#list>  -->
 
+	<#assign members=[]/> 
+	<#list resultMembers.members as m> 
+		<#if m?has_content> 
+				<#assign op = { "name": m.staffName?j_string ,"value": m.staffId?j_string } /> 
+				<#assign members = members + [op] /> 
+		</#if> 
+	</#list>
 	<#assign columnsChange=[
 		{
 			"name": uiLabelMap.BkEunivContent?j_string,
-			"value": "content"
+			"value": "content",
+			"type": "textarea"
 		},
 		{
 			"name": uiLabelMap.BkEunivStaff?j_string,
-			"value": "staffId"
+			"value": "staffId",
+			"type": "select",
+			"option":{
+				"source": members,
+				"maxItem": 1
+			}
 		},
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
@@ -106,13 +119,7 @@
 		}
 	] />
 
-	<#assign members=[]/> 
-	<#list resultMembers.members as m> 
-		<#if m?has_content> 
-				<#assign op = { "name": m.staffName?j_string ,"value": m.staffId?j_string } /> 
-				<#assign members = members + [op] /> 
-		</#if> 
-	</#list>
+	
 
 	<#assign columnsNew=[
 		{
@@ -131,7 +138,7 @@
 		},
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
-			"value": "workingdays"
+			"value": "workingDays"
 		},
 		{
 			"name": uiLabelMap.BkEunivBudget?j_string,
@@ -172,7 +179,7 @@
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="" 
+		urlUpdate="/bkeuniv/control/update-a-workpackage-project-proposal" 
 		urlAdd="/bkeuniv/control/add-a-workpackage-project-proposal" 
 		optionDataAdd={
 			"data": {
@@ -180,12 +187,12 @@
 			}
 		}
 		urlDelete="" 
-		keysId=["researchProjectProposalId"] 
+		keysId=["researchProjectProposalId","contentItemSeq"] 
 		fieldDataResult = "projectProposalContentItems" 
 		titleChange=uiLabelMap.BkEunivChange
 		titleNew=uiLabelMap.BkEunivNew
 		titleDelete=uiLabelMap.BkEunivDelete
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
-		contextmenu=false
+		contextmenu=true
 	/>
 </div>

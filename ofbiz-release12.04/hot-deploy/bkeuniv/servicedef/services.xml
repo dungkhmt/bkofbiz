@@ -299,6 +299,8 @@
 		<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="journalConferenceName" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="DOI" mode="IN" type="String"  optional="true"></attribute>
+		<attribute name="impactFactor" mode="IN" type="String"  optional="true"></attribute>
 		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="year" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="month" mode="IN" type="String" optional="true"></attribute>
@@ -326,6 +328,8 @@
 		<attribute name="paperCategoryId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="journalConferenceName" mode="IN" type="String"  optional="true"></attribute>
+		<attribute name="DOI" mode="IN" type="String"  optional="true"></attribute>
+		<attribute name="impactFactor" mode="IN" type="String"  optional="true"></attribute>
 		<attribute name="volumn" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="year" mode="IN" type="String"  optional="true"></attribute>
 		<attribute name="month" mode="IN" type="String"  optional="true"></attribute>

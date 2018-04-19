@@ -870,6 +870,8 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="paperName" type="very-long"></field>
 		<field name="journalConferenceName" type="very-long"></field>
+		<field name="DOI" type="very-long"></field>
+		<field name="impactFactor" type="floating-point"></field>
 		<field name="volumn" type="value"></field>
 		<field name="year" type="numeric"></field>
 		<field name="month" type="numeric"></field>

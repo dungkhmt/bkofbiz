@@ -708,7 +708,7 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
 			"data": "paperName",
 			"render": 'function(value, name, dataColumns, id) {
-                return "<a href=\\"/bkeuniv/control/detail-paper?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
+                return "<a href=\\"/bkeuniv/control/detail-paper-update?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
 			}'
 		},
 		{
@@ -731,6 +731,15 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"data": "journalConferenceName"
 		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"data": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"data": "impactFactor"
+		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
 			"data": "month"
@@ -779,6 +788,8 @@
 		"volumn",
 		"authors",
 		"journalConferenceName",
+		"DOI",
+		"impactFactor"
 		"paperCategoryId",
 		"categoryName",
 		"paperName",
@@ -820,6 +831,17 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"value": "journalConferenceName"
 		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"value": "impactFactor",
+			"pattern": "([0-9]{0,3}).([0-9]{0,9})",
+			"title": "So thuc"
+		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
@@ -886,6 +908,18 @@
 			"value": "journalConferenceName"
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"value": "impactFactor",
+			"pattern": "([0-9]{0,3}).([0-9]{0,9})",
+			"title": "So thuc"
+		},
+		
+		{
+
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
 		},

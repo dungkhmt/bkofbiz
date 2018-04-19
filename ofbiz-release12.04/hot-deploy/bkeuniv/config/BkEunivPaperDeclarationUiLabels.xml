@@ -39,6 +39,16 @@
         <value xml:lang="vi">Tên tại chí, hội nghị</value>
     </property>
    
+    <property key="BkEunivPaperDOI">
+        <value xml:lang="en">DOI</value>
+        <value xml:lang="vi">DOI</value>
+    </property>
+    
+    <property key="BkEunivPaperIF">
+        <value xml:lang="en">Impact Factor</value>
+        <value xml:lang="vi">Impact Factor</value>
+    </property>
+
     <property key="BkEunivPaperVolumn">
         <value xml:lang="en">Volumn</value>
         <value xml:lang="vi">Số, Trang (ví dụ: vol. 21, pp 13-25)</value>
