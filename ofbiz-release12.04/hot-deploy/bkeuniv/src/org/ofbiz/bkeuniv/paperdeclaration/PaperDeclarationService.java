@@ -619,8 +619,9 @@ public class PaperDeclarationService {
 					+ ", staffId = " + staffId);
 			String ext = getExtension(file_name);
 			java.util.Date currentDate = new java.util.Date();
-			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
-					"HHmmssddMMyyyy");
+			//SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("HHmmssddMMyyyy");
+			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			
 			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
 
 			String filenameDB = sCurrentDate + "." + ext;
@@ -1047,6 +1048,11 @@ public class PaperDeclarationService {
 		
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
+		String DOI = (String) context
+				.get("DOI");
+		String impactFactor = (String) context
+				.get("impactFactor");
+		
 		String volumn = (String) context.get("volumn");
 		String syear = (String) context.get("year");
 		String smonth = (String) context.get("month");
@@ -1081,6 +1087,13 @@ public class PaperDeclarationService {
 			if (journalConferenceName != null
 					&& !journalConferenceName.equals(""))
 				p.put("journalConferenceName", journalConferenceName);
+			if (DOI != null
+					&& !DOI.equals(""))
+				p.put("DOI", DOI);
+			if (impactFactor != null
+					&& !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+			
 			if (volumn != null && !volumn.equals(""))
 				p.put("volumn", volumn);
 			if (syear != null && !syear.equals("")) {
@@ -1162,6 +1175,11 @@ public class PaperDeclarationService {
 
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
+		String DOI = (String) context
+				.get("DOI");
+		String impactFactor = (String) context
+				.get("impactFactor");
+
 		String volumn = (String) context.get("volumn");
 		String year = (String) context.get("year");
 		String month = (String) context.get("month");
@@ -1208,6 +1226,13 @@ public class PaperDeclarationService {
 			if (journalConferenceName != null
 					&& !journalConferenceName.equals(""))
 				p.put("journalConferenceName", journalConferenceName);
+			if (DOI != null
+					&& !DOI.equals(""))
+				p.put("DOI", DOI);
+			if (impactFactor != null
+					&& !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+
 			if (volumn != null && !volumn.equals(""))
 				p.put("volumn", volumn);
 			if (year != null && !year.equals("")) {

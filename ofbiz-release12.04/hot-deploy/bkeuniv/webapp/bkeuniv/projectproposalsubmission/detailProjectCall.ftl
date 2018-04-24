@@ -18,7 +18,8 @@
 		margin-left: 20%!important;
 	}
 </style>
-
+<#assign projectCallIdStr = resultProjectCall.projectCall.projectCallId/>
+<input type="hidden" id="projectCallId" value="${resultProjectCall.projectCall.projectCallId}" />
 <div class="info-table">
 <table>
 	<tr>
@@ -36,6 +37,14 @@
 		</td>
 	</tr>
 	
+	<tr>
+		<td>
+			<div class="info-box">
+			Ma dot goi de tai: ${resultProjectCall.projectCall.projectCallId}
+			</div>
+		</td>
+	</tr>
+
 	<tr>
 		<td>		
 		<div class="info-box">
@@ -80,6 +89,12 @@
 					<@buttonCommand text="${uiLabelMap.BkEunivOpenEvaluation}" action="openEvaluation"/>
 					</td>
 				</tr>
+				<tr>	
+					<td>
+					<@buttonCommand text="${uiLabelMap.BkEunivCloseEvaluation}" action="closeEvaluation"/>
+					</td>
+				</tr>
+				
 			</table>
 		</td>
 	</tr>
@@ -88,16 +103,17 @@
 
 <script>
 	function openProjectCallForSubmission(){
+		var projectCallId =  document.getElementById("projectCallId").value;
 		//alert("Dong dot goi de tai" + data.projectCallId);
 		
-		alertify.confirm('Xac nhan mo de tai', "Ban co muon thuc su muon mo khong?",
+		alertify.confirm('Xac nhan mo de tai ' + projectCallId, "Ban co muon thuc su muon mo khong?",
 		function(){
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
 					url: "/bkeuniv/control/open-project-call-for-submission",
 					type: 'POST',
 					data: {
-						"projectCallId": ${resultProjectCall.projectCall.projectCallId}
+						"projectCallId": projectCallId
 					},
 					success:function(rs){
 						console.log(rs);
@@ -113,14 +129,15 @@
 
 
 function closeProjectCall(){
-			alertify.confirm('Xac nhan dong de tai', "Ban co muon thuc su dong khong?",
+		var projectCallId =  document.getElementById("projectCallId").value;
+			alertify.confirm('Xac nhan dong de tai ' + projectCallId, "Ban co muon thuc su dong khong?",
 		function(){
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
 					url: "/bkeuniv/control/close-project-call",
 					type: 'POST',
 					data: {
-						"projectCallId": ${resultProjectCall.projectCall.projectCallId}
+						"projectCallId": projectCallId
 					},
 					success:function(rs){
 						console.log(rs);
@@ -135,14 +152,15 @@ function closeProjectCall(){
 }
 
 function openProjectCallForRevision(){
-		alertify.confirm('Xac nhan mo lai dot goi de tai', "Ban co muon thuc su muon mo khong?",
+		var projectCallId =  document.getElementById("projectCallId").value;
+		alertify.confirm('Xac nhan mo lai dot goi de tai ' + projectCallId, "Ban co muon thuc su muon mo cho phep chinh sua khong?",
 		function(){
-				//alert("Dong dot goi de tai" + data.projectCallId);
+				//alert("Dong dot goi de tai: " + ${projectCallIdStr});
 				$.ajax({
 					url: "/bkeuniv/control/open-project-call-for-revision",
 					type: 'POST',
 					data: {
-						"projectCallId": ${resultProjectCall.projectCall.projectCallId}
+						"projectCallId": projectCallId
 					},
 					success:function(rs){
 						console.log(rs);
@@ -156,16 +174,17 @@ function openProjectCallForRevision(){
 
 }
 function closeProjectCallForRevision(){
+		var projectCallId =  document.getElementById("projectCallId").value;
 		//alert("Dong dot goi de tai" + data.projectCallId);
 		
-		alertify.confirm('Xac nhan dong dot goi de tai', "Ban co muon thuc su muon dong khong?",
+		alertify.confirm('Xac nhan dong dot goi de tai ' + projectCallId, "Ban co muon thuc su muon dong khong?",
 		function(){
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
 					url: "/bkeuniv/control/close-project-call-for-revision",
 					type: 'POST',
 					data: {
-						"projectCallId":  ${resultProjectCall.projectCall.projectCallId}
+						"projectCallId":  projectCallId
 					},
 					success:function(rs){
 						console.log(rs);
@@ -179,14 +198,38 @@ function closeProjectCallForRevision(){
 
 }
 	function openEvaluation(){
-		alertify.confirm('Xac nhan cong bo ket qua danh gia thuyet minh de tai', "Ban co muon thuc su muon cong bo khong?",
+		var projectCallId =  document.getElementById("projectCallId").value;
+		alertify.confirm('Xac nhan cong bo ket qua danh gia thuyet minh de tai ' + projectCallId, "Ban co muon thuc su muon cong bo khong?",
 		function(){
 				//alert("Dong dot goi de tai" + data.projectCallId);
 				$.ajax({
-					url: "/bkeuniv/control/open-evaluation-result",
+					url: "/bkeuniv/control/publish-evaluation-result",
 					type: 'POST',
 					data: {
-						"projectCallId": ${resultProjectCall.projectCall.projectCallId}
+						"projectCallId": projectCallId
+					},
+					success:function(rs){
+						console.log(rs);
+						window.location.href="/bkeuniv/control/project-call-management";
+					}
+				})
+		},
+		function(){
+			//alert("ban da chon cancel");
+		});
+	
+	}
+
+	function closeEvaluation(){
+		var projectCallId =  document.getElementById("projectCallId").value;
+		alertify.confirm('Xac nhan huy cong bo ket qua danh gia thuyet minh de tai ' + projectCallId, "Ban co muon thuc su muon huy cong bo khong?",
+		function(){
+				//alert("Dong dot goi de tai" + data.projectCallId);
+				$.ajax({
+					url: "/bkeuniv/control/unpublish-evaluation-result",
+					type: 'POST',
+					data: {
+						"projectCallId": projectCallId
 					},
 					success:function(rs){
 						console.log(rs);

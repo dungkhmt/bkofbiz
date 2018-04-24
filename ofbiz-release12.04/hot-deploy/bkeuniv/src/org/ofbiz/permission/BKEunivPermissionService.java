@@ -176,6 +176,9 @@ public class BKEunivPermissionService {
 					null, 
 					null, 
 					false);
+			
+			functions = sortGroupParent(functions);
+			
 			for(GenericValue gv: functions){
 				mFunction2Checked.put((String)gv.get("functionId"), 0);
 			}
@@ -188,8 +191,16 @@ public class BKEunivPermissionService {
 			String json = "{\"functions\":[";
 			for(int i = 0; i < functions.size(); i++){
 				GenericValue gv = functions.get(i);
-				json += "{\"functionId\":\"" + gv.get("functionId") + "\",\"vnLabel\":\"" + gv.get("vnLabel") + "\","
-						+ "\"checked\":" + mFunction2Checked.get((String)gv.get("functionId")) + "}";
+				String parentFunctionId = "-";
+				if(gv.getString("parentFunctionId") != null)
+					parentFunctionId = gv.getString("parentFunctionId");
+				json += "{\"functionId\":\"" + gv.get("functionId") 
+						+ "\",\"vnLabel\":\"" + gv.get("vnLabel") 
+						+ "\","
+						+ "\"checked\":" + mFunction2Checked.get((String)gv.get("functionId"))
+						+ ","
+						+ "\"parentFunctionId\":\"" + parentFunctionId + "\""
+						+ "}";
 				if(i < functions.size() - 1)
 					json += ",\n";
 			}
@@ -400,6 +411,32 @@ public class BKEunivPermissionService {
 		return retSucc;
 		
 	}
+	public static List<GenericValue> sortGroupParent(List<GenericValue> functions){
+		GenericValue[] a = new GenericValue[functions.size()];
+		for(int i = 0; i < functions.size(); i++){
+			a[i] = functions.get(i);
+		}
+		for(int i = 0; i < a.length-1; i++){
+			String pi = a[i].getString("parentFunctionId");
+			if(pi.equals("NULL")) pi = a[i].getString("functionId");
+			for(int j = i+1; j < a.length; j++){
+				String pj = a[j].getString("parentFunctionId");
+				if(pj.equals("NULL")) pj = a[j].getString("functionId");
+				if(pi.compareTo(pj) > 0){
+					GenericValue tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+					Debug.log(module + "::sortGroupParent, pi = " + pi + ", pj = " + pj + ", SWAP " + i + "," + j);
+				}
+			}
+		}
+		for(int i = 0; i < a.length; i++){
+			Debug.log(module + "::sortGroupParent, AFTER SORT -> " + a[i].getString("parentFunctionId"));
+		}
+		List<GenericValue> retL = FastList.newInstance();
+		for(int i = 0; i < a.length; i++){
+			retL.add(a[i]);
+		}
+		return retL;
+	}
 	public static Map<String, Object> getListFunctions(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		try{
@@ -410,7 +447,9 @@ public class BKEunivPermissionService {
 					null, 
 					null, 
 					false);
-			Debug.logInfo("functions.sz = " + functions.size(), module);
+			
+			//Debug.logInfo("functions.sz = " + functions.size(), module);
+			
 			retSucc.put("functions", functions);
 		}catch(Exception ex){
 			ex.printStackTrace();

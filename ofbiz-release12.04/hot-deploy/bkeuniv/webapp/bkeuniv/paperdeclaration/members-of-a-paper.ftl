@@ -7,6 +7,7 @@
 	var modal;
 	var span;
 	var selectedEntry;
+	/*
 	function createContextMenu(id) {
 		
 		$(document).contextmenu({
@@ -37,7 +38,8 @@
 		alert(data.researchProjectProposalId);
 		//window.location.href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=" + data.researchProjectProposalId;
 	}
-
+	*/
+	
 </script>
 
 <div class="body">
@@ -148,6 +150,8 @@
 		jqTitle=uiLabelMap.BkEunivManage
 		jqTitle=uiLabelMap.TitleProjectSubmissionManagement?j_string
 		contextmenu=true
+		<!--
 		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
+		-->
 	/>
 </div>

@@ -88,7 +88,7 @@
     		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="deleteProject">
     	<attribute name="appliedResearchProjectId" mode="IN" type="String"></attribute>
     	
-    	<attribute name="project" mode="OUT" type="String"></attribute>
+    	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
      
 </services>

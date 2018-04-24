@@ -870,6 +870,8 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="paperName" type="very-long"></field>
 		<field name="journalConferenceName" type="very-long"></field>
+		<field name="DOI" type="very-long"></field>
+		<field name="impactFactor" type="floating-point"></field>
 		<field name="volumn" type="value"></field>
 		<field name="year" type="numeric"></field>
 		<field name="month" type="numeric"></field>
@@ -1234,4 +1236,46 @@
 		<prim-key field="budgetInOutId"/>
 	</entity>
 	
+	<entity entity-name="RunningBudgetResearchProject" package-name="org.ofbiz.bkeuniv">
+		<field name="runningBudgetResearchProjectId" type="id-ne"></field>
+		<field name="customTimePeriodId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="accumulateTransferedBudget" type="currency-amount"></field>
+		<field name="transferedBudgetPeriodFacultyAccount" type="currency-amount"></field>
+		<field name="transferedBudgetPeriodUniversityAccount" type="currency-amount"></field>
+		<field name="statusId" type="id-vlong"></field>
+		<field name="description" type="very-long"></field>
+		<prim-key field="runningBudgetResearchProjectId"/>
+		
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		<relation rel-entity-name="ProjectProposalStatus" type="one">
+			<key-map field-name="statusId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="CustomTimePeriod" type="one">
+			<key-map field-name="customTimePeriodId"/>
+		</relation>
+	</entity>
+	
+	<view-entity entity-name="AcctgTransGlAccountSums"
+            package-name="org.ofbiz.accounting.ledger"
+            title="Sum of AcctgTransEntry entity amounts grouped by glAccountId, debitCreditFlag">
+      <member-entity entity-alias="ATE" entity-name="AcctgTransEntry"/>
+      <member-entity entity-alias="ACT" entity-name="AcctgTrans"/>      
+      <alias entity-alias="ATE" name="glAccountId" group-by="true"/>     
+      <alias entity-alias="ACT" name="acctgTransTypeId" group-by="false"/>
+      <alias entity-alias="ATE" name="debitCreditFlag" group-by="true"/>
+      <alias entity-alias="ATE" name="amount" function="sum"/>
+      <alias entity-alias="ACT" name="isPosted" group-by="false"/>
+      <alias entity-alias="ACT" name="transactionDate" group-by="false"/> <!-- so we can select the sum by date -->
+      <view-link entity-alias="ATE" rel-entity-alias="ACT">
+        <key-map field-name="acctgTransId"/>
+      </view-link>
+    </view-entity>
+    
 </entitymodel>

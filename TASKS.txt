@@ -1,7 +1,7 @@
 
-Tiệp: Hiển thị thông tin chi tiết bài báo
-
-
+Tiệp: Van ban phap quy
+-request-map: upload-official-document, view-official-document, official-document-type
+-entity: OfficialDocuments, OfficialDocumentTypes
 ---------------------------------------
 
 Quỳnh Hương: 
@@ -30,6 +30,8 @@ Nam: Quản lí lĩnh vực nghiên cứu, chuyên ngành đào tạo
 Đức: 
 -báo lỗi đăng nhập
 -fixbug: thanh vien cua bai bao: nhap lan thu nhat thanh cong, form van hien thi, chon de nhap tiep lan thu 2 thi failed
+-Co the dua href vao jqLibrary khong?
+
 ---------------------------------------
 DungPQ:
 Hiển thị chi tiết bài báo

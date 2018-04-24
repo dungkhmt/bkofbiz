@@ -59,7 +59,7 @@
 				<td></td>
 			</#if>
 			<#if p.paperName?exists>
-				<td>${p.paperName}</td>
+				<td><a href="/bkeuniv/control/detail-paper?paperId=${p.paperId}">${p.paperName}</a></td>
 			<#else>
 				<td></td>
 			</#if>
@@ -74,7 +74,11 @@
 			<#else>
 				<td></td>
 			</#if>
-			<td>${p.year}</td>
+			
+			<#if p.year?exists>
+				<td>${p.year}</td>
+			</#if>
+			
 			<#if p.volumn?exists>
 				<td>${p.volumn}</td>
 			<#else>

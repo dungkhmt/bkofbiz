@@ -29,6 +29,33 @@
 		</section>
 	</screen>
 
+	<screen name="pageDetailScientificCV">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				<service service-name="getCVProfileOfStaff" result-map="resultCV">
+				 	<field-map field-name="staffId" value="${parameters.staffId}"/>
+				 </service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cvstaffs/detail-scientific-cv.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="pageViewUser">
 		<section>
 			<actions>
@@ -494,10 +521,72 @@
 		</section>
 	</screen>
 
+	<screen name="UpdatePaperSection">
+		<section>
+			<widgets>
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+			</widgets>
+		</section>
+	</screen>
 	<screen name="pageViewDetailPaper">
 		<section>
 			<actions>
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
+				
+				
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+					<include-screen name="pageDetailPaper"/>
+					<!-- 
+					<include-screen name="UpdatePaperSection"/>
+					 -->
+			<!-- 		
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+			 -->		
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageViewDetailPaperUpdate">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
+				
+				
 				<service service-name="getAPaperDeclaration" result-map="resultPaper">
 					<field-map field-name="paperId" value="${parameters.paperId}"/>
 				</service>
@@ -509,13 +598,15 @@
 
 					<include-screen name="pageDetailPaper"/>
 					
+					<include-screen name="UpdatePaperSection"/>
+			<!-- 		
 						<platform-specific>
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
 							</html>
 						</platform-specific>
-					
+			 -->		
 					</decorator-section>
 				</decorator-screen>
 
@@ -921,7 +1012,9 @@
 				<service service-name="getAcademicYear" result-map="academicYearS"></service>
 				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
 				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
 				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

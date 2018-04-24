@@ -91,6 +91,11 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-detail-paper"/>
     </request-map>
+    
+    <request-map uri="detail-paper-update">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-detail-paper-update"/>
+    </request-map>
 
     <request-map uri="members-of-a-paper">
     	<security https="true" auth="true"/>
@@ -787,11 +792,20 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="detail-scientific-cv">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-detail-scientific-cv"/>
+    	
+	</request-map>
+    
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
     <view-map name="view-detail-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewDetailPaper"/>
+    <view-map name="view-detail-paper-update" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewDetailPaperUpdate"/>
     <view-map name="view-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageMembersOfAPaper"/>
+    <view-map name="view-detail-scientific-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDetailScientificCV"/>
+
 
     <view-map name="view-staff-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffManagement"/>
     <view-map name="view-test-service" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTestService"/>

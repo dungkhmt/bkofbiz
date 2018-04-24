@@ -16,13 +16,21 @@
             <response name="AttachementSuccess" type="view" value="CLOSEPROJECTCALL"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
-    <request-map uri="open-evaluation-result">
+    <request-map uri="publish-evaluation-result">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
-           invoke="openEvaluationResult"/>
+           invoke="publishEvaluationResult"/>
             <response name="AttachementSuccess" type="view" value="OPENEVALUATIONRESULT"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    <request-map uri="unpublish-evaluation-result">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="unpublishEvaluationResult"/>
+            <response name="AttachementSuccess" type="view" value="OPENEVALUATIONRESULT"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
     <request-map uri="generate-code-for-project-proposal">
             <security https="true" auth="true"/>
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
@@ -51,6 +59,14 @@
            <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
            invoke="acceptReviseProjectProposal"/>
             <response name="AttachementSuccess" type="view" value="ACCEPTREVISEPROJECTPROPOSAL"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>    
+
+    <request-map uri="delete-a-project-proposal">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
+           invoke="deleteAProjectProposal"/>
+            <response name="AttachementSuccess" type="view" value="DELETEPROJECTPROPOSAL"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
 
@@ -256,6 +272,13 @@
 		<response name="AttachementSuccess" type="view" value="ADDWORKPACKAGEPROJECT"/>
 	</request-map>
 	
+	<request-map uri="update-a-workpackage-project-proposal">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="updateWorkpackageProject" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="UPDATEWORKPACKAGEPROJECT"/>
+	</request-map>
+
 	<request-map uri="add-a-project-proposal-product-type">
 		<security https="true" auth="true"/>
 		<event type="java" invoke="addProjectProposalType" 

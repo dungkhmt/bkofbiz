@@ -159,6 +159,11 @@
         <value xml:lang="vi">Công bố kết quả đánh giá thuyết minh</value>
     </property>
 
+    <property key="BkEunivCloseEvaluation">
+        <value xml:lang="en">Close Evaluation</value>
+        <value xml:lang="vi">Huỷ công bố kết quả đánh giá thuyết minh</value>
+    </property>
+
     <property key="BkEunivResearchSpeciality">
         <value xml:lang="en">Research speciality</value>
         <value xml:lang="vi">Chuyên ngành nghiên cứu</value>

@@ -14,7 +14,10 @@
 		},
 		{
 			"name": uiLabel.ProjectDirector?j_string,
-			"data": "createStaffName"
+			"data": "createStaffName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-scientific-cv?staffId="+dataColumns.createStaffId+"\\">" + dataColumns.createStaffName + "</a>";
+			}'
 		},
 		{
 			"name": uiLabel.ProjectCallName?j_string,
@@ -54,6 +57,7 @@
 		"researchProjectProposalId",
 		"researchProjectProposalName",
 		"createStaffName",
+		"createStaffId",
 		"projectCallName",
 		"facultyName",
 		"statusName",

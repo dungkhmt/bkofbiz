@@ -377,6 +377,13 @@
 				
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
+				
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
 				<!-- 				
 				
 				<set field="researchProjectProposalId" from-field="${parameters.researchProjectProposalId}" global="true"/>

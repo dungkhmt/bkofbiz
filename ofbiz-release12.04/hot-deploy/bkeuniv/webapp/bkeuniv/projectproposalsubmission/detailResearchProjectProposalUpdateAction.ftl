@@ -56,7 +56,7 @@ ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 		<div class="modal-content" id="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">${uiLabel.BkEunivSetting}</h4>
+				<h4 class="modal-title">Chon file de upload</h4>
 			</div>
 			<div class="modal-body" id="modal-body">
 				<input type="file" id="input-upload-file" class="dropify" accept=".doc, .docx, .pdf, .csv, .xls, .xlsx" data-default-file="" />

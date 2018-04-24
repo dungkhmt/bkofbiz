@@ -248,11 +248,11 @@
 			    delegate: "#"+id+"-content td",
 			menu: [
 			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
-			  {title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
-			  {title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
-			  {title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
-			  {title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
+			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+			  //{title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
+			  //{title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
+			  //{title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
+			  //{title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
 			
 			],
 			select: function(event, ui) {
@@ -706,7 +706,10 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"data": "paperName"
+			"data": "paperName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-paper-update?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
+			}'
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
@@ -728,6 +731,15 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"data": "journalConferenceName"
 		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"data": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"data": "impactFactor"
+		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
 			"data": "month"
@@ -776,6 +788,8 @@
 		"volumn",
 		"authors",
 		"journalConferenceName",
+		"DOI",
+		"impactFactor"
 		"paperCategoryId",
 		"categoryName",
 		"paperName",
@@ -817,6 +831,17 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"value": "journalConferenceName"
 		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"value": "impactFactor",
+			"pattern": "([0-9]{0,3}).([0-9]{0,9})",
+			"title": "So thuc"
+		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
@@ -883,6 +908,18 @@
 			"value": "journalConferenceName"
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"value": "impactFactor",
+			"pattern": "([0-9]{0,3}).([0-9]{0,9})",
+			"title": "So thuc"
+		},
+		
+		{
+
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
 		},
