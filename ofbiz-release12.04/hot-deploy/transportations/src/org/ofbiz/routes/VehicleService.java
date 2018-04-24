@@ -1,5 +1,6 @@
 package src.org.ofbiz.routes;
 
+import java.util.List;
 import java.util.Map;
 
 import javolution.util.FastMap;
@@ -11,6 +12,26 @@ import org.ofbiz.service.DispatchContext;
 
 
 public class VehicleService {
+	
+	public static Map<String, Object> getListOfVehicles(DispatchContext ctx, 
+			Map<String, ? extends Object> context){ 
+		
+		Map<String, Object> retSucc = FastMap.newInstance();
+		
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<GenericValue> lst = delegator.findList("Vehicle",
+					null,null,null,null,false);
+			
+			retSucc.put("listVehicles", lst);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+		return retSucc;
+	}
+	
 	public static Map<String, Object> createAVehicle(DispatchContext ctx, 
 			Map<String, ? extends Object> context){ 
 		
@@ -41,5 +62,8 @@ public class VehicleService {
 			ex.printStackTrace();
 		}
 		return retSucc;
+	}
+	public static void main(String[] args){
+		System.out.println("abc");
 	}
 }

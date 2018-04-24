@@ -277,6 +277,9 @@ public class ResearchProjectProposal {
 					map.put("staffName", gv.getString("staffName"));
 				staffs.add(map);
 			}
+			
+			Debug.log(module + "::getStaff, GOT list.sz = " + list.size() + " == " + staffs.size());
+			
 			retSucc.put("staffs", staffs);
 		} catch (Exception ex) {
 			ex.printStackTrace();

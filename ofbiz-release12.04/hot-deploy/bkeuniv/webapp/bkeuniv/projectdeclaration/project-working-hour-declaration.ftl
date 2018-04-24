@@ -63,6 +63,7 @@
 		</#if>
 	</#list>
 	
+	<!--
 	<#assign listStaff = [] />
 	<#list staffS.staffs as project>
 		<#if project?has_content>
@@ -70,6 +71,7 @@
 						<#assign listStaff = listStaff + [op] />
 		</#if>
 	</#list>
+	-->
 	
 	<#assign columnsNew=[
 		{
@@ -81,6 +83,7 @@
 				"maxItem": 1
 			}
 		},
+		<!--
 		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
 			"value": "staffId",
@@ -88,6 +91,17 @@
 			"option": {
 				"source": listStaff,
 				"maxItem": 1
+			}
+		},
+		-->
+		{
+			"name": projectDeclarationUiLabelMap.StaffId?j_string,
+			"value": "staffId",
+			"type":"select_server_side",
+			"option":{
+				"maxItem": 1,
+				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
 		{
@@ -126,6 +140,7 @@
 				"maxItem": 1
 			}
 		},
+		<!--
 		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
 			"value": "staffId",
@@ -135,6 +150,18 @@
 				"maxItem": 1
 			}
 		},
+		-->
+		{
+			"name": projectDeclarationUiLabelMap.StaffId?j_string,
+			"value": "staffId",
+			"type":"select_server_side",
+			"option":{
+				"maxItem": 1,
+				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+			}
+		},
+
 		{
 			"name": projectDeclarationUiLabelMap.ProjectParticipationRoleId?j_string,
 			"value": "projectParticipationRoleId",

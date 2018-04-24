@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
 
+<CustomTimePeriod customTimePeriodId="00001" periodTypeId="RESEARCH_PROJECT" periodName="Kỳ báo cáo 2016-2017" fromDate="2016-01-01" thruDate="2018-04-30" isClosed="N"/>
+
 <SecurityGroup groupId="BIZSTAFF" description="ordinary staffs"/>
 <SecurityGroupPermission groupId="BIZSTAFF" permissionId="OFBTOOLS_VIEW"/>
 
@@ -102,6 +104,8 @@
 <Function functionId="RESEARCH_PROJECT_PROPOSAL_GENERATE_CODE" uiLabelId="research_project_decision_code" vnLabel="Sinh mã cho đề tài" enLabel="Research proposal generate code" target="generate-code-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="10"/>
 
 <Function functionId="RESEARCH_PROJECT_UPDATE_RESULT_PRODUCT" uiLabelId="research_project_update_result_product" vnLabel="Cập nhật kết quả (sản phẩm) của đề tài" enLabel="Research project update result product" target="research-project-update-result-product" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="11"/>
+
+<Function functionId="RESEARCH_PROJECT_UPDATE_RUNNING_BUDGET" uiLabelId="research_project_update_running_budget" vnLabel="Cập nhật tình hình kinh phí của đề tài" enLabel="Research project update running budget" target="research-project-update-running-budget" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="11"/>
 
 <Function functionId="RESEARCH_PROJECT_JURY_EVALUATE_RESULT" uiLabelId="research_project_jury_evaluate_result" vnLabel="Hội đồng đánh giá nghiệm thu đề tài" enLabel="Research project jury evaluate result" target="research-project-jury-evaluate-result" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="12"/>
 

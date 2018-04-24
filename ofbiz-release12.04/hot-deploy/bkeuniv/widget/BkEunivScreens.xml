@@ -1012,7 +1012,9 @@
 				<service service-name="getAcademicYear" result-map="academicYearS"></service>
 				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
 				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
 				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

@@ -244,11 +244,12 @@ public class ProjectWorkingHourDeclaration {
 		String staffId = (String) userLogin.get("userLoginId");
 		Delegator delegator = ctx.getDelegator();
 		try{
-			GenericValue staff = delegator.findOne("Staff", UtilMisc.toMap("staffId", 
-	    			staffId), false);
-			String departmentId = staff.getString("departmentId");
+			//GenericValue staff = delegator.findOne("Staff", UtilMisc.toMap("staffId", 
+	    	//		staffId), false);
+			//String departmentId = staff.getString("departmentId");
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition.makeCondition("departmentId", EntityOperator.EQUALS, departmentId));
+			//conds.add(EntityCondition.makeCondition("departmentId", EntityOperator.EQUALS, departmentId));
+			
 			List<GenericValue> list = delegator.findList("Staff",
 					EntityCondition.makeCondition(conds),null, null, null, false);
 			List<Map> staffs = FastList.newInstance();

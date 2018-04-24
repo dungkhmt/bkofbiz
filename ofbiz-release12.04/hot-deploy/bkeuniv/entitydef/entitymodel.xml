@@ -1236,7 +1236,31 @@
 		<prim-key field="budgetInOutId"/>
 	</entity>
 	
-	
+	<entity entity-name="RunningBudgetResearchProject" package-name="org.ofbiz.bkeuniv">
+		<field name="runningBudgetResearchProjectId" type="id-ne"></field>
+		<field name="customTimePeriodId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="accumulateTransferedBudget" type="currency-amount"></field>
+		<field name="transferedBudgetPeriodFacultyAccount" type="currency-amount"></field>
+		<field name="transferedBudgetPeriodUniversityAccount" type="currency-amount"></field>
+		<field name="statusId" type="id-vlong"></field>
+		<field name="description" type="very-long"></field>
+		<prim-key field="runningBudgetResearchProjectId"/>
+		
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		<relation rel-entity-name="ProjectProposalStatus" type="one">
+			<key-map field-name="statusId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="CustomTimePeriod" type="one">
+			<key-map field-name="customTimePeriodId"/>
+		</relation>
+	</entity>
 	
 	<view-entity entity-name="AcctgTransGlAccountSums"
             package-name="org.ofbiz.accounting.ledger"

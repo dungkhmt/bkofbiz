@@ -18,6 +18,12 @@
        <attribute name="description" mode="IN" type="String"></attribute>
     </service>
     
+     <service name="getListOfVehicles" engine="java"
+            location="org.ofbiz.routes.VehicleService" 
+            invoke="getListOfVehicles">
+     <attribute name="listVehicles" mode="OUT" type="List"></attribute>
+       
+    </service>
     
      <service name="createARoute" engine="java"
             location="org.ofbiz.routes.RouteService" invoke="createARoute">
