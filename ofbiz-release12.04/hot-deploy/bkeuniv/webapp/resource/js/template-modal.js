@@ -362,7 +362,7 @@ modal.prototype._updateDefault = function(data, message) {
 			}, 500);
 		} else {
 			table.row.add(data).draw();
-	    	
+	    	$([_.id, "#modal-template"].join(" ")).modal('hide');
 			this.columns.forEach(function(column, index) {
 				$([_.id,"#"+column.id].join(" ")).val("");
 			})
