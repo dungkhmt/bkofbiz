@@ -18,7 +18,8 @@
 <!--
 ${uiLabel.Status}: ${pResultProjectProposal.projectCallStatusName}
 -->
-
+projectCallStatus: ${pResultProjectProposal.projectCallStatusId}<br>
+projectProposalStatus: ${pResultProjectProposal.projectproposal.statusId}
 <table>
 	<tr>
 		<td>
