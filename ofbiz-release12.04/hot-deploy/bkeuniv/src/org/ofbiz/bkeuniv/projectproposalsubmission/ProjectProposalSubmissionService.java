@@ -1336,11 +1336,12 @@ public class ProjectProposalSubmissionService {
 			Delegator delegator = ctx.getDelegator();
 
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition
-					.makeCondition(
-							"statusId",
-							EntityOperator.NOT_EQUAL,
-							ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
+			//conds.add(EntityCondition
+			//		.makeCondition(
+			//				"statusId",
+			//				EntityOperator.NOT_EQUAL,
+			//				ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
+			
 			if (projectCallId != null)
 				conds.add(EntityCondition.makeCondition("projectCallId",
 						EntityOperator.EQUALS, projectCallId));
