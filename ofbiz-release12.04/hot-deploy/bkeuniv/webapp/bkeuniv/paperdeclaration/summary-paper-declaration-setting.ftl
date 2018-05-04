@@ -2,6 +2,18 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
   <head>
+    <!-- Bootstrap Core CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resource/bkeuniv/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
@@ -27,7 +39,7 @@
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 Chon khoa/vien
 <#assign LF = listFaculties.faculties?size>
-<select id="faculty" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
+<select id="faculty" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	
 		 	<#if 1 < LF>
 		 		<option value="all" selected>Tat ca</option>
@@ -42,7 +54,7 @@ Chon khoa/vien
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 Chon nam 
-<select id="academicYear" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
+<select id="academicYear" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list listAcademicYears.academicYears as y>
 		 		<option value="${y.academicYearId}">${y.academicYearName}</option>
@@ -54,7 +66,7 @@ Chon nam
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
 Chon loai hinh bai bao
-<select id="paperCategory" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
+<select id="paperCategory" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list listPaperCategory.result as pc>
 		 		<option value="${pc.paperCategoryId}">${pc.paperCategoryName}</option>
@@ -66,7 +78,7 @@ Chon loai hinh bai bao
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
 Chon trang thai
-<select id="paperDeclarationStatus" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
+<select id="paperDeclarationStatus" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list listStatus.statuses as s>
 		 		<option value="${s.paperDeclarationStatusId}">${s.paperDeclarationStatusName}</option>

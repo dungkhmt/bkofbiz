@@ -955,12 +955,14 @@ public class ProjectProposalSubmissionService {
 				.getParameter("researchProjectProposalId");
 		String researchProductTypeId = request
 				.getParameter("researchProductTypeId[]");
+		String researchProductName = request.getParameter("researchProductName");
+		
 		String sQuantity = request.getParameter("quantity");
 		Long quantity = Long.valueOf(sQuantity);
 		Debug.log(module
 				+ "::addProjectProposalType, researchProjectProposalId= "
 				+ researchProjectProposalId + ", researchProductTypeId = "
-				+ researchProductTypeId + ", quantity = " + quantity);
+				+ researchProductTypeId + ", quantity = " + quantity + ", researchProductName = " + researchProductName);
 		try {
 			GenericValue gv = delegator.makeValue("ResearchProposalProduct");
 			String researchProductId = delegator
@@ -970,7 +972,7 @@ public class ProjectProposalSubmissionService {
 			gv.put("researchProductTypeId", researchProductTypeId);
 			gv.put("researchProjectProposalId", researchProjectProposalId);
 			gv.put("quantity", quantity);
-			gv.put("researchProductName", "-");
+			gv.put("researchProductName", researchProductName);
 			gv.put("sourcePathUpload", "-");
 
 			delegator.create(gv);
@@ -980,6 +982,71 @@ public class ProjectProposalSubmissionService {
 			context.put("message", "Create new row");
 			BKEunivUtils.writeJSONtoResponse(
 					BKEunivUtils.parseJSONObject(context), response, 200);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+	public static void updateProjectProposalType(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+
+		String researchProductId = request
+				.getParameter("researchProductId");
+		
+		String researchProjectProposalId = request
+				.getParameter("researchProjectProposalId");
+		String researchProductTypeId = request
+				.getParameter("researchProductTypeId[]");
+		String researchProductName = request.getParameter("researchProductName");
+		
+		String sQuantity = request.getParameter("quantity");
+		Long quantity = Long.valueOf(sQuantity);
+		Debug.log(module
+				+ "::updateProjectProposalType, researchProductId = " + researchProductId + ", researchProjectProposalId= "
+				+ researchProjectProposalId + ", researchProductTypeId = "
+				+ researchProductTypeId + ", quantity = " + quantity + ", researchProductName = " + researchProductName);
+		try {
+			GenericValue gv = delegator.findOne("ResearchProposalProduct",UtilMisc.toMap("researchProductId",researchProductId),false);
+			if(gv != null){
+			
+
+			gv.put("researchProductTypeId", researchProductTypeId);
+			gv.put("researchProjectProposalId", researchProjectProposalId);
+			gv.put("quantity", quantity);
+			gv.put("researchProductName", researchProductName);
+			gv.put("sourcePathUpload", "-");
+
+			delegator.store(gv);
+
+			Map<String, Object> context = FastMap.newInstance();
+			context.put("projectProposalProducts", gv);
+			context.put("message", "Update successfully");
+			BKEunivUtils.writeJSONtoResponse(
+					BKEunivUtils.parseJSONObject(context), response, 200);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
+
+	public static void removeProjectProposalType(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+
+		String researchProductId = request
+				.getParameter("researchProductId");
+		
+		Debug.log(module
+				+ "::removeProjectProposalType, researchProductId = "
+				+ researchProductId);
+		try {
+			GenericValue gv = delegator.findOne("ResearchProposalProduct",UtilMisc.toMap("researchProductId",researchProductId),false);
+			if(gv != null){
+				delegator.removeValue(gv);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

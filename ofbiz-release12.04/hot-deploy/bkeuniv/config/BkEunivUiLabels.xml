@@ -234,6 +234,12 @@
         <value xml:lang="en">Product Type</value>
         <value xml:lang="vi">Loại sản phẩm</value>
     </property>
+    
+    <property key="BkEunivResearchProductName">
+        <value xml:lang="en">Research Product Name</value>
+        <value xml:lang="vi">Tên sản phẩm</value>
+    </property>
+
     <property key="BkEunivQuantity">
         <value xml:lang="en">Quantity</value>
         <value xml:lang="vi">Số lượng</value>

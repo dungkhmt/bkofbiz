@@ -283,9 +283,21 @@
 		<security https="true" auth="true"/>
 		<event type="java" invoke="addProjectProposalType" 
 		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
-		<response name="AttachementSuccess" type="view" value="ADDWORKPACKAGEPROJECT"/>
+		<response name="AttachementSuccess" type="view" value="ADDPRODUCTPROJECT"/>
 	</request-map>
 	
+	<request-map uri="remove-a-project-proposal-product-type">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="removeProjectProposalType" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="REMOVEPRODUCTPROJECT"/>
+	</request-map>
+	<request-map uri="update-a-project-proposal-product-type">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="updateProjectProposalType" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="UPDATEPRODUCTPROJECT"/>
+	</request-map>
 
 	<request-map uri="products-of-project-proposals">
 		 <security https="true" auth="true"/>

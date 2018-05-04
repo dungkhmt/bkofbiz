@@ -1,5 +1,37 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
+  <head>
+    <!-- Bootstrap Core CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resource/bkeuniv/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    
+    
+    <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
+    
+    <meta charset="utf-8" />
+    
+    <title>DataTables - Context menu integration</title>
+  
+  </head>
+
+
 <style>
 #form-add {
     margin-top: 20px;
@@ -26,7 +58,7 @@
 			${uiLabel.ProjectProposalName}
 	</div>
 	<div style="display: inline-block;width: 100%;">
-		<input id="projectProposalName" style="width: 100%" type="text" value=""/>
+		<input id="projectProposalName" class="form-control" style="width: 100%" type="text" value=""/>
 	</div>
 	
 </div>
@@ -36,7 +68,7 @@
 		${uiLabel.Faculty}
 	</div>
 	<div style="display: inline-block;width: 100%;">
-		<select id="facultyId" style="width: 100%" type="text">
+		<select id="facultyId" class="form-control" style="width: 100%" type="text">
 		 	<#list resultFaculties.faculties as f>
 		 		<option value="${f.facultyId}">${f.facultyName}</option>
 		 	</#list>

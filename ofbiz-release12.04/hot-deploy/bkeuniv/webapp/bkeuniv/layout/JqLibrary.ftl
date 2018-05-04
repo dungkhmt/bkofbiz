@@ -66,6 +66,7 @@
 		urlData="" 
 		optionData={}
 		urlUpdate=""
+		optionDataUpdate={}
 		urlAdd=""
 		optionDataAdd={}
 		urlDelete="" 
@@ -355,6 +356,7 @@
 				resolve(new modal("#jqModalChange").setting({
 					data: data,
 					columns: <@pfArray array=columnsChange />,
+			        optionAjax: <@pfObject object=optionDataUpdate />,
 			        title: '${titleChange}',
 			        action: {
 						name: '${uiLabelMap.BkEunivUpdate}',
