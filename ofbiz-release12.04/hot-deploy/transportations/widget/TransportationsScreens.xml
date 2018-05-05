@@ -40,7 +40,12 @@
 			<actions>
 				<set field="vehicleCode" value="${parameters.vehicleCode}"/>
 				<set field="description" value="${parameters.description}"/>
-				
+				<!-- 
+				<service service-name="createAVehicle">
+					<field-map field-name="vehicleCode" value="vehicleCode"/>
+					<field-map field-name="description" value="description"/>
+				</service>
+				 -->
 				<service service-name="getListOfVehicles" result-map="lstVehicles">
 				</service>
 				

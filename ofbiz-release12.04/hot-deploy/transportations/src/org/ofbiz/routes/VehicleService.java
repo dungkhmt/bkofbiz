@@ -1,11 +1,15 @@
-package src.org.ofbiz.routes;
+package org.ofbiz.routes;
 
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javolution.util.FastMap;
 
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.service.DispatchContext;
@@ -13,6 +17,22 @@ import org.ofbiz.service.DispatchContext;
 
 public class VehicleService {
 	
+	public static void removeVehicle(HttpServletRequest request, HttpServletResponse response){
+		try{
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			String vehicleId = request.getParameter("vehicleId");
+			Debug.log("removeVehicle, vehicleId = " + vehicleId);
+			GenericValue v = delegator.findOne("Vehicle", UtilMisc.toMap("vehicleId",vehicleId), false);
+			if(v != null){
+				delegator.removeValue(v);
+				Debug.log("removeVehicle, vehicleId = " + vehicleId + " DELETED");
+			}else{
+				Debug.log("removeVehicle, vehicleId = " + vehicleId + " NOT exists");
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	public static Map<String, Object> getListOfVehicles(DispatchContext ctx, 
 			Map<String, ? extends Object> context){ 
 		

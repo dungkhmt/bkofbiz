@@ -28,9 +28,17 @@
     
     <request-map uri="createvehicle">
     	<security https="true" auth="true"/>
-    	<response name="success" type="view" value="view-list-vehicles"/>
+    	<event type="service" invoke="createAVehicle"></event>
+    	<response name="success" type="view" value="view-list-of-vehicles"/>
     </request-map>
     
+    <request-map uri="remove-a-vehicle">
+    	<security https="true" auth="true"/>
+    	<event type="java"  path="org.ofbiz.routes.VehicleService"  
+    	invoke="removeVehicle"></event>
+    	
+    </request-map>
+
     <request-map uri="listvehicle">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-list-of-vehicles"/>
