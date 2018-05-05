@@ -62,9 +62,13 @@ public class VRP3DService {
 			client.setWriteTimeout(180, TimeUnit.SECONDS);
 			RequestBody body = RequestBody.create(JSON_HEADER,
 					json);
+			//Request request_server = new Request.Builder()
+			//		.url("http://localhost:8088/ezRoutingAPI/vrp-load3d")
+			//		.post(body).build();
 			Request request_server = new Request.Builder()
-					.url("http://localhost:8088/ezRoutingAPI/vrp-load3d")
-					.post(body).build();
+			.url("http://localhost:8080/DailyOptAPI/vrp-load3d")
+			.post(body).build();
+	
 			Response response_receive = null;
 			String resultString = null;
 			
