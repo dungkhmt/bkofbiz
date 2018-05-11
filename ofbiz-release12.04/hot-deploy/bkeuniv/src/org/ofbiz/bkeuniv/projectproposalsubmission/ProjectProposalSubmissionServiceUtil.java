@@ -239,7 +239,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	}
 
 	public static GenericValue createAProjectProposalSubmission(
-			Delegator delegator, String projectProposalName, String facultyId,
+			Delegator delegator, String projectProposalName, String s_budget, String facultyId,
 			String projectCallId, String staffId) {
 		try {
 			String partyId = delegator.getNextSeqId("Party");
@@ -248,12 +248,18 @@ public class ProjectProposalSubmissionServiceUtil {
 			GenericValue pty = delegator.makeValue("Party", info);
 			// pty.put("partyId", partyId);
 			delegator.create(pty);
-
+			BigDecimal budget = null;
+			if(s_budget != null && !s_budget.equals(""))
+				budget = new BigDecimal(s_budget);
+			else
+				budget = BigDecimal.ZERO;
+			
 			GenericValue pps = delegator.makeValue("ResearchProjectProposal");
 			String researchProjectProposalId = delegator
 					.getNextSeqId("ResearchProjectProposal");
 			pps.put("researchProjectProposalId", researchProjectProposalId);
 			pps.put("researchProjectProposalName", projectProposalName);
+			pps.put("totalBudget", budget);
 			pps.put("createStaffId", staffId);
 			pps.put("partyId", partyId);
 			pps.put("statusId",

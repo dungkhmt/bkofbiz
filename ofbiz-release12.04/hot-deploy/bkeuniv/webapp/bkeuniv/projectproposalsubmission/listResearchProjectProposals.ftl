@@ -28,6 +28,10 @@
 			"data": "facultyName"
 		},
 		{
+			"name": uiLabel.Budget?j_string,
+			"data": "totalBudget"
+		},
+		{
 			"name": uiLabel.Status?j_string,
 			"data": "statusName"
 		},
@@ -60,6 +64,7 @@
 		"createStaffId",
 		"projectCallName",
 		"facultyName",
+		"totalBudget",
 		"statusName",
 		"totalEvaluation",
 		"numberEvaluations"

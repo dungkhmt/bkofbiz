@@ -162,7 +162,7 @@
 		<field name="projectCallId" type="id-vlong"></field>
 		<field name="projectCategoryId" type="id-vlong"></field>
 		<field name="researchProjectProposalName" type="very-long"></field>
-		<field name="totalBudget" type="numeric"></field>
+		<field name="totalBudget" type="currency-amount"></field>
 		<field name="statusId" type="id-vlong"></field>
 		<field name="approvedByStaffId" type="id-vlong"></field>
 		<field name="sourceFileUpload" type="very-long"></field>

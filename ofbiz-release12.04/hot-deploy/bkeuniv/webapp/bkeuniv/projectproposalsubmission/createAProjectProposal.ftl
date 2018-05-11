@@ -59,8 +59,16 @@
 	</div>
 	<div style="display: inline-block;width: 100%;">
 		<input id="projectProposalName" class="form-control" style="width: 100%" type="text" value=""/>
+	</div>	
+</div>
+
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 100%;">
+			${uiLabel.Budget}
 	</div>
-	
+	<div style="display: inline-block;width: 100%;">
+		<input id="budget" class="form-control" style="width: 100%" type="text" value="0" pattern="[0-9]{0,19}" title="Nhap so nguyen duong khong qua 20 chu so"/>
+	</div>	
 </div>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
@@ -87,6 +95,13 @@ function addProjectProposal(){
 	var facultyId = document.getElementById("facultyId").value;
 	var projectCallId =  document.getElementById("projectCallId").value;
 	var projectProposalName = document.getElementById("projectProposalName").value;
+	var budget = 0;
+	if(document.getElementById("budget").checkValidity()){
+		budget = document.getElementById("budget").value;
+	}else{
+		alert("Kinh phi nhap chua dung dinh dang");
+		return;
+	}
 	//alert('addProposal facultyId = ' + facultyId + ', and projecCallId = ' + projectCallId);
 	
 		$.ajax({
@@ -95,7 +110,8 @@ function addProjectProposal(){
 			data: {
 				"facultyId": facultyId,
 				"projectProposalName": projectProposalName,
-				"projectCallId": projectCallId
+				"projectCallId": projectCallId,
+				"budget": budget
 			},
 			success: function(rs){
 				window.location.href = "/bkeuniv/control/my-project-proposal";

@@ -260,6 +260,8 @@ public class ProjectProposalSubmissionService {
 		String facultyId = (String) request.getParameter("facultyId");
 		String projectProposalName = (String) request
 				.getParameter("projectProposalName");
+		String s_budget = (String)request.getParameter("budget");
+		
 		String projectCallId = (String) request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
@@ -281,7 +283,7 @@ public class ProjectProposalSubmissionService {
 			 */
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							projectProposalName, facultyId, projectCallId,
+							projectProposalName, s_budget, facultyId, projectCallId,
 							staffId);
 
 			String rs = "{\"result\":\"OK\"}";
@@ -976,9 +978,22 @@ public class ProjectProposalSubmissionService {
 			gv.put("sourcePathUpload", "-");
 
 			delegator.create(gv);
-
+			
+			GenericValue pdt = delegator.findOne("ResearchProductType", 
+					UtilMisc.toMap("researchProductTypeId",researchProductTypeId), false);
+			
+			Map<String, Object> retObj = FastMap.newInstance();
+			retObj.put("researchProductId", gv.get("researchProductId"));
+			retObj.put("researchProductTypeId", gv.get("researchProductTypeId"));
+			retObj.put("researchProductTypeName", pdt.get("researchProductTypeName"));
+			retObj.put("researchProjectProposalId", gv.get("researchProjectProposalId"));
+			retObj.put("quantity", gv.get("quantity"));
+			retObj.put("researchProductId", gv.get("researchProductId"));
+			retObj.put("researchProductName", gv.get("researchProductName"));
+			retObj.put("sourcePathUpload", gv.get("sourcePathUpload"));
+			
 			Map<String, Object> context = FastMap.newInstance();
-			context.put("projectProposalProducts", gv);
+			context.put("projectProposalProducts", retObj);
 			context.put("message", "Create new row");
 			BKEunivUtils.writeJSONtoResponse(
 					BKEunivUtils.parseJSONObject(context), response, 200);
@@ -1062,10 +1077,15 @@ public class ProjectProposalSubmissionService {
 		String staffId = request.getParameter("staffId[]");
 		String content = request.getParameter("content");
 		String sworkingdays = request.getParameter("workingDays");
-		Long workingdays = Long.valueOf(sworkingdays);
+		long workingdays = 0;
+		if(sworkingdays != null && !sworkingdays.equals(""))
+			workingdays = Long.valueOf(sworkingdays);
 		String sbudget = request.getParameter("budget");
-		BigDecimal budget = new BigDecimal(sbudget);
-
+		BigDecimal budget = null;
+		if(sbudget != null && !sbudget.equals(""))
+			budget = new BigDecimal(sbudget);
+		else budget = BigDecimal.ZERO;
+		
 		Debug.log(module
 				+ "::addWorkpackageProject, researchProjectProposalId = "
 				+ researchProjectProposalId + ", staffId = " + staffId
@@ -1336,11 +1356,11 @@ public class ProjectProposalSubmissionService {
 			Delegator delegator = ctx.getDelegator();
 
 			List<EntityCondition> conds = FastList.newInstance();
-			//conds.add(EntityCondition
-			//		.makeCondition(
-			//				"statusId",
-			//				EntityOperator.NOT_EQUAL,
-			//				ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
+			conds.add(EntityCondition
+					.makeCondition(
+							"statusId",
+							EntityOperator.NOT_EQUAL,
+							ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
 			
 			if (projectCallId != null)
 				conds.add(EntityCondition.makeCondition("projectCallId",
@@ -1946,7 +1966,7 @@ public class ProjectProposalSubmissionService {
 			for (GenericValue p : prj) {
 				String researchProjectProposalId = p
 						.getString("researchProjectProposalId");
-
+				BigDecimal totalBudget = p.getBigDecimal("totalBudget");
 				// get evaluation of current project
 				Map<String, Object> in = FastMap.newInstance();
 				in.put("researchProjectProposalId", researchProjectProposalId);
@@ -2005,6 +2025,7 @@ public class ProjectProposalSubmissionService {
 				item.put("researchProjectProposalCode",
 						p.get("researchProjectProposalCode"));
 				item.put("budget", budget);
+				item.put("totalBudget", totalBudget);
 
 				item.put("statusName", p.getString("statusName"));
 
@@ -2427,7 +2448,7 @@ public class ProjectProposalSubmissionService {
 
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							researchProjectProposalName, facultyId,
+							researchProjectProposalName, "0", facultyId,
 							projectCallId, staffId);
 
 			retSucc.put("projectproposals", pps);

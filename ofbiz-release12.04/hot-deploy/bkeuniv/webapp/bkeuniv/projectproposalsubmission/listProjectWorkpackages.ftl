@@ -111,11 +111,15 @@
 		},
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
-			"value": "workingDays"
+			"value": "workingDays",
+			"pattern": "[0-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		},
 		{
 			"name": uiLabelMap.BkEunivBudget?j_string,
-			"value": "budget"
+			"value": "budget",
+			"pattern": "[0-9]([0-9]{0,20})",
+			"title": "So nguyen duong nho hon 20 chu so"
 		}
 	] />
 
@@ -138,11 +142,15 @@
 		},
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
-			"value": "workingDays"
+			"value": "workingDays",
+			"pattern": "[0-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		},
 		{
 			"name": uiLabelMap.BkEunivBudget?j_string,
-			"value": "budget"
+			"value": "budget",
+			"pattern": "[0-9]([0-9]{0,20})",
+			"title": "So nguyen duong nho hon 20 chu so"
 		}
 		]
 	 />
