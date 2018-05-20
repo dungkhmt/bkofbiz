@@ -752,6 +752,8 @@
 		<field name="facultyId" type="id-ne"></field>
 		<field name="facultyName" type="very-long"></field>
 		<field name="universityId" type="id"></field>
+		<field name="statusId" type="id-ne"></field>
+		
 		<prim-key field="facultyId"/>
 		<relation rel-entity-name="University" type="one">
 			<key-map field-name="universityId"/>
@@ -762,6 +764,7 @@
 		<field name="departmentId" type="id-vlong"></field>
 		<field name="departmentName" type="very-long"></field>
 		<field name="facultyId" type="id"></field>
+		<field name="statusId" type="id-ne"></field>
 		<prim-key field="departmentId"/>
 		<relation rel-entity-name="Faculty" type="one">
 			<key-map field-name="facultyId"/>
@@ -783,6 +786,7 @@
 	
 	<entity entity-name="Staff" package-name="org.ofbiz.bkeuniv">
 		<field name="staffId" type="id-vlong"></field>
+		<field name="staffCode" type="id-vlong"></field>
 		<field name="staffUserLoginId" type="id-vlong"></field>
 		<field name="staffName" type="name"></field>
 		<field name="staffEmail" type="email"></field>
@@ -792,6 +796,7 @@
 		<field name="staffPhone" type="tel-number"></field>
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
+		<field name="statusId" type="id-ne"></field>
 		<prim-key field="staffId"/>
 		<relation rel-entity-name="Department" type="one">
 			<key-map field-name="departmentId"/>

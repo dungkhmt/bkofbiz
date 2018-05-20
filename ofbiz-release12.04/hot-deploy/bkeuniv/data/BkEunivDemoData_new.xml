@@ -16,6 +16,10 @@
 <SecurityGroupPermission groupId="BIZMASTERCOURSE" permissionId="OFBTOOLS_VIEW"/>
 
 <!-- Quan ly phan quyen he thong -->
+<Function functionId="CONFIG_MANAGEMENT" uiLabelId="config_management" vnLabel="Quản lý cấu hình" enLabel="config management" parentFunctionId="NULL" index="1"/>
+
+<Function functionId="SYNCHRONIZE_STAFF" uiLabelId="synchronize staffs" target="synchronize-staff" vnLabel="Đồng bộ thông tin cán bộ" enLabel="Synchronize staffs" parentFunctionId="CONFIG_MANAGEMENT" index="1"/>
+
 <Function functionId="PERMISSION_MANAGEMENT" uiLabelId="permission_management" vnLabel="Quản lý phân quyền" enLabel="permission management" parentFunctionId="NULL" index="1"/>
 
 <Function functionId="CREATE_SECURITY_GROUP" uiLabelId="create_security_group" target="create-security-group" vnLabel="Tạo mới nhóm quyền" enLabel="Create new security group" parentFunctionId="PERMISSION_MANAGEMENT" index="1"/>

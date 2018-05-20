@@ -45,7 +45,20 @@
         <response name="error" type="view" value="main"/>
     </request-map>
     
+    <request-map uri="synchronize-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-synchronize-staff"></response>
+    </request-map>
     
+    <request-map uri="perform-synchronize-staff">
+    	<security https="true" auth="true"/>
+    	<event type="java" path="org.ofbiz.bkeuniv.configmanagement.ConfigManagementService" 
+    	invoke="performSynchronizeStaff"></event>
+    	<response name="AttachementSuccess" type="view" value="PERFORMSYNCHRONIZESTAFF"></response>
+    </request-map>
+
+	
+
     <!-- <request-map uri="login">
         <security https="true" auth="false"/>
         <event type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="login"/>
@@ -836,5 +849,8 @@
    <view-map name="view-form-change-password" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageChangePassword"/>
    <view-map name="view-project-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclarationNew"/>
    <view-map name="view-project-working-hour-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectWorkingHourDeclaration"/>
+    
+   <view-map name="view-synchronize-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#SynchronizeStaff"/>
+   
     
 </site-conf>
