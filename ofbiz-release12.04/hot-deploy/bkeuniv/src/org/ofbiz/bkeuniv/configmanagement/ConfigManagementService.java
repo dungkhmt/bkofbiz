@@ -134,7 +134,7 @@ public class ConfigManagementService {
 				log.println(sohieuchuan + "\t" + hoten + "\t" + email + "\t"
 						+ ngaysinh + "\t" + gioitinh);
 				
-				/*
+				
 				if (email != null) {
 					if(mStaff2Update.get(email) != null){
 						log.println("DUPLICATE " + email + "\t" + hoten);
@@ -201,7 +201,7 @@ public class ConfigManagementService {
 						log.println("CREATE NEW " + email);
 					}
 				}
-				*/
+				
 			}
 			for (String ma_khoavien : ma_khoavien_set) {
 				GenericValue kv = delegator.findOne("Faculty",
