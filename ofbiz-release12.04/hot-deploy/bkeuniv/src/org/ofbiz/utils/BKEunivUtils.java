@@ -36,6 +36,7 @@ public class BKEunivUtils {
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("facultyId",EntityOperator.EQUALS,facultyId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"UPDATED"));
 			
 			List<GenericValue> depts = delegator.findList("Department", 
 					EntityCondition.makeCondition(conds),
@@ -86,6 +87,7 @@ public class BKEunivUtils {
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("universityId",EntityOperator.EQUALS,universityId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"UPDATED"));
 			
 			List<GenericValue> faculties = delegator.findList("Faculty", 
 					EntityCondition.makeCondition(conds),

@@ -33,7 +33,8 @@ public class DepartmentService {
 			conds.add(EntityCondition.makeCondition("facultyId",
 					EntityOperator.EQUALS, facultyId));
 		}
-
+		conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"UPDATED"));
+		
 		try {
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 
@@ -108,7 +109,7 @@ public class DepartmentService {
 			conds.add(EntityCondition.makeCondition("facultyId",
 					EntityOperator.EQUALS, facultyId));
 		}
-
+		conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"UPDATED"));
 		try {
 			Map<String, Object> result = ServiceUtil.returnSuccess();
 
