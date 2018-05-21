@@ -108,6 +108,11 @@
         <value xml:lang="vi">Đợt gọi đề tài</value>
     </property>
 
+    <property key="AddNew">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm mới</value>
+    </property>
+
     <property key="numberSubmissions">
         <value xml:lang="en">Number of submissions</value>
         <value xml:lang="vi">Số đề tài đã nộp</value>

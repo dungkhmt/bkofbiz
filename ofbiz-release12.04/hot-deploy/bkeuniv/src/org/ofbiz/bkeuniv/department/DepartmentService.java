@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javolution.util.FastList;
 
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -19,6 +20,7 @@ import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
 public class DepartmentService {
+	public static final String module = DepartmentService.class.getName();
 	public static String name() {
 		return "DepartmentService";
 	}
@@ -68,15 +70,18 @@ public class DepartmentService {
 			conds.add(EntityCondition.makeCondition("universityId",
 					EntityOperator.EQUALS, universityId));
 		}
-
+		Debug.log(module + "::getFacultyOfStaff, staffId = " + staffId + ", facultyId = " + facultyId);
+				
 		try {
-			if (facultyId == null) {
+			if (facultyId == null || facultyId.equals("")) {
 				GenericValue st = delegator.findOne("Staff",
 						UtilMisc.toMap("staffId", staffId), false);
 				String departmentId = (String) st.get("departmentId");
 				GenericValue dept = delegator.findOne("Department",
 						UtilMisc.toMap("departmentId", departmentId), false);
 				facultyId = (String) dept.getString("facultyId");
+				Debug.log(module + "::getFacultyOfStaff, staffId = " + staffId + ", GOT departmentId = " + departmentId
+						+ ", GOT facultyId = " + facultyId);
 			}
 
 			GenericValue facul = delegator.findOne("Faculty",

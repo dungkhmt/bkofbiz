@@ -39,8 +39,9 @@
   </script>
 
 <div id="form-add">
-<@buttonStore text="Them moi" action="addProjectCall()"/>
-
+<!--
+<@buttonStore text="${uiLabel.AddNew}" action="addProjectCall()"/>
+-->
 
 <div id="table-list" style="overflow-y: auto; padding: 2em;">
 	<table id="list" cellspacing="0" width="100%" class="display dataTable">

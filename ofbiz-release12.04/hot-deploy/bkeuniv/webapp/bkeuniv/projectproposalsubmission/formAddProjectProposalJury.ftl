@@ -1,6 +1,20 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>jQuery UI Datepicker - Default functionality</title>
+  
+      <!-- Bootstrap Core CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resource/bkeuniv/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resource/bkeuniv/css/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -24,20 +38,20 @@
 
 <div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-			Ten Hoi Dong
+			${bkEunivUiLabelMap.JuryName}
 	</div>
 	<div style="display: inline-block;width: 69%;">
-		<input id="juryName" style="width: 100%" type="text" width="1000" value=""/>
+		<input id="juryName" class="form-control" style="width: 100%" type="text" width="1000" value=""/>
 	</div>
 	
 </div>
 
 <div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		dot goi de tai
+		${bkEunivUiLabelMap.ProjectCallName}
 	</div>
 	<div style="display: inline-block;width: 69%;">
-		<select id="projectCallId" style="width: 100%" type="text" width="1000">
+		<select id="projectCallId" class="form-control" style="width: 100%" type="text" width="1000">
 		 	<#list resultProjectCalls.projectCalls as pc>
 		 		<option value="${pc.projectCallId}">${pc.projectCallName}</option>
 		 	</#list>
@@ -48,10 +62,10 @@
 
 <div class="inline-box" style="width: 100%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 30%;">
-		Khoa/vien
+		${bkEunivUiLabelMap.FacultyName}
 	</div>
 	<div style="display: inline-block;width: 69%;">
-		<select id="facultyId" style="width: 100%" type="text" width="1000">
+		<select id="facultyId" class="form-control" style="width: 100%" type="text" width="1000">
 		 	<#list resultFaculties.faculties as f>
 		 		<option value="${f.facultyId}">${f.facultyName}</option>
 		 	</#list>
