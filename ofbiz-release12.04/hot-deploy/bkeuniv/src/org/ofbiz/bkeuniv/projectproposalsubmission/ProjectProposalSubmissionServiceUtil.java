@@ -238,8 +238,36 @@ public class ProjectProposalSubmissionServiceUtil {
 		return retSucc;
 	}
 
+	public static List<GenericValue> getProjectProposalContents(Delegator delegator, String researchProjectProposalId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId",EntityOperator.EQUALS,researchProjectProposalId));
+			List<GenericValue> lst = delegator.findList("ResearchProposalContentItem", 
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			return lst;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+		
+	}
+	public static List<GenericValue> getProjectProposalRegisteredProducts(Delegator delegator, String researchProjectProposalId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId",
+					EntityOperator.EQUALS,researchProjectProposalId));
+			List<GenericValue> lst = delegator.findList("ResearchProposalProduct", 
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			return lst;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 	public static GenericValue createAProjectProposalSubmission(
-			Delegator delegator, String projectProposalName, String s_budget, String facultyId,
+			Delegator delegator, String projectProposalName, String s_material_budget, String facultyId,
 			String projectCallId, String staffId) {
 		try {
 			String partyId = delegator.getNextSeqId("Party");
@@ -249,8 +277,8 @@ public class ProjectProposalSubmissionServiceUtil {
 			// pty.put("partyId", partyId);
 			delegator.create(pty);
 			BigDecimal budget = null;
-			if(s_budget != null && !s_budget.equals(""))
-				budget = new BigDecimal(s_budget);
+			if(s_material_budget != null && !s_material_budget.equals(""))
+				budget = new BigDecimal(s_material_budget);
 			else
 				budget = BigDecimal.ZERO;
 			
@@ -259,7 +287,8 @@ public class ProjectProposalSubmissionServiceUtil {
 					.getNextSeqId("ResearchProjectProposal");
 			pps.put("researchProjectProposalId", researchProjectProposalId);
 			pps.put("researchProjectProposalName", projectProposalName);
-			pps.put("totalBudget", budget);
+			//pps.put("totalBudget", budget);
+			pps.put("materialBudget", budget);
 			pps.put("createStaffId", staffId);
 			pps.put("partyId", partyId);
 			pps.put("statusId",

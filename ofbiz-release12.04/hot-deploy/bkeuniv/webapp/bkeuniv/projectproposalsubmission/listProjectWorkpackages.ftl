@@ -194,7 +194,7 @@
 				"researchProjectProposalId": projectProposalId?j_string
 			}
 		}
-		urlDelete="" 
+		urlDelete="/bkeuniv/control/delete-a-workpackage-project-proposal" 
 		keysId=["researchProjectProposalId","contentItemSeq"] 
 		fieldDataResult = "projectProposalContentItems" 
 		titleChange=uiLabelMap.BkEunivChange

@@ -170,7 +170,7 @@
 		<field name="startDate" type="date"></field>
 		<field name="endDate" type="date"></field>
 		<field name="deliverable" type="very-long"></field>
-		<field name="materialBudget" type="numeric"></field>
+		<field name="materialBudget" type="currency-amount"></field>
 		<field name="evaluationOpenFlag" type="indicator"></field>
 		
 		<prim-key field="researchProjectProposalId"/>
@@ -450,9 +450,10 @@
 		<field name="researchProjectProposalId" type="id-ne"></field>	
 		 <field name="staffId" type="id-vlong"></field>
 		<field name="roleTypeId" type="id-vlong"></field>
+		<!-- 
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
-		
+		 -->
 		<prim-key field="projectProposalMemberId"/>
 		
 		<relation rel-entity-name="ResearchProjectProposal" type="one">

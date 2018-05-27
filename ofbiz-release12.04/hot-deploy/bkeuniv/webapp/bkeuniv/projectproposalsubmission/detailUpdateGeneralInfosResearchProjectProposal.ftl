@@ -40,70 +40,32 @@
     overflow: scroll
 }
 </style>
-
 <div id="form-add">
-
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-			
-	</div>
-	<div style="display: inline-block;width: 100%;">
-		<input id="projectCallId" type="hidden" value="${parameters.projectCallId}"/>
-	</div>
-	
-</div>
-
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
 			${uiLabel.ProjectProposalName}
 	</div>
 	<div style="display: inline-block;width: 100%;">
-		<input id="projectProposalName" class="form-control" style="width: 100%" type="text" value=""/>
+		<input id="projectProposalName" class="form-control" style="width: 100%" type="text" value="${resultProjectProposal.projectproposal.researchProjectProposalName}"/>
 	</div>	
 </div>
-<!--
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-			${uiLabel.Budget}
-			
-	</div>
-	<div style="display: inline-block;width: 100%;">
-		<input id="budget" class="form-control" style="width: 100%" type="text" value="0" pattern="[0-9]{0,19}" title="Nhap so nguyen duong khong qua 20 chu so"/>
-	</div>	
-</div>
--->
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
 		${uiLabel.MaterialBudget}
 	</div>
 	<div style="display: inline-block;width: 100%;">
-		<input id="material-budget" class="form-control" style="width: 100%" type="text" value="0" pattern="[0-9]{0,19}" title="Nhap so nguyen duong khong qua 20 chu so"/>
+		<input id="material-budget" class="form-control" style="width: 100%" type="text" value="${resultProjectProposal.projectproposal.materialBudget}" pattern="[0-9]{0,19}" title="Nhap so nguyen duong khong qua 20 chu so"/>
 	</div>	
 </div>
 
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-		${uiLabel.Faculty}
-	</div>
-	<div style="display: inline-block;width: 100%;">
-		<select id="facultyId" class="form-control" style="width: 100%" type="text">
-		 	<#list resultFaculties.faculties as f>
-		 		<option value="${f.facultyId}">${f.facultyName}</option>
-		 	</#list>
-		</select> 
-		
-	</div>
-</div>
-
-
-<@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="addProjectProposal"/>
+<@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="updateProjectProposal"/>
 
 </div>
 
 <script>
-function addProjectProposal(){
-	var facultyId = document.getElementById("facultyId").value;
-	var projectCallId =  document.getElementById("projectCallId").value;
+function updateProjectProposal(){
+	//var facultyId = document.getElementById("facultyId").value;
+	//var projectCallId =  document.getElementById("projectCallId").value;
 	var projectProposalName = document.getElementById("projectProposalName").value;
 	/*
 	var budget = 0;
@@ -125,12 +87,13 @@ function addProjectProposal(){
 	//alert('addProposal facultyId = ' + facultyId + ', and projecCallId = ' + projectCallId);
 	
 		$.ajax({
-			url: "/bkeuniv/control/add-a-project-proposal",
+			url: "/bkeuniv/control/update-general-infos-a-project-proposal",
 			type: 'POST',
 			data: {
-				"facultyId": facultyId,
+				"researchProjectProposalId": ${resultProjectProposal.projectproposal.researchProjectProposalId},
+				//"facultyId": facultyId,
 				"projectProposalName": projectProposalName,
-				"projectCallId": projectCallId,
+				//"projectCallId": projectCallId,
 				"materialbudget": materialbudget
 			},
 			success: function(rs){

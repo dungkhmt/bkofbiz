@@ -70,8 +70,9 @@
 	<screen name="WorkpackagesOfProjectProposal">
 		<section>
 			<actions>
-				
+				<!-- 
 				<set field="titlePage" from-field="AAAA"/>
+				 -->
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<set field="projectProposalId" from-field="${parameters.researchProjectProposalId}"/>
 				<service service-name="getMembersOfProjectProposal" auto-field-map="true" result-map="resultMembers"></service>
@@ -363,6 +364,37 @@
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<decorator-section name="body">
 					<include-screen name="DetailResearchProjectProposal"/>
+	 				</decorator-section>
+				</decorator-screen>
+	 
+	
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="DetailUpdateGeneralInfosResearchProjectProposal">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="researchProjectProposalId" type="PlainString" from-field="${parameters.researchProjectProposalId}" global="true"/>
+				
+				<service service-name="getProjectProposal"
+					result-map="resultProjectProposal">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+					<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailUpdateGeneralInfosResearchProjectProposal.ftl" />
+							</html>
+						</platform-specific>
 	 				</decorator-section>
 				</decorator-screen>
 	 

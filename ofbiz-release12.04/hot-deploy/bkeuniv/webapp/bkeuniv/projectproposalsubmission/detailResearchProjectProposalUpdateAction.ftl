@@ -35,6 +35,7 @@ projectProposalStatus: ${pResultProjectProposal.projectproposal.statusId}
 			</#if>
 			<#if view_update==1>
 			<tr>
+				<td><a href = "/bkeuniv/control/detail-update-of-project-proposal?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.DetailUpdateInfoProject}</a></td>
 				<td><a href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.MembersOfProject}</a></td>
 				<td><a href = "/bkeuniv/control/workpackages-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.ListWorkPackages}</a></td>
 				<td><a href = "/bkeuniv/control/products-of-project-proposals?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.ListProducts}</a></td>
