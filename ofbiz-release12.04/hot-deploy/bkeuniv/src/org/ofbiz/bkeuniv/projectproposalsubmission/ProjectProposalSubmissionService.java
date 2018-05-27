@@ -194,7 +194,9 @@ public class ProjectProposalSubmissionService {
 			fontNormal.setColor(HSSFColor.BLACK.index);
 			styleNormal.setFont(fontNormal);
 			styleNormal.setWrapText(true);
-			styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+			//styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+			styleNormal.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
+			
 			styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
 			styleNormal.setBorderTop(CellStyle.BORDER_THIN);
 			styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
@@ -215,6 +217,11 @@ public class ProjectProposalSubmissionService {
 			
 			i_row++;
 			HSSFRow rh = sh.createRow(i_row);
+			HSSFCell ct = rh.createCell(3);
+			ct.setCellValue("DANH SÁCH ĐỀ TÀI");
+			
+			i_row += 4;
+			rh = sh.createRow(i_row);
 			HSSFCell ch = rh.createCell(0);
 			ch.setCellValue("STT");
 			ch.setCellStyle(styleNormal);
@@ -263,7 +270,7 @@ public class ProjectProposalSubmissionService {
 				
 				String str_products = "";
 				for(GenericValue pr: products){
-					str_products += "-" + pr.getString("researchProductName") + "\n";
+					str_products += "- " + pr.getLong("quantity") + " " + pr.getString("researchProductTypeName") + ": " + pr.getString("researchProductName") + "\n";
 				}
 				
 				i_row++;

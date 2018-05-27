@@ -256,7 +256,7 @@ public class ProjectProposalSubmissionServiceUtil {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("researchProjectProposalId",
 					EntityOperator.EQUALS,researchProjectProposalId));
-			List<GenericValue> lst = delegator.findList("ResearchProposalProduct", 
+			List<GenericValue> lst = delegator.findList("ResearchProposalProductView", 
 					EntityCondition.makeCondition(conds), null,null,null,false);
 			return lst;
 		}catch(Exception ex){
