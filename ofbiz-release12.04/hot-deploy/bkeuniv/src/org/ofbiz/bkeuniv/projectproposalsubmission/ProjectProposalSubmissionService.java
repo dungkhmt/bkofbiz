@@ -369,7 +369,7 @@ public class ProjectProposalSubmissionService {
 		
 		//String s_budget = (String)request.getParameter("budget");
 		String s_material_budget = (String)request.getParameter("materialbudget");
-		
+		String note = (String)request.getParameter("note");
 		String projectCallId = (String) request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
@@ -391,7 +391,7 @@ public class ProjectProposalSubmissionService {
 			 */
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							projectProposalName, s_material_budget, facultyId, projectCallId,
+							projectProposalName, s_material_budget, note, facultyId, projectCallId,
 							staffId);
 
 			String rs = "{\"result\":\"OK\"}";
@@ -414,6 +414,7 @@ public class ProjectProposalSubmissionService {
 		//String facultyId = (String) request.getParameter("facultyId");
 		String projectProposalName = (String) request
 				.getParameter("projectProposalName");
+		String note = (String)request.getParameter("note");
 		
 		//String s_budget = (String)request.getParameter("budget");
 		String s_material_budget = (String)request.getParameter("materialbudget");
@@ -428,7 +429,7 @@ public class ProjectProposalSubmissionService {
 					 UtilMisc.toMap("researchProjectProposalId",researchProjectProposalId),false);
 			 gv.put("researchProjectProposalName", projectProposalName);
 			 gv.put("materialBudget", new BigDecimal(s_material_budget));
-
+			 gv.put("note", note);
 			 delegator.store(gv);
 			 
 			String rs = "{\"result\":\"OK\"}";
@@ -2721,7 +2722,7 @@ public class ProjectProposalSubmissionService {
 
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							researchProjectProposalName, "0", facultyId,
+							researchProjectProposalName, "0", "", facultyId,
 							projectCallId, staffId);
 
 			retSucc.put("projectproposals", pps);

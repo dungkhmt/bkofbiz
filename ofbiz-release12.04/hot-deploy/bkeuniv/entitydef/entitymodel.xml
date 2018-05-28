@@ -171,6 +171,7 @@
 		<field name="endDate" type="date"></field>
 		<field name="deliverable" type="very-long"></field>
 		<field name="materialBudget" type="currency-amount"></field>
+		<field name="note" type="very-long"></field>
 		<field name="evaluationOpenFlag" type="indicator"></field>
 		
 		<prim-key field="researchProjectProposalId"/>

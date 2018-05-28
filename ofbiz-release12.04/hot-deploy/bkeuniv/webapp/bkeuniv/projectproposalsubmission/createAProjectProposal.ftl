@@ -95,6 +95,15 @@
 	</div>
 </div>
 
+<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+	<div style="display: inline-block;width: 100%;">
+		Ghi chu
+	</div>
+	<div style="display: inline-block;width: 100%;">
+		<input id="note" class="form-control" style="width: 100%" type="text" value=""/>
+		
+	</div>
+</div>
 
 <@buttonStore text="${bkEunivUiLabelMap.BkEunivStore}" action="addProjectProposal"/>
 
@@ -105,6 +114,7 @@ function addProjectProposal(){
 	var facultyId = document.getElementById("facultyId").value;
 	var projectCallId =  document.getElementById("projectCallId").value;
 	var projectProposalName = document.getElementById("projectProposalName").value;
+	var note = document.getElementById("note").value;
 	/*
 	var budget = 0;
 	if(document.getElementById("budget").checkValidity()){
@@ -131,7 +141,8 @@ function addProjectProposal(){
 				"facultyId": facultyId,
 				"projectProposalName": projectProposalName,
 				"projectCallId": projectCallId,
-				"materialbudget": materialbudget
+				"materialbudget": materialbudget,
+				"note": note
 			},
 			success: function(rs){
 				window.location.href = "/bkeuniv/control/my-project-proposal";
