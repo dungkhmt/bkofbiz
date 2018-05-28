@@ -46,13 +46,22 @@
 <#if prj.note?exists>
 	<#assign note=prj.note/>
 </#if>
+<#assign materialBudget=0/>
+<#if prj.materialBudget?exists>
+	<#assign materialBudget=prj.materialBudget>
+</#if>
+<#assign projectName=""/>
+<#if prj.researchProjectProposalName?exists>
+	<#assign projectName=prj.researchProjectProposalName>
+</#if>
+
 <div id="form-add">
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 	<div style="display: inline-block;width: 100%;">
 			${uiLabel.ProjectProposalName}
 	</div>
 	<div style="display: inline-block;width: 100%;">
-		<input id="projectProposalName" class="form-control" style="width: 100%" type="text" value="${resultProjectProposal.projectproposal.researchProjectProposalName}"/>
+		<input id="projectProposalName" class="form-control" style="width: 100%" type="text" value="${projectName}"/>
 	</div>	
 </div>
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
@@ -60,7 +69,7 @@
 		${uiLabel.MaterialBudget}
 	</div>
 	<div style="display: inline-block;width: 100%;">
-		<input id="material-budget" class="form-control" style="width: 100%" type="text" value="${resultProjectProposal.projectproposal.materialBudget}" pattern="[0-9]{0,19}" title="Nhap so nguyen duong khong qua 20 chu so"/>
+		<input id="material-budget" class="form-control" style="width: 100%" type="text" value="${materialBudget}" pattern="[0-9]{0,19}" title="Nhap so nguyen duong khong qua 20 chu so"/>
 	</div>	
 </div>
 
