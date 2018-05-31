@@ -303,7 +303,7 @@
 				</textarea>
 				<script>
 					$(function() {
-						$('textarea#content').froalaEditor({
+						$('textarea#content').bkeunivEditor({
 							charCounterCount : false,
 							language: 'vi',
 							height: 300,

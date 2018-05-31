@@ -1,9 +1,3 @@
-/*!
- * froala_editor v2.7.6 (https://www.froala.com/wysiwyg-editor)
- * License https://froala.com/wysiwyg-editor/terms/
- * Copyright 2014-2018 Froala Labs
- */
-
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.

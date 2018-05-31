@@ -168,7 +168,7 @@
 		<script>
 		$( document ).ready(function() {
 			$(function() {
-				$('textarea#comments').froalaEditor({
+				$('textarea#comments').bkeunivEditor({
 					charCounterCount : false,
 					language: 'vi',
 					height: 200,

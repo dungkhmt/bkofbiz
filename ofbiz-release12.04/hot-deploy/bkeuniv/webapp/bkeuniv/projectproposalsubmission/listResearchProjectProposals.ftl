@@ -265,7 +265,7 @@
 	
 </style>
 
-<div style="position: relative; top: 0; left: 0; right: 0; bottom: 0;">
+<div style="top: 0; left: 0; right: 0; bottom: 0;">
 	<div style="width: 50%; float: right; height: 100%;">
 		<div id="message" style="transform: translate(150%, 0px);z-index: 1000; transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; position: absolute; bottom: 0; right: 0;margin: 0px 5px 2px 0px; -webkit-box-shadow: rgba(0,0,0,0.2) 0 2px 6px; box-shadow: rgba(0,0,0,0.2) 0 2px 6px;">	
 			<div class="title-message row" style="line-height: 2; margin: 0; background-color: #404040; height: 30px;cursor: pointer;" onClick="expandMessage()">
@@ -287,7 +287,7 @@
 				</textarea>
 				<script>
 					$(function() {
-						$('textarea#content').froalaEditor({
+						$('textarea#content').bkeunivEditor({
 							charCounterCount : false,
 							language: 'vi',
 							height: 300,
