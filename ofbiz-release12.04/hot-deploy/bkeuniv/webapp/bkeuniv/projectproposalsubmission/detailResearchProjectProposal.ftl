@@ -84,7 +84,9 @@
 	<tr>
 		<td>
 			<div class="info-box">
-			${uiLabel.MembersOfProject}
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					${uiLabel.MembersOfProject}
+				</div>
 			<table border=1>
 				<thead>
 					<td>${uiLabel.FullName}</td>
@@ -105,13 +107,17 @@
 	<tr>
 		<td>
 			<div class="info-box">
-			${uiLabel.ListWorkPackages}
-			<table border = 1>
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					${uiLabel.ListWorkPackages}
+				</div>
+			<table>
 				<thead>
-					<td width="200">${uiLabel.FullName}</td>
-					<td width="400">${uiLabel.WorkPackage}</td>
-					<td width="100">${uiLabel.Workingdays}</td>
-					<td width="100">${uiLabel.Budget}</td>
+					<tr>
+					<th width="200">${uiLabel.FullName}</th>
+					<th width="400">${uiLabel.WorkPackage}</th>
+					<th width="100">${uiLabel.Workingdays}</th>
+					<th width="100">${uiLabel.Budget}</th>
+					</tr>
 				</thead>
 			<#list resultContentItems.projectProposalContentItems as ci>
 				<tr>
@@ -145,7 +151,9 @@
 	<tr>
 		<td>
 			<div class="info-box">
-			${uiLabel.ListProducts}
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					${uiLabel.ListProducts}
+				</div>
 			<table border=1>
 				<thead>
 					<td>${uiLabel.Products}</td>

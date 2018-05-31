@@ -17,37 +17,39 @@
 		width: 60%!important;
 		margin-left: 20%!important;
 	}
+	
+	thead {
+		border-bottom: 1px solid #000000;
+	}
+	
+	.body-table > tr {
+		border-bottom: 1px solid #d0d0d0;
+	}
 </style>
 
-<style>
- tr {
-    border-bottom: 1px solid black;
-    border-collapse: collapse;
-}​
-</style>
 
 <div class="info-table">
 <table>
 	<tr>
 		<td>
 			<div class="info-box">
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					Danh sach de tai/du an duoc ung dung
+				</div>
 				<table>
-					<tr>
-						<th colspan="4" style="text-align:center;">
-							Danh sach de tai/du an duoc ung dung
-						</th>
-					</tr>
+					<thead>
 					<tr>
 						<th>STT</th>
 						<th>Ten cong trinh</th>
 						<th>Mo ta</th>
 						<th>Giai doan</th>
 					</tr>
-					
-				<#assign index = 0>
-				<#list resultCV.cv.appliedProjects as p>
+					</thead>
+					<tbody class="body-table">
+					<#assign index = 0>
+					<#list resultCV.cv.appliedProjects as p>
 					<tr>
-					<#assign index = index+1>
+						<#assign index = index+1>
 
 						<td>${index}</td>
 						<td>
@@ -74,7 +76,8 @@
 							</#if>
 						</td>
 					</tr>
-				</#list>
+					</#list>
+					</tbody>
 				</table>
 			</div>
 		</td>
@@ -83,19 +86,21 @@
 	<tr>
 		<td>
 			<div class="info-box">
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+						Kinh nghiem danh gia, hoi dong KHCN
+						
+				</div>
+					
 				<table>
-					<tr>
-						<th colspan="4" style="text-align:center;">
-							Kinh nghiem danh gia, hoi dong KHCN
-						</th>
-					</tr>
+					<thead>
 					<tr>
 						<th>STT</th>
 						<th>Noi dung</th>
 						<th>So lan</th>
 						
 					</tr>
-					
+					</thead>
+					<tbody class="body-table">	
 					<#assign index = 0>
 					<#list resultCV.cv.scientificExperiences as se>
 					<tr>
@@ -111,6 +116,7 @@
 						</td>
 					</tr>
 					</#list>
+					</tbody>	
 				</table>
 			</div>
 		</td>
@@ -119,12 +125,11 @@
 	<tr>
 		<td>
 			<div class="info-box">
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					Danh sach cong trinh
+				</div>
 				<table border="1" rules="rows">
-					<tr>
-						<th colspan="5" style="text-align:center;">
-							Danh sach cong trinh
-						</th>
-					</tr>
+					<thead>
 					<tr>
 						<th>STT</th>
 						<th>Ten cong trinh</th>
@@ -132,6 +137,9 @@
 						<th>Tap chi/hoi nghi</th>
 						<th>Nam xuat ban</th>
 					</tr>
+					</thead>
+
+					<tbody class="body-table">
 					<#assign index = 0>
 					<#list resultCV.cv.papers as p>
 						<#assign index = index + 1>
@@ -169,6 +177,7 @@
 							</td>
 						</tr>
 					</#list>
+					</tbody>
 				</table>
 			</div>
 		</td>

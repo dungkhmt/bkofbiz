@@ -72,7 +72,7 @@
 			${staffManagementUiLabelMap.BkEunivPhone} 
 	</div>
 	<div style="display: inline-block;width: 69%;">
-		<#if staff.staff.staffDateOfBirth?exists>
+		<#if staff.staff.staffPhone?exists>
 			<input id="phone" style="width: 100%" type="text" width="1000" value="${staff.staff.staffPhone}"/>
 		<#else>
 			<input id="phone" style="width: 100%" type="text" width="1000" value=""/>	

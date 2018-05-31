@@ -29,10 +29,14 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.sl.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
@@ -181,27 +185,129 @@ public class ProjectProposalSubmissionService {
 							facultyId, projectProposalStatusId);
 			HSSFWorkbook wb = new HSSFWorkbook();
 			HSSFSheet sh = wb.createSheet(filename);
+			
+			CellStyle styleNormal = wb.createCellStyle();
+			Font fontNormal = wb.createFont();
+			fontNormal.setFontHeightInPoints((short) 12);
+			fontNormal.setFontName("Times New Roman");
+			// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			fontNormal.setColor(HSSFColor.BLACK.index);
+			styleNormal.setFont(fontNormal);
+			styleNormal.setWrapText(true);
+			//styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+			styleNormal.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
+			
+			styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+			styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+			styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+			styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+
+			sh.setColumnWidth(0, 1000);
+			sh.setColumnWidth(1, 10000);
+			sh.setColumnWidth(2, 8000);
+			sh.setColumnWidth(3, 8000);
+			sh.setColumnWidth(4, 8000);
+			sh.setColumnWidth(5, 8000);
+			sh.setColumnWidth(6, 8000);
+			sh.setColumnWidth(7, 5000);
+
 			int i_row = 0;
 			int index = 0;
+			
+			
+			i_row++;
+			HSSFRow rh = sh.createRow(i_row);
+			HSSFCell ct = rh.createCell(3);
+			ct.setCellValue("DANH SÁCH ĐỀ TÀI");
+			
+			i_row += 4;
+			rh = sh.createRow(i_row);
+			HSSFCell ch = rh.createCell(0);
+			ch.setCellValue("STT");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(1);
+			ch.setCellValue("Tên đề tài");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(2);
+			ch.setCellValue("Chủ nhiệm");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(3);
+			ch.setCellValue("Đợt gọi đề tài");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(4);
+			ch.setCellValue("Khoa/viện");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(5);
+			ch.setCellValue("Nội dung nghiên cứu");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(6);
+			ch.setCellValue("Sản phẩm dự kiến");
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(7);
+			ch.setCellValue("Kinh phí");
+			ch.setCellStyle(styleNormal);
+		
 			for (GenericValue p : listPrj) {
+				String pId = p.getString("researchProjectProposalId");
+				List<GenericValue> contents = ProjectProposalSubmissionServiceUtil.getProjectProposalContents(delegator, pId);
+				List<GenericValue> products = ProjectProposalSubmissionServiceUtil.getProjectProposalRegisteredProducts(delegator, pId);
+				String str_contents = "";
+				BigDecimal totalBudget = BigDecimal.ZERO;
+				for(GenericValue c: contents){
+					str_contents += "-" + c.getString("content") + "\n";
+					if(c.getBigDecimal("budget") != null)
+						totalBudget = totalBudget.add(c.getBigDecimal("budget"));
+				}
+				if(p.getBigDecimal("materialBudget") != null)
+					totalBudget = totalBudget.add(p.getBigDecimal("materialBudget"));
+				
+				String str_products = "";
+				for(GenericValue pr: products){
+					str_products += "- " + pr.getLong("quantity") + " " + pr.getString("researchProductTypeName") + ": " + pr.getString("researchProductName") + "\n";
+				}
+				
 				i_row++;
 				index++;
 				HSSFRow r = sh.createRow(i_row);
 				HSSFCell c = r.createCell(0);
 				c.setCellValue(index);
-
+				c.setCellStyle(styleNormal);
+				
 				c = r.createCell(1);
 				c.setCellValue(p.getString("researchProjectProposalName"));
-
+				c.setCellStyle(styleNormal);
+				
 				c = r.createCell(2);
 				c.setCellValue(p.getString("createStaffName"));
-
+				c.setCellStyle(styleNormal);
+				
 				c = r.createCell(3);
 				c.setCellValue(p.getString("projectCallName"));
-
+				c.setCellStyle(styleNormal);
+				
 				c = r.createCell(4);
 				c.setCellValue(p.getString("facultyName"));
-
+				c.setCellStyle(styleNormal);
+				
+				c = r.createCell(5);
+				c.setCellValue(str_contents);
+				c.setCellStyle(styleNormal);
+				
+				c = r.createCell(6);
+				c.setCellValue(str_products);
+				c.setCellStyle(styleNormal);
+				
+				c = r.createCell(7);
+				c.setCellValue(totalBudget.toString());
+				c.setCellStyle(styleNormal);
+				
 			}
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
@@ -260,8 +366,10 @@ public class ProjectProposalSubmissionService {
 		String facultyId = (String) request.getParameter("facultyId");
 		String projectProposalName = (String) request
 				.getParameter("projectProposalName");
-		String s_budget = (String)request.getParameter("budget");
 		
+		//String s_budget = (String)request.getParameter("budget");
+		String s_material_budget = (String)request.getParameter("materialbudget");
+		String note = (String)request.getParameter("note");
 		String projectCallId = (String) request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
@@ -283,7 +391,7 @@ public class ProjectProposalSubmissionService {
 			 */
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							projectProposalName, s_budget, facultyId, projectCallId,
+							projectProposalName, s_material_budget, note, facultyId, projectCallId,
 							staffId);
 
 			String rs = "{\"result\":\"OK\"}";
@@ -297,6 +405,44 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 
 			return "error";
+		}
+	}
+	public static void updateGeneralInfosProjectProposal(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String researchProjectProposalId = (String)request.getParameter("researchProjectProposalId");
+		//String facultyId = (String) request.getParameter("facultyId");
+		String projectProposalName = (String) request
+				.getParameter("projectProposalName");
+		String note = (String)request.getParameter("note");
+		
+		//String s_budget = (String)request.getParameter("budget");
+		String s_material_budget = (String)request.getParameter("materialbudget");
+		
+		//String projectCallId = (String) request.getParameter("projectCallId");
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String staffId = (String) userLogin.getString("userLoginId");
+
+		try {
+			 GenericValue gv = delegator.findOne("ResearchProjectProposal",
+					 UtilMisc.toMap("researchProjectProposalId",researchProjectProposalId),false);
+			 gv.put("researchProjectProposalName", projectProposalName);
+			 gv.put("materialBudget", new BigDecimal(s_material_budget));
+			 gv.put("note", note);
+			 delegator.store(gv);
+			 
+			String rs = "{\"result\":\"OK\"}";
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+			//return "successs";
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+			//return "error";
 		}
 	}
 
@@ -1158,7 +1304,7 @@ public class ProjectProposalSubmissionService {
 				delegator.store(gv);
 				Map<String, Object> context = FastMap.newInstance();
 				context.put("projectProposalContentItems", gv);
-				context.put("message", "Create new row");
+				context.put("message", "row updated");
 
 				BKEunivUtils.writeJSONtoResponse(
 						BKEunivUtils.parseJSONObject(context), response, 200);
@@ -1167,6 +1313,48 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 		}
 	}
+	public static void deleteWorkpackageProject(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+
+		String researchProjectProposalId = request
+				.getParameter("researchProjectProposalId");
+		String contentItemSeq = request.getParameter("contentItemSeq");
+
+		
+		
+
+		Debug.log(module
+				+ "::deleteWorkpackageProject, researchProjectProposalId = "
+				+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq);
+		
+		try {
+			GenericValue gv = delegator.findOne("ResearchProposalContentItem",
+					UtilMisc.toMap("researchProjectProposalId",
+							researchProjectProposalId, "contentItemSeq",
+							contentItemSeq), false);
+
+			if (gv != null) {
+				delegator.removeValue(gv);
+				Map<String, Object> context = FastMap.newInstance();
+				context.put("projectProposalContentItems", gv);
+				context.put("message", "row deleted");
+
+				BKEunivUtils.writeJSONtoResponse(
+						BKEunivUtils.parseJSONObject(context), response, 200);
+				Debug.log(module
+						+ "::deleteWorkpackageProject, researchProjectProposalId = "
+						+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq + " DELETED");
+			}else{
+				Debug.log(module
+						+ "::deleteWorkpackageProject, researchProjectProposalId = "
+						+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq + " NOT FOUND");
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 
 	public static Map<String, Object> getMembersOfResearchProjectProposalJury(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -2370,17 +2558,103 @@ public class ProjectProposalSubmissionService {
 						false);
 				roleTypeName = (String) rt.get("roleTypeName");
 			}
-
+			/*
 			Timestamp now = UtilDateTime.nowTimestamp();
 			java.sql.Date fromDate = new java.sql.Date(now.getTime());
-
 			gv.put("fromDate", fromDate);
-
+			*/
+			
 			delegator.create(gv);
 
 			GenericValue rg = delegator.makeValue("ProjectProposalMemberView");
 
 			rg.put("researchProjectProposalId", researchProjectProposalId);
+			rg.put("staffId", (String) gv.get("staffId"));
+			rg.put("roleTypeId", (String) gv.get("roleTypeId"));
+			rg.put("staffName", staffName);
+			rg.put("roleTypeName", roleTypeName);
+
+			retSucc.put("members", rg);
+			retSucc.put("message", "Successfully");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+	public static Map<String, Object> deleteMemberOfProjectProposal(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		String projectProposalMemberId = (String) context
+				.get("projectProposalMemberId");
+		Delegator delegator = ctx.getDelegator();
+		Debug.log(module + "::deleteMemberOfProjectProposal, projectProposalMemberId = " + projectProposalMemberId);
+		try{
+			GenericValue gv = delegator.findOne("ProjectProposalMember",
+					UtilMisc.toMap("projectProposalMemberId",projectProposalMemberId),false);
+			if(gv != null){
+				delegator.removeValue(gv);
+				Debug.log(module + "::deleteMemberOfProjectProposal, DELETED projectProposalMemberId " + projectProposalMemberId);
+			}else{
+				Debug.log(module + "::deleteMemberOfProjectProposal, cannot find projectProposalMemberId " + projectProposalMemberId);
+			}
+			retSucc.put("members", gv);
+			retSucc.put("message", "delete successfully");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> updateMemberOfProjectProposal(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		String projectProposalMemberId = (String) context
+				.get("projectProposalMemberId");
+		List<Object> staffIds = (List<Object>) context.get("staffId[]");
+		List<Object> roleTypeIds = (List<Object>) context.get("roleTypeId[]");
+		Debug.log(module
+				+ "::updateMemberOfProjectProposal, projectProposalMemberId = "
+				+ projectProposalMemberId);
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			String staffName = "";
+			String roleTypeName = "";
+
+			GenericValue gv = delegator.findOne("ProjectProposalMember",
+					UtilMisc.toMap("projectProposalMemberId",projectProposalMemberId),false);
+			if(gv != null){
+			if (staffIds != null && staffIds.size() > 0) {
+				gv.put("staffId", (String) staffIds.get(0));
+				GenericValue st = delegator.findOne("Staff",
+						UtilMisc.toMap("staffId", gv.get("staffId")), false);
+				staffName = (String) st.get("staffName");
+			}
+			if (roleTypeIds != null && roleTypeIds.size() > 0) {
+				gv.put("roleTypeId", (String) roleTypeIds.get(0));
+				GenericValue rt = delegator.findOne("ProjectProposalRoleType",
+						UtilMisc.toMap("roleTypeId", gv.get("roleTypeId")),
+						false);
+				roleTypeName = (String) rt.get("roleTypeName");
+			}
+			/*
+			Timestamp now = UtilDateTime.nowTimestamp();
+			java.sql.Date fromDate = new java.sql.Date(now.getTime());
+			gv.put("fromDate", fromDate);
+			*/
+			
+				delegator.store(gv);
+				Debug.log(module + "::updateMemberOfProjectProposal, UPDATED projectProposalMemberId " + projectProposalMemberId);
+			}else{
+				Debug.log(module + "::updateMemberOfProjectProposal, cannot find projectProposalMemberId " + projectProposalMemberId);
+			}
+			GenericValue rg = delegator.makeValue("ProjectProposalMemberView");
+			rg.put("projectProposalMemberId", projectProposalMemberId);
+			rg.put("researchProjectProposalId", gv.getString("researchProjectProposalId"));
 			rg.put("staffId", (String) gv.get("staffId"));
 			rg.put("roleTypeId", (String) gv.get("roleTypeId"));
 			rg.put("staffName", staffName);
@@ -2448,7 +2722,7 @@ public class ProjectProposalSubmissionService {
 
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							researchProjectProposalName, "0", facultyId,
+							researchProjectProposalName, "0", "", facultyId,
 							projectCallId, staffId);
 
 			retSucc.put("projectproposals", pps);

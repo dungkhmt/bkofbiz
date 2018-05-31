@@ -527,7 +527,7 @@ public class BKEunivPermissionService {
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
 				String functionId = (String)f.get("functionId");
-				Debug.log(module + "::getPermissionFunctions, function " + functionId + ", parentFunction = " + parentFunctionId);
+				//Debug.log(module + "::getPermissionFunctions, function " + functionId + ", parentFunction = " + parentFunctionId);
 				if(parentFunctionId.equals("NULL")){// collect parent functions
 					parent_functions.add(f);
 					mId2Function.put(functionId, f);

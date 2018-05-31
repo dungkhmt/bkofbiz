@@ -50,6 +50,10 @@
         <value xml:lang="en">Members</value>
         <value xml:lang="vi">Thành viên đề tài</value>
     </property>
+    <property key="DetailUpdateInfoProject">
+        <value xml:lang="en">Update Detail Infos Project</value>
+        <value xml:lang="vi">Cập nhật thông tin chung của đề tài</value>
+    </property>
     
     <property key="ListAssignedProposalForEvaluation">
         <value xml:lang="en">List of proposal assigned for evaluation</value>
@@ -106,6 +110,11 @@
     <property key="ProjectCallName">
         <value xml:lang="en">Project Call</value>
         <value xml:lang="vi">Đợt gọi đề tài</value>
+    </property>
+
+    <property key="AddNew">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm mới</value>
     </property>
 
     <property key="numberSubmissions">
@@ -258,6 +267,11 @@
     <property key="Budget">
         <value xml:lang="en">Budget</value>
         <value xml:lang="vi">Kinh phí</value>
+    </property>
+    
+    <property key="MaterialBudget">
+        <value xml:lang="en">Material Budget</value>
+        <value xml:lang="vi">Kinh phí nguyên vật liệu</value>
     </property>
 
     <property key="ListWorkPackages">

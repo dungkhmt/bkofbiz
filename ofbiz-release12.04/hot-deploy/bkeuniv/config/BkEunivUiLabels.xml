@@ -633,5 +633,19 @@
         <value xml:lang="vi">Xin lỗi, tệp quá lớn</value>
     </property>
     
+    <property key="JuryName">
+        <value xml:lang="en">Jury Name</value>
+        <value xml:lang="vi">Tên hội đồng</value>
+    </property>
+    
+    <property key="ProjectCallName">
+        <value xml:lang="en">Project Call Name</value>
+        <value xml:lang="vi">Đợt gọi đề tài</value>
+    </property>
+    
+    <property key="FacultyName">
+        <value xml:lang="en">Faculty Name</value>
+        <value xml:lang="vi">Khoa/viện</value>
+    </property>
     
 </resource>
