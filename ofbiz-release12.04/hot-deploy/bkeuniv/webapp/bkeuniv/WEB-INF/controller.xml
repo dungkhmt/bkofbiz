@@ -808,8 +808,26 @@
 	<request-map uri="detail-scientific-cv">
 		<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-detail-scientific-cv"/>
-    	
 	</request-map>
+
+	<request-map uri="upload-official-document">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-upload-official-document"/>
+	</request-map>
+
+	<request-map uri="view-official-document">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-official-document"/>
+	</request-map>
+	
+	<request-map uri="upload-file-official-document">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.bkeuniv.officialdocument.UploadOfficialDocument" 
+                     invoke="uploadFileOfficialDocument"/>
+            <response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+    </request-map>  
     
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -851,6 +869,8 @@
    <view-map name="view-project-working-hour-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectWorkingHourDeclaration"/>
     
    <view-map name="view-synchronize-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#SynchronizeStaff"/>
-   
-    
+
+   <view-map name="view-upload-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageUploadOfficialDocument"/>
+   <view-map name="view-list-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListOfficialDocument"/>
+      
 </site-conf>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of BkEuniv Component</title>
+	
+	<view-entity entity-name="OfficialDocumentsView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="OD" entity-name="OfficialDocuments"></member-entity>
+		<member-entity entity-alias="ODT" entity-name="OfficialDocumentTypes"></member-entity>
+		<member-entity entity-alias="S" entity-name="Staff"></member-entity>
+		
+		<alias name="officialDocumentId" entity-alias="OD"></alias>
+		<alias name="officialDocumentName" entity-alias="OD"></alias>
+		<alias name="officialDocumentTypeId" entity-alias="OD"></alias>
+		<alias name="uploadDate" entity-alias="OD"></alias>
+		<alias name="staffId" entity-alias="OD"></alias>
+		
+		<alias name="officialDocumentTypeName" entity-alias="ODT"></alias>
+		<alias name="staffName" field="staffName" entity-alias="S"></alias>
+		
+		<view-link rel-entity-alias="S" entity-alias="OD" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="ODT" entity-alias="OD" rel-optional="true">
+			<key-map rel-field-name="officialDocumentTypeId" field-name="officialDocumentTypeId"/>
+		</view-link>
+	</view-entity>	
+	
+</entitymodel>
