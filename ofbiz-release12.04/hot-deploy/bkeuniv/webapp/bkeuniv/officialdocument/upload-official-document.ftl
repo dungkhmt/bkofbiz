@@ -17,7 +17,7 @@
 
         $("#official-document-type-name").select2({
             language: "vi",
-            placeholder: "Chon loai tai lieu",
+            placeholder: '${uiLabelMap.BkEunivPlaceholderDocumentType}',
             ajax: {
                 url: '/bkeuniv/control/jqxGeneralServicer?sname=JQGetListOfficialDocumentType',
                 "method": "POST",
@@ -60,12 +60,12 @@
         var documentType = $("#official-document-type-name").val();
 
         if(!documentName) {
-            alertify.error('Chua nhap ten tai lieu');
+            alertify.error('${uiLabelMap.BkEunivDocumentNameNotNull}');
             return;
         }
 
         if(!documentType) {
-            alertify.error('Chua chon loai tai lieu');
+            alertify.error('${uiLabelMap.BkEunivDocumentTypeNotSelected}');
             return;
         }
 
@@ -102,7 +102,7 @@
 					}
 				})
 		} else {
-            alertify.error('Chua them tep');
+            alertify.error('${uiLabelMap.BkEunivAttachmentNotAdded}');
         }
 	}
 

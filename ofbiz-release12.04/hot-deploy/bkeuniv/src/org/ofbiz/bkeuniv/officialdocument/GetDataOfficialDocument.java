@@ -1,13 +1,22 @@
 package org.ofbiz.bkeuniv.officialdocument;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javolution.util.FastMap;
 
 import org.ofbiz.base.util.Debug;
+import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionServiceUtil;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
@@ -122,5 +131,62 @@ public class GetDataOfficialDocument {
 //			}
 		}
 		return result;
+	}
+	
+	public static void downloadFileOfficialDocument(HttpServletRequest request,
+			HttpServletResponse response) {
+		// GenericDelegator delegator = (GenericDelegator)
+		// DelegatorFactory.getDelegator("default");
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String officialDocumentId = request
+				.getParameter("officialDocumentId");
+
+		
+		String type = request
+				.getParameter("type");
+		
+		if(type==null||!type.equals("inline")) {
+			type="attachment";
+		}
+
+		
+		// String filename = "HDSD.pdf";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			GenericValue gv = delegator.findOne("OfficialDocuments",
+					false, UtilMisc.toMap("officialDocumentId",
+							officialDocumentId));
+			String staffId = (String) gv.get("staffId");
+			String filenameDB = (String) gv.get("sourceFileName");
+			String fullFileName = ProjectProposalSubmissionServiceUtil
+					.establishFullFilename(staffId, filenameDB, "officialdocument");
+
+			Debug.log("::downloadFileOfficialDocument, officialDocumentId = "
+					+ officialDocumentId + ", staffId = " + staffId
+					+ ", filenameDB = " + filenameDB + ", fullFileName = "
+					+ fullFileName);
+
+			// File f = new File("C:/DungPQ/olbius/tmp/" + filename);
+			File f = new File(fullFileName);
+			FileInputStream fi = new FileInputStream(f);
+			byte[] bytes = new byte[(int) f.length()];
+			fi.read(bytes);
+
+			response.setHeader("content-disposition", type+";filename="
+					+ filenameDB);
+			response.setContentType("application/pdf");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

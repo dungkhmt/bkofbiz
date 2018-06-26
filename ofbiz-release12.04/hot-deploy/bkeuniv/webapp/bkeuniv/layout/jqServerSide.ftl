@@ -124,17 +124,16 @@
 		
 		
 		.ui-menu-item {
-		    list-style: none;
-		    padding: 5px 10px 5px 10px;
-		    
-		    padding-left: 2em;
-		    position: relative;
-		    
-		    cursor: pointer;
+		    min-width: 100px;
+			list-style: none;
+			padding: 5px 10px 5px 10px;
+			padding-left: 2.7em;
+			position: relative;
+			cursor: pointer;
 		}
 		
 		.ui-menu-item:hover {
-			background-color: hsla(0, 0%, 93.3%, .4);
+			background-color: #0000001c;
 		}
 		
 		.ui-menu {
@@ -149,12 +148,14 @@
 		
 		.ui-icon {
 			height: 16px;
-		    width: 16px;
-		    left: 0.4em;
-		    top: 0;
-		    position: absolute;
-		    bottom: 0;
-		    margin: auto 0;
+			width: 16px;
+			font-size: 16px;
+			left: 0.7em;
+			top: 0;
+			color: #00000099;
+			position: absolute;
+			bottom: 0;
+			margin: auto 0;
 		}
 		
 		#jqDataTable-button-add{
