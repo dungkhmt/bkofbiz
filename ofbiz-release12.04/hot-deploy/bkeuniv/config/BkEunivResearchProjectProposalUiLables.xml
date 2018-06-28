@@ -8,7 +8,7 @@
     
     <property key="CreateStaffId">
         <value xml:lang="en">Create staff</value>
-        <value xml:lang="vi">Nhân viên khởi tạo</value>
+        <value xml:lang="vi">Người tạo</value>
     </property>
     
     <property key="ProjectCallId">

@@ -6946,7 +6946,8 @@
 	
 	<!-- end of Master-Class-Course-Calendar -->
 	
-	<OfficialDocumentTypes officialDocumentTypeId="RESEARCH_PROPOSAL_FORM" officialDocumentTypeName="Biểu mẫu thuyết minh đề tài"/>
+	<OfficialDocumentTypes officialDocumentTypeId="RESEARCH_PROPOSAL" officialDocumentTypeName="Biểu mẫu thuyết minh đề tài"/>
+	<OfficialDocumentTypes officialDocumentTypeId="RESEARCH_SUMMARY" officialDocumentTypeName="Biểu mẫu tổng hợp khối lượng NCKH"/>
 	<OfficialDocumentTypes officialDocumentTypeId="ANNOUNCEMENT" officialDocumentTypeName="Công Văn"/>
 	
 	<StudentSupervisionType studentSupervisionTypeId="MASTER" studentSupervisionTypeName="Học viên cao học"/>
