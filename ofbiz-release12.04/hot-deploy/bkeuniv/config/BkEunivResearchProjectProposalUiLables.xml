@@ -25,6 +25,10 @@
         <value xml:lang="en">Research Project Proposal Name</value>
         <value xml:lang="vi">Tên dự án của nghiên cứu</value>
     </property>
+    <property key="ResearchProjectProposalCode">
+        <value xml:lang="en">Research Project Proposal Code</value>
+        <value xml:lang="vi">Mã đề tài</value>
+    </property>
     
     <property key="TotalBudget">
         <value xml:lang="en">Total Budget</value>
