@@ -1010,6 +1010,7 @@
 		<alias name="paperCategoryName" entity-alias="PC"></alias>
 		<alias name="paperDeclarationStatusName" entity-alias="PDS"></alias>
 		<alias name="researchProjectProposalName" entity-alias="RP"></alias>
+		<alias name="researchProjectProposalCode" entity-alias="RP"></alias>
 		
 		
 		<view-link rel-entity-alias="ST" entity-alias="PD">
