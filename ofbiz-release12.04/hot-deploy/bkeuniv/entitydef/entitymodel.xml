@@ -946,6 +946,8 @@
 		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
 		<alias name="declareStaffName" entity-alias="DST" field="staffName"></alias>
@@ -956,6 +958,8 @@
 		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
 		<alias name="staffPaperDeclarationId" entity-alias="SPD"></alias>
 		<alias name="staffId" entity-alias="SPD"></alias>
+		<alias name="researchProjectProposalName" entity-alias="RPP"></alias>
+		
 		
 		
 		<view-link rel-entity-alias="SPDR" entity-alias="SPD" rel-optional="true">
@@ -974,6 +978,11 @@
 		<view-link rel-entity-alias="PC" entity-alias="PD" rel-optional="true">
 			<key-map field-name="paperCategoryId" rel-field-name="paperCategoryId"/>
 		</view-link>
+		
+		<view-link rel-entity-alias="RPP" entity-alias="PD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
 	</view-entity>
 	
 	<view-entity entity-name="PaperView" package-name="org.ofbiz.bkeuniv">
@@ -981,11 +990,14 @@
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
 		<member-entity entity-alias="PDS" entity-name="PaperDeclarationStatus"></member-entity>
+		<member-entity entity-alias="RP" entity-name="ResearchProjectProposal"></member-entity>
 		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST"></alias>
 		<alias name="paperCategoryName" entity-alias="PC"></alias>
 		<alias name="paperDeclarationStatusName" entity-alias="PDS"></alias>
+		<alias name="researchProjectProposalName" entity-alias="RP"></alias>
+		
 		
 		<view-link rel-entity-alias="ST" entity-alias="PD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
@@ -996,6 +1008,10 @@
 		<view-link rel-entity-alias="PDS" entity-alias="PD" rel-optional="true">
 			<key-map rel-field-name="paperDeclarationStatusId" field-name="approveStatusId"/>
 		</view-link>
+		<view-link rel-entity-alias="RP" entity-alias="PD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
 	</view-entity>
 	
 	

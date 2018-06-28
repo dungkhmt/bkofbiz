@@ -40,6 +40,7 @@
 				<th>Tac gia</th>
 				<th>${paperDeclarationUiLabelMap.BkEunivPaperName}</th>
 				<th>${paperDeclarationUiLabelMap.BkEunivPaperCategory}</th>
+				<th>Thuoc de tai</th>
 				<th>Ten hoi nghi, tap chi</th>
 				<th>Nam</th>
 				<th>Vol. number</th>
@@ -65,6 +66,11 @@
 			</#if>
 			<#if p.paperCategoryName?exists>
 				<td>${p.paperCategoryName}</td>
+			<#else>
+				<td></td>
+			</#if>
+			<#if p.researchProjectProposalName?exists>
+				<td>${p.researchProjectProposalName}</td>
 			<#else>
 				<td></td>
 			</#if>

@@ -712,6 +712,10 @@
 			}'
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
+			"data": "researchProjectProposalName"
+		},
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
 			"data": "roleName"
 		},
@@ -763,6 +767,17 @@
 		</#if>
 	</#list>
 	
+	<#assign sourceResearchProjects = [] />
+	<#assign op={"name":"","value":""}/>
+	<#assign sourceResearchProjects = sourceResearchProjects + [op] />
+	
+	<#list projects.researchProjectProposals as prj>
+		<#if prj?has_content>
+             <#assign op = { "name": prj.researchProjectProposalName?j_string ,"value": prj.researchProjectProposalId?j_string } />
+						<#assign sourceResearchProjects = sourceResearchProjects + [op] />
+		</#if>
+	</#list>
+	
 	<#assign sourceAcademicYear = [] />
 	<#list result.academicYears as y>
 		<#if y?has_content>
@@ -791,6 +806,8 @@
 		"DOI",
 		"impactFactor"
 		"paperCategoryId",
+		"researchProjectProposalId",
+		"researchProjectProposalName",
 		"categoryName",
 		"paperName",
 		"month",
@@ -826,7 +843,15 @@
 				"maxItem": 1
 			}
 		},
-		
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
+			"value": "researchProjectProposalId",
+			"type": "select",
+			"option": {
+				"source": sourceResearchProjects,
+				"maxItem": 1
+			}
+		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"value": "journalConferenceName"
@@ -902,7 +927,15 @@
 				"maxItem": 1
 			}
 		},
-		
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
+			"value": "researchProjectProposalId",
+			"type": "select",
+			"option": {
+				"source": sourceResearchProjects,
+				"maxItem": 1
+			}
+		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"value": "journalConferenceName"
