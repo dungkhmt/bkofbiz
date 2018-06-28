@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+    <property key="staffName">
+        <value xml:lang="en">Creator</value>
+        <value xml:lang="vi">Người tạo</value>
+    </property>
+    
+    <property key="officialDocumentId">
+        <value xml:lang="en">ID</value>
+        <value xml:lang="vi">ID</value>
+    </property>
+    
+    <property key="officialDocumentName">
+        <value xml:lang="en">Document name</value>
+        <value xml:lang="vi">Tên tài liệu</value>
+    </property>
+    
+    <property key="officialDocumentTypeName">
+        <value xml:lang="en">Type</value>
+        <value xml:lang="vi">Loại tài liệu</value>
+    </property>
+    
+    <property key="uploadDate">
+        <value xml:lang="en">Upload date</value>
+        <value xml:lang="vi">Ngày tạo</value>
+    </property>
+      
+</resource>

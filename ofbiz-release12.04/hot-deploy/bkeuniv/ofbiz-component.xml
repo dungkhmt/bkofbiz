@@ -18,6 +18,7 @@
     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_view.xml"/>
     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_student_research.xml"/>
     <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_official_documents.xml"/>
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel_official_documents_view.xml"/>
     
     
     <!-- <entity-resource type="eca" reader-name="main" loader="main" location="entitydef/eecas.xml"/> -->

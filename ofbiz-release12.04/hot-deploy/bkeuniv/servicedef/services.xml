@@ -83,6 +83,14 @@
    	<service name="JQGetListResearchSubDomainManagement" engine="java" invoke="JQGetListResearchSubDomainManagement" location="org.ofbiz.bkeuniv.researchdomainmanagement.ResearchDomainManagement">
         <implements service="jqxGetListInterface"/>
    	</service>
+   	
+   	<service name="JQGetListOfficialDocument" engine="java" invoke="JQGetListOfficialDocument" location="org.ofbiz.bkeuniv.officialdocument.GetDataOfficialDocument">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+    
+    <service name="JQGetListOfficialDocumentType" engine="java" invoke="JQGetListOfficialDocumentType" location="org.ofbiz.bkeuniv.officialdocument.GetDataOfficialDocument">
+        <implements service="jqxGetListInterface"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
             location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">

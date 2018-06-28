@@ -87,6 +87,27 @@ public class ProjectProposalSubmissionServiceUtil {
 
 		return fullname;
 	}
+	
+	public static String establishFullFilename(String staffId, String name, String folder) {
+		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
+				+ folder;
+		Debug.log(module + "::establishFullFilename, path = " + path);
+		String fullname = path + File.separator + name;
+
+		File file = new File(path);
+
+		if (!file.exists()) {
+
+			file.mkdirs();
+			Debug.log(module
+					+ "::establishFullFilename, folder NOT exist --> Create folder\n\t");
+			// If you require it to make the entire directory path including
+			// parents,
+			// use directory.mkdirs(); here instead.
+		}
+
+		return fullname;
+	}
 
 	public static Map<String, Object> cloneProjectProposalWithNewStatus(
 			Delegator delegator, String researchProjectProposalId,

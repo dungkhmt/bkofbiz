@@ -1066,4 +1066,60 @@
 		</section>
 	</screen>
 
+	<screen name="pageUploadOfficialDocument">
+		<section>
+			<actions>
+				<property-map resource="BkEunivOfficialDocumentLabels" map-name="uiLabelMap" global="true"/>
+				
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/selectize.default.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+				
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/selectize.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/officialdocument/upload-official-document.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageListOfficialDocument">
+		<section>
+			<actions>
+				<property-map resource="BkEunivOfficialDocumentLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/officialdocument/view-list-official-document.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
 </screens>

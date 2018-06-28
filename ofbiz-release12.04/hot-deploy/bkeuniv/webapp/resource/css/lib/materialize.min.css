@@ -6579,7 +6579,7 @@ textarea.materialize-textarea.validate+label:not(.label-icon).active {
 
 form p {
     margin-bottom: 10px;
-    text-align: left
+    /* text-align: left */
 }
 
 form p:last-child {
