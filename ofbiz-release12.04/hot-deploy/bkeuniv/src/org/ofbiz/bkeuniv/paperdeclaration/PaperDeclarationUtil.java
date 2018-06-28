@@ -674,12 +674,19 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(2, 8000);
 		sh.setColumnWidth(3, 8000);
 		sh.setColumnWidth(4, 8000);
+		sh.setColumnWidth(5, 8000);
+		sh.setColumnWidth(6, 8000);
 
 		int i_row = 0;
 
 		i_row = 10;
 		Row rh = sh.createRow(i_row);
-		Cell ch = rh.createCell(2);
+		
+		Cell ch = rh.createCell(1);
+		ch.setCellValue("STT");
+		ch.setCellStyle(styleTitle);
+
+		ch = rh.createCell(2);
 		ch.setCellValue("Họ và tên các tác giả");
 		ch.setCellStyle(styleTitle);
 
@@ -695,13 +702,24 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("Thuộc đề tài");
 		ch.setCellStyle(styleTitle);
 		
+		ch = rh.createCell(6);
+		ch.setCellValue("Mã số đề tài");
+		ch.setCellStyle(styleTitle);
+		
+		int count = 0;
 		for(GenericValue p: papers){
 			i_row++;
+			count++;
 			rh = sh.createRow(i_row);
+
+			ch = rh.createCell(1);
+			ch.setCellValue(count);
+			ch.setCellStyle(styleNormal);
+			
 			ch = rh.createCell(2);
 			ch.setCellValue(p.getString("authors"));
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(3);
 			ch.setCellValue(p.getString("paperName"));
 			ch.setCellStyle(styleNormal);
@@ -712,6 +730,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			
 			ch = rh.createCell(5);
 			ch.setCellValue(p.getString("researchProjectProposalName"));
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(6);
+			ch.setCellValue(p.getString("researchProjectProposalCode"));
 			ch.setCellStyle(styleNormal);
 			
 		}

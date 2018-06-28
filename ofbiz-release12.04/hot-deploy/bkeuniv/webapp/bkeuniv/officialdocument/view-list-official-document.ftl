@@ -6,7 +6,7 @@
 		$(document).contextmenu({
 			delegate: '#'+id+ ' td',
 		menu: [
-			{title: '${uiLabelMap.BkEunivReview}', cmd: "review", uiIcon: "fa fa-eye"},
+			<#-- {title: '${uiLabelMap.BkEunivReview}', cmd: "review", uiIcon: "fa fa-eye"}, -->
 			{title: '${uiLabelMap.BkEunivDownload}', cmd: "download", uiIcon: "fa fa-download"},
 			<#--  {title: '${uiLabelMap.BkEunivRemove}', cmd: "remove", uiIcon: "glyphicon glyphicon-trash"}  -->
 		],
@@ -14,6 +14,7 @@
 			var el = ui.target.parent();
 			var data = jqDataTable.table.row( el ).data();
 			switch(ui.cmd){
+				
 				case "review":
 					window.open("/bkeuniv/control/download-file-official-document?type=inline&officialDocumentId="+data.officialDocumentId, "_blank");
 					break;
@@ -38,10 +39,12 @@
 <div class="body">
 
 	<#assign columns=[
+		<!--
 		{
 			"name": uiLabelMap.officialDocumentId?j_string,
 			"data": "officialDocumentId"
 		},
+		-->
 		{
 			"name": uiLabelMap.officialDocumentName?j_string,
 			"data": "officialDocumentName"
@@ -49,7 +52,9 @@
 		{
 			"name": uiLabelMap.officialDocumentTypeName?j_string,
 			"data": "officialDocumentTypeName"
-		},
+		}
+		<!--
+		,
 		{
 			"name": uiLabelMap.staffName?j_string,
 			"data": "staffName"
@@ -60,6 +65,7 @@
 			"data": "uploadDate",
 			"type": "date"
 		}
+		-->
 	] />
 	
 	<#assign fields=[
