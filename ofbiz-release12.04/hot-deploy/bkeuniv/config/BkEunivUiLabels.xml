@@ -107,6 +107,11 @@
         <value xml:lang="vi">Chưa chọn loại tài liệu</value>
     </property>
     
+    <property key="BkEunivUpload">
+        <value xml:lang="en">Upload</value>
+        <value xml:lang="vi">Tải lên</value>
+    </property>
+    
     <property key="BkEunivReview">
         <value xml:lang="en">Review</value>
         <value xml:lang="vi">Xem trước</value>

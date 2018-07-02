@@ -2,6 +2,8 @@ package org.ofbiz.bkeuniv.officialdocument;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -28,7 +30,10 @@ import org.ofbiz.utils.BKEunivUtils;
 public class UploadOfficialDocument {
 	public static String module = PaperDeclarationService.class.getName();
 	//public static String dataFolder = "." + File.separator + "euniv-deploy";
+	private static final Charset UTF_8 = Charset.forName("UTF-8");
+	private static final Charset ISO = Charset.forName("ISO-8859-1");
 
+	
 	public static String establishFullFilename(String staffId, String name) {
 		
 		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
@@ -150,6 +155,8 @@ public class UploadOfficialDocument {
 			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
 					response, 200);
 			return;
+		} else {
+			officialDocumentName = new String(officialDocumentName.getBytes(ISO), UTF_8);
 		}
 		
 		// Checking for form fields - End

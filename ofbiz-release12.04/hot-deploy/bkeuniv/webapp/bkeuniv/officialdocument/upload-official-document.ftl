@@ -17,7 +17,7 @@
 
         $("#official-document-type-name").select2({
             language: "vi",
-            placeholder: '${uiLabelMap.BkEunivPlaceholderDocumentType}',
+            placeholder: '${StringUtil.wrapString(uiLabelMap.BkEunivPlaceholderDocumentType)}',
             ajax: {
                 url: '/bkeuniv/control/jqxGeneralServicer?sname=JQGetListOfficialDocumentType',
                 "method": "POST",
@@ -72,6 +72,8 @@
 		var reader = new FileReader();
 		if(files.length !== 0) {
 			var formData = new FormData();
+            formData.append("accept-charset", 'UTF-8');
+
 			formData.append("officialDocumentName", $("#official-document-name").val());
             formData.append("officialDocumentTypeId", $("#official-document-type-name").val());
             formData.append("file", files[0]);
@@ -80,6 +82,7 @@
 					url: "/bkeuniv/control/upload-file-official-document",
 					type: 'POST',
 					method: 'POST',
+                    Content-Type: application/json;charset=UTF-8
 					contentType: false,
     				processData: false,
 					data: formData,
@@ -158,9 +161,8 @@
                     <input type="file" id="input-upload-file" class="dropify" accept=".doc, .docx, .pdf, .csv, .xls, .xlsx" data-default-file="" />
                 </div>
 
-                <button class="btn btn-primary" onClick="uploadFile()">Tai len</button>
+                <button class="btn btn-primary" onClick="uploadFile()">${uiLabelMap.BkEunivUpload}</button>
             </form>
-
         </div>
     </div>
 
