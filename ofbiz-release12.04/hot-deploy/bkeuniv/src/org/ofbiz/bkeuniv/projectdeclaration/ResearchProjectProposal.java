@@ -1,5 +1,6 @@
 package org.ofbiz.bkeuniv.projectdeclaration;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class ResearchProjectProposal {
 		System.out.println("staffId"+staffId);
 		List<String> projectCategoryId = (List<String>) context.get("projectCategoryId[]");
 		String researchProjectProposalName = (String) context.get("researchProjectProposalName");
+		String researchProjectProposalCode = (String) context.get("researchProjectProposalCode");
 		String totalBudget = (String) context.get("totalBudget");
 		List<String> facultyId = (List<String>) context.get("facultyId[]");
 		String startDate = (String) context.get("startDate");
@@ -83,7 +85,8 @@ public class ResearchProjectProposal {
 			gv.put("createStaffId", staffId);
 			gv.put("projectCategoryId", projectCategoryId.get(0));
 			gv.put("researchProjectProposalName", researchProjectProposalName);
-			long totalBudgetl = Long.valueOf(totalBudget);
+			gv.put("researchProjectProposalCode", researchProjectProposalCode);
+			BigDecimal totalBudgetl = new BigDecimal(totalBudget);//Long.valueOf(totalBudget);
 			gv.put("totalBudget", totalBudgetl);
 			gv.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING);
 			

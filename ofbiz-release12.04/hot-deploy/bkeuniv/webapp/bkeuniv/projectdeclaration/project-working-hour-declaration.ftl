@@ -7,6 +7,10 @@
 			"data": "researchProjectProposalName"
 		},
 		{
+			"name": projectDeclarationUiLabelMap.CreateStaffId?j_string,
+			"data": "createStaffId"
+		},
+		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
 			"data": "staffName"
 		},
@@ -30,6 +34,7 @@
 		"researchProjectDeclarationYearId",
 		"researchProjectProposalId",
 		"staffId",
+		"createStaffId",
 		"projectParticipationRoleId",
 		"workinghours",
 		"academicYearId",
@@ -63,15 +68,6 @@
 		</#if>
 	</#list>
 	
-	<!--
-	<#assign listStaff = [] />
-	<#list staffS.staffs as project>
-		<#if project?has_content>
-             <#assign op = { "name": project.staffName?j_string ,"value": project.staffId?j_string } />
-						<#assign listStaff = listStaff + [op] />
-		</#if>
-	</#list>
-	-->
 	
 	<#assign columnsNew=[
 		{

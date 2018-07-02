@@ -11,6 +11,10 @@
 			"data": "researchProjectProposalName"
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
+			"data": "researchProjectProposalCode"
+		},
+		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
 			"data": "startDate"
 		},
@@ -29,6 +33,7 @@
 		"projectCallId",
 		"projectCategoryId",
 		"researchProjectProposalName",
+		"researchProjectProposalCode",
 		"totalBudget",
 		"statusId",
 		"approvedByStaffId",
@@ -101,6 +106,11 @@
 			"value": "researchProjectProposalName"
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
+			"value": "researchProjectProposalCode"
+		},
+		
+		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
 			"value": "totalBudget",
 			"pattern": "[1-9]([0-9]{0,20})",
@@ -131,6 +141,10 @@
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
 			"value": "researchProjectProposalName"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
+			"value": "researchProjectProposalCode"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,

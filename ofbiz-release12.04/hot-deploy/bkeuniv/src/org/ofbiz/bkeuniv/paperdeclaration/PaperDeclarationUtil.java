@@ -12,6 +12,7 @@ import java.util.Map;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+
 import org.apache.poi.hssf.usermodel.HSSFBorderFormatting;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -636,6 +637,108 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		return i_row;
 	}
 
+	public static void createSheetListPapersKV04(HSSFWorkbook wb, List<GenericValue> papers){
+		Sheet sh = wb.createSheet("danh sach bai bao");
+
+		CellStyle styleTitle = wb.createCellStyle();
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+
+		CellStyle styleNormal = wb.createCellStyle();
+		Font fontNormal = wb.createFont();
+		fontNormal.setFontHeightInPoints((short) 12);
+		fontNormal.setFontName("Times New Roman");
+		// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontNormal.setColor(HSSFColor.BLACK.index);
+		styleNormal.setFont(fontNormal);
+		styleNormal.setWrapText(true);
+		styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 1000);
+		sh.setColumnWidth(2, 8000);
+		sh.setColumnWidth(3, 8000);
+		sh.setColumnWidth(4, 8000);
+		sh.setColumnWidth(5, 8000);
+		sh.setColumnWidth(6, 8000);
+
+		int i_row = 0;
+
+		i_row = 10;
+		Row rh = sh.createRow(i_row);
+		
+		Cell ch = rh.createCell(1);
+		ch.setCellValue("STT");
+		ch.setCellStyle(styleTitle);
+
+		ch = rh.createCell(2);
+		ch.setCellValue("Họ và tên các tác giả");
+		ch.setCellStyle(styleTitle);
+
+		ch = rh.createCell(3);
+		ch.setCellValue("Tên bài báo");
+		ch.setCellStyle(styleTitle);
+
+		ch = rh.createCell(4);
+		ch.setCellValue("Tạp chí, Proceedings");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(5);
+		ch.setCellValue("Thuộc đề tài");
+		ch.setCellStyle(styleTitle);
+		
+		ch = rh.createCell(6);
+		ch.setCellValue("Mã số đề tài");
+		ch.setCellStyle(styleTitle);
+		
+		int count = 0;
+		for(GenericValue p: papers){
+			i_row++;
+			count++;
+			rh = sh.createRow(i_row);
+
+			ch = rh.createCell(1);
+			ch.setCellValue(count);
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(2);
+			ch.setCellValue(p.getString("authors"));
+			ch.setCellStyle(styleNormal);
+
+			ch = rh.createCell(3);
+			ch.setCellValue(p.getString("paperName"));
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(4);
+			ch.setCellValue(p.getString("journalConferenceName"));
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(5);
+			ch.setCellValue(p.getString("researchProjectProposalName"));
+			ch.setCellStyle(styleNormal);
+			
+			ch = rh.createCell(6);
+			ch.setCellValue(p.getString("researchProjectProposalCode"));
+			ch.setCellStyle(styleNormal);
+			
+		}
+		
+	}
 	public static HSSFWorkbook createExcelFormKV04(Delegator delegator,
 			String academicYearId, String facultyId) {
 
@@ -679,7 +782,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		// conds.add(EntityCondition.makeCondition("staffId",EntityOperator.IN,staffIDs));
 		List<GenericValue> papers = FastList.newInstance();
 		try {
-			papers = delegator.findList("PaperDeclaration",
+			papers = delegator.findList("PaperView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 		} catch (Exception ex) {
@@ -840,7 +943,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(2);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("Danh sách bài báo nằm trong danh mục ISI, Scopus");
+		ch.setCellValue("Danh sách bài báo không nằm trong danh mục ISI, Scopus");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 12));
 		i_row = createSegmentKV04(list_paper_international_journals,
 				styleNormal, sh, i_row, delegator, mPaperCategory2Money,
@@ -874,6 +977,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row = createSegmentKV04(list_paper_national_conferences, styleNormal,
 				sh, i_row, delegator, mPaperCategory2Money, mId2Staff);
 
+		createSheetListPapersKV04(wb, papers);
+		
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;
 		 * Row r = sh.createRow(i_row);

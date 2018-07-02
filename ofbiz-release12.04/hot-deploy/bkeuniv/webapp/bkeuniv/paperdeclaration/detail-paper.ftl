@@ -69,6 +69,17 @@
 </tr>
 <tr>
 	<td>
+		Thuoc de tai
+	</td>
+	<td>
+		<#if resultPaper.paper.researchProjectProposalName?exists>
+			${resultPaper.paper.researchProjectProposalName}
+		</#if>
+	</td>
+</tr>
+
+<tr>
+	<td>
 		<a href="/bkeuniv/control/download-file-paper?id-paper=${resultPaper.paper.paperId}">${paperDeclarationUiLabelMap.BkEunivDownloadPaper}</a>
 
 	</td>

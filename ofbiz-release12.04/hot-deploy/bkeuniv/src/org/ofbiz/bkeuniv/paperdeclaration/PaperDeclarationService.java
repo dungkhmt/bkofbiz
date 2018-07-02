@@ -34,6 +34,7 @@ import org.ofbiz.entity.util.EntityFindOptions;
 
 //import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.poi.hssf.dev.ReSave;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -1039,6 +1040,11 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
+		List<Object> researchProjectProposalIds = (List<Object>) context.get("researchProjectProposalId[]");
+		String researchProjectProposalId = null;
+		if(researchProjectProposalIds != null && researchProjectProposalIds.size() > 0)
+			researchProjectProposalId = (String) researchProjectProposalIds.get(0);
+		
 		List<Object> roleIds = (List<Object>) context
 				.get("roleId[]");
 		String roleId = null;
@@ -1084,6 +1090,10 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			
+			if(researchProjectProposalId != null)
+				p.put("researchProjectProposalId", researchProjectProposalId);
+			
 			if (journalConferenceName != null
 					&& !journalConferenceName.equals(""))
 				p.put("journalConferenceName", journalConferenceName);
@@ -1167,6 +1177,11 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
+		List<Object> researchProjectProposalIds = (List<Object>) context.get("researchProjectProposalId[]");
+		String researchProjectProposalId = null;
+		if(researchProjectProposalIds != null && researchProjectProposalIds.size() > 0)
+			researchProjectProposalId = (String) researchProjectProposalIds.get(0);
+		
 		List<Object> roleIds = (List<Object>) context
 				.get("roleId[]");
 		String roleId = "";
@@ -1223,6 +1238,9 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if(researchProjectProposalId != null)
+				p.put("researchProjectProposalId", researchProjectProposalId);
+			
 			if (journalConferenceName != null
 					&& !journalConferenceName.equals(""))
 				p.put("journalConferenceName", journalConferenceName);

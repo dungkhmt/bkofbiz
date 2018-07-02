@@ -20,7 +20,7 @@ import org.ofbiz.service.ServiceUtil;
 public class ProjectWorkingHourDeclaration {
 	public static String module = ProjectDeclaration.class.getName();
 	private final static String[] arrAtt = new String[] {"researchProjectDeclarationYearId", "researchProjectProposalId",
-		"staffId", "projectParticipationRoleId", "workinghours", "academicYearId", "academicYearName",
+		"staffId", "createStaffId", "projectParticipationRoleId", "workinghours", "academicYearId", "academicYearName",
 		"staffName", "researchProjectProposalName", "projectParticipationRoleName"};
 	
 	public static Map<String, Object> getProjectWorkingHourDeclaration(DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -49,7 +49,8 @@ public class ProjectWorkingHourDeclaration {
 			*/
 			List<Map> projectDeclarations = FastList.newInstance();
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS, staffId));
+			//conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS, staffId));
 			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
 			
 			List<GenericValue> listProjectDeclaration = delegator.findList("ResearchProjectDeclarationYearView", 

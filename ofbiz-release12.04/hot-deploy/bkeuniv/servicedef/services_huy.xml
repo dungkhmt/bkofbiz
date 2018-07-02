@@ -182,6 +182,8 @@
 		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
 		<attribute name="researchProjectProposalName" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="researchProjectProposalCode" type="String" mode="IN" optional="true"></attribute>
+		
 		<attribute name="totalBudget" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
