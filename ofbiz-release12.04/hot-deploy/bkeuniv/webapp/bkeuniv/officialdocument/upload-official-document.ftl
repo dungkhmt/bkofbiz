@@ -82,7 +82,6 @@
 					url: "/bkeuniv/control/upload-file-official-document",
 					type: 'POST',
 					method: 'POST',
-                    Content-Type: application/json;charset=UTF-8
 					contentType: false,
     				processData: false,
 					data: formData,
@@ -148,7 +147,7 @@
             <form action="javascript:void(0);">
                 <div class="form-group">
                     <label for="official-document-name">${uiLabelMap.officialDocumentName}</label>
-                    <input type="text" class="form-control" id="official-document-name" placeholder="Nhập tên tài liệu">
+                    <input type="text" class="form-control" id="official-document-name" placeholder="${uiLabelMap.BkEunivDocumentName}">
                     <#--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>  -->
                 </div>
                 <div class="form-group">

@@ -92,6 +92,11 @@
         <value xml:lang="vi">Chưa nhập tên tài liệu</value>
     </property>
     
+    <property key="BkEunivDocumentName">
+        <value xml:lang="en">Document name</value>
+        <value xml:lang="vi">Nhập tên tài liệu</value>
+    </property>
+    
     <property key="BkEunivPlaceholderDocumentType">
         <value xml:lang="en">Chose type document</value>
         <value xml:lang="vi">Chọn loại tài liệu</value>
