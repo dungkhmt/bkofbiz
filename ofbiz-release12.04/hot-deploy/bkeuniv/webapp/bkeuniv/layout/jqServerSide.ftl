@@ -246,6 +246,7 @@
             jqDataTable.table = $('#${id}-content').DataTable( {
                 "processing": true,
                 "serverSide": true,
+				"scrollX": true,
 				"order": [[ 1, "asc" ]],
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,

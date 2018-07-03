@@ -264,6 +264,7 @@
 			    	
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
+					"scrollX": true,
 					columns: jqDataTable.columns,
 					deferRender: true,
 					"columnDefs": [
