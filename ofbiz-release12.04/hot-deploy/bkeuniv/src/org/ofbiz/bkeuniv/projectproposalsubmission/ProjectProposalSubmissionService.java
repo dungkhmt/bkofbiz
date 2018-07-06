@@ -185,7 +185,7 @@ public class ProjectProposalSubmissionService {
 							facultyId, projectProposalStatusId);
 			HSSFWorkbook wb = new HSSFWorkbook();
 			HSSFSheet sh = wb.createSheet(filename);
-			
+
 			CellStyle styleNormal = wb.createCellStyle();
 			Font fontNormal = wb.createFont();
 			fontNormal.setFontHeightInPoints((short) 12);
@@ -194,9 +194,9 @@ public class ProjectProposalSubmissionService {
 			fontNormal.setColor(HSSFColor.BLACK.index);
 			styleNormal.setFont(fontNormal);
 			styleNormal.setWrapText(true);
-			//styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+			// styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
 			styleNormal.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
-			
+
 			styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
 			styleNormal.setBorderTop(CellStyle.BORDER_THIN);
 			styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
@@ -213,101 +213,106 @@ public class ProjectProposalSubmissionService {
 
 			int i_row = 0;
 			int index = 0;
-			
-			
+
 			i_row++;
 			HSSFRow rh = sh.createRow(i_row);
 			HSSFCell ct = rh.createCell(3);
 			ct.setCellValue("DANH SÁCH ĐỀ TÀI");
-			
+
 			i_row += 4;
 			rh = sh.createRow(i_row);
 			HSSFCell ch = rh.createCell(0);
 			ch.setCellValue("STT");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(1);
 			ch.setCellValue("Tên đề tài");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(2);
 			ch.setCellValue("Chủ nhiệm");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(3);
 			ch.setCellValue("Đợt gọi đề tài");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(4);
 			ch.setCellValue("Khoa/viện");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(5);
 			ch.setCellValue("Nội dung nghiên cứu");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(6);
 			ch.setCellValue("Sản phẩm dự kiến");
 			ch.setCellStyle(styleNormal);
-			
+
 			ch = rh.createCell(7);
 			ch.setCellValue("Kinh phí");
 			ch.setCellStyle(styleNormal);
-		
+
 			for (GenericValue p : listPrj) {
 				String pId = p.getString("researchProjectProposalId");
-				List<GenericValue> contents = ProjectProposalSubmissionServiceUtil.getProjectProposalContents(delegator, pId);
-				List<GenericValue> products = ProjectProposalSubmissionServiceUtil.getProjectProposalRegisteredProducts(delegator, pId);
+				List<GenericValue> contents = ProjectProposalSubmissionServiceUtil
+						.getProjectProposalContents(delegator, pId);
+				List<GenericValue> products = ProjectProposalSubmissionServiceUtil
+						.getProjectProposalRegisteredProducts(delegator, pId);
 				String str_contents = "";
 				BigDecimal totalBudget = BigDecimal.ZERO;
-				for(GenericValue c: contents){
+				for (GenericValue c : contents) {
 					str_contents += "-" + c.getString("content") + "\n";
-					if(c.getBigDecimal("budget") != null)
-						totalBudget = totalBudget.add(c.getBigDecimal("budget"));
+					if (c.getBigDecimal("budget") != null)
+						totalBudget = totalBudget
+								.add(c.getBigDecimal("budget"));
 				}
-				if(p.getBigDecimal("materialBudget") != null)
-					totalBudget = totalBudget.add(p.getBigDecimal("materialBudget"));
-				
+				if (p.getBigDecimal("materialBudget") != null)
+					totalBudget = totalBudget.add(p
+							.getBigDecimal("materialBudget"));
+
 				String str_products = "";
-				for(GenericValue pr: products){
-					str_products += "- " + pr.getLong("quantity") + " " + pr.getString("researchProductTypeName") + ": " + pr.getString("researchProductName") + "\n";
+				for (GenericValue pr : products) {
+					str_products += "- " + pr.getLong("quantity") + " "
+							+ pr.getString("researchProductTypeName") + ": "
+							+ pr.getString("researchProductName") + "\n";
 				}
-				
+
 				i_row++;
 				index++;
 				HSSFRow r = sh.createRow(i_row);
 				HSSFCell c = r.createCell(0);
 				c.setCellValue(index);
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(1);
 				c.setCellValue(p.getString("researchProjectProposalName"));
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(2);
 				c.setCellValue(p.getString("createStaffName"));
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(3);
 				c.setCellValue(p.getString("projectCallName"));
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(4);
 				c.setCellValue(p.getString("facultyName"));
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(5);
 				c.setCellValue(str_contents);
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(6);
 				c.setCellValue(str_products);
 				c.setCellStyle(styleNormal);
-				
+
 				c = r.createCell(7);
 				c.setCellValue(totalBudget.toString());
 				c.setCellStyle(styleNormal);
-				
+
 			}
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
@@ -366,10 +371,11 @@ public class ProjectProposalSubmissionService {
 		String facultyId = (String) request.getParameter("facultyId");
 		String projectProposalName = (String) request
 				.getParameter("projectProposalName");
-		
-		//String s_budget = (String)request.getParameter("budget");
-		String s_material_budget = (String)request.getParameter("materialbudget");
-		String note = (String)request.getParameter("note");
+
+		// String s_budget = (String)request.getParameter("budget");
+		String s_material_budget = (String) request
+				.getParameter("materialbudget");
+		String note = (String) request.getParameter("note");
 		String projectCallId = (String) request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
@@ -391,8 +397,8 @@ public class ProjectProposalSubmissionService {
 			 */
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							projectProposalName, s_material_budget, note, facultyId, projectCallId,
-							staffId);
+							projectProposalName, s_material_budget, note,
+							facultyId, projectCallId, staffId);
 
 			String rs = "{\"result\":\"OK\"}";
 			response.setContentType("application/json");
@@ -407,42 +413,47 @@ public class ProjectProposalSubmissionService {
 			return "error";
 		}
 	}
-	public static void updateGeneralInfosProjectProposal(HttpServletRequest request,
-			HttpServletResponse response) {
+
+	public static void updateGeneralInfosProjectProposal(
+			HttpServletRequest request, HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		String researchProjectProposalId = (String)request.getParameter("researchProjectProposalId");
-		//String facultyId = (String) request.getParameter("facultyId");
+		String researchProjectProposalId = (String) request
+				.getParameter("researchProjectProposalId");
+		// String facultyId = (String) request.getParameter("facultyId");
 		String projectProposalName = (String) request
 				.getParameter("projectProposalName");
-		String note = (String)request.getParameter("note");
-		
-		//String s_budget = (String)request.getParameter("budget");
-		String s_material_budget = (String)request.getParameter("materialbudget");
-		
-		//String projectCallId = (String) request.getParameter("projectCallId");
+		String note = (String) request.getParameter("note");
+
+		// String s_budget = (String)request.getParameter("budget");
+		String s_material_budget = (String) request
+				.getParameter("materialbudget");
+
+		// String projectCallId = (String)
+		// request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
 		String staffId = (String) userLogin.getString("userLoginId");
 
 		try {
-			 GenericValue gv = delegator.findOne("ResearchProjectProposal",
-					 UtilMisc.toMap("researchProjectProposalId",researchProjectProposalId),false);
-			 gv.put("researchProjectProposalName", projectProposalName);
-			 gv.put("materialBudget", new BigDecimal(s_material_budget));
-			 gv.put("note", note);
-			 delegator.store(gv);
-			 
+			GenericValue gv = delegator.findOne("ResearchProjectProposal",
+					UtilMisc.toMap("researchProjectProposalId",
+							researchProjectProposalId), false);
+			gv.put("researchProjectProposalName", projectProposalName);
+			gv.put("materialBudget", new BigDecimal(s_material_budget));
+			gv.put("note", note);
+			delegator.store(gv);
+
 			String rs = "{\"result\":\"OK\"}";
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			out.write(rs);
 			out.close();
-			//return "successs";
+			// return "successs";
 		} catch (Exception ex) {
 			ex.printStackTrace();
 
-			//return "error";
+			// return "error";
 		}
 	}
 
@@ -1103,14 +1114,16 @@ public class ProjectProposalSubmissionService {
 				.getParameter("researchProjectProposalId");
 		String researchProductTypeId = request
 				.getParameter("researchProductTypeId[]");
-		String researchProductName = request.getParameter("researchProductName");
-		
+		String researchProductName = request
+				.getParameter("researchProductName");
+
 		String sQuantity = request.getParameter("quantity");
 		Long quantity = Long.valueOf(sQuantity);
 		Debug.log(module
 				+ "::addProjectProposalType, researchProjectProposalId= "
 				+ researchProjectProposalId + ", researchProductTypeId = "
-				+ researchProductTypeId + ", quantity = " + quantity + ", researchProductName = " + researchProductName);
+				+ researchProductTypeId + ", quantity = " + quantity
+				+ ", researchProductName = " + researchProductName);
 		try {
 			GenericValue gv = delegator.makeValue("ResearchProposalProduct");
 			String researchProductId = delegator
@@ -1124,20 +1137,23 @@ public class ProjectProposalSubmissionService {
 			gv.put("sourcePathUpload", "-");
 
 			delegator.create(gv);
-			
-			GenericValue pdt = delegator.findOne("ResearchProductType", 
-					UtilMisc.toMap("researchProductTypeId",researchProductTypeId), false);
-			
+
+			GenericValue pdt = delegator.findOne("ResearchProductType",
+					UtilMisc.toMap("researchProductTypeId",
+							researchProductTypeId), false);
+
 			Map<String, Object> retObj = FastMap.newInstance();
 			retObj.put("researchProductId", gv.get("researchProductId"));
 			retObj.put("researchProductTypeId", gv.get("researchProductTypeId"));
-			retObj.put("researchProductTypeName", pdt.get("researchProductTypeName"));
-			retObj.put("researchProjectProposalId", gv.get("researchProjectProposalId"));
+			retObj.put("researchProductTypeName",
+					pdt.get("researchProductTypeName"));
+			retObj.put("researchProjectProposalId",
+					gv.get("researchProjectProposalId"));
 			retObj.put("quantity", gv.get("quantity"));
 			retObj.put("researchProductId", gv.get("researchProductId"));
 			retObj.put("researchProductName", gv.get("researchProductName"));
 			retObj.put("sourcePathUpload", gv.get("sourcePathUpload"));
-			
+
 			Map<String, Object> context = FastMap.newInstance();
 			context.put("projectProposalProducts", retObj);
 			context.put("message", "Create new row");
@@ -1148,43 +1164,46 @@ public class ProjectProposalSubmissionService {
 		}
 
 	}
+
 	public static void updateProjectProposalType(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
-		String researchProductId = request
-				.getParameter("researchProductId");
-		
+		String researchProductId = request.getParameter("researchProductId");
+
 		String researchProjectProposalId = request
 				.getParameter("researchProjectProposalId");
 		String researchProductTypeId = request
 				.getParameter("researchProductTypeId[]");
-		String researchProductName = request.getParameter("researchProductName");
-		
+		String researchProductName = request
+				.getParameter("researchProductName");
+
 		String sQuantity = request.getParameter("quantity");
 		Long quantity = Long.valueOf(sQuantity);
-		Debug.log(module
-				+ "::updateProjectProposalType, researchProductId = " + researchProductId + ", researchProjectProposalId= "
+		Debug.log(module + "::updateProjectProposalType, researchProductId = "
+				+ researchProductId + ", researchProjectProposalId= "
 				+ researchProjectProposalId + ", researchProductTypeId = "
-				+ researchProductTypeId + ", quantity = " + quantity + ", researchProductName = " + researchProductName);
+				+ researchProductTypeId + ", quantity = " + quantity
+				+ ", researchProductName = " + researchProductName);
 		try {
-			GenericValue gv = delegator.findOne("ResearchProposalProduct",UtilMisc.toMap("researchProductId",researchProductId),false);
-			if(gv != null){
-			
+			GenericValue gv = delegator.findOne("ResearchProposalProduct",
+					UtilMisc.toMap("researchProductId", researchProductId),
+					false);
+			if (gv != null) {
 
-			gv.put("researchProductTypeId", researchProductTypeId);
-			gv.put("researchProjectProposalId", researchProjectProposalId);
-			gv.put("quantity", quantity);
-			gv.put("researchProductName", researchProductName);
-			gv.put("sourcePathUpload", "-");
+				gv.put("researchProductTypeId", researchProductTypeId);
+				gv.put("researchProjectProposalId", researchProjectProposalId);
+				gv.put("quantity", quantity);
+				gv.put("researchProductName", researchProductName);
+				gv.put("sourcePathUpload", "-");
 
-			delegator.store(gv);
+				delegator.store(gv);
 
-			Map<String, Object> context = FastMap.newInstance();
-			context.put("projectProposalProducts", gv);
-			context.put("message", "Update successfully");
-			BKEunivUtils.writeJSONtoResponse(
-					BKEunivUtils.parseJSONObject(context), response, 200);
+				Map<String, Object> context = FastMap.newInstance();
+				context.put("projectProposalProducts", gv);
+				context.put("message", "Update successfully");
+				BKEunivUtils.writeJSONtoResponse(
+						BKEunivUtils.parseJSONObject(context), response, 200);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1192,20 +1211,19 @@ public class ProjectProposalSubmissionService {
 
 	}
 
-
 	public static void removeProjectProposalType(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 
-		String researchProductId = request
-				.getParameter("researchProductId");
-		
-		Debug.log(module
-				+ "::removeProjectProposalType, researchProductId = "
+		String researchProductId = request.getParameter("researchProductId");
+
+		Debug.log(module + "::removeProjectProposalType, researchProductId = "
 				+ researchProductId);
 		try {
-			GenericValue gv = delegator.findOne("ResearchProposalProduct",UtilMisc.toMap("researchProductId",researchProductId),false);
-			if(gv != null){
+			GenericValue gv = delegator.findOne("ResearchProposalProduct",
+					UtilMisc.toMap("researchProductId", researchProductId),
+					false);
+			if (gv != null) {
 				delegator.removeValue(gv);
 			}
 		} catch (Exception ex) {
@@ -1224,14 +1242,15 @@ public class ProjectProposalSubmissionService {
 		String content = request.getParameter("content");
 		String sworkingdays = request.getParameter("workingDays");
 		long workingdays = 0;
-		if(sworkingdays != null && !sworkingdays.equals(""))
+		if (sworkingdays != null && !sworkingdays.equals(""))
 			workingdays = Long.valueOf(sworkingdays);
 		String sbudget = request.getParameter("budget");
 		BigDecimal budget = null;
-		if(sbudget != null && !sbudget.equals(""))
+		if (sbudget != null && !sbudget.equals(""))
 			budget = new BigDecimal(sbudget);
-		else budget = BigDecimal.ZERO;
-		
+		else
+			budget = BigDecimal.ZERO;
+
 		Debug.log(module
 				+ "::addWorkpackageProject, researchProjectProposalId = "
 				+ researchProjectProposalId + ", staffId = " + staffId
@@ -1274,18 +1293,18 @@ public class ProjectProposalSubmissionService {
 		String staffId = request.getParameter("staffId[]");
 		String content = request.getParameter("content");
 		String sworkingdays = request.getParameter("workingDays");
-		
+
 		String sbudget = request.getParameter("budget");
-		
 
 		Debug.log(module
 				+ "::updateWorkpackageProject, researchProjectProposalId = "
-				+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq + ", staffId = " + staffId
-				+ ", content = " + content + ", workingdays = " + sworkingdays
-				+ ", sbudget = " + sbudget + ", budget = " + sbudget);
+				+ researchProjectProposalId + ", contentItemSeq = "
+				+ contentItemSeq + ", staffId = " + staffId + ", content = "
+				+ content + ", workingdays = " + sworkingdays + ", sbudget = "
+				+ sbudget + ", budget = " + sbudget);
 		Long workingdays = Long.valueOf(sworkingdays);
 		BigDecimal budget = new BigDecimal(sbudget);
-		
+
 		try {
 			GenericValue gv = delegator.findOne("ResearchProposalContentItem",
 					UtilMisc.toMap("researchProjectProposalId",
@@ -1313,6 +1332,7 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 		}
 	}
+
 	public static void deleteWorkpackageProject(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -1321,13 +1341,11 @@ public class ProjectProposalSubmissionService {
 				.getParameter("researchProjectProposalId");
 		String contentItemSeq = request.getParameter("contentItemSeq");
 
-		
-		
-
 		Debug.log(module
 				+ "::deleteWorkpackageProject, researchProjectProposalId = "
-				+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq);
-		
+				+ researchProjectProposalId + ", contentItemSeq = "
+				+ contentItemSeq);
+
 		try {
 			GenericValue gv = delegator.findOne("ResearchProposalContentItem",
 					UtilMisc.toMap("researchProjectProposalId",
@@ -1344,17 +1362,18 @@ public class ProjectProposalSubmissionService {
 						BKEunivUtils.parseJSONObject(context), response, 200);
 				Debug.log(module
 						+ "::deleteWorkpackageProject, researchProjectProposalId = "
-						+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq + " DELETED");
-			}else{
+						+ researchProjectProposalId + ", contentItemSeq = "
+						+ contentItemSeq + " DELETED");
+			} else {
 				Debug.log(module
 						+ "::deleteWorkpackageProject, researchProjectProposalId = "
-						+ researchProjectProposalId + ", contentItemSeq = " + contentItemSeq + " NOT FOUND");
+						+ researchProjectProposalId + ", contentItemSeq = "
+						+ contentItemSeq + " NOT FOUND");
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
 
 	public static Map<String, Object> getMembersOfResearchProjectProposalJury(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -1462,6 +1481,7 @@ public class ProjectProposalSubmissionService {
 					"ResearchProposalProductView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
+
 			Debug.log(module + "::getProjectProposalProducts, list.sz = "
 					+ list.size());
 			retSucc.put("projectProposalProducts", list);
@@ -1549,7 +1569,7 @@ public class ProjectProposalSubmissionService {
 							"statusId",
 							EntityOperator.NOT_EQUAL,
 							ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CALL_CANCELLED));
-			
+
 			if (projectCallId != null)
 				conds.add(EntityCondition.makeCondition("projectCallId",
 						EntityOperator.EQUALS, projectCallId));
@@ -2004,14 +2024,24 @@ public class ProjectProposalSubmissionService {
 				retSucc.put("projectproposal", pp);
 
 				String projectCallId = (String) pp.getString("projectCallId");
-				GenericValue pc = delegator.findOne("ProjectCallView",
-						UtilMisc.toMap("projectCallId", projectCallId), false);
-				String projectCallStatusId = (String) pc.getString("statusId");
-				String projectCallStatusName = (String) pc
-						.getString("statusName");
+				String projectCallStatusId = "";
+				String projectCallStatusName = "";
+				if (projectCallId != null && !projectCallId.equals("")) {
+					GenericValue pc = delegator.findOne("ProjectCallView",
+							UtilMisc.toMap("projectCallId", projectCallId),
+							false);
+					if (pc != null) {
+						projectCallStatusId = (String) pc
+								.getString("statusId");
+						projectCallStatusName = (String) pc
+								.getString("statusName");
+						
+					}
+				}
 				retSucc.put("projectCallStatusId", projectCallStatusId);
-				retSucc.put("projectCallStatusName", projectCallStatusName);
-
+				retSucc.put("projectCallStatusName",
+						projectCallStatusName);
+				
 				// get evaluation
 				/*
 				 * conds = FastList.newInstance();
@@ -2559,11 +2589,11 @@ public class ProjectProposalSubmissionService {
 				roleTypeName = (String) rt.get("roleTypeName");
 			}
 			/*
-			Timestamp now = UtilDateTime.nowTimestamp();
-			java.sql.Date fromDate = new java.sql.Date(now.getTime());
-			gv.put("fromDate", fromDate);
-			*/
-			
+			 * Timestamp now = UtilDateTime.nowTimestamp(); java.sql.Date
+			 * fromDate = new java.sql.Date(now.getTime()); gv.put("fromDate",
+			 * fromDate);
+			 */
+
 			delegator.create(gv);
 
 			GenericValue rg = delegator.makeValue("ProjectProposalMemberView");
@@ -2583,6 +2613,7 @@ public class ProjectProposalSubmissionService {
 		return retSucc;
 
 	}
+
 	public static Map<String, Object> deleteMemberOfProjectProposal(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -2590,24 +2621,31 @@ public class ProjectProposalSubmissionService {
 		String projectProposalMemberId = (String) context
 				.get("projectProposalMemberId");
 		Delegator delegator = ctx.getDelegator();
-		Debug.log(module + "::deleteMemberOfProjectProposal, projectProposalMemberId = " + projectProposalMemberId);
-		try{
+		Debug.log(module
+				+ "::deleteMemberOfProjectProposal, projectProposalMemberId = "
+				+ projectProposalMemberId);
+		try {
 			GenericValue gv = delegator.findOne("ProjectProposalMember",
-					UtilMisc.toMap("projectProposalMemberId",projectProposalMemberId),false);
-			if(gv != null){
+					UtilMisc.toMap("projectProposalMemberId",
+							projectProposalMemberId), false);
+			if (gv != null) {
 				delegator.removeValue(gv);
-				Debug.log(module + "::deleteMemberOfProjectProposal, DELETED projectProposalMemberId " + projectProposalMemberId);
-			}else{
-				Debug.log(module + "::deleteMemberOfProjectProposal, cannot find projectProposalMemberId " + projectProposalMemberId);
+				Debug.log(module
+						+ "::deleteMemberOfProjectProposal, DELETED projectProposalMemberId "
+						+ projectProposalMemberId);
+			} else {
+				Debug.log(module
+						+ "::deleteMemberOfProjectProposal, cannot find projectProposalMemberId "
+						+ projectProposalMemberId);
 			}
 			retSucc.put("members", gv);
 			retSucc.put("message", "delete successfully");
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return retSucc;
 	}
-	
+
 	public static Map<String, Object> updateMemberOfProjectProposal(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -2626,35 +2664,43 @@ public class ProjectProposalSubmissionService {
 			String roleTypeName = "";
 
 			GenericValue gv = delegator.findOne("ProjectProposalMember",
-					UtilMisc.toMap("projectProposalMemberId",projectProposalMemberId),false);
-			if(gv != null){
-			if (staffIds != null && staffIds.size() > 0) {
-				gv.put("staffId", (String) staffIds.get(0));
-				GenericValue st = delegator.findOne("Staff",
-						UtilMisc.toMap("staffId", gv.get("staffId")), false);
-				staffName = (String) st.get("staffName");
-			}
-			if (roleTypeIds != null && roleTypeIds.size() > 0) {
-				gv.put("roleTypeId", (String) roleTypeIds.get(0));
-				GenericValue rt = delegator.findOne("ProjectProposalRoleType",
-						UtilMisc.toMap("roleTypeId", gv.get("roleTypeId")),
-						false);
-				roleTypeName = (String) rt.get("roleTypeName");
-			}
-			/*
-			Timestamp now = UtilDateTime.nowTimestamp();
-			java.sql.Date fromDate = new java.sql.Date(now.getTime());
-			gv.put("fromDate", fromDate);
-			*/
-			
+					UtilMisc.toMap("projectProposalMemberId",
+							projectProposalMemberId), false);
+			if (gv != null) {
+				if (staffIds != null && staffIds.size() > 0) {
+					gv.put("staffId", (String) staffIds.get(0));
+					GenericValue st = delegator
+							.findOne("Staff", UtilMisc.toMap("staffId",
+									gv.get("staffId")), false);
+					staffName = (String) st.get("staffName");
+				}
+				if (roleTypeIds != null && roleTypeIds.size() > 0) {
+					gv.put("roleTypeId", (String) roleTypeIds.get(0));
+					GenericValue rt = delegator.findOne(
+							"ProjectProposalRoleType",
+							UtilMisc.toMap("roleTypeId", gv.get("roleTypeId")),
+							false);
+					roleTypeName = (String) rt.get("roleTypeName");
+				}
+				/*
+				 * Timestamp now = UtilDateTime.nowTimestamp(); java.sql.Date
+				 * fromDate = new java.sql.Date(now.getTime());
+				 * gv.put("fromDate", fromDate);
+				 */
+
 				delegator.store(gv);
-				Debug.log(module + "::updateMemberOfProjectProposal, UPDATED projectProposalMemberId " + projectProposalMemberId);
-			}else{
-				Debug.log(module + "::updateMemberOfProjectProposal, cannot find projectProposalMemberId " + projectProposalMemberId);
+				Debug.log(module
+						+ "::updateMemberOfProjectProposal, UPDATED projectProposalMemberId "
+						+ projectProposalMemberId);
+			} else {
+				Debug.log(module
+						+ "::updateMemberOfProjectProposal, cannot find projectProposalMemberId "
+						+ projectProposalMemberId);
 			}
 			GenericValue rg = delegator.makeValue("ProjectProposalMemberView");
 			rg.put("projectProposalMemberId", projectProposalMemberId);
-			rg.put("researchProjectProposalId", gv.getString("researchProjectProposalId"));
+			rg.put("researchProjectProposalId",
+					gv.getString("researchProjectProposalId"));
 			rg.put("staffId", (String) gv.get("staffId"));
 			rg.put("roleTypeId", (String) gv.get("roleTypeId"));
 			rg.put("staffName", staffName);
