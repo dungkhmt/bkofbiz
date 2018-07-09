@@ -40,7 +40,7 @@
     
     <property key="BkEunivPaperJournalConference">
         <value xml:lang="en">Journal/Conference</value>
-        <value xml:lang="vi">Tên tại chí, hội nghị</value>
+        <value xml:lang="vi">Tên tạp chí, hội nghị</value>
     </property>
    
     <property key="BkEunivPaperDOI">
