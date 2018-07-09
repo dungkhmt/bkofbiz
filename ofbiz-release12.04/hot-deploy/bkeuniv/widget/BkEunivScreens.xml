@@ -499,8 +499,10 @@
 				<service service-name="getPaperCategory" result-map="paperCategory"></service>
 				<service service-name="getListAcademicYears" result-map="result"></service>
 				<service service-name="getStaffPaperDeclarationRole" result-map="paperRoles"></service>
+				<!-- 
 				<service service-name="getResearchProjectProposal" result-map="projects"></service>
-				
+				 -->
+				<service service-name="getAllRunningResearchProjectProposal" result-map="projects"></service>
 				
 			</actions>
 			<widgets>
