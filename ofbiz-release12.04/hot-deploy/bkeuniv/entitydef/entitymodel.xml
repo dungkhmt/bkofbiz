@@ -351,7 +351,7 @@
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<alias-all entity-alias="RPCI"></alias-all>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
-		<view-link rel-entity-alias="ST" entity-alias="RPCI">
+		<view-link rel-entity-alias="ST" entity-alias="RPCI" rel-optional="true">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
 	</view-entity>
@@ -417,10 +417,10 @@
 		<alias-all entity-alias="RPP"></alias-all>
 		<alias name="researchProductTypeName" entity-alias="RPT" field="researchProductTypeName"></alias>
 		<alias name="researchProjectProposalName" entity-alias="RPPR" field="researchProjectProposalName"></alias>
-		<view-link rel-entity-alias="RPT" entity-alias="RPP">
+		<view-link rel-entity-alias="RPT" entity-alias="RPP" rel-optional="true">
 			<key-map rel-field-name="researchProductTypeId" field-name="researchProductTypeId"/>
 		</view-link>
-		<view-link rel-entity-alias="RPPR" entity-alias="RPP">
+		<view-link rel-entity-alias="RPPR" entity-alias="RPP" rel-optional="true">
 			<key-map  rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
 		</view-link>
 	</view-entity>
@@ -480,17 +480,17 @@
 			<key-map field-name="roleTypeId"/>
 		</relation>
 	</entity>
-	<view-entity entity-name="ProjectProposalMemberView" package-name="">
+	<view-entity entity-name="ProjectProposalMemberView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="PPR" entity-name="ProjectProposalMember"></member-entity>
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="RT" entity-name="ProjectProposalRoleType"></member-entity>
 		<alias-all entity-alias="PPR"></alias-all>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
 		<alias name="roleTypeName" field="roleTypeName" entity-alias="RT"></alias>
-		<view-link rel-entity-alias="ST" entity-alias="PPR">
+		<view-link rel-entity-alias="ST" entity-alias="PPR" rel-optional="true">
 			<key-map  rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
-		<view-link rel-entity-alias="RT" entity-alias="PPR">
+		<view-link rel-entity-alias="RT" entity-alias="PPR" rel-optional="true">
 			<key-map rel-field-name="roleTypeId" field-name="roleTypeId"/>
 		</view-link>
 	</view-entity>

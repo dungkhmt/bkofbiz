@@ -218,6 +218,33 @@ public class ProjectWorkingHourDeclaration {
 		return retSucc;
 	}
 	
+	public static Map<String, Object> getAllRunningResearchProjectProposal(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String) userLogin.get("userLoginId");
+		//System.out.println("getResearchProjectProposal by: "+staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			//conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
+			List<GenericValue> list = delegator.findList("ResearchProjectProposal",
+					EntityCondition.makeCondition(conds),null, null, null, false);
+			List<Map> projects = FastList.newInstance();
+			for(GenericValue gv : list){
+				Map<String, Object> map = FastMap.newInstance();
+					map.put("researchProjectProposalId", gv.getString("researchProjectProposalId"));
+					map.put("researchProjectProposalName", gv.getString("researchProjectProposalName"));
+					projects.add(map);
+			}
+			retSucc.put("researchProjectProposals", projects);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> getProjectParticipationRole(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();

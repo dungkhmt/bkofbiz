@@ -262,6 +262,12 @@
     	<attribute name="researchProjectProposals" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getAllRunningResearchProjectProposal" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectWorkingHourDeclaration" invoke="getAllRunningResearchProjectProposal">
+    	<attribute name="researchProjectProposals" mode="OUT" type="List"></attribute>
+    </service>
+
+    
     <service name="getProjectParticipationRole" engine="java" 
     		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectWorkingHourDeclaration" invoke="getProjectParticipationRole">
     	<attribute name="projectParticipationRoles" mode="OUT" type="List"></attribute>

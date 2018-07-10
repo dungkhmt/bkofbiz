@@ -304,7 +304,6 @@
 					result-map="resultProducts">
 					<field-map field-name="researchProjectProposalId"/>
 				</service>
-					
 				
 			</actions>
 			<widgets>
