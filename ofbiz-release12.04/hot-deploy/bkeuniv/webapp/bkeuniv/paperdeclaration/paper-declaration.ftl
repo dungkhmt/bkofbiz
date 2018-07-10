@@ -773,8 +773,10 @@
 	
 	<#list projects.researchProjectProposals as prj>
 		<#if prj?has_content>
+			<#if prj.researchProjectProposalName?exists>
              <#assign op = { "name": prj.researchProjectProposalName?j_string ,"value": prj.researchProjectProposalId?j_string } />
 						<#assign sourceResearchProjects = sourceResearchProjects + [op] />
+			</#if>
 		</#if>
 	</#list>
 	

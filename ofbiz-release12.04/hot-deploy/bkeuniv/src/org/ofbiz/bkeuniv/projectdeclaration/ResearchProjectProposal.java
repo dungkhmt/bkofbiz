@@ -63,7 +63,7 @@ public class ResearchProjectProposal {
 		
 		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
 		String staffId = (String)userLogin.get("userLoginId");
-		System.out.println("staffId"+staffId);
+		//System.out.println("staffId"+staffId);
 		List<String> projectCategoryId = (List<String>) context.get("projectCategoryId[]");
 		String researchProjectProposalName = (String) context.get("researchProjectProposalName");
 		String researchProjectProposalCode = (String) context.get("researchProjectProposalCode");
@@ -71,7 +71,11 @@ public class ResearchProjectProposal {
 		List<String> facultyId = (List<String>) context.get("facultyId[]");
 		String startDate = (String) context.get("startDate");
 		String endDate = (String) context.get("endDate");
-		System.out.println(endDate);
+		//System.out.println(endDate);
+		if(researchProjectProposalName == null || researchProjectProposalName.equals(""))
+			researchProjectProposalName = " ";
+		if(researchProjectProposalCode == null || researchProjectProposalCode.equals(""))
+			researchProjectProposalCode = " ";
 		
 		Delegator delegator = ctx.getDelegator();
 		try{
@@ -86,7 +90,9 @@ public class ResearchProjectProposal {
 			gv.put("projectCategoryId", projectCategoryId.get(0));
 			gv.put("researchProjectProposalName", researchProjectProposalName);
 			gv.put("researchProjectProposalCode", researchProjectProposalCode);
-			BigDecimal totalBudgetl = new BigDecimal(totalBudget);//Long.valueOf(totalBudget);
+			BigDecimal totalBudgetl = BigDecimal.ZERO;
+			if(totalBudget != null)
+				totalBudgetl =	new BigDecimal(totalBudget);//Long.valueOf(totalBudget);
 			gv.put("totalBudget", totalBudgetl);
 			gv.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING);
 			
