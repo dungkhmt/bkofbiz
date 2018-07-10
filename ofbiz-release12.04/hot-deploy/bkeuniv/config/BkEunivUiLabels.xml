@@ -245,6 +245,16 @@
         <value xml:lang="vi">Hủy bỏ</value>
     </property>
     
+    <property key="BkEunivSave">
+        <value xml:lang="en">Save</value>
+        <value xml:lang="vi">Lưu lại</value>
+    </property>
+    
+    <property key="BkEunivSaveSuccess">
+        <value xml:lang="en">Save success</value>
+        <value xml:lang="vi">Lưu thành công</value>
+    </property>
+    
     <property key="BkEunivConfirmToDelete">
         <value xml:lang="en">You confirm you want to delete</value>
         <value xml:lang="vi">Bạn xác nhận xóa bản ghi</value>

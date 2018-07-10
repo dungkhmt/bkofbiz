@@ -87,9 +87,9 @@
 	
 	<style>
 
-		th {
+		<#--  th {
 			transition: .2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
-		}
+		}  -->
 		
 		#${id} .jqDataTable-title {
 			padding: 30px 0px 30px 0px;
