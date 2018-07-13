@@ -11,9 +11,11 @@
 		<#else>
 			<#assign styleMain="" />
 		</#if>
+		<#assign autoURLTitlePage=false />
 		<#if "user"?index_of(targetCurr)!= -1 || targetCurr?index_of("user")!= -1>
 			<#assign styleUser="background-color: rgba(0, 0, 0, 0.1);" />
 			<#if !titlePage??>
+				<#assign autoURLTitlePage=true />
 				<#assign titlePage=uiLabelMap.BkEunivPersonalInformation />
 			</#if>
 		<#else>
@@ -27,7 +29,7 @@
 			<#if f.function.target??>
 				<#if f.function.target?index_of(targetCurr)!= -1 || targetCurr?index_of(f.function.target)!= -1>
 					<#assign styleItem="background-color: rgba(0, 0, 0, 0.1);" />
-					<#if !titlePage??>
+					<#if !titlePage?? || autoURLTitlePage>
 						<#assign titlePage=f.function.vnLabel />
 					</#if>
 				<#else>
@@ -44,7 +46,7 @@
 							<#assign pathCFT = cf.target?split("/", "r") />
 							<#if (cf.target?index_of(targetCurr)!= -1 || targetCurr?index_of(cf.target)!= -1)&&(pathT[pathT?size - 1]==pathCFT[pathCFT?size - 1])>
 								<#assign styleItem="background-color: rgba(0, 0, 0, 0.1);" />
-								<#if !titlePage??>
+								<#if !titlePage?? || autoURLTitlePage>
 									<#assign titlePage=cf.vnLabel />
 								</#if>
 							<#else>

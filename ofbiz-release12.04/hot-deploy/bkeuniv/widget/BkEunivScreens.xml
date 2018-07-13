@@ -114,7 +114,7 @@
 	<screen name="pageEnableSecurityGroupUser">
 		<section>
 			<actions>
-				
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<service service-name="getListSecurityGroups" result-map="securityGroup"></service>
 				<!-- <service service-name="getStaffs" result-map="resultStaffs"> </service> -->

@@ -1,25 +1,32 @@
 package org.ofbiz.permission;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityExpr;
+import org.ofbiz.entity.condition.EntityFunction;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.entity.GenericValue;
@@ -216,6 +223,93 @@ public class BKEunivPermissionService {
 		}
 	}
 	
+	public static Map<String,Object> JQGetStaffsOfASecurityGroup(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		List<GenericValue> staffs = null;
+		List<GenericValue> staffsOfASecurityGroup = null;
+		
+		
+		
+		
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String)parameters.get("q")[0];
+				System.out.println("1. debug ::::::::::" +q);
+				String[] searchKeys = {"staffId", "staffEmail", "staffName", "facultyName", "departmentName", "genderName", "facultyName"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+//							EntityCondition.makeCondition(, EntityOperator.LIKE, "%" + q + "%");
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			
+			
+		 	staffs = delegator.findList("StaffView", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, sort, opts, false);
+		 	
+		 	if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			System.out.println("4. debug ::::::::::"  + userLoginId);
+			staffsOfASecurityGroup = delegator.findList("StaffSecurityGroupView", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, sort, opts, false);
+			
+			//int total = staffs.getResultsSizeAfterPartialList();
+			//System.out.println("Size Staff ::::::::" + staffs.getCompleteList().size());
+			
+			List<GenericValue> rsf = new ArrayList<GenericValue>();
+			
+			int i = 0, j = 0;
+			
+			while (i < staffs.size()) {
+				GenericValue s = staffs.get(i);
+				
+				if(j >= staffsOfASecurityGroup.size()) {
+					rsf.add(s);
+					i++;
+					continue;
+				}
+				
+				GenericValue sf = staffsOfASecurityGroup.get(j);
+				
+				if(s.getString("staffId").equals(sf.getString("staffId"))) {
+					rsf.add(sf);
+					j++;
+				} else {
+					rsf.add(s);
+				}
+				i++;
+			}
+			
+			Debug.log("tesssst staffsOfASecurityGroup" + staffsOfASecurityGroup.size());
+			result.put("listIterator", rsf);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list staffs");
+		} finally {
+//			if(staffs != null){
+//				staffs.close();
+//			}
+		}
+		return result;
+	}
+	
 	@SuppressWarnings({ "unchecked" })
 	public static void getStaffsOfASecurityGroup(HttpServletRequest request,
 			HttpServletResponse response){
@@ -318,11 +412,12 @@ public class BKEunivPermissionService {
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String groupId = request.getParameter("groupId");
-		String staffs = request.getParameter("staffs");
-		Debug.log(module + "::storeSecurityGroupUsers, groupId = " + groupId + ", staffs = " + staffs);
-		String[] lst_staff_id = staffs.split(",");
+		String staff_id_insert = request.getParameter("staffsInsert");
+		String staff_id_remove = request.getParameter("staffsRemove");
+		Debug.log(module + "::storeSecurityGroupUsers, groupId = " + groupId + ", staffs = " + staff_id_insert + staff_id_remove);
 		
-		
+		String[] lst_staff_id_insert = staff_id_insert.split(",");
+		String[] lst_staff_id_remove = staff_id_remove.split(",");
 		
 		try{
 			List<GenericValue> all_staffs = delegator.findList("Staff", 
@@ -337,19 +432,19 @@ public class BKEunivPermissionService {
 				U.add((String)gv.get("staffId"));
 			}
 			
-			for(int i = 0; i < lst_staff_id.length; i++){
-				String staffId = lst_staff_id[i];
+			for(int i = 0; i < lst_staff_id_insert.length; i++){
+				String staffId = lst_staff_id_insert[i];
 				if(!groupUserEnabled(delegator, groupId, staffId)){
 					createGroupUser(delegator, groupId, staffId);
 				}
-				
-				U.remove(staffId);
 			}
-			for(String uId: U){
-				if(groupUserEnabled(delegator, groupId, uId)){
-					disableGroupUser(delegator, groupId, uId);
+			
+			for(String staffId: lst_staff_id_remove){
+				if(groupUserEnabled(delegator, groupId, staffId)){
+					disableGroupUser(delegator, groupId, staffId);
 				}
 			}
+			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();

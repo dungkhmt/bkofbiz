@@ -98,7 +98,7 @@
 				}).map(function(f) {
 					return f.functionId
 				}).join(", ")
-
+				loader.open();
 				$.ajax({
 					url: "/bkeuniv/control/store-security-group-functions",
 					type: 'POST',
@@ -107,7 +107,10 @@
 						"functions": funcs
 					},
 					success: function(rs){
-						alertify.success("${uiLabelMap.BkEunivSaveSuccess}");
+						setTimeout(function(){ 
+							loader.close();
+							alertify.success("${uiLabelMap.BkEunivSaveSuccess}");
+						}, 500);
 					}
 				})
 			}

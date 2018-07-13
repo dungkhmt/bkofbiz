@@ -849,6 +849,45 @@
 		</entity-condition>
 	</view-entity>
 	
+	<view-entity entity-name="StaffSecurityGroupView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="D" entity-name="Department"></member-entity>
+		<member-entity entity-alias="G" entity-name="Gender"></member-entity>
+		<member-entity entity-alias="F" entity-name="Faculty"></member-entity>
+		<member-entity entity-alias="ULSG" entity-name="UserLoginSecurityGroup"></member-entity>
+		
+		<alias-all entity-alias="ST"></alias-all>
+		<alias name="departmentName" entity-alias="D"></alias>
+		<alias name="genderName" entity-alias="G"></alias>
+		<alias name="facultyName" entity-alias="F"></alias>
+		<alias name="facultyId" entity-alias="F"></alias>
+		
+		<alias name="groupId" entity-alias="ULSG"></alias>
+		
+		<view-link rel-entity-alias="D" entity-alias="ST" rel-optional="true">
+			<key-map field-name="departmentId" rel-field-name="departmentId"/>
+		</view-link>
+		<view-link rel-entity-alias="G" entity-alias="ST" rel-optional="true">
+			<key-map field-name="staffGenderId" rel-field-name="genderId"/>
+		</view-link>
+		<view-link rel-entity-alias="F" entity-alias="D" rel-optional="true">
+			<key-map field-name="facultyId" rel-field-name="facultyId"/>
+		</view-link>
+		
+		<view-link rel-entity-alias="ULSG" entity-alias="ST">
+			<key-map field-name="staffUserLoginId" rel-field-name="userLoginId"/>
+		</view-link>
+		
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-list>
+					<condition-expr field-name="thruDate" entity-alias="ST" value=""/>
+					<condition-expr field-name="thruDate" entity-alias="ULSG" value=""/>
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	
 	<entity entity-name="PaperCategoryHourBudget" package-name="org.ofbiz.bkeuniv">
 		<!-- <field name="paperCategoryHourBudgetId" type="id-ne"></field>
 		 -->

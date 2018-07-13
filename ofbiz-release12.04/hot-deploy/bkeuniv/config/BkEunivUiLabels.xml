@@ -87,6 +87,16 @@
         <value xml:lang="vi">Tải xuống</value>
     </property>
     
+    <property key="BkEunivNoChange">
+        <value xml:lang="en">No Change</value>
+        <value xml:lang="vi">Chưa có sự thay đổi nào!</value>
+    </property>
+    
+    <property key="BkEunivConfirmChange">
+        <value xml:lang="en">Confirm change</value>
+        <value xml:lang="vi">Xác nhận thay đổi</value>
+    </property>
+    
     <property key="BkEunivDocumentNameNotNull">
         <value xml:lang="en">Document name must not be empty</value>
         <value xml:lang="vi">Chưa nhập tên tài liệu</value>

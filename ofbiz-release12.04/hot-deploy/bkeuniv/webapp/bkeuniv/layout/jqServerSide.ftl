@@ -82,6 +82,10 @@
 		titleDelete=""
 		jqTitle=""
 		contextmenu=true
+		advanceActionButton=[]
+		getDataFilter=""
+		filters=[]
+		JqRefresh=""
 	>
 	<@jqMinimumLib />
 	
@@ -224,6 +228,7 @@
 			{
 				name: "STT",
 				orderable: false,
+				"width": "50px",
 				data: "index"
 			}
 		];
@@ -234,6 +239,12 @@
 				name: '${column.name}',
 				<#if column.type??>
 				type: '${column.type}',
+				</#if>
+				<#if column.orderable??>
+				orderable: ${column.orderable},
+				</#if>
+				<#if column.width??>
+				width: '${column.width}',
 				</#if>
 				data: '${column.data}'
 			}
@@ -247,7 +258,7 @@
                 "processing": true,
                 "serverSide": true,
 				"scrollX": true,
-				"order": [[ 1, "asc" ]],
+				"order": [[ 2, "asc" ]],
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,
                 columns: jqDataTable.columns,
@@ -293,7 +304,7 @@
                 
                 "fnServerData": function ( sSource, aoData, fnCallback ) {
                     <#--  loader.open();  -->
-                    console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
+                    //console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
                     var n_colunm = (aoData.find(function(data) {
                         return data.name=="iColumns";
                     })||{}).value||0;
@@ -334,7 +345,8 @@
                             "q": s_search,
                             "pagenum" : page.toString(),
                             "pagesize": i_size.toString(),
-                            <#--  "filter": '{"field": "staffId", "value": "dung", "operation": "CONTAINS" }',  -->
+                            <#if getDataFilter!=''>"filter": JSON.stringify(${getDataFilter}),</#if>
+							<#--  "filter": '{"field": "groupId", "value": "SUPER_ADMIN", "operation": "CONTAINS" }',  -->
                             "sort": JSON.stringify([{"field": s_sort_field, "type": s_sort_type}]),
                         },
                         "success": function (reponse) {
@@ -569,7 +581,7 @@
 		}
 		
 		function JqRefresh() {
-			<#--  loader.open();
+			<#--  
 			$.ajax({
 			    url: "${urlData}",
 			    type: 'post',
@@ -587,7 +599,11 @@
 			    	jqDataTable.table.rows.add(jqDataTable.data).draw();
 			    }
 			});  -->
-			setTimeout(function(){ jqDataTable.table.ajax.reload(null, false); }, 100);
+			
+			loader.open();
+			setTimeout(function(){ jqDataTable.table.ajax.reload(function() {
+				setTimeout(function(){ loader.close();}, 200);
+			}, false); }, 100);
 		}
 
 		function openLoader() {
@@ -603,7 +619,7 @@
 		}
 
 		jqDataTable.buildColumn = function(data, type, row, meta) {
-			console.log(data, type, row, meta)
+			
 			var value = data;
 			switch(type) {
 				case "date":
@@ -650,6 +666,33 @@
 
 			return price;
 		}
+
+		function removeFilter(idInput, idLabel) {
+			document.getElementById(idInput).style.display = "none";
+			document.getElementById(idLabel).style.display = "";
+
+			var numfilter = $("#filter-content").children().filter(function(el) {
+				return this.style.display !== "none"
+			}).length
+
+			if(numfilter != 0 && document.getElementById("dropdown-filter").style.display == "none") {
+				document.getElementById("dropdown-filter").style.display = "";
+			}
+			
+		}
+
+		function addFilter(idInput, idLabel) {
+			document.getElementById(idInput).style.display = "inline-block";
+			document.getElementById(idLabel).style.display = "none";
+
+			var numfilter = $("#filter-content").children().filter(function(el) {
+				return this.style.display !== "none"
+			}).length
+
+			if(numfilter == 0) {
+				document.getElementById("dropdown-filter").style.display = "none";
+			}
+		}
 	
 	</script>
 	<!-- html -->
@@ -676,14 +719,84 @@
 							${uiLabelMap.BkEunivAdd}
 						</@FlatButton>
 					</#if>
-					
-					<@FlatButton id="JqRefresh" onClick="JqRefresh()" style="color: rgb(0, 188, 212); text-transform: uppercase;width: 120px">
+
+					<#local conditions = []>
+					<#list filters as filter>
+						<#if !filter.require?? || !filter.require>
+							<#local conditions = conditions + [filter]>
+						</#if>
+					</#list>
+
+					<#if conditions?size gt 0>
+						<@Dropdown id="filter" width="140px">
+							<@Ul id="filter-content">
+								<#list conditions as condition>
+									<#local addFilter = 'addFilter("' + condition.id + '-block", "' + condition.id + '")' />
+									<@Li id=condition.id onClick=addFilter>
+										${condition.label}
+									</@Li>
+								</#list>
+							</@Ul>
+						</@Dropdown>
+					</#if>
+
+					<#list advanceActionButton as button>
+						<#if button.width??>
+							<#local width = button.width>
+						<#else>
+							<#local width = "120px">
+						</#if>
+						
+						<@FlatButton id="${button.id}" onClick="${button.onClick}" style="color: rgb(0, 188, 212); text-transform: uppercase;width: ${width}">
+							<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+								<path d="${button.dImage}"></path>
+							</svg>
+							${button.text}
+						</@FlatButton>
+					</#list>
+					<#if JqRefresh=="">
+						<#assign JqRefresh="JqRefresh()" />
+					</#if>
+					<@FlatButton id="JqRefresh" onClick=JqRefresh style="color: rgb(0, 188, 212); text-transform: uppercase;width: 120px">
 						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
 							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
 						</svg>
 						${uiLabelMap.BkEunivRefresh}
 					</@FlatButton>
 				</div>
+			</div>
+
+			<div style="margin-bottom: 20px!important;">
+				<#list filters as filter>
+					<#if filter.require?? && filter.require>
+						<div style="display: inline-block;" id="${filter.id}-block">
+						<#if filter.type=="select-render-html">
+							<@FormInput id=filter.id field=filter.label width="256px">
+								<select id="${filter.id}" <#if filter.onChange??>onChange="${filter.onChange}"</#if>>
+									<#list securityGroup.securityGroups as sg>
+										<option value="${sg.groupId}">${sg.description}</option>
+									</#list>
+								</select>
+							</@FormInput>
+						</#if>
+						</div>
+					</#if>
+				</#list>
+
+
+				<#if conditions?size gt 0>
+					<#list conditions as condition>
+						<div style="display: none;" id="${condition.id}-block">
+						<#local idCondition=condition.id+"-input" />
+						<#local removeFilter = 'removeFilter("' + condition.id + '-block", "' + condition.id + '")' />
+						<@IconButton onClick=removeFilter color="rgb(0, 188, 212)" title=condition.title id="close-adsd" size="42px"  style="z-index: 100" styleParent="position: relative; top: 10px; margin-left: 10px; margin-right: -5px; height: 42px" icon='M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' >
+						</@IconButton>
+						<@FormInput id=idCondition field=condition.label width="256px" style="top: 1px">
+							<input id="${idCondition}" placeholder="${condition.placeholder}" />
+						</@FormInput>
+						</div>
+					</#list>
+				</#if>
 			</div>
 			
 			<table id="${id}-content" style="width: 100%!important;" class="table table-striped">
@@ -708,7 +821,12 @@
 	</div>
 	
 	<div class="loader hidden-loading"></div>
-	<div id="jqModalAdd"></div>
-	<div id="jqModalChange"></div>
+	<#if urlAdd!="">
+		<div id="jqModalAdd"></div>
+	</#if>
+
+	<#if urlUpdate!="">
+		<div id="jqModalChange"></div>
+	</#if>
 	
 </#macro>

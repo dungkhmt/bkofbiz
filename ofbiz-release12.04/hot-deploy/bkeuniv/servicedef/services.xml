@@ -51,6 +51,16 @@
    		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
    		<attribute name="listIterator" mode="OUT" type="org.ofbiz.entity.util.EntityListIterator" optional="true"></attribute>
    </service>
+   
+   <service name="jqxGetListInterfaceList" engine="interface" >
+ 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="List" optional="true"></attribute>
+   </service>
  
  	<service name="jqxGridGeneralServicer" engine="java"
             location="org.ofbiz.bkeuniv.service.JqxWidgetServices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
@@ -90,6 +100,10 @@
     
     <service name="JQGetListOfficialDocumentType" engine="java" invoke="JQGetListOfficialDocumentType" location="org.ofbiz.bkeuniv.officialdocument.GetDataOfficialDocument">
         <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="JQGetStaffsOfASecurityGroup" engine="java" invoke="JQGetStaffsOfASecurityGroup" location="org.ofbiz.permission.BKEunivPermissionService">
+        <implements service="jqxGetListInterfaceList"/>
    	</service>
     
     <service name="getPermissionFunctions" engine="java"
