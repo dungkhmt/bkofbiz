@@ -676,34 +676,66 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(4, 8000);
 		sh.setColumnWidth(5, 8000);
 		sh.setColumnWidth(6, 8000);
-
+		sh.setColumnWidth(7, 8000);
+		sh.setColumnWidth(8, 5000);
+		sh.setColumnWidth(9, 5000);
+		sh.setColumnWidth(10, 5000);
+		
 		int i_row = 0;
 
 		i_row = 10;
 		Row rh = sh.createRow(i_row);
 		
-		Cell ch = rh.createCell(1);
+		int i_col = 0;
+		
+		i_col++;
+		Cell ch = rh.createCell(i_col);
 		ch.setCellValue("STT");
 		ch.setCellStyle(styleTitle);
 
-		ch = rh.createCell(2);
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Người kê khai");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
 		ch.setCellValue("Họ và tên các tác giả");
 		ch.setCellStyle(styleTitle);
 
-		ch = rh.createCell(3);
+		i_col++;
+		ch = rh.createCell(i_col);
 		ch.setCellValue("Tên bài báo");
 		ch.setCellStyle(styleTitle);
 
-		ch = rh.createCell(4);
+		i_col++;
+		ch = rh.createCell(i_col);
 		ch.setCellValue("Tạp chí, Proceedings");
 		ch.setCellStyle(styleTitle);
 		
-		ch = rh.createCell(5);
+		i_col++;
+		ch = rh.createCell(i_col);
 		ch.setCellValue("Thuộc đề tài");
 		ch.setCellStyle(styleTitle);
 		
-		ch = rh.createCell(6);
+		i_col++;
+		ch = rh.createCell(i_col);
 		ch.setCellValue("Mã số đề tài");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Tháng đăng tải");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Năm đăng tải");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Minh chứng");
 		ch.setCellStyle(styleTitle);
 		
 		int count = 0;
@@ -711,31 +743,67 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			i_row++;
 			count++;
 			rh = sh.createRow(i_row);
+			i_col = 0;
 
-			ch = rh.createCell(1);
+			i_col++;
+			ch = rh.createCell(i_col);
 			ch.setCellValue(count);
 			ch.setCellStyle(styleNormal);
 			
-			ch = rh.createCell(2);
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(p.getString("staffName"));
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
 			ch.setCellValue(p.getString("authors"));
 			ch.setCellStyle(styleNormal);
 
-			ch = rh.createCell(3);
+			i_col++;
+			ch = rh.createCell(i_col);
 			ch.setCellValue(p.getString("paperName"));
 			ch.setCellStyle(styleNormal);
 			
-			ch = rh.createCell(4);
+			i_col++;
+			ch = rh.createCell(i_col);
 			ch.setCellValue(p.getString("journalConferenceName"));
 			ch.setCellStyle(styleNormal);
 			
-			ch = rh.createCell(5);
+			i_col++;
+			ch = rh.createCell(i_col);
 			ch.setCellValue(p.getString("researchProjectProposalName"));
 			ch.setCellStyle(styleNormal);
 			
-			ch = rh.createCell(6);
+			i_col++;
+			ch = rh.createCell(i_col);
 			ch.setCellValue(p.getString("researchProjectProposalCode"));
 			ch.setCellStyle(styleNormal);
 			
+			i_col++;
+			ch = rh.createCell(i_col);
+			String month = "";
+			if(p.getString("month") != null)
+				month = p.getString("month");
+			ch.setCellValue(month);
+			ch.setCellStyle(styleNormal);
+			
+			i_col++;
+			ch = rh.createCell(i_col);
+			String year = "";
+			if(p.getString("year") != null)
+				year = p.getString("year");
+			ch.setCellValue(year);
+			ch.setCellStyle(styleNormal);
+			
+			i_col++;
+			ch = rh.createCell(i_col);
+			String file = "NO";
+			if(p.getString("sourcePath") != null && p.getString("sourcePath").equals(""));
+				file = "YES";
+				ch.setCellValue(file);
+			ch.setCellStyle(styleNormal);
+
 		}
 		
 	}
