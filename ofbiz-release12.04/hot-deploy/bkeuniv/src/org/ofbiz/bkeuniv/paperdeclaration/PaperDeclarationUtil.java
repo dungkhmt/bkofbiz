@@ -799,8 +799,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			i_col++;
 			ch = rh.createCell(i_col);
 			String file = "NO";
-			if(p.getString("sourcePath") != null && !p.getString("sourcePath").equals(""));
-				file = "YES";
+			if(p.getString("sourcePath") != null && !p.getString("sourcePath").equals(""))
+				file = "YES [" + p.getString("sourcePath") + "]";
 			ch.setCellValue(file);
 			ch.setCellStyle(styleNormal);
 
