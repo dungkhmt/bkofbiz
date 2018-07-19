@@ -748,12 +748,14 @@
 		<prim-key field="securityGroupId"/>
 		<prim-key field="functionId"/>
 		<prim-key field="fromDate"/>
+		
 		<relation type="one" fk-name="MAP_FUNCTION" rel-entity-name="Function">
             <key-map field-name="functionId" rel-field-name="functionId"/>
         </relation>
         <relation type="one" fk-name="MAP_GROUP" rel-entity-name="SecurityGroup">
             <key-map field-name="securityGroupId" rel-field-name="groupId"/>
-        </relation>    
+        </relation>
+            
     </entity>
 	
 	
@@ -945,6 +947,7 @@
 		<field name="month" type="numeric"></field>
 		<field name="sourcePath" type="very-long"></field>
 		<field name="ISSN" type="value"></field>
+		<field name="link" type="very-long"></field>
 		<field name="authors" type="very-long"></field>
 		<field name="academicYearId" type="id"></field>
 		<field name="approverStaffId" type="id-vlong"></field>

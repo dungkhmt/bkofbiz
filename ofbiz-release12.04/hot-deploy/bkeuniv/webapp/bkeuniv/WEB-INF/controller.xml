@@ -471,6 +471,15 @@
            
     </request-map>    
 	
+	<request-map uri="get-academic-years-staffs">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
+                     invoke="getListAcademicYearsStaffs"/>
+            <response name="AttachementSuccess" type="view" value="YEARSSTAFFS"/>
+           
+    </request-map>    
+
 	<request-map uri="get-departments-of-faculty">
             <security https="true" auth="true"/>
           
@@ -552,6 +561,12 @@
     </request-map>    
     
     
+    <request-map uri="excel-01-cn-02-cn">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcel01CN02CN"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+
     <request-map uri="export-excel-kv01">
 		<security auth="true" https="true" />
 		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV01"></event>

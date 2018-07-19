@@ -85,6 +85,7 @@ public class PaperDeclarationService {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String year = (String) request.getParameter("reportyear-kv01");
 		String facultyId = (String) request.getParameter("facultyId-kv01");
+		
 		Debug.log(module + "::exportExcelKV01, academic year = " + year);
 
 		String filename = "KV01";
@@ -93,6 +94,45 @@ public class PaperDeclarationService {
 
 			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV01(
 					delegator, year, facultyId);
+
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcel01CN02CN(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String) request.getParameter("reportyear-kv01");
+		GenericValue userLogin = (GenericValue)request.getSession().getAttribute("userLogin");
+		String staffId = (String)userLogin.getString("userLoginId");
+		String academicYearId = "2017-2018";
+		//String facultyId = (String) request.getParameter("facultyId-kv01");
+		Debug.log(module + "::exportExcel01CN02CN, academic year = " + year + ", userLoginId = " + staffId);
+
+		String filename = "01CN-02CN";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelForm01CN02CN(
+					delegator, academicYearId, staffId);
 
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
@@ -1056,6 +1096,9 @@ public class PaperDeclarationService {
 				.get("journalConferenceName");
 		String DOI = (String) context
 				.get("DOI");
+		String link = (String) context
+				.get("link");
+		
 		String impactFactor = (String) context
 				.get("impactFactor");
 		
@@ -1100,6 +1143,10 @@ public class PaperDeclarationService {
 			if (DOI != null
 					&& !DOI.equals(""))
 				p.put("DOI", DOI);
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
 			if (impactFactor != null
 					&& !impactFactor.equals(""))
 				p.put("impactFactor", Double.valueOf(impactFactor));
@@ -1192,6 +1239,9 @@ public class PaperDeclarationService {
 				.get("journalConferenceName");
 		String DOI = (String) context
 				.get("DOI");
+		String link = (String) context
+				.get("link");
+		
 		String impactFactor = (String) context
 				.get("impactFactor");
 
@@ -1247,6 +1297,10 @@ public class PaperDeclarationService {
 			if (DOI != null
 					&& !DOI.equals(""))
 				p.put("DOI", DOI);
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
 			if (impactFactor != null
 					&& !impactFactor.equals(""))
 				p.put("impactFactor", Double.valueOf(impactFactor));

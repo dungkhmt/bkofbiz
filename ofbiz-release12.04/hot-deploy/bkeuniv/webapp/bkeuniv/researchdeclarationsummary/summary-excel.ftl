@@ -149,7 +149,115 @@
 		})
 	}
 
-	function openModalKV04() {
+	function openModal01CN02CN() {
+		var start = Date.now();
+		loader.open();
+
+		$.ajax({
+			url: "/bkeuniv/control/get-academic-years-faculties",
+			type: 'POST',
+			data: {
+				"universityId": "HUST"
+			},
+			success:function(rs){
+				console.log(rs);
+				var millis = Date.now() - start;
+				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
+				var modal_content_eL = $("#modal-body");
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-bm-01-02-03');
+
+				var els = modal_content_eL.children();
+				for(var i = 0; i < els.length; ++i) {
+					els[i].remove();
+				}
+
+				
+				var faculties = rs.faculties.map(function(faculty) {
+					return {
+						id: faculty.id,
+        				text: faculty.name
+					};
+				});
+
+				var script_facultie = 
+				'<script type="text/javascript">'+
+					'$(function () {'+
+						'$("#facultyId-01cn-02cn_select2").on("change", function(e) { '+
+							'var facultyId = $("#facultyId-01cn-02cn_select2").val();'+
+							'changeFaculty01CN02CN(facultyId);'+
+						'});'+
+					'});'+
+				'<\/script>';
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-01cn-02cn", faculties)+
+						script_facultie +
+					'</div>'
+				);
+
+				var script_department = 
+				'<script type="text/javascript">'+
+					'$(function () {'+
+						'$("#departmentId-01cn-02cn_select2").on("change", function(e) { '+
+							'var departmentId = $("#departmentId-01cn-02cn_select2").val();'+
+							'changeDepartment(departmentId);'+
+						'});'+
+					'});'+
+				'<\/script>';
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Department</label>'+
+						'<div style="width: 70%; display: inline-block;" id="departmentId-01cn-02cn" name="facultyId-kv01" modal-value=\'$("#departmentId-01cn-02cn_select2").val()\'>'+
+							'<select class="form-control" style="width: 100%" id="departmentId-01cn-02cn_select2">'+
+							'</select>'+
+							script_department+
+						'</div>'+
+					'</div>'
+				);
+
+				var script_staff = 
+				'<script type="text/javascript">'+
+					'$(function () {'+
+						'$("#staff-01cn-02cn_select2").select2({'+
+							
+						'});'+
+						'changeDepartment($("#departmentId-01cn-02cn_select2").val());'+
+					'});'+
+				'<\/script>';
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Staff</label>'+
+						'<div style="width: 70%; display: inline-block;" id="staff-01cn-02cn" name="facultyId-kv01" modal-value=\'$("#staff-01cn-02cn_select2").val()\'>'+
+							'<select class="form-control" style="width: 100%" id="staff-01cn-02cn_select2">'+
+							'</select>'+
+							script_staff+
+						'</div>'+
+					'</div>'
+				);
+
+
+				var years = rs.years.map(function(year) {
+					return {
+						id: year.id,
+        				text: year.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-bm-01-02-03", years)+
+					'</div>'
+				);
+
+				$("#modal-setting-export").modal("show");
+			}
+		})
+	}
+
+		function openModalKV04() {
 
 		var start = Date.now();
 		loader.open();
@@ -354,6 +462,7 @@
 	}
 	
 	function changeFacultyBM010203(facultyId){
+		alert('changeFacultyBM010203, id = ' + facultyId);
 		$.ajax({
 					url: "/bkeuniv/control/get-departments-of-faculty",
 					type: 'POST',
@@ -378,6 +487,61 @@
 				})
 		
 	}
+
+	function changeFaculty01CN02CN(facultyId){
+		alert('changeFaculty01CN02CN, id = ' + facultyId);
+		$.ajax({
+					url: "/bkeuniv/control/get-departments-of-faculty",
+					type: 'POST',
+					data: {
+						"facultyId": facultyId
+					},
+					success:function(rs){
+						var departments = rs.departments.map(function(department) {
+							return {
+								id: department.id,
+								text: department.name
+							};
+						});
+
+						console.log(departments)
+						$("#departmentId-01cn-02cn_select2").html('').select2();
+						$("#departmentId-01cn-20cn_select2").select2({
+							data: departments
+						});
+						
+					}
+				})
+		
+	}
+
+	function changeDepartment(departmentId){
+		alert('changeDepartment, id = ' + departmentId);
+		$.ajax({
+					url: "/bkeuniv/control/get-staffs-of-department",
+					type: 'POST',
+					data: {
+						"departmentId": departmentId
+					},
+					success:function(rs){
+						var staffs = rs.staffs.map(function(staff) {
+							return {
+								id: staff.id,
+								text: staff.name
+							};
+						});
+
+						console.log(staffs)
+						$("#staff-01cn-02cn_select2").html('').select2();
+						$("#staff-01cn-02cn_select2").select2({
+							data: staffs
+						});
+						
+					}
+				})
+		
+	}
+
 </script>
 <body>
 <div class="body" style="flex: 1 1 0%;padding: 2em 3em 6em 3em;width: 100%;overflow-y: auto;height: 100%;background-color: rgb(237, 236, 236);">
@@ -471,6 +635,18 @@
 	<@Loader handleToggle="loader">
 		<@IconSpinner/>
 	</@Loader>
+
+	<div class="card" onclick="openModal01CN02CN()">
+		<div class="card-image">
+		<img src="/resource/bkeuniv/image/Infor.png">
+		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>
+		</div>
+		<div class="card-content" style="padding: 24px 10px 24px 10px;">
+			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+				EXPORT 01CN-02CN
+			</span>
+		</div>
+	</div>
 
 	<div class="card" onclick="openModalKV01()">
 		<div class="card-image">
