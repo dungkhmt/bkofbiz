@@ -471,6 +471,15 @@
            
     </request-map>    
 	
+	<request-map uri="get-academic-years-staffs">
+            <security https="true" auth="true"/>
+          
+            <event type="java" path="org.ofbiz.utils.BKEunivUtils" 
+                     invoke="getListAcademicYearsStaffs"/>
+            <response name="AttachementSuccess" type="view" value="YEARSSTAFFS"/>
+           
+    </request-map>    
+
 	<request-map uri="get-departments-of-faculty">
             <security https="true" auth="true"/>
           

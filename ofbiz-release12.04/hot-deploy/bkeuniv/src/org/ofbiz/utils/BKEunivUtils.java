@@ -154,6 +154,79 @@ public class BKEunivUtils {
 
 	}
 
+	public static void getListAcademicYearsStaffs(
+			HttpServletRequest request, HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String universityId = (String)request.getParameter("universityId");
+		
+		try {
+
+			List<GenericValue> acaYears = delegator.findList("AcademicYear",
+					null, null, null, null, false);
+			
+			List<GenericValue> faculties = getListFaculties(delegator, universityId);
+			List<GenericValue> staffs = FastList.newInstance();
+			for(GenericValue f: faculties){
+				List<GenericValue> staffs_faculty = getListStaffsOfFaculty(delegator, f.getString("facultyId"));
+				for(GenericValue st: staffs_faculty)
+					staffs.add(st);
+			}
+			
+			
+			Debug.log(module + "::getListAcademicYearsStaffs, university = " + universityId + ", years.sz = "
+					+ acaYears.size() + ", faculties.sz = " + faculties.size() + ", staffs.sz = " + staffs.size());
+			
+			String rs = "{\"years\":[";
+			for (int i = 0; i < acaYears.size(); i++) {
+				GenericValue st = acaYears.get(i);
+				rs += "{\"id\":\"" + st.get("academicYearId")
+						+ "\",\"name\":\"" + st.get("academicYearName") + "\"}";
+				if (i < acaYears.size() - 1)
+					rs += ",";
+
+			}
+			rs += "]";
+			rs += ",\"faculties\":[";
+			for(int i = 0; i < faculties.size(); i++){
+				GenericValue f =  faculties.get(i);
+				String fId = (String)f.get("facultyId");
+				String fName = (String)f.get("facultyName");
+				rs += "{\"id\":\"" + fId
+						+ "\",\"name\":\"" + fName + "\"}" + "\n";
+				if (i < faculties.size() - 1)
+					rs += ",";
+
+			}
+			rs += "]";
+			
+			rs += ",\"staffs\":[";
+			for(int i = 0; i < staffs.size(); i++){
+				GenericValue st =  staffs.get(i);
+				String id = (String)st.get("staffId");
+				String name = (String)st.get("staffName");
+				rs += "{\"id\":\"" + id
+						+ "\",\"name\":\"" + name + "\"}" + "\n";
+				if (i < staffs.size() - 1)
+					rs += ",";
+
+			}
+			rs += "}";
+			
+			Debug.log(module + "::getListAcademicYearsStaffs, json = " + rs);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+	}
+
 	@SuppressWarnings({ "unchecked" })
 	public static void getListDepartmentsOfFacultyJSON(
 			HttpServletRequest request, HttpServletResponse response) {
