@@ -422,6 +422,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_col++;
 		c = r.createCell(i_col);
 		c.setCellStyle(cellStyle);
+		c.setCellValue(p.getString("ISSN"));
+
+		i_col++;
+		c = r.createCell(i_col);
+		c.setCellStyle(cellStyle);
 		int nbAuthors = 0;
 		if(p.getString("authors") != null){
 			String[] s = p.getString("authors").split(",");
@@ -475,6 +480,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		HSSFCellStyle styleTitle = wb.createCellStyle();
+		styleTitle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 		Font fontTitle = wb.createFont();
 		fontTitle.setFontHeightInPoints((short) 12);
 		fontTitle.setFontName("Times New Roman");
@@ -569,7 +575,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/" + y[0] + " - 31/12/" + y[0]);
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -577,7 +583,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -591,7 +597,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -605,7 +611,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -614,7 +620,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -628,7 +634,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -642,7 +648,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -650,7 +656,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -664,7 +670,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -679,7 +685,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/" + y[1] + " - 30/06/" + y[1]);
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -687,7 +693,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -701,7 +707,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -715,7 +721,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -723,7 +729,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -737,7 +743,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -751,7 +757,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
@@ -759,7 +765,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước:");
 		for (int i = 0; i < lst_international_conference_papers2.size(); i++) {
 			GenericValue p = lst_international_conference_papers2.get(i);
@@ -770,7 +776,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
-		ch.setCellStyle(cellStyle);
+		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
 		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
 				nbColumns));
