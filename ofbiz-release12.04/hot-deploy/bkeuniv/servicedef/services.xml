@@ -105,6 +105,10 @@
    	<service name="JQGetStaffsOfASecurityGroup" engine="java" invoke="JQGetStaffsOfASecurityGroup" location="org.ofbiz.permission.BKEunivPermissionService">
         <implements service="jqxGetListInterfaceList"/>
    	</service>
+   	
+   	<service name="JQGetListSecurityGroups" engine="java" invoke="JQGetListSecurityGroups" location="org.ofbiz.permission.BKEunivPermissionService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
             location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">

@@ -821,6 +821,15 @@
 		</relation>
 	</entity>
 	
+	<view-entity entity-name="SecurityGroupView"
+            package-name="org.ofbiz.security.securitygroup"
+            title="Security Component - Security Group Entity">
+      <member-entity entity-alias="SG" entity-name="SecurityGroup"></member-entity>
+      <alias name="groupId" entity-alias="SG"></alias>
+      <alias name="description" entity-alias="SG"></alias>
+      <alias name="status" entity-alias="SG"></alias>
+    </view-entity>
+	
 	<view-entity entity-name="StaffView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="D" entity-name="Department"></member-entity>

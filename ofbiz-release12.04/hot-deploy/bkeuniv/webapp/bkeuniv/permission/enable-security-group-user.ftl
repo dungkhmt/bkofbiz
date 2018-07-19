@@ -117,12 +117,12 @@
 			}'
 		},
 		{
-			"name": staffManagementUiLabelMap.BkEunivFullName?j_string,
-			"data": "staffName"
+			"name": "ID"?j_string,
+			"data": "staffId"
 		},
 		{
-			"name": staffManagementUiLabelMap.BkEunivEmail?j_string,
-			"data": "staffEmail"
+			"name": staffManagementUiLabelMap.BkEunivFullName?j_string,
+			"data": "staffName"
 		},
 		{
 			"name": staffManagementUiLabelMap.BkEunivDepartment?j_string,

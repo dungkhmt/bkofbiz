@@ -506,6 +506,60 @@ public class BKEunivPermissionService {
 		return retSucc;
 		
 	}
+	
+	
+	public static Map<String,Object> JQGetListSecurityGroups(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator securityGroups = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String)parameters.get("q")[0];
+				System.out.println("1. debug ::::::::::" +q);
+				String[] searchKeys = {"groupId", "description"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			System.out.println("4. debug ::::::::::"  + userLoginId);
+			securityGroups = delegator.find("SecurityGroupView", condition, null, null, sort, opts);
+			
+			result.put("listIterator", securityGroups);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get securityGroups");
+		}
+		
+		return result;
+	}
+	
+	
 	public static List<GenericValue> sortGroupParent(List<GenericValue> functions){
 		GenericValue[] a = new GenericValue[functions.size()];
 		for(int i = 0; i < functions.size(); i++){

@@ -232,9 +232,15 @@
 				data: "index"
 			}
 		];
+		<#assign sort=1 />
 		<#assign index=0 />
 		<#list columns as column>
 			<#assign index=index+1>
+
+			<#if keysId?size gt 0 && column.data==keysId[0]>
+				<#assign sort=index />
+			</#if>
+
 			var c${index} = {
 				name: '${column.name}',
 				<#if column.type??>
@@ -258,7 +264,7 @@
                 "processing": true,
                 "serverSide": true,
 				"scrollX": true,
-				"order": [[ 2, "asc" ]],
+				"order": [[ ${sort}, "asc" ]],
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,
                 columns: jqDataTable.columns,
