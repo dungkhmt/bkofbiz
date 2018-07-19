@@ -69,11 +69,22 @@
 </tr>
 <tr>
 	<td>
-		Thuoc de tai
+		${paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper}
 	</td>
 	<td>
 		<#if resultPaper.paper.researchProjectProposalName?exists>
 			${resultPaper.paper.researchProjectProposalName}
+		</#if>
+	</td>
+</tr>
+
+<tr>
+	<td>
+		${paperDeclarationUiLabelMap.BkEunivPaperLink}
+	</td>
+	<td>
+		<#if resultPaper.paper.link?exists>
+			${resultPaper.paper.link}
 		</#if>
 	</td>
 </tr>

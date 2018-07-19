@@ -936,6 +936,7 @@
 		<field name="month" type="numeric"></field>
 		<field name="sourcePath" type="very-long"></field>
 		<field name="ISSN" type="value"></field>
+		<field name="link" type="very-long"></field>
 		<field name="authors" type="very-long"></field>
 		<field name="academicYearId" type="id"></field>
 		<field name="approverStaffId" type="id-vlong"></field>

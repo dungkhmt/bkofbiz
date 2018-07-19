@@ -806,6 +806,8 @@
 		"authors",
 		"journalConferenceName",
 		"DOI",
+		"ISSN",
+		"link"
 		"impactFactor"
 		"paperCategoryId",
 		"researchProjectProposalId",
@@ -861,6 +863,10 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
 			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperLink?j_string,
+			"value": "link"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
@@ -945,6 +951,10 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
 			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperLink?j_string,
+			"value": "link"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,

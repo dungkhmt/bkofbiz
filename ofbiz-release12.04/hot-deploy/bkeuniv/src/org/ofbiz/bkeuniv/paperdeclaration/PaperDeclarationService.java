@@ -1056,6 +1056,9 @@ public class PaperDeclarationService {
 				.get("journalConferenceName");
 		String DOI = (String) context
 				.get("DOI");
+		String link = (String) context
+				.get("link");
+		
 		String impactFactor = (String) context
 				.get("impactFactor");
 		
@@ -1100,6 +1103,10 @@ public class PaperDeclarationService {
 			if (DOI != null
 					&& !DOI.equals(""))
 				p.put("DOI", DOI);
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
 			if (impactFactor != null
 					&& !impactFactor.equals(""))
 				p.put("impactFactor", Double.valueOf(impactFactor));
@@ -1192,6 +1199,9 @@ public class PaperDeclarationService {
 				.get("journalConferenceName");
 		String DOI = (String) context
 				.get("DOI");
+		String link = (String) context
+				.get("link");
+		
 		String impactFactor = (String) context
 				.get("impactFactor");
 
@@ -1247,6 +1257,10 @@ public class PaperDeclarationService {
 			if (DOI != null
 					&& !DOI.equals(""))
 				p.put("DOI", DOI);
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
 			if (impactFactor != null
 					&& !impactFactor.equals(""))
 				p.put("impactFactor", Double.valueOf(impactFactor));
