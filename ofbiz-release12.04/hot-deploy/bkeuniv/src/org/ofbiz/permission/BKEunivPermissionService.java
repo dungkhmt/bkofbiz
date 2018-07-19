@@ -102,6 +102,7 @@ public class BKEunivPermissionService {
 
 	public static void createGroupFunction(Delegator delegator, String groupId, String functionId){
 		try{
+			Debug.log(module + "::createGroupFunction, groupId = " + groupId + ", functionId = " + functionId);
 			GenericValue gv = delegator.makeValue("GroupFunction");
 			String id = delegator.getNextSeqId("GroupFunction");
 			Timestamp now = UtilDateTime.nowTimestamp();
@@ -110,8 +111,10 @@ public class BKEunivPermissionService {
 			gv.put("functionId", functionId);
 			gv.put("fromDate", now);
 			delegator.create(gv);
+			Debug.log(module + "::createGroupFunction, groupId = " + groupId + ", functionId = " + functionId + " --> OK");
 		}catch(Exception ex){
 			ex.printStackTrace();
+			Debug.log(module + "::createGroupFunction, groupId = " + groupId + ", functionId = " + functionId + " --> FAILED");
 		}
 	}
 	public static void createGroupUser(Delegator delegator, String groupId, String staffId){
@@ -366,7 +369,8 @@ public class BKEunivPermissionService {
 		String functions = request.getParameter("functions");
 		Debug.log(module + "::storeSecurityGroupFunctions, groupId = " + groupId + ", functions = " + functions);
 		String[] lst_function_id = functions.split(",");
-		
+		for(int i = 0; i < lst_function_id.length; i++)
+			lst_function_id[i] = lst_function_id[i].trim();
 		
 		
 		try{
