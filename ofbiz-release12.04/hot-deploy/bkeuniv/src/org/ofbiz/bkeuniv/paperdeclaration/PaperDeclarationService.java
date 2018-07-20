@@ -120,12 +120,11 @@ public class PaperDeclarationService {
 			HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
-		String year = (String) request.getParameter("reportyear-kv01");
 		GenericValue userLogin = (GenericValue)request.getSession().getAttribute("userLogin");
-		String staffId = (String)userLogin.getString("userLoginId");
-		String academicYearId = "2017-2018";
+		String staffId = (String) request.getParameter("staff-01cn-02cn");
+		String academicYearId = (String) request.getParameter("reportyear-bm-01-02-03");
 		//String facultyId = (String) request.getParameter("facultyId-kv01");
-		Debug.log(module + "::exportExcel01CN02CN, academic year = " + year + ", userLoginId = " + staffId);
+		Debug.log(module + "::exportExcel01CN02CN, academic year = " + academicYearId + ", userLoginId = " + staffId);
 
 		String filename = "01CN-02CN";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

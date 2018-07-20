@@ -708,4 +708,14 @@
         <value xml:lang="vi">Khoa/viện</value>
     </property>
     
+    <property key="DepartmentName">
+        <value xml:lang="en">Department Name</value>
+        <value xml:lang="vi">Bộ môn</value>
+    </property>
+    
+    <property key="BkEunivYearN">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="vi">Năm</value>
+    </property>
+    
 </resource>

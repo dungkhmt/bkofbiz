@@ -127,7 +127,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-kv01", faculties)+
+						'<label id="title-modal-input">${uiLabelMap.FacultyName}</label>'+buildSelect2("facultyId-kv01", faculties)+
 					'</div>'
 				);
 
@@ -140,7 +140,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-kv01", years)+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivYearN}</label>'+buildSelect2("reportyear-kv01", years)+
 					'</div>'
 				);
 
@@ -153,6 +153,10 @@
 		var start = Date.now();
 		loader.open();
 
+		<#--  String year = (String) request.getParameter("reportyear-kv01");
+		String staffId = (String)userLogin.getString("userLoginId");
+		String academicYearId = "2017-2018";  -->
+
 		$.ajax({
 			url: "/bkeuniv/control/get-academic-years-faculties",
 			type: 'POST',
@@ -164,7 +168,7 @@
 				var millis = Date.now() - start;
 				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
 				var modal_content_eL = $("#modal-body");
-				modal_content_eL.attr('action','/bkeuniv/control/export-excel-bm-01-02-03');
+				modal_content_eL.attr('action','/bkeuniv/control/excel-01-cn-02-cn');
 
 				var els = modal_content_eL.children();
 				for(var i = 0; i < els.length; ++i) {
@@ -184,14 +188,14 @@
 					'$(function () {'+
 						'$("#facultyId-01cn-02cn_select2").on("change", function(e) { '+
 							'var facultyId = $("#facultyId-01cn-02cn_select2").val();'+
-							'changeFaculty01CN02CN(facultyId);'+
+							'changeFaculty01CN02CN(facultyId, "departmentId-01cn-02cn_select2");'+
 						'});'+
 					'});'+
 				'<\/script>';
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-01cn-02cn", faculties)+
+						'<label id="title-modal-input">${uiLabelMap.FacultyName}</label>'+buildSelect2("facultyId-01cn-02cn", faculties)+
 						script_facultie +
 					'</div>'
 				);
@@ -201,14 +205,14 @@
 					'$(function () {'+
 						'$("#departmentId-01cn-02cn_select2").on("change", function(e) { '+
 							'var departmentId = $("#departmentId-01cn-02cn_select2").val();'+
-							'changeDepartment(departmentId);'+
+							'changeDepartment(departmentId, "staff-01cn-02cn_select2");'+
 						'});'+
 					'});'+
 				'<\/script>';
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Department</label>'+
+						'<label id="title-modal-input">${uiLabelMap.DepartmentName}</label>'+
 						'<div style="width: 70%; display: inline-block;" id="departmentId-01cn-02cn" name="facultyId-kv01" modal-value=\'$("#departmentId-01cn-02cn_select2").val()\'>'+
 							'<select class="form-control" style="width: 100%" id="departmentId-01cn-02cn_select2">'+
 							'</select>'+
@@ -223,13 +227,13 @@
 						'$("#staff-01cn-02cn_select2").select2({'+
 							
 						'});'+
-						'changeDepartment($("#departmentId-01cn-02cn_select2").val());'+
+						'changeDepartment($("#departmentId-01cn-02cn_select2").val(), "staff-01cn-02cn_select2");'+
 					'});'+
 				'<\/script>';
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Staff</label>'+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivStaffName}</label>'+
 						'<div style="width: 70%; display: inline-block;" id="staff-01cn-02cn" name="facultyId-kv01" modal-value=\'$("#staff-01cn-02cn_select2").val()\'>'+
 							'<select class="form-control" style="width: 100%" id="staff-01cn-02cn_select2">'+
 							'</select>'+
@@ -248,7 +252,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-bm-01-02-03", years)+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivYearN}</label>'+buildSelect2("reportyear-bm-01-02-03", years)+
 					'</div>'
 				);
 
@@ -290,7 +294,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-kv04", faculties)+
+						'<label id="title-modal-input">${uiLabelMap.FacultyName}</label>'+buildSelect2("facultyId-kv04", faculties)+
 					'</div>'
 				);
 
@@ -303,7 +307,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-kv04", years)+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivYearN}</label>'+buildSelect2("reportyear-kv04", years)+
 					'</div>'
 				);
 
@@ -345,7 +349,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-isi", faculties)+
+						'<label id="title-modal-input">${uiLabelMap.FacultyName}</label>'+buildSelect2("facultyId-isi", faculties)+
 					'</div>'
 				);
 
@@ -358,7 +362,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-isi", years)+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivYearN}</label>'+buildSelect2("reportyear-isi", years)+
 					'</div>'
 				);
 
@@ -410,7 +414,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Faculty</label>'+buildSelect2("facultyId-bm-01-02-03", faculties)+
+						'<label id="title-modal-input">${uiLabelMap.FacultyName}</label>'+buildSelect2("facultyId-bm-01-02-03", faculties)+
 						script_facultie +
 					'</div>'
 				);
@@ -427,7 +431,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Department</label>'+
+						'<label id="title-modal-input">${uiLabelMap.DepartmentName}</label>'+
 						'<div style="width: 70%; display: inline-block;" id="departmentId-bm-01-02-03" name="facultyId-kv01" modal-value=\'$("#departmentId-bm-01-02-03_select2").val()\'>'+
 							'<select class="form-control" style="width: 100%" id="departmentId-bm-01-02-03_select2">'+
 							'</select>'+
@@ -445,7 +449,7 @@
 
 				modal_content_eL.append(
 					'<div class="row inline-box">'+
-						'<label id="title-modal-input">Year</label>'+buildSelect2("reportyear-bm-01-02-03", years)+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivYearN}</label>'+buildSelect2("reportyear-bm-01-02-03", years)+
 					'</div>'
 				);
 
@@ -462,7 +466,7 @@
 	}
 	
 	function changeFacultyBM010203(facultyId){
-		alert('changeFacultyBM010203, id = ' + facultyId);
+		//alert('changeFacultyBM010203, id = ' + facultyId);
 		$.ajax({
 					url: "/bkeuniv/control/get-departments-of-faculty",
 					type: 'POST',
@@ -478,6 +482,9 @@
 						});
 
 						console.log(departments)
+						var newOption = new Option(data.text, data.id, false, false);
+						$('#departmentId-bm-01-02-03_select2').append(newOption).trigger('change');
+
 						$("#departmentId-bm-01-02-03_select2").html('').select2();
 						$("#departmentId-bm-01-02-03_select2").select2({
 							data: departments
@@ -488,8 +495,8 @@
 		
 	}
 
-	function changeFaculty01CN02CN(facultyId){
-		alert('changeFaculty01CN02CN, id = ' + facultyId);
+	function changeFaculty01CN02CN(facultyId, idSelect){
+		//alert('changeFaculty01CN02CN, id = ' + facultyId);
 		$.ajax({
 					url: "/bkeuniv/control/get-departments-of-faculty",
 					type: 'POST',
@@ -505,8 +512,8 @@
 						});
 
 						console.log(departments)
-						$("#departmentId-01cn-02cn_select2").html('').select2();
-						$("#departmentId-01cn-20cn_select2").select2({
+						$("#"+idSelect).html('').select2();
+						$("#"+idSelect).select2({
 							data: departments
 						});
 						
@@ -515,8 +522,8 @@
 		
 	}
 
-	function changeDepartment(departmentId){
-		alert('changeDepartment, id = ' + departmentId);
+	function changeDepartment(departmentId, idSelect){
+		//alert('changeDepartment, id = ' + departmentId);
 		$.ajax({
 					url: "/bkeuniv/control/get-staffs-of-department",
 					type: 'POST',
@@ -532,8 +539,8 @@
 						});
 
 						console.log(staffs)
-						$("#staff-01cn-02cn_select2").html('').select2();
-						$("#staff-01cn-02cn_select2").select2({
+						$("#" + idSelect).html('').select2();
+						$("#" + idSelect).select2({
 							data: staffs
 						});
 						
@@ -702,14 +709,14 @@
 			<div class="modal-content" id="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Cài đặt</h4>
+					<h4 class="modal-title">${uiLabelMap.BkEunivSetting}</h4>
 				</div>
 				<div class="modal-body" id="modal-body">
 					<p>Some text in the modal.</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" onClick="save()">Export</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" onClick="save()">${uiLabelMap.BkEunivDownload}</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">${uiLabelMap.BkEunivClose}</button>
 				</div>
 			</div>
 
