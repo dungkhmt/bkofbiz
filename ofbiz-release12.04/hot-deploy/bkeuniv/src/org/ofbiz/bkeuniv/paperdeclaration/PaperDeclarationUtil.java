@@ -900,8 +900,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			
 			long hour = 0;
 			for(GenericValue p: lst){
-				if(p.getLong("workingHours") != null)
-					hour += p.getLong("workingHours");
+				if(p.getLong("workinghours") != null)
+					hour += p.getLong("workinghours");
 			}
 			return hour;
 		}catch(Exception ex){
@@ -997,6 +997,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				
 				long hourProject = getHourProject(delegator, staffId, academicYearId);
 				mStaff2HourProject.put(st, hourProject);
+				Debug.log(module + "::createExcelFormKV01, hour_project of " + staffId + " = " + hourProject);
 			}
 		}
 
@@ -2084,13 +2085,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		List<GenericValue> isi_papers2 = new ArrayList<GenericValue>();
 
 		for (GenericValue p : isi_papers) {
-			long month = 1;
+			long month = 0;
 			if (p.get("month") != null)
 				month = (long) p.get("month");
 
-			if (month >= 7)
+			if (month >= 7 && month <= 12)
 				isi_papers1.add(p);
-			else
+			else if(month >= 1 && month <= 6)
 				isi_papers2.add(p);
 		}
 		List<GenericValue> scopus_papers = getListPaperScopus(delegator,
@@ -2100,13 +2101,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		List<GenericValue> scopus_papers2 = new ArrayList<GenericValue>();
 
 		for (GenericValue p : scopus_papers) {
-			long month = 1;
+			long month = 0;
 			if (p.get("month") != null)
 				month = (long) p.get("month");
 
-			if (month >= 7)
+			if (month >= 7 && month <= 12)
 				scopus_papers1.add(p);
-			else
+			else if(month >= 1 && month <= 6)
 				scopus_papers2.add(p);
 		}
 
