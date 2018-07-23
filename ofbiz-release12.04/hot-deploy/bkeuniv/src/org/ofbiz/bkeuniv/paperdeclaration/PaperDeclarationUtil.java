@@ -399,8 +399,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		return retSucc;
 	}
 
-	public static void createPaperRow(int i_row, Sheet sh, GenericValue p, HSSFCellStyle cellStyle, 
-			HashMap<GenericValue, Integer> mPaper2NbAuthors){
+	public static void createPaperRow(int i_row, Sheet sh, GenericValue p,
+			HSSFCellStyle cellStyle,
+			HashMap<GenericValue, Integer> mPaper2NbAuthors) {
 		Row r = sh.createRow(i_row);
 
 		int i_col = 1;
@@ -413,7 +414,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		c = r.createCell(i_col);
 		c.setCellStyle(cellStyle);
 		c.setCellValue(p.getString("journalConferenceName"));
-		
+
 		i_col++;
 		c = r.createCell(i_col);
 		c.setCellStyle(cellStyle);
@@ -428,20 +429,20 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		c = r.createCell(i_col);
 		c.setCellStyle(cellStyle);
 		int nbAuthors = 0;
-		if(p.getString("authors") != null){
+		if (p.getString("authors") != null) {
 			String[] s = p.getString("authors").split(",");
 			nbAuthors = s.length;
 		}
 		c.setCellValue(nbAuthors);
-		
+
 		i_col++;
 		c = r.createCell(i_col);
 		c.setCellStyle(cellStyle);
 		int nbIntAuthors = mPaper2NbAuthors.get(p);
 		c.setCellValue(nbIntAuthors);
-		
 
 	}
+
 	public static void createSheetPaper01CN02CN(HSSFWorkbook wb,
 			List<GenericValue> lst_isi_papers1,
 			List<GenericValue> lst_isi_papers2,
@@ -456,11 +457,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			List<GenericValue> lst_domestic_conference_papers1,
 			List<GenericValue> lst_domestic_conference_papers2,
 			String academicYearId,
-			HashMap<GenericValue, Integer> mPaper2NbIntAuthors
-			) {
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors) {
 
 		int nbColumns = 14;
-		
+
 		Sheet sh = wb.createSheet("Bài báo 01-CN");
 		sh.setColumnWidth(0, 500);
 		sh.setColumnWidth(1, 3000);
@@ -495,13 +495,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
 		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
 		styleTitle.setWrapText(true);
-		
+
 		cellStyle.setWrapText(true);
 
 		int i_row = 0;
-		
+
 		String[] y = academicYearId.split("-");
-		
+
 		// set header title
 		i_row++;
 		Row rh = sh.createRow(i_row);
@@ -510,84 +510,82 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		Cell ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Họ tên các tác giả");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Tên bài báo");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Tên tạp chí, proceedings");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Số và thời gian xuất bản chính thức");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Chỉ số ISSN");
-				
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Tổng số tác giả");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Số tác giả của trường");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Tác giả đầu tiên là corresponding author");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Tác giả đầu tiên không là corresponding author");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Tác giả là corresponding author");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các tác giả còn lại");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Số giờ quy đổi của bài báo");
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Số giờ quy đổi của người kê khai");
-		
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/" + y[0] + " - 31/12/" + y[0]);
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/"
+				+ y[0] + " - 31/12/" + y[0]);
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_isi_papers1.size(); i++) {
 			GenericValue p = lst_isi_papers1.get(i);
 			i_row++;
@@ -599,105 +597,95 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_scopus_papers1.size(); i++) {
 			GenericValue p = lst_scopus_papers1.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
 
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_other_international_journal_papers1.size(); i++) {
 			GenericValue p = lst_other_international_journal_papers1.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_domestic_journal_papers1.size(); i++) {
 			GenericValue p = lst_domestic_journal_papers1.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_international_conference_papers1.size(); i++) {
 			GenericValue p = lst_international_conference_papers1.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
 		for (int i = 0; i < lst_domestic_conference_papers1.size(); i++) {
 			GenericValue p = lst_domestic_conference_papers1.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
 
-		// second part 
+		// second part
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
-		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/" + y[1] + " - 30/06/" + y[1]);
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/"
+				+ y[1] + " - 30/06/" + y[1]);
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_isi_papers2.size(); i++) {
 			GenericValue p = lst_isi_papers2.get(i);
 			i_row++;
@@ -709,59 +697,54 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_scopus_papers2.size(); i++) {
 			GenericValue p = lst_scopus_papers2.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
 
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_other_international_journal_papers2.size(); i++) {
 			GenericValue p = lst_other_international_journal_papers2.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		for (int i = 0; i < lst_domestic_journal_papers2.size(); i++) {
 			GenericValue p = lst_domestic_journal_papers2.get(i);
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
-		
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
@@ -772,14 +755,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			i_row++;
 			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
 		}
-		
+
 		i_row++;
 		rh = sh.createRow(i_row);
 		ch = rh.createCell(1);
 		ch.setCellStyle(styleTitle);
 		ch.setCellValue("Trong nước:");
-		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-				nbColumns));
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
 		for (int i = 0; i < lst_domestic_conference_papers2.size(); i++) {
 			GenericValue p = lst_domestic_conference_papers2.get(i);
 			i_row++;
@@ -788,127 +770,479 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 	}
 
-	public static int getNbInternalAuthors(Delegator delegator, String paperId){
+	public static void createSheetPaperKV03(HSSFWorkbook wb,
+			List<GenericValue> lst_other_international_journal_papers1,
+			List<GenericValue> lst_other_international_journal_papers2,
+			List<GenericValue> lst_domestic_journal_papers1,
+			List<GenericValue> lst_domestic_journal_papers2,
+			List<GenericValue> lst_international_conference_papers1,
+			List<GenericValue> lst_international_conference_papers2,
+			List<GenericValue> lst_domestic_conference_papers1,
+			List<GenericValue> lst_domestic_conference_papers2,
+			String academicYearId,
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors) {
+
+		int nbColumns = 14;
+
+		Sheet sh = wb.createSheet("KV03");
+		sh.setColumnWidth(0, 500);
+		sh.setColumnWidth(1, 3000);
+		sh.setColumnWidth(2, 12000);
+		sh.setColumnWidth(3, 6000);
+		sh.setColumnWidth(4, 6000);
+		sh.setColumnWidth(5, 6000);
+		sh.setColumnWidth(6, 6000);
+		sh.setColumnWidth(7, 6000);
+		sh.setColumnWidth(8, 6000);
+		sh.setColumnWidth(9, 6000);
+		sh.setColumnWidth(10, 6000);
+		sh.setColumnWidth(11, 6000);
+		sh.setColumnWidth(12, 6000);
+		sh.setColumnWidth(13, 6000);
+		sh.setColumnWidth(14, 6000);
+
+		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
+		HSSFCellStyle styleTitle = wb.createCellStyle();
+		styleTitle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+		styleTitle.setWrapText(true);
+
+		cellStyle.setWrapText(true);
+
+		int i_row = 0;
+
+		String[] y = academicYearId.split("-");
+
+		// set header title
+		i_row++;
+		Row rh = sh.createRow(i_row);
+		int i_col = 0;
+		i_col++;
+		Cell ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Họ tên các tác giả");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tên bài báo");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tên tạp chí, proceedings");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Số và thời gian xuất bản chính thức");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Chỉ số ISSN");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tổng số tác giả");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Số tác giả của trường");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tác giả đầu tiên là corresponding author");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tác giả đầu tiên không là corresponding author");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Tác giả là corresponding author");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Các tác giả còn lại");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Số giờ quy đổi của bài báo");
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Số giờ quy đổi của người kê khai");
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/"
+				+ y[0] + " - 31/12/" + y[0]);
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Bài báo đăng tạp chí nước ngoài (không kê các bài báo trong danh mục SCI, SCIE, SCOPUS)");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+		for (int i = 0; i < lst_other_international_journal_papers1.size(); i++) {
+			GenericValue p = lst_other_international_journal_papers1.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Các bài báo đăng tạp chí trong nước:");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+		for (int i = 0; i < lst_domestic_journal_papers1.size(); i++) {
+			GenericValue p = lst_domestic_journal_papers1.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Bài báo đăng kỷ yếu hội nghị quốc tế có phản biện:");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+		for (int i = 0; i < lst_international_conference_papers1.size(); i++) {
+			GenericValue p = lst_international_conference_papers1.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Bài báo đăng kỷ yếu hội nghị trong nước có phản biện:");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+		for (int i = 0; i < lst_domestic_conference_papers1.size(); i++) {
+			GenericValue p = lst_domestic_conference_papers1.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		// second part
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/"
+				+ y[1] + " - 30/06/" + y[1]);
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Bài báo đăng tạp chí nước ngoài (không kê các bài báo trong danh mục SCI, SCIE, SCOPUS):");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+		for (int i = 0; i < lst_other_international_journal_papers2.size(); i++) {
+			GenericValue p = lst_other_international_journal_papers2.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Các bài báo đăng tạp chí trong nước:");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+
+		for (int i = 0; i < lst_domestic_journal_papers2.size(); i++) {
+			GenericValue p = lst_domestic_journal_papers2.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Bài báo đăng kỷ yếu hội nghị quốc tế có phản biện:");
+		for (int i = 0; i < lst_international_conference_papers2.size(); i++) {
+			GenericValue p = lst_international_conference_papers2.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+		i_row++;
+		rh = sh.createRow(i_row);
+		ch = rh.createCell(1);
+		ch.setCellStyle(styleTitle);
+		ch.setCellValue("Bài báo đăng kỷ yếu hội nghị trong nước có phản biện:");
+		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, nbColumns));
+		for (int i = 0; i < lst_domestic_conference_papers2.size(); i++) {
+			GenericValue p = lst_domestic_conference_papers2.get(i);
+			i_row++;
+			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		}
+
+	}
+
+	public static int getNbInternalAuthors(Delegator delegator, String paperId) {
 		// return the number of co-authors which is the member of the university
-		try{
+		try {
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
-			List<GenericValue> lst = delegator.findList("StaffPaperDeclaration", 
-					EntityCondition.makeCondition(conds), 
-					null, 
-					null, 
-					null, 
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			List<GenericValue> lst = delegator.findList(
+					"StaffPaperDeclaration",
+					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			return lst.size();
-			
-		}catch(Exception ex){
+
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return 0;
 	}
+
 	public static HSSFWorkbook createExcelForm01CN02CN(Delegator delegator,
 			String academicYearId, String staffId) {
-		try{
+		try {
 			HSSFWorkbook wb = new HSSFWorkbook();
-			List<GenericValue> all_papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
+			List<GenericValue> all_papers = getPapersOfStaffAcademicYear(
+					delegator, staffId, academicYearId);
 			HashMap<GenericValue, Integer> mPaper2NbIntAuthors = new HashMap<GenericValue, Integer>();
-			for(GenericValue p: all_papers){
-				int nbauthors = getNbInternalAuthors(delegator, p.getString("paperId"));
+			for (GenericValue p : all_papers) {
+				int nbauthors = getNbInternalAuthors(delegator,
+						p.getString("paperId"));
 				mPaper2NbIntAuthors.put(p, nbauthors);
 			}
-			
+
 			List<GenericValue> lst_isi_papers1 = FastList.newInstance();
 			List<GenericValue> lst_isi_papers2 = FastList.newInstance();
 			List<GenericValue> lst_scopus_papers1 = FastList.newInstance();
 			List<GenericValue> lst_scopus_papers2 = FastList.newInstance();
-			List<GenericValue> lst_internaltional_journal_papers1 = FastList.newInstance();
-			List<GenericValue> lst_internaltional_journal_papers2 = FastList.newInstance();
-			List<GenericValue> lst_domestic_journal_papers1 = FastList.newInstance();
-			List<GenericValue> lst_domestic_journal_papers2 = FastList.newInstance();
-			List<GenericValue> lst_international_conference_papers1 = FastList.newInstance();
-			List<GenericValue> lst_international_conference_papers2 = FastList.newInstance();
-			List<GenericValue> lst_domestic_conference_papers1 = FastList.newInstance();
-			List<GenericValue> lst_domestic_conference_papers2 = FastList.newInstance();
-			
-			Debug.log(module + "::createExcelForm01CN02CN, staffId = " + staffId + ", year = " + academicYearId + 
-					", all_papers = " + all_papers.size());
-			
-			for(GenericValue p: all_papers){
+			List<GenericValue> lst_internaltional_journal_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_internaltional_journal_papers2 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_journal_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_journal_papers2 = FastList
+					.newInstance();
+			List<GenericValue> lst_international_conference_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_international_conference_papers2 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_conference_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_conference_papers2 = FastList
+					.newInstance();
+
+			Debug.log(module + "::createExcelForm01CN02CN, staffId = "
+					+ staffId + ", year = " + academicYearId
+					+ ", all_papers = " + all_papers.size());
+
+			for (GenericValue p : all_papers) {
 				String category = p.getString("paperCategoryId");
-				long month = 1;
-				if(p.getLong("month") != null)
+				long month = 0;
+				if (p.getLong("month") != null)
 					month = p.getLong("month");
-				
-				if(month >= 7){
-					if(category.equals("JINT_SCI") || category.equals("JINT_SCIE")){
+
+				if (month >= 7 && month <= 12) {
+					if (category.equals("JINT_SCI")
+							|| category.equals("JINT_SCIE")) {
 						lst_isi_papers1.add(p);
-					}else if(category.equals("JINT_SCOPUS")){
+					} else if (category.equals("JINT_SCOPUS")) {
 						lst_scopus_papers1.add(p);
-					}else if(category.equals("JINT_Other")){
+					} else if (category.equals("JINT_Other")) {
 						lst_internaltional_journal_papers1.add(p);
-					}else if(category.equals("JDOM_Other")){
+					} else if (category.equals("JDOM_Other")) {
 						lst_domestic_journal_papers1.add(p);
-					}else if(category.equals("CINT_Other")){
+					} else if (category.equals("CINT_Other")) {
 						lst_international_conference_papers1.add(p);
-					}else if(category.equals("CDOM_Other")){
+					} else if (category.equals("CDOM_Other")) {
 						lst_domestic_conference_papers1.add(p);
 					}
-					
-				}else{
-					if(category.equals("JINT_SCI") || category.equals("JINT_SCIE")){
+
+				} else if (month >= 1 && month <= 6) {
+					if (category.equals("JINT_SCI")
+							|| category.equals("JINT_SCIE")) {
 						lst_isi_papers2.add(p);
-					}else if(category.equals("JINT_SCOPUS")){
+					} else if (category.equals("JINT_SCOPUS")) {
 						lst_scopus_papers2.add(p);
-					}else if(category.equals("JINT_Other")){
+					} else if (category.equals("JINT_Other")) {
 						lst_internaltional_journal_papers2.add(p);
-					}else if(category.equals("JDOM_Other")){
+					} else if (category.equals("JDOM_Other")) {
 						lst_domestic_journal_papers2.add(p);
-					}else if(category.equals("CINT_Other")){
+					} else if (category.equals("CINT_Other")) {
 						lst_international_conference_papers2.add(p);
-					}else if(category.equals("CDOM_Other")){
+					} else if (category.equals("CDOM_Other")) {
 						lst_domestic_conference_papers2.add(p);
 					}
-					
+
 				}
 			}
 			createSheetPaper01CN02CN(wb, lst_isi_papers1, lst_isi_papers2,
 					lst_scopus_papers1, lst_scopus_papers2,
-					lst_internaltional_journal_papers1, lst_internaltional_journal_papers2,
+					lst_internaltional_journal_papers1,
+					lst_internaltional_journal_papers2,
 					lst_domestic_journal_papers1, lst_domestic_journal_papers2,
-					lst_international_conference_papers1, lst_international_conference_papers2,
-					lst_domestic_conference_papers1, lst_domestic_conference_papers2, 
-					academicYearId,
-					mPaper2NbIntAuthors
-					);
-			
+					lst_international_conference_papers1,
+					lst_international_conference_papers2,
+					lst_domestic_conference_papers1,
+					lst_domestic_conference_papers2, academicYearId,
+					mPaper2NbIntAuthors);
+
 			return wb;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return null;
 	}
 
-	public static long getHourProject(Delegator delegator, String staffId, String academicYearId){
-		try{
+	public static long getHourProject(Delegator delegator, String staffId,
+			String academicYearId) {
+		try {
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
-			conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
-			List<GenericValue> lst = delegator.findList("ResearchProjectDeclarationYear", 
-					EntityCondition.makeCondition(conds), 
-					null,null,null, 
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+			List<GenericValue> lst = delegator.findList(
+					"ResearchProjectDeclarationYear",
+					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			
+
 			long hour = 0;
-			for(GenericValue p: lst){
-				if(p.getLong("workinghours") != null)
+			for (GenericValue p : lst) {
+				if (p.getLong("workinghours") != null)
 					hour += p.getLong("workinghours");
 			}
 			return hour;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return 0;
 		}
 	}
+
+	public static void createExcelFormKV03(HSSFWorkbook wb, Delegator delegator, String academicYearId, String facultyId){
+		try{
+			List<GenericValue> all_papers = getPaperOfFacultyAcademcYearId(delegator, facultyId, academicYearId);
+			//Sheet sh = wb.createSheet("KV03");
+			List<GenericValue> lst_isi_papers1 = FastList.newInstance();
+			List<GenericValue> lst_isi_papers2 = FastList.newInstance();
+			List<GenericValue> lst_scopus_papers1 = FastList.newInstance();
+			List<GenericValue> lst_scopus_papers2 = FastList.newInstance();
+			List<GenericValue> lst_internaltional_journal_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_internaltional_journal_papers2 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_journal_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_journal_papers2 = FastList
+					.newInstance();
+			List<GenericValue> lst_international_conference_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_international_conference_papers2 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_conference_papers1 = FastList
+					.newInstance();
+			List<GenericValue> lst_domestic_conference_papers2 = FastList
+					.newInstance();
+
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors = new HashMap<GenericValue, Integer>();
+			for (GenericValue p : all_papers) {
+				int nbauthors = getNbInternalAuthors(delegator,
+						p.getString("paperId"));
+				mPaper2NbIntAuthors.put(p, nbauthors);
+			}
+
+			for (GenericValue p : all_papers) {
+				String category = p.getString("paperCategoryId");
+				long month = 0;
+				if (p.getLong("month") != null)
+					month = p.getLong("month");
+
+				if (month >= 7 && month <= 12) {
+					if (category.equals("JINT_SCI")
+							|| category.equals("JINT_SCIE")) {
+						lst_isi_papers1.add(p);
+					} else if (category.equals("JINT_SCOPUS")) {
+						lst_scopus_papers1.add(p);
+					} else if (category.equals("JINT_Other")) {
+						lst_internaltional_journal_papers1.add(p);
+					} else if (category.equals("JDOM_Other")) {
+						lst_domestic_journal_papers1.add(p);
+					} else if (category.equals("CINT_Other")) {
+						lst_international_conference_papers1.add(p);
+					} else if (category.equals("CDOM_Other")) {
+						lst_domestic_conference_papers1.add(p);
+					}
+
+				} else if (month >= 1 && month <= 6) {
+					if (category.equals("JINT_SCI")
+							|| category.equals("JINT_SCIE")) {
+						lst_isi_papers2.add(p);
+					} else if (category.equals("JINT_SCOPUS")) {
+						lst_scopus_papers2.add(p);
+					} else if (category.equals("JINT_Other")) {
+						lst_internaltional_journal_papers2.add(p);
+					} else if (category.equals("JDOM_Other")) {
+						lst_domestic_journal_papers2.add(p);
+					} else if (category.equals("CINT_Other")) {
+						lst_international_conference_papers2.add(p);
+					} else if (category.equals("CDOM_Other")) {
+						lst_domestic_conference_papers2.add(p);
+					}
+
+				}
+			}
+			createSheetPaperKV03(wb, 
+					lst_internaltional_journal_papers1,
+					lst_internaltional_journal_papers2,
+					lst_domestic_journal_papers1, lst_domestic_journal_papers2,
+					lst_international_conference_papers1,
+					lst_international_conference_papers2,
+					lst_domestic_conference_papers1,
+					lst_domestic_conference_papers2, academicYearId,
+					mPaper2NbIntAuthors);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
 	public static HSSFWorkbook createExcelFormKV01(Delegator delegator,
 			String academicYearId, String facultyId) {
 
@@ -933,20 +1267,17 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		Map<GenericValue, Long> mStaff2Hour1 = FastMap.newInstance();
 		Map<GenericValue, Long> mStaff2Hour2 = FastMap.newInstance();
 		Map<GenericValue, Long> mStaff2HourProject = FastMap.newInstance();
-		
+
 		Map<GenericValue, List<GenericValue>> mDepartment2Staffs = FastMap
 				.newInstance();
 
 		/*
-		String facultyName = "";
-		try{
-			GenericValue f = delegator.findOne("Faculty", UtilMisc.toMap("facultyId",facultyId), false);
-			facultyName = f.getString("facultyName");
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
-		*/
-		
+		 * String facultyName = ""; try{ GenericValue f =
+		 * delegator.findOne("Faculty", UtilMisc.toMap("facultyId",facultyId),
+		 * false); facultyName = f.getString("facultyName"); }catch(Exception
+		 * ex){ ex.printStackTrace(); }
+		 */
+
 		// get list of departments of the given faculty
 		List<GenericValue> departments = getDepartments(delegator, facultyId);
 		for (GenericValue d : departments) {
@@ -982,11 +1313,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						h = h / sz;
 					}
 					long month = 0;
-					if(p.getLong("month") != null)
+					if (p.getLong("month") != null)
 						month = p.getLong("month");
-					if(month >= 7 && month <= 12){
+					if (month >= 7 && month <= 12) {
 						hour1 += h;
-					}else if(month >= 1 && month <= 6){
+					} else if (month >= 1 && month <= 6) {
 						hour2 += h;
 					}
 					hour += h;
@@ -994,10 +1325,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				mStaff2Hour.put(st, hour);
 				mStaff2Hour1.put(st, hour1);
 				mStaff2Hour2.put(st, hour2);
-				
-				long hourProject = getHourProject(delegator, staffId, academicYearId);
+
+				long hourProject = getHourProject(delegator, staffId,
+						academicYearId);
 				mStaff2HourProject.put(st, hourProject);
-				Debug.log(module + "::createExcelFormKV01, hour_project of " + staffId + " = " + hourProject);
+				Debug.log(module + "::createExcelFormKV01, hour_project of "
+						+ staffId + " = " + hourProject);
 			}
 		}
 
@@ -1049,21 +1382,24 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row = i_row + 4;
 		// System.out.println(i_row);
 		Row row_header_table = sh.createRow(i_row);
-		String[] str_header_table = new String[] { "TT", "Họ và tên",
-				"Tổng số giờ quy đổi từ bài báo tính trong khoảng thời gian 1/7/" + Y[0] + "-31/12/" + Y[0],
-				"Tổng số giờ quy đổi từ bài báo tính trong khoảng thời gian 1/1/" + Y[1] + "-30/6/" + Y[1],
-				"Tổng cộng (C+D)",
-				"Tổng số giờ quy đổi từ đề tài NCKH", 
-				"Tổng cộng giờ NCKH năm học " + academicYearId + "(E+F)"};
+		String[] str_header_table = new String[] {
+				"TT",
+				"Họ và tên",
+				"Tổng số giờ quy đổi từ bài báo tính trong khoảng thời gian 1/7/"
+						+ Y[0] + "-31/12/" + Y[0],
+				"Tổng số giờ quy đổi từ bài báo tính trong khoảng thời gian 1/1/"
+						+ Y[1] + "-30/6/" + Y[1], "Tổng cộng (C+D)",
+				"Tổng số giờ quy đổi từ đề tài NCKH",
+				"Tổng cộng giờ NCKH năm học " + academicYearId + "(E+F)" };
 		createRowInExcel(1, 7, str_header_table, row_header_table,
 				cellStyleCenterBoldFullBorder);
-		
+
 		i_row++;
 		row_header_table = sh.createRow(i_row);
-		String[] str_ABCD = {"A","B","C","D","E","F","G"};
+		String[] str_ABCD = { "A", "B", "C", "D", "E", "F", "G" };
 		createRowInExcel(1, 7, str_ABCD, row_header_table,
 				cellStyleCenterBoldFullBorder);
-		
+
 		// ----end header_table
 		long paper_hour1_faculty = 0;
 		long paper_hour2_faculty = 0;
@@ -1077,30 +1413,30 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			long dept_hour_project = 0;
 			long dept_hour_paper = 0;
 			long dept_hour_total = 0;
-			for(GenericValue st: staffs){
+			for (GenericValue st : staffs) {
 				dept_hour1 += mStaff2Hour1.get(st);
 				dept_hour2 += mStaff2Hour2.get(st);
 				dept_hour_project += mStaff2HourProject.get(st);
 			}
 			dept_hour_paper = dept_hour1 + dept_hour2;
 			dept_hour_total = dept_hour_paper + dept_hour_project;
-		
+
 			paper_hour1_faculty += dept_hour1;
 			paper_hour2_faculty += dept_hour2;
-			
+
 			project_hour_faculty += dept_hour_project;
 		}
 		paper_hour_faculty = paper_hour1_faculty + paper_hour2_faculty;
-		total_hour_faculty  = paper_hour_faculty + project_hour_faculty;
-		
+		total_hour_faculty = paper_hour_faculty + project_hour_faculty;
+
 		i_row++;
-		String[] FN = {facultyName,paper_hour1_faculty+"",
-				paper_hour2_faculty + "", paper_hour_faculty+"",project_hour_faculty+"",total_hour_faculty+""};
+		String[] FN = { facultyName, paper_hour1_faculty + "",
+				paper_hour2_faculty + "", paper_hour_faculty + "",
+				project_hour_faculty + "", total_hour_faculty + "" };
 		row_header_table = sh.createRow(i_row);
-		
+
 		createRowInExcel(2, 7, FN, row_header_table, cellStyleLeftBold);
-		
-		
+
 		// ----start index of table in excel
 		int s = 0;
 		for (GenericValue d : departments) {
@@ -1110,14 +1446,14 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			long dept_hour_project = 0;
 			long dept_hour_paper = 0;
 			long dept_hour_total = 0;
-			for(GenericValue st: staffs){
+			for (GenericValue st : staffs) {
 				dept_hour1 += mStaff2Hour1.get(st);
 				dept_hour2 += mStaff2Hour2.get(st);
 				dept_hour_project += mStaff2HourProject.get(st);
 			}
 			dept_hour_paper = dept_hour1 + dept_hour2;
 			dept_hour_total = dept_hour_paper + dept_hour_project;
-			
+
 			i_row += 1;
 			Row r = sh.createRow(i_row);
 			String[] str_stt = new String[] { sSTT[s] };
@@ -1126,11 +1462,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String deptName = (String) d.get("departmentName");
 			String[] str_departmentName = new String[] { deptName };
 			createRowInExcel(2, 2, str_departmentName, r, cellStyleLeftBold);
-			String[] str_1 = new String[] { dept_hour1 + "", dept_hour2 + "", dept_hour_paper + "",
-					dept_hour_project + "",dept_hour_total+""};
+			String[] str_1 = new String[] { dept_hour1 + "", dept_hour2 + "",
+					dept_hour_paper + "", dept_hour_project + "",
+					dept_hour_total + "" };
 			createRowInExcel(3, 7, str_1, r, cellStyleCenterBoldFullBorder);
 
-			
 			int count = 0;
 			for (GenericValue st : staffs) {
 				String staffName = (String) st.get("staffName");
@@ -1142,18 +1478,20 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				createRowInExcel(1, 1, str_sttt, r, cellStyleRight);
 				String[] str_staffName = new String[] { staffName };
 				createRowInExcel(2, 2, str_staffName, r, cellStyleLeft);
-				//long paperHour = mStaff2Hour.get(st);
-				//long projectHour = mStaff2ProjectHours.get(staffId) != null ? (long) mStaff2ProjectHours
-				//		.get(staffId) : 0;
+				// long paperHour = mStaff2Hour.get(st);
+				// long projectHour = mStaff2ProjectHours.get(staffId) != null ?
+				// (long) mStaff2ProjectHours
+				// .get(staffId) : 0;
 				long paper_hour1 = mStaff2Hour1.get(st);
 				long paper_hour2 = mStaff2Hour2.get(st);
 				long paper_hour = paper_hour1 + paper_hour2;
 				long project_hour = mStaff2HourProject.get(st);
 				long total_hour = paper_hour + project_hour;
-				
-				//long totalHour = paperHour + projectHour;
-				String[] str_2 = new String[] { paper_hour1 + "", paper_hour2 + "", paper_hour + "",
-						project_hour + "", total_hour + "" };
+
+				// long totalHour = paperHour + projectHour;
+				String[] str_2 = new String[] { paper_hour1 + "",
+						paper_hour2 + "", paper_hour + "", project_hour + "",
+						total_hour + "" };
 
 				Debug.log(module + "::createExcelFormKV01, staffId " + staffId
 						+ ", project_hour = " + project_hour);
@@ -1181,6 +1519,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createRowInExcel(5, 5, str_footer2, rowFooter, cellStyleBold);
 		// ----end footer in excel
 
+		
+		// create additional sheet for KV03
+		createExcelFormKV03(wb, delegator, academicYearId, facultyId);
+		
 		return wb;
 	}
 
@@ -2091,7 +2433,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			if (month >= 7 && month <= 12)
 				isi_papers1.add(p);
-			else if(month >= 1 && month <= 6)
+			else if (month >= 1 && month <= 6)
 				isi_papers2.add(p);
 		}
 		List<GenericValue> scopus_papers = getListPaperScopus(delegator,
@@ -2107,7 +2449,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			if (month >= 7 && month <= 12)
 				scopus_papers1.add(p);
-			else if(month >= 1 && month <= 6)
+			else if (month >= 1 && month <= 6)
 				scopus_papers2.add(p);
 		}
 
@@ -2934,4 +3276,59 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		}
 	}
 
+	public static List<GenericValue> getPaperOfFacultyAcademcYearId(
+			Delegator delegator, String facultyId, String academicYearId) {
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			if (academicYearId != null && !academicYearId.equals("all"))
+				conds.add(EntityCondition.makeCondition("academicYearId",
+						EntityOperator.EQUALS, academicYearId));
+
+			// List<GenericValue> papers = delegator.findList("PapersStaffView",
+			List<GenericValue> papers = delegator.findList("PaperView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+
+			HashSet<String> setStaffId = new HashSet<String>();
+			if (facultyId != null && !facultyId.equals("all")) {
+				List<GenericValue> staffsOfFaculty = PaperDeclarationUtil
+						.getListStaffsOfFaculty(delegator, facultyId);
+				for (GenericValue st : staffsOfFaculty)
+					setStaffId.add((String) st.getString("staffId"));
+			}
+			Debug.log(module
+					+ "::getPaperOfFacultyAcademcYearId, staff of selected faculty = "
+					+ setStaffId.size());
+			List<GenericValue> retList = FastList.newInstance();
+			for (GenericValue gv : papers) {
+				Debug.log(module + "::getPaperOfFacultyAcademcYearId, paper "
+						+ gv.get("paperName"));
+
+				boolean ok = true;
+				if (facultyId != null && !facultyId.equals("all")) {
+					String paperId = (String) gv.getString("paperId");
+					List<GenericValue> ST = PaperDeclarationUtil
+							.getStaffsOfPaper(paperId, delegator);
+					ok = false;
+					for (GenericValue st : ST) {
+						String stId = (String) st.getString("staffId");
+						if (setStaffId.contains(stId)) {
+							ok = true;
+							break;
+						}
+					}
+				}
+				if (ok)
+					retList.add(gv);
+
+			}
+			return retList;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return FastList.newInstance();
+	}
 }
