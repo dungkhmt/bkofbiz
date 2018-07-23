@@ -888,6 +888,27 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		return null;
 	}
 
+	public static long getHourProject(Delegator delegator, String staffId, String academicYearId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
+			List<GenericValue> lst = delegator.findList("ResearchProjectDeclarationYear", 
+					EntityCondition.makeCondition(conds), 
+					null,null,null, 
+					false);
+			
+			long hour = 0;
+			for(GenericValue p: lst){
+				if(p.getLong("workingHours") != null)
+					hour += p.getLong("workingHours");
+			}
+			return hour;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return 0;
+		}
+	}
 	public static HSSFWorkbook createExcelFormKV01(Delegator delegator,
 			String academicYearId, String facultyId) {
 
@@ -909,9 +930,23 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		}
 
 		Map<GenericValue, Long> mStaff2Hour = FastMap.newInstance();
+		Map<GenericValue, Long> mStaff2Hour1 = FastMap.newInstance();
+		Map<GenericValue, Long> mStaff2Hour2 = FastMap.newInstance();
+		Map<GenericValue, Long> mStaff2HourProject = FastMap.newInstance();
+		
 		Map<GenericValue, List<GenericValue>> mDepartment2Staffs = FastMap
 				.newInstance();
 
+		/*
+		String facultyName = "";
+		try{
+			GenericValue f = delegator.findOne("Faculty", UtilMisc.toMap("facultyId",facultyId), false);
+			facultyName = f.getString("facultyName");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		*/
+		
 		// get list of departments of the given faculty
 		List<GenericValue> departments = getDepartments(delegator, facultyId);
 		for (GenericValue d : departments) {
@@ -927,6 +962,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						delegator, staffId, academicYearId);
 
 				long hour = 0;
+				long hour1 = 0;
+				long hour2 = 0;
 				for (GenericValue p : papers) {
 					String paperCategoryId = (String) p.get("paperCategoryId");
 					long h = 0;
@@ -944,15 +981,29 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						}
 						h = h / sz;
 					}
+					long month = 0;
+					if(p.getLong("month") != null)
+						month = p.getLong("month");
+					if(month >= 7 && month <= 12){
+						hour1 += h;
+					}else if(month >= 1 && month <= 6){
+						hour2 += h;
+					}
 					hour += h;
 				}
 				mStaff2Hour.put(st, hour);
+				mStaff2Hour1.put(st, hour1);
+				mStaff2Hour2.put(st, hour2);
+				
+				long hourProject = getHourProject(delegator, staffId, academicYearId);
+				mStaff2HourProject.put(st, hourProject);
 			}
 		}
 
 		Map<String, Object> mStaff2ProjectHours = getProjectHourOfStaffs(
 				delegator, academicYearId);
 
+		String[] Y = academicYearId.split("-");
 		// start renderExcel
 
 		HSSFWorkbook wb = new HSSFWorkbook();
@@ -965,6 +1016,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(3, 6000);
 		sh.setColumnWidth(4, 6000);
 		sh.setColumnWidth(5, 6000);
+		sh.setColumnWidth(6, 6000);
+		sh.setColumnWidth(7, 6000);
 		int i_row = 0;
 
 		// ----style font in excel
@@ -995,16 +1048,75 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row = i_row + 4;
 		// System.out.println(i_row);
 		Row row_header_table = sh.createRow(i_row);
-		String[] str_header_table = new String[] { "STT", "Họ và tên",
-				"Tổng số giờ quy đổi từ bài báo",
-				"Tổng số giờ quy đổi từ đề tài NCKH", "Tổng cộng giờ quy đổi" };
-		createRowInExcel(1, 5, str_header_table, row_header_table,
+		String[] str_header_table = new String[] { "TT", "Họ và tên",
+				"Tổng số giờ quy đổi từ bài báo tính trong khoảng thời gian 1/7/" + Y[0] + "-31/12/" + Y[0],
+				"Tổng số giờ quy đổi từ bài báo tính trong khoảng thời gian 1/1/" + Y[1] + "-30/6/" + Y[1],
+				"Tổng cộng (C+D)",
+				"Tổng số giờ quy đổi từ đề tài NCKH", 
+				"Tổng cộng giờ NCKH năm học " + academicYearId + "(E+F)"};
+		createRowInExcel(1, 7, str_header_table, row_header_table,
 				cellStyleCenterBoldFullBorder);
+		
+		i_row++;
+		row_header_table = sh.createRow(i_row);
+		String[] str_ABCD = {"A","B","C","D","E","F","G"};
+		createRowInExcel(1, 7, str_ABCD, row_header_table,
+				cellStyleCenterBoldFullBorder);
+		
 		// ----end header_table
-
+		long paper_hour1_faculty = 0;
+		long paper_hour2_faculty = 0;
+		long paper_hour_faculty = 0;
+		long project_hour_faculty = 0;
+		long total_hour_faculty = 0;
+		for (GenericValue d : departments) {
+			List<GenericValue> staffs = mDepartment2Staffs.get(d);
+			long dept_hour1 = 0;
+			long dept_hour2 = 0;
+			long dept_hour_project = 0;
+			long dept_hour_paper = 0;
+			long dept_hour_total = 0;
+			for(GenericValue st: staffs){
+				dept_hour1 += mStaff2Hour1.get(st);
+				dept_hour2 += mStaff2Hour2.get(st);
+				dept_hour_project += mStaff2HourProject.get(st);
+			}
+			dept_hour_paper = dept_hour1 + dept_hour2;
+			dept_hour_total = dept_hour_paper + dept_hour_project;
+		
+			paper_hour1_faculty += dept_hour1;
+			paper_hour2_faculty += dept_hour2;
+			
+			project_hour_faculty += dept_hour_project;
+		}
+		paper_hour_faculty = paper_hour1_faculty + paper_hour2_faculty;
+		total_hour_faculty  = paper_hour_faculty + project_hour_faculty;
+		
+		i_row++;
+		String[] FN = {facultyName,paper_hour1_faculty+"",
+				paper_hour2_faculty + "", paper_hour_faculty+"",project_hour_faculty+"",total_hour_faculty+""};
+		row_header_table = sh.createRow(i_row);
+		
+		createRowInExcel(2, 7, FN, row_header_table, cellStyleLeftBold);
+		
+		
 		// ----start index of table in excel
 		int s = 0;
 		for (GenericValue d : departments) {
+			List<GenericValue> staffs = mDepartment2Staffs.get(d);
+			long dept_hour1 = 0;
+			long dept_hour2 = 0;
+			long dept_hour_project = 0;
+			long dept_hour_paper = 0;
+			long dept_hour_total = 0;
+			for(GenericValue st: staffs){
+				dept_hour1 += mStaff2Hour1.get(st);
+				dept_hour2 += mStaff2Hour2.get(st);
+				dept_hour_project += mStaff2HourProject.get(st);
+			}
+			dept_hour_paper = dept_hour1 + dept_hour2;
+			dept_hour_total = dept_hour_paper + dept_hour_project;
+			
 			i_row += 1;
 			Row r = sh.createRow(i_row);
 			String[] str_stt = new String[] { sSTT[s] };
@@ -1013,10 +1125,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String deptName = (String) d.get("departmentName");
 			String[] str_departmentName = new String[] { deptName };
 			createRowInExcel(2, 2, str_departmentName, r, cellStyleLeftBold);
-			String[] str_1 = new String[] { "0", "0", "0" };
-			createRowInExcel(3, 5, str_1, r, cellStyleCenterBoldFullBorder);
+			String[] str_1 = new String[] { dept_hour1 + "", dept_hour2 + "", dept_hour_paper + "",
+					dept_hour_project + "",dept_hour_total+""};
+			createRowInExcel(3, 7, str_1, r, cellStyleCenterBoldFullBorder);
 
-			List<GenericValue> staffs = mDepartment2Staffs.get(d);
+			
 			int count = 0;
 			for (GenericValue st : staffs) {
 				String staffName = (String) st.get("staffName");
@@ -1028,18 +1141,23 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				createRowInExcel(1, 1, str_sttt, r, cellStyleRight);
 				String[] str_staffName = new String[] { staffName };
 				createRowInExcel(2, 2, str_staffName, r, cellStyleLeft);
-				long paperHour = mStaff2Hour.get(st);
-				long projectHour = mStaff2ProjectHours.get(staffId) != null ? (long) mStaff2ProjectHours
-						.get(staffId) : 0;
-
-				long totalHour = paperHour + projectHour;
-				String[] str_2 = new String[] { paperHour + "",
-						projectHour + "", totalHour + "" };
+				//long paperHour = mStaff2Hour.get(st);
+				//long projectHour = mStaff2ProjectHours.get(staffId) != null ? (long) mStaff2ProjectHours
+				//		.get(staffId) : 0;
+				long paper_hour1 = mStaff2Hour1.get(st);
+				long paper_hour2 = mStaff2Hour2.get(st);
+				long paper_hour = paper_hour1 + paper_hour2;
+				long project_hour = mStaff2HourProject.get(st);
+				long total_hour = paper_hour + project_hour;
+				
+				//long totalHour = paperHour + projectHour;
+				String[] str_2 = new String[] { paper_hour1 + "", paper_hour2 + "", paper_hour + "",
+						project_hour + "", total_hour + "" };
 
 				Debug.log(module + "::createExcelFormKV01, staffId " + staffId
-						+ ", projectHour = " + projectHour);
+						+ ", project_hour = " + project_hour);
 
-				createRowInExcel(3, 5, str_2, r, cellStyleRight);
+				createRowInExcel(3, 7, str_2, r, cellStyleRight);
 			}
 		}
 		// ----end table in excel

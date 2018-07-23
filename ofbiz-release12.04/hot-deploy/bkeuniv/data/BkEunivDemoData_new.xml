@@ -4205,6 +4205,11 @@
 <ProjectCategory projectCategoryId="MINI_PROJ" projectCategoryName="Đề tài cấp Bộ" projectCategoryCode="MINI_PROJ"/>
 <ProjectCategory projectCategoryId="NATI_PROJ" projectCategoryName="Đề tài cấp nhà nước" projectCategoryCode="NATI_PROJ"/>
 <ProjectCategory projectCategoryId="NAFOS_PROJ" projectCategoryName="Đề tài NAFOSTED" projectCategoryCode="NAFOS_PROJ"/>
+<ProjectCategory projectCategoryId="REGION_PROJ" projectCategoryName="Đề tài cấp thành phố" projectCategoryCode="REGION_PROJ"/>
+<ProjectCategory projectCategoryId="INTCOOP_PROJ" projectCategoryName="Đề tài hợp tác quốc tế" projectCategoryCode="INTCOOP_PROJ"/>
+
+
+
 
 <ProjectStatus projectStatusId="CANCELLED" projectStatusName="Đã huỷ"/>
 <ProjectStatus projectStatusId="CREATED" projectStatusName="Tạo mới"/>
