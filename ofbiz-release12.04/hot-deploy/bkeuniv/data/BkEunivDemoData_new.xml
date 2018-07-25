@@ -4208,7 +4208,8 @@
 <ProjectCategory projectCategoryId="REGION_PROJ" projectCategoryName="Đề tài cấp thành phố" projectCategoryCode="REGION_PROJ"/>
 <ProjectCategory projectCategoryId="INTCOOP_PROJ" projectCategoryName="Đề tài hợp tác quốc tế" projectCategoryCode="INTCOOP_PROJ"/>
 
-
+<YesNo name="Có" value="Y"/>
+<YesNo name="Không" value="N"/>
 
 
 <ProjectStatus projectStatusId="CANCELLED" projectStatusName="Đã huỷ"/>

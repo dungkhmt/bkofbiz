@@ -74,9 +74,23 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="get-external-members-of-a-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getExternalMembersOfAPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
 	<request-map uri="create-member-of-a-paper">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="createMemberOfAPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="create-external-member-of-a-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="createExternalMemberOfAPaper"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -87,10 +101,23 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	<request-map uri="remove-external-member-of-a-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="removeExternalMemberOfAPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 
 	<request-map uri="update-member-of-a-paper">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="updateMemberOfAPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="update-external-member-of-a-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateExternalMemberOfAPaper"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -114,6 +141,17 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-members-of-a-paper"/>
     </request-map>
+
+    <request-map uri="external-members-of-a-paper">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-external-members-of-a-paper"/>
+    </request-map>
+
+    <request-map uri="members-of-a-paper">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-members-of-a-paper"/>
+    </request-map>
+
     
     <request-map uri="research-summary-excel">
     	<security https="true" auth="true"/>
@@ -857,6 +895,8 @@
     <view-map name="view-detail-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewDetailPaper"/>
     <view-map name="view-detail-paper-update" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewDetailPaperUpdate"/>
     <view-map name="view-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageMembersOfAPaper"/>
+    <view-map name="view-external-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageExternalMembersOfAPaper"/>
+
     <view-map name="view-detail-scientific-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDetailScientificCV"/>
 
 
