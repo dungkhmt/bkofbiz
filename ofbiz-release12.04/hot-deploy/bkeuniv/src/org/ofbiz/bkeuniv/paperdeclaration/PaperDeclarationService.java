@@ -1010,6 +1010,20 @@ public class PaperDeclarationService {
 		}
 		return retSucc;
 	}
+	public static Map<String, Object> getYesNo(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try{
+			List<GenericValue> list = delegator.findList("YesNo", null, null, null, null, false);
+			retSucc.put("yn", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> getPaperDeclarationStatus(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
@@ -1519,11 +1533,33 @@ public class PaperDeclarationService {
 		return retSucc;
 		
 	}
+	public static Map<String, Object> getExternalMembersOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String)context.get("paperId");
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
+			List<GenericValue> lst = delegator.findList("ExternalMemberPaperDeclarationView",
+					EntityCondition.makeCondition(conds),null,null,null,false);
+			
+			retSucc.put("staffs", lst);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+
 	public static Map<String, Object> createMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		String paperId = (String)context.get("paperId");
 		List<String> list_staffId = (List<String>)context.get("staffId[]");
 		List<String> list_roleId = (List<String>)context.get("roleId[]");
+		String s_sequence = (String)context.get("sequence");
+		List<String> list_correspondingAuthors = (List<String>)context.get("correspondingAuthor[]");
+		String correspondingAuthor = list_correspondingAuthors.get(0);
 		Delegator delegator = ctx.getDelegator();
 		String staffId = list_staffId.get(0);
 		String roleId = list_roleId.get(0);
@@ -1545,6 +1581,9 @@ public class PaperDeclarationService {
 			sp.put("staffPaperDeclarationId", staffPaperDeclarationId);
 			sp.put("paperId", paperId);
 			sp.put("staffId", staffId);
+			sp.put("correspondingAuthor", correspondingAuthor);
+			long sequence = Long.valueOf(s_sequence);
+			sp.put("sequence", sequence);
 			sp.put("roleId", roleId);
 			sp.put("statusId", "ENABLED");
 			delegator.create(sp);
@@ -1579,12 +1618,135 @@ public class PaperDeclarationService {
 		return retSucc;
 		
 	}
+	public static Map<String, Object> createExternalMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String)context.get("paperId");
+		
+		List<String> list_roleId = (List<String>)context.get("roleId[]");
+		String s_sequence = (String)context.get("sequence");
+		List<String> list_correspondingAuthors = (List<String>)context.get("correspondingAuthor[]");
+		String affilliation = (String)context.get("affilliation");
+		String staffName = (String)context.get("staffName");
+		Delegator delegator = ctx.getDelegator();
+		String correspondingAuthor = list_correspondingAuthors.get(0);
+		String roleId = list_roleId.get(0);
+		Debug.log(module + "::createExternalMemberOfAPaper, paperId = " + paperId + ", correspondingAuthor = " + correspondingAuthor
+				+ ", roleId = " + roleId);
+		try{
+			
+			String externalMemberPaperDeclarationId = delegator.getNextSeqId("ExternalMemberPaperDeclaration");
+			GenericValue sp = delegator.makeValue("ExternalMemberPaperDeclaration");
+			sp.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
+			sp.put("paperId", paperId);
+			sp.put("correspondingAuthor", correspondingAuthor);
+			sp.put("roleId", roleId);
+			sp.put("staffName", staffName);
+			sp.put("affilliation", affilliation);
+			long sequence = Long.valueOf(s_sequence);
+			sp.put("sequence", sequence);
+			sp.put("statusId", "ENABLED");
+			delegator.create(sp);
+		
+			Debug.log(module + "::createExternalMemberOfAPaper, paperId = " + paperId + ", staffName = " + staffName
+					+ ", roleId = " + roleId + ", CREATED");
+			
+			GenericValue role = delegator.findOne("StaffPaperDeclarationRole", 
+					UtilMisc.toMap("roleId",roleId), false);
+			
+			
+			GenericValue spv = delegator.makeValue("ExternalMemberPaperDeclarationView");
+
+			spv.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
+			spv.put("staffName", (String) sp.get("staffName"));
+			spv.put("paperId", (String) sp.get("paperId"));
+			spv.put("roleId", (String) sp.get("roleId"));
+			spv.put("affilliation", (String) sp.get("affilliation"));
+			spv.put("sequence", sp.getLong("sequence"));
+			
+			spv.put("correspondingAuthor", (String) sp.get("correspondingAuthor"));
+			spv.put("roleName", role.getString("roleName"));
+
+			
+			retSucc.put("staffs", spv);
+			retSucc.put("message", "successfully");
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+	public static Map<String, Object> updateExternalMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String externalMemberPaperDeclarationId = (String)context.get("externalMemberPaperDeclarationId");
+
+		String paperId = (String)context.get("paperId");
+		List<String> list_correspondingAuthors = (List<String>)context.get("correspondingAuthor[]");
+		List<String> list_roleId = (List<String>)context.get("roleId[]");
+		String s_sequence = (String)context.get("sequence");
+		String affilliation = (String)context.get("affilliation");
+		String staffName = (String)context.get("staffName");
+		Delegator delegator = ctx.getDelegator();
+		String correspondingAuthor = list_correspondingAuthors.get(0);
+		String roleId = list_roleId.get(0);
+		Debug.log(module + "::updateExternalMemberOfAPaper, externalMemberPaperDeclarationId = " + externalMemberPaperDeclarationId +
+				", staffName = " + staffName
+				+ ", roleId = " + roleId);
+		try{
+			GenericValue sp = delegator.findOne("ExternalMemberPaperDeclaration", 
+					UtilMisc.toMap("externalMemberPaperDeclarationId",externalMemberPaperDeclarationId), false);
+			if(sp != null){
+				sp.put("paperId", paperId);
+				sp.put("correspondingAuthor", correspondingAuthor);
+				sp.put("roleId", roleId);
+				sp.put("staffName", staffName);
+				sp.put("affilliation", affilliation);
+				long sequence = Long.valueOf(s_sequence);
+				sp.put("sequence", sequence);
+				sp.put("statusId", "ENABLED");
+				
+				delegator.store(sp);
+			
+				GenericValue role = delegator.findOne("StaffPaperDeclarationRole", 
+						UtilMisc.toMap("roleId",roleId), false);
+				
+				GenericValue spv = delegator.makeValue("ExternalMemberPaperDeclarationView");
+
+				spv.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
+				spv.put("staffName", (String) sp.get("staffName"));
+				spv.put("paperId", (String) sp.get("paperId"));
+				spv.put("roleId", (String) sp.get("roleId"));
+				spv.put("affilliation", (String) sp.get("affilliation"));
+				spv.put("sequence", sp.getLong("sequence"));
+				
+				spv.put("correspondingAuthor", (String) sp.get("correspondingAuthor"));
+				spv.put("roleName", role.getString("roleName"));
+
+				
+				retSucc.put("staffs", spv);
+				retSucc.put("message", "successfully");
+			}else{
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+				
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
 
 	public static Map<String, Object> updateMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		String staffPaperDeclarationId = (String)context.get("staffPaperDeclarationId");
 		List<String> list_staffId = (List<String>)context.get("staffId[]");
 		List<String> list_roleId = (List<String>)context.get("roleId[]");
+		String s_sequence = (String)context.get("sequence");
+		List<String> list_correspondingAuthors = (List<String>)context.get("correspondingAuthor[]");
+		String correspondingAuthor = list_correspondingAuthors.get(0);
 		Delegator delegator = ctx.getDelegator();
 		String staffId = list_staffId.get(0);
 		String roleId = list_roleId.get(0);
@@ -1596,6 +1758,9 @@ public class PaperDeclarationService {
 			if(sp != null){
 				sp.put("staffId", staffId);
 				sp.put("roleId", roleId);
+				sp.put("correspondingAuthor", correspondingAuthor);
+				long sequence = Long.valueOf(s_sequence);
+				sp.put("sequence", sequence);
 				sp.put("statusId", "ENABLED");
 				delegator.store(sp);
 			
@@ -1640,7 +1805,37 @@ public class PaperDeclarationService {
 			GenericValue sp = delegator.findOne("StaffPaperDeclaration", 
 					UtilMisc.toMap("staffPaperDeclarationId",staffPaperDeclarationId), false);
 			if(sp != null){
-				delegator.removeValue(sp);
+				//delegator.removeValue(sp);
+				sp.put("statusId", "ENABLED");
+				delegator.store(sp);
+				retSucc.put("message", "successfully");
+			}else{
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+			
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		
+	}
+
+	public static Map<String, Object> removeExternalMemberOfAPaper(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String externalMemberPaperDeclarationId = (String)context.get("externalMemberPaperDeclarationId");
+		Delegator delegator = ctx.getDelegator();
+		Debug.log(module + "::removeExternalMemberOfAPaper, externalMemberPaperDeclarationId = " + externalMemberPaperDeclarationId);
+		try{
+			GenericValue sp = delegator.findOne("ExternalMemberPaperDeclaration", 
+					UtilMisc.toMap("externalMemberPaperDeclarationId",externalMemberPaperDeclarationId), false);
+			if(sp != null){
+				
+				sp.put("statusId", "ENABLED");
+				delegator.store(sp);
+				//delegator.removeValue(sp);
+				
 				retSucc.put("message", "successfully");
 			}else{
 				retSucc.put("message", "ban ghi khong ton tai");

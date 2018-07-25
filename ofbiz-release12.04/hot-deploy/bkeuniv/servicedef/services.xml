@@ -256,6 +256,11 @@
     	<attribute name="roles" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getYesNo" engine="java" 
+    		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getYesNo">
+    	
+    	<attribute name="yn" mode="OUT" type="List"></attribute>
+    </service>
     
     <service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
@@ -273,22 +278,66 @@
 		<attribute name="staffs" mode="OUT" type="List"></attribute>		
 	</service>
 
+    <service name="getExternalMembersOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getExternalMembersOfAPaper">
+		
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		
+		<attribute name="staffs" mode="OUT" type="List"></attribute>		
+	</service>
+
     <service name="createMemberOfAPaper" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createMemberOfAPaper">
 		
 		<attribute name="paperId" mode="IN" type="String"></attribute>
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
+		
 		
 		<attribute name="staffs" mode="OUT" type="GenericValue"></attribute>	
 		<attribute name="message" mode="OUT" type="String"></attribute>
 	</service>
 	
+    <service name="createExternalMemberOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createExternalMemberOfAPaper">
+		
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="affilliation" mode="IN" type="String"></attribute>
+    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
+		
+		<attribute name="staffs" mode="OUT" type="GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>
+	</service>
+
+    <service name="updateExternalMemberOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updateExternalMemberOfAPaper">
+		
+		<attribute name="externalMemberPaperDeclarationId" mode="IN" type="String"></attribute>
+    	<attribute name="paperId" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String"></attribute>
+    	<attribute name="affilliation" mode="IN" type="String"></attribute>
+    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
+		
+		<attribute name="staffs" mode="OUT" type="GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>
+	</service>
+
     <service name="updateMemberOfAPaper" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updateMemberOfAPaper">
 		
 		<attribute name="staffPaperDeclarationId" mode="IN" type="String"></attribute>
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		
 		<attribute name="staffs" mode="OUT" type="GenericValue"></attribute>	
@@ -299,6 +348,12 @@
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="removeMemberOfAPaper">
 		
 		<attribute name="staffPaperDeclarationId" mode="IN" type="String"></attribute>
+		<attribute name="message" mode="OUT" type="String"></attribute>
+	</service>
+    <service name="removeExternalMemberOfAPaper" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="removeExternalMemberOfAPaper">
+		
+		<attribute name="externalMemberPaperDeclarationId" mode="IN" type="String"></attribute>
 		<attribute name="message" mode="OUT" type="String"></attribute>
 	</service>
 

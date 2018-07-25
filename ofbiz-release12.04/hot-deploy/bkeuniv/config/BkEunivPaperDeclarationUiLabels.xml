@@ -88,6 +88,21 @@
         <value xml:lang="vi">Tải File bài báo</value>
     </property>
    
+    <property key="BkEunivSequenceMembers">
+        <value xml:lang="en">Sequence Member of papers</value>
+        <value xml:lang="vi">Số thứ tự (trong danh sách tác giả)*</value>
+    </property>
+
+    <property key="BkEunivCorrespondingAuthor">
+        <value xml:lang="en">Corresponding author</value>
+        <value xml:lang="vi">Corresponding author*</value>
+    </property>
+
+    <property key="Affiliation">
+        <value xml:lang="en">Affiliation</value>
+        <value xml:lang="vi">Cơ quan*</value>
+    </property>
+
     <property key="BkEunivPaperMembers">
         <value xml:lang="en">Member of papers</value>
         <value xml:lang="vi">Thành viên bài báo</value>
@@ -96,6 +111,11 @@
     <property key="BkEunivPaperMembersHUST">
         <value xml:lang="en">Member of papers</value>
         <value xml:lang="vi">Thành viên bài báo là cán bộ trường</value>
+    </property>
+
+    <property key="BkEunivPaperExternalMembersHUST">
+        <value xml:lang="en">External member of papers</value>
+        <value xml:lang="vi">Thành viên bài báo là cán bộ ngoài trường</value>
     </property>
 
     <property key="BkEunivSelectFaculty">

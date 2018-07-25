@@ -23,6 +23,7 @@
 		<table>
 			<tr>
 				<td><a href = "/bkeuniv/control/members-of-a-paper?paperId=${paper.paper.paperId}">${paperDeclarationUiLabelMap.BkEunivPaperMembersHUST}</a></td>
+				<td><a href = "/bkeuniv/control/external-members-of-a-paper?paperId=${paper.paper.paperId}">${paperDeclarationUiLabelMap.BkEunivPaperExternalMembersHUST}</a></td>
 				<td><@buttonStore text="Upload File" action="uploadFileProposal"/></td>
 			</tr>
 			

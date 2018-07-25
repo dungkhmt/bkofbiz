@@ -981,13 +981,15 @@
 		<prim-key field="roleId"/>
 	</entity>
 	
+	
 	<entity entity-name="StaffPaperDeclaration" package-name="org.ofbiz.bkeuniv">
 		<field name="staffPaperDeclarationId" type="id-vlong"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="paperId" type="id-vlong"></field>
 		<field name="statusId" type="id-vlong"></field>
 		<field name="roleId" type="id-vlong"></field>
-		
+		<field name="sequence" type="numeric"></field>
+		<field name="correspondingAuthor" type="id-vlong"></field>
 		<prim-key field="staffPaperDeclarationId"/>
 		<!-- 
 		<relation rel-entity-name="StaffPaperDeclarationRole" type="one">
@@ -1002,6 +1004,44 @@
 			<key-map field-name="paperId"/>
 		</relation>
 	</entity>
+	<entity entity-name="YesNo" package-name="org.ofbiz.bkeuniv">
+		<field name="name" type="id-vlong"></field>
+		<field name="value" type="id-vlong"></field>
+		<prim-key field="name"/>
+	</entity>
+	
+	<entity entity-name="ExternalMemberPaperDeclaration" package-name="org.ofbiz.bkeuniv">
+		<field name="externalMemberPaperDeclarationId" type="id-vlong"></field>
+		<field name="staffName" type="very-long"></field>
+		<field name="affilliation" type="very-long"></field>
+		<field name="paperId" type="id-vlong"></field>
+		<field name="statusId" type="id-vlong"></field>
+		<field name="roleId" type="id-vlong"></field>
+		<field name="sequence" type="numeric"></field>
+		<field name="correspondingAuthor" type="id-vlong"></field>
+		<prim-key field="externalMemberPaperDeclarationId"/>
+		<!-- 
+		<relation rel-entity-name="StaffPaperDeclarationRole" type="one">
+			<key-map field-name="roleId"/>
+		</relation>
+		 -->
+		 
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId"/>
+		</relation>
+	</entity>
+	<view-entity entity-name="ExternalMemberPaperDeclarationView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="SPDR" entity-name="StaffPaperDeclarationRole"></member-entity>
+		<member-entity entity-alias="SPD" entity-name="ExternalMemberPaperDeclaration"></member-entity>
+		
+		<alias-all entity-alias="SPD"></alias-all>
+		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
+		
+		<view-link rel-entity-alias="SPDR" entity-alias="SPD" rel-optional="true">
+			<key-map rel-field-name="roleId" field-name="roleId"/>
+		</view-link>
+		
+	</view-entity>
 	
 	<view-entity entity-name="PapersStaffView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>

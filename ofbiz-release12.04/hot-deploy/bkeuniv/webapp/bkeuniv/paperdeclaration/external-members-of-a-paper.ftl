@@ -51,6 +51,10 @@
 			"data": "staffName"
 		},
 		{
+			"name": uiLabelMap.Affiliation?j_string,
+			"data": "affilliation"
+		},
+		{
 			"name": uiLabelMap.BkEunivSequenceMembers?j_string,
 			"data": "sequence"
 		},
@@ -58,7 +62,6 @@
 			"name": uiLabelMap.BkEunivCorrespondingAuthor?j_string,
 			"data": "correspondingAuthor"
 		},
-
 		{
 			"name": uiLabelMap.BkEunivRoleName?j_string,
 			"data": "roleName"
@@ -66,14 +69,14 @@
 	] />
 	
 	<#assign fields=[
-		"staffPaperDeclarationId",
+		"externalMemberPaperDeclarationId",
 		"paperId",
 		"staffName",
-		"staffId",
-		"sequence",
-		"correspondingAuthor",
+		"affilliation",
 		"roleId",
-		"roleName"
+		"roleName",
+		"sequence",
+		"correspondingAuthor"
 	] />
   <#assign roleTypeList=[]/>
   <#list resultRole.roles as rt>
@@ -83,26 +86,26 @@
     </#if>
   </#list>
 
-	<#assign yesnoList=[]/>
+  <#assign yesnoList=[]/>
   <#list resultYesNo.yn as yn>
     <#if yn?has_content>
              <#assign op = { "name": yn.name?j_string ,"value": yn.value?j_string } />
             <#assign yesnoList = yesnoList + [op] />
     </#if>
   </#list>
+ 
   
+
 	<#assign columnsChange=[
 		{
 			"name": uiLabelMap.BkEunivPaperMembers?j_string,
-			"value": "staffId",
-			"type":"select_server_side",
-			"option":{
-				"maxItem": 1,
-				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
-				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
-			}
+			"value": "staffName"
 		},
-				{
+		{
+			"name": uiLabelMap.Affiliation?j_string,
+			"value": "affilliation"
+		},
+		{
 			"name": uiLabelMap.BkEunivSequenceMembers?j_string,
 			"value": "sequence",
 			"pattern": "[1-9]([0-9]{0,2})",
@@ -117,7 +120,6 @@
 				"maxItem": 1
 			}
 		},
-
 		{
 			"name": uiLabelMap.BkEunivRoleName?j_string,
 			"value": "roleId",
@@ -134,15 +136,13 @@
 	<#assign columnsNew=[
 		{
 			"name": uiLabelMap.BkEunivPaperMembers?j_string,
-			"value": "staffId",
-			"type":"select_server_side",
-			"option":{
-				"maxItem": 1,
-				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
-				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
-			}
+			"value": "staffName"
 		},
-				{
+		{
+			"name": uiLabelMap.Affiliation?j_string,
+			"value": "affilliation"
+		},
+		{
 			"name": uiLabelMap.BkEunivSequenceMembers?j_string,
 			"value": "sequence",
 			"pattern": "[1-9]([0-9]{0,2})",
@@ -157,7 +157,6 @@
 				"maxItem": 1
 			}
 		},
-
 		{
 			"name": uiLabelMap.BkEunivRoleName?j_string,
 			"value": "roleId",
@@ -173,7 +172,7 @@
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
 	
 	<@jqDataTable
-		urlData="/bkeuniv/control/get-members-of-a-paper"
+		urlData="/bkeuniv/control/get-external-members-of-a-paper"
 		optionData={
 			"data": {
 				"paperId": paperId?j_string
@@ -184,15 +183,15 @@
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="/bkeuniv/control/update-member-of-a-paper" 
-		urlAdd="/bkeuniv/control/create-member-of-a-paper" 
+		urlUpdate="/bkeuniv/control/update-external-member-of-a-paper" 
+		urlAdd="/bkeuniv/control/create-external-member-of-a-paper" 
 		optionDataAdd={
 			"data": {
 				"paperId": paperId?j_string
 			}
 		}
-		urlDelete="/bkeuniv/control/remove-member-of-a-paper" 
-		keysId=["staffPaperDeclarationId"] 
+		urlDelete="/bkeuniv/control/remove-external-member-of-a-paper" 
+		keysId=["externalMemberPaperDeclarationId"] 
 		fieldDataResult = "staffs" 
 		titleChange=uiLabelMap.BkEunivChange
 		titleNew=uiLabelMap.BkEunivNew
