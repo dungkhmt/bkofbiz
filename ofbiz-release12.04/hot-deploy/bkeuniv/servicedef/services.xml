@@ -291,7 +291,7 @@
 		
 		<attribute name="paperId" mode="IN" type="String"></attribute>
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
-    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
     	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
@@ -305,9 +305,9 @@
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="createExternalMemberOfAPaper">
 		
 		<attribute name="paperId" mode="IN" type="String"></attribute>
-    	<attribute name="staffName" mode="IN" type="String"></attribute>
-    	<attribute name="affilliation" mode="IN" type="String"></attribute>
-    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="affilliation" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		
@@ -320,9 +320,9 @@
 		
 		<attribute name="externalMemberPaperDeclarationId" mode="IN" type="String"></attribute>
     	<attribute name="paperId" mode="IN" type="String"></attribute>
-    	<attribute name="staffName" mode="IN" type="String"></attribute>
-    	<attribute name="affilliation" mode="IN" type="String"></attribute>
-    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="staffName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="affilliation" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		
@@ -335,7 +335,7 @@
 		
 		<attribute name="staffPaperDeclarationId" mode="IN" type="String"></attribute>
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
-    	<attribute name="sequence" mode="IN" type="String"></attribute>
+    	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
     	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>

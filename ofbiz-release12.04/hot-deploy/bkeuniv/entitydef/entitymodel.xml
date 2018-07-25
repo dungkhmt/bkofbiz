@@ -1059,6 +1059,8 @@
 		<alias name="categoryName" entity-alias="PC" field="paperCategoryName"></alias>
 		<alias name="statusStaffPaper" entity-alias="SPD" field="statusId"></alias>
 		<alias name="roleId" entity-alias="SPD" field="roleId"></alias>
+		<alias name="sequence" entity-alias="SPD" field="sequence"></alias>
+		<alias name="correspondingAuthor" entity-alias="SPD" field="correspondingAuthor"></alias>
 		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
 		<alias name="staffPaperDeclarationId" entity-alias="SPD"></alias>
 		<alias name="staffId" entity-alias="SPD"></alias>
