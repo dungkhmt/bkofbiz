@@ -100,4 +100,61 @@
 		</view-link>
 	</view-entity>	
 	
+	<view-entity entity-name="ResearchProjectView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPDY" entity-name="ResearchProjectDeclarationYear"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="PC" entity-name="ProjectCategory"></member-entity>
+		<member-entity entity-alias="PPR" entity-name="ProjectParticipationRole"></member-entity>
+		<member-entity entity-alias="S" entity-name="Staff"></member-entity>
+		
+		<alias name="researchProjectProposalId" entity-alias="RPP"></alias>
+		<alias name="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="projectCategoryId" entity-alias="PC"></alias>
+		<alias name="projectCategoryName" entity-alias="PC"></alias>
+		<alias name="workinghours" entity-alias="RPDY"></alias>
+		<alias name="projectParticipationRoleId" entity-alias="PPR"></alias>
+		<alias name="projectParticipationRoleName" entity-alias="PPR"></alias>
+		<alias name="staffId" entity-alias="S"></alias>
+		<alias name="staffName" entity-alias="S"></alias> 
+		<alias name="totalBudget" entity-alias="RPP"></alias>
+		<alias name="academicYearId" entity-alias="RPDY"></alias>
+		
+		<view-link rel-entity-alias="S" entity-alias="RPDY" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="PPR" entity-alias="RPDY" rel-optional="true">
+			<key-map rel-field-name="projectParticipationRoleId" field-name="projectParticipationRoleId"/>
+		</view-link>
+		<view-link rel-entity-alias="RPP" entity-alias="RPDY" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		<view-link rel-entity-alias="PC" entity-alias="RPP" rel-optional="true">
+			<key-map rel-field-name="projectCategoryId" field-name="projectCategoryId"/>
+		</view-link>
+	</view-entity>	
+	
+	<view-entity entity-name="MemberResearchProjectView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPDY" entity-name="ResearchProjectDeclarationYear"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="PPR" entity-name="ProjectParticipationRole"></member-entity>
+		<member-entity entity-alias="S" entity-name="Staff"></member-entity>
+		
+		<alias name="researchProjectProposalId" entity-alias="RPP"></alias>
+		<alias name="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="workinghours" entity-alias="RPDY"></alias>
+		<alias name="projectParticipationRoleId" entity-alias="PPR"></alias>
+		<alias name="projectParticipationRoleName" entity-alias="PPR"></alias>
+		<alias name="staffName" entity-alias="S"></alias>
+		
+		<view-link rel-entity-alias="S" entity-alias="RPDY" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="PPR" entity-alias="RPDY" rel-optional="true">
+			<key-map rel-field-name="projectParticipationRoleId" field-name="projectParticipationRoleId"/>
+		</view-link>
+		<view-link rel-entity-alias="RPP" entity-alias="RPDY" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+	</view-entity>
+	
 </entitymodel>

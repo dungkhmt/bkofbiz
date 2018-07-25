@@ -12,6 +12,7 @@ import java.util.Map;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFBorderFormatting;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -107,6 +108,47 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			// Debug.log(module + "::getPapersOfStaff, papers.sz = "
 			// + papers.size());
 			return papers;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	public static List<Map<String, Object>> getResearchProjectOfStaffAcademicYear(
+			Delegator delegator, String staffId, String academicYearId) {
+		try {
+			List<Map<String, Object>> ResearchProjectAcademicYear = new ArrayList<Map<String,Object>>();
+
+			List<EntityCondition> condsResearchProject = FastList.newInstance();
+			condsResearchProject.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			condsResearchProject.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+			
+			List<GenericValue> researchProject = delegator.findList("ResearchProjectView",
+					EntityCondition.makeCondition(condsResearchProject), null, null, null,
+					false);
+			
+			
+			for(int i = 0; i < researchProject.size(); ++i) {
+				Map<String, Object> rpg = new HashMap<String, Object>();
+				
+				GenericValue rp = researchProject.get(i);
+				
+				List<GenericValue> memberResearchProject = delegator.findList("MemberResearchProjectView",
+						EntityCondition.makeCondition("researchProjectProposalId",
+								EntityOperator.EQUALS, rp.getString("researchProjectProposalId")), null, null, null,
+						false);
+				
+				rpg.put("information", rp);
+				rpg.put("member", memberResearchProject);
+				ResearchProjectAcademicYear.add(rpg);
+				
+			}
+
+			return ResearchProjectAcademicYear;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -450,13 +492,43 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int nbIntAuthors = mPaper2NbAuthors.get(p);
 		c.setCellValue(nbIntAuthors);
 	}
-	public static void createSheetPaper02CN(HSSFWorkbook wb
+	
+	public static int createContentTable(Sheet sh, List<List<String>> data,
+			HSSFCellStyle cellStyle, int firstRow, int firstColumn) {
+		int currRow = firstRow;
+		int currColumn = firstColumn;
+		for(int i = 0; i < data.size(); ++i) {
+			List<String> d = data.get(i);
+			Row rh = sh.createRow(currRow);
+			for(int j = 0; j < d.size(); ++j) {
+				createCell(rh, cellStyle, d.get(j), currRow, currColumn);
+				
+				currColumn++;
+			}
+			currRow++;
+			currColumn = firstColumn;
+		}
+		
+		
+        return currRow - 1;
+	}
+	
+	public static void createSheetPaper02CN(HSSFWorkbook wb,
+			List<Map<String, Object>> researchProject,
+			List<GenericValue> user
 			) {
 		
 		int numColumns = 11; //A -> K
 		int[] widthColumns = {100, 1600, 5000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000};
 		int currRow = 0;
 		int currColumn = A; //A
+		
+		GenericValue u;
+		if(user==null) {
+			return;
+		} else {
+			u = user.get(0);
+		}
 		
 		// font Sheet
 		String fontName = "Times New Roman";
@@ -509,22 +581,31 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		
 		currColumn=B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, "Họ và tên cán bộ:", currRow, currColumn);
+		createCell(rh, cellStyleInformation, "Họ và tên cán bộ: " + u.getString("staffName"), currRow, currColumn);
 		
+		String telephone = "Tel: (CQ) - (NR) - (DĐ)";
+		if(u.getString("departmentName") != null) {
+			telephone = "Tel: (CQ) - (NR) - (DĐ) "+u.getString("staffPhone");
+		}
 		currColumn=G;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-		createCell(rh, cellStyleInformation, "Tel: (CQ) - (NR) - (DĐ)", currRow, currColumn);
+		createCell(rh, cellStyleInformation, telephone, currRow, currColumn);
 		
 		currRow++;
 		rh = sh.createRow(currRow);
 		
+		String departmentName = "Bộ môn: ";
+		if(u.getString("departmentName") != null) {
+			departmentName = "Bộ môn: "+u.getString("departmentName");
+		}
+		
 		currColumn=B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, "Bộ môn: ", currRow, currColumn);
+		createCell(rh, cellStyleInformation, departmentName, currRow, currColumn);
 		
 		currColumn=G;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-		createCell(rh, cellStyleInformation, "Khoa (Viện, Trung tâm): ", currRow, currColumn);
+		createCell(rh, cellStyleInformation, "Khoa (Viện, Trung tâm): "+u.getString("facultyName"), currRow, currColumn);
 
 		currRow++;
 		currRow++;
@@ -600,8 +681,92 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		
 		//content
 		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
+		HSSFCellStyle cellStyleCheckBox = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
+		if(researchProject == null || researchProject.size()==0) {
+			currRow++;
+			rh = sh.createRow(currRow);
+			
+			for(int i = B; i <= K; ++i) {
+				createCell(rh, cellStyleSum, "", currRow, i);
+			}
+		} else {
+			for(int i = 0; i < researchProject.size(); ++i) {
+				Map<String, Object> rp = researchProject.get(i);
+				GenericValue information = (GenericValue) rp.get("information");
+				List<GenericValue> member = (List<GenericValue>) rp.get("member");
+				String[] memberSA = new String[member.size()];
+				
+				int index = 0;
+				int totalWorkinghours = 0;
+				for(int j = 0; j < member.size(); ++j) {
+					GenericValue m = member.get(j);
+					totalWorkinghours += m.getLong("workinghours");
+					if(m.getString("projectParticipationRoleId").equals("DIRECTOR")) {
+						memberSA[index] = m.getString("staffName") + " (" +m.getString("projectParticipationRoleName") + ")";
+						index++;
+					}
+				}
+				
+				for(int j = 0; j < member.size(); ++j) {
+					GenericValue m = member.get(j);
+					if(m.getString("projectParticipationRoleId").equals("MEMBER")) {
+						memberSA[index] = m.getString("staffName") + " (" +m.getString("projectParticipationRoleName") + ")";
+						index++;
+					}
+				}
+				
+				String memberString = StringUtils.join(memberSA, ", ");
+				currRow++;
+				rh = sh.createRow(currRow);
+				
+				createCell(rh, cellStyleContent, String.valueOf(i+1) + ".", currRow, B);
+				createCell(rh, cellStyleContent, information.getString("researchProjectProposalName") + ". " + memberString, currRow, C);
+				createCell(rh, cellStyleContent, information.getString("totalBudget"), currRow, D);
+				
+				int checkBox = 0;
+				
+				switch (information.getString("projectCategoryId")) {
+				case "INST_MIX_PROJ":
+					checkBox = I;
+					break;
+				case "INST_PROJ":
+					checkBox = I;
+					break;
+				case "REGION_PROJ":
+					checkBox = F;		
+					break;			
+				case "NAFOS_PROJ":
+					checkBox = G;
+					break;
+				case "MINI_PROJ":
+					checkBox = F;
+					break;
+				case "NATI_PROJ":
+					checkBox = E;
+					break;
+					
+				case "INTCOOP_PROJ":
+					checkBox = H;
+					break;
+				}
+				
+				for(int j = E; j <= I; ++ j) {
+					if(j==checkBox) {
+						createCell(rh, cellStyleCheckBox, "X", currRow, checkBox);
+					} else {
+						createCell(rh, cellStyleCheckBox, "", currRow, j);
+					}
+				}
+				
+				createCell(rh, cellStyleContent, String.valueOf(totalWorkinghours), currRow, J);
+				
+				createCell(rh, cellStyleContent, information.getString("workinghours"), currRow, K);
+				
+			}
+		}
 		
-        
+		
+		
         //Sum
         
         currRow++;
@@ -675,6 +840,14 @@ public class PaperDeclarationUtil extends java.lang.Object {
         currColumn=I;
         createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
 		
+        //fake data
+        currRow++;
+		rh = sh.createRow(currRow);
+		
+		for(int i = B; i <= I; ++i) {
+			createCell(rh, cellStyleSum, "", currRow, i);
+		}
+        
         //Sum
         
         currRow++;
@@ -716,6 +889,64 @@ public class PaperDeclarationUtil extends java.lang.Object {
         currColumn=J;
         createCell(rh, cellStyleSign, "Người kê khai", currRow, currColumn);
 	}
+	
+	public static int createContentTablePaper01CN(Sheet sh, List<GenericValue> data, HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
+			HSSFCellStyle cellStyle, int firstRow, int firstColumn) {
+		int currRow = firstRow;
+		List<List<String>> papers = new ArrayList<List<String>>();
+		
+		//add row null
+		if(data.size() == 0) {
+			List<String> paper = new ArrayList<String>();
+			paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    papers.add(paper);
+		}
+		
+		for (int i = 0; i < data.size(); i++) {
+		    GenericValue p = data.get(i);
+		    List<String> paper = new ArrayList<String>();
+		    
+		    int nbAuthors = 0;
+		    if(p.getString("authors") != null){
+		        String[] s = p.getString("authors").split(",");
+		        nbAuthors = s.length;
+		    }
+		    int nbIntAuthors = mPaper2NbIntAuthors.get(p);
+		    paper.add((i + 1) + ".");
+		    paper.add(p.getString("authors"));
+		    paper.add(p.getString("paperName"));
+		    paper.add(p.getString("journalConferenceName"));
+		    paper.add(p.getString("volumn"));
+		    paper.add(p.getString("ISSN"));
+		    paper.add(String.valueOf(nbAuthors));
+		    paper.add(String.valueOf(nbIntAuthors));
+		    
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    paper.add("");
+		    papers.add(paper);
+		}
+		currRow = createContentTable(sh, papers, cellStyle, currRow, firstColumn);
+
+		
+		return currRow;
+	}
 
     
 	public static void createSheetPaper01CN(HSSFWorkbook wb,
@@ -732,10 +963,16 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			List<GenericValue> lst_domestic_conference_papers1,
 			List<GenericValue> lst_domestic_conference_papers2,
 			String academicYearId,
-			HashMap<GenericValue, Integer> mPaper2NbIntAuthors
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
+			List<GenericValue> user
 			) {
 		String[] year = academicYearId.split("-");
-		
+		GenericValue u;
+		if(user == null) {
+			return;
+		} else {
+			u = user.get(0);
+		}
 		int numColumns = 15; //A -> O
 		int[] widthColumns = {400, 1600, 5000, 6000, 4000, 4000, 3000, 2000, 2000, 4000, 4000, 4000, 2000, 2000, 2000};
 		int currRow = 0;
@@ -792,22 +1029,30 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		
 		currColumn=B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, "Họ và tên cán bộ:", currRow, currColumn);
+		createCell(rh, cellStyleInformation, "Họ và tên cán bộ: " + u.getString("staffName"), currRow, currColumn);
 		
+		String telephone = "Tel: (CQ) - (NR) - (DĐ)";
+		if(u.getString("departmentName") != null) {
+			telephone = "Tel: (CQ) - (NR) - (DĐ) "+u.getString("staffPhone");
+		}
 		currColumn=F;
 		mergedRegion(sh, currRow, currRow, currColumn, O);
-		createCell(rh, cellStyleInformation, "Tel: (CQ) - (NR) - (DĐ)", currRow, currColumn);
+		createCell(rh, cellStyleInformation, telephone, currRow, currColumn);
 		
 		currRow++;
 		rh = sh.createRow(currRow);
 		
+		String departmentName = "Bộ môn: ";
+		if(u.getString("departmentName") != null) {
+			departmentName = "Bộ môn: "+u.getString("departmentName");
+		}
 		currColumn=B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, "Bộ môn: ", currRow, currColumn);
+		createCell(rh, cellStyleInformation, departmentName, currRow, currColumn);
 		
 		currColumn=F;
 		mergedRegion(sh, currRow, currRow, currColumn, O);
-		createCell(rh, cellStyleInformation, "Khoa (Viện, Trung tâm): ", currRow, currColumn);
+		createCell(rh, cellStyleInformation, "Khoa (Viện, Trung tâm): "+u.getString("facultyName"), currRow, currColumn);
 
 		currRow++;
 		currRow++;
@@ -944,62 +1189,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
         createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):", currRow, currColumn);
 		
-        for (int i = 0; i < lst_isi_papers2.size(); i++) {
-			GenericValue p = lst_isi_papers2.get(i);
-			currRow++;
-			rh = sh.createRow(currRow);
-
-	        currColumn=B;
-	        createCell(rh, cellStyleContent, (i + 1) + ".", currRow, currColumn);
-			
-	        currColumn=C;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-	        
-			currColumn=D;
-	        createCell(rh, cellStyleContent, p.getString("paperName"), currRow, currColumn);
-			
-	        currColumn=E;
-	        createCell(rh, cellStyleContent, p.getString("journalConferenceName"), currRow, currColumn);
-			
-	        currColumn=F;
-	        createCell(rh, cellStyleContent, p.getString("volumn"), currRow, currColumn);
-	        
-	        currColumn=G;
-	        createCell(rh, cellStyleContent, p.getString("ISSN"), currRow, currColumn);
-			
-	        int nbAuthors = 0;
-			if(p.getString("authors") != null){
-				String[] s = p.getString("authors").split(",");
-				nbAuthors = s.length;
-			}
-			
-			currColumn=H;
-	        createCell(rh, cellStyleContent, String.valueOf(nbAuthors), currRow, currColumn);
-			
-	        currColumn=I;
-	        int nbIntAuthors = mPaper2NbIntAuthors.get(p);
-	        createCell(rh, cellStyleContent, String.valueOf(nbIntAuthors), currRow, currColumn);
-	        
-	        currColumn=J;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-	        
-	        currColumn=K;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-	        
-	        currColumn=L;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-	        
-	        currColumn=M;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-	        
-	        currColumn=N;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-	        
-	        currColumn=O;
-	        createCell(rh, cellStyleContent, "", currRow, currColumn);
-		}
-        
-        
+        currRow = createContentTablePaper01CN( sh, lst_isi_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B); 
+        		
         currRow++;
 		rh = sh.createRow(currRow);
 		currColumn=B;
@@ -1008,6 +1199,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		currColumn=C;
 		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
         createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:", currRow, currColumn);
+        
+        currRow = createContentTablePaper01CN( sh, lst_scopus_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
+        
         
         currRow++;
 		rh = sh.createRow(currRow);
@@ -1035,8 +1229,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         		fontNoBold.setColor(HSSFColor.BLACK.index);
         		String text = "Ngoài nước (Không kê lại các bài ở mục I, II):";
         		HSSFRichTextString value = new HSSFRichTextString(text);
-        		value.applyFont(0,9,fontBold);
-        		value.applyFont(10, text.length()-1, fontNoBold);
+        		value.applyFont(0,10,fontBold);
+        		value.applyFont(11, text.length()-1, fontNoBold);
         		
         		cellStyle.setWrapText(true);
         		cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
@@ -1054,6 +1248,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         	}
         }
         
+        currRow = createContentTablePaper01CN( sh, lst_other_international_journal_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
+        
         currRow++;
 		rh = sh.createRow(currRow);
         for(int i = B; i <= O; ++i) {
@@ -1063,6 +1259,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         		createCell(rh, cellStyleContent, "", currRow, i);
         	}
         }
+        
+        currRow = createContentTablePaper01CN( sh, lst_domestic_journal_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
         
         currRow++;
 		rh = sh.createRow(currRow);
@@ -1083,6 +1281,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         	}
         }
         
+        currRow = createContentTablePaper01CN( sh, lst_international_conference_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
+        
         currRow++;
 		rh = sh.createRow(currRow);
         for(int i = B; i <= O; ++i) {
@@ -1092,6 +1292,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         		createCell(rh, cellStyleContent, "", currRow, i);
         	}
         }
+        
+        currRow = createContentTablePaper01CN( sh, lst_domestic_conference_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
         
         
         currRow++;
@@ -1113,6 +1315,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
         createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):", currRow, currColumn);
 		
+        currRow = createContentTablePaper01CN( sh, lst_isi_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
+        
         currRow++;
 		rh = sh.createRow(currRow);
 		currColumn=B;
@@ -1121,6 +1325,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		currColumn=C;
 		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
         createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:", currRow, currColumn);
+        
+        currRow = createContentTablePaper01CN( sh, lst_scopus_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
         
         currRow++;
 		rh = sh.createRow(currRow);
@@ -1148,8 +1354,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         		fontNoBold.setColor(HSSFColor.BLACK.index);
         		String text = "Ngoài nước (Không kê lại các bài ở mục I, II):";
         		HSSFRichTextString value = new HSSFRichTextString(text);
-        		value.applyFont(0,9,fontBold);
-        		value.applyFont(10, text.length()-1, fontNoBold);
+        		value.applyFont(0,10,fontBold);
+        		value.applyFont(11, text.length()-1, fontNoBold);
         		
         		cellStyle.setWrapText(true);
         		cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
@@ -1167,6 +1373,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         	}
         }
         
+        currRow = createContentTablePaper01CN( sh, lst_other_international_journal_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
+        
         currRow++;
 		rh = sh.createRow(currRow);
         for(int i = B; i <= O; ++i) {
@@ -1176,6 +1384,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         		createCell(rh, cellStyleContent, "", currRow, i);
         	}
         }
+        
+        currRow = createContentTablePaper01CN( sh, lst_domestic_journal_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
         
         currRow++;
 		rh = sh.createRow(currRow);
@@ -1196,6 +1406,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         	}
         }
         
+        currRow = createContentTablePaper01CN( sh, lst_international_conference_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
+        
         currRow++;
 		rh = sh.createRow(currRow);
         for(int i = B; i <= O; ++i) {
@@ -1205,6 +1417,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
         		createCell(rh, cellStyleContent, "", currRow, i);
         	}
         }
+        
+        currRow = createContentTablePaper01CN( sh, lst_domestic_conference_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
         
         //Sum
         
@@ -1733,6 +1947,17 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			HSSFWorkbook wb = new HSSFWorkbook();
 			List<GenericValue> all_papers = getPapersOfStaffAcademicYear(
 					delegator, staffId, academicYearId);
+			
+			List<Map<String, Object>> researchProject = getResearchProjectOfStaffAcademicYear(
+					delegator, staffId, academicYearId);
+			
+			List<GenericValue> user = delegator.findList("StaffView",
+					EntityCondition.makeCondition("staffId",
+							EntityOperator.EQUALS, staffId), null, null, null,
+					false);
+			
+			
+			
 			HashMap<GenericValue, Integer> mPaper2NbIntAuthors = new HashMap<GenericValue, Integer>();
 			for (GenericValue p : all_papers) {
 				int nbauthors = getNbInternalAuthors(delegator,
@@ -1802,9 +2027,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					} else if (category.equals("CDOM_Other")) {
 						lst_domestic_conference_papers2.add(p);
 					}
-
 				}
 			}
+			
 			createSheetPaper01CN(wb, lst_isi_papers1, lst_isi_papers2,
 					lst_scopus_papers1, lst_scopus_papers2,
 					lst_internaltional_journal_papers1,
@@ -1813,9 +2038,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					lst_international_conference_papers1, lst_international_conference_papers2,
 					lst_domestic_conference_papers1, lst_domestic_conference_papers2, 
 					academicYearId,
-					mPaper2NbIntAuthors
+					mPaper2NbIntAuthors,
+					user
 					);
-			createSheetPaper02CN(wb);
+			createSheetPaper02CN(wb, researchProject, user);
 			
 			return wb;
 		} catch (Exception ex) {
