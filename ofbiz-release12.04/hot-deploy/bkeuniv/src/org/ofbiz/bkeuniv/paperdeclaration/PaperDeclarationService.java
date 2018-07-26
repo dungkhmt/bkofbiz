@@ -1521,6 +1521,7 @@ public class PaperDeclarationService {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		String paperId = (String)context.get("paperId");
 		Delegator delegator = ctx.getDelegator();
+		Debug.log(module + "::getMembersOfAPaper, paperId = " + paperId);
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
@@ -1528,6 +1529,18 @@ public class PaperDeclarationService {
 			List<GenericValue> lst = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds),null,null,null,false);
 			
+			Debug.log(module + "::getMembersOfAPaper, lst.sz = " + lst.size());
+			for(GenericValue g: lst){
+				Debug.log(g.getString("staffPaperDeclarationId") 
+						+ "," + g.getString("paperId")
+						+ "," + g.getString("staffName")
+						+ "," + g.getString("staffId")
+						+ "," + g.getLong("sequence")
+						+ "," + g.getString("correspondingAuthor")
+						+ "," + g.getString("roleId")
+						+ "," + g.getString("roleName")
+						);
+			}
 			retSucc.put("staffs", lst);
 		}catch(Exception ex){
 			ex.printStackTrace();

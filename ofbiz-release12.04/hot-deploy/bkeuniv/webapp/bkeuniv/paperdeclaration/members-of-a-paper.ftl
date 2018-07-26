@@ -58,7 +58,6 @@
 			"name": uiLabelMap.BkEunivCorrespondingAuthor?j_string,
 			"data": "correspondingAuthor"
 		},
-
 		{
 			"name": uiLabelMap.BkEunivRoleName?j_string,
 			"data": "roleName"
