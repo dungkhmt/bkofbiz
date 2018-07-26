@@ -51,6 +51,8 @@
 					'${k}': <@pfArray array=object[k] depth=depth+1/>,
 				<#elseif (object[k]?string)?index_of("function") == 0>
 					'${k}': ${object[k]?replace("\n|\t", "", "r")},
+				<#elseif (object[k]?string)?last_index_of("#JS")!= -1&&((object[k]?string)?last_index_of("#JS") == object[k]?length - 3)>
+					'${k}': ${object[k]?replace("\n|\t", "", "r")?substring(0, object[k]?length - 3)},
 				<#elseif object[k]?is_string>
 					'${k}': '${object[k]?j_string?replace("\n|\t", "", "r")}',
 				<#else>
@@ -66,7 +68,8 @@
 		urlData="" 
 		urlUpdate="" 
 		urlAdd="" 
-		urlDelete="" 
+		urlDelete=""
+		optionData={}
 		keysId=[]
 		fnInfoCallback=""
 		dataFields=[]
@@ -118,14 +121,9 @@
 		     border-left: 2px #0014ff solid;			
 		}
 
-		.dataTables_scrollHeadInner {
+		.width100 {
 			width: 100%!important;
 		}
-
-		.dataTables_scrollHeadInner table {
-			width: 100%!important;
-		}
-		
 		
 		.ui-menu-item {
 		    min-width: 100px;
@@ -256,8 +254,34 @@
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
+
+		function resizeDataTable() {
+			var tbodyDataTable = $(".dataTables_scrollBody tbody")[0];
+			var bodyDataTable = $(".dataTables_scrollBody")[0];
+			var isOverflownX = bodyDataTable.scrollWidth <= bodyDataTable.clientWidth;
+
+			var elements = [$(".dataTables_scrollHeadInner"), $(".dataTables_scrollHeadInner table"), $("#${id}-content")]
+			if(isOverflownX) {
+				elements.forEach(function(e) {
+					if(!e.hasClass("width100")) {
+						e.addClass("width100");
+					}
+				})
+			} else {
+				elements.forEach(function(e) {
+					if(e.hasClass("width100")) {
+						e.removeClass("width100");
+					}
+				})
+			}
+		}
 		
 		$(document).ready(function(){
+			
+			document.getElementById("side-bar").addEventListener("click", function() {
+				resizeDataTable();
+			})
+
 			document.getElementById("jqTitlePage").innerHTML = titlePage;
 
             jqDataTable.table = $('#${id}-content').DataTable( {
@@ -307,7 +331,7 @@
                     "fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
                 </#if>
                 "bJQueryUI": true,
-                
+
                 "fnServerData": function ( sSource, aoData, fnCallback ) {
                     <#--  loader.open();  -->
                     //console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
@@ -342,8 +366,7 @@
                     })||{}).value||0;
                     
                     var page = !i_size?0:i_start/i_size;
-
-                    $.ajax( {
+					$.ajax(deepmerge.all([,<@pfObject object=optionData />, {
                         "dataType": 'json', 
                         "type": "POST", 
                         "url": sSource, 
@@ -373,10 +396,15 @@
                             })
                             fnCallback(data)
                         }
-                    } );
+                    }]));
                     
                 }
             } );
+
+			jqDataTable.table.on( 'draw', function () {
+				resizeDataTable();
+			});
+
             <#if contextmenu>
                     $(document).contextmenu({
                         delegate: "#${id}-content td",
@@ -488,7 +516,7 @@
                         });
                 </#if>  -->
 		});
-		
+
 		function jqChange(data) {
 			new Promise(function(resolve, reject) {
 				resolve(new modal("#jqModalChange").setting({
@@ -805,7 +833,7 @@
 				</#if>
 			</div>
 			
-			<table id="${id}-content" style="width: 100%!important;" class="table table-striped">
+			<table id="${id}-content" class="table table-striped">
 			 <thead>
 				<tr>
 					<th>
