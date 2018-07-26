@@ -49,7 +49,7 @@
 					'${k}': <@pfObject object=object[k] depth=depth+1/>,
 				<#elseif object[k]?is_sequence>
 					'${k}': <@pfArray array=object[k] depth=depth+1/>,
-				<#elseif (object[k]?string)?last_index_of("#JS") == object[k]?length - 3>
+				<#elseif (object[k]?string)?last_index_of("#JS")!= -1&&((object[k]?string)?last_index_of("#JS") == object[k]?length - 3)>
 					'${k}': ${object[k]?replace("\n|\t", "", "r")?substring(0, object[k]?length - 3)},
 				<#elseif (object[k]?string)?index_of("function") == 0>
 					'${k}': ${object[k]?replace("\n|\t", "", "r")},
