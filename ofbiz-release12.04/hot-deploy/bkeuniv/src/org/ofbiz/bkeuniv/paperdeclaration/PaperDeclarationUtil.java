@@ -33,6 +33,7 @@ import org.apache.poi.util.Units;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.bkeuniv.department.DepartmentService;
+import org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionServiceUtil;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
@@ -126,6 +127,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityOperator.EQUALS, staffId));
 			condsResearchProject.add(EntityCondition.makeCondition("academicYearId",
 					EntityOperator.EQUALS, academicYearId));
+			//condsResearchProject.add(EntityCondition.makeCondition("statusId",
+			//		EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING ));
 			
 			List<GenericValue> researchProject = delegator.findList("ResearchProjectView",
 					EntityCondition.makeCondition(condsResearchProject), null, null, null,
