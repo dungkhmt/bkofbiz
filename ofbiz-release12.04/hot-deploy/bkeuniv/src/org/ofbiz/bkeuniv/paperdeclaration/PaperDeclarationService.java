@@ -130,7 +130,7 @@ public class PaperDeclarationService {
 		//String facultyId = (String) request.getParameter("facultyId-kv01");
 		Debug.log(module + "::exportExcel01CN02CN, academic year = " + academicYearId + ", userLoginId = " + staffId);
 
-		String filename = "01CN-02CN";
+		String filename = staffId + "-01CN-02CN";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
