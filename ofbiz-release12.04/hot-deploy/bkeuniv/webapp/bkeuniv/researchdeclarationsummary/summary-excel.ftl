@@ -562,7 +562,7 @@
 	<div class="modal-content">
 	<div class="modal-header">
 		<span class="close">&times;</span>
-		<h2>Export KV01</h2>
+		<h2>KV01-KV03</h2>
 	</div>
 	
 	<div class="modal-body">
@@ -580,7 +580,7 @@
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <span class="close">&times;</span>
-	      <h2>Export KV04</h2>
+	      <h2>KV04</h2>
 	    </div>
 	    
 	    <div class="modal-body">
@@ -600,7 +600,7 @@
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <span class="close">&times;</span>
-	      <h2>Export ISI</h2>
+	      <h2>ISI-SCOPUS</h2>
 	    </div>
 	    
 	    <div class="modal-body">
@@ -621,7 +621,7 @@
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <span class="close">&times;</span>
-	      <h2>Export Bo mon 01-02-03</h2>
+	      <h2>Bo mon 01-02-03</h2>
 	    </div>
 	    
 	    <div class="modal-body">
@@ -650,7 +650,7 @@
 		</div>
 		<div class="card-content" style="padding: 24px 10px 24px 10px;">
 			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-				EXPORT 01CN-02CN
+				01CN-02CN
 			</span>
 		</div>
 	</div>
@@ -662,7 +662,7 @@
 		</div>
 		<div class="card-content" style="padding: 24px 10px 24px 10px;">
 			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-				EXPORT KV01
+				KV01-KV03
 			</span>
 		</div>
 	</div>
@@ -674,7 +674,7 @@
 		</div>
 		<div class="card-content" style="padding: 24px 10px 24px 10px;">
 			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-				EXPORT ISI
+				ISI-SCOPUS
 			</span>
 		</div>
 	</div>
@@ -686,7 +686,7 @@
 		</div>
 		<div class="card-content" style="padding: 24px 10px 24px 10px;">
 			<span class="card-title" style="font-size: 16px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-				EXPORT Bo mon 01-02-03
+				Bo mon 01-02-03
 			</span>
 		</div>
 	</div>
@@ -698,7 +698,7 @@
 		</div>
 		<div class="card-content" style="padding: 24px 10px 24px 10px;">
 			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-				EXPORT KV04
+				KV04
 			</span>
 		</div>
 	</div>

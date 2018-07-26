@@ -100,7 +100,7 @@
 
     <property key="Affiliation">
         <value xml:lang="en">Affiliation</value>
-        <value xml:lang="vi">Cơ quan*</value>
+        <value xml:lang="vi">Cơ quan</value>
     </property>
 
     <property key="BkEunivPaperMembers">
