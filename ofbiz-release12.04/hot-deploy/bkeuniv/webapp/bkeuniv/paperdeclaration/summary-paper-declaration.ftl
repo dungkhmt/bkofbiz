@@ -1,175 +1,155 @@
-
-<#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
-<#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
-<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
-
-  <head>
-
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
-
-    
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    
-    
-    <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
-    
-    <meta charset="utf-8" />
-    
-    <title>DataTables - Context menu integration</title>
-  
-  </head>
-  
-<@Loader handleToggle="loader">
-	<@IconSpinner/>
-</@Loader>
-
-<input id="staffId" type="hidden" value="${login.userLoginId}"/>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/jqServerSide.ftl"/>
+<body>
 
 <script>
-  	loader.open();
-  </script>
-<div id="table-list-paper" style="overflow-y: auto; padding: 2em;">
-	<table id="list-papers" cellspacing="0" width="100%" class="display dataTable">
-		<thead>
-			<tr>
-				<th style="display: none"></th>
-				<th>${paperDeclarationUiLabelMap.BkEunivStaffId}</th>
-				<th>Tac gia</th>
-				<th>${paperDeclarationUiLabelMap.BkEunivPaperName}</th>
-				<th>${paperDeclarationUiLabelMap.BkEunivPaperCategory}</th>
-				<th>Thuoc de tai</th>
-				<th>Ten hoi nghi, tap chi</th>
-				<th>Nam</th>
-				<th>Vol. number</th>
-				<th>ISSN</th>
-				<th>Nam ke khai</th>
-				<th>Trang thai</th>
-			</tr>
-		</thead>
-	<tbody>
-	<#list resultPapers.papers as p>
-		<tr>
-			<td style="display: none">${p.paperId}</td>
-			<td>${p.staffName}</td>
-			<#if p.authors?exists>
-				<td>${p.authors}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if p.paperName?exists>
-				<td><a href="/bkeuniv/control/detail-paper?paperId=${p.paperId}">${p.paperName}</a></td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if p.paperCategoryName?exists>
-				<td>${p.paperCategoryName}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<#if p.researchProjectProposalName?exists>
-				<td>${p.researchProjectProposalName}</td>
-			<#else>
-				<td></td>
-			</#if>
-			
-			<#if p.journalConferenceName?exists>
-				<td>${p.journalConferenceName}</td>
-			<#else>
-				<td></td>
-			</#if>
-			
-			<#if p.year?exists>
-				<td>${p.year}</td>
-			</#if>
-			
-			<#if p.volumn?exists>
-				<td>${p.volumn}</td>
-			<#else>
-				<td></td>
-			</#if>
-			
-			<#if p.ISSN?exists>
-				<td>${p.ISSN}</td>
-			<#else>
-				<td></td>
-			</#if>
-			<td>${p.academicYearId}</td>
-			<#if p.paperDeclarationStatusName?exists>
-				<td>${p.paperDeclarationStatusName}</td>
-			<#else>
-				<td></td>
-			</#if>
-		</tr>
-	</#list>
-	</tbody>
-	</table>
+	var modalChangePassword;
+	function createContextMenu(id) {
 	
+		$(document).contextmenu({
+			delegate: "#"+id+"-content td",
+			menu: [
+				//{title: ${paperDeclarationUiLabelMap.BkEunivApprovePaper}, cmd: "approve"},
+				//{title: ${paperDeclarationUiLabelMap.BkEunivRejectPaper}, cmd: "reject"}
+				{title: "Phe duyet", cmd: "approve"},
+				{title: "Khong phe duyet", cmd: "reject"},
+				{title: 'Download minh chung', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
+			],
+			select: function(event, ui) {
+				var el = ui.target.parent();
+				var data = jqDataTable.table.row( el ).data();
+				switch(ui.cmd){
+					case "approve":
+						//$(ui.target).parent().remove();
+						//alert("phe duyet bai bao " + paperId);
+						approvePaper(data);
+						
+						break;
+					case "reject":
+						//alert('edit paper ' + paperId);
+						rejectPaper(data);
+						break;
+					case "pdf":
+						//alert('download paper ' + paperId);
+						jqPDF(data);
+						break;
+					
+				}
+			},
+			beforeOpen: function(event, ui) {
+				var $menu = ui.menu,
+					$target = ui.target,
+					extraData = ui.extraData;
+				ui.menu.zIndex(9999);
+			}
+		});
+	}
+</script>
+
+<div class="body">
+	
+	<#assign columns=[
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivStaffId?j_string,
+			"data": "staffName",
+			"width": "150px"
+		},
+		{
+			"name": "Tac gia"?j_string,
+			"data": "authors",
+			"width": "200px"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
+			"data": "paperName",
+			"width": "350px",
+			 "render": 'function(value, name, dataColumns, id) {
+				return \'<a href="/bkeuniv/control/detail-paper?paperId=\'+value+ \'">\'+value+\'</a>\';
+			}'
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,
+			"data": "paperCategoryName",
+			"width": "150px"
+		},
+		{
+			"name": "Thuoc de tai"?j_string,
+			"width": "200px",
+			"data": "researchProjectProposalName"
+		},
+		{
+			"name": "Ten hoi nghi, tap chi"?j_string,
+			"width": "150px",
+			"data": "journalConferenceName"
+		},
+		{
+			"name": "Nam"?j_string,
+			"data": "year"
+		},
+		{
+			"name": "Vol. number"?j_string,
+			"data": "volumn"
+		},
+		{
+			"name": "ISSN"?j_string,
+			"data": "ISSN"
+		},
+		{
+			"name": "Nam ke khai"?j_string,
+			"data": "academicYearId"
+		},
+		{
+			"name": "Trang thai"?j_string,
+			"data": "paperDeclarationStatusName"
+		}
+	] />
+	
+	<#assign fields=[
+		"paperId",
+		"staffName",
+		"authors",
+		"paperName",
+		"paperCategoryName",
+		"researchProjectProposalName",
+		"departmentName",
+		"year",
+		"volumn",
+		"ISSN",
+		"academicYearId",
+		"paperDeclarationStatusName"
+	] />
+	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	<#assign optionData={} />
+	<#if parameters.facultyId??&&parameters.facultyId!="all">
+		<#assign optionData={ "data": {"facultyId": parameters.facultyId?j_string}} />
+	</#if>
+
+	<@jqDataTable
+		id="jqDataTable"
+		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetPaperDeclarations" 
+		columns=columns 
+		dataFields=fields
+		sizeTable=sizeTable
+		keysId=["paperId"]
+		contextmenu=false
+		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
+		getDataFilter= "getFilter()"
+		optionData=optionData
+	/>
 </div>
+
 <script>
 var obj;
 
-$(document).ready(function() {
-  loader.close();
-  var oTable = $('#list-papers').dataTable({
-    "bJQueryUI": true,
-    "sDom": 'l<"H"Rf>t<"F"ip>'
-  });
-  $(document).contextmenu({
-    delegate: ".dataTable td",
-    menu: [
-      //{title: ${paperDeclarationUiLabelMap.BkEunivApprovePaper}, cmd: "approve"},
-      //{title: ${paperDeclarationUiLabelMap.BkEunivRejectPaper}, cmd: "reject"}
-   	  {title: "Phe duyet", cmd: "approve"},
-      {title: "Khong phe duyet", cmd: "reject"},
-   	  {title: 'Download minh chung', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
-     ],
-    select: function(event, ui) {
-        switch(ui.cmd){
-            case "approve":
-                //$(ui.target).parent().remove();
-                obj = ui;
-				var el = ui.target.parent();
-				var paperId = el.children()[0].innerHTML;
-				//alert("phe duyet bai bao " + paperId);
-				approvePaper(paperId);
-				
-                break;
-            case "reject":
-				obj = ui;
-				var el = ui.target.parent();
-				var paperId = el.children()[0].innerHTML;
-				//alert('edit paper ' + paperId);
-				rejectPaper(paperId);
-			    break;
-			case "pdf":
-				obj = ui;
-				var el = ui.target.parent();
-				var paperId = el.children()[0].innerHTML;
-				//alert('download paper ' + paperId);
-				jqPDF(paperId);
-			    break;
-			   
-        }
-    },
-    beforeOpen: function(event, ui) {
-        var $menu = ui.menu,
-            $target = ui.target
-        ui.menu.zIndex(0);
-    }
-  });
-    
-} );
-
-function jqPDF(paperId){
+function jqPDF(data){
+		var paperId = data.paperId
 		console.log(paperId);
 		window.open("/bkeuniv/control/download-file-paper?id-paper=" + paperId, "_blank")
 }	
 	
-function approvePaper(paperId){
-	var staffId = document.getElementById("staffId").value;
+function approvePaper(data){
+	var paperId = data.paperId;
+	var staffId = "${login.userLoginId}";
 	//alert("approve paper staff = " + staffId);
 	$.ajax({
 					url: "/bkeuniv/control/approve-a-paper-declaration",
@@ -186,22 +166,60 @@ function approvePaper(paperId){
 	});
 				
 }
-function rejectPaper(paperId){
-	var staffId = document.getElementById("staffId").value;
+function rejectPaper(data){
+	var staffId = "${login.userLoginId}";
+	var paperId = data.paperId;
 	//alert("approve paper staff = " + staffId);
 	$.ajax({
-					url: "/bkeuniv/control/reject-a-paper-declaration",
-					type: 'POST',
-					data: {
-						"paperId": paperId,
-						"staffId": staffId
-					},
-					success:function(rs){
-						console.log(rs);
-						//alert("Bai bao da duoc phe duyet " + rs.status);
-					}
-	
+		url: "/bkeuniv/control/reject-a-paper-declaration",
+		type: 'POST',
+		data: {
+			"paperId": paperId,
+			"staffId": staffId
+		},
+		success:function(rs){
+			console.log(rs);
+			//alert("Bai bao da duoc phe duyet " + rs.status);
+		}
 	});
 				
 }
+	var filter = {
+			"expressions": [],
+			"operation": "AND"
+		};
+	function getFilter() {
+		<#--  var filter = {
+			"expressions": [],
+			"operation": "AND"
+		};  -->
+
+		<#if parameters.academicYearId??&&parameters.academicYearId!="all">
+			filter.expressions.push({
+				"field": "academicYearId",
+				"operation": "EQUAL",
+				"value": '${parameters.academicYearId}'
+			});
+		</#if>
+
+		<#if parameters.paperCategoryId??&&parameters.paperCategoryId!="all">
+			filter.expressions.push({
+				"field": "paperCategoryId",
+				"operation": "EQUAL",
+				"value": '${parameters.paperCategoryId}'
+			});
+		</#if>
+
+		<#if parameters.paperDeclarationStatusId??&&parameters.paperDeclarationStatusId!="all">
+			filter.expressions.push({
+				"field": "approveStatusId",
+				"operation": "EQUAL",
+				"value": '${parameters.paperDeclarationStatusId}'
+			});
+		</#if>
+
+		if(filter.expressions.length > 0) {
+			return filter;
+		}
+	}
 </script>

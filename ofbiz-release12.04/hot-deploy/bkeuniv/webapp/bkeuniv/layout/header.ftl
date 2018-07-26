@@ -21,6 +21,7 @@
 		<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
 		<script src="/resource/bkeuniv/js/lib/dragula.min.js"></script>
 		<script src="/resource/bkeuniv/js/common.js"></script>
+		<script src="/resource/bkeuniv/js/lib/deepmerge.js"></script>
 		
 		<#list layoutSettings.scripts as script>
 			<script src="${StringUtil.wrapString(script)}"></script>

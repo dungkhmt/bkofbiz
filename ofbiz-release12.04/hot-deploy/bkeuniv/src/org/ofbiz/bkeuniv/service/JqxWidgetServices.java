@@ -476,7 +476,7 @@ public class JqxWidgetServices {
 		case AND:
 			return EntityCondition.makeCondition(conditions, EntityOperator.AND);
 		case OR:
-			return EntityCondition.makeCondition(conditions, EntityOperator.AND);
+			return EntityCondition.makeCondition(conditions, EntityOperator.OR);
 		default:
 			return EntityCondition.makeCondition(conditions);
 		}

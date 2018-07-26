@@ -134,7 +134,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityCondition.makeCondition(condsResearchProject), null, null, null,
 					false);
 			
-			
+			Debug.log(module + "::getResearchProjectOfStaffAcademicYear, researchProject.sz = " + researchProject.size());
 			for(int i = 0; i < researchProject.size(); ++i) {
 				Map<String, Object> rpg = new HashMap<String, Object>();
 				
@@ -144,6 +144,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						EntityCondition.makeCondition("researchProjectProposalId",
 								EntityOperator.EQUALS, rp.getString("researchProjectProposalId")), null, null, null,
 						false);
+				Debug.log(module + "::getResearchProjectOfStaffAcademicYear, project " + rp.getString("researchProjectProposalName")
+				+ " has " + memberResearchProject.size() + " member");
 				
 				rpg.put("information", rp);
 				rpg.put("member", memberResearchProject);
@@ -1181,7 +1183,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		
 		currColumn=C;
 		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/2017 - 31/12/2017", currRow, currColumn);
+        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/" + year[0] + " - 31/12/" + year[0], currRow, currColumn);
 		
         currRow++;
 		rh = sh.createRow(currRow);
@@ -1307,7 +1309,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		
 		currColumn=C;
 		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/2017 - 31/12/2017", currRow, currColumn);
+        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/" + year[1] + " - 30/06/" + year[1], currRow, currColumn);
 		
         currRow++;
 		rh = sh.createRow(currRow);

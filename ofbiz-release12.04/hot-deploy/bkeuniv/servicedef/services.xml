@@ -109,6 +109,10 @@
    	<service name="JQGetListSecurityGroups" engine="java" invoke="JQGetListSecurityGroups" location="org.ofbiz.permission.BKEunivPermissionService">
         <implements service="jqxGetListInterface"/>
    	</service>
+   	
+   	<service name="JQGetPaperDeclarations" engine="java" invoke="JQGetPaperDeclarations" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
             location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">
