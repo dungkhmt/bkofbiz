@@ -31,7 +31,7 @@
 			window.entrypoint = window.location.origin + "<@ofbizUrl>/</@ofbizUrl>";
 		</script>
 		
-		<title>BKEUNIV</title>
+		<title>H&#x1EC7; th&#x1ED1;ng qu&#x1EA3;n l&#xFD; khoa h&#x1ECD;c c&#xF4;ng ngh&#x1EC7;</title>
 	</head>
 <body>
 	<div id="body" style="height: 95%;margin-top:40px;width:100%; background-color: #fff;display: flex;flex: 1 1 0%;overflow-y: hidden;overflow-x: hidden;">
