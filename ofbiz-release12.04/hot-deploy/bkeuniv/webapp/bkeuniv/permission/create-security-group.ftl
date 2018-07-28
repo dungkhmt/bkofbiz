@@ -34,43 +34,6 @@
 
 	}
 
-	function updatePermission(){
-		var groupId = $("#security-group-function").val();
-		var insert = (userChange.filter(function(u) {
-			return !u.groupId&&!!u.groupId_t&&u.groupId_t==groupId;
-		})||[]).map(function(u) {
-			return u.staffId
-		});
-
-		var remove = (userChange.filter(function(u) {
-			return !!u.groupId&&!u.groupId_t&&u.groupId_t!=groupId
-		})||[]).map(function(u) {
-			return u.staffId
-		});
-
-		if(insert.length == 0 && remove.length == 0) {
-			alertify.success("${uiLabelMap.BkEunivNoChange}");
-			return;
-		}
-
-		console.log(insert, remove)
-		
-		$.ajax({
-			url: "/bkeuniv/control/store-security-group-users",
-			type: 'POST',
-			data: {
-				"groupId": groupId,
-				"staffsInsert": insert.join(", "),
-				"staffsRemove": remove.join(", ")
-			},
-			success: function(rs){
-				alertify.success("${uiLabelMap.BkEunivSaveSuccess}");
-				userChange=[];
-				refresh();
-			}
-		})
-
-	}
 	var test;
 	function refresh(that) {
 		test = that;
@@ -115,6 +78,17 @@
 		}
 		
 	] />
+
+	<#assign columnsNew=[
+		{
+			"name": "groupId"?j_string,
+			"value": "groupId"
+		},
+		{
+			"name": "description"?j_string,
+			"value": "description"
+		}
+	] />
 	
 	
 	
@@ -129,20 +103,13 @@
 	<@jqDataTable
 		id="jqDataTable"
 		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetListSecurityGroups" 
+		urlAdd="add-new-security-group"
 		columns=columns 
+		columnsNew=columnsNew
 		dataFields=fields
 		sizeTable=sizeTable
 		keysId=["groupId"]
 		contextmenu=false
-		advanceActionButton=[
-			{
-				"id": "updatePermission",
-				"onClick": "updatePermission()",
-				"width": "120px",
-				"dImage": "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z",
-				"text": uiLabelMap.BkEunivSave
-			}
-		]
 		JqRefresh='refresh()'
 	/>
 </div>
