@@ -63,7 +63,7 @@
 			"data": "paperName",
 			"width": "350px",
 			 "render": 'function(value, name, dataColumns, id) {
-				return \'<a href="/bkeuniv/control/detail-paper?paperId=\'+value+ \'">\'+value+\'</a>\';
+				return \'<a href="/bkeuniv/control/detail-paper?paperId=\'+dataColumns.paperId+ \'">\'+value+\'</a>\';
 			}'
 		},
 		{
