@@ -316,6 +316,8 @@ modal.prototype.action = function() {
 	option.success = function(data) {
 		if(!!_._action.update && typeof _._action.update === "function") {
 			_._action.update(data)
+			$([_.id, "#modal-template"].join(" ")).modal('hide');
+			closeLoader();
 		} else {
 			_._updateDefault(data[_._action.fieldDataResult], data.message);
 		}
