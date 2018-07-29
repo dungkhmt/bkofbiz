@@ -45,8 +45,6 @@ import java.util.ArrayList;
 
 import jimm.datavision.source.Column;
 
-
-
 public class PaperDeclarationUtil extends java.lang.Object {
 	public static final String STATUS_ENABLED = "ENABLED";
 	public static final String STATUS_DISABLED = "DISABLED";
@@ -54,7 +52,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	public static final String[] sSTT = new String[] { "I", "II", "III", "IV",
 			"V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV",
 			"XV" };
-	static final int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7, I = 8, J = 9, K = 10, L = 11, M = 12, N = 13, O = 14, P = 15, Q = 16, R = 17, S = 18, T = 19, U = 20, V = 21, W = 22, X = 23, Y = 24, Z = 25;
+	static final int A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7,
+			I = 8, J = 9, K = 10, L = 11, M = 12, N = 13, O = 14, P = 15,
+			Q = 16, R = 17, S = 18, T = 19, U = 20, V = 21, W = 22, X = 23,
+			Y = 24, Z = 25;
 
 	public static List<GenericValue> getPapersOfStaff(Delegator delegator,
 			String staffId) {
@@ -116,41 +117,50 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		}
 
 	}
-	
+
 	public static List<Map<String, Object>> getResearchProjectOfStaffAcademicYear(
 			Delegator delegator, String staffId, String academicYearId) {
 		try {
-			List<Map<String, Object>> ResearchProjectAcademicYear = new ArrayList<Map<String,Object>>();
+			List<Map<String, Object>> ResearchProjectAcademicYear = new ArrayList<Map<String, Object>>();
 
 			List<EntityCondition> condsResearchProject = FastList.newInstance();
 			condsResearchProject.add(EntityCondition.makeCondition("staffId",
 					EntityOperator.EQUALS, staffId));
-			condsResearchProject.add(EntityCondition.makeCondition("academicYearId",
-					EntityOperator.EQUALS, academicYearId));
-			//condsResearchProject.add(EntityCondition.makeCondition("statusId",
-			//		EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING ));
-			
-			List<GenericValue> researchProject = delegator.findList("ResearchProjectView",
-					EntityCondition.makeCondition(condsResearchProject), null, null, null,
-					false);
-			
-			Debug.log(module + "::getResearchProjectOfStaffAcademicYear, researchProject.sz = " + researchProject.size());
-			for(int i = 0; i < researchProject.size(); ++i) {
+			condsResearchProject.add(EntityCondition.makeCondition(
+					"academicYearId", EntityOperator.EQUALS, academicYearId));
+			// condsResearchProject.add(EntityCondition.makeCondition("statusId",
+			// EntityOperator.EQUALS,
+			// ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING ));
+
+			List<GenericValue> researchProject = delegator.findList(
+					"ResearchProjectView",
+					EntityCondition.makeCondition(condsResearchProject), null,
+					null, null, false);
+
+			Debug.log(module
+					+ "::getResearchProjectOfStaffAcademicYear, researchProject.sz = "
+					+ researchProject.size());
+			for (int i = 0; i < researchProject.size(); ++i) {
 				Map<String, Object> rpg = new HashMap<String, Object>();
-				
+
 				GenericValue rp = researchProject.get(i);
-				
-				List<GenericValue> memberResearchProject = delegator.findList("MemberResearchProjectView",
-						EntityCondition.makeCondition("researchProjectProposalId",
-								EntityOperator.EQUALS, rp.getString("researchProjectProposalId")), null, null, null,
-						false);
-				Debug.log(module + "::getResearchProjectOfStaffAcademicYear, project " + rp.getString("researchProjectProposalName")
-				+ " has " + memberResearchProject.size() + " member");
-				
+
+				List<GenericValue> memberResearchProject = delegator.findList(
+						"MemberResearchProjectView",
+						EntityCondition.makeCondition(
+								"researchProjectProposalId",
+								EntityOperator.EQUALS,
+								rp.getString("researchProjectProposalId")),
+						null, null, null, false);
+				Debug.log(module
+						+ "::getResearchProjectOfStaffAcademicYear, project "
+						+ rp.getString("researchProjectProposalName") + " has "
+						+ memberResearchProject.size() + " member");
+
 				rpg.put("information", rp);
 				rpg.put("member", memberResearchProject);
 				ResearchProjectAcademicYear.add(rpg);
-				
+
 			}
 
 			return ResearchProjectAcademicYear;
@@ -437,7 +447,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				if (staffId == null)
 					continue;
 
-				long hours = g.getLong("workinghours");
+				long hours = 0;
+				if(g.getLong("workinghours") != null)
+					hours = g.getLong("workinghours");
 				if (retSucc.get(staffId) == null)
 					retSucc.put(staffId, hours);
 				else
@@ -497,239 +509,285 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int nbIntAuthors = mPaper2NbAuthors.get(p);
 		c.setCellValue(nbIntAuthors);
 	}
-	
+
 	public static int createContentTable(Sheet sh, List<List<String>> data,
 			HSSFCellStyle cellStyle, int firstRow, int firstColumn) {
 		int currRow = firstRow;
 		int currColumn = firstColumn;
-		for(int i = 0; i < data.size(); ++i) {
+		for (int i = 0; i < data.size(); ++i) {
 			List<String> d = data.get(i);
 			Row rh = sh.createRow(currRow);
-			for(int j = 0; j < d.size(); ++j) {
+			for (int j = 0; j < d.size(); ++j) {
 				createCell(rh, cellStyle, d.get(j), currRow, currColumn);
-				
+
 				currColumn++;
 			}
 			currRow++;
 			currColumn = firstColumn;
 		}
-		
-		
-        return currRow - 1;
+
+		return currRow - 1;
 	}
-	
+
 	public static void createSheetPaper02CN(HSSFWorkbook wb,
-			List<Map<String, Object>> researchProject,
-			List<GenericValue> user
-			) {
-		
-		int numColumns = 11; //A -> K
-		int[] widthColumns = {100, 1600, 5000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000};
+			List<Map<String, Object>> researchProject, List<GenericValue> user) {
+
+		int numColumns = 11; // A -> K
+		int[] widthColumns = { 100, 1600, 5000, 3000, 3000, 3000, 3000, 3000,
+				3000, 3000, 3000 };
 		int currRow = 0;
-		int currColumn = A; //A
-		
+		int currColumn = A; // A
+
 		GenericValue u;
-		if(user==null) {
+		if (user == null) {
 			return;
 		} else {
 			u = user.get(0);
 		}
-		
+
 		// font Sheet
 		String fontName = "Times New Roman";
-		
+
 		Sheet sh = wb.createSheet("Đề tài 01-CN");
 		Row rh;
 		Cell ch;
-		
-		for(int i = 0; i < widthColumns.length; ++i) {
+
+		for (int i = 0; i < widthColumns.length; ++i) {
 			sh.setColumnWidth(i, widthColumns[i]);
 		}
-		
-		//Title
-		HSSFCellStyle cellStyleTitle = createCellStyle(wb, (short)12, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_NONE);
-				
+
+		// Title
+		HSSFCellStyle cellStyleTitle = createCellStyle(wb, (short) 12,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_NONE);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
+		currColumn = B;
 		String title = "BẢNG KÊ KHAI KHỐI LƯỢNG NGHIÊN CỨU KHOA HỌC NĂM HỌC 2017 - 2018";
 		mergedRegion(sh, currRow, currRow, currColumn, H);
 		createCell(rh, cellStyleTitle, title, currRow, currColumn);
-		
 
-		//Note
-		HSSFCellStyle cellStyleNote = createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER);
-		
-		currColumn=J;
-		createCell(rh, cellStyleNote, "Mẫu 02- CN\nDùng cho cá nhân", currRow, currColumn);
-		
+		// Note
+		HSSFCellStyle cellStyleNote = createCellStyle(wb, (short) 11,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER);
+
+		currColumn = J;
+		createCell(rh, cellStyleNote, "Mẫu 02- CN\nDùng cho cá nhân", currRow,
+				currColumn);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=A;
-		
-		//Subtitle
-		HSSFCellStyle cellStyleSubTitle = createCellStyle(wb, (short)9, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
-		
-		currColumn=B;
+		currColumn = A;
+
+		// Subtitle
+		HSSFCellStyle cellStyleSubTitle = createCellStyle(wb, (short) 9,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, H);
-		createCell(rh, cellStyleSubTitle, "ĐỀ TÀI NGHIÊN CỨU KHOA HỌC CÁC CẤP – BẰNG ĐỘC QUYỀN SÁNG CHẾ/GIẢI PHÁP HỮU ÍCH", currRow, currColumn);
+		createCell(
+				rh,
+				cellStyleSubTitle,
+				"ĐỀ TÀI NGHIÊN CỨU KHOA HỌC CÁC CẤP – BẰNG ĐỘC QUYỀN SÁNG CHẾ/GIẢI PHÁP HỮU ÍCH",
+				currRow, currColumn);
 
-		//Merge Note
-		mergedRegion(wb, sh, currRow-1, currRow, J, K, CellStyle.BORDER_THIN);
-		
+		// Merge Note
+		mergedRegion(wb, sh, currRow - 1, currRow, J, K, CellStyle.BORDER_THIN);
+
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//Information
-		HSSFCellStyle cellStyleInformation = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
-		
-		currColumn=B;
+
+		// Information
+		HSSFCellStyle cellStyleInformation = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, "Họ và tên cán bộ: " + u.getString("staffName"), currRow, currColumn);
-		
+		createCell(rh, cellStyleInformation,
+				"Họ và tên cán bộ: " + u.getString("staffName"), currRow,
+				currColumn);
+
 		String telephone = "Tel: (CQ) - (NR) - (DĐ)";
-		if(u.getString("departmentName") != null) {
-			telephone = "Tel: (CQ) - (NR) - (DĐ) "+u.getString("staffPhone");
+		if (u.getString("departmentName") != null) {
+			telephone = "Tel: (CQ) - (NR) - (DĐ) " + u.getString("staffPhone");
 		}
-		currColumn=G;
+		currColumn = G;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
 		createCell(rh, cellStyleInformation, telephone, currRow, currColumn);
-		
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
+
 		String departmentName = "Bộ môn: ";
-		if(u.getString("departmentName") != null) {
-			departmentName = "Bộ môn: "+u.getString("departmentName");
+		if (u.getString("departmentName") != null) {
+			departmentName = "Bộ môn: " + u.getString("departmentName");
 		}
-		
-		currColumn=B;
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, departmentName, currRow, currColumn);
-		
-		currColumn=G;
+		createCell(rh, cellStyleInformation, departmentName, currRow,
+				currColumn);
+
+		currColumn = G;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-		createCell(rh, cellStyleInformation, "Khoa (Viện, Trung tâm): "+u.getString("facultyName"), currRow, currColumn);
+		createCell(rh, cellStyleInformation,
+				"Khoa (Viện, Trung tâm): " + u.getString("facultyName"),
+				currRow, currColumn);
 
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		HSSFCellStyle cellStyleSection = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
-		currColumn=B;
+
+		HSSFCellStyle cellStyleSection = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-		createCell(rh, cellStyleSection, "I. ĐỀ TÀI NGHIÊN CỨU KHOA HỌC CÁC CẤP:", currRow, currColumn);
-		
+		createCell(rh, cellStyleSection,
+				"I. ĐỀ TÀI NGHIÊN CỨU KHOA HỌC CÁC CẤP:", currRow, currColumn);
+
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//Table content
-		HSSFCellStyle cellStyleHeaderTable = createCellStyle(wb, (short)9, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		HSSFCellStyle cellStyleSum = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		
-		currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "TT", currRow, currColumn);
-        
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "Tên đề tài (dự án), thời gian thực hiện.\nNhững người cùng thực hiện, đơn vị, vai trò.", currRow, currColumn);
-        
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "Kinh phí được cấp\n(Triệu đồng)", currRow, currColumn);
-        
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "Đề tài KHCN, dự án, cấp Nhà nước", currRow, currColumn);
-        
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "Đề tài, dự án cấp Bộ, thành phố và tương đương", currRow, currColumn);
-        
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "Đề tài thuộc quỹ Nafosted", currRow, currColumn);
-        
-		currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "Đề tài, dự án, HTQT", currRow, currColumn);
-		
-        currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "Đề tài cấp trường", currRow, currColumn);
-		
-        currColumn=J;
-        createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi của  đề tài, dự án", currRow, currColumn);
-		
-        currColumn=K;
-        createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi cho người kê khai\n(I)", currRow, currColumn);
-        
+
+		// Table content
+		HSSFCellStyle cellStyleHeaderTable = createCellStyle(wb, (short) 9,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_THIN);
+		HSSFCellStyle cellStyleSum = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "TT", currRow, currColumn);
+
+		currColumn = C;
+		createCell(
+				rh,
+				cellStyleHeaderTable,
+				"Tên đề tài (dự án), thời gian thực hiện.\nNhững người cùng thực hiện, đơn vị, vai trò.",
+				currRow, currColumn);
+
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "Kinh phí được cấp\n(Triệu đồng)",
+				currRow, currColumn);
+
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable,
+				"Đề tài KHCN, dự án, cấp Nhà nước", currRow, currColumn);
+
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable,
+				"Đề tài, dự án cấp Bộ, thành phố và tương đương", currRow,
+				currColumn);
+
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "Đề tài thuộc quỹ Nafosted",
+				currRow, currColumn);
+
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "Đề tài, dự án, HTQT", currRow,
+				currColumn);
+
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable, "Đề tài cấp trường", currRow,
+				currColumn);
+
+		currColumn = J;
+		createCell(rh, cellStyleHeaderTable,
+				"Số giờ quy đổi của  đề tài, dự án", currRow, currColumn);
+
+		currColumn = K;
+		createCell(rh, cellStyleHeaderTable,
+				"Số giờ quy đổi cho người kê khai\n(I)", currRow, currColumn);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//index columns
-        currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "1", currRow, currColumn);
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "2", currRow, currColumn);
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "3", currRow, currColumn);
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "4", currRow, currColumn);
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "5", currRow, currColumn);
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "6", currRow, currColumn);
-        currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "7", currRow, currColumn);
-        currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
-        currColumn=J;
-        createCell(rh, cellStyleHeaderTable, "9", currRow, currColumn);
-        currColumn=K;
-        createCell(rh, cellStyleHeaderTable, "10", currRow, currColumn);
-		
-		//content
-		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		HSSFCellStyle cellStyleCheckBox = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		if(researchProject == null || researchProject.size()==0) {
+
+		// index columns
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "1", currRow, currColumn);
+		currColumn = C;
+		createCell(rh, cellStyleHeaderTable, "2", currRow, currColumn);
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "3", currRow, currColumn);
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable, "4", currRow, currColumn);
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable, "5", currRow, currColumn);
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "6", currRow, currColumn);
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "7", currRow, currColumn);
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
+		currColumn = J;
+		createCell(rh, cellStyleHeaderTable, "9", currRow, currColumn);
+		currColumn = K;
+		createCell(rh, cellStyleHeaderTable, "10", currRow, currColumn);
+
+		// content
+		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+		HSSFCellStyle cellStyleCheckBox = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_THIN);
+		if (researchProject == null || researchProject.size() == 0) {
 			currRow++;
 			rh = sh.createRow(currRow);
-			
-			for(int i = B; i <= K; ++i) {
+
+			for (int i = B; i <= K; ++i) {
 				createCell(rh, cellStyleSum, "", currRow, i);
 			}
 		} else {
-			for(int i = 0; i < researchProject.size(); ++i) {
+			for (int i = 0; i < researchProject.size(); ++i) {
 				Map<String, Object> rp = researchProject.get(i);
 				GenericValue information = (GenericValue) rp.get("information");
-				List<GenericValue> member = (List<GenericValue>) rp.get("member");
+				List<GenericValue> member = (List<GenericValue>) rp
+						.get("member");
 				String[] memberSA = new String[member.size()];
-				
+
 				int index = 0;
 				int totalWorkinghours = 0;
-				for(int j = 0; j < member.size(); ++j) {
+				for (int j = 0; j < member.size(); ++j) {
 					GenericValue m = member.get(j);
 					totalWorkinghours += m.getLong("workinghours");
-					if(m.getString("projectParticipationRoleId").equals("DIRECTOR")) {
-						memberSA[index] = m.getString("staffName") + " (" +m.getString("projectParticipationRoleName") + ")";
+					if (m.getString("projectParticipationRoleId").equals(
+							"DIRECTOR")) {
+						memberSA[index] = m.getString("staffName") + " ("
+								+ m.getString("projectParticipationRoleName")
+								+ ")";
 						index++;
 					}
 				}
-				
-				for(int j = 0; j < member.size(); ++j) {
+
+				for (int j = 0; j < member.size(); ++j) {
 					GenericValue m = member.get(j);
-					if(m.getString("projectParticipationRoleId").equals("MEMBER")) {
-						memberSA[index] = m.getString("staffName") + " (" +m.getString("projectParticipationRoleName") + ")";
+					if (m.getString("projectParticipationRoleId").equals(
+							"MEMBER")) {
+						memberSA[index] = m.getString("staffName") + " ("
+								+ m.getString("projectParticipationRoleName")
+								+ ")";
 						index++;
 					}
 				}
-				
+
 				String memberString = StringUtils.join(memberSA, ", ");
 				currRow++;
 				rh = sh.createRow(currRow);
-				
-				createCell(rh, cellStyleContent, String.valueOf(i+1) + ".", currRow, B);
-				createCell(rh, cellStyleContent, information.getString("researchProjectProposalName") + ". " + memberString, currRow, C);
-				createCell(rh, cellStyleContent, information.getString("totalBudget"), currRow, D);
-				
+
+				createCell(rh, cellStyleContent, String.valueOf(i + 1) + ".",
+						currRow, B);
+				createCell(rh, cellStyleContent,
+						information.getString("researchProjectProposalName")
+								+ ". " + memberString, currRow, C);
+				createCell(rh, cellStyleContent,
+						information.getString("totalBudget"), currRow, D);
+
 				int checkBox = 0;
-				
+
 				switch (information.getString("projectCategoryId")) {
 				case "INST_MIX_PROJ":
 					checkBox = I;
@@ -738,8 +796,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					checkBox = I;
 					break;
 				case "REGION_PROJ":
-					checkBox = F;		
-					break;			
+					checkBox = F;
+					break;
 				case "NAFOS_PROJ":
 					checkBox = G;
 					break;
@@ -749,266 +807,303 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				case "NATI_PROJ":
 					checkBox = E;
 					break;
-					
+
 				case "INTCOOP_PROJ":
 					checkBox = H;
 					break;
 				}
-				
-				for(int j = E; j <= I; ++ j) {
-					if(j==checkBox) {
-						createCell(rh, cellStyleCheckBox, "X", currRow, checkBox);
+
+				for (int j = E; j <= I; ++j) {
+					if (j == checkBox) {
+						createCell(rh, cellStyleCheckBox, "X", currRow,
+								checkBox);
 					} else {
 						createCell(rh, cellStyleCheckBox, "", currRow, j);
 					}
 				}
-				
-				createCell(rh, cellStyleContent, String.valueOf(totalWorkinghours), currRow, J);
-				
-				createCell(rh, cellStyleContent, information.getString("workinghours"), currRow, K);
-				
+
+				createCell(rh, cellStyleContent,
+						String.valueOf(totalWorkinghours), currRow, J);
+
+				createCell(rh, cellStyleContent,
+						information.getString("workinghours"), currRow, K);
+
 			}
 		}
-		
-		
-		
-        //Sum
-        
-        currRow++;
-		rh = sh.createRow(currRow);
-		
-        for(int i = B; i <= K; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSum, "Tổng cộng", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        
-        currRow++;
+
+		// Sum
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		currColumn=B;
+
+		for (int i = B; i <= K; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSum, "Tổng cộng", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow++;
+		currRow++;
+		rh = sh.createRow(currRow);
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-		createCell(rh, cellStyleSection, "II. BẰNG ĐỘC QUYỀN SÁNG CHẾ/GIẢI PHÁP HỮU ÍCH:", currRow, currColumn);
-		
+		createCell(rh, cellStyleSection,
+				"II. BẰNG ĐỘC QUYỀN SÁNG CHẾ/GIẢI PHÁP HỮU ÍCH:", currRow,
+				currColumn);
+
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//Table content
-		
-		currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "TT", currRow, currColumn);
-        
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "Tên tác giả/các tác giả", currRow, currColumn);
-        
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "Loại văn bằng", currRow, currColumn);
-        
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "Số bằng", currRow, currColumn);
-        
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "Tên Sáng chế/Giải pháp hữu ích", currRow, currColumn);
-        
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "Ngày tháng năm được cấp", currRow, currColumn);
-        
-		currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi của văn bằng", currRow, currColumn);
-		
-        currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi  cho người kê khai\n(II)", currRow, currColumn);
-		
+
+		// Table content
+
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "TT", currRow, currColumn);
+
+		currColumn = C;
+		createCell(rh, cellStyleHeaderTable, "Tên tác giả/các tác giả",
+				currRow, currColumn);
+
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "Loại văn bằng", currRow,
+				currColumn);
+
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable, "Số bằng", currRow, currColumn);
+
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable, "Tên Sáng chế/Giải pháp hữu ích",
+				currRow, currColumn);
+
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "Ngày tháng năm được cấp",
+				currRow, currColumn);
+
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi của văn bằng",
+				currRow, currColumn);
+
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable,
+				"Số giờ quy đổi  cho người kê khai\n(II)", currRow, currColumn);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//index columns
-        currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "1", currRow, currColumn);
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "2", currRow, currColumn);
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "3", currRow, currColumn);
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "4", currRow, currColumn);
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "5", currRow, currColumn);
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "6", currRow, currColumn);
-        currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "7", currRow, currColumn);
-        currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
-		
-        //fake data
-        currRow++;
+
+		// index columns
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "1", currRow, currColumn);
+		currColumn = C;
+		createCell(rh, cellStyleHeaderTable, "2", currRow, currColumn);
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "3", currRow, currColumn);
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable, "4", currRow, currColumn);
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable, "5", currRow, currColumn);
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "6", currRow, currColumn);
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "7", currRow, currColumn);
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
+
+		// fake data
+		currRow++;
 		rh = sh.createRow(currRow);
-		
-		for(int i = B; i <= I; ++i) {
+
+		for (int i = B; i <= I; ++i) {
 			createCell(rh, cellStyleSum, "", currRow, i);
 		}
-        
-        //Sum
-        
-        currRow++;
+
+		// Sum
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		
-        for(int i = B; i <= I; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSum, "Tổng cộng", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        
-        HSSFCellStyle cellStyleSign = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, false);
-        
-        currRow++;
-        currRow++;
+
+		for (int i = B; i <= I; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSum, "Tổng cộng", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		HSSFCellStyle cellStyleSign = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, false);
+
+		currRow++;
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=C;
+		currColumn = C;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-        createCell(rh, cellStyleSign, "Tổng số giờ qui đổi của người kê khai (I) + (II) = .....................................................", currRow, currColumn);
-        
-        currRow++;
+		createCell(
+				rh,
+				cellStyleSign,
+				"Tổng số giờ qui đổi của người kê khai (I) + (II) = .....................................................",
+				currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=H;
+		currColumn = H;
 		mergedRegion(sh, currRow, currRow, currColumn, K);
-        createCell(rh, cellStyleSign, " Hà Nội, ngày ….... tháng ….... năm …......", currRow, currColumn);
-        
-        currRow++;
+		createCell(rh, cellStyleSign,
+				" Hà Nội, ngày ….... tháng ….... năm …......", currRow,
+				currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		
-		currColumn=C;
-        createCell(rh, cellStyleSign, "Xác nhận của Khoa (Viện , TT)", currRow, currColumn);
-        
-        currColumn=F;
-        createCell(rh, cellStyleSign, "Xác nhận của Bộ môn", currRow, currColumn);
-        
-        currColumn=J;
-        createCell(rh, cellStyleSign, "Người kê khai", currRow, currColumn);
+
+		currColumn = C;
+		createCell(rh, cellStyleSign, "Xác nhận của Khoa (Viện , TT)", currRow,
+				currColumn);
+
+		currColumn = F;
+		createCell(rh, cellStyleSign, "Xác nhận của Bộ môn", currRow,
+				currColumn);
+
+		currColumn = J;
+		createCell(rh, cellStyleSign, "Người kê khai", currRow, currColumn);
 	}
-	
-	public static int createContentTablePaperKV03(Sheet sh, List<GenericValue> data, HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
-			HSSFCellStyle cellStyle, int firstRow, int firstColumn) {
+
+	public static int createContentTablePaperKV03(Sheet sh,
+			List<GenericValue> data,
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
+			HSSFCellStyle cellStyle, int firstRow, int firstColumn, Map<String, Object> mPaper2AuthorInfo) {
 		int currRow = firstRow;
 		List<List<String>> papers = new ArrayList<List<String>>();
-		
-		//add row null
-		if(data.size() == 0) {
+
+		// add row null
+		if (data.size() == 0) {
 			List<String> paper = new ArrayList<String>();
 			paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    papers.add(paper);
-		}
-		
-		for (int i = 0; i < data.size(); i++) {
-		    GenericValue p = data.get(i);
-		    List<String> paper = new ArrayList<String>();
-		    
-		    int nbAuthors = 0;
-		    if(p.getString("authors") != null){
-		        String[] s = p.getString("authors").split(",");
-		        nbAuthors = s.length;
-		    }
-		    int nbIntAuthors = mPaper2NbIntAuthors.get(p);
-		    
-		    paper.add((i + 1) + ".");
-		    paper.add(p.getString("authors"));
-		    paper.add(p.getString("paperName"));
-		    paper.add(p.getString("journalConferenceName"));
-		    paper.add(p.getString("volumn"));
-		    paper.add(p.getString("ISSN"));
-		    paper.add(String.valueOf(nbAuthors));
-		    paper.add(String.valueOf(nbIntAuthors));
-		    
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    papers.add(paper);
-		}
-		currRow = createContentTable(sh, papers, cellStyle, currRow, firstColumn);
-
-		
-		return currRow;
-	}
-	
-	public static int createContentTablePaper01CN(Sheet sh, List<GenericValue> data, HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
-			HSSFCellStyle cellStyle, int firstRow, int firstColumn) {
-		int currRow = firstRow;
-		List<List<String>> papers = new ArrayList<List<String>>();
-		
-		//add row null
-		if(data.size() == 0) {
-			List<String> paper = new ArrayList<String>();
 			paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    papers.add(paper);
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			papers.add(paper);
 		}
-		
-		for (int i = 0; i < data.size(); i++) {
-		    GenericValue p = data.get(i);
-		    List<String> paper = new ArrayList<String>();
-		    
-		    int nbAuthors = 0;
-		    if(p.getString("authors") != null){
-		        String[] s = p.getString("authors").split(",");
-		        nbAuthors = s.length;
-		    }
-		    int nbIntAuthors = mPaper2NbIntAuthors.get(p);
-		    paper.add((i + 1) + ".");
-		    paper.add(p.getString("authors"));
-		    paper.add(p.getString("paperName"));
-		    paper.add(p.getString("journalConferenceName"));
-		    paper.add(p.getString("volumn"));
-		    paper.add(p.getString("ISSN"));
-		    paper.add(String.valueOf(nbAuthors));
-		    paper.add(String.valueOf(nbIntAuthors));
-		    
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    paper.add("");
-		    papers.add(paper);
-		}
-		currRow = createContentTable(sh, papers, cellStyle, currRow, firstColumn);
 
-		
+		for (int i = 0; i < data.size(); i++) {
+			GenericValue p = data.get(i);
+			List<String> paper = new ArrayList<String>();
+
+			int nbAuthors = 0;
+			if (p.getString("authors") != null) {
+				String[] s = p.getString("authors").split(",");
+				nbAuthors = s.length;
+			}
+			int nbIntAuthors = mPaper2NbIntAuthors.get(p);
+
+			paper.add((i + 1) + ".");
+			paper.add(p.getString("authors"));
+			paper.add(p.getString("paperName"));
+			paper.add(p.getString("journalConferenceName"));
+			paper.add(p.getString("volumn"));
+			paper.add(p.getString("ISSN"));
+			paper.add(String.valueOf(nbAuthors));
+			paper.add(String.valueOf(nbIntAuthors));
+
+			String paperId = p.getString("paperId");
+			Map<String, Object> info = (Map<String, Object>)mPaper2AuthorInfo.get(paperId);
+			
+			String firstAuthorIsCorresponding = "";
+			String firstAuthorIsNotCorresponding = "";
+			String correspondingAuthor = "";
+			String nonCorrespondingAuthor = "";
+			if(info != null){
+				info.get("firstAuthorIsCorresponding");
+				info.get("firstAuthorIsNotCorresponding");
+				info.get("correspondingAuthor");
+				info.get("nonCorrespondingAuthor");
+			}
+			if(firstAuthorIsCorresponding.equals("T")) firstAuthorIsCorresponding = "X";
+			else firstAuthorIsCorresponding = "";
+			if(firstAuthorIsNotCorresponding.equals("T")) firstAuthorIsNotCorresponding = "X";
+			else firstAuthorIsNotCorresponding = "";
+			
+			paper.add(firstAuthorIsCorresponding);
+			paper.add(firstAuthorIsNotCorresponding);
+			paper.add(correspondingAuthor);
+			paper.add(nonCorrespondingAuthor);
+			papers.add(paper);
+		}
+		currRow = createContentTable(sh, papers, cellStyle, currRow,
+				firstColumn);
+
 		return currRow;
 	}
 
-    
+	public static int createContentTablePaper01CN(Sheet sh,
+			List<GenericValue> data,
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
+			HSSFCellStyle cellStyle, int firstRow, int firstColumn) {
+		int currRow = firstRow;
+		List<List<String>> papers = new ArrayList<List<String>>();
+
+		// add row null
+		if (data.size() == 0) {
+			List<String> paper = new ArrayList<String>();
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			papers.add(paper);
+		}
+
+		for (int i = 0; i < data.size(); i++) {
+			GenericValue p = data.get(i);
+			List<String> paper = new ArrayList<String>();
+
+			int nbAuthors = 0;
+			if (p.getString("authors") != null) {
+				String[] s = p.getString("authors").split(",");
+				nbAuthors = s.length;
+			}
+			int nbIntAuthors = mPaper2NbIntAuthors.get(p);
+			paper.add((i + 1) + ".");
+			paper.add(p.getString("authors"));
+			paper.add(p.getString("paperName"));
+			paper.add(p.getString("journalConferenceName"));
+			paper.add(p.getString("volumn"));
+			paper.add(p.getString("ISSN"));
+			paper.add(String.valueOf(nbAuthors));
+			paper.add(String.valueOf(nbIntAuthors));
+
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			paper.add("");
+			papers.add(paper);
+		}
+		currRow = createContentTable(sh, papers, cellStyle, currRow,
+				firstColumn);
+
+		return currRow;
+	}
+
 	public static void createSheetPaper01CN(HSSFWorkbook wb,
 			List<GenericValue> lst_isi_papers1,
 			List<GenericValue> lst_isi_papers2,
@@ -1024,715 +1119,820 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			List<GenericValue> lst_domestic_conference_papers2,
 			String academicYearId,
 			HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
-			List<GenericValue> user
-			) {
+			List<GenericValue> user) {
 		String[] year = academicYearId.split("-");
 		GenericValue u;
-		if(user == null) {
+		if (user == null) {
 			return;
 		} else {
 			u = user.get(0);
 		}
-		int numColumns = 15; //A -> O
-		int[] widthColumns = {400, 1600, 5000, 6000, 4000, 4000, 3000, 2000, 2000, 4000, 4000, 4000, 2000, 2000, 2000};
+		int numColumns = 15; // A -> O
+		int[] widthColumns = { 400, 1600, 5000, 6000, 4000, 4000, 3000, 2000,
+				2000, 4000, 4000, 4000, 2000, 2000, 2000 };
 		int currRow = 0;
-		int currColumn = A; //A
-		
+		int currColumn = A; // A
+
 		// font Sheet
 		String fontName = "Times New Roman";
-		
+
 		Sheet sh = wb.createSheet("Bài báo 01-CN");
 		Row rh;
 		Cell ch;
-		
-		for(int i = 0; i < widthColumns.length; ++i) {
+
+		for (int i = 0; i < widthColumns.length; ++i) {
 			sh.setColumnWidth(i, widthColumns[i]);
 		}
-		
-		//Title
-		HSSFCellStyle cellStyleTitle = createCellStyle(wb, (short)12, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_NONE);
-				
+
+		// Title
+		HSSFCellStyle cellStyleTitle = createCellStyle(wb, (short) 12,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_NONE);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-		String title = "BẢNG KÊ KHAI KHỐI LƯỢNG NGHIÊN CỨU KHOA HỌC  NĂM HỌC " + year[0] + " - " + year[1];
+		currColumn = B;
+		String title = "BẢNG KÊ KHAI KHỐI LƯỢNG NGHIÊN CỨU KHOA HỌC  NĂM HỌC "
+				+ year[0] + " - " + year[1];
 		mergedRegion(sh, currRow, currRow, currColumn, G);
 		createCell(rh, cellStyleTitle, title, currRow, currColumn);
-		
 
-		//Note
-		HSSFCellStyle cellStyleNote = createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER);
-		
-		currColumn=M;
-		createCell(rh, cellStyleNote, "Mẫu 01- CN\nDùng cho cá nhân", currRow, currColumn);
-		
+		// Note
+		HSSFCellStyle cellStyleNote = createCellStyle(wb, (short) 11,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER);
+
+		currColumn = M;
+		createCell(rh, cellStyleNote, "Mẫu 01- CN\nDùng cho cá nhân", currRow,
+				currColumn);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=A;
-		
-		//Subtitle
-		HSSFCellStyle cellStyleSubTitle = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
-		
-		currColumn=B;
+		currColumn = A;
+
+		// Subtitle
+		HSSFCellStyle cellStyleSubTitle = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, G);
-		createCell(rh, cellStyleSubTitle, "CÁC BÀI BÁO KHOA HỌC", currRow, currColumn);
+		createCell(rh, cellStyleSubTitle, "CÁC BÀI BÁO KHOA HỌC", currRow,
+				currColumn);
 
-		//Merge Note
-		mergedRegion(wb, sh, currRow-1, currRow, M, O, CellStyle.BORDER_THIN);
-		
+		// Merge Note
+		mergedRegion(wb, sh, currRow - 1, currRow, M, O, CellStyle.BORDER_THIN);
+
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//Information
-		HSSFCellStyle cellStyleInformation = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
-		
-		currColumn=B;
+
+		// Information
+		HSSFCellStyle cellStyleInformation = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, "Họ và tên cán bộ: " + u.getString("staffName"), currRow, currColumn);
-		
+		createCell(rh, cellStyleInformation,
+				"Họ và tên cán bộ: " + u.getString("staffName"), currRow,
+				currColumn);
+
 		String telephone = "Tel: (CQ) - (NR) - (DĐ)";
-		if(u.getString("departmentName") != null) {
-			telephone = "Tel: (CQ) - (NR) - (DĐ) "+u.getString("staffPhone");
+		if (u.getString("departmentName") != null) {
+			telephone = "Tel: (CQ) - (NR) - (DĐ) " + u.getString("staffPhone");
 		}
-		currColumn=F;
+		currColumn = F;
 		mergedRegion(sh, currRow, currRow, currColumn, O);
 		createCell(rh, cellStyleInformation, telephone, currRow, currColumn);
-		
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
+
 		String departmentName = "Bộ môn: ";
-		if(u.getString("departmentName") != null) {
-			departmentName = "Bộ môn: "+u.getString("departmentName");
+		if (u.getString("departmentName") != null) {
+			departmentName = "Bộ môn: " + u.getString("departmentName");
 		}
-		currColumn=B;
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, E);
-		createCell(rh, cellStyleInformation, departmentName, currRow, currColumn);
-		
-		currColumn=F;
+		createCell(rh, cellStyleInformation, departmentName, currRow,
+				currColumn);
+
+		currColumn = F;
 		mergedRegion(sh, currRow, currRow, currColumn, O);
-		createCell(rh, cellStyleInformation, "Khoa (Viện, Trung tâm): "+u.getString("facultyName"), currRow, currColumn);
+		createCell(rh, cellStyleInformation,
+				"Khoa (Viện, Trung tâm): " + u.getString("facultyName"),
+				currRow, currColumn);
 
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
 
-		//Table content
-		HSSFCellStyle cellStyleHeaderTable = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cellStyleHeaderTableNote = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_NORMAL, true, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "STT", currRow, currColumn);
-        
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "Họ và tên các tác giả, đơn vị\n(ghi chi tiết)", currRow, currColumn);
-        
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "Tên bài báo", currRow, currColumn);
-        
-		currColumn=E;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, G, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleHeaderTable, "Tạp chí, Proceedings", currRow, currColumn);
-        
-		currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "Tổng số tác giả", currRow, currColumn);
-        
-		currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "Số tác giả của trường", currRow, currColumn);
-        
-		currColumn=J;
-        createCell(rh, cellStyleHeaderTable, "Tác giả  đầu tiên là Corresponding author", currRow, currColumn);
-		currColumn=K;
-        createCell(rh, cellStyleHeaderTable, "Tác giả  đầu tiên không là Corresponding author", currRow, currColumn);
-		currColumn=L;
-        createCell(rh, cellStyleHeaderTable, "Tác giả là Corresponding author", currRow, currColumn);
-		currColumn=M;
-        createCell(rh, cellStyleHeaderTable, "Các tác giả còn lại", currRow, currColumn);
-        
-		
-        
-        currColumn=N;
-        createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi  của bài báo", currRow, currColumn);
-        
-        currColumn=O;
-        createCell(rh, cellStyleHeaderTable, "Số giờ  quy đổi của người", currRow, currColumn);
-        
-		currRow++;
-		rh = sh.createRow(currRow);
-		mergedRegion(wb, sh, currRow-1, currRow, B, B, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, C, C, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, D, D, CellStyle.BORDER_THIN);
-		
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "Tên tạp chí, Proceedings", currRow, currColumn);
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "Số và thời gian xuất bản chính thức", currRow, currColumn);
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "Chỉ số ISSN", currRow, currColumn);
-		
-		mergedRegion(wb, sh, currRow-1, currRow, H, H, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, I, I, CellStyle.BORDER_THIN);
-		
+		// Table content
+		HSSFCellStyle cellStyleHeaderTable = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_THIN);
 
-        currColumn=J;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, M, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleHeaderTableNote, "Đánh dấu \"x\" vào ô tương ứng", currRow, currColumn);
-        
-		
-		mergedRegion(wb, sh, currRow-1, currRow, N, N, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, O, O, CellStyle.BORDER_THIN);
-		
-        
-		
+		HSSFCellStyle cellStyleHeaderTableNote = createCellStyle(wb,
+				(short) 10, HSSFFont.BOLDWEIGHT_NORMAL, true,
+				HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
+
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "STT", currRow, currColumn);
+
+		currColumn = C;
+		createCell(rh, cellStyleHeaderTable,
+				"Họ và tên các tác giả, đơn vị\n(ghi chi tiết)", currRow,
+				currColumn);
+
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "Tên bài báo", currRow, currColumn);
+
+		currColumn = E;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, G,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleHeaderTable, "Tạp chí, Proceedings", currRow,
+				currColumn);
+
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "Tổng số tác giả", currRow,
+				currColumn);
+
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable, "Số tác giả của trường", currRow,
+				currColumn);
+
+		currColumn = J;
+		createCell(rh, cellStyleHeaderTable,
+				"Tác giả  đầu tiên là Corresponding author", currRow,
+				currColumn);
+		currColumn = K;
+		createCell(rh, cellStyleHeaderTable,
+				"Tác giả  đầu tiên không là Corresponding author", currRow,
+				currColumn);
+		currColumn = L;
+		createCell(rh, cellStyleHeaderTable, "Tác giả là Corresponding author",
+				currRow, currColumn);
+		currColumn = M;
+		createCell(rh, cellStyleHeaderTable, "Các tác giả còn lại", currRow,
+				currColumn);
+
+		currColumn = N;
+		createCell(rh, cellStyleHeaderTable, "Số giờ quy đổi  của bài báo",
+				currRow, currColumn);
+
+		currColumn = O;
+		createCell(rh, cellStyleHeaderTable, "Số giờ  quy đổi của người",
+				currRow, currColumn);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//index columns
-        currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "1", currRow, currColumn);
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "2", currRow, currColumn);
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "3", currRow, currColumn);
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "4", currRow, currColumn);
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "5", currRow, currColumn);
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "6", currRow, currColumn);
-        currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
-        currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
-        currColumn=J;
-        createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
-        currColumn=K;
-        createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
-        currColumn=L;
-        createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
-        currColumn=M;
-        createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
-		currColumn=N;
-        createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
-		currColumn=O;
-        createCell(rh, cellStyleHeaderTable, "9", currRow, currColumn);
-		
-		
+		mergedRegion(wb, sh, currRow - 1, currRow, B, B, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, C, C, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, D, D, CellStyle.BORDER_THIN);
+
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable, "Tên tạp chí, Proceedings",
+				currRow, currColumn);
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable,
+				"Số và thời gian xuất bản chính thức", currRow, currColumn);
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "Chỉ số ISSN", currRow, currColumn);
+
+		mergedRegion(wb, sh, currRow - 1, currRow, H, H, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, I, I, CellStyle.BORDER_THIN);
+
+		currColumn = J;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, M,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleHeaderTableNote,
+				"Đánh dấu \"x\" vào ô tương ứng", currRow, currColumn);
+
+		mergedRegion(wb, sh, currRow - 1, currRow, N, N, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, O, O, CellStyle.BORDER_THIN);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//content
-		HSSFCellStyle cellStyleSection = createCellStyle(wb, (short)9, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN, HSSFColor.YELLOW.index);
-		HSSFCellStyle cellStyleSectionIndex = createCellStyle(wb, (short)9, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN, HSSFColor.YELLOW.index);
-		
-		HSSFCellStyle cellStyleSubSection = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		HSSFCellStyle cellStyleSubSectionIndex = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		
-		//Section A
-		currColumn=B;
-        createCell(rh, cellStyleSectionIndex, "A", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/" + year[0] + " - 31/12/" + year[0], currRow, currColumn);
-		
-        currRow++;
+
+		// index columns
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "1", currRow, currColumn);
+		currColumn = C;
+		createCell(rh, cellStyleHeaderTable, "2", currRow, currColumn);
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "3", currRow, currColumn);
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable, "4", currRow, currColumn);
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable, "5", currRow, currColumn);
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "6", currRow, currColumn);
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
+		currColumn = J;
+		createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
+		currColumn = K;
+		createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
+		currColumn = L;
+		createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
+		currColumn = M;
+		createCell(rh, cellStyleHeaderTable, "", currRow, currColumn);
+		currColumn = N;
+		createCell(rh, cellStyleHeaderTable, "8", currRow, currColumn);
+		currColumn = O;
+		createCell(rh, cellStyleHeaderTable, "9", currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "I.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):", currRow, currColumn);
-		
-        currRow = createContentTablePaper01CN( sh, lst_isi_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B); 
-        		
-        currRow++;
+
+		// content
+		HSSFCellStyle cellStyleSection = createCellStyle(wb, (short) 9,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN, HSSFColor.YELLOW.index);
+		HSSFCellStyle cellStyleSectionIndex = createCellStyle(wb, (short) 9,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_THIN, HSSFColor.YELLOW.index);
+
+		HSSFCellStyle cellStyleSubSection = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+		HSSFCellStyle cellStyleSubSectionIndex = createCellStyle(wb,
+				(short) 10, HSSFFont.BOLDWEIGHT_BOLD,
+				HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
+
+		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+
+		// Section A
+		currColumn = B;
+		createCell(rh, cellStyleSectionIndex, "A", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSection,
+				"CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/"
+						+ year[0] + " - 31/12/" + year[0], currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "II.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:", currRow, currColumn);
-        
-        currRow = createContentTablePaper01CN( sh, lst_scopus_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "I.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(
+				rh,
+				cellStyleSubSection,
+				"Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):",
+				currRow, currColumn);
+
+		currRow = createContentTablePaper01CN(sh, lst_isi_papers1,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "III.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí trong và ngoài nước:", currRow, currColumn);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "II.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSubSection,
+				"Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:",
+				currRow, currColumn);
+
+		currRow = createContentTablePaper01CN(sh, lst_scopus_papers1,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
-        		Font fontNoBold = wb.createFont();
-        		Font fontBold = wb.createFont();
-        		fontBold.setFontHeightInPoints((short)10);
-        		fontBold.setFontName("Times New Roman");
-        		fontBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        		fontBold.setColor(HSSFColor.BLACK.index);
-        		fontNoBold.setFontHeightInPoints((short)10);
-        		fontNoBold.setFontName("Times New Roman");
-        		fontNoBold.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-        		fontNoBold.setColor(HSSFColor.BLACK.index);
-        		String text = "Ngoài nước (Không kê lại các bài ở mục I, II):";
-        		HSSFRichTextString value = new HSSFRichTextString(text);
-        		value.applyFont(0,10,fontBold);
-        		value.applyFont(11, text.length()-1, fontNoBold);
-        		
-        		cellStyle.setWrapText(true);
-        		cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-        		cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
-        		cellStyle.setBorderTop(CellStyle.BORDER_THIN);
-        		cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
-        		cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-        		
-        		Cell chx = rh.createCell(i);
-        		chx.setCellStyle(cellStyle);
-        		chx.setCellValue(value);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_other_international_journal_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "III.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSubSection,
+				"Các bài báo đăng trong tạp chí trong và ngoài nước:", currRow,
+				currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_domestic_journal_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
+				Font fontNoBold = wb.createFont();
+				Font fontBold = wb.createFont();
+				fontBold.setFontHeightInPoints((short) 10);
+				fontBold.setFontName("Times New Roman");
+				fontBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+				fontBold.setColor(HSSFColor.BLACK.index);
+				fontNoBold.setFontHeightInPoints((short) 10);
+				fontNoBold.setFontName("Times New Roman");
+				fontNoBold.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+				fontNoBold.setColor(HSSFColor.BLACK.index);
+				String text = "Ngoài nước (Không kê lại các bài ở mục I, II):";
+				HSSFRichTextString value = new HSSFRichTextString(text);
+				value.applyFont(0, 10, fontBold);
+				value.applyFont(11, text.length() - 1, fontNoBold);
+
+				cellStyle.setWrapText(true);
+				cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+				cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+				cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+				cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+				cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+
+				Cell chx = rh.createCell(i);
+				chx.setCellStyle(cellStyle);
+				chx.setCellValue(value);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh,
+				lst_other_international_journal_papers1, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "IV.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:", currRow, currColumn);
-        
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh, lst_domestic_journal_papers1,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Ngoài nước", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_international_conference_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "IV.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(
+				rh,
+				cellStyleSubSection,
+				"Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:",
+				currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_domestic_conference_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Ngoài nước", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh,
+				lst_international_conference_papers1, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		//Section B
-		currColumn=B;
-        createCell(rh, cellStyleSectionIndex, "A", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/" + year[1] + " - 30/06/" + year[1], currRow, currColumn);
-		
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh,
+				lst_domestic_conference_papers1, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "I.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):", currRow, currColumn);
-		
-        currRow = createContentTablePaper01CN( sh, lst_isi_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		// Section B
+		currColumn = B;
+		createCell(rh, cellStyleSectionIndex, "A", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSection,
+				"CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/"
+						+ year[1] + " - 30/06/" + year[1], currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "II.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:", currRow, currColumn);
-        
-        currRow = createContentTablePaper01CN( sh, lst_scopus_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "I.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(
+				rh,
+				cellStyleSubSection,
+				"Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):",
+				currRow, currColumn);
+
+		currRow = createContentTablePaper01CN(sh, lst_isi_papers2,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "III.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong tạp chí trong và ngoài nước:", currRow, currColumn);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "II.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSubSection,
+				"Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:",
+				currRow, currColumn);
+
+		currRow = createContentTablePaper01CN(sh, lst_scopus_papers2,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
-        		Font fontNoBold = wb.createFont();
-        		Font fontBold = wb.createFont();
-        		fontBold.setFontHeightInPoints((short)10);
-        		fontBold.setFontName("Times New Roman");
-        		fontBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        		fontBold.setColor(HSSFColor.BLACK.index);
-        		fontNoBold.setFontHeightInPoints((short)10);
-        		fontNoBold.setFontName("Times New Roman");
-        		fontNoBold.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-        		fontNoBold.setColor(HSSFColor.BLACK.index);
-        		String text = "Ngoài nước (Không kê lại các bài ở mục I, II):";
-        		HSSFRichTextString value = new HSSFRichTextString(text);
-        		value.applyFont(0,10,fontBold);
-        		value.applyFont(11, text.length()-1, fontNoBold);
-        		
-        		cellStyle.setWrapText(true);
-        		cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-        		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-        		cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
-        		cellStyle.setBorderTop(CellStyle.BORDER_THIN);
-        		cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
-        		cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-        		
-        		Cell chx = rh.createCell(i);
-        		chx.setCellStyle(cellStyle);
-        		chx.setCellValue(value);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_other_international_journal_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "III.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSubSection,
+				"Các bài báo đăng trong tạp chí trong và ngoài nước:", currRow,
+				currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_domestic_journal_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
+				Font fontNoBold = wb.createFont();
+				Font fontBold = wb.createFont();
+				fontBold.setFontHeightInPoints((short) 10);
+				fontBold.setFontName("Times New Roman");
+				fontBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+				fontBold.setColor(HSSFColor.BLACK.index);
+				fontNoBold.setFontHeightInPoints((short) 10);
+				fontNoBold.setFontName("Times New Roman");
+				fontNoBold.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+				fontNoBold.setColor(HSSFColor.BLACK.index);
+				String text = "Ngoài nước (Không kê lại các bài ở mục I, II):";
+				HSSFRichTextString value = new HSSFRichTextString(text);
+				value.applyFont(0, 10, fontBold);
+				value.applyFont(11, text.length() - 1, fontNoBold);
+
+				cellStyle.setWrapText(true);
+				cellStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+				cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+				cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+				cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+				cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+
+				Cell chx = rh.createCell(i);
+				chx.setCellStyle(cellStyle);
+				chx.setCellValue(value);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh,
+				lst_other_international_journal_papers2, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-        createCell(rh, cellStyleSubSectionIndex, "IV.", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, O, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSubSection, "Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:", currRow, currColumn);
-        
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh, lst_domestic_journal_papers2,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Ngoài nước", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_international_conference_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		currColumn = B;
+		createCell(rh, cellStyleSubSectionIndex, "IV.", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, O,
+				CellStyle.BORDER_THIN);
+		createCell(
+				rh,
+				cellStyleSubSection,
+				"Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:",
+				currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        currRow = createContentTablePaper01CN( sh, lst_domestic_conference_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        //Sum
-        
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Ngoài nước", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh,
+				lst_international_conference_papers2, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-        for(int i = B; i <= O; ++i) {
-        	if(i == C) {
-        		createCell(rh, cellStyleSubSection, "Cộng", currRow, i);
-        	} else {
-        		createCell(rh, cellStyleContent, "", currRow, i);
-        	}
-        }
-        
-        HSSFCellStyle cellStyleSign = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, false);
-        
-        currRow++;
-        currRow++;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Trong nước", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		currRow = createContentTablePaper01CN(sh,
+				lst_domestic_conference_papers2, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B);
+
+		// Sum
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
+		for (int i = B; i <= O; ++i) {
+			if (i == C) {
+				createCell(rh, cellStyleSubSection, "Cộng", currRow, i);
+			} else {
+				createCell(rh, cellStyleContent, "", currRow, i);
+			}
+		}
+
+		HSSFCellStyle cellStyleSign = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, false);
+
+		currRow++;
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, O);
-        createCell(rh, cellStyleSign, "Tổng số giờ qui đổi của người kê khai (A+B) = .....................................................", currRow, currColumn);
-        
-        currRow++;
+		createCell(
+				rh,
+				cellStyleSign,
+				"Tổng số giờ qui đổi của người kê khai (A+B) = .....................................................",
+				currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=G;
+		currColumn = G;
 		mergedRegion(sh, currRow, currRow, currColumn, O);
-        createCell(rh, cellStyleSign, " Hà Nội, ngày ….... tháng ….... năm …......", currRow, currColumn);
-        
-        currRow++;
+		createCell(rh, cellStyleSign,
+				" Hà Nội, ngày ….... tháng ….... năm …......", currRow,
+				currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		
-		currColumn=C;
-        createCell(rh, cellStyleSign, "Xác nhận của Khoa (Viện , TT)", currRow, currColumn);
-        
-        currColumn=F;
-        createCell(rh, cellStyleSign, "Xác nhận của Bộ môn", currRow, currColumn);
-        
-        currColumn=M;
-        createCell(rh, cellStyleSign, "Người kê khai", currRow, currColumn);
-		
-		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/" + y[0] + " - 31/12/" + y[0]);
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_isi_papers1.size(); i++) {
-//			GenericValue p = lst_isi_papers1.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_scopus_papers1.size(); i++) {
-//			GenericValue p = lst_scopus_papers1.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_other_international_journal_papers1.size(); i++) {
-//			GenericValue p = lst_other_international_journal_papers1.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Trong nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_domestic_journal_papers1.size(); i++) {
-//			GenericValue p = lst_domestic_journal_papers1.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Ngoài nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_international_conference_papers1.size(); i++) {
-//			GenericValue p = lst_international_conference_papers1.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Trong nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		for (int i = 0; i < lst_domestic_conference_papers1.size(); i++) {
-//			GenericValue p = lst_domestic_conference_papers1.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//
-//		// second part 
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/" + y[1] + " - 30/06/" + y[1]);
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_isi_papers2.size(); i++) {
-//			GenericValue p = lst_isi_papers2.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_scopus_papers2.size(); i++) {
-//			GenericValue p = lst_scopus_papers2.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_other_international_journal_papers2.size(); i++) {
-//			GenericValue p = lst_other_international_journal_papers2.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Trong nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		for (int i = 0; i < lst_domestic_journal_papers2.size(); i++) {
-//			GenericValue p = lst_domestic_journal_papers2.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Ngoài nước:");
-//		for (int i = 0; i < lst_international_conference_papers2.size(); i++) {
-//			GenericValue p = lst_international_conference_papers2.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
-//		
-//		i_row++;
-//		rh = sh.createRow(i_row);
-//		ch = rh.createCell(1);
-//		ch.setCellStyle(styleTitle);
-//		ch.setCellValue("Trong nước:");
-//		sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
-//				nbColumns));
-//		for (int i = 0; i < lst_domestic_conference_papers2.size(); i++) {
-//			GenericValue p = lst_domestic_conference_papers2.get(i);
-//			i_row++;
-//			createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
-//		}
+
+		currColumn = C;
+		createCell(rh, cellStyleSign, "Xác nhận của Khoa (Viện , TT)", currRow,
+				currColumn);
+
+		currColumn = F;
+		createCell(rh, cellStyleSign, "Xác nhận của Bộ môn", currRow,
+				currColumn);
+
+		currColumn = M;
+		createCell(rh, cellStyleSign, "Người kê khai", currRow, currColumn);
+
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/"
+		// + y[0] + " - 31/12/" + y[0]);
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_isi_papers1.size(); i++) {
+		// GenericValue p = lst_isi_papers1.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_scopus_papers1.size(); i++) {
+		// GenericValue p = lst_scopus_papers1.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_other_international_journal_papers1.size();
+		// i++) {
+		// GenericValue p = lst_other_international_journal_papers1.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Trong nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_domestic_journal_papers1.size(); i++) {
+		// GenericValue p = lst_domestic_journal_papers1.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Ngoài nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_international_conference_papers1.size(); i++)
+		// {
+		// GenericValue p = lst_international_conference_papers1.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Trong nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		// for (int i = 0; i < lst_domestic_conference_papers1.size(); i++) {
+		// GenericValue p = lst_domestic_conference_papers1.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		//
+		// // second part
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/"
+		// + y[1] + " - 30/06/" + y[1]);
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCI và SCIE (ISI):");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_isi_papers2.size(); i++) {
+		// GenericValue p = lst_isi_papers2.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong tạp chí thuộc danh mục SCOPUS:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_scopus_papers2.size(); i++) {
+		// GenericValue p = lst_scopus_papers2.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong tạp chí trong và ngoài nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Ngoài nước (Không kê lại các bài ở mục I, II):");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_other_international_journal_papers2.size();
+		// i++) {
+		// GenericValue p = lst_other_international_journal_papers2.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Trong nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// for (int i = 0; i < lst_domestic_journal_papers2.size(); i++) {
+		// GenericValue p = lst_domestic_journal_papers2.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Các bài báo đăng trong kỷ yếu Hội nghị  khoa học trong và ngoài nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Ngoài nước:");
+		// for (int i = 0; i < lst_international_conference_papers2.size(); i++)
+		// {
+		// GenericValue p = lst_international_conference_papers2.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
+		//
+		// i_row++;
+		// rh = sh.createRow(i_row);
+		// ch = rh.createCell(1);
+		// ch.setCellStyle(styleTitle);
+		// ch.setCellValue("Trong nước:");
+		// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1,
+		// nbColumns));
+		// for (int i = 0; i < lst_domestic_conference_papers2.size(); i++) {
+		// GenericValue p = lst_domestic_conference_papers2.get(i);
+		// i_row++;
+		// createPaperRow(i_row, sh, p, cellStyle, mPaper2NbIntAuthors);
+		// }
 
 	}
 
@@ -1746,290 +1946,381 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			List<GenericValue> lst_domestic_conference_papers1,
 			List<GenericValue> lst_domestic_conference_papers2,
 			String academicYearId, String facultyName,
-			HashMap<GenericValue, Integer> mPaper2NbIntAuthors) {
-		
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors, Map<String, Object> mPaper2AuthorInfo) {
+
 		String[] year = academicYearId.split("-");
-		
-		int numColumns = 13; //A -> M
-		int[] widthColumns = {400, 1600, 5000, 6000, 4000, 4000, 3000, 2000, 2000, 4000, 4000, 4000, 2000};
+
+		int numColumns = 13; // A -> M
+		int[] widthColumns = { 400, 1600, 5000, 6000, 4000, 4000, 3000, 2000,
+				2000, 4000, 4000, 4000, 2000 };
 		int currRow = 0;
-		int currColumn = A; //A
-		
+		int currColumn = A; // A
+
 		// font Sheet
 		String fontName = "Times New Roman";
-		
+
 		Sheet sh = wb.createSheet("KV03");
 		Row rh;
 		Cell ch;
-		
-		for(int i = 0; i < widthColumns.length; ++i) {
+
+		for (int i = 0; i < widthColumns.length; ++i) {
 			sh.setColumnWidth(i, widthColumns[i]);
 		}
 		currRow++;
 		rh = sh.createRow(currRow);
-		//Note
-		HSSFCellStyle cellStyleNote = createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER);
-		
-		currColumn=J;
-		createCell(rh, cellStyleNote, "Mẫu 03-KV\nDùng cho Khoa/Viện/TT", currRow, currColumn);
-		//Merge Note
-		mergedRegion(wb, sh, currRow, currRow+1, J, K, CellStyle.BORDER_THIN);
-		
-		//Title
-		HSSFCellStyle cellStyleTitle = createCellStyle(wb, (short)12, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_NONE);
-		
+		// Note
+		HSSFCellStyle cellStyleNote = createCellStyle(wb, (short) 11,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER);
+
+		currColumn = J;
+		createCell(rh, cellStyleNote, "Mẫu 03-KV\nDùng cho Khoa/Viện/TT",
+				currRow, currColumn);
+		// Merge Note
+		mergedRegion(wb, sh, currRow, currRow + 1, J, K, CellStyle.BORDER_THIN);
+
+		// Title
+		HSSFCellStyle cellStyleTitle = createCellStyle(wb, (short) 12,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_NONE);
+
 		currRow++;
 		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
-		String title = "DANH MỤC BÀI BÁO ĐĂNG TRONG TẠP CHÍ VÀ KỶ YẾU HỘI NGHỊ KHOA HỌC\nCỦA CÁN BỘ TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI NĂM HỌC " + year[0] + " - " + year[1];
+		currColumn = B;
+		String title = "DANH MỤC BÀI BÁO ĐĂNG TRONG TẠP CHÍ VÀ KỶ YẾU HỘI NGHỊ KHOA HỌC\nCỦA CÁN BỘ TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI NĂM HỌC "
+				+ year[0] + " - " + year[1];
 		mergedRegion(sh, currRow, currRow, currColumn, M);
 		createCell(rh, cellStyleTitle, title, currRow, currColumn);
-		
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=A;
-		
-		//Subtitle
-		HSSFCellStyle cellStyleSubTitle = createCellStyle(wb, (short)12, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
-		
-		currColumn=B;
+		currColumn = A;
+
+		// Subtitle
+		HSSFCellStyle cellStyleSubTitle = createCellStyle(wb, (short) 12,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT);
+
+		currColumn = B;
 		mergedRegion(sh, currRow, currRow, currColumn, G);
-		createCell(rh, cellStyleSubTitle, "Khoa/Viện: " + facultyName, currRow, currColumn);
+		createCell(rh, cellStyleSubTitle, "Khoa/Viện: " + facultyName, currRow,
+				currColumn);
 
 		currRow++;
 		rh = sh.createRow(currRow);
 
-		//Table content
-		HSSFCellStyle cellStyleHeaderTable = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cellStyleHeaderTableNote = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_NORMAL, true, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		currColumn=B;
-        createCell(rh, cellStyleHeaderTable, "STT", currRow, currColumn);
-        
-		currColumn=C;
-        createCell(rh, cellStyleHeaderTable, "Họ và tên các tác giả, đơn vị\n(ghi chi tiết)", currRow, currColumn);
-        
-		currColumn=D;
-        createCell(rh, cellStyleHeaderTable, "Tên bài báo", currRow, currColumn);
-        
-		currColumn=E;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, G, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleHeaderTable, "Tạp chí, Proceedings", currRow, currColumn);
-        
-		currColumn=H;
-        createCell(rh, cellStyleHeaderTable, "Tổng số tác giả", currRow, currColumn);
-        
-		currColumn=I;
-        createCell(rh, cellStyleHeaderTable, "Số tác giả của trường", currRow, currColumn);
-        
-		currColumn=J;
-        createCell(rh, cellStyleHeaderTable, "Tác giả  đầu tiên là Corresponding author", currRow, currColumn);
-		currColumn=K;
-        createCell(rh, cellStyleHeaderTable, "Tác giả  đầu tiên không là Corresponding author", currRow, currColumn);
-		currColumn=L;
-        createCell(rh, cellStyleHeaderTable, "Tác giả là Corresponding author", currRow, currColumn);
-		currColumn=M;
-        createCell(rh, cellStyleHeaderTable, "Các tác giả còn lại", currRow, currColumn);
-        
-		currRow++;
-		rh = sh.createRow(currRow);
-		mergedRegion(wb, sh, currRow-1, currRow, B, B, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, C, C, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, D, D, CellStyle.BORDER_THIN);
-		
-		currColumn=E;
-        createCell(rh, cellStyleHeaderTable, "Tên tạp chí, Proceedings", currRow, currColumn);
-		currColumn=F;
-        createCell(rh, cellStyleHeaderTable, "Số và thời gian xuất bản chính thức", currRow, currColumn);
-		currColumn=G;
-        createCell(rh, cellStyleHeaderTable, "Chỉ số ISSN", currRow, currColumn);
-		
-		mergedRegion(wb, sh, currRow-1, currRow, H, H, CellStyle.BORDER_THIN);
-		mergedRegion(wb, sh, currRow-1, currRow, I, I, CellStyle.BORDER_THIN);
-		
+		// Table content
+		HSSFCellStyle cellStyleHeaderTable = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_THIN);
 
-        currColumn=J;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, M, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleHeaderTableNote, "Đánh dấu \"x\" vào ô tương ứng", currRow, currColumn);
-		
+		HSSFCellStyle cellStyleHeaderTableNote = createCellStyle(wb,
+				(short) 10, HSSFFont.BOLDWEIGHT_NORMAL, true,
+				HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
+
+		currColumn = B;
+		createCell(rh, cellStyleHeaderTable, "STT", currRow, currColumn);
+
+		currColumn = C;
+		createCell(rh, cellStyleHeaderTable,
+				"Họ và tên các tác giả, đơn vị\n(ghi chi tiết)", currRow,
+				currColumn);
+
+		currColumn = D;
+		createCell(rh, cellStyleHeaderTable, "Tên bài báo", currRow, currColumn);
+
+		currColumn = E;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, G,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleHeaderTable, "Tạp chí, Proceedings", currRow,
+				currColumn);
+
+		currColumn = H;
+		createCell(rh, cellStyleHeaderTable, "Tổng số tác giả", currRow,
+				currColumn);
+
+		currColumn = I;
+		createCell(rh, cellStyleHeaderTable, "Số tác giả của trường", currRow,
+				currColumn);
+
+		currColumn = J;
+		createCell(rh, cellStyleHeaderTable,
+				"Tác giả  đầu tiên là Corresponding author", currRow,
+				currColumn);
+		currColumn = K;
+		createCell(rh, cellStyleHeaderTable,
+				"Tác giả  đầu tiên không là Corresponding author", currRow,
+				currColumn);
+		currColumn = L;
+		createCell(rh, cellStyleHeaderTable, "Tác giả là Corresponding author",
+				currRow, currColumn);
+		currColumn = M;
+		createCell(rh, cellStyleHeaderTable, "Các tác giả còn lại", currRow,
+				currColumn);
+
 		currRow++;
 		rh = sh.createRow(currRow);
-		
-		//content
-		HSSFCellStyle cellStyleSection = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		HSSFCellStyle cellStyleSectionIndex = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cellStyleSubSection = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		HSSFCellStyle cellStyleSubSectionIndex = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
-		
-		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short)10, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT, CellStyle.BORDER_THIN);
-		
-		//Section A
-		currColumn=B;
-        createCell(rh, cellStyleSectionIndex, "I", currRow, currColumn);
-		
-		currColumn=C;
-		mergedRegion(wb, sh, currRow, currRow, currColumn, M, CellStyle.BORDER_THIN);
-        createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/" + year[0] + " - 31/12/" + year[0], currRow, currColumn);
-        
-        
-        currRow++;
+		mergedRegion(wb, sh, currRow - 1, currRow, B, B, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, C, C, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, D, D, CellStyle.BORDER_THIN);
+
+		currColumn = E;
+		createCell(rh, cellStyleHeaderTable, "Tên tạp chí, Proceedings",
+				currRow, currColumn);
+		currColumn = F;
+		createCell(rh, cellStyleHeaderTable,
+				"Số và thời gian xuất bản chính thức", currRow, currColumn);
+		currColumn = G;
+		createCell(rh, cellStyleHeaderTable, "Chỉ số ISSN", currRow, currColumn);
+
+		mergedRegion(wb, sh, currRow - 1, currRow, H, H, CellStyle.BORDER_THIN);
+		mergedRegion(wb, sh, currRow - 1, currRow, I, I, CellStyle.BORDER_THIN);
+
+		currColumn = J;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, M,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleHeaderTableNote,
+				"Đánh dấu \"x\" vào ô tương ứng", currRow, currColumn);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
+
+		// content
+		HSSFCellStyle cellStyleSection = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+		HSSFCellStyle cellStyleSectionIndex = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER,
+				CellStyle.BORDER_THIN);
+
+		HSSFCellStyle cellStyleSubSection = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+		HSSFCellStyle cellStyleSubSectionIndex = createCellStyle(wb,
+				(short) 10, HSSFFont.BOLDWEIGHT_BOLD,
+				HSSFCellStyle.ALIGN_CENTER, CellStyle.BORDER_THIN);
+
+		HSSFCellStyle cellStyleContent = createCellStyle(wb, (short) 10,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT,
+				CellStyle.BORDER_THIN);
+
+		// Section A
+		currColumn = B;
+		createCell(rh, cellStyleSectionIndex, "I", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, M,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSection,
+				"CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/7/"
+						+ year[0] + " - 31/12/" + year[0], currRow, currColumn);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
 		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-		
-		currColumn=D;
-		HSSFRichTextString subSectionTitle1 = createRickText(wb, cellStyleSubSection, "Bài báo đăng trong tạp chí nước ngoài (Không kê các bài báo trong danh mục SCI, SCIE, SCOPUS)", new int[]{0, 37});
-		createCell(rh, cellStyleSubSection, subSectionTitle1, currRow, currColumn);		
-        createCellNull(rh, cellStyleSubSection, E, M);
-        
-        currRow = createContentTablePaperKV03( sh, lst_other_international_journal_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+
+		currColumn = D;
+		HSSFRichTextString subSectionTitle1 = createRickText(
+				wb,
+				cellStyleSubSection,
+				"Bài báo đăng trong tạp chí nước ngoài (Không kê các bài báo trong danh mục SCI, SCIE, SCOPUS)",
+				new int[] { 0, 37 });
+		createCell(rh, cellStyleSubSection, subSectionTitle1, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh,
+				lst_other_international_journal_papers1, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
+		currColumn = B;
 		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-		
-		currColumn=D;
+
+		currColumn = D;
 		String subSectionTitle2 = "Bài báo đăng trong tạp chí trong nước";
-		createCell(rh, cellStyleSubSection, subSectionTitle2, currRow, currColumn);
-        createCellNull(rh, cellStyleSubSection, E, M);
-        
-        currRow = createContentTablePaperKV03( sh, lst_domestic_journal_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		createCell(rh, cellStyleSubSection, subSectionTitle2, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh, lst_domestic_journal_papers1,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
+		currColumn = B;
 		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-		
-		currColumn=D;
+
+		currColumn = D;
 		String subSectionTitle3 = "Bài báo đăng trong kỷ yếu hội nghị quốc tế có phản biện (Proceedings)";
-		createCell(rh, cellStyleSubSection, subSectionTitle3, currRow, currColumn);
-        createCellNull(rh, cellStyleSubSection, E, M);
-        
-        currRow = createContentTablePaperKV03( sh, lst_international_conference_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        currRow++;
+		createCell(rh, cellStyleSubSection, subSectionTitle3, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh,
+				lst_international_conference_papers1, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		currRow++;
 		rh = sh.createRow(currRow);
-		currColumn=B;
+		currColumn = B;
 		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-		
-		currColumn=D;
+
+		currColumn = D;
 		String subSectionTitle4 = "Bài báo đăng trong kỷ yếu hội nghị trong nước có phản biện (Proceedings)";
-		createCell(rh, cellStyleSubSection, subSectionTitle4, currRow, currColumn);
-        createCellNull(rh, cellStyleSubSection, E, M);
-        
-        currRow = createContentTablePaperKV03( sh, lst_domestic_conference_papers1, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-        
-        //Section B
-        currRow++;
+		createCell(rh, cellStyleSubSection, subSectionTitle4, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh,
+				lst_domestic_conference_papers1, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		// Section B
+		currRow++;
 		rh = sh.createRow(currRow);
-  		currColumn=B;
-        createCell(rh, cellStyleSectionIndex, "II", currRow, currColumn);
-  		
-  		currColumn=C;
-  		mergedRegion(wb, sh, currRow, currRow, currColumn, M, CellStyle.BORDER_THIN);
-	      createCell(rh, cellStyleSection, "CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/" + year[1] + " - 30/6/" + year[1], currRow, currColumn);
-        
-        currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-  		
-  		currColumn=D;
-  		createCell(rh, cellStyleSubSection, subSectionTitle1, currRow, currColumn);		
-          createCellNull(rh, cellStyleSubSection, E, M);
-          
-          currRow = createContentTablePaperKV03( sh, lst_other_international_journal_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-          
-          currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-  		
-  		currColumn=D;
-  		createCell(rh, cellStyleSubSection, subSectionTitle2, currRow, currColumn);
-          createCellNull(rh, cellStyleSubSection, E, M);
-          
-          currRow = createContentTablePaperKV03( sh, lst_domestic_journal_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-          
-          currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-  		
-  		currColumn=D;
-  		createCell(rh, cellStyleSubSection, subSectionTitle3, currRow, currColumn);
-          createCellNull(rh, cellStyleSubSection, E, M);
-          
-          currRow = createContentTablePaperKV03( sh, lst_international_conference_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-          
-          currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCellNull(rh, cellStyleSubSectionIndex, B, C);
-  		
-  		currColumn=D;
-  		createCell(rh, cellStyleSubSection, subSectionTitle4, currRow, currColumn);
-          createCellNull(rh, cellStyleSubSection, E, M);
-              
-          currRow = createContentTablePaperKV03( sh, lst_domestic_conference_papers2, mPaper2NbIntAuthors, cellStyleContent, currRow+1, B);
-              
-        
-          HSSFCellStyle cellStyleSignTitle = createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, false);
-          HSSFCellStyle cellStyleSignDate = createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER, false);
-          HSSFCellStyle cellStyleSignContent = createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT, true);
-          
-          currRow++;
-          rh = sh.createRow(currRow);
-          currColumn=H;
-          mergedRegion(sh, currRow, currRow, currColumn, M);
-          createCell(rh, cellStyleSignDate, "Ngày     tháng     năm 201", currRow, currColumn);
-          
-        currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		mergedRegion(sh, currRow, currRow, currColumn, D);
-          createCell(rh, cellStyleSignTitle, "PHÒNG KHOA HỌC CÔNG NGHỆ", currRow, currColumn);
-          
-        currColumn=H;
+		currColumn = B;
+		createCell(rh, cellStyleSectionIndex, "II", currRow, currColumn);
+
+		currColumn = C;
+		mergedRegion(wb, sh, currRow, currRow, currColumn, M,
+				CellStyle.BORDER_THIN);
+		createCell(rh, cellStyleSection,
+				"CÁC BÀI BÁO KHOA HỌC ĐƯỢC ĐĂNG CHÍNH THỨC TRONG KHOẢNG THỜI GIAN TỪ 1/1/"
+						+ year[1] + " - 30/6/" + year[1], currRow, currColumn);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCellNull(rh, cellStyleSubSectionIndex, B, C);
+
+		currColumn = D;
+		createCell(rh, cellStyleSubSection, subSectionTitle1, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh,
+				lst_other_international_journal_papers2, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCellNull(rh, cellStyleSubSectionIndex, B, C);
+
+		currColumn = D;
+		createCell(rh, cellStyleSubSection, subSectionTitle2, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh, lst_domestic_journal_papers2,
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCellNull(rh, cellStyleSubSectionIndex, B, C);
+
+		currColumn = D;
+		createCell(rh, cellStyleSubSection, subSectionTitle3, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh,
+				lst_international_conference_papers2, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCellNull(rh, cellStyleSubSectionIndex, B, C);
+
+		currColumn = D;
+		createCell(rh, cellStyleSubSection, subSectionTitle4, currRow,
+				currColumn);
+		createCellNull(rh, cellStyleSubSection, E, M);
+
+		currRow = createContentTablePaperKV03(sh,
+				lst_domestic_conference_papers2, mPaper2NbIntAuthors,
+				cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+
+		HSSFCellStyle cellStyleSignTitle = createCellStyle(wb, (short) 11,
+				HSSFFont.BOLDWEIGHT_BOLD, HSSFCellStyle.ALIGN_CENTER, false);
+		HSSFCellStyle cellStyleSignDate = createCellStyle(wb, (short) 11,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_CENTER, false);
+		HSSFCellStyle cellStyleSignContent = createCellStyle(wb, (short) 11,
+				HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_LEFT, true);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = H;
 		mergedRegion(sh, currRow, currRow, currColumn, M);
-        createCell(rh, cellStyleSignTitle, "LÃNH ĐẠO KHOA/VIỆN", currRow, currColumn);
-          
-          
-        currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCell(rh, createCellStyle(wb, (short)11, HSSFFont.BOLDWEIGHT_NORMAL, true, Font.U_SINGLE, HSSFCellStyle.ALIGN_LEFT, HSSFCellStyle.BORDER_NONE), "Ghi chú:", currRow, currColumn);
-  		mergedRegion(sh, currRow, currRow, currColumn, F);
-  		
-  		currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCell(rh, cellStyleSignContent, "- Căn cứ vào kê khai của từng cá nhân các Khoa/Viện tổng hợp theo mẫu.", currRow, currColumn);
-  		mergedRegion(sh, currRow, currRow, currColumn, F);
-  		
-  		currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCell(rh, cellStyleSignContent, "- Đối với bài báo do nhiều tác giả trong cùng Khoa/Viện viết chung thì chỉ tổng hợp 1 lần.", currRow, currColumn);
-  		mergedRegion(sh, currRow, currRow, currColumn, F);
-  		
-  		currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCell(rh, cellStyleSignContent, "- Các đơn vị gửi minh chứng bài báo khoa học kèm theo danh mục này.\nMinh chứng đầy đủ theo hướng dẫn tại mục 2.1 công văn.", currRow, currColumn);
-  		mergedRegion(sh, currRow, currRow+1, currColumn, F);
-  		
-  		currRow++;
-  		currRow++;
-  		rh = sh.createRow(currRow);
-  		currColumn=B;
-  		createCell(rh, cellStyleSignContent, "- Chỉ chấp nhận bài có đầy đủ thông tin tại các cột", currRow, currColumn);
-  		mergedRegion(sh, currRow, currRow, currColumn, F);
-  		
+		createCell(rh, cellStyleSignDate, "Ngày     tháng     năm 201",
+				currRow, currColumn);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		mergedRegion(sh, currRow, currRow, currColumn, D);
+		createCell(rh, cellStyleSignTitle, "PHÒNG KHOA HỌC CÔNG NGHỆ", currRow,
+				currColumn);
+
+		currColumn = H;
+		mergedRegion(sh, currRow, currRow, currColumn, M);
+		createCell(rh, cellStyleSignTitle, "LÃNH ĐẠO KHOA/VIỆN", currRow,
+				currColumn);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCell(
+				rh,
+				createCellStyle(wb, (short) 11, HSSFFont.BOLDWEIGHT_NORMAL,
+						true, Font.U_SINGLE, HSSFCellStyle.ALIGN_LEFT,
+						HSSFCellStyle.BORDER_NONE), "Ghi chú:", currRow,
+				currColumn);
+		mergedRegion(sh, currRow, currRow, currColumn, F);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCell(
+				rh,
+				cellStyleSignContent,
+				"- Căn cứ vào kê khai của từng cá nhân các Khoa/Viện tổng hợp theo mẫu.",
+				currRow, currColumn);
+		mergedRegion(sh, currRow, currRow, currColumn, F);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCell(
+				rh,
+				cellStyleSignContent,
+				"- Đối với bài báo do nhiều tác giả trong cùng Khoa/Viện viết chung thì chỉ tổng hợp 1 lần.",
+				currRow, currColumn);
+		mergedRegion(sh, currRow, currRow, currColumn, F);
+
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCell(
+				rh,
+				cellStyleSignContent,
+				"- Các đơn vị gửi minh chứng bài báo khoa học kèm theo danh mục này.\nMinh chứng đầy đủ theo hướng dẫn tại mục 2.1 công văn.",
+				currRow, currColumn);
+		mergedRegion(sh, currRow, currRow + 1, currColumn, F);
+
+		currRow++;
+		currRow++;
+		rh = sh.createRow(currRow);
+		currColumn = B;
+		createCell(rh, cellStyleSignContent,
+				"- Chỉ chấp nhận bài có đầy đủ thông tin tại các cột", currRow,
+				currColumn);
+		mergedRegion(sh, currRow, currRow, currColumn, F);
+
 	}
 
 	public static int getNbInternalAuthors(Delegator delegator, String paperId) {
@@ -2056,17 +2347,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			HSSFWorkbook wb = new HSSFWorkbook();
 			List<GenericValue> all_papers = getPapersOfStaffAcademicYear(
 					delegator, staffId, academicYearId);
-			
+
 			List<Map<String, Object>> researchProject = getResearchProjectOfStaffAcademicYear(
 					delegator, staffId, academicYearId);
-			
+
 			List<GenericValue> user = delegator.findList("StaffView",
 					EntityCondition.makeCondition("staffId",
 							EntityOperator.EQUALS, staffId), null, null, null,
 					false);
-			
-			
-			
+
 			HashMap<GenericValue, Integer> mPaper2NbIntAuthors = new HashMap<GenericValue, Integer>();
 			for (GenericValue p : all_papers) {
 				int nbauthors = getNbInternalAuthors(delegator,
@@ -2138,20 +2427,19 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					}
 				}
 			}
-			
+
 			createSheetPaper01CN(wb, lst_isi_papers1, lst_isi_papers2,
 					lst_scopus_papers1, lst_scopus_papers2,
 					lst_internaltional_journal_papers1,
 					lst_internaltional_journal_papers2,
 					lst_domestic_journal_papers1, lst_domestic_journal_papers2,
-					lst_international_conference_papers1, lst_international_conference_papers2,
-					lst_domestic_conference_papers1, lst_domestic_conference_papers2, 
-					academicYearId,
-					mPaper2NbIntAuthors,
-					user
-					);
+					lst_international_conference_papers1,
+					lst_international_conference_papers2,
+					lst_domestic_conference_papers1,
+					lst_domestic_conference_papers2, academicYearId,
+					mPaper2NbIntAuthors, user);
 			createSheetPaper02CN(wb, researchProject, user);
-			
+
 			return wb;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -2184,10 +2472,74 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		}
 	}
 
-	public static void createExcelFormKV03(HSSFWorkbook wb, Delegator delegator, String academicYearId, String facultyId){
-		try{
-			List<GenericValue> all_papers = getPaperOfFacultyAcademcYearId(delegator, facultyId, academicYearId);
-			//Sheet sh = wb.createSheet("KV03");
+	public static Map<String, Object> getAuthorInfos(Delegator delegator,
+			String paperId) {
+		Map<String, Object> retSucc = FastMap.newInstance();
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			List<GenericValue> lst_ext = delegator.findList(
+					"ExternalMemberPaperDeclaration",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+
+			List<GenericValue> lst_int = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			String firstAuthorIsCorresponding = "F";
+			String firstAuthorIsNotCorresponding = "F";
+			String correspondingAuthor = "";
+			String nonCorrespondingAuthor = "";
+			for (GenericValue g : lst_ext) {
+				if (g.getString("correspondingAuthor") != null && g.getString("correspondingAuthor").equals("Y")) {
+					if (g.getLong("sequence") != null && g.getLong("sequence") == 1) {
+						firstAuthorIsCorresponding = "T";
+					}else{
+						firstAuthorIsNotCorresponding = "T";
+					}
+					if(g.getString("staffName") != null)correspondingAuthor += g.getString("staffName") + ", ";
+				} else {
+					if(g.getString("staffName") != null)nonCorrespondingAuthor += g.getString("staffName") + ", ";
+				}
+			}
+
+			for (GenericValue g : lst_int) {
+				if (g.getString("correspondingAuthor") != null && g.getString("correspondingAuthor").equals("Y")) {
+					if (g.getLong("sequence") != null && g.getLong("sequence") == 1) {
+						firstAuthorIsCorresponding = "T";
+					}else{
+						firstAuthorIsNotCorresponding = "T";
+					}
+					if(g.getString("staffName") != null) correspondingAuthor += g.getString("staffName") + ", ";
+				} else {
+					if(g.getString("staffName") != null) nonCorrespondingAuthor += g.getString("staffName") + ", ";
+				}
+			}
+			retSucc.put("firstAuthorIsCorresponding", firstAuthorIsCorresponding);
+			retSucc.put("firstAuthorIsNotCorresponding", firstAuthorIsNotCorresponding);
+			retSucc.put("correspondingAuthor", correspondingAuthor);
+			retSucc.put("nonCorrespondingAuthor", nonCorrespondingAuthor);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return retSucc;
+	}
+
+	public static void createExcelFormKV03(HSSFWorkbook wb,
+			Delegator delegator, String academicYearId, String facultyId) {
+		try {
+			List<GenericValue> all_papers = getPaperOfFacultyAcademcYearId(
+					delegator, facultyId, academicYearId);
+
+			Map<String, Object> mPaper2AuthorInfo = FastMap.newInstance();
+			for(GenericValue p: all_papers){
+				String paperId = p.getString("paperId");
+				Map<String, Object> infos = getAuthorInfos(delegator, paperId);
+				mPaper2AuthorInfo.put(paperId, infos);
+			}
+			
+			// Sheet sh = wb.createSheet("KV03");
 			List<GenericValue> lst_isi_papers1 = FastList.newInstance();
 			List<GenericValue> lst_isi_papers2 = FastList.newInstance();
 			List<GenericValue> lst_scopus_papers1 = FastList.newInstance();
@@ -2256,20 +2608,19 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 				}
 			}
-			
+
 			String facultyName = getFacultyName(delegator, facultyId);
-			
-			createSheetPaperKV03(wb, 
-					lst_internaltional_journal_papers1,
+
+			createSheetPaperKV03(wb, lst_internaltional_journal_papers1,
 					lst_internaltional_journal_papers2,
 					lst_domestic_journal_papers1, lst_domestic_journal_papers2,
 					lst_international_conference_papers1,
 					lst_international_conference_papers2,
 					lst_domestic_conference_papers1,
-					lst_domestic_conference_papers2, academicYearId, facultyName,
-					mPaper2NbIntAuthors);
+					lst_domestic_conference_papers2, academicYearId,
+					facultyName, mPaper2NbIntAuthors, mPaper2AuthorInfo);
 
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -2461,7 +2812,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		total_hour_faculty = paper_hour_faculty + project_hour_faculty;
 
 		i_row++;
-		String[] FN = {"", facultyName, paper_hour1_faculty + "",
+		String[] FN = { "", facultyName, paper_hour1_faculty + "",
 				paper_hour2_faculty + "", paper_hour_faculty + "",
 				project_hour_faculty + "", total_hour_faculty + "" };
 		row_header_table = sh.createRow(i_row);
@@ -2550,10 +2901,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createRowInExcel(5, 5, str_footer2, rowFooter, cellStyleBold);
 		// ----end footer in excel
 
-		
 		// create additional sheet for KV03
 		createExcelFormKV03(wb, delegator, academicYearId, facultyId);
-		
+
 		return wb;
 	}
 
@@ -4226,45 +4576,49 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			return null;
 		}
 	}
-	
-	public static void mergedRegion(HSSFWorkbook wb, Sheet sh, int fr, int lw, int fc, int lc, short border){
-		CellRangeAddress mergedCell = new CellRangeAddress(
-				fr, //first row (0-based)
-				lw, //last row  (0-based)
-				fc, //first column (0-based)
-				lc  //last column  (0-based)
+
+	public static void mergedRegion(HSSFWorkbook wb, Sheet sh, int fr, int lw,
+			int fc, int lc, short border) {
+		CellRangeAddress mergedCell = new CellRangeAddress(fr, // first row
+																// (0-based)
+				lw, // last row (0-based)
+				fc, // first column (0-based)
+				lc // last column (0-based)
 		);
 		sh.addMergedRegion(mergedCell);
-		
+
 		RegionUtil.setBorderTop(border, mergedCell, sh, wb);
 		RegionUtil.setBorderBottom(border, mergedCell, sh, wb);
 		RegionUtil.setBorderLeft(border, mergedCell, sh, wb);
 		RegionUtil.setBorderRight(border, mergedCell, sh, wb);
 	}
-	
-	public static void mergedRegion(Sheet sh, int fr, int lw, int fc, int lc){
-		CellRangeAddress mergedCell = new CellRangeAddress(
-				fr, //first row (0-based)
-				lw, //last row  (0-based)
-				fc, //first column (0-based)
-				lc  //last column  (0-based)
+
+	public static void mergedRegion(Sheet sh, int fr, int lw, int fc, int lc) {
+		CellRangeAddress mergedCell = new CellRangeAddress(fr, // first row
+																// (0-based)
+				lw, // last row (0-based)
+				fc, // first column (0-based)
+				lc // last column (0-based)
 		);
 		sh.addMergedRegion(mergedCell);
 	}
-	
-	public static void createCell(Row rh, HSSFCellStyle style, String value, int row, int column){
+
+	public static void createCell(Row rh, HSSFCellStyle style, String value,
+			int row, int column) {
 		Cell ch = rh.createCell(column);
 		ch.setCellStyle(style);
 		ch.setCellValue(value);
 	}
-	
-	public static void createCell(Row rh, HSSFCellStyle style, HSSFRichTextString value, int row, int column){
+
+	public static void createCell(Row rh, HSSFCellStyle style,
+			HSSFRichTextString value, int row, int column) {
 		Cell ch = rh.createCell(column);
 		ch.setCellStyle(style);
 		ch.setCellValue(value);
 	}
-	
-	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb, short fontSize, short boldWeight, short align, short border){
+
+	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb,
+			short fontSize, short boldWeight, short align, short border) {
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints(fontSize);
@@ -4279,11 +4633,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		cellStyle.setBorderTop(border);
 		cellStyle.setBorderLeft(border);
 		cellStyle.setBorderRight(border);
-		
+
 		return cellStyle;
 	}
-	
-	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb, short fontSize, short boldWeight, short align, short border, short color){
+
+	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb,
+			short fontSize, short boldWeight, short align, short border,
+			short color) {
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints(fontSize);
@@ -4301,11 +4657,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		cellStyle.setBorderTop(border);
 		cellStyle.setBorderLeft(border);
 		cellStyle.setBorderRight(border);
-		
+
 		return cellStyle;
 	}
-	
-	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb, short fontSize, short boldWeight, boolean italic, short align, short border){
+
+	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb,
+			short fontSize, short boldWeight, boolean italic, short align,
+			short border) {
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints(fontSize);
@@ -4321,18 +4679,21 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		cellStyle.setBorderTop(border);
 		cellStyle.setBorderLeft(border);
 		cellStyle.setBorderRight(border);
-		
+
 		return cellStyle;
 	}
-	
-	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb, short fontSize, short boldWeight, boolean italic, byte underline, short align, short border){
+
+	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb,
+			short fontSize, short boldWeight, boolean italic, byte underline,
+			short align, short border) {
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints(fontSize);
 		font.setFontName("Times New Roman");
 		font.setBoldweight(boldWeight);
 		font.setItalic(italic);
-		font.setUnderline(underline);;
+		font.setUnderline(underline);
+		;
 		font.setColor(HSSFColor.BLACK.index);
 		cellStyle.setFont(font);
 		cellStyle.setWrapText(true);
@@ -4342,11 +4703,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		cellStyle.setBorderTop(border);
 		cellStyle.setBorderLeft(border);
 		cellStyle.setBorderRight(border);
-		
+
 		return cellStyle;
 	}
-	
-	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb, short fontSize, short boldWeight, short align){
+
+	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb,
+			short fontSize, short boldWeight, short align) {
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints(fontSize);
@@ -4361,73 +4723,76 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		cellStyle.setBorderTop(HSSFCellStyle.BORDER_NONE);
 		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_NONE);
 		cellStyle.setBorderRight(HSSFCellStyle.BORDER_NONE);
-		
+
 		return cellStyle;
 	}
-	
-	public static void createCellNull(Row rh, HSSFCellStyle styleCell, int firstColumn, int lastColumn) {
-		for(int i = firstColumn; i <= lastColumn; ++i) {			
+
+	public static void createCellNull(Row rh, HSSFCellStyle styleCell,
+			int firstColumn, int lastColumn) {
+		for (int i = firstColumn; i <= lastColumn; ++i) {
 			createCell(rh, styleCell, "", rh.getRowNum(), i);
 		}
 	}
-	
-	public static void createCellNull(HSSFSheet sh, HSSFCellStyle styleCell, int firstRow, int lastRow, int firstColumn, int lastColumn) {
-		for(int i = firstRow; i <= lastRow; ++i) {	
+
+	public static void createCellNull(HSSFSheet sh, HSSFCellStyle styleCell,
+			int firstRow, int lastRow, int firstColumn, int lastColumn) {
+		for (int i = firstRow; i <= lastRow; ++i) {
 			Row rh = sh.createRow(i);
-			for(int j = firstRow; j <= lastRow; ++j) {			
+			for (int j = firstRow; j <= lastRow; ++j) {
 				createCell(rh, styleCell, "", i, j);
 			}
 		}
 	}
-	
-	public static HSSFRichTextString createRickText(HSSFWorkbook wb, HSSFCellStyle styleCell, String text, int[] position) {
+
+	public static HSSFRichTextString createRickText(HSSFWorkbook wb,
+			HSSFCellStyle styleCell, String text, int[] position) {
 		Font fontNoBold = wb.createFont();
 		Font fontBold = wb.createFont();
 		Font font = styleCell.getFont(wb);
-		
+
 		fontBold.setFontHeightInPoints(font.getFontHeightInPoints());
 		fontBold.setFontName(font.getFontName());
 		fontBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		fontBold.setColor(font.getColor());
 		fontBold.setItalic(font.getItalic());
-		
+
 		fontNoBold.setFontHeightInPoints(font.getFontHeightInPoints());
 		fontNoBold.setFontName(font.getFontName());
 		fontNoBold.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
 		fontNoBold.setColor(font.getColor());
 		fontNoBold.setItalic(font.getItalic());
-		
+
 		HSSFRichTextString value = new HSSFRichTextString(text);
-		
-		int k = position.length/2;
+
+		int k = position.length / 2;
 		int currIndex = 0;
 		int end = text.length();
-		for(int i = 0; i < k; ++i) {
-			int start = position[i*2];
-			if(i*2+1 < position.length) {
-				end = position[i*2+1];
+		for (int i = 0; i < k; ++i) {
+			int start = position[i * 2];
+			if (i * 2 + 1 < position.length) {
+				end = position[i * 2 + 1];
 			}
-			if(start < end) {
-				if(start > currIndex) {
-					value.applyFont(currIndex,start-1,fontNoBold);
+			if (start < end) {
+				if (start > currIndex) {
+					value.applyFont(currIndex, start - 1, fontNoBold);
 					value.applyFont(start, end, fontBold);
-					currIndex=end+1;
+					currIndex = end + 1;
 				} else {
-					value.applyFont(start,end,fontBold);
-					currIndex=end+1;
+					value.applyFont(start, end, fontBold);
+					currIndex = end + 1;
 				}
-			}		
+			}
 		}
-		
-		if(currIndex < text.length()) {
-			value.applyFont(currIndex,text.length(),fontNoBold);
+
+		if (currIndex < text.length()) {
+			value.applyFont(currIndex, text.length(), fontNoBold);
 		}
-		
-		
+
 		return value;
 	}
-	
-	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb, short fontSize, short boldWeight, short align, boolean wrapText){
+
+	public static HSSFCellStyle createCellStyle(HSSFWorkbook wb,
+			short fontSize, short boldWeight, short align, boolean wrapText) {
 		HSSFCellStyle cellStyle = getAttributeLeftFullBoder(wb);
 		Font font = wb.createFont();
 		font.setFontHeightInPoints(fontSize);
@@ -4442,7 +4807,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		cellStyle.setBorderTop(HSSFCellStyle.BORDER_NONE);
 		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_NONE);
 		cellStyle.setBorderRight(HSSFCellStyle.BORDER_NONE);
-		
+
 		return cellStyle;
 	}
 
