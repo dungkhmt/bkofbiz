@@ -109,6 +109,7 @@
 		"authors",
 		"paperName",
 		"paperCategoryName",
+		"journalConferenceName",
 		"researchProjectProposalName",
 		"departmentName",
 		"year",

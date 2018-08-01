@@ -873,6 +873,11 @@
     	<response name="success" type="view" value="view-list-official-document"/>
 	</request-map>
 	
+	<request-map uri="manage-official-document">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="manage-official-document"/>
+	</request-map>
+	
 	<request-map uri="upload-file-official-document">
             <security https="true" auth="true"/>
           
@@ -887,6 +892,21 @@
 		<event type="java" path="org.ofbiz.bkeuniv.officialdocument.GetDataOfficialDocument" 
 		invoke="downloadFileOfficialDocument"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
+	<request-map uri="update-official-document">
+		<security https="true" auth="true"/>
+    	<event type="java" path="org.ofbiz.bkeuniv.officialdocument.UploadOfficialDocument" 
+                     invoke="updateOfficialDocument"/>
+        <response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-official-document">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteOfficialDocument"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
 	</request-map>
     
     <!-- View Mappings -->
@@ -934,5 +954,6 @@
 
    <view-map name="view-upload-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageUploadOfficialDocument"/>
    <view-map name="view-list-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListOfficialDocument"/>
+   <view-map name="manage-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageManageOfficialDocument"/>
       
 </site-conf>

@@ -2,6 +2,29 @@ var modal = function (id) {
 	this.id = id;
 }
 
+modal.prototype.progress = function(e){
+	var _ = this;
+	if(e.lengthComputable){
+		var max = e.total;
+		var current = e.loaded;
+
+		var Percentage = Math.floor((current * 100)/max);
+
+		if(Percentage >= 100)
+		{
+			document.getElementById("liner-upload-template").style.width="100%";
+			document.getElementById("infor-liner-upload-template").innerHTML=BkEunivLoaded;
+			setTimeout(function(){
+				$([_.id, "#modal-template"].join(" ")).modal('hide');
+				loadingProcess.close();
+			}, 300);
+		} else {
+			document.getElementById("liner-upload-template").style.width=Percentage+"%";
+			document.getElementById("infor-liner-upload-template").innerHTML=BkEunivUpload + ' ' + Percentage+"%";
+		}
+	}
+}
+
 modal.prototype._getDate = function (selector, format) {
 	var value = $([this.id,selector].join(" ")).datepicker( "getDate" );
 	console.log(value, typeof value)
@@ -27,6 +50,22 @@ modal.prototype._getSelect = function (selector) {
 	}
 	
     return _data_select;
+}
+
+modal.prototype._getDropify = function (selector, multiple) {
+	var _id_upload = [this.id,selector].join(" ");
+	
+	var files = $(_id_upload)[0].files;
+
+	if(files.length == 0) {
+		return;
+	}
+
+	if(!!multiple) {
+		return files;
+	} else {
+		return files[0];
+	}
 }
 
 modal.prototype._date = function(value, edit, id, defaultValue=""){
@@ -174,6 +213,40 @@ modal.prototype._buildScriptArray = function(array = [], result = "") {
 	return result;
 }
 
+modal.prototype._dropify = function(value, edit, id, column) {
+	var _id = "#"+id;
+	var render;
+
+	var script = '$("'+_id+'").dropify({'+
+		'messages: {'+
+			'default: BkEunivDropifyDefault,'+
+			'replace: BkEunivDropifyReplace,'+
+			'remove:  BkEunivDropifyRemove,'+
+			'error:   BkEunivDropifyError'+
+		'}'+
+	'}).data("dropify");';
+	//value = "http://alex.smola.org/drafts/thebook.pdf";
+	var a =  '<input type="file" class="form-control"' +
+	'id="' + id + '" ' +
+	'class="dropify" ' +
+	(!!edit?"":'disabled="disabled" ') +
+	(!column.accept?"":(' accept="'+column.accept+'" '))+
+	(!column.pattern?"":(' pattern="'+column.pattern+'" title="'+column.title + '" ')) +
+	'data-default-file="' + value + '" '+
+	(!!column.multiple?"multiple ":'') +
+	'/>'+
+	'<script type="text/javascript">'+
+	script +
+	'</script>';
+
+	
+	console.log(a)
+	return '<div class="row inline-box" style="display: block;">'+
+		'<label id="title-modal-input">'+column.name+'</label>'+a+
+	'</div>'
+	;
+}
+
 modal.prototype._select_server_side = function(value, edit, id, option, column) {
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
@@ -285,14 +358,16 @@ modal.prototype.setting = function(option) {
 			case "select_server_side":
 		    	el = this._select_server_side(column._data, column.edit, column.id, column.option, column);
 				break;
+			case "dropify":
+				column.html = this._dropify(column._data, column.edit, column.id, column);
+				this._formData=true;
+				break;
 		    case "custom":
 		    	el = column.el;
 		    	break;
 		    case "render":
 		    	column.html = column.render(column._data, column.name, this._data, column.id);
 		    	break;
-		    	
-		    	
 		}
 			column.html = column.html||'<div class="row inline-box">'+
 				'<label id="title-modal-input">'+column.name+'</label>'+el+
@@ -313,7 +388,36 @@ modal.prototype.action = function() {
 
 	option = Object.assign({}, option, this._optionAjax);
 	option.data = Object.assign({},_.data(), this._optionAjax.data||{})
+
+	if(!!_._formData) {
+		option.contentType = false;
+		option.processData = false;
+
+		var formData = new FormData();
+		Object.keys(option.data).forEach(function(key){
+			var value = option.data[key];
+			formData.append(key, value);
+		})
+
+		option.data = formData;
+		
+		option.xhr = function() {
+			var myXhr = $.ajaxSettings.xhr();
+			if(myXhr.upload){
+				loadingProcess.open();
+				myXhr.upload.addEventListener('progress',_.progress, false);
+				closeLoader();
+			}
+			console.log(myXhr)
+			return myXhr;
+		}
+	}
+
 	option.success = function(data) {
+		if(!!_._formData) {
+			alertify.success(BkEunivLoaded);
+		}
+
 		if(!!_._action.update && typeof _._action.update === "function") {
 			_._action.update(data)
 			$([_.id, "#modal-template"].join(" ")).modal('hide');
@@ -450,6 +554,9 @@ modal.prototype.data = function() {
 				case "select_server_side":
 			    	column._data = _._getSelect("#"+column.id);
 					break;
+				case "dropify":
+			    	column._data = _._getDropify("#"+column.id, column.multiple);
+					break;
 			    case "custom":
 			    	if(typeof column.getData == "function") {
 			    		column._data = column.getData("#"+column.id);
@@ -487,6 +594,16 @@ modal.prototype._mergeData = function(base, compare) {
 		key = keys[i];
 		if(compare.hasOwnProperty(key)) {
 			base[key] = compare[key];			
+		}
+	}
+
+	keys = Object.keys(base);
+	var key;
+	
+	for (var i = 0, len = keys.length; i < len; i++) {
+		key = keys[i];
+		if(base[key]==undefined) {
+			delete base[key];
 		}
 	}
 

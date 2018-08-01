@@ -96,7 +96,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
-				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"render": 'function(r){return {title:"[" + r.staffId +"] " + r.staffName, id: r.staffId, text: r.staffName + " ["+ r.facultyName +" - "+r.departmentName+"]"}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
@@ -153,7 +153,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
-				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"render": 'function(r){return {title:"[" + r.staffId +"] " + r.staffName, id: r.staffId, text: r.staffName + " ["+ r.facultyName +" - "+r.departmentName+"]"}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},

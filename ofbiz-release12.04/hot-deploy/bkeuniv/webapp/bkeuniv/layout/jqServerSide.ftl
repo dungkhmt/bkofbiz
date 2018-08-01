@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/selectize.default.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dropify.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/template-modal.css">
 
 	<!-- import jqMinimumLib lib js -->
@@ -17,6 +18,7 @@
 	<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
 	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
+	<script src="/resource/bkeuniv/js/lib/dropify.min.js"></script>
 	
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
@@ -221,6 +223,16 @@
 	
 	</style>
 	<script type="text/javascript">
+		var BkEunivDropifyDefault = '${uiLabelMap.BkEunivDropifyDefault}',
+			BkEunivDropifyReplace = '${uiLabelMap.BkEunivDropifyReplace}',
+			BkEunivDropifyRemove = '${uiLabelMap.BkEunivDropifyRemove}',
+			BkEunivDropifyError = '${uiLabelMap.BkEunivDropifyError}';
+
+		var BkEunivLoading = "${uiLabelMap.BkEunivLoading} ...";
+		var BkEunivLoaded = "${uiLabelMap.BkEunivLoaded}";
+		var BkEunivAttachmentNotAdded = "${uiLabelMap.BkEunivAttachmentNotAdded}";
+		var BkEunivUpload = "${uiLabelMap.BkEunivUpload}";
+
 		var jqDataTable = new Object();
 		jqDataTable.columns = [
 			{
@@ -390,10 +402,29 @@
                                 recordsTotal: reponse.totalRows,  -->
                             }
 
-                            data.data = reponse.results.map(function(d, index) {
+
+							data.data = data.data.map(function(d, index) {
+								var r = new Object();
+								<#list dataFields as field>
+									<#if field?is_hash_ex>
+										<#if field.value??>
+											r['${field.name}'] = d['${field.value}'];
+										</#if>
+										<#if field.generate??>
+											r['${field.name}'] = ${field.generate}(d);
+										</#if>
+									<#else>
+										r['${field}'] = d['${field}']||"";
+									</#if>
+								</#list>
+								return r;
+							})
+
+                            data.data = data.data.map(function(d, index) {
                                 d.index = page*i_size + index + 1;
                                 return d;
                             })
+
                             fnCallback(data)
                         }
                     }]));
@@ -432,89 +463,6 @@
                         }
                         });
                 </#if>
-
-
-			
-            <#--  jqDataTable.data = data.${fieldDataResult}.map(function(d, index) {
-                    var r = new Object();
-                    <#list dataFields as field>
-                        r.${field} = d.${field}||"";
-                    </#list>		
-                    return r;
-                })  -->
-                
-                <#--  jqDataTable.table = $('#${id}-content').DataTable({
-                data: jqDataTable.data,
-                columns: jqDataTable.columns,
-                deferRender: true,
-                "columnDefs": [
-                {
-                    "targets": 0,
-                    "render": function ( data, type, row, meta ) {
-                        
-                        var row = meta.row;
-                        if( Object.prototype.toString.call( row ) === '[object Array]' ) {
-                            if(row.length > 0) {
-                                return row[0] + 1
-                            } else {
-                                return jqDataTable.data.length
-                            }
-                        }
-                        
-                        return meta.row + 1;					      
-                    }
-                },
-                <#assign index = 1 />
-                <#list columns as column>
-                    <#assign c = {} />
-                    
-                    <#if column.render?has_content>
-                            <#assign c = c + {"render": column.render} />
-                    </#if>
-                    <#if column.width?has_content>
-                            <#assign c = c + {"width": column.width} />
-                    </#if>
-                    
-                    <#if c?has_content>
-                            <#assign c = c + {"targets": index} />
-                            <@pfObject object=c />,
-                    </#if>
-                    
-                    <#assign index = index + 1 />
-                </#list>
-                ],
-                <#if fnInfoCallback?has_content>
-                    "fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
-                </#if>
-                "bJQueryUI": true
-                });
-                <#if contextmenu>
-                    $(document).contextmenu({
-                        delegate: "#${id}-content td",
-                    menu: [
-                        {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-                        {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
-                    ],
-                    select: function(event, ui) {
-                        var el = ui.target.parent();
-                        var data = jqDataTable.table.row( el ).data();
-                        switch(ui.cmd){
-                            case "edit":
-                                jqChange(data)
-                                break;
-                            case "delete":
-                                jqDelete(data);
-                                break;
-                            }
-                        },
-                        beforeOpen: function(event, ui) {
-                            var $menu = ui.menu,
-                                $target = ui.target,
-                                extraData = ui.extraData;
-                            ui.menu.zIndex(9999);
-                        }
-                        });
-                </#if>  -->
 		});
 
 		function jqChange(data) {
@@ -529,6 +477,7 @@
 						dataTable: jqDataTable.table,
 						keys: <@pfArray array=keysId />,
 						fieldDataResult: '${fieldDataResult}',
+						update: ${JqRefresh?substring(0, JqRefresh?length-2)},
 						hidden: "auto"
 					}
 				}).render());
@@ -553,7 +502,7 @@
 						keys: <@pfArray array=keysId />,
 						fieldDataResult: '${fieldDataResult}',
 						update: ${JqRefresh?substring(0, JqRefresh?length-2)},
-						hidden: "show"
+						hidden: "auto"
 					}
 				}).render());
 			}).then(function(modal) {
@@ -563,7 +512,7 @@
 		}
 		
 		function jqDelete(data) {
-			alertify.confirm("Confirm", '${titleDelete}',
+			alertify.confirm('${uiLabelMap.BkEunivConfirm}', '${uiLabelMap.BkEunivConfirmToDelete}',
 			function(){
 				openLoader();
 				$.ajax({
@@ -574,7 +523,7 @@
 				    success: function(d) {
 				    	var table = jqDataTable.table;
 				    	if(!!d) {
-				    		var element = table.rows().indexes().data().filter(function(e, index) {
+				    		<#--  var element = table.rows().indexes().data().filter(function(e, index) {
 								
 								var check = <@pfArray array=keysId />.reduce(function(acc, curr) {
 									return acc&&(e[curr]==data[curr]);
@@ -588,7 +537,9 @@
 							
 							if(!!element) {
 								table.row(element.index).remove().draw();
-							}
+							}  -->
+
+							${JqRefresh};
 							
 				    		setTimeout(function() {
 				    			closeLoader();
@@ -861,5 +812,16 @@
 	<#if urlUpdate!="">
 		<div id="jqModalChange"></div>
 	</#if>
+
+	<@Loader handleToggle="loadingProcess" backgroundColor="rgba(0, 0, 0, 0.6)">
+        <div style="margin-left: 17%; margin-right: 17%;">
+            <div class="progress">
+                <div class="determinate" id="liner-upload-template" style="width: 0%"></div>
+            </div>
+        </div>
+        <div style="font-size: 20px; text-align: center; color: #fffffff2; font-weight: 400;" id="infor-liner-upload-template">
+            ${uiLabelMap.BkEunivLoading} ...
+        </div>
+    </@Loader>
 	
 </#macro>

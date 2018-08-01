@@ -5,8 +5,12 @@ import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +27,15 @@ import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.bkeuniv.config.ConfigParams;
 import org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityFunction;
+import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
+import org.ofbiz.service.DispatchContext;
+import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.utils.BKEunivUtils;
 
@@ -248,5 +260,148 @@ public class UploadOfficialDocument {
 		}
 
 	}
+	
+
+	public static String updateOfficialDocument(HttpServletRequest request,
+			HttpServletResponse response) throws GenericEntityException{
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		GenericValue staff = (GenericValue)request.getSession().getAttribute("staff");
+		String userLoginId = (String) staff.get("staffId");
+		 
+		
+		ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory());
+		
+		
+		
+		FileItem file = null;
+		String officialDocumentId = null;
+		String officialDocumentName = null;
+		String officialDocumentTypeId = null;
+		java.util.Date currentDate = new java.util.Date();
+		String filenameDB = "";
+		
+		try {
+			
+			List<FileItem> lst = fu.parseRequest(request);
+			
+			FileItem file_item = null;
+			FileItem selected_file_item = null;
+
+			// Checking for form fields - Start
+			for (int i = 0; i < lst.size(); i++) {
+				file_item = (FileItem) lst.get(i);
+				String fieldName = file_item.getFieldName();
+
+				switch (fieldName) {
+				case "file":
+					file = file_item;
+					break;
+				case "officialDocumentId":
+					officialDocumentId = file_item.getString();
+					break;
+				case "officialDocumentName":
+					officialDocumentName = file_item.getString();
+					break;
+				case "officialDocumentTypeId":
+					officialDocumentTypeId = file_item.getString();
+					break;
+				}
+
+			}
+			
+			if(officialDocumentId==null||officialDocumentName==null||officialDocumentTypeId==null) {
+				retSucc.put("message", "require officialDocumentId, officialDocumentName, officialDocumentTypeId");
+			}
+			
+			
+			if(file != null && file.getSize() != 0) {
+				String file_name = file.getName();
+				String ext = getExtension(file_name);
+	
+				SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				
+				String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+				
+				filenameDB = sCurrentDate + "." + ext;
+				String fullFileName = establishFullFilename(userLoginId, filenameDB);
+				
+				Debug.log(module + "::uploadFile, filename = " + file_name
+				+ ", officialDocumentName = " + officialDocumentName + ", extension = " + ext
+				+ ", filenameDB = " + filenameDB + ", fullFileName = "
+				+ fullFileName);
+				
+				byte[] file_bytes = file.get();
+				byte[] extract_bytes = new byte[file_bytes.length];
+				
+				for (int l = 0; l < file_bytes.length; l++)
+				extract_bytes[l] = file_bytes[l];
+				
+				FileOutputStream fout = new FileOutputStream(fullFileName);
+				System.out
+				.println("\n\n\t****************************************\n\tAfter creating outputstream");
+				fout.flush();
+				fout.write(extract_bytes);
+				fout.flush();
+				fout.close();
+			}
+		
+		
+			GenericValue gv = delegator.findOne("OfficialDocuments", false, UtilMisc.toMap("officialDocumentId",officialDocumentId));
+			
+			if(gv != null){
+				officialDocumentName = new String(officialDocumentName.getBytes(ISO), UTF_8);
+				gv.put("officialDocumentName", officialDocumentName);
+				gv.put("officialDocumentTypeId", officialDocumentTypeId);
+				
+				if(filenameDB.equals("")) {
+					gv.put("sourceFileName", filenameDB);
+					gv.put("uploadDate", new java.sql.Date(currentDate.getTime()));
+					gv.put("staffId", userLoginId);
+					
+				}
+				
+				delegator.store(gv);
+				
+        		retSucc.put("message", "updated record with id: " + officialDocumentId);
+        	} else {
+        		retSucc.put("message", "not found record with id: " + officialDocumentId);
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+        	ServiceUtil.returnError(e.getMessage());
+        	return "error";
+		}
+		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc), response, 200);
+		
+		return "success";
+	}
+	
+	public static Map<String, Object> deleteOfficialDocument(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Delegator delegator = ctx.getDelegator();
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+        
+        GenericValue userLogin = (GenericValue) context.get("userLogin");
+        Locale locale = (Locale) context.get("locale");        
+        
+        Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+        
+        String officialDocumentId = (String)context.get("officialDocumentId");
+        try{
+        	GenericValue gv = delegator.findOne("OfficialDocuments", UtilMisc.toMap("officialDocumentId",officialDocumentId), false);
+        	if(gv != null){
+        		delegator.removeValue(gv);
+        		retSucc.put("result", "deleted record with id: " + officialDocumentId);
+        	} else {
+        		retSucc.put("result", "not found record with id: " + officialDocumentId);
+        	}
+        	
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        }
+        return retSucc;
+	}
+	
 
 }

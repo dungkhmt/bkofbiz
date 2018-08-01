@@ -8,7 +8,8 @@
 		menu: [
 			<#-- {title: '${uiLabelMap.BkEunivReview}', cmd: "review", uiIcon: "fa fa-eye"}, -->
 			{title: '${uiLabelMap.BkEunivDownload}', cmd: "download", uiIcon: "fa fa-download"},
-			<#--  {title: '${uiLabelMap.BkEunivRemove}', cmd: "remove", uiIcon: "glyphicon glyphicon-trash"}  -->
+			{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+            {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 		],
 		select: function(event, ui) {
 			var el = ui.target.parent();
@@ -21,10 +22,13 @@
 				case "download":
 					window.open("/bkeuniv/control/download-file-official-document?officialDocumentId="+data.officialDocumentId, "_blank");
 					break;
-				case "remove":
-					
-					break;
-				}
+                case "edit":
+                    jqChange(data)
+                    break;
+                case "delete":
+                    jqDelete(data);
+                    break;
+                }
 			},
 			beforeOpen: function(event, ui) {
 				var $menu = ui.menu,
@@ -34,17 +38,15 @@
 			}
 			});
 	}
+
+    function getLinkDownLoad(data) {
+        return "/bkeuniv/control/download-file-official-document?officialDocumentId="+data.officialDocumentId;
+    }
 </script>
 
 <div class="body">
 
 	<#assign columns=[
-		<!--
-		{
-			"name": uiLabelMap.officialDocumentId?j_string,
-			"data": "officialDocumentId"
-		},
-		-->
 		{
 			"name": uiLabelMap.officialDocumentName?j_string,
 			"data": "officialDocumentName",
@@ -55,9 +57,7 @@
 		{
 			"name": uiLabelMap.officialDocumentTypeName?j_string,
 			"data": "officialDocumentTypeName"
-		}
-		<!--
-		,
+		},
 		{
 			"name": uiLabelMap.staffName?j_string,
 			"data": "staffName"
@@ -68,16 +68,43 @@
 			"data": "uploadDate",
 			"type": "date"
 		}
-		-->
+	] />
+
+    <#assign columnsChange=[
+		{
+			"name": uiLabelMap.officialDocumentName?j_string,
+			"value": "officialDocumentName"
+		},
+		{
+			"name": uiLabelMap.officialDocumentTypeName?j_string,
+			"value": "officialDocumentTypeId",
+			"type":"select_server_side",
+			"option":{
+				"maxItem": 1,
+				"render": 'function(r){return {id: r.officialDocumentTypeId, text:r.officialDocumentTypeName}}',
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListOfficialDocumentType"
+			}
+		},
+    	{
+			"name": "Upload"?j_string,
+			"value": "file",
+			"type": "dropify",
+            "accept": ".doc, .docx, .pdf, .csv, .xls, .xlsx"
+		}
 	] />
 	
 	<#assign fields=[
 		"staffId",
+        "staffName",
 		"officialDocumentId",
 		"officialDocumentName",
 		"officialDocumentTypeName",
 		"officialDocumentTypeId",
-		"uploadDate"
+		"uploadDate",
+        {
+            "name": "file",
+            "generate": "getLinkDownLoad"
+        }
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
@@ -85,14 +112,17 @@
 	<@jqDataTable
 		id="jqDataTable"
 		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetListOfficialDocument" 
+        urlUpdate="/bkeuniv/control/update-official-document"
+		urlDelete="/bkeuniv/control/delete-official-document"
 		columns=columns 
+        columnsChange=columnsChange
 		dataFields=fields
 		sizeTable=sizeTable
-		urlDelete="/bkeuniv/control/remove-a-staff" 
-		keysId=["officialDocumentId"] 
+		keysId=["officialDocumentId"]
 		fieldDataResult = "results"
 		contextmenu=false
 		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
+		titleDelete=uiLabelMap.BkEunivConfirmToDelete
 	/>
 
 </div>

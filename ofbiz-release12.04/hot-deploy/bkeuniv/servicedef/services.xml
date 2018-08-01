@@ -489,5 +489,27 @@
     	location="org.ofbiz.bkeuniv.academicyear.AcademicYearService" 
     	invoke="createGlAccountOrganizationForTesting" transaction-timeout="10000000">
     </service>
+    
+    <!-- <service name="updateOfficialDocument" engine="java"
+    	location="org.ofbiz.bkeuniv.officialdocument.UploadOfficialDocument" 
+    	invoke="updateOfficialDocument" transaction-timeout="10000000">
+    	<attribute name="officialDocumentId" mode="IN" type="String"></attribute>
+    	<attribute name="officialDocumentName" mode="IN" type="String"></attribute>
+    	<attribute name="officialDocumentTypeId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="file" mode="IN"  type="org.apache.commons.fileupload.FileItem" optional="true"></attribute>
+    	
+    	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
+    </service> -->
+    
+    <service name="deleteOfficialDocument" engine="java"
+    	location="org.ofbiz.bkeuniv.officialdocument.UploadOfficialDocument" 
+    	invoke="deleteOfficialDocument" transaction-timeout="10000000">
+    	<attribute name="officialDocumentId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="result" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    
+    
 	
 </services>
