@@ -2,6 +2,22 @@ var modal = function (id) {
 	this.id = id;
 }
 
+function setCustomValidity(id, text){
+	var element = $(id)[0];
+	if(!element) {
+		return;
+	}
+	element.oninvalid = function(e) {
+		e.target.setCustomValidity("");
+        if (!e.target.validity.valid) {
+            e.target.setCustomValidity(text);
+        }
+    };
+	element.oninput = function(e) {
+        e.target.setCustomValidity("");
+	};
+}
+
 modal.prototype.progress = function(e){
 	var _ = this;
 	if(e.lengthComputable){
@@ -68,39 +84,64 @@ modal.prototype._getDropify = function (selector, multiple) {
 	}
 }
 
-modal.prototype._date = function(value, edit, id, defaultValue=""){
+modal.prototype._date = function(column){
+	var value = column._data, edit = column.edit, id = column.id, defaultValue=column.defaultValue||"";
+	var require = column.require||false;
+	var customValidity = column.customValidity||"";
 	var _id = "#"+id;
 	return '<input type="text" class=" date form-control"' +
 					'id="' + id+'"' +
 					(edit?"":"disabled ") +
 					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?(!defaultValue?defaultValue:new Date(defaultValue)):new Date(value))) + '"'+
-					'placeholder="dd/mm/yyyy"'+
+					'placeholder="dd/mm/yyyy" '+
+					(require?'required':"")+
 					'>' +
     			'<script type="text/javascript">'+
     				'$(function () {'+
-    					'$("'+[this.id, _id].join(" ")+'").datepicker({format: "dd/mm/yyyy"});'+
-        		'});'+
+						'$("'+[this.id, _id].join(" ")+'").datepicker({format: "dd/mm/yyyy"});'+
+						(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+					'});'+
         		'</script>'
 }
 
-modal.prototype._text = function(value, edit, id, column){
-	console.log(column)
+modal.prototype._text = function(column){
+	var value = column._data, edit = column.edit, id = column.id;
+	var require = column.require||false;
+	var customValidity = column.customValidity||"";
+	var _id = "#"+id;
 	return '<input type="text" class="form-control"' +
 					'id="' + id + '"' +
 					(!!edit?"":"disabled ") +
 					(!column.pattern?"":(' pattern="'+column.pattern+'" title="'+column.title + '" ')) +
-					'value="' + value + '"'+
-					'/>';
+					'value="' + value + '" '+
+					(require?'required':"")+
+					'/>'+
+			'<script type="text/javascript">'+
+				'$(function () {'+
+					(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+				'});'+
+			'</script>';
 }
 
-modal.prototype._textarea = function(value, edit, id){
+modal.prototype._textarea = function(column){
+	var value = column._data, edit = column.edit, id =column.id;
+	var require = column.require||false;
+	var customValidity = column.customValidity||"";
+	var _id = "#"+id;
 	return '<textarea class="form-control"' +
 					'id="' + id + '"' +
 					(edit?"":"disabled ") +
-					'>'+value+'</textarea>';
+					(require?'required ':"")+
+					'>'+value+'</textarea>'+
+				'<script type="text/javascript">'+
+					'$(function () {'+
+						(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+					'});'+
+				'</script>';
 }
 
-modal.prototype._select = function(value, edit, id, option) {
+modal.prototype._select = function(column) {
+	var value = column._data, edit = column.edit, id = column.id, option = column.option;
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
 	var script = '<script type="text/javascript">'+
@@ -213,10 +254,12 @@ modal.prototype._buildScriptArray = function(array = [], result = "") {
 	return result;
 }
 
-modal.prototype._dropify = function(value, edit, id, column) {
+modal.prototype._dropify = function(column) {
+	var value = column._data, edit = column.edit, id = column.id;
 	var _id = "#"+id;
 	var render;
-
+	var require = column.require||false;
+	var customValidity = column.customValidity||"";
 	var script = '$("'+_id+'").dropify({'+
 		'messages: {'+
 			'default: BkEunivDropifyDefault,'+
@@ -234,9 +277,13 @@ modal.prototype._dropify = function(value, edit, id, column) {
 	(!column.pattern?"":(' pattern="'+column.pattern+'" title="'+column.title + '" ')) +
 	'data-default-file="' + value + '" '+
 	(!!column.multiple?"multiple ":'') +
+	(require?'required ':"")+
 	'/>'+
 	'<script type="text/javascript">'+
 	script +
+	'$(function () {'+
+		(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+	'});'+
 	'</script>';
 
 	
@@ -247,7 +294,8 @@ modal.prototype._dropify = function(value, edit, id, column) {
 	;
 }
 
-modal.prototype._select_server_side = function(value, edit, id, option, column) {
+modal.prototype._select_server_side = function(column) {
+	var value = column._data, edit = column.edit, id = column.id, option = column.option;
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
 	var render;
@@ -341,25 +389,27 @@ modal.prototype.setting = function(option) {
 		column.edit = column.hasOwnProperty("edit")?column.edit:true;
 		column.type = column.hasOwnProperty("type")?column.type:"text";
 		column._data = this._data[column.value]||"";
+		var require = column.require||false;
+		var customValidity = column.customValidity||"";
 		var el;
 		switch(column.type) {
 		    case "date":
-		    	el = this._date(column._data, column.edit, column.id, column.defaultValue);
+		    	el = this._date(column);
 		    	break;
 		    case "text":
-		    	el = this._text(column._data, column.edit, column.id, column);
+		    	el = this._text(column);
 				break;
 			case "textarea":
-		    	el = this._textarea(column._data, column.edit, column.id);
+		    	el = this._textarea(column);
 		        break;
 		    case "select":
-		    	el = this._select(column._data, column.edit, column.id, column.option);
+		    	el = this._select(column);
 				break;
 			case "select_server_side":
-		    	el = this._select_server_side(column._data, column.edit, column.id, column.option, column);
+		    	el = this._select_server_side(column);
 				break;
 			case "dropify":
-				column.html = this._dropify(column._data, column.edit, column.id, column);
+				column.html = this._dropify(column);
 				this._formData=true;
 				break;
 		    case "custom":
@@ -370,7 +420,7 @@ modal.prototype.setting = function(option) {
 		    	break;
 		}
 			column.html = column.html||'<div class="row inline-box">'+
-				'<label id="title-modal-input">'+column.name+'</label>'+el+
+				'<label id="title-modal-input">'+column.name + (require&&!!customValidity?' <span style="color: #db4437;" title="Câu hỏi bắt buộc">*</span>':"") + '</label>'+el+
 			'</div>';
 	}
 	return this;
@@ -499,7 +549,7 @@ modal.prototype.render = function() {
 		        	'<h4 class="modal-title">'+this.option.title+'</h4>'+
 		      '</div>'+
 		      '<div class="modal-body">'+
-		      	'<form id="'+ [this.id, "form"].join("") +'" action="javascript:void(0);" class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'<button id="submit" style="display: none" type="submit">Click Me!</button></form>'+
+		      	'<form id="'+ [this.id.replace('#', ''), "form"].join("") +'" action="javascript:void(0);" class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'<button id="submit" style="display: none" type="submit">Click Me!</button></form>'+
 		      '</div>'+
 		      '<div class="modal-footer">'+
 		      	'<button type="button" class="btn btn-success" id="modal-action">'+(this._action.name||"Action")+'</button>'+
@@ -523,7 +573,7 @@ modal.prototype.render = function() {
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
 		$([_.id, "#submit"].join(" ")).click();
-		if(document.getElementById([_.id, "form"].join("")).checkValidity()) {
+		if(document.getElementById([_.id.replace('#', ''), "form"].join("")).checkValidity()) {
 			if(!!_._action.type&&_._action.type=="custom") {
 				_._action.update(_.data());
 			} else {
