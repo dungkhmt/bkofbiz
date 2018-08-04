@@ -612,15 +612,15 @@ public class BKEunivPermissionService {
 		
 	}
 
-	public static List<GenericValue> sort(List<GenericValue> L){
-		GenericValue[] a = new GenericValue[L.size()];
+	public static List<Map<String, Object>> sort(List<Map<String, Object>> L){
+		Map<String, Object>[] a = new Map[L.size()];
 		for(int i = 0; i < a.length; i++) a[i] = L.get(i);
 		for(int i = 0; i < a.length - 1; i++)
 			for(int j = i+1; j < a.length; j++)
 				if((long)a[i].get("index") > (long)a[j].get("index")){
-					GenericValue tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+					Map<String, Object> tmp = a[i]; a[i] = a[j]; a[j] = tmp;
 				}
-		List<GenericValue> sL = new ArrayList<GenericValue>();
+		List<Map<String, Object>> sL = new ArrayList<Map<String, Object>>();
 		for(int i = 0; i < a.length; i++) sL.add(a[i]);
 		return sL;
 	}
@@ -673,49 +673,45 @@ public class BKEunivPermissionService {
 			//	Debug.log(module + "::getPermissionFunctions, get functions " + f.get("functionId"));
 			//}
 			
-			List<GenericValue> parent_functions = new ArrayList<GenericValue>();
-			HashMap<String, GenericValue> mId2Function = new HashMap<String, GenericValue>();
-			HashMap<GenericValue, List<GenericValue>> mFunction2ChildrenFunctions = new HashMap<GenericValue, List<GenericValue>>();
+			List<Map<String, Object>> parent_functions = new ArrayList<Map<String, Object>>();
+			Map<String, ArrayList<Map<String, Object>>> mFunction2ChildrenFunctions = new HashMap<String, ArrayList<Map<String, Object>>>();
+			List<String> parentIds = new ArrayList<String>();
+			//HashMap<String, Map<String, Object>> mId2Function = new HashMap<String, Map<String, Object>>();
+			//HashMap<String, List<Map<String, Object>>> mFunction2ChildrenFunctions = new HashMap<String, List<Map<String, Object>>>();
 			
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
 				String functionId = (String)f.get("functionId");
 				//Debug.log(module + "::getPermissionFunctions, function " + functionId + ", parentFunction = " + parentFunctionId);
 				if(parentFunctionId.equals("NULL")){// collect parent functions
-					parent_functions.add(f);
-					mId2Function.put(functionId, f);
-					mFunction2ChildrenFunctions.put(f, new ArrayList<GenericValue>());
-				}else{
-					
-					
+					parent_functions.add(convertFunctionsToMap(f));
+					parentIds.add(functionId);
+					mFunction2ChildrenFunctions.put(functionId, new ArrayList<Map<String, Object>>());
 				}
 			}
-			parent_functions = sort(parent_functions);
 			
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
 				if(!parentFunctionId.equals("NULL")){
-					GenericValue pf = mId2Function.get(parentFunctionId);
-					if(pf == null){
-						pf = delegator.findOne("Function", false, 
+					int check = parentIds.indexOf(parentFunctionId);
+					if(check == -1){
+						GenericValue pf = delegator.findOne("Function", false, 
 								UtilMisc.toMap("functionId",parentFunctionId));
-						mId2Function.put(parentFunctionId, pf);
-						mFunction2ChildrenFunctions.put(pf, new ArrayList<GenericValue>());
+						parentIds.add(parentFunctionId);
+						parent_functions.add(convertFunctionsToMap(pf));
+						mFunction2ChildrenFunctions.put(parentFunctionId, new ArrayList<Map<String, Object>>());
 					}
-					mFunction2ChildrenFunctions.get(pf).add(f);
+					mFunction2ChildrenFunctions.get(parentFunctionId).add(convertFunctionsToMap(f));
 				}
 			}
-			List<Map<String, Object>> functions = new ArrayList<Map<String, Object>>();
-			//List<GenericValue> functions = new ArrayList<GenericValue>();
 			
-			for(GenericValue f: parent_functions){
-				Map<String, Object> o = new HashMap<String, Object>();
-				o.put("function", f);
-				o.put("children", sort(mFunction2ChildrenFunctions.get(f)));
-				functions.add(o);
+			parent_functions = sort(parent_functions);
+			
+			for(Map<String, Object> f: parent_functions){
+				f.put("children", sort(mFunction2ChildrenFunctions.get(f.get("functionId"))));
 			}
 			
-			retSucc.put("permissionFunctions", functions);
+			retSucc.put("permissionFunctions", parent_functions);
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -723,5 +719,14 @@ public class BKEunivPermissionService {
 		}
 		return retSucc;
 		
+	}
+	
+	public static Map<String, Object> convertFunctionsToMap(GenericValue f) {
+			Map<String, Object> fs = new HashMap<String, Object>();
+			String[] fields = {"functionId", "uiLabelId", "vnLabel", "enLabel", "target", "icon", "parentFunctionId", "index", "status"};
+			for(String field: fields) {
+				fs.put(field, f.get(field));				
+			}
+		return fs;
 	}
 }
