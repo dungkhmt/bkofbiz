@@ -157,4 +157,17 @@
 		</view-link>
 	</view-entity>
 	
+	<view-entity entity-name="StaffPaperDeclarationView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
+		<member-entity entity-alias="S" entity-name="Staff"></member-entity>
+		
+		<alias-all entity-alias="SPD"></alias-all>
+		<alias name="staffName" entity-alias="S"></alias>
+		
+		<view-link rel-entity-alias="S" entity-alias="SPD" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		
+	</view-entity>
+	
 </entitymodel>

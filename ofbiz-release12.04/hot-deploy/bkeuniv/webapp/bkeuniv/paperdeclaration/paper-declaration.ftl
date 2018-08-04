@@ -708,7 +708,7 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
 			"data": "paperName",
 			"render": 'function(value, name, dataColumns, id) {
-                return "<a href=\\"/bkeuniv/control/detail-paper-update?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
+                return "<a href=\\"/bkeuniv/control/detail-paper?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
 			}'
 		},
 		{

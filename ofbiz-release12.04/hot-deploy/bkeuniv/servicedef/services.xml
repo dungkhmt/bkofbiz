@@ -376,6 +376,13 @@
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="paper" mode="OUT" type="GenericValue"></attribute>		
 	</service>
+	
+	<service name="getMembersPaperDeclaration" engine="java" 
+		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getMembersPaperDeclaration">
+		<attribute name="paperId" mode="IN" type="String"></attribute>
+		<attribute name="staffPaperDeclaration" mode="OUT" type="List"></attribute>
+		<attribute name="externalMemberPaperDeclaration" mode="OUT" type="List"></attribute>		
+	</service>
 
 	<service name="updatePaper" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updatePaper">

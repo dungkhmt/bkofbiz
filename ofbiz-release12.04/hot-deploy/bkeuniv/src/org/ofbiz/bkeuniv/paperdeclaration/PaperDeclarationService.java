@@ -45,6 +45,7 @@ import org.ofbiz.utils.BKEunivUtils;
 
 
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -831,6 +832,28 @@ public class PaperDeclarationService {
 		try{
 			GenericValue p = delegator.findOne("PaperView", UtilMisc.toMap("paperId", paperId), false);
 			retSucc.put("paper", p);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> getMembersPaperDeclaration(DispatchContext ctx,
+			Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = ctx.getDelegator();
+		String paperId = (String)context.get("paperId");
+		try{
+			List<String> _sort = new ArrayList<String>();;
+			_sort.add("sequence");
+			
+			
+			List<GenericValue> staffPaperDeclaration  = delegator.findList("StaffPaperDeclarationView", EntityCondition.makeCondition("paperId", EntityOperator.EQUALS, paperId), null, _sort, null, false);
+			List<GenericValue> externalMemberPaperDeclaration  = delegator.findList("ExternalMemberPaperDeclaration", EntityCondition.makeCondition("paperId", EntityOperator.EQUALS, paperId), null, _sort, null, false);
+			retSucc.put("staffPaperDeclaration", staffPaperDeclaration);
+			retSucc.put("externalMemberPaperDeclaration", externalMemberPaperDeclaration);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

@@ -15,8 +15,7 @@
 </style>
 
 
-<div>
-
+<hr class="side-bar-separator">
 <table>
 	<tr>
 		<td>
@@ -36,7 +35,6 @@
 
 <div class="modal fade" style="margin-top: 5%;" id="modal-upload" role="dialog">
 	<div class="modal-dialog">
-		<!-- Modal content-->
 		<div class="modal-content" id="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -82,7 +80,6 @@
 	 
 	function uploadFileProposal(){
 		//alert('upload file thuyet minh');
-		<#--  document.getElementById("upload").click();  -->
 		$("#modal-upload").modal("show");
 	}
 	function uploadFile(){
@@ -146,6 +143,5 @@
 	}
 	
 </script>
-
 
 

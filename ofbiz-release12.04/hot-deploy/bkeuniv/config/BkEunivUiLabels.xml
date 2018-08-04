@@ -718,4 +718,14 @@
         <value xml:lang="vi">Năm</value>
     </property>
     
+    <property key="BkEunivInternally">
+        <value xml:lang="en">Internally</value>
+        <value xml:lang="vi">Trong trường</value>
+    </property>
+    
+    <property key="BkEunivExternal">
+        <value xml:lang="en">External</value>
+        <value xml:lang="vi">Ngoài trường</value>
+    </property>
+    
 </resource>

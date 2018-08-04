@@ -532,6 +532,9 @@
 				<service service-name="getAPaperDeclaration" result-map="resultPaper">
 					<field-map field-name="paperId" value="${parameters.paperId}"/>
 				</service>
+				<service service-name="getMembersPaperDeclaration" result-map="members">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
 				<set field="paper" from-field="resultPaper" global="true"/>
 			</actions>
 			<widgets>
