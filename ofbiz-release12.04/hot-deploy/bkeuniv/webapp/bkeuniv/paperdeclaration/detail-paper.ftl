@@ -104,27 +104,31 @@
 					<tbody>
 					<#assign stt=1/>
 					<#list members.staffPaperDeclaration as m>
-						<td>${stt}</td>
-						<#if m.staffName?exists>
-							<td>${m.staffName}</td>
-						<#else>
-							<td></td>
-						</#if>
+						<tr>
+							<td>${stt}</td>
+							<#if m.staffName?exists>
+								<td>${m.staffName}</td>
+							<#else>
+								<td></td>
+							</#if>
 
-						<td>${uiLabelMap.BkEunivInternally}</td>
-						<td><#if m.correspondingAuthor??>${m.correspondingAuthor}</#if></td>
-						<#assign stt=stt+1/>
+							<td>${uiLabelMap.BkEunivInternally}</td>
+							<td><#if m.correspondingAuthor??>${m.correspondingAuthor}</#if></td>
+							<#assign stt=stt+1/>
+						</tr>
 					</#list>
 					<#list members.externalMemberPaperDeclaration as m>
-						<td>${stt}</td>
-						<#if m.staffName?exists>
-							<td>${m.staffName}</td>
-						<#else>
-							<td></td>
-						</#if>
-						<td>${uiLabelMap.BkEunivExternal}</td>
-						<td><#if m.correspondingAuthor??>${m.correspondingAuthor}</#if></td>
-						<#assign stt=stt+1/>
+						<tr>
+							<td>${stt}</td>
+							<#if m.staffName?exists>
+								<td>${m.staffName}</td>
+							<#else>
+								<td></td>
+							</#if>
+							<td>${uiLabelMap.BkEunivExternal}</td>
+							<td><#if m.correspondingAuthor??>${m.correspondingAuthor}</#if></td>
+							<#assign stt=stt+1/>
+						</tr>
 					</#list>
 					</tbody>
 				</table>
