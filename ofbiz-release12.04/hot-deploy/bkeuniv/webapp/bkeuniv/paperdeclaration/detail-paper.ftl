@@ -106,7 +106,7 @@
 					<#list members.staffPaperDeclaration as m>
 						<tr>
 							
-							<td>${m.sequence}</td>
+							<td><#if m.sequence??>${m.sequence}</#if></td>
 							<#if m.staffName?exists>
 								<td>${m.staffName}</td>
 							<#else>
@@ -120,7 +120,8 @@
 					</#list>
 					<#list members.externalMemberPaperDeclaration as m>
 						<tr>
-							<td>${m.sequence}</td>
+							
+							<td><#if m.sequence??>${m.sequence}</#if></td>
 							<#if m.staffName?exists>
 								<td>${m.staffName}</td>
 							<#else>
