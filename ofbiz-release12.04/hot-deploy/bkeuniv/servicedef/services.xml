@@ -113,6 +113,10 @@
    	<service name="JQGetPaperDeclarations" engine="java" invoke="JQGetPaperDeclarations" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
         <implements service="jqxGetListInterfaceList"/>
    	</service>
+   	
+   	<service name="JQGetListProjectProposalJuries" engine="java" invoke="JQGetListProjectProposalJuries" location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
     
     <service name="getPermissionFunctions" engine="java"
             location="org.ofbiz.permission.BKEunivPermissionService" invoke="getPermissionFunctions">

@@ -728,4 +728,20 @@
         <value xml:lang="vi">Ngoài trường</value>
     </property>
     
+    <property key="BkEunivResearchProjectJuryMembers">
+        <value xml:lang="en">Research project jury members</value>
+        <value xml:lang="vi">Thành viên hội đồng</value>
+    </property>
+    
+    <property key="BkEunivResearchProjectJuryAssginReviewer">
+        <value xml:lang="en">Research project jury assgin reviewer</value>
+        <value xml:lang="vi">Phân công phản biện thuyết minh</value>
+    </property>
+    
+    <property key="BkEunivJuryName">
+        <value xml:lang="en">Jury name</value>
+        <value xml:lang="vi">Tên hội đồng duyệt thuyết minh đề tài</value>
+    </property>
+    
+    
 </resource>
