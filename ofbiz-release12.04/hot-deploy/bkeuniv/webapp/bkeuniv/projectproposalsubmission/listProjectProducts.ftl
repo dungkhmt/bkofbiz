@@ -42,8 +42,6 @@
 </script>
 
 <div class="body">
-<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
-
 		<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivProductType?j_string,
@@ -161,5 +159,9 @@
 		titleDelete=uiLabelMap.BkEunivDelete
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
 		contextmenu=true
+		backToUrl={
+			"href": '/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId='+ projectProposalId,
+			"text": "Quay ve de tai"
+		}
 	/>
 </div>

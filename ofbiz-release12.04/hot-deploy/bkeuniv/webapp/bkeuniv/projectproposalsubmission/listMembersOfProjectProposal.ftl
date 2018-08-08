@@ -7,8 +7,6 @@
 </script>
 
 <div class="body">
-<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
-
 	<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivStaffName?j_string,
@@ -129,9 +127,9 @@
 		jqTitle=uiLabelMap.BkEunivManage
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
 		contextmenu=true
-		<!--
-		contextmenu=false
-		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
-		-->
+		backToUrl={
+			"href": '/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId='+ projectProposalId,
+			"text": "Quay ve de tai"
+		}
 	/>
 </div>

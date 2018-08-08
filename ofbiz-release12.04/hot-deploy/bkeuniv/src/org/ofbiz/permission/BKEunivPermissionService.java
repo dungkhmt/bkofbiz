@@ -50,6 +50,7 @@ public class BKEunivPermissionService {
 			return null;
 		}
 	}
+	
 	public static List<GenericValue> getStaffsOfASecurityGroup(Delegator delegator, String groupId){
 		try{
 			List<EntityCondition> conds = FastList.newInstance();

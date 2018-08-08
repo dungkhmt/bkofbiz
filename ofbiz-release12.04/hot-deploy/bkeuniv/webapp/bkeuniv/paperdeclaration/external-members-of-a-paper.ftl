@@ -1,49 +1,7 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 <body>
 
-<#--  Project Proposal ID = ${projectProposalId}  -->
-
-<script>
-	var modal;
-	var span;
-	var selectedEntry;
-	/*
-	function createContextMenu(id) {
-		
-		$(document).contextmenu({
-			    delegate: "#"+id+"-content td",
-			menu: [
-			  {title: 'View Detail', cmd: "viewdetail", uiIcon: "glyphicon glyphicon-list-alt"},
-			],
-			select: function(event, ui) {
-				var el = ui.target.parent();
-				var data = jqDataTable.table.row( el ).data();
-				switch(ui.cmd){
-					case "viewdetail":
-						jqViewDetail(data);
-						break;
-						
-					}		
-				},
-				beforeOpen: function(event, ui) {
-					var $menu = ui.menu,
-						$target = ui.target,
-						extraData = ui.extraData;
-					ui.menu.zIndex(9999);
-			    }
-			  });
-	}
-				
-	function 	jqViewDetail(data){
-		alert(data.researchProjectProposalId);
-		//window.location.href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=" + data.researchProjectProposalId;
-	}
-	*/
-	
-</script>
-
 <div class="body">
-<a href="/bkeuniv/control/detail-paper?paperId=${paperId}">Quay ve bai bao</a>
 
 	<#assign columns=[
 		{
@@ -199,8 +157,9 @@
 		jqTitle=uiLabelMap.BkEunivManage
 		jqTitle=uiLabelMap.TitleProjectSubmissionManagement?j_string
 		contextmenu=true
-		<!--
-		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
-		-->
+		backToUrl={
+			"href": '/bkeuniv/control/detail-paper?paperId='+paperId,
+			"text": "Quay ve bai bao"
+		}
 	/>
 </div>

@@ -849,9 +849,14 @@ public class PaperDeclarationService {
 			List<String> _sort = new ArrayList<String>();;
 			_sort.add("sequence");
 			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 			
-			List<GenericValue> staffPaperDeclaration  = delegator.findList("StaffPaperDeclarationView", EntityCondition.makeCondition("paperId", EntityOperator.EQUALS, paperId), null, _sort, null, false);
-			List<GenericValue> externalMemberPaperDeclaration  = delegator.findList("ExternalMemberPaperDeclaration", EntityCondition.makeCondition("paperId", EntityOperator.EQUALS, paperId), null, _sort, null, false);
+			List<GenericValue> staffPaperDeclaration  = delegator.findList("StaffPaperDeclarationView", EntityCondition.makeCondition(conds, EntityOperator.AND), null, _sort, null, false);
+			List<GenericValue> externalMemberPaperDeclaration  = delegator.findList("ExternalMemberPaperDeclaration", EntityCondition.makeCondition(conds, EntityOperator.AND), null, _sort, null, false);
 			retSucc.put("staffPaperDeclaration", staffPaperDeclaration);
 			retSucc.put("externalMemberPaperDeclaration", externalMemberPaperDeclaration);
 		}catch(Exception ex){
