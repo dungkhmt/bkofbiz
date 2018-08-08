@@ -164,7 +164,7 @@
 		<alias-all entity-alias="SPD"></alias-all>
 		<alias name="staffName" entity-alias="S"></alias>
 		
-		<view-link rel-entity-alias="S" entity-alias="SPD" rel-optional="true">
+		<view-link rel-entity-alias="S" entity-alias="SPD" rel-optional="false">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
 		
