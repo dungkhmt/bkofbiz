@@ -16,6 +16,16 @@
 		staffIdTemp = staffId;
 		$("#setting-export-pdf").modal();
 	}
+
+	$("#setting-export-pdf").ready(function(){
+		var maxHeight = parseInt(window.innerHeight*0.6)
+		
+		if($(this).height() >= maxHeight) {
+	        $('.modal-body').css('max-height', maxHeight);
+	    }else{
+	        $('.modal-body').css('max-height', '');
+	    }
+	});
 	
 </script>
 
@@ -84,8 +94,8 @@
 		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
 	/>
 
-	<div class="modal fade" id="setting-export-pdf" role="dialog">
-		<div class="modal-dialog" style="margin-top: 100px;">
+	<div class="modal fade" id="setting-export-pdf" style="margin-top: 5%;" role="dialog">
+		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
