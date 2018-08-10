@@ -188,7 +188,7 @@
 					'$(function () {'+
 						'$("#facultyId-01cn-02cn_select2").on("change", function(e) { '+
 							'var facultyId = $("#facultyId-01cn-02cn_select2").val();'+
-							'changeFaculty01CN02CN(facultyId, "departmentId-01cn-02cn_select2");'+
+							'changeFaculty(facultyId, "departmentId-01cn-02cn_select2");'+
 						'});'+
 					'});'+
 				'<\/script>';
@@ -407,7 +407,7 @@
 					'$(function () {'+
 						'$("#facultyId-bm-01-02-03_select2").on("change", function(e) { '+
 							'var facultyId = $("#facultyId-bm-01-02-03_select2").val();'+
-							'changeFacultyBM010203(facultyId);'+
+							'changeFaculty(facultyId, "departmentId-bm-01-02-03_select2");'+
 						'});'+
 					'});'+
 				'<\/script>';
@@ -425,7 +425,6 @@
 						'$("#departmentId-bm-01-02-03_select2").select2({'+
 							
 						'});'+
-						'changeFacultyBM010203($("#facultyId-bm-01-02-03_select2").val());'+
 					'});'+
 				'<\/script>';
 
@@ -464,39 +463,8 @@
 			sel.remove(i);
 		}
 	}
-	
-	function changeFacultyBM010203(facultyId){
-		//alert('changeFacultyBM010203, id = ' + facultyId);
-		$.ajax({
-					url: "/bkeuniv/control/get-departments-of-faculty",
-					type: 'POST',
-					data: {
-						"facultyId": facultyId
-					},
-					success:function(rs){
-						var departments = rs.departments.map(function(department) {
-							return {
-								id: department.id,
-								text: department.name
-							};
-						});
 
-						console.log(departments)
-						var newOption = new Option(data.text, data.id, false, false);
-						$('#departmentId-bm-01-02-03_select2').append(newOption).trigger('change');
-
-						$("#departmentId-bm-01-02-03_select2").html('').select2();
-						$("#departmentId-bm-01-02-03_select2").select2({
-							data: departments
-						});
-						
-					}
-				})
-		
-	}
-
-	function changeFaculty01CN02CN(facultyId, idSelect){
-		//alert('changeFaculty01CN02CN, id = ' + facultyId);
+	function changeFaculty(facultyId, idSelect){
 		$.ajax({
 					url: "/bkeuniv/control/get-departments-of-faculty",
 					type: 'POST',
