@@ -170,4 +170,32 @@
 		
 	</view-entity>
 	
+	<view-entity entity-name="ProjectCallProposalJuriesUniversityView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PC" entity-name="ProjectCall"></member-entity>
+		<member-entity entity-alias="PCAT" entity-name="ProjectCategory"></member-entity>
+		<member-entity entity-alias="PCS" entity-name="ProjectCallStatus"></member-entity>
+		<member-entity entity-alias="J" entity-name="Jury"></member-entity>
+		
+		<alias-all entity-alias="PC" ></alias-all>
+		<alias name="projectCategoryName" field="projectCategoryName" entity-alias="PCAT"></alias>
+		<alias name="statusName" field="statusName" entity-alias="PCS"></alias>
+		<alias name="juryId" entity-alias="J"></alias>
+		<alias name="juryName" entity-alias="J"></alias>
+		
+		<view-link rel-entity-alias="PCAT" entity-alias="PC">
+			<key-map rel-field-name="projectCategoryId" field-name="projectCategoryId"/>
+		</view-link>
+		<view-link rel-entity-alias="PCS" entity-alias="PC" rel-optional="true">
+			<key-map rel-field-name="statusId" field-name="statusId"/>
+		</view-link>
+		
+		<view-link rel-entity-alias="J" entity-alias="PC" rel-optional="true">
+			<key-map rel-field-name="projectCallId" field-name="projectCallId"/>
+			<entity-condition>
+				<condition-expr field-name="facultyId" entity-alias="J" value="UNIVERSITY"/>
+			</entity-condition>
+		</view-link>
+		
+	</view-entity>
+	
 </entitymodel>

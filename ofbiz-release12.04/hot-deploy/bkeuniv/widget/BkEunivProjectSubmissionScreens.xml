@@ -780,9 +780,9 @@
 		<section>
 			<actions>
 				
-				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
-				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
-				<service service-name="getListProjectCallsAndProposalJuriesUniversity" result-map="resultProjectCalls"></service>
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<!-- <service service-name="getListProjectCallsAndProposalJuriesUniversity" result-map="resultProjectCalls"></service> -->
 				<!-- <service service-name="getFacultyOfStaff" result-map="listFaculties">
 					<field-map field-name="universityId" value="HUST"/>
 				</service>
