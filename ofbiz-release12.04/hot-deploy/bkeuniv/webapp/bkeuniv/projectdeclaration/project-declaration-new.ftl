@@ -8,6 +8,7 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
+			"width": "300px",
 			"data": "researchProjectProposalName"
 		},
 		{
@@ -16,10 +17,13 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
+			"width": "120px",
 			"data": "startDate"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
+			"width": "200px",
+			"type": "currency",
 			"data": "totalBudget"
 		}
 		
@@ -109,7 +113,7 @@
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
 			"value": "researchProjectProposalCode"
 		},
-		
+
 		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
 			"value": "totalBudget",

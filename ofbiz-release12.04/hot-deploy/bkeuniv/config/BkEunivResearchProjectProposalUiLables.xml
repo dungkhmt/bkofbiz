@@ -31,8 +31,8 @@
     </property>
     
     <property key="TotalBudget">
-        <value xml:lang="en">Total Budget</value>
-        <value xml:lang="vi">Tổng ngân sách</value>
+        <value xml:lang="en">Total Budget (VNĐ)</value>
+        <value xml:lang="vi">Tổng ngân sách (VNĐ)</value>
     </property>
     
     <property key="ApprovedByStaffId">
