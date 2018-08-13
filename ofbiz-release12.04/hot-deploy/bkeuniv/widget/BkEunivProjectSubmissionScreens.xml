@@ -978,9 +978,9 @@
 		<section>
 			<actions>
 				
-				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
-				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
-				<service service-name="getListProjectProposalsAssignedForReview" result-map="resultProposals"></service>
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<!-- <service service-name="getListProjectProposalsAssignedForReview" result-map="resultProposals"></service> -->
 				
 				
 			</actions>

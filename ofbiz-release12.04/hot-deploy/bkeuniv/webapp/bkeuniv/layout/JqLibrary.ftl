@@ -276,7 +276,7 @@
 			var tbodyDataTable = $(".dataTables_scrollBody tbody")[0];
 			var bodyDataTable = $(".dataTables_scrollBody")[0];
 			var isOverflownX = bodyDataTable.scrollWidth <= bodyDataTable.clientWidth;
-
+			
 			var elements = [$(".dataTables_scrollHeadInner"), $(".dataTables_scrollHeadInner table"), $("#${id}-content")]
 			if(isOverflownX) {
 				elements.forEach(function(e) {
@@ -388,6 +388,10 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
+					"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+					"drawCallback": function( settings ) {
+						resizeDataTable();
+					},
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
 					</#if>

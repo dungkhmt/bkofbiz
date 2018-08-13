@@ -304,6 +304,10 @@
 				"order": [[ ${sort}, "asc" ]],
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"drawCallback": function( settings ) {
+					resizeDataTable();
+				},
                 columns: jqDataTable.columns,
                 deferRender: true,
                 "columnDefs": [
@@ -328,8 +332,13 @@
                     <#if column.render?has_content>
                             <#assign c = c + {"render": column.render} />
                     </#if>
+					
                     <#if column.width?has_content>
                             <#assign c = c + {"width": column.width} />
+                    </#if>
+
+					<#if column.className?has_content>
+                        <#assign c = c + {"className": column.className} />
                     </#if>
                     
                     <#if c?has_content>
@@ -344,7 +353,6 @@
                     "fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
                 </#if>
                 "bJQueryUI": true,
-
                 "fnServerData": function ( sSource, aoData, fnCallback ) {
                     <#--  loader.open();  -->
                     //console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
@@ -432,10 +440,6 @@
                     
                 }
             } );
-
-			jqDataTable.table.on( 'draw', function () {
-				resizeDataTable();
-			});
 
             <#if contextmenu>
                     $(document).contextmenu({
