@@ -29,6 +29,16 @@
 
 		<script>
 			window.entrypoint = window.location.origin + "<@ofbizUrl>/</@ofbizUrl>";
+			Number.prototype.formatMoney = function(c, d, t){
+				var n = this,
+				c = isNaN(c = Math.abs(c)) ? 2 : c, 
+				d = d == undefined ? "." : d, 
+				t = t == undefined ? "," : t, 
+				s = n < 0 ? "-" : "", 
+				i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+				j = (j = i.length) > 3 ? j % 3 : 0;
+			return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+			};
 		</script>
 		
 		<title>H&#x1EC7; th&#x1ED1;ng qu&#x1EA3;n l&#xFD; khoa h&#x1ECD;c c&#xF4;ng ngh&#x1EC7;</title>

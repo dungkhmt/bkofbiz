@@ -91,6 +91,7 @@
 		getDataFilter=""
 		filters=[]
 		JqRefresh="JqRefresh()"
+		backToUrl={}
 	>
 	<@jqMinimumLib />
 	
@@ -303,6 +304,10 @@
 				"order": [[ ${sort}, "asc" ]],
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"drawCallback": function( settings ) {
+					resizeDataTable();
+				},
                 columns: jqDataTable.columns,
                 deferRender: true,
                 "columnDefs": [
@@ -327,8 +332,13 @@
                     <#if column.render?has_content>
                             <#assign c = c + {"render": column.render} />
                     </#if>
+					
                     <#if column.width?has_content>
                             <#assign c = c + {"width": column.width} />
+                    </#if>
+
+					<#if column.className?has_content>
+                        <#assign c = c + {"className": column.className} />
                     </#if>
                     
                     <#if c?has_content>
@@ -343,7 +353,6 @@
                     "fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
                 </#if>
                 "bJQueryUI": true,
-
                 "fnServerData": function ( sSource, aoData, fnCallback ) {
                     <#--  loader.open();  -->
                     //console.log(JSON.stringify(sSource), JSON.stringify(aoData), fnCallback)
@@ -431,10 +440,6 @@
                     
                 }
             } );
-
-			jqDataTable.table.on( 'draw', function () {
-				resizeDataTable();
-			});
 
             <#if contextmenu>
                     $(document).contextmenu({
@@ -687,6 +692,14 @@
 	</@Loader>
 
 	<div id="${id}" style="flex: 1 1 0%; padding: 2em 3em 6em 3em; width: 100%;overflow-y: auto; height: 100%;background-color: rgb(237, 236, 236);">
+		<#if backToUrl.href?? && backToUrl.text??>
+			<@FlatButton id="back-to-url" href=backToUrl.href style="top: -2em; left: -3em; color: rgb(0, 188, 212); text-transform: uppercase; width: 200px">
+				<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+					<path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+				</svg>
+				${backToUrl.text}
+			</@FlatButton>
+		</#if>
 		<div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; z-index: 1; opacity: 1;padding: 1em;">
 			<div style="display: flex; justify-content: space-between;">
 				<div class="title" style="padding: 16px; position: relative;">
