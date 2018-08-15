@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/selectize.default.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/dropify.min.css">
 	<link rel="stylesheet" href="/resource/bkeuniv/css/template-modal.css">
 
 	<!-- import jqMinimumLib lib js -->
@@ -17,7 +18,8 @@
 	<script src="/resource/bkeuniv/js/lib/selectize.js"></script>
 	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-	
+	<script src="/resource/bkeuniv/js/lib/dropify.min.js"></script>
+
 	<script src="/resource/bkeuniv/js/template-modal.js"></script>
 </#macro>
 
@@ -92,9 +94,9 @@
 		contextmenu=true
 		advanceActionButton=[]
 		filters=[]
+		JqRefresh="JqRefresh()"
 		backToUrl={}
 	>
-
 	<@jqMinimumLib />
 	
 	<style>
@@ -126,14 +128,9 @@
 		     border-left: 2px #0014ff solid;			
 		}
 
-		.dataTables_scrollHeadInner {
+		.width100 {
 			width: 100%!important;
 		}
-
-		.dataTables_scrollHeadInner table {
-			width: 100%!important;
-		}
-		
 		
 		.ui-menu-item {
 		    min-width: 100px;
@@ -231,16 +228,34 @@
 	
 	</style>
 	<script type="text/javascript">
+		var BkEunivDropifyDefault = '${uiLabelMap.BkEunivDropifyDefault}',
+			BkEunivDropifyReplace = '${uiLabelMap.BkEunivDropifyReplace}',
+			BkEunivDropifyRemove = '${uiLabelMap.BkEunivDropifyRemove}',
+			BkEunivDropifyError = '${uiLabelMap.BkEunivDropifyError}';
+
+		var BkEunivLoading = "${uiLabelMap.BkEunivLoading} ...";
+		var BkEunivLoaded = "${uiLabelMap.BkEunivLoaded}";
+		var BkEunivAttachmentNotAdded = "${uiLabelMap.BkEunivAttachmentNotAdded}";
+		var BkEunivUpload = "${uiLabelMap.BkEunivUpload}";
+
 		var jqDataTable = new Object();
 		jqDataTable.columns = [
 			{
 				name: "STT",
+				orderable: false,
+				"width": "50px",
 				data: "index"
 			}
 		];
+		<#assign sort=1 />
 		<#assign index=0 />
 		<#list columns as column>
 			<#assign index=index+1>
+
+			<#if keysId?size gt 0 && column.data==keysId[0]>
+				<#assign sort=index />
+			</#if>
+
 			var c${index} = {
 				name: '${column.name}',
 				<#if column.type??>
@@ -256,8 +271,34 @@
 			}
 			jqDataTable.columns.push(c${index});
 		</#list>
+
+		function resizeDataTable() {
+			var tbodyDataTable = $(".dataTables_scrollBody tbody")[0];
+			var bodyDataTable = $(".dataTables_scrollBody")[0];
+			var isOverflownX = bodyDataTable.scrollWidth <= bodyDataTable.clientWidth;
+			
+			var elements = [$(".dataTables_scrollHeadInner"), $(".dataTables_scrollHeadInner table"), $("#${id}-content")]
+			if(isOverflownX) {
+				elements.forEach(function(e) {
+					if(!e.hasClass("width100")) {
+						e.addClass("width100");
+					}
+				})
+			} else {
+				elements.forEach(function(e) {
+					if(e.hasClass("width100")) {
+						e.removeClass("width100");
+					}
+				})
+			}
+		}
 		
 		$(document).ready(function(){
+
+			document.getElementById("side-bar").addEventListener("click", function() {
+				resizeDataTable();
+			})
+
 			document.getElementById("jqTitlePage").innerHTML = titlePage;
 			
 			loader.open();
@@ -285,6 +326,7 @@
 			    	jqDataTable.table = $('#${id}-content').DataTable({
 			   		data: jqDataTable.data,
 					"scrollX": true,
+					"order": [[ ${sort}, "asc" ]],
 					columns: jqDataTable.columns,
 					deferRender: true,
 					"columnDefs": [
@@ -346,6 +388,10 @@
 						<#assign index = index + 1 />
 					</#list>
 					],
+					"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+					"drawCallback": function( settings ) {
+						resizeDataTable();
+					},
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
 					</#if>
@@ -354,6 +400,11 @@
 					</#if>
 					"bJQueryUI": true
 			       });
+
+				   	jqDataTable.table.on( 'draw', function () {
+						resizeDataTable();
+					});
+					
 			       <#if contextmenu>
 				       $(document).contextmenu({
 						    delegate: "#${id}-content td",
@@ -525,7 +576,7 @@
 		}
 
 		jqDataTable.buildColumn = function(data, type, row, meta) {
-			console.log(data, type, row, meta)
+			//console.log(data, type, row, meta)
 			var value = data;
 			switch(type) {
 				case "date":
@@ -533,6 +584,9 @@
 					break;
 				case "datetime":
 					value = parseDateTime(data);
+					break;
+				case "currency":
+					value = parseCurrency(data);
 					break;
 				default:
 					value = data;
@@ -564,12 +618,11 @@
 			return date;
 		}
 
-		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2, minimumFractionDigits=2) {
+		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2) {
 			var price = ""
 			if(!!data) {
-				price= parseFloat(data).toLocaleString(locales, { style: 'currency', currency: currency, maximumFractionDigits: maximumFractionDigits, minimumFractionDigits: minimumFractionDigits });
+				price= parseFloat(data).formatMoney(maximumFractionDigits, ',', '.') + "₫";
 			}
-
 			return price;
 		}
 
@@ -669,7 +722,7 @@
 						</@FlatButton>
 					</#list>
 
-					<@FlatButton id="JqRefresh" onClick="JqRefresh()" style="color: rgb(0, 188, 212); text-transform: uppercase;width: 120px">
+					<@FlatButton id="JqRefresh" onClick=JqRefresh style="color: rgb(0, 188, 212); text-transform: uppercase;width: 120px">
 						<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
 							<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
 						</svg>
@@ -677,6 +730,7 @@
 					</@FlatButton>
 				</div>
 			</div>
+
 			<div style="margin-bottom: 20px!important;">
 			<#list filters as filter>
 				<#if filter.require?? && filter.require>
@@ -694,6 +748,7 @@
 				</#if>
 			</#list>
 
+
 			<#if conditions?size gt 0>
 				<#list conditions as condition>
 					<div style="display: none;" id="${condition.id}-block">
@@ -707,10 +762,9 @@
 					</div>
 				</#list>
 			</#if>
-			
-
 			</div>
-			<table id="${id}-content" style="width: 100%!important;" class="table table-striped">
+
+			<table id="${id}-content" class="table table-striped">
 			 <thead>
 				<tr>
 					<th>
@@ -745,5 +799,16 @@
 	<#if urlUpdate!="">
 		<div id="jqModalChange"></div>
 	</#if>
+
+	<@Loader handleToggle="loadingProcess" backgroundColor="rgba(0, 0, 0, 0.6)">
+        <div style="margin-left: 17%; margin-right: 17%;">
+            <div class="progress">
+                <div class="determinate" id="liner-upload-template" style="width: 0%"></div>
+            </div>
+        </div>
+        <div style="font-size: 20px; text-align: center; color: #fffffff2; font-weight: 400;" id="infor-liner-upload-template">
+            ${uiLabelMap.BkEunivLoading} ...
+        </div>
+    </@Loader>
 	
 </#macro>

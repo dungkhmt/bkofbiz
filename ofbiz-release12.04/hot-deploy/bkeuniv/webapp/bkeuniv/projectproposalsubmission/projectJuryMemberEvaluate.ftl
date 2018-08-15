@@ -1,99 +1,56 @@
-<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/jqServerSide.ftl"/>
+<body>
+<div class="body">
+	<#assign columns=[
+		{
+			"name": uiLabelMap.ProjectProposalName?j_string,
+			"data": "researchProjectProposalName",
+			"render": 'function(value, name, dataColumns, id) {
+        return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.reviewerResearchProposalId+"\\">" + value + "</a>";
+			}'
+		},
+		{
+			"name": uiLabelMap.Evaluation?j_string,
+			"data": "reviewerResearchProposalId",
+			"className": "text-center",
+			"render": 'function(value, name, dataColumns, id) {
+				if(!!dataColumns.statusId == "ASSIGNED_REVIEWER") {
+					return \'<a href="/bkeuniv/control/form-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">\'+uiLabelMap.Evaluation+\'</a>\';
+				} else {
+					return \'<a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.ViewEvaluation+'</a>\';'+
+				'}
+			}'
+		}
+	] />
 
-  <head>
+  <#assign fields=[
+		"reviewerResearchProposalId",
+		"juryId",
+		"researchProjectProposalId",
+		"researchProjectProposalName",
+		"staffId",
+		"staffName",
+		"statusId"
+	] />
 
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
-
-    
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    
-    
-    <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
-    
-    <meta charset="utf-8" />
-    
-    <title>DataTables - Context menu integration</title>
-  
-  </head>
-  
-<@Loader handleToggle="loader">
-	<@IconSpinner/>
-</@Loader>
-
-<script>
-  	loader.open();
-  </script>
-
-<div id="table-list" style="overflow-y: auto; padding: 2em;">
-	<table id="list" cellspacing="0" width="100%" class="display dataTable">
-		<thead>
-			<tr>
-				<th style="display: none"></th>
-				<th>${uiLabel.ProjectProposalName}</th>
-				<th>${uiLabel.Evaluation}</th>
-			</tr>
-		</thead>
-	<tbody>
-	<#list resultProposals.projectproposals as p>
-		<tr>
-			<td style="display: none">${p.researchProjectProposalId}</td>
-			
-			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
-			<#else>
-				<td></td>
-			</#if>
-			
-			<#if p.statusId == "ASSIGNED_REVIEWER">
-				<td><a href="/bkeuniv/control/form-evaluate-research-project-proposal?
-				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.Evaluation}</a></td>
-			<#else>
-				<td><a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?
-				reviewerResearchProposalId=${p.reviewerResearchProposalId}">${uiLabel.ViewEvaluation}</a></td>
-			</#if>
-		</tr>
-	</#list>
-	</tbody>
-	</table>
-	
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	<@jqDataTable
+		id="jqDataTable"
+		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetListProjectProposalsAssignedForReview" 
+		<#--  optionData={
+			"data": {
+				"pagesize": "-1"?j_string
+			}
+		}  -->
+		columns=columns 
+		dataFields=fields
+		sizeTable=sizeTable
+		keysId=["researchProjectProposalId"]
+		fieldDataResult = "results" 
+		titleChange=uiLabelMap.BkEunivChange
+		titleNew=uiLabelMap.BkEunivNew
+		titleDelete=uiLabelMap.BkEunivDelete
+		jqTitle=uiLabelMap.BkEunivManage
+		contextmenu=false
+	/>
 </div>
-<script>
-var obj;
-
-$(document).ready(function() {
-  loader.close();
-  var oTable = $('#list').dataTable({
-    "bJQueryUI": true,
-    "sDom": 'l<"H"Rf>t<"F"ip>'
-  });
-  $(document).contextmenu({
-    delegate: ".dataTable td",
-    menu: [
-      {title: "Delete", cmd: "delete"},
-      {title: "Edit", cmd: "edit"}
-    ],
-    select: function(event, ui) {
-        switch(ui.cmd){
-            case "delete":
-                $(ui.target).parent().remove();
-                break;
-            case "edit":
-				obj = ui;
-				var el = ui.target.parent();
-				var paperId = el.children()[0].innerHTML;
-				alert('edit paper ' + paperId);
-			    break;
-        }
-    },
-    beforeOpen: function(event, ui) {
-        var $menu = ui.menu,
-            $target = ui.target
-        ui.menu.zIndex(0);
-    }
-  });
-    
-} );
-</script>

@@ -2536,6 +2536,56 @@ public class ProjectProposalSubmissionService {
 			ex.printStackTrace();
 		}
 	}
+	
+	public static Map<String,Object> JQGetListProjectProposalsAssignedForReview(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator list = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				String q = (String)parameters.get("q")[0];
+				String[] searchKeys = {"researchProjectProposalName", "researchProjectProposalId"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			listAllConditions.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, userLoginId));
+
+			list = delegator.find("ReviewerResearchProposalView", condition, null, null, sort, opts);
+						
+			result.put("listIterator", list);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error getListProjectCallsAndProposalJuriesUniversity");
+		}
+		
+		return result;
+	}
 
 	public static Map<String, Object> getListProjectProposalsAssignedForReview(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -2544,7 +2594,7 @@ public class ProjectProposalSubmissionService {
 
 		Map<String, Object> userLogin = (Map<String, Object>) context
 				.get("userLogin");
-
+		
 		String staffId = (String) context.get("staffId");
 		if (staffId == null)
 			staffId = (String) userLogin.get("userLoginId");
