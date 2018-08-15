@@ -4,7 +4,10 @@
 	<#assign columns=[
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
-			"data": "researchProjectProposalName"
+			"data": "researchProjectProposalName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+			}'
 		},
 		{
 			"name": projectDeclarationUiLabelMap.CreateStaffId?j_string,

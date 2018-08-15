@@ -9,7 +9,10 @@
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
 			"width": "300px",
-			"data": "researchProjectProposalName"
+			"data": "researchProjectProposalName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+			}'
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,

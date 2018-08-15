@@ -11,6 +11,26 @@
         <value xml:lang="vi">Tên đề tài</value>
     </property>
     
+    <property key="WorkingHourProject">
+        <value xml:lang="en">Working hour of research project</value>
+        <value xml:lang="vi">Số giờ thực hiện đề tài</value>
+    </property>
+    <property key="MemberProject">
+        <value xml:lang="en">Member</value>
+        <value xml:lang="vi">Thành viên</value>
+    </property>
+    <property key="Workinghour">
+        <value xml:lang="en">working hour</value>
+        <value xml:lang="vi">Số giờ thực hiện</value>
+    </property>
+    <property key="AcademicYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="vi">Năm kê khai</value>
+    </property>
+    
+    
+    
+
     <property key="Status">
         <value xml:lang="en">Status</value>
         <value xml:lang="vi">Trạng thái</value>

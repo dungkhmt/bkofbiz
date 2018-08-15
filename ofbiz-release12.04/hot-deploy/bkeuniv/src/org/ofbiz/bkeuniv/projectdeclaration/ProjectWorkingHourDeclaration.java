@@ -75,6 +75,58 @@ public class ProjectWorkingHourDeclaration {
 		return retSucc;
 	}
 	
+	public static Map<String, Object> getProjectWorkingHourDeclarationOfProject(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String) userLogin.get("userLoginId");
+		//System.out.println("staff id: "+staffId);
+		String researchProjectProposalId = (String)context.get("researchProjectProposalId");
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> condss = FastList.newInstance();
+			/*
+			condss.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS, staffId));
+			condss.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
+			
+			List<GenericValue> listProjectProposal = delegator.findList("ResearchProjectProposal", 
+																EntityCondition.makeCondition(condss), 
+																null, null, null, false);
+			List<Map> projectDeclarations = FastList.newInstance();
+			List<EntityCondition> conds = FastList.newInstance();
+			for(GenericValue gvv : listProjectProposal){
+				conds.add(EntityCondition.makeCondition("researchProjectProposalId", 
+						EntityOperator.EQUALS, gvv.getString("researchProjectProposalId")));
+			}
+			*/
+			List<Map> projectDeclarations = FastList.newInstance();
+			List<EntityCondition> conds = FastList.newInstance();
+			//conds.add(EntityCondition.makeCondition("createStaffId", EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS, researchProjectProposalId));
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
+			
+			List<GenericValue> listProjectDeclaration = delegator.findList("ResearchProjectDeclarationYearView", 
+					EntityCondition.makeCondition(conds), 
+					null, null, null, false);
+			Debug.log(module + "::getProjectWorkingHourDeclaration, list = " + listProjectDeclaration.size());
+			
+			for(GenericValue gv : listProjectDeclaration){
+				Map<String, Object> map = FastMap.newInstance();
+				for(int i=0; i<arrAtt.length; i++){
+					map.put(arrAtt[i], gv.getString(arrAtt[i]));
+				}
+				Debug.log(module + "::getProjectWorkingHourDeclaration, proposal name = " + map.get("researchProjectProposalName"));
+
+				projectDeclarations.add(map);
+			}
+			retSucc.put("projectDeclarations", projectDeclarations);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> createProjectWorkingHourDeclaration(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		

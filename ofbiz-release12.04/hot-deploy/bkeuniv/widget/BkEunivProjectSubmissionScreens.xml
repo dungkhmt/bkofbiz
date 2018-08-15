@@ -305,6 +305,11 @@
 					<field-map field-name="researchProjectProposalId"/>
 				</service>
 				
+				<service service-name="getProjectWorkingHourDeclarationOfProject" 
+					result-map="resultProjectWorkingHourDeclaration">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+
 			</actions>
 			<widgets>
 			<!-- 

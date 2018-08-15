@@ -219,6 +219,12 @@
     	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getProjectWorkingHourDeclarationOfProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectWorkingHourDeclaration" invoke="getProjectWorkingHourDeclarationOfProject">
+    	<attribute name="researchProjectProposalId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
+    </service>
+
     <service name="createProjectWorkingHourDeclaration" engine="java" 
     		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectWorkingHourDeclaration" invoke="createProjectWorkingHourDeclaration">
 		<attribute name="researchProjectProposalId[]" mode="IN" type="List" optional="true"></attribute>

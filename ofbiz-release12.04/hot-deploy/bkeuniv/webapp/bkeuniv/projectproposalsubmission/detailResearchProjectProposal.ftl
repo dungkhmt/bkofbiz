@@ -169,4 +169,36 @@
 			</div>
 		</td>
 	</tr>
+	
+	<tr>
+		<td>
+			<div class="info-box">
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					
+					${uiLabel.WorkingHourProject}
+				</div>
+			<table border=1>
+				<thead>
+					<td>${uiLabel.MemberProject}</td>
+					<td>${uiLabel.Workinghour}</td>
+					<td>${uiLabel.AcademicYear}</td>
+				</thead>
+			<#list resultProjectWorkingHourDeclaration.projectDeclarations as p>
+				<tr>
+					<#if p.staffName?exists>
+						<td>${p.staffName}</td>
+					</#if>
+					
+					<#if p.workinghours?exists>
+						<td>${p.workinghours}</td>
+					</#if>
+					
+					<#if p.academicYearName?exists>
+						<td>${p.academicYearName}</td>
+					</#if>
+				</tr>
+			</#list>
+			</div>
+		</td>
+	</tr>
 </table>
