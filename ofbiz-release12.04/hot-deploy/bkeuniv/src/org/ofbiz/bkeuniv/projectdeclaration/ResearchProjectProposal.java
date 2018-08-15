@@ -138,8 +138,14 @@ public class ResearchProjectProposal {
 			gv.put("createStaffId", staffId);
 			gv.put("projectCategoryId", projectCategoryId.get(0));
 			gv.put("researchProjectProposalName", researchProjectProposalName);
-			long totalBudgetl = Long.valueOf(totalBudget);
+			//long totalBudgetl = Long.valueOf(totalBudget);
+			//gv.put("totalBudget", totalBudgetl);
+			
+			BigDecimal totalBudgetl = BigDecimal.ZERO;
+			if(totalBudget != null)
+				totalBudgetl =	new BigDecimal(totalBudget);//Long.valueOf(totalBudget);
 			gv.put("totalBudget", totalBudgetl);
+			
 			if (startDate != null){
 				gv.put("startDate", new Date(Long.valueOf(startDate)));
 			}

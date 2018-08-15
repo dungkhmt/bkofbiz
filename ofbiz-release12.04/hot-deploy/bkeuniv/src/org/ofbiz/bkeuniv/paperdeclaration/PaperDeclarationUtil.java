@@ -1022,10 +1022,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String correspondingAuthor = "";
 			String nonCorrespondingAuthor = "";
 			if(info != null){
-				info.get("firstAuthorIsCorresponding");
-				info.get("firstAuthorIsNotCorresponding");
-				info.get("correspondingAuthor");
-				info.get("nonCorrespondingAuthor");
+				firstAuthorIsCorresponding = (String)info.get("firstAuthorIsCorresponding");
+				firstAuthorIsNotCorresponding = (String)info.get("firstAuthorIsNotCorresponding");
+				correspondingAuthor = (String)info.get("correspondingAuthor");
+				nonCorrespondingAuthor = (String) info.get("nonCorrespondingAuthor");
 			}
 			if(firstAuthorIsCorresponding.equals("T")) firstAuthorIsCorresponding = "X";
 			else firstAuthorIsCorresponding = "";
@@ -1036,6 +1036,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			paper.add(firstAuthorIsNotCorresponding);
 			paper.add(correspondingAuthor);
 			paper.add(nonCorrespondingAuthor);
+			
 			papers.add(paper);
 		}
 		currRow = createContentTable(sh, papers, cellStyle, currRow,
@@ -3521,6 +3522,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(4, 6000);
 		sh.setColumnWidth(5, 6000);
 		sh.setColumnWidth(6, 6000);
+		sh.setColumnWidth(7, 6000);
+		sh.setColumnWidth(8, 6000);
+		sh.setColumnWidth(9, 6000);
+		sh.setColumnWidth(10, 6000);
+		sh.setColumnWidth(11, 6000);
+		sh.setColumnWidth(12, 6000);
 
 		// ----create style font bold
 		HSSFCellStyle cellStyleBold = getFontBold(wb);
@@ -3569,8 +3576,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		row_header_table = sh.createRow(i_row);
 		String[] str2 = new String[] { "", "", "", "Tên tạp chí",
-				"Số và thời gian xuất bản", "Chỉ số ISSN" };
-		createRowInExcel(1, 6, str2, row_header_table,
+				"Số và thời gian xuất bản", "Đường link", "Chỉ số ISSN","Tổng số tác giả", "Số tác giả của trường",
+				"Tác giả đầu tiên là Corresponding author", "Tác giả đầu tiên không phải là Corresponding author", 
+				"Tác giả là Corresponding author", "Các tác giả còn lại"};
+		createRowInExcel(1, 13, str2, row_header_table,
 				cellStyleCenterBoldFullBorder);
 		// ----end header table in excel
 		// ----start table
@@ -3594,8 +3603,16 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String journal = (String) p.get("journalConferenceName");
 			String vol = (String) p.get("volumn");
 			String issn = (String) p.get("ISSN");
+			int nbIntAuthors = getNbInternalAuthors(delegator,
+					p.getString("paperId"));
+			int nbAuthors = 0;
+			String[] s = authors.split(",");
+			if(s != null) nbAuthors = s.length;
+			
 			String[] str_papers1 = new String[] { authors, name, journal, vol,
-					issn };
+					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
+			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
+			
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -3603,7 +3620,36 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellStyle(cellStyleRight);
 			c.setCellValue(m);
 
-			createRowInExcel(2, 6, str_papers1, r, cellStyleLeft);
+			createRowInExcel(2, 9, str_papers1, r, cellStyleLeft);
+		
+			// add author information
+			int i_col=9;
+			String mark = "";
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
+				mark = "X";
+			c.setCellValue(mark);
+			c.setCellStyle(cellStyleLeft);
+			
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
+				mark = "X";
+			c.setCellValue(mark);
+			c.setCellStyle(cellStyleLeft);
+			
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("correspondingAuthor")!=null)
+				c.setCellValue((String)infos.get("correspondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
+			
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("nonCorrespondingAuthor")!=null)
+				c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
 		}
 		i_row++;
 		i_row_t = i_row + 1;
@@ -3620,8 +3666,16 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String journal = (String) p.get("journalConferenceName");
 			String vol = (String) p.get("volumn");
 			String issn = (String) p.get("ISSN");
+			int nbIntAuthors = getNbInternalAuthors(delegator,
+					p.getString("paperId"));
+			int nbAuthors = 0;
+			String[] s = authors.split(",");
+			if(s != null) nbAuthors = s.length;
+			
 			String[] str_papers2 = new String[] { authors, name, journal, vol,
-					issn };
+					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
+			
+			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -3629,7 +3683,35 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellStyle(cellStyleRight);
 			c.setCellValue(m);
 
-			createRowInExcel(2, 6, str_papers2, r, cellStyleLeft);
+			createRowInExcel(2, 9, str_papers2, r, cellStyleLeft);
+			int i_col = 9;
+			// add author information
+						String mark = "";
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
+							mark = "X";
+						c.setCellStyle(cellStyleLeft);
+						c.setCellValue(mark);
+						
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
+							mark = "X";
+						c.setCellValue(mark);
+						c.setCellStyle(cellStyleLeft);
+						
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("correspondingAuthor")!=null)
+							c.setCellValue((String)infos.get("correspondingAuthor"));
+						c.setCellStyle(cellStyleLeft);
+						
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("nonCorrespondingAuthor")!=null)
+							c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
+						c.setCellStyle(cellStyleLeft);
 		}
 		// ----end table
 
@@ -3665,6 +3747,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(4, 6000);
 		sh.setColumnWidth(5, 6000);
 		sh.setColumnWidth(6, 6000);
+		sh.setColumnWidth(7, 6000);
+		sh.setColumnWidth(8, 6000);
+		sh.setColumnWidth(9, 6000);
+		sh.setColumnWidth(10, 6000);
+		sh.setColumnWidth(11, 6000);
+		sh.setColumnWidth(12, 6000);
 
 		// ----create style font bold
 		HSSFCellStyle cellStyleBold = getFontBold(wb);
@@ -3673,7 +3761,6 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		HSSFCellStyle cellStyleCenterBoldFullBorder = getAttributeCenterBoldFullBorder(wb);
 		cellStyleRight.setWrapText(true);
 		cellStyleLeft.setWrapText(true);
-
 		int i_row = 0;
 		// ----start header in excel
 		i_row++;
@@ -3683,7 +3770,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createRowInExcel(1, 1, str_header1, row_header, cellStyleBold);
 		i_row++;
 		row_header = sh.createRow(i_row);
-		String[] str_header2 = new String[] { "ĐĂNG TRONG TẠP CHÍ QUỐC TẾ TRONG DANH MỤC SCOPUS NĂM HỌC "
+		String[] str_header2 = new String[] { "TRONG DANH MỤC SCOPUS NĂM HỌC "
 				+ academicYearId };
 		createRowInExcel(1, 1, str_header2, row_header, cellStyleBold);
 		// ----end header in excel
@@ -3714,8 +3801,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		row_header_table = sh.createRow(i_row);
 		String[] str2 = new String[] { "", "", "", "Tên tạp chí",
-				"Số và thời gian xuất bản", "Chỉ số ISSN" };
-		createRowInExcel(1, 6, str2, row_header_table,
+				"Số và thời gian xuất bản", "Đường link", "Chỉ số ISSN","Tổng số tác giả", "Số tác giả của trường",
+				"Tác giả đầu tiên là Corresponding author", "Tác giả đầu tiên không phải là Corresponding author", 
+				"Tác giả là Corresponding author", "Các tác giả còn lại"};
+		createRowInExcel(1, 13, str2, row_header_table,
 				cellStyleCenterBoldFullBorder);
 		// ----end header table in excel
 		// ----start table
@@ -3739,8 +3828,16 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String journal = (String) p.get("journalConferenceName");
 			String vol = (String) p.get("volumn");
 			String issn = (String) p.get("ISSN");
+			int nbIntAuthors = getNbInternalAuthors(delegator,
+					p.getString("paperId"));
+			int nbAuthors = 0;
+			String[] s = authors.split(",");
+			if(s != null) nbAuthors = s.length;
+			
 			String[] str_papers1 = new String[] { authors, name, journal, vol,
-					issn };
+					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
+			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
+			
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -3748,7 +3845,36 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellStyle(cellStyleRight);
 			c.setCellValue(m);
 
-			createRowInExcel(2, 6, str_papers1, r, cellStyleLeft);
+			createRowInExcel(2, 9, str_papers1, r, cellStyleLeft);
+		
+			// add author information
+			int i_col=9;
+			String mark = "";
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
+				mark = "X";
+			c.setCellValue(mark);
+			c.setCellStyle(cellStyleLeft);
+			
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
+				mark = "X";
+			c.setCellValue(mark);
+			c.setCellStyle(cellStyleLeft);
+			
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("correspondingAuthor")!=null)
+				c.setCellValue((String)infos.get("correspondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
+			
+			i_col++;
+			c = r.createCell(i_col);
+			if(infos.get("nonCorrespondingAuthor")!=null)
+				c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
 		}
 		i_row++;
 		i_row_t = i_row + 1;
@@ -3765,8 +3891,16 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String journal = (String) p.get("journalConferenceName");
 			String vol = (String) p.get("volumn");
 			String issn = (String) p.get("ISSN");
+			int nbIntAuthors = getNbInternalAuthors(delegator,
+					p.getString("paperId"));
+			int nbAuthors = 0;
+			String[] s = authors.split(",");
+			if(s != null) nbAuthors = s.length;
+			
 			String[] str_papers2 = new String[] { authors, name, journal, vol,
-					issn };
+					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
+			
+			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -3774,7 +3908,35 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellStyle(cellStyleRight);
 			c.setCellValue(m);
 
-			createRowInExcel(2, 6, str_papers2, r, cellStyleLeft);
+			createRowInExcel(2, 9, str_papers2, r, cellStyleLeft);
+			int i_col = 9;
+			// add author information
+						String mark = "";
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
+							mark = "X";
+						c.setCellStyle(cellStyleLeft);
+						c.setCellValue(mark);
+						
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
+							mark = "X";
+						c.setCellValue(mark);
+						c.setCellStyle(cellStyleLeft);
+						
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("correspondingAuthor")!=null)
+							c.setCellValue((String)infos.get("correspondingAuthor"));
+						c.setCellStyle(cellStyleLeft);
+						
+						i_col++;
+						c = r.createCell(i_col);
+						if(infos.get("nonCorrespondingAuthor")!=null)
+							c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
+						c.setCellStyle(cellStyleLeft);
 		}
 		// ----end table
 
