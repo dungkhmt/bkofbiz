@@ -11,7 +11,7 @@
 			"width": "300px",
 			"data": "researchProjectProposalName",
 			"render": 'function(value, name, dataColumns, id) {
-                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
 			}'
 		},
 		{
