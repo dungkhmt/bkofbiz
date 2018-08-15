@@ -11,7 +11,14 @@
 				<div style="display: flex; justify-content: space-between;">
 					<div class="title" style="padding: 16px; position: relative;">
 						<span style="font-size: 24px; color: rgba(0, 0, 0, 0.87); display: block; line-height: 36px;">
-							<span id="titlePage">${resultPaper.paper.paperName}</span>
+							<span id="titlePage">
+							<#if resultPaper.paper.paperName?exists>
+								${resultPaper.paper.paperName}
+							<#else>
+							
+							</#if>
+							
+							</span>
 						</span>
 					</div>
 					<div style="padding: 8px; position: relative; z-index: 2; display: flex; justify-content: flex-end; flex-wrap: wrap;">
@@ -30,7 +37,10 @@
 							${paperDeclarationUiLabelMap.BkEunivPaperName}
 						</label>
 						<span style="width: 80%; display: block;" >
-							${resultPaper.paper.paperName}
+							<#if resultPaper.paper.paperName?exists>
+								${resultPaper.paper.paperName}
+							<#else>
+							</#if>
 						</span>
 					</div>
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
@@ -38,7 +48,12 @@
 							${paperDeclarationUiLabelMap.BkEunivAuthors}
 						</label>
 						<span style="width: 80%; display: block;" >
-							${resultPaper.paper.authors}
+							<#if resultPaper.paper.authors?exists>
+								${resultPaper.paper.authors}
+							<#else>
+								
+							</#if>
+							
 						</span>
 					</div>
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
@@ -46,7 +61,11 @@
 							${paperDeclarationUiLabelMap.BkEunivPaperCategory}
 						</label>
 						<span style="width: 80%; display: block;" >
-							${resultPaper.paper.paperCategoryName}
+							<#if resultPaper.paper.paperCategoryName?exists>
+								${resultPaper.paper.paperCategoryName}
+							<#else>
+							
+							</#if>
 						</span>
 					</div>
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
@@ -59,6 +78,17 @@
 							</#if>
 						</span>
 					</div>
+					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
+							${paperDeclarationUiLabelMap.BkEunivPaperMonth}
+						</label>
+						<span style="width: 80%; display: block;" >
+							<#if resultPaper.paper.month?exists>
+								${resultPaper.paper.month}
+							</#if>
+						</span>
+					</div>
+
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperYear}

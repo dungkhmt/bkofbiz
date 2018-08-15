@@ -382,7 +382,9 @@ public class ProjectProposalSubmissionServiceUtil {
 					"ResearchProjectProposalView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			
+			Debug.log(module + "::getListFilteredProjectProposals, facultyId = "
+					+ facultyId + ", projectCallId = " + projectCallId
+					+ ", projectProposalStatusId = " + projectProposalStatusId + ", GOT list prj size = " + prj.size());
 			/*
 			Map<String, Boolean> hasChildProposal = FastMap.newInstance();
 			//Set<String> partyIdSet = FastSet.newInstance();
