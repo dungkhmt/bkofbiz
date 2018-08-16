@@ -250,7 +250,7 @@ public class BKEunivPermissionService {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"staffId", "staffEmail", "staffName", "facultyName", "departmentName", "genderName", "facultyName"}; 
 				
@@ -531,7 +531,7 @@ public class BKEunivPermissionService {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"groupId", "description"}; 
 				

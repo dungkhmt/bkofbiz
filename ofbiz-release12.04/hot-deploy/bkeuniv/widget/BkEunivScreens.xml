@@ -88,9 +88,8 @@
 		<section>
 			<actions>
 				
-				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
-				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
-				<service service-name="getStaffInfo" result-map="staff"></service>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
 				
 			</actions>
 			<widgets>

@@ -770,8 +770,8 @@
 						<#if filter.type=="select-render-html">
 							<@FormInput id=filter.id field=filter.label width="256px">
 								<select id="${filter.id}" <#if filter.onChange??>onChange="${filter.onChange}"</#if>>
-									<#list securityGroup.securityGroups as sg>
-										<option value="${sg.groupId}">${sg.description}</option>
+									<#list filter.data as d>
+										<option value="${d.value}">${d.text}</option>
 									</#list>
 								</select>
 							</@FormInput>

@@ -823,6 +823,23 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="StaffTemp" package-name="org.ofbiz.bkeuniv">
+		<field name="id" type="id-vlong"></field>
+		
+		<field name="shcc" type="id-vlong"></field>
+		<field name="sohieuchuan" type="id-vlong"></field>
+		<field name="staffName" type="name"></field>
+		<field name="departmentId" type="id-vlong"></field>
+		<field name="departmentName" type="very-long"></field>
+		<field name="facultyId" type="id-vlong"></field>
+		<field name="facultyName" type="very-long"></field>
+		<field name="staffEmail" type="email"></field>
+		<field name="gt" type="id-ne"></field>
+		<field name="ntns" type="date"></field>
+		
+		<prim-key field="id"/>
+	</entity>
+	
 	<view-entity entity-name="SecurityGroupView"
             package-name="org.ofbiz.security.securitygroup"
             title="Security Component - Security Group Entity">
@@ -1407,5 +1424,7 @@
         <key-map field-name="acctgTransId"/>
       </view-link>
     </view-entity>
+    
+    
     
 </entitymodel>

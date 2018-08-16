@@ -1778,7 +1778,7 @@ public class ProjectProposalSubmissionService {
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 			
 			if(parameters.containsKey("q")) {
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				String[] searchKeys = {"projectCategoryName", "juryId", "juryName", "projectCallId", "projectCallName", "year"}; 
 				
 				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
@@ -2419,7 +2419,7 @@ public class ProjectProposalSubmissionService {
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 			
 			if(parameters.containsKey("q")) {
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				String[] searchKeys = {"facultyName", "projectCallName", "juryId", "juryName"}; 
 				
 				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
@@ -2555,7 +2555,7 @@ public class ProjectProposalSubmissionService {
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 			
 			if(parameters.containsKey("q")) {
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				String[] searchKeys = {"researchProjectProposalName", "researchProjectProposalId"}; 
 				
 				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 

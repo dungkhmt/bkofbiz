@@ -61,7 +61,7 @@ public class ResearchDomainManagement {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"researchDomainName"}; 
 				
@@ -120,7 +120,7 @@ public class ResearchDomainManagement {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"researchDomainName"}; 
 				
@@ -309,7 +309,7 @@ public class ResearchDomainManagement {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"researchSubDomainName", "researchSubDomainCode"}; 
 				

@@ -260,6 +260,11 @@
         <value xml:lang="vi">Lưu lại</value>
     </property>
     
+    <property key="BkEunivSync">
+        <value xml:lang="en">Synchronized</value>
+        <value xml:lang="vi">Đồng bộ</value>
+    </property>
+    
     <property key="BkEunivSaveSuccess">
         <value xml:lang="en">Save success</value>
         <value xml:lang="vi">Lưu thành công</value>
@@ -741,6 +746,31 @@
     <property key="BkEunivJuryName">
         <value xml:lang="en">Jury name</value>
         <value xml:lang="vi">Tên hội đồng duyệt thuyết minh đề tài</value>
+    </property>
+    
+    <property key="BkEunivAll">
+        <value xml:lang="en">All</value>
+        <value xml:lang="vi">Tất cả</value>
+    </property>
+    
+    <property key="BkEunivNewStaff">
+        <value xml:lang="en">New</value>
+        <value xml:lang="vi">Mới thêm vào</value>
+    </property>
+    
+    <property key="BkEunivUpdateStaff">
+        <value xml:lang="en">Update</value>
+        <value xml:lang="vi">Mới cập nhật</value>
+    </property>
+    
+    <property key="BkEunivUnqualifiedStaff">
+        <value xml:lang="en">Unqualified</value>
+        <value xml:lang="vi">Không đủ thông tin</value>
+    </property>
+    
+    <property key="BkEunivCategory">
+        <value xml:lang="en">Category</value>
+        <value xml:lang="vi">Phân loại</value>
     </property>
     
     
