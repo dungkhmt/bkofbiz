@@ -652,7 +652,7 @@
 		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2, minimumFractionDigits=2) {
 			var price = ""
 			if(!!data) {
-				price= parseFloat(data).toLocaleString(locales, { style: 'currency', currency: currency, maximumFractionDigits: maximumFractionDigits, minimumFractionDigits: minimumFractionDigits });
+				price= parseFloat(data).formatMoney(maximumFractionDigits, ',', '.') + "&#x20AB;";
 			}
 
 			return price;
