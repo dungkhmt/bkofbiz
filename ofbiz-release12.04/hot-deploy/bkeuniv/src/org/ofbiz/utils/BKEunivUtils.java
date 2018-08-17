@@ -1,11 +1,19 @@
 package org.ofbiz.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,13 +25,20 @@ import javax.servlet.http.HttpServletResponse;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityOperator;
+
+import com.google.gson.Gson;
 
 public class BKEunivUtils {
 
@@ -406,6 +421,128 @@ public class BKEunivUtils {
 		}
 		
 		return result;
+	}
+	
+	private static String readAll(Reader rd) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		int cp;
+		while ((cp = rd.read()) != -1) {
+		  sb.append((char) cp);
+		}
+		return sb.toString();
+	}
+	
+	public static Map<String, Object> httpPost(String sUrl, List<NameValuePair> data) throws IOException, JSONException {
+		/**
+		 * Todo
+		 */
+		
+		Map<String, Object> reponse = new HashMap<String, Object>();
+		
+		URL url = new URL(sUrl);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setDoOutput(true);
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-Type", "application/json");
+		
+		conn.setReadTimeout(15000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+		
+		
+		reponse.put("statusCode", conn.getResponseCode());
+
+		InputStream is = conn.getInputStream();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+
+		String jsonText = readAll(rd);
+		try {
+			JSONObject json = JSONObject.fromObject(jsonText);
+			reponse.put("reponse", json);
+			
+	    } catch (Exception ex) {
+	    	reponse.put("reponse", jsonText);
+	    	is.close();
+	    } finally {
+	    	is.close();
+	    }
+		return reponse;
+	}
+	
+	public static Map<String, Object> httpGET(String sUrl) throws IOException {
+		Map<String, Object> reponse = new HashMap<String, Object>();
+		URL url = new URL(sUrl);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		
+		conn.setDoOutput(true);
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-Type", "application/json");
+		
+		reponse.put("statusCode", conn.getResponseCode());
+
+		InputStream is = conn.getInputStream();
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+
+		String jsonText = readAll(rd);
+		reponse.put("reponse", jsonText);
+		conn.disconnect();
+    	is.close();
+    	
+		return reponse;
+	}
+	
+	public static void quickSort (List<Map<String, Object>> list, int lowerIndex, int higherIndex, String field, String type){
+		int i = lowerIndex;
+        int j = higherIndex;
+        // calculate pivot number, I am taking pivot as middle index number
+        Map<String, Object> pivot = list.get(lowerIndex+(higherIndex-lowerIndex)/2);
+
+        String key = getValueString(pivot, field);
+        
+        if(type.equals("asc")) {
+        	while (i <= j) {
+        		while (getValueString(list.get(i), field).compareTo(key) < 0) {
+        			i++;
+        		}
+        		while (getValueString(list.get(j), field).compareTo(key) > 0) {
+        			j--;
+        		}
+        		if (i <= j) {
+        			Collections.swap(list, i, j);
+        			//move index to next position on both sides
+        			i++;
+        			j--;
+        		}
+        	}
+        } else {
+        	while (i <= j) {
+        		while (getValueString(list.get(i), field).compareTo(key) > 0) {
+        			i++;
+        		}
+        		while (getValueString(list.get(j), field).compareTo(key) < 0) {
+        			j--;
+        		}
+        		if (i <= j) {
+        			Collections.swap(list, i, j);
+        			//move index to next position on both sides
+        			i++;
+        			j--;
+        		}
+        	}
+        }
+        // call quickSort() method recursively
+        if (lowerIndex < j)
+        	quickSort(list, lowerIndex, j, field, type);
+        if (i < higherIndex)
+        	quickSort(list, i, higherIndex, field, type);
+	}
+	
+	public static String getValueString(Map<String, Object> map, String key) {
+		String value = "";
+		if(map.get(key)!= null) {
+			value = (String) map.get(key);
+		}
+		return value;
 	}
 
 }

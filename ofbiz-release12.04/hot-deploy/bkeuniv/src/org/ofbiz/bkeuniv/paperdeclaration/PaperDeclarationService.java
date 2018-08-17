@@ -46,6 +46,7 @@ import org.ofbiz.utils.BKEunivUtils;
 
 
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -977,7 +978,7 @@ public class PaperDeclarationService {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"staffName", "paperCategoryName", "researchProjectProposalName", "paperDeclarationStatusName", "researchProjectProposalCode", "paperName", "journalConferenceName"}; 
 				

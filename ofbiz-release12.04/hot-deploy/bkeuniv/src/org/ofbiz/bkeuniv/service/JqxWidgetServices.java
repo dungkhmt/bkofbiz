@@ -227,49 +227,58 @@ public class JqxWidgetServices {
 					tmpList.close();
 				} else if (resultList instanceof java.util.LinkedList) {
 					java.util.LinkedList tmpList = (java.util.LinkedList) resultList;
-					if (tmpList.size() > 0) {
-						List<Object> list = null;
-						if (iSize != 0 && (tmpList.size() > iSize)) {
-							if (iIndex == 0) {
-								list = tmpList.subList(0, iSize);
-							} else {
-								if(tmpList.size() > ((iIndex + 1) *iSize)){
-									list = tmpList.subList(iIndex * iSize,
-											((iIndex + 1) *iSize));
-								}else{
-									list = tmpList.subList(iIndex * iSize,
-											tmpList.size());
+					if(iSize == -1) {
+						result.put("results", tmpList);
+						result.put("totalRows", String.valueOf(tmpList.size()));
+					} else {
+						if (tmpList.size() > 0) {
+							List<Object> list = null;
+							if (iSize != 0 && (tmpList.size() > iSize)) {
+								if (iIndex == 0) {
+									list = tmpList.subList(0, iSize);
+								} else {
+									if(tmpList.size() > ((iIndex + 1) *iSize)){
+										list = tmpList.subList(iIndex * iSize,
+												((iIndex + 1) *iSize));
+									}else{
+										list = tmpList.subList(iIndex * iSize,
+												tmpList.size());
+									}
 								}
+							} else {
+								list = tmpList;
+							}
+							result.put("results", list);
+							if(totalRows != null){
+								result.put("totalRows", totalRows);
+							}else{
+								result.put("totalRows", String.valueOf(tmpList.size()));
 							}
 						} else {
-							list = tmpList;
-						}
-						result.put("results", list);
-						if(totalRows != null){
-							result.put("totalRows", totalRows);
-						}else{
-							result.put("totalRows", String.valueOf(tmpList.size()));
-						}
-					} else {
-						result.put("results", tmpList);
-						result.put("totalRows", "0");
+							result.put("results", tmpList);
+							result.put("totalRows", "0");
+						}	
 					}
 				} else { // if
 					List<Object> list = (List<Object>) resultList;
 					result.put("totalRows", String.valueOf(list.size()));
-					if (iSize != 0 && (list.size() > iSize)) {
-						if (iIndex == 0) {
-							list = list.subList(0, iSize);
-						} else {
-							int toIndex = iIndex * iSize + iSize;
-							if (list.size() > toIndex) {
-								list = list.subList(iIndex * iSize, iIndex
-										* iSize + iSize);
+					if(iSize == -1) {
+						result.put("results", list);
+					} else {
+						if (iSize != 0 && (list.size() > iSize)) {
+							if (iIndex == 0) {
+								list = list.subList(0, iSize);
 							} else {
-								list = list.subList(iIndex * iSize, list.size());
+								int toIndex = iIndex * iSize + iSize;
+								if (list.size() > toIndex) {
+									list = list.subList(iIndex * iSize, iIndex
+											* iSize + iSize);
+								} else {
+									list = list.subList(iIndex * iSize, list.size());
+								}
+								result.put("results", list);
 							}
-							result.put("results", list);
-						}
+						}						
 					}
 
 					if (totalRows != null) {

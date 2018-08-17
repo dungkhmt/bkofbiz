@@ -652,7 +652,7 @@
 		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2, minimumFractionDigits=2) {
 			var price = ""
 			if(!!data) {
-				price= parseFloat(data).toLocaleString(locales, { style: 'currency', currency: currency, maximumFractionDigits: maximumFractionDigits, minimumFractionDigits: minimumFractionDigits });
+				price= parseFloat(data).formatMoney(maximumFractionDigits, ',', '.') + "&#x20AB;";
 			}
 
 			return price;
@@ -770,8 +770,8 @@
 						<#if filter.type=="select-render-html">
 							<@FormInput id=filter.id field=filter.label width="256px">
 								<select id="${filter.id}" <#if filter.onChange??>onChange="${filter.onChange}"</#if>>
-									<#list securityGroup.securityGroups as sg>
-										<option value="${sg.groupId}">${sg.description}</option>
+									<#list filter.data as d>
+										<option value="${d.value}">${d.text}</option>
 									</#list>
 								</select>
 							</@FormInput>

@@ -621,7 +621,7 @@
 		function parseCurrency(data, locales="VND", currency="VND", maximumFractionDigits=2) {
 			var price = ""
 			if(!!data) {
-				price= parseFloat(data).formatMoney(maximumFractionDigits, ',', '.') + "₫";
+				price= parseFloat(data).formatMoney(maximumFractionDigits, ',', '.') + "&#x20AB;";
 			}
 			return price;
 		}
