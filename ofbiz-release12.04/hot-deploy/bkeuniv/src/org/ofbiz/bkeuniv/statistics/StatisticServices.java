@@ -6,6 +6,8 @@ import java.util.Set;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
 
@@ -23,9 +25,12 @@ public class StatisticServices {
 		Delegator delegator = ctx.getDelegator();
 		try{
 			List<GenericValue> allYears = delegator.findList("AcademicYear", null, null, null, null, false);
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"ENABLED"));
 			
 			List<GenericValue> papers = delegator.findList("PaperDeclaration", 
-					null, null, null, null, false);
+					EntityCondition.makeCondition(conds), null, null, null, false);
+			
 			Debug.log(module + "::getPapersStatistic, total = " + papers.size());
 			Set<String> years = FastSet.newInstance();
 			//for(GenericValue p: papers){
@@ -53,22 +58,34 @@ public class StatisticServices {
 			for(int i = 0; i<years_list.length; i++)
 				m.put(years_list[i], i);
 			int[] count = new int[years_list.length];
+			int[] countISI = new int[years_list.length];
+			
 			for(int i = 0; i < count.length; i++) count[i] = 0;
+			for(int i = 0; i < countISI.length; i++) countISI[i] = 0;
+			
 			for(GenericValue p: papers)if(p.get("academicYearId") != null){
 				String y = p.getString("academicYearId");
 				int ix = m.get(y);
 				count[ix]++;
+				if(p.getString("paperCategoryId") != null && 
+						(p.getString("paperCategoryId").equals("JINT_SCI") || p.getString("paperCategoryId").equals("JINT_SCIE"))){
+					countISI[ix]++;
+				}
 			}
 			List<String> Y = FastList.newInstance();
 			List<Integer> C = FastList.newInstance();
+			List<Integer> C_ISI = FastList.newInstance();
 			for(int i = 0; i < years_list.length; i++){
 				Y.add(years_list[i]);
 				C.add(count[i]);
+				C_ISI.add(countISI[i]);
 				Debug.log(module + "::getPapersStatistic, year " + years_list[i] + " count " + count[i]);
 			}
 			
 			retSucc.put("years", Y);
-			retSucc.put("count", C);
+			retSucc.put("countPapers", C);
+			retSucc.put("countPapersISI", C_ISI);
+			
 		}catch(Exception ex){
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

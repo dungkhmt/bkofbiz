@@ -373,6 +373,7 @@
 				<set field="headerItem" value="main" /><!-- this highlights the selected 
 					menu-item with name "main" -->
 				<service service-name="getPapersStatistic" result-map="papers"></service>
+				
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
