@@ -195,14 +195,14 @@ public class ConfigManagementService {
 		 	
 		 	listStaffTemp = delegator.findList("StaffTemp", condition, null, Arrays.asList("staffEmail"), opts, false);
 			int iS = 0, iST = 0;
-			listStaff = delegator.findList("StaffView", condition, null, Arrays.asList("staffId"), opts, false);
+			listStaff = delegator.findList("StaffView", condition, null, Arrays.asList("staffUserLoginId"), opts, false);
 			Debug.log("StaffTemp: " + listStaffTemp.size() + " ---- StaffView: " + listStaff.size());
 			while(listStaff.size()>iS&&listStaffTemp.size()>iST) {
 				GenericValue staff1 = listStaff.get(iS);
 				GenericValue staff2 = listStaffTemp.get(iST);
 				Map<String, Object> staff = new HashMap<String, Object>();
 				
-				String email1 = staff1.getString("staffId");
+				String email1 = staff1.getString("staffUserLoginId");
 				String email2 = staff2.getString("staffEmail");
 				//email1 = email1.trim();
 								
@@ -223,7 +223,8 @@ public class ConfigManagementService {
 					iST++;
 				} else {
 					//email2 = email2.replaceAll("\\s","");
-					email2 = email2.trim();
+					email2 = email2.trim().replace("@hust.edu.vn", "");
+					email1 = email1.trim().replace("@hust.edu.vn", "");
 
 					
 					if(email1.compareTo(email2) < 0) {
@@ -241,7 +242,7 @@ public class ConfigManagementService {
 							staff.put("staffName", staff2.get("staffName"));
 							staff.put("departmentName", staff2.get("departmentName"));
 							staff.put("facultyName", staff2.get("facultyName"));
-							staff.put("staffEmail", email2);
+							staff.put("staffEmail", staff2.get("staffEmail"));
 							switch (staff2.getString("gt")) {
 							case "0":
 								staff.put("genderName", "Nữ");
@@ -256,7 +257,7 @@ public class ConfigManagementService {
 							staff.put("staffName", staff2.get("staffName"));
 							staff.put("departmentName", staff2.get("departmentName"));
 							staff.put("facultyName", staff2.get("facultyName"));
-							staff.put("staffEmail", email2);
+							staff.put("staffEmail", staff2.get("staffEmail"));
 							switch (staff2.getString("gt")) {
 							case "0":
 								staff.put("genderName", "Nữ");
