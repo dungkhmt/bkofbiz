@@ -777,5 +777,26 @@
         <value xml:lang="en">Mus be not NULL</value>
         <value xml:lang="vi">Nội dung không được bỏ trống</value>
     </property>
+    <property key="SelectFaculty">
+        <value xml:lang="en">Select faculty</value>
+        <value xml:lang="vi">Chọn Khoa/Viện</value>
+    </property>
+    <property key="SelectYear">
+        <value xml:lang="en">Select year</value>
+        <value xml:lang="vi">Chọn Năm kê khai</value>
+    </property>
+    <property key="SelectPaperCategory">
+        <value xml:lang="en">Select paper category</value>
+        <value xml:lang="vi">Chọn Loại bài báo</value>
+    </property>
+    <property key="SelectStatus">
+        <value xml:lang="en">Select status</value>
+        <value xml:lang="vi">Chọn trạng thái</value>
+    </property>
+    <property key="View">
+        <value xml:lang="en">View</value>
+        <value xml:lang="vi">Xem</value>
+    </property>
+    
     
 </resource>

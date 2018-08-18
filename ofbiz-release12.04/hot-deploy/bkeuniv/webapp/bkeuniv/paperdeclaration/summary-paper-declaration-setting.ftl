@@ -37,7 +37,7 @@
 <input id="staffId" type="hidden" value="${login.userLoginId}"/>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
-Chon khoa/vien
+${uiLabelMap.SelectFaculty}
 <#assign LF = listFaculties.faculties?size>
 <select id="faculty" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	
@@ -53,7 +53,7 @@ Chon khoa/vien
 </div>
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
-Chon nam 
+${uiLabelMap.SelectYear}
 <select id="academicYear" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list listAcademicYears.academicYears as y>
@@ -65,7 +65,7 @@ Chon nam
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
-Chon loai hinh bai bao
+${uiLabelMap.SelectPaperCategory}
 <select id="paperCategory" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list listPaperCategory.result as pc>
@@ -77,7 +77,7 @@ Chon loai hinh bai bao
 
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
-Chon trang thai
+${uiLabelMap.SelectStatus}
 <select id="paperDeclarationStatus" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	<option value="all" selected>Tat ca</option>
 		 	<#list listStatus.statuses as s>
@@ -86,7 +86,7 @@ Chon trang thai
 </select>
 </div>
 		
-<@buttonStore text="Hien thi" action="listPapers"/>
+<@buttonStore text="${uiLabelMap.View}" action="listPapers"/>
 </div>
 
 <script>

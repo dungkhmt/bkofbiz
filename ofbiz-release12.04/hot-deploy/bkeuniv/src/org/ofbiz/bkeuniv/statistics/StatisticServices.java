@@ -81,7 +81,14 @@ public class StatisticServices {
 				C_ISI.add(countISI[i]);
 				Debug.log(module + "::getPapersStatistic, year " + years_list[i] + " count " + count[i]);
 			}
-			
+			idx = C.size()-1;
+			while(idx > 0){
+				if(C.get(idx) > 0) break;
+				Y.remove(idx);
+				C.remove(idx);
+				C_ISI.remove(idx);
+				idx = C.size()-1;
+			}
 			retSucc.put("years", Y);
 			retSucc.put("countPapers", C);
 			retSucc.put("countPapersISI", C_ISI);
