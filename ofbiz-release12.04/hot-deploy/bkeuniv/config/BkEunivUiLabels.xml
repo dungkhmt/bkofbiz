@@ -773,5 +773,9 @@
         <value xml:lang="vi">Phân loại</value>
     </property>
     
+    <property key="BkEunivNotNull">
+        <value xml:lang="en">Mus be not NULL</value>
+        <value xml:lang="vi">Nội dung không được bỏ trống</value>
+    </property>
     
 </resource>

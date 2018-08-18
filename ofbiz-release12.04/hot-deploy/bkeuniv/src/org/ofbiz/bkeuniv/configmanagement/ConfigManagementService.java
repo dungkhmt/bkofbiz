@@ -204,7 +204,8 @@ public class ConfigManagementService {
 				
 				String email1 = staff1.getString("staffId");
 				String email2 = staff2.getString("staffEmail");
-				
+				//email1 = email1.trim();
+								
 				if(email2 == null || email2.equals("")) {
 					staff.put("staffName", staff2.get("staffName"));
 					staff.put("departmentName", staff2.get("departmentName"));
@@ -222,7 +223,8 @@ public class ConfigManagementService {
 					iST++;
 				} else {
 					//email2 = email2.replaceAll("\\s","");
-					
+					email2 = email2.trim();
+
 					
 					if(email1.compareTo(email2) < 0) {
 						staff.put("staffId", staff1.get("staffId"));

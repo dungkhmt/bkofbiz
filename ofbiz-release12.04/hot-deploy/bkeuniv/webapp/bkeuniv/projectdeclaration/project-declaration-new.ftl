@@ -110,7 +110,9 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
-			"value": "researchProjectProposalName"
+			"value": "researchProjectProposalName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,

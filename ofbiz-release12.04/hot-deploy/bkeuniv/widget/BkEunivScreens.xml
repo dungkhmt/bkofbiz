@@ -372,6 +372,7 @@
 				<set field="headerItem" value="main" /><!-- this highlights the selected 
 					menu-item with name "main" -->
 				<service service-name="getPapersStatistic" result-map="papers"></service>
+				 <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/Chart.bundle.js" global="true" />
 				
 			</actions>
 			<widgets>
