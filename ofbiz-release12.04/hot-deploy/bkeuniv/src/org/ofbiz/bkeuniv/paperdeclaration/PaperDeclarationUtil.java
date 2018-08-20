@@ -2496,9 +2496,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				if (g.getString("correspondingAuthor") != null && g.getString("correspondingAuthor").equals("Y")) {
 					if (g.getLong("sequence") != null && g.getLong("sequence") == 1) {
 						firstAuthorIsCorresponding = "T";
-					}else{
-						firstAuthorIsNotCorresponding = "T";
 					}
+					//else{
+					//	firstAuthorIsNotCorresponding = "T";
+					//}
 					if(g.getString("staffName") != null)correspondingAuthor += g.getString("staffName") + ", ";
 				} else {
 					if(g.getString("staffName") != null)nonCorrespondingAuthor += g.getString("staffName") + ", ";
@@ -2509,14 +2510,20 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				if (g.getString("correspondingAuthor") != null && g.getString("correspondingAuthor").equals("Y")) {
 					if (g.getLong("sequence") != null && g.getLong("sequence") == 1) {
 						firstAuthorIsCorresponding = "T";
-					}else{
-						firstAuthorIsNotCorresponding = "T";
 					}
+					//else{
+					//	firstAuthorIsNotCorresponding = "T";
+					//}
 					if(g.getString("staffName") != null) correspondingAuthor += g.getString("staffName") + ", ";
 				} else {
 					if(g.getString("staffName") != null) nonCorrespondingAuthor += g.getString("staffName") + ", ";
 				}
 			}
+			if(firstAuthorIsCorresponding.equals("T"))
+				firstAuthorIsNotCorresponding = "F";
+			else
+				firstAuthorIsNotCorresponding = "T";
+			
 			retSucc.put("firstAuthorIsCorresponding", firstAuthorIsCorresponding);
 			retSucc.put("firstAuthorIsNotCorresponding", firstAuthorIsNotCorresponding);
 			retSucc.put("correspondingAuthor", correspondingAuthor);
