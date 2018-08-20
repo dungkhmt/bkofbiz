@@ -115,7 +115,7 @@
 
     <property key="BkEunivPaperExternalMembersHUST">
         <value xml:lang="en">External member of papers</value>
-        <value xml:lang="vi">Thành viên bài báo là cán bộ ngoài trường</value>
+        <value xml:lang="vi">Thành viên khác của bài báo</value>
     </property>
 
     <property key="BkEunivSelectFaculty">

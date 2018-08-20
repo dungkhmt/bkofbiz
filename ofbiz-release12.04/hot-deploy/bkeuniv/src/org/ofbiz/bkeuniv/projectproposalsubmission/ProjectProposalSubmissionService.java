@@ -2076,7 +2076,10 @@ public class ProjectProposalSubmissionService {
 					"ResearchProjectProposalView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-
+			
+			Debug.log(module + "::getProjectProposal, researchProjectProposalId = "
+					+ researchProjectProposalId + ", prj = " + prj.size());
+			
 			if (prj != null && prj.size() > 0) {
 				GenericValue pp = prj.get(0);
 				retSucc.put("projectproposal", pp);
@@ -2099,6 +2102,9 @@ public class ProjectProposalSubmissionService {
 				retSucc.put("projectCallStatusId", projectCallStatusId);
 				retSucc.put("projectCallStatusName",
 						projectCallStatusName);
+				Debug.log(module + "::getProjectProposal, researchProjectProposalId = "
+						+ researchProjectProposalId + ", projectCallStatusId = " + projectCallStatusId
+						+ ", projectCallStatusName = " + projectCallStatusName);
 				
 				// get evaluation
 				/*

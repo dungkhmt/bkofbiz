@@ -823,7 +823,9 @@
 	<#assign columnsChange=[
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"value": "paperName"
+			"value": "paperName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
@@ -836,7 +838,9 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
-			"value": "authors"
+			"value": "authors",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,
@@ -858,7 +862,9 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
-			"value": "journalConferenceName"
+			"value": "journalConferenceName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
@@ -911,11 +917,15 @@
 	<#assign columnsNew=[
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"value": "paperName"
+			"value": "paperName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
-			"value": "authors"
+			"value": "authors",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
@@ -946,7 +956,9 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
-			"value": "journalConferenceName"
+			"value": "journalConferenceName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
