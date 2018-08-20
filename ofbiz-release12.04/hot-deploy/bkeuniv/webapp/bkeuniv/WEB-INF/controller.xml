@@ -951,7 +951,11 @@
 
     <view-map name="view-applied-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#appliedResearchProject"/>
     <view-map name="view-research-summary-excel" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperViewResearchSummaryExcel"/>
+   	<!-- 
    	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclaration"/>
+	 -->
+	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclarationNew"/>
+	
 	<view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
 	<view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
 	<view-map name="view-staff-research-speciality" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchSpeciality"/>
