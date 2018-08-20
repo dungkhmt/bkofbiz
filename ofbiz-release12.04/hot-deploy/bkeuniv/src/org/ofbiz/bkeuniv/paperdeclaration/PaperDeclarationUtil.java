@@ -3633,6 +3633,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellStyle(cellStyleLeft);
 			
 			i_col++;
+			mark="";
 			c = r.createCell(i_col);
 			if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
 				mark = "X";
@@ -3695,6 +3696,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						c.setCellValue(mark);
 						
 						i_col++;
+						mark="";
 						c = r.createCell(i_col);
 						if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
 							mark = "X";
@@ -3858,6 +3860,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellStyle(cellStyleLeft);
 			
 			i_col++;
+			mark="";
 			c = r.createCell(i_col);
 			if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
 				mark = "X";
@@ -3920,6 +3923,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						c.setCellValue(mark);
 						
 						i_col++;
+						mark="";
 						c = r.createCell(i_col);
 						if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
 							mark = "X";

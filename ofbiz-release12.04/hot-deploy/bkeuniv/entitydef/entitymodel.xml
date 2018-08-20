@@ -370,9 +370,13 @@
 	
 	<entity entity-name="ResearchProduct" package-name="org.ofbiz.bkeuniv">
 		<field name="researchProductId" type="id-ne"></field>
+		<field name="researchProductRegisteredId" type="id-ne"></field>
+		<!-- 
 		<field name="researchProductTypeId" type="id-vlong"></field>
+		 -->
 		<field name="researchProductName" type="very-long"></field>
 		<field name="sourcePathUpload" type="very-long"></field>
+		
 		<field name="researchProjectProposalId" type="id-ne"></field>
 		<field name="approvedByStaffId" type="id-vlong"></field>
 		
@@ -381,9 +385,11 @@
 		<relation rel-entity-name="ResearchProductType" type="one">
 			<key-map field-name="researchProductTypeId"/>
 		</relation>
-		<relation rel-entity-name="Party" type="one">
-			<key-map field-name="researchProductId" rel-field-name="partyId"/>
+		<!-- 
+		<relation rel-entity-name="ResearchProposalProduct" type="one">
+			<key-map field-name="researchProductRegisteredId" rel-field-name="researchProductId"/>
 		</relation>
+		 -->
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
 			<key-map field-name="researchProjectProposalId"/>
 		</relation>
