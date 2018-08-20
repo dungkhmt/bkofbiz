@@ -51,3 +51,31 @@ input.form-control:disabled {
     cursor: inherit;
     box-shadow: none;
 }
+
+/* When the pattern is matched */
+input[type="text"]:valid {
+    color: green;
+}
+
+input[type="text"]:valid ~ .input-validation::before {
+    content: "\2713";
+    color: green;
+}
+
+input[type="text"]:valid ~ .input-validation {
+    padding: 5px 0px;
+}
+
+input[type="text"]:invalid ~ .input-validation {
+    padding: 5px 0px;
+}
+
+/* Unmatched */
+input[type="text"]:invalid {
+    color: red;
+}
+
+input[type="text"]:invalid ~ .input-validation::before {
+    content: "\2717";
+    color: red;
+}

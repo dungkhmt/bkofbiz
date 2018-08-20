@@ -959,7 +959,9 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
 			"value": "impactFactor",
-			"pattern": "([0-9]{0,3}).([0-9]{0,9})",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string,
+			"pattern": "([0-9]*[.])?[0-9]+",
 			"title": "So thuc"
 		},
 		
