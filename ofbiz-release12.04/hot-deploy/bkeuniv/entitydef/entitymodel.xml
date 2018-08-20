@@ -950,6 +950,13 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="PaperCategoryKNC" package-name="org.ofbiz.bkeuniv">
+		<field name="paperCategoryKNCId" type="id-ne"></field>
+		<field name="paperCategoryKNCName" type="very-long"></field>
+		<field name="paperCategoryKNCCode" type="id"></field>
+		<prim-key field="paperCategoryKNCId"/>
+	</entity>
+
 	<entity entity-name="PaperDeclarationStatus" package-name="org.ofbiz.bkeuniv">
 		<field name="paperDeclarationStatusId" type="id-ne"></field>
 		<field name="paperDeclarationStatusName" type="very-long"></field>
@@ -960,6 +967,7 @@
 		<field name="paperId" type="id-vlong"></field>
 		<field name="paperCode" type="id-vlong"></field>
 		<field name="paperCategoryId" type="id"></field>
+		<field name="paperCategoryKNCId" type="id"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="paperName" type="very-long"></field>
 		<field name="journalConferenceName" type="very-long"></field>
@@ -989,6 +997,10 @@
 		<relation rel-entity-name="PaperCategory" type="one">
 			<key-map field-name="paperCategoryId"/>
 		</relation>
+		<relation rel-entity-name="PaperCategoryKNC" type="one">
+			<key-map field-name="paperCategoryKNCId"/>
+		</relation>
+		
 		<relation type="one" fk-name="APPROVER_STAFF" rel-entity-name="Staff">
             <key-map field-name="approverStaffId" rel-field-name="staffId"/>
         </relation>
