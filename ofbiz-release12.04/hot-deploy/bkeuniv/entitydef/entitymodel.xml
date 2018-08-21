@@ -956,7 +956,22 @@
 		<field name="paperCategoryKNCCode" type="id"></field>
 		<prim-key field="paperCategoryKNCId"/>
 	</entity>
-
+	
+	<entity entity-name="PaperCategoryKNCRateYear" package-name="org.ofbiz.bkeuniv">
+		<field name="paperCategoryKNCRateYearId" type="id-ne"></field>
+		<field name="paperCategoryKNCId" type="id-ne"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="rate" type="floating-point"></field>
+		<prim-key field="paperCategoryKNCRateYearId"/>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="PaperCategoryKNC" type="one">
+			<key-map field-name="paperCategoryKNCId"/>
+		</relation>
+		
+	</entity>
+	
 	<entity entity-name="PaperDeclarationStatus" package-name="org.ofbiz.bkeuniv">
 		<field name="paperDeclarationStatusId" type="id-ne"></field>
 		<field name="paperDeclarationStatusName" type="very-long"></field>

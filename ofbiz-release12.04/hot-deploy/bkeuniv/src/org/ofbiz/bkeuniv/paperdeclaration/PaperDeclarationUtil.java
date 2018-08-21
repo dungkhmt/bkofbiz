@@ -172,6 +172,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 	}
 
+	
 	public static List<GenericValue> getDepartments(Delegator delegator,
 			String facultyId) {
 		try {
@@ -182,6 +183,18 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			return departments;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	public static GenericValue getDepartment(Delegator delegator,
+			String departmentId) {
+		try {
+			
+			GenericValue d = delegator.findOne("Department", 
+					UtilMisc.toMap("departmentId", departmentId),false);
+			return d;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
@@ -3031,7 +3044,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		}
 		return i_row;
 	}
-
+	
+	
+	
 	public static void createSheetListPapersKV04(HSSFWorkbook wb,
 			List<GenericValue> papers) {
 		Sheet sh = wb.createSheet("danh sach bai bao");
@@ -3201,6 +3216,277 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch.setCellValue(file);
 			ch.setCellStyle(styleNormal);
 
+		}
+
+	}
+
+	public static GenericValue getStaffPaperDeclaration(Delegator delegator, String paperId, String staffId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
+			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,PaperDeclarationUtil.STATUS_ENABLED));
+			List<GenericValue> L = delegator.findList("StaffPaperDeclaration", 
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			if(L != null && L.size() > 0)
+				return L.get(0);
+			else
+				return null;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	public static HashMap<String, Double> getRateKNCPaper(Delegator delegator, String academicYearId){
+		try{
+			HashMap<String, Double> mCategory2Rate = new HashMap<String, Double>();
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
+			List<GenericValue> L = delegator.findList("PaperCategoryKNCRateYear", 
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			for(GenericValue g: L){
+				String cat = g.getString("paperCategoryKNCId");
+				double rate = g.getDouble("rate");
+				mCategory2Rate.put(cat, rate);
+			}
+			return mCategory2Rate;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+		}
+		return null;
+	}
+	public static HashMap<String, String> getMapPaperCategoryKNCId2Name(Delegator delegator){
+		try{
+			HashMap<String, String> m = new HashMap<String, String>();
+			//List<EntityCondition> conds = FastList.newInstance();
+			//conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
+			List<GenericValue> L = delegator.findList("PaperCategoryKNC", 
+					null, null,null,null,false);
+			for(GenericValue g: L){
+				String cat = g.getString("paperCategoryKNCId");
+				String name = g.getString("paperCategoryKNCName");
+				m.put(cat, name);
+			}
+			return m;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+		}
+		return null;
+	}
+	public static String name(){
+		return "paperDeclarationUtil";
+	}
+	public static void createSheetKNC(HSSFWorkbook wb,
+			String facultyId, String academicYearId, Delegator delegator) {
+		Sheet sh = wb.createSheet("KNC");
+
+		CellStyle styleTitle = wb.createCellStyle();
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+
+		CellStyle styleNormal = wb.createCellStyle();
+		Font fontNormal = wb.createFont();
+		fontNormal.setFontHeightInPoints((short) 12);
+		fontNormal.setFontName("Times New Roman");
+		// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontNormal.setColor(HSSFColor.BLACK.index);
+		styleNormal.setFont(fontNormal);
+		styleNormal.setWrapText(true);
+		styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+
+		sh.setColumnWidth(0, 1000);// blank
+		sh.setColumnWidth(1, 1000);// STT
+		sh.setColumnWidth(2, 6000);// Ho ten
+		sh.setColumnWidth(3, 8000);// Bai bao
+		sh.setColumnWidth(4, 8000);// Loai hinh Bai bao
+		sh.setColumnWidth(5, 5000);// rate
+		sh.setColumnWidth(6, 5000);// KNC
+
+		int i_row = 0;
+
+		i_row = 10;
+		Row rh = sh.createRow(i_row);
+
+		int i_col = 0;
+
+		i_col++;
+		Cell ch = rh.createCell(i_col);
+		ch.setCellValue("STT");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Họ tên");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Tên bài báo");
+		ch.setCellStyle(styleTitle);
+
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Loại hình");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Điểm năng lực");
+		ch.setCellStyle(styleTitle);
+		
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("KNC");
+		ch.setCellStyle(styleTitle);
+		
+		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
+		
+		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator, academicYearId);
+		
+		HashMap<String, String> mKNCIdName = getMapPaperCategoryKNCId2Name(delegator);
+		
+		int count = 0;
+		for (GenericValue st : staffs) {
+			String staffId = st.getString("staffId");
+			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
+			
+			i_row++;
+			count++;
+			rh = sh.createRow(i_row);
+			i_col = 0;
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(count);
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(st.getString("staffName"));
+			ch.setCellStyle(styleNormal);
+			
+			for(int k = 1; k <= 4; k++){
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+			}
+			
+			
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 6));
+			
+			double total_knc = 0;
+			for(GenericValue p: papers){
+				String paperId = p.getString("paperId");
+				String authors = p.getString("authors");
+				String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+				
+				GenericValue sp = getStaffPaperDeclaration(delegator, paperId, staffId);
+				
+				String s_rate = "";
+				String s_knc = "";
+				double knc = 0;
+				if(paperCategoryKNCId != null && sp != null){
+					Double x = mCategory2Rate.get(paperCategoryKNCId);
+					
+					System.out.println(name() + "::createSheetKNC paper " + p.getString("paperName") + ", categoryKNC = " + 
+				paperCategoryKNCId + ", sequence = " + sp.getLong("sequence") + ", corresponding = " + 
+							sp.getString("correspondingAuthor") + ", rate = " + x + ", authors = " + authors);
+					
+					
+					if(x != null && sp.getLong("sequence") != null && 
+							sp.getString("correspondingAuthor")!=null && authors != null && !authors.equals("")){
+						s_rate = x + "";
+						long seq = sp.getLong("sequence");
+						
+						String[] s = authors.split(",");
+						int nbAuthors = s.length;
+						if(seq == 1 && sp.getString("correspondingAuthor").equals("Y")){
+							knc = 0.4*x + (0.6*x*1.0/nbAuthors);
+						}else if(seq == 1){
+							knc = 0.2*x + (0.6*x*1.0/nbAuthors);
+						}else if(sp.getString("correspondingAuthor").equals("Y")){
+							knc = 0.2*x + (0.6*x*1.0/nbAuthors);
+						}else{
+							knc = (0.6*x*1.0/nbAuthors);
+						}
+						s_knc = knc + "";
+						total_knc += knc;
+					}
+				}
+				
+				i_row++;
+				rh = sh.createRow(i_row);
+				i_col = 0;
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(p.getString("paperName"));
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				String catKNCName = mKNCIdName.get(p.getString("paperCategoryKNCId")); 
+				if(catKNCName != null)
+					ch.setCellValue(catKNCName);
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(s_rate);
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(s_knc);
+				ch.setCellStyle(styleNormal);
+				
+			}
+			i_row++;
+			rh = sh.createRow(i_row);
+			i_col = 0;
+			
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue("Tổng");
+			ch.setCellStyle(styleNormal);
+		
+			for(int k = 1; k <= 4; k++){
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+			}
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(total_knc + "");
+			ch.setCellStyle(styleNormal);
+			
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 5));
 		}
 
 	}
@@ -3445,6 +3731,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		createSheetListPapersKV04(wb, papers);
 
+		createSheetKNC(wb,facultyId,academicYearId,delegator);
+		
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;
 		 * Row r = sh.createRow(i_row);

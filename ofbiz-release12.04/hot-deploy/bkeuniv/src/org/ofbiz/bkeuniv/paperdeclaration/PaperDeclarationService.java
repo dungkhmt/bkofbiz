@@ -246,8 +246,13 @@ public class PaperDeclarationService {
 				.getParameter("departmentId-bm-01-02-03");
 		Debug.log(module + "::exportExcelBM010203, academic year = " + year
 				+ ", faculty = " + facultyId + ", department = " + departmentId);
-
-		String filename = "BM010203";
+		
+		GenericValue dept = PaperDeclarationUtil.getDepartment(delegator, departmentId);
+		String deptName = "";
+		if(dept != null && dept.getString("departmentName") != null)
+			deptName = dept.getString("departmentName");
+		
+		String filename = "BM010203-" + deptName;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
