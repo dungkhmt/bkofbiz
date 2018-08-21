@@ -131,6 +131,11 @@
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-detail-paper"/>
     </request-map>
+
+	<request-map uri="approve-paper">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-approve-paper"/>
+    </request-map>
     
     <request-map uri="detail-paper-update">
     	<security https="true" auth="true"/>
@@ -923,10 +928,32 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="update-paper-declaration-status">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updatePaperDeclarationStatus"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-paper-categoryKNC">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updatePaperCategoryKNC"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="edit-approve-paper">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-paper-declaration"/>
+	</request-map>
+	
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
+    <view-map name="view-list-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListPaperDeclaration"/>
     <view-map name="view-detail-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewDetailPaper"/>
+	<view-map name="view-approve-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageEditApprovePaper"/>
     <view-map name="view-detail-paper-update" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageViewDetailPaperUpdate"/>
     <view-map name="view-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageMembersOfAPaper"/>
     <view-map name="view-external-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageExternalMembersOfAPaper"/>

@@ -135,6 +135,31 @@
    		<attribute name="message" mode="OUT" type="String"></attribute>
    	</service>
    	
+   	<service name="getListPaperCategoryKNC" engine="java" invoke="getListPaperCategoryKNC" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+   		<attribute name="listPaperCategoryKNC" mode="OUT" type="List"></attribute>
+   	</service>
+   	
+   	<service name="getListPaperDeclaration" engine="java" invoke="getListPaperDeclaration" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+   		<attribute name="listPaperDeclaration" mode="OUT" type="List"></attribute>
+   	</service>
+   	
+   	<service name="updatePaperDeclarationStatus" engine="java" invoke="updatePaperDeclarationStatus" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+   		<attribute name="paperId" mode="IN" type="String"></attribute>
+   		<attribute name="statusId" mode="IN" type="String"></attribute>
+   		<attribute name="message" mode="OUT" type="String"></attribute>
+   	</service>
+   	
+   	<service name="updatePaperCategoryKNC" engine="java" invoke="updatePaperCategoryKNC" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+   		<attribute name="paperId" mode="IN" type="String"></attribute>
+   		<attribute name="paperCategoryKNCId" mode="IN" type="String"></attribute>
+   		<attribute name="message" mode="OUT" type="String"></attribute>
+   	</service>
+   	
+   	<service name="pullStaff" engine="java" invoke="pullStaff" location="org.ofbiz.bkeuniv.configmanagement.ConfigManagementService">
+   		<attribute name="statusCode" mode="OUT" type="String"></attribute>
+   		<attribute name="message" mode="OUT" type="String"></attribute>
+   	</service>
+   	
    	<service name="mergeSynchronizeStaff" engine="java" invoke="mergeSynchronizeStaff" location="org.ofbiz.bkeuniv.configmanagement.ConfigManagementService">
    		<attribute name="statusCode" mode="OUT" type="String"></attribute>
    		<attribute name="message" mode="OUT" type="String"></attribute>

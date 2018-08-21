@@ -669,6 +669,7 @@
 			if(numfilter != 0 && document.getElementById("dropdown-filter").style.display == "none") {
 				document.getElementById("dropdown-filter").style.display = "";
 			}
+			${JqRefresh};
 			
 		}
 
@@ -683,6 +684,7 @@
 			if(numfilter == 0) {
 				document.getElementById("dropdown-filter").style.display = "none";
 			}
+			${JqRefresh};
 		}
 	
 	</script>
@@ -727,7 +729,7 @@
 					</#list>
 
 					<#if conditions?size gt 0>
-						<@Dropdown id="filter" width="140px">
+						<@Dropdown id="filter" width="140px" style="margin: auto; height: 36px; line-height: 36px;">
 							<@Ul id="filter-content">
 								<#list conditions as condition>
 									<#local addFilter = 'addFilter("' + condition.id + '-block", "' + condition.id + '")' />
@@ -788,9 +790,19 @@
 						<#local removeFilter = 'removeFilter("' + condition.id + '-block", "' + condition.id + '")' />
 						<@IconButton onClick=removeFilter color="rgb(0, 188, 212)" title=condition.title id="close-adsd" size="42px"  style="z-index: 100" styleParent="position: relative; top: 10px; margin-left: 10px; margin-right: -5px; height: 42px" icon='M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' >
 						</@IconButton>
-						<@FormInput id=idCondition field=condition.label width="256px" style="top: 1px">
-							<input id="${idCondition}" placeholder="${condition.placeholder}" />
-						</@FormInput>
+						<#if condition.type=="select-render-html">
+							<@FormInput id=idCondition field=condition.label width="256px">
+								<select id="${idCondition}" <#if condition.onChange??>onChange="${condition.onChange}"</#if>>
+									<#list condition.data as d>
+										<option value="${d.value}">${d.text}</option>
+									</#list>
+								</select>
+							</@FormInput>
+						<#else>
+							<@FormInput id=idCondition field=condition.label width="256px" style="top: 1px">
+								<input id="${idCondition}" placeholder="${condition.placeholder}" />
+							</@FormInput>
+						</#if>
 						</div>
 					</#list>
 				</#if>

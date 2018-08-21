@@ -6,10 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +44,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.ofbiz.utils.BKEunivUtils;
+
 
 
 
@@ -2074,10 +2077,101 @@ public class PaperDeclarationService {
 		
 	}
 
-	public static void main(String[] args) {
-		String s = "aaa.pdf";
-		String[] ss = s.split("\\.");
-		System.out.println("s.lengt = " + ss.length + ", ss[0] = " + ss[0]
-				+ ", ss[1] = " + ss[1]);
+	public static Map<String, Object> getListPaperCategoryKNC(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			
+			List<GenericValue> listPaperCategoryKNC = delegator.findList("PaperCategoryKNC",
+					null, null, null, null,
+					false);
+			
+			retSucc.put("listPaperCategoryKNC", listPaperCategoryKNC);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> getListPaperDeclaration(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			
+			List<GenericValue> listPaperDeclaration = delegator.findList("PaperDeclarationStatus",
+					null, null, null, null,
+					false);
+			
+			retSucc.put("listPaperDeclaration", listPaperDeclaration);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> updatePaperDeclarationStatus(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatch = ctx.getDispatcher();
+		
+		String paperId = (String) context.get("paperId");
+		String statusId = (String) context.get("statusId");
+		
+		try{
+			GenericValue gv = delegator.findOne("PaperDeclaration", false, UtilMisc.toMap("paperId",paperId));
+			if(gv != null){
+				gv.put("approveStatusId", statusId);
+				
+				delegator.store(gv);
+				
+        		retSucc.put("message", "Thay đổi trạng thái thành công");
+        	} else {
+        		retSucc.put("message", "Không tìm thấy bài báo");
+        	}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> updatePaperCategoryKNC(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatch = ctx.getDispatcher();
+		
+		String paperId = (String) context.get("paperId");
+		String paperCategoryKNCId = (String) context.get("paperCategoryKNCId");
+		
+		try{
+			GenericValue gv = delegator.findOne("PaperDeclaration", false, UtilMisc.toMap("paperId",paperId));
+			if(gv != null){
+				gv.put("paperCategoryKNCId", paperCategoryKNCId);
+				
+				delegator.store(gv);
+				
+        		retSucc.put("message", "Thay đổi thành công");
+        	} else {
+        		retSucc.put("message", "Không tìm thấy bài báo");
+        	}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        
+		}
+		return retSucc;
 	}
 }

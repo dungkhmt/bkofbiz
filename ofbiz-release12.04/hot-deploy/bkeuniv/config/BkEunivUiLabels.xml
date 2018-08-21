@@ -798,5 +798,15 @@
         <value xml:lang="vi">Xem</value>
     </property>
     
+    <property key="BkEunivPaperDeclarationStatus">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng thái</value>
+    </property>
+    
+    <property key="BkEunivPaperDeclarationCategoryKNC">
+        <value xml:lang="en">Category KNC</value>
+        <value xml:lang="vi">Phân loại KNC</value>
+    </property>
+    
     
 </resource>

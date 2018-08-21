@@ -110,6 +110,43 @@
 		</section>
 	</screen>
 
+	<screen name="pageListPaperDeclaration">
+		<section>
+			<actions>
+				<service service-name="getFaculties" result-map="listFaculties">
+					<field-map field-name="universityId" value="HUST"/>
+				</service>
+				<service service-name="getListAcademicYears" result-map="listAcademicYears">
+				</service>
+				<service service-name="getPaperCategory" result-map="listPaperCategory">
+				</service>
+				<service service-name="getPaperDeclarationStatus" result-map="listStatus">
+				</service>
+					
+				<service service-name="getUserLogin" result-map="login"></service>
+				
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/list-paper-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="pageEnableSecurityGroupUser">
 		<section>
 			<actions>
@@ -554,6 +591,45 @@
 					</decorator-section>
 				</decorator-screen>
  -->
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageEditApprovePaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getMembersPaperDeclaration" result-map="members">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				<service service-name="getListPaperDeclaration" result-map="paperDeclaration"></service>
+				<set field="paper" from-field="resultPaper" global="true"/>
+
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+
+			</actions>
+
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/edit-approve-paper.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
 			</widgets>
 		</section>
 	</screen>
