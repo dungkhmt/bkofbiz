@@ -12,9 +12,41 @@ function setCustomValidity(id, text){
         if (!e.target.validity.valid) {
             e.target.setCustomValidity(text);
         }
-    };
+	};
+	
+	element.oninput = function(e) {
+		e.target.setCustomValidity("");
+		if (!e.target.validity.valid) {
+            e.target.setCustomValidity(text);
+        }
+	};
+}
+
+function setCustomValidityRequireAndPattern(id, textRequire, textPattern){
+	var element = $(id)[0];
+	if(!element) {
+		return;
+	}
+	element.oninvalid = function(e) {
+		e.target.setCustomValidity("");
+        if (!e.target.validity.valid) {
+			if(e.target.value=="") {
+				e.target.setCustomValidity(textRequire);
+			} else {
+				e.target.setCustomValidity(textPattern);
+			}
+        }
+	};
+	
 	element.oninput = function(e) {
         e.target.setCustomValidity("");
+        if (!e.target.validity.valid) {
+			if(e.target.value=="") {
+				e.target.setCustomValidity(textRequire);
+			} else {
+				e.target.setCustomValidity(textPattern);
+			}
+        }
 	};
 }
 
@@ -95,7 +127,7 @@ modal.prototype._date = function(column){
 					'value="' + $.datepicker.formatDate('dd/mm/yy', (!value?(!defaultValue?defaultValue:new Date(defaultValue)):new Date(value))) + '"'+
 					'placeholder="dd/mm/yyyy" '+
 					(require?'required':"")+
-					'>' +
+					'/>'+
     			'<script type="text/javascript">'+
     				'$(function () {'+
 						'$("'+[this.id, _id].join(" ")+'").datepicker({format: "dd/mm/yyyy"});'+
@@ -109,16 +141,32 @@ modal.prototype._text = function(column){
 	var require = column.require||false;
 	var customValidity = column.customValidity||"";
 	var _id = "#"+id;
+
+	var setValidity = "";
+
+	if(require&&!!column.pattern) {
+		setValidity = 'setCustomValidityRequireAndPattern("'+[this.id, _id].join(" ") +'","'+ customValidity + '","' + column.title + '");'
+	} else {
+		if(!!column.pattern) {
+			setValidity = 'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ column.title + '");';
+		} else {
+			if(require) {
+				setValidity = 'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");';
+			}
+		}
+	}
+
 	return '<input type="text" class="form-control"' +
 					'id="' + id + '"' +
 					(!!edit?"":"disabled ") +
-					(!column.pattern?"":(' pattern="'+column.pattern+'" title="'+column.title + '" ')) +
+					(!column.pattern?"":(' pattern="'+column.pattern+'"')) +
 					'value="' + value + '" '+
 					(require?'required':"")+
 					'/>'+
+					(!column.pattern?"":'<div class="input-validation"></div>')+
 			'<script type="text/javascript">'+
 				'$(function () {'+
-					(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+					(!!setValidity?setValidity:"")+
 				'});'+
 			'</script>';
 }
@@ -128,14 +176,29 @@ modal.prototype._textarea = function(column){
 	var require = column.require||false;
 	var customValidity = column.customValidity||"";
 	var _id = "#"+id;
+	var setValidity = "";
+
+	if(require&&!!column.pattern) {
+		setValidity = 'setCustomValidityRequireAndPattern("'+[this.id, _id].join(" ") +'","'+ customValidity + '","' + column.title + '");'
+	} else {
+		if(!!column.pattern) {
+			setValidity = 'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ column.title + '");';
+		} else {
+			if(require) {
+				setValidity = 'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");';
+			}
+		}
+	}
 	return '<textarea class="form-control"' +
 					'id="' + id + '"' +
+					(!column.pattern?"":(' pattern="'+column.pattern+'" ')) +
 					(edit?"":"disabled ") +
 					(require?'required ':"")+
 					'>'+value+'</textarea>'+
+				(!column.pattern?"":'<div class="input-validation"></div>')+
 				'<script type="text/javascript">'+
 					'$(function () {'+
-						(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+					(!!setValidity?setValidity:"")+
 					'});'+
 				'</script>';
 }
