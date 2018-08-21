@@ -161,6 +161,8 @@
 
 <Function functionId="EXCEL_01CN_02CN" uiLabelId="excel_01_cn_02_cn" vnLabel="Kết xuất excel mẫu 01-CN và 02-CN" enLabel="generate excel 01-CN 02-CN" target="excel-01-cn-02-cn" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="10"/>
 
+<Function functionId="EDIT_APPROVE_PAPER" uiLabelId="edit_approve_paper" vnLabel="Cập nhật, Phê duyệt bài báo" enLabel="edit, approve paper" target="edit-approve-paper" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="11"/>
+
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
 <Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
 <Function functionId="STUDENT_SUPERVISION" uiLabelId="student_supervision" vnLabel="Hướng dẫn sau đại học" enLabel="graduate supervion" target="student-supervision" parentFunctionId="PROFILE_MANAGEMENT" index="12"/>
