@@ -6981,6 +6981,12 @@
 	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_VN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Việt)" paperCategoryKNCCode="JOURNAL_HDGS_VN"/>
 	
 	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2017-2018" rate="1.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2017-2018" rate="0.8"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2017-2018" rate="0.6"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2017-2018" rate="0.15"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2017-2018" rate="0.10"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2017-2018" rate="0.10"/>
 	
 	
 </entity-engine-xml>
