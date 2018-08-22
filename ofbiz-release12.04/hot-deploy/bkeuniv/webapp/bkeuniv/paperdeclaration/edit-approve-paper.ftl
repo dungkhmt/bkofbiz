@@ -266,7 +266,11 @@
 					<#list members.staffPaperDeclaration as m>
 						<tr>
 							
-							<td>${stt}</td>
+							<#if m.sequence?exists>
+								<td>${m.sequence}</td>
+							<#else>
+								<td></td>
+							</#if>
 							<#if m.staffName?exists>
 								<td>${m.staffName}</td>
 							<#else>
@@ -281,7 +285,11 @@
 					<#list members.externalMemberPaperDeclaration as m>
 						<tr>
 							
-							<td>${stt}</td>
+							<#if m.sequence?exists>
+								<td>${m.sequence}</td>
+							<#else>
+								<td></td>
+							</#if>
 							<#if m.staffName?exists>
 								<td>${m.staffName}</td>
 							<#else>
