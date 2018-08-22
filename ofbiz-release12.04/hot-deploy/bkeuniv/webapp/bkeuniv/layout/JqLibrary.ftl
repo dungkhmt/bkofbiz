@@ -450,7 +450,8 @@
 							dataTable: jqDataTable.table,
 							keys: <@pfArray array=keysId />,
 							fieldDataResult: '${fieldDataResult}',
-							hidden: "auto"
+							update: ${JqRefresh?substring(0, JqRefresh?length-2)},
+							hidden: "auto",
 						}
 					}).render());
 				}).then(function(modal) {
@@ -473,9 +474,10 @@
 							name: '${uiLabelMap.BkEunivAddRow}',
 							url: '${urlAdd}',
 							dataTable: jqDataTable.table,
+							update: ${JqRefresh?substring(0, JqRefresh?length-2)},
+							hidden: "auto",
 							keys: <@pfArray array=keysId />,
 							fieldDataResult: '${fieldDataResult}',
-							hidden: "show"
 						}
 					}).render());
 				}).then(function(modal) {
@@ -539,6 +541,8 @@
 		}
 		
 		function JqRefresh() {
+			var page = jqDataTable.table.page();
+
 			loader.open();
 			$.ajax(Object.assign(<@pfObject object=optionData />, {
 			    url: "${urlData}",
@@ -559,6 +563,7 @@
 				    	return r;
 			    	});
 			    	jqDataTable.table.rows.add(jqDataTable.data).draw();
+					jqDataTable.table.page(page);
 			    }
 			}));
 		}
