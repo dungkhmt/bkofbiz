@@ -22,6 +22,10 @@ function setCustomValidity(id, text){
 	};
 }
 
+function scrollToBottom(id) {
+	$(id)[0].scrollTo(0, $(id)[0].scrollHeight)
+}
+
 function setCustomValidityRequireAndPattern(id, textRequire, textPattern){
 	var element = $(id)[0];
 	if(!element) {
@@ -75,7 +79,7 @@ modal.prototype.progress = function(e){
 
 modal.prototype._getDate = function (selector, format) {
 	var value = $([this.id,selector].join(" ")).datepicker( "getDate" );
-	console.log(value, typeof value)
+	
 	if(isNaN(value.getTime())){
 		console.log(value, typeof value)
 		return ;
@@ -436,7 +440,7 @@ modal.prototype._select_server_side = function(column) {
 					'});'+
 				'</script>';
 	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
-	console.log(a)
+	
 	return a;
 }
 
@@ -613,7 +617,19 @@ modal.prototype.render = function() {
 		        	'<h4 class="modal-title">'+this.option.title+'</h4>'+
 		      '</div>'+
 		      '<div class="modal-body">'+
-		      	'<form id="'+ [this.id.replace('#', ''), "form"].join("") +'" action="javascript:void(0);" class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'<button id="submit" style="display: none" type="submit">Click Me!</button></form>'+
+				  '<form id="'+ [this.id.replace('#', ''), "form"].join("") +'" action="javascript:void(0);" class="container-fluid">'+this.columns.reduce(function(acc, curr){return acc + curr.html}, "")+'<button id="submit" style="display: none" type="submit">Click Me!</button></form>'+
+				  '<div id="floating-action-button-576574" onClick=\'scrollToBottom("#jqModalAdd .modal-body")\' style="margin: auto; color: rgb(255, 255, 255); background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; border-radius: 50%; display: inline-block;position: fixed;left: 50%;margin-left: -20px;">'+
+					'<button id="" tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; vertical-align: bottom; background-color: rgb(0, 188, 212); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; height: 40px; width: 40px; overflow: hidden; border-radius: 50%; text-align: center;">'+
+						'<div>'+
+							'<span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>'+
+							'<div style="transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; top: 0px;">'+
+								'<svg viewBox="0 0 24 24" style="display: inline-block; color: rgb(255, 255, 255); fill: rgb(255, 255, 255); height: 40px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; line-height: 40px;">'+
+									'<path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"></path>'+
+								'</svg>'+
+							'</div>'+
+						'</div>'+
+					'</button>'+
+				'</div>'+
 		      '</div>'+
 		      '<div class="modal-footer">'+
 		      	'<button type="button" class="btn btn-success" id="modal-action">'+(this._action.name||"Action")+'</button>'+
@@ -621,19 +637,37 @@ modal.prototype.render = function() {
 		      '</div>'+
 		    '</div>'+
 		  '</div>'+
-		'</div>';
+		'</div>'+
+		'<script>'+
+		'$("'+[this.id,"#modal-template"].join(" ")+'").ready(function(){'+
+			'setTimeout(function(){'+
+				'var that = this;'+
+				'var maxHeight = parseInt(window.innerHeight*0.6);'+
+				'if($(that).height() >= maxHeight) {'+
+					'$(".modal-body").css("max-height", maxHeight);'+
+				'}else{'+
+					'$(".modal-body").css("max-height", "");'+
+				'}'+
+				'var element = $("'+[this.id,".modal-body"].join(" ")+'")[0];'+
+				'if(element.scrollHeight - element.clientHeight - element.scrollTop > 30) {'+
+					'$("'+[this.id,"#floating-action-button-576574"].join(" ")+'").css("display", "block");'+
+				'} else {'+
+					'$("'+[this.id,"#floating-action-button-576574"].join(" ")+'").css("display", "none");'+
+				'}'+
+				'$("'+[this.id,"#floating-action-button-576574"].join(" ")+'").css("top", $("'+[this.id, ".modal-header"].join(" ")+'").position().top+$("'+[this.id, ".modal-body"].join(" ")+'").height()+ 70);'+
+			'}, 200);'+
+			'});'+
+		'</script>';
 	$(this.id).children().remove()
 	$(this.id).append(html);
-	console.log([this.id,"#modal-template"].join(" "));
-	$([this.id,"#modal-template"].join(" ")).ready(function(){
-		var maxHeight = parseInt(window.innerHeight*0.6)
-		if($(this).height() >= maxHeight) {
-	        $('.modal-body').css('max-height', maxHeight);
-	    }else{
-	        $('.modal-body').css('max-height', '');
-	    }
-	});
-	
+	$([this.id,".modal-body"].join(" ")).scroll(function(e) {
+		var element = e.target;
+		if(element.scrollHeight - element.clientHeight - element.scrollTop > 30) {
+			$([this.id,"#floating-action-button-576574"].join(" ")).css("display", "block");
+		} else {
+			$([this.id,"#floating-action-button-576574"].join(" ")).css("display", "none");
+		}
+	})
 	var _ = this;
 	$( this.id +" #modal-action" ).click(function() {
 		$([_.id, "#submit"].join(" ")).click();
