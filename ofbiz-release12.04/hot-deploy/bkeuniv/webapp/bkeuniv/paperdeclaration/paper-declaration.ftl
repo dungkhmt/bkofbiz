@@ -889,14 +889,18 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
 			"value": "month",
 			"pattern": "[1-9]([0-9]{0,2})",
-			"title": "So nguyen duong"
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 			
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
 			"value": "year",
 			"pattern": "[1-9]([0-9]{0,4})",
-			"title": "So nguyen duong"
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
@@ -986,14 +990,18 @@
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
 			"value": "month",
 			"pattern": "[1-9]([0-9]{0,2})",
-			"title": "So nguyen duong"
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 			
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
 			"value": "year",
 			"pattern": "[1-9]([0-9]{0,4})",
-			"title": "So nguyen duong"
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
