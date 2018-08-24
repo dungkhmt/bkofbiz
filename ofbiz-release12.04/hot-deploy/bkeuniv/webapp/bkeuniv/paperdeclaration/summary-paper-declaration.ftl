@@ -10,9 +10,9 @@
 			menu: [
 				//{title: ${paperDeclarationUiLabelMap.BkEunivApprovePaper}, cmd: "approve"},
 				//{title: ${paperDeclarationUiLabelMap.BkEunivRejectPaper}, cmd: "reject"}
-				{title: "Phe duyet", cmd: "approve"},
-				{title: "Khong phe duyet", cmd: "reject"},
-				{title: 'Download minh chung', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
+				//{title: "Phe duyet", cmd: "approve"},
+				//{title: "Khong phe duyet", cmd: "reject"},
+				//{title: 'Download minh chung', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
 			],
 			select: function(event, ui) {
 				var el = ui.target.parent();

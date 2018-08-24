@@ -3316,8 +3316,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(2, 6000);// Ho ten
 		sh.setColumnWidth(3, 8000);// Bai bao
 		sh.setColumnWidth(4, 8000);// Loai hinh Bai bao
-		sh.setColumnWidth(5, 5000);// rate
-		sh.setColumnWidth(6, 5000);// KNC
+		sh.setColumnWidth(5, 8000);// danh sach tac gia
+		sh.setColumnWidth(6, 4000);// so tac gia
+		sh.setColumnWidth(7, 5000);// corresponding
+		sh.setColumnWidth(8, 5000);// rate
+		sh.setColumnWidth(9, 5000);// KNC
 
 		int i_row = 0;
 
@@ -3331,10 +3334,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("STT");
 		ch.setCellStyle(styleTitle);
 
-		i_col++;
-		ch = rh.createCell(i_col);
-		ch.setCellValue("Họ tên");
-		ch.setCellStyle(styleTitle);
+		
+		//i_col++;
+		//ch = rh.createCell(i_col);
+		//ch.setCellValue("Họ tên");
+		//ch.setCellStyle(styleTitle);
 
 		i_col++;
 		ch = rh.createCell(i_col);
@@ -3347,6 +3351,21 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("Loại hình");
 		ch.setCellStyle(styleTitle);
 
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("D/S Tác giả");
+		ch.setCellStyle(styleTitle);
+		
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Số tác giả");
+		ch.setCellStyle(styleTitle);
+		
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Corresponding");
+		ch.setCellStyle(styleTitle);
+		
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("Điểm năng lực");
@@ -3390,7 +3409,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			}
 			
 			
-			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 6));
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 9));
 			
 			double total_knc = 0;
 			for(GenericValue p: papers){
@@ -3403,6 +3422,14 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				String s_rate = "";
 				String s_knc = "";
 				double knc = 0;
+				int nbAuthors = 1;
+				String correspondingAuthor = "N";
+				
+				if(authors != null && !authors.equals("")){
+					String[] s = authors.split(",");
+					nbAuthors = s.length;
+				}
+				
 				if(paperCategoryKNCId != null && sp != null){
 					Double x = mCategory2Rate.get(paperCategoryKNCId);
 					
@@ -3411,13 +3438,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 							sp.getString("correspondingAuthor") + ", rate = " + x + ", authors = " + authors);
 					
 					
+					
 					if(x != null && sp.getLong("sequence") != null && 
 							sp.getString("correspondingAuthor")!=null && authors != null && !authors.equals("")){
 						s_rate = x + "";
 						long seq = sp.getLong("sequence");
 						
-						String[] s = authors.split(",");
-						int nbAuthors = s.length;
+						
 						if(seq == 1 && sp.getString("correspondingAuthor").equals("Y")){
 							knc = 0.4*x + (0.6*x*1.0/nbAuthors);
 						}else if(seq == 1){
@@ -3427,6 +3454,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						}else{
 							knc = (0.6*x*1.0/nbAuthors);
 						}
+						if(sp.getString("correspondingAuthor").equals("Y"))
+							correspondingAuthor = "Y";
 						s_knc = knc + "";
 						total_knc += knc;
 					}
@@ -3442,10 +3471,6 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				
 				i_col++;
 				ch = rh.createCell(i_col);
-				ch.setCellStyle(styleNormal);
-				
-				i_col++;
-				ch = rh.createCell(i_col);
 				ch.setCellValue(p.getString("paperName"));
 				ch.setCellStyle(styleNormal);
 				
@@ -3454,6 +3479,21 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				String catKNCName = mKNCIdName.get(p.getString("paperCategoryKNCId")); 
 				if(catKNCName != null)
 					ch.setCellValue(catKNCName);
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(p.getString("authors"));
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(nbAuthors + "");
+				ch.setCellStyle(styleNormal);
+				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(correspondingAuthor);
 				ch.setCellStyle(styleNormal);
 				
 				i_col++;
@@ -3476,7 +3516,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch.setCellValue("Tổng");
 			ch.setCellStyle(styleNormal);
 		
-			for(int k = 1; k <= 4; k++){
+			for(int k = 1; k <= 6; k++){
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellStyle(styleNormal);
@@ -3486,7 +3526,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch.setCellValue(total_knc + "");
 			ch.setCellStyle(styleNormal);
 			
-			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 5));
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
 		}
 
 	}
