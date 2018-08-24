@@ -173,9 +173,8 @@
 					</tbody>
 				</table>
 
-				<#if resultPaper.paper.staffId==userLogin.userLoginId>
-					<#include "component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl"/>
-				</#if>
+				
+				<#include "component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl"/>
 			</div>
 		</div>
 	</div>
