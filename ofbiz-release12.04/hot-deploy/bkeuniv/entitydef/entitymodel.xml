@@ -1157,7 +1157,7 @@
 		<alias name="researchProjectProposalCode" entity-alias="RP"></alias>
 		<alias name="paperCategoryKNCName" entity-alias="CKNC"></alias>
 		
-		<view-link rel-entity-alias="CKNC" entity-alias="PD">
+		<view-link rel-entity-alias="CKNC" entity-alias="PD"  rel-optional="true">
 			<key-map rel-field-name="paperCategoryKNCId" field-name="paperCategoryKNCId"/>
 		</view-link>
 		
