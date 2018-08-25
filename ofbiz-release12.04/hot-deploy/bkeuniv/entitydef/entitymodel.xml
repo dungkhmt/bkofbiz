@@ -1147,6 +1147,7 @@
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
 		<member-entity entity-alias="PDS" entity-name="PaperDeclarationStatus"></member-entity>
 		<member-entity entity-alias="RP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="CKNC" entity-name="PaperCategoryKNC"></member-entity>
 		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST"></alias>
@@ -1154,7 +1155,11 @@
 		<alias name="paperDeclarationStatusName" entity-alias="PDS"></alias>
 		<alias name="researchProjectProposalName" entity-alias="RP"></alias>
 		<alias name="researchProjectProposalCode" entity-alias="RP"></alias>
+		<alias name="paperCategoryKNCName" entity-alias="CKNC"></alias>
 		
+		<view-link rel-entity-alias="CKNC" entity-alias="PD">
+			<key-map rel-field-name="paperCategoryKNCId" field-name="paperCategoryKNCId"/>
+		</view-link>
 		
 		<view-link rel-entity-alias="ST" entity-alias="PD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>

@@ -6976,9 +6976,11 @@
 	<PaperCategoryKNC paperCategoryKNCId="WEB_SCIENCE_Q1" paperCategoryKNCName="Tạp chí, ấn phẩm trong danh mục Web of Science, nhóm Q1" paperCategoryKNCCode="WEB_SCIENCE_Q1"/>
 	<PaperCategoryKNC paperCategoryKNCId="WEB_SCIENCE_OTHER" paperCategoryKNCName="Tạp chí, ấn phẩm trong danh mục Web of Science, các nhóm khác" paperCategoryKNCCode="WEB_SCIENCE_OTHER"/>
 	<PaperCategoryKNC paperCategoryKNCId="SCOPUS" paperCategoryKNCName="Tạp chí, ấn phẩm thuộc danh mục SCOPUS" paperCategoryKNCCode="SCOPUS"/>
-	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HUST" paperCategoryKNCName="Tạp chí KH\&CN các trường kỹ thuật (của Trường ĐHBK Hà Nội)" paperCategoryKNCCode="JOURNAL_HUST"/>
+	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HUST" paperCategoryKNCName="Tạp chí KH và CN các trường kỹ thuật (của Trường ĐHBK Hà Nội)" paperCategoryKNCCode="JOURNAL_HUST"/>
 	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_EN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Anh)" paperCategoryKNCCode="JOURNAL_HDGS_EN"/>
 	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_VN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Việt)" paperCategoryKNCCode="JOURNAL_HDGS_VN"/>
+	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_OTHER" paperCategoryKNCName="Tạp chí Khác" paperCategoryKNCCode="JOURNAL_OTHER"/>
+	
 	
 	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2017-2018" rate="1.0"/>
@@ -6987,6 +6989,7 @@
 	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2017-2018" rate="0.15"/>
 	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2017-2018" rate="0.10"/>
 	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2017-2018" rate="0.10"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2017-2018" rate="0.0"/>
 	
 	
 </entity-engine-xml>
