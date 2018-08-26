@@ -3246,7 +3246,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityCondition.makeCondition(conds), null,null,null,false);
 			for(GenericValue g: L){
 				String cat = g.getString("paperCategoryKNCId");
-				double rate = g.getDouble("rate_nangluc");
+				double rate = g.getDouble("rateNangluc");
 				mCategory2Rate.put(cat, rate);
 			}
 			return mCategory2Rate;
@@ -3313,15 +3313,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		sh.setColumnWidth(0, 1000);// blank
 		sh.setColumnWidth(1, 1000);// STT
-		sh.setColumnWidth(2, 6000);// Ho ten
-		sh.setColumnWidth(3, 8000);// Bai bao
-		sh.setColumnWidth(4, 8000);// Loai hinh Bai bao
-		sh.setColumnWidth(5, 8000);// danh sach tac gia
-		sh.setColumnWidth(6, 4000);// so tac gia
-		sh.setColumnWidth(7, 5000);// corresponding
-		sh.setColumnWidth(8, 5000);// rate
-		sh.setColumnWidth(9, 5000);// KNC
-		sh.setColumnWidth(10, 10000);// GHi chu
+		sh.setColumnWidth(2, 6000);// Ho ten (ten bai bao)
+		sh.setColumnWidth(3, 8000);// Loai hinh
+		sh.setColumnWidth(4, 8000);// D/S tac gia
+		sh.setColumnWidth(5, 3000);// so tac gia
+		sh.setColumnWidth(6, 3000);// corresponding
+		sh.setColumnWidth(7, 3000);// rate_nangluc
+		sh.setColumnWidth(8, 4000);// KNC
+		sh.setColumnWidth(9, 5000);// Ghi chu
+		//sh.setColumnWidth(10, 10000);// GHi chu
 
 		int i_row = 0;
 
@@ -3408,7 +3408,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch.setCellValue(st.getString("staffName"));
 			ch.setCellStyle(styleNormal);
 			
-			for(int k = 1; k <= 4; k++){
+			for(int k = 3; k <= 9; k++){
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellStyle(styleNormal);
@@ -3518,6 +3518,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				ch.setCellValue(s_knc);
 				ch.setCellStyle(styleNormal);
 				
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(description);
+				ch.setCellStyle(styleNormal);
 			}
 			i_row++;
 			rh = sh.createRow(i_row);
@@ -3538,7 +3542,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch.setCellValue(total_knc + "");
 			ch.setCellStyle(styleNormal);
 			
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellStyle(styleNormal);
+			
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
 		}
 
 	}

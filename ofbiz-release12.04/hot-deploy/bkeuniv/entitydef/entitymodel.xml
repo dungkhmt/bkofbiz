@@ -963,8 +963,8 @@
 		<field name="paperCategoryKNCId" type="id-ne"></field>
 		<field name="academicYearId" type="id-ne"></field>
 		<field name="rate" type="floating-point"></field>
-		<field name="rate_khoiluong" type="floating-point"></field>
-		<field name="rate_nangluc" type="floating-point"></field>
+		<field name="rateKhoiluong" type="floating-point"></field>
+		<field name="rateNangluc" type="floating-point"></field>
 		<prim-key field="paperCategoryKNCRateYearId"/>
 		<relation rel-entity-name="AcademicYear" type="one">
 			<key-map field-name="academicYearId"/>
@@ -1138,7 +1138,7 @@
 		<view-link rel-entity-alias="PC" entity-alias="PD" rel-optional="true">
 			<key-map field-name="paperCategoryId" rel-field-name="paperCategoryId"/>
 		</view-link>
-		<view-link rel-entity-alias="CKNC" entity-alias="PD">
+		<view-link rel-entity-alias="CKNC" entity-alias="PD" rel-optional="true">
 			<key-map rel-field-name="paperCategoryKNCId" field-name="paperCategoryKNCId"/>
 		</view-link>
 		
