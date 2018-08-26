@@ -33,6 +33,11 @@
         <value xml:lang="en">Category</value>
         <value xml:lang="vi">Loại bài báo*</value>
     </property>
+    <property key="BkEunivPaperCategoryKNC">
+        <value xml:lang="en">Category KNC</value>
+        <value xml:lang="vi">Loại bài báo KNC*</value>
+    </property>
+
     <property key="BkEunivResearchProjectOfPaper">
         <value xml:lang="en">Research Project</value>
         <value xml:lang="vi">Thuộc đề tài</value>

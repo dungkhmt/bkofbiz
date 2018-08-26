@@ -3246,7 +3246,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityCondition.makeCondition(conds), null,null,null,false);
 			for(GenericValue g: L){
 				String cat = g.getString("paperCategoryKNCId");
-				double rate = g.getDouble("rate");
+				double rate = g.getDouble("rate_nangluc");
 				mCategory2Rate.put(cat, rate);
 			}
 			return mCategory2Rate;
@@ -3321,6 +3321,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(7, 5000);// corresponding
 		sh.setColumnWidth(8, 5000);// rate
 		sh.setColumnWidth(9, 5000);// KNC
+		sh.setColumnWidth(10, 10000);// GHi chu
 
 		int i_row = 0;
 
@@ -3376,6 +3377,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
 		
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Ghi chú");
+		ch.setCellStyle(styleTitle);
+		
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 		
 		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator, academicYearId);
@@ -3424,7 +3430,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				double knc = 0;
 				int nbAuthors = 1;
 				String correspondingAuthor = "N";
-				
+				String description = "";
+				if(sp.get("sequence") == null){
+					description += "Không có thông tin về số thứ tự của tác giả. ";
+				}
+				if(paperCategoryKNCId == null){
+					description += "Không có thông tin về phân loại KNC. ";
+				}
 				if(authors != null && !authors.equals("")){
 					String[] s = authors.split(",");
 					nbAuthors = s.length;

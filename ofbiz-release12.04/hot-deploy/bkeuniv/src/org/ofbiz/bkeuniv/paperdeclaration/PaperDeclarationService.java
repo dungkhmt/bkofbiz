@@ -1226,6 +1226,12 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
+		List<Object> paperCategoryKNCIds = (List<Object>) context
+				.get("paperCategoryKNCId[]");
+		String paperCategoryKNCId = "";
+		if (paperCategoryKNCIds != null && paperCategoryKNCIds.size() > 0)
+			paperCategoryKNCId = (String) (paperCategoryKNCIds.get(0));
+
 		List<Object> researchProjectProposalIds = (List<Object>) context.get("researchProjectProposalId[]");
 		String researchProjectProposalId = null;
 		if(researchProjectProposalIds != null && researchProjectProposalIds.size() > 0)
@@ -1279,6 +1285,8 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if (paperCategoryKNCId != null && !paperCategoryKNCId.equals(""))
+				p.put("paperCategoryKNCId", paperCategoryKNCId);
 			
 			if(researchProjectProposalId != null)
 				p.put("researchProjectProposalId", researchProjectProposalId);
@@ -1369,6 +1377,12 @@ public class PaperDeclarationService {
 		String paperCategoryId = "";
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
+		
+		List<Object> paperCategoryKNCIds = (List<Object>) context
+				.get("paperCategoryKNCId[]");
+		String paperCategoryKNCId = "";
+		if (paperCategoryKNCIds != null && paperCategoryKNCIds.size() > 0)
+			paperCategoryKNCId = (String) (paperCategoryKNCIds.get(0));
 
 		List<Object> researchProjectProposalIds = (List<Object>) context.get("researchProjectProposalId[]");
 		String researchProjectProposalId = null;
@@ -1434,6 +1448,8 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if (paperCategoryKNCId != null && !paperCategoryKNCId.equals(""))
+				p.put("paperCategoryKNCId", paperCategoryKNCId);
 			if(researchProjectProposalId != null)
 				p.put("researchProjectProposalId", researchProjectProposalId);
 			
@@ -2088,9 +2104,11 @@ public class PaperDeclarationService {
 		Delegator delegator = ctx.getDelegator();
 
 		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"ENABLED"));
 			
 			List<GenericValue> listPaperCategoryKNC = delegator.findList("PaperCategoryKNC",
-					null, null, null, null,
+					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			
 			retSucc.put("listPaperCategoryKNC", listPaperCategoryKNC);
