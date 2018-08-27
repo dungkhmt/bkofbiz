@@ -50,6 +50,7 @@ import org.ofbiz.utils.BKEunivUtils;
 
 
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -812,8 +813,11 @@ public class PaperDeclarationService {
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
-			// conds.add(EntityCondition.makeCondition("statusStaffPaper",
-			// EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+			EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			conds.add(EntityCondition.makeCondition("approveStatusId",
+					EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED));
 
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,

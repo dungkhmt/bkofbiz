@@ -55,7 +55,11 @@
     
     <property key="BkEunivPaperLink">
         <value xml:lang="en">Link</value>
-        <value xml:lang="vi">Đường Link bài báo*</value>
+        <value xml:lang="vi">Đường Link bài báo</value>
+    </property>
+    <property key="BkEunivApproveStatus">
+        <value xml:lang="en">Approve Status</value>
+        <value xml:lang="vi">Tình trạng phê duyệt</value>
     </property>
 
     <property key="BkEunivPaperIF">

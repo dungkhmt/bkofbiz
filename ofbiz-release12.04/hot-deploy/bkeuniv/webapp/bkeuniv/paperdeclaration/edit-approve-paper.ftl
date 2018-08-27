@@ -194,7 +194,16 @@
 							</#if>
 						</span>
 					</div>
-
+					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
+							${uiLabelMap.BkEunivApproveStatus}
+						</label>
+						<span style="width: 80%; display: block;" >
+							<#if resultPaper.paper.paperDeclarationStatusName?exists>
+								${resultPaper.paper.paperDeclarationStatusName}
+							</#if>
+						</span>
+					</div>
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 0px 16px 0px 16px;">
 						<label style="margin-top: 40px; padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 30%;">
 							${uiLabelMap.BkEunivPaperDeclarationCategoryKNC}
