@@ -48,6 +48,8 @@ import jimm.datavision.source.Column;
 public class PaperDeclarationUtil extends java.lang.Object {
 	public static final String STATUS_ENABLED = "ENABLED";
 	public static final String STATUS_DISABLED = "DISABLED";
+	public static final String STATUS_CANCELLED = "CANCELLED";
+	
 	public static final String module = PaperDeclarationUtil.class.getName();
 	public static final String[] sSTT = new String[] { "I", "II", "III", "IV",
 			"V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV",
@@ -99,6 +101,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 			conds.add(EntityCondition.makeCondition("statusStaffPaper",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			//conds.add(EntityCondition.makeCondition("approveStatusId",
+			//		EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED));
 
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
