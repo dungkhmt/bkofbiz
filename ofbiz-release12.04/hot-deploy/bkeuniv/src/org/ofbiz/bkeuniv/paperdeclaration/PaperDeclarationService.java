@@ -822,13 +822,21 @@ public class PaperDeclarationService {
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			for (GenericValue gv : papers) {
+			
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for(GenericValue p: papers){
+				if(p.get("approveStatusId") == null || !p.getString("approveStatusId").equals(PaperDeclarationUtil.STATUS_CANCELLED)){
+					ret_papers.add(p);
+				}
+			}
+			
+			for (GenericValue gv : ret_papers) {
 				Debug.log(module + "::getPapersOfStaff, paper "
 						+ gv.get("paperName"));
 			}
 			Debug.log(module + "::getPapersOfStaff, papers.sz = "
-					+ papers.size());
-			retSucc.put("papers", papers);
+					+ ret_papers.size());
+			retSucc.put("papers", ret_papers);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

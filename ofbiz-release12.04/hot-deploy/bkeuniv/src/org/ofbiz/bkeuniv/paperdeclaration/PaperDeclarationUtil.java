@@ -37,6 +37,7 @@ import org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionServ
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
@@ -101,19 +102,39 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 			conds.add(EntityCondition.makeCondition("statusStaffPaper",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			/*
+			EntityCondition c1 = EntityCondition.makeCondition("approveStatusId",
+					EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED);
+			EntityCondition c2 = EntityCondition.makeCondition("approveStatusId",
+					EntityOperator.EQUALS,null);
+			List<EntityCondition> L1 = FastList.newInstance();
+			L1.add(c1);
+			L1.add(c2);
+			conds.add(EntityCondition.makeCondition(L1,EntityJoinOperator.OR));
+			*/
+			
 			//conds.add(EntityCondition.makeCondition("approveStatusId",
 			//		EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED));
 
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
+			
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for(GenericValue p: papers){
+				System.out.println(module + "::getPapersOfStaffAcademicYear, " + p.get("approveStatusId"));
+				
+				if(p.get("approveStatusId") == null || !p.getString("approveStatusId").equals(PaperDeclarationUtil.STATUS_CANCELLED)){
+					ret_papers.add(p);
+				}
+			}
 			// for (GenericValue gv : papers) {
 			// Debug.log(module + "::getPapersOfStaff, paper "
 			// + gv.get("paperName"));
 			// }
 			// Debug.log(module + "::getPapersOfStaff, papers.sz = "
 			// + papers.size());
-			return papers;
+			return ret_papers;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -3521,6 +3542,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				ch = rh.createCell(i_col);
 				ch.setCellValue(s_knc);
 				ch.setCellStyle(styleNormal);
+				styleNormal.setDataFormat(
+					    wb.getCreationHelper().createDataFormat().getFormat("#.#"));
 				
 				i_col++;
 				ch = rh.createCell(i_col);
@@ -3553,6 +3576,173 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
 		}
+
+	}
+	public static double getKNCFromPapers(Delegator delegator, String staffId, String academicYearId,
+			HashMap<String, Double> mCategory2Rate){
+		List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
+		
+		
+		double total_knc = 0;
+		for(GenericValue p: papers){
+			String paperId = p.getString("paperId");
+			String authors = p.getString("authors");
+			String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+			
+			GenericValue sp = getStaffPaperDeclaration(delegator, paperId, staffId);
+			
+			String s_rate = "";
+			String s_knc = "";
+			double knc = 0;
+			int nbAuthors = 1;
+			String correspondingAuthor = "N";
+			String description = "";
+			if(sp.get("sequence") == null){
+				description += "Không có thông tin về số thứ tự của tác giả. ";
+			}
+			if(paperCategoryKNCId == null){
+				description += "Không có thông tin về phân loại KNC. ";
+			}
+			if(authors != null && !authors.equals("")){
+				String[] s = authors.split(",");
+				nbAuthors = s.length;
+			}
+			
+			if(paperCategoryKNCId != null && sp != null){
+				Double x = mCategory2Rate.get(paperCategoryKNCId);
+				
+				System.out.println(name() + "::createSheetKNC paper " + p.getString("paperName") + ", categoryKNC = " + 
+			paperCategoryKNCId + ", sequence = " + sp.getLong("sequence") + ", corresponding = " + 
+						sp.getString("correspondingAuthor") + ", rate = " + x + ", authors = " + authors);
+				
+				if(x != null && sp.getLong("sequence") != null && 
+						sp.getString("correspondingAuthor")!=null && authors != null && !authors.equals("")){
+					s_rate = x + "";
+					long seq = sp.getLong("sequence");
+					
+					
+					if(seq == 1 && sp.getString("correspondingAuthor").equals("Y")){
+						knc = 0.4*x + (0.6*x*1.0/nbAuthors);
+					}else if(seq == 1){
+						knc = 0.2*x + (0.6*x*1.0/nbAuthors);
+					}else if(sp.getString("correspondingAuthor").equals("Y")){
+						knc = 0.2*x + (0.6*x*1.0/nbAuthors);
+					}else{
+						knc = (0.6*x*1.0/nbAuthors);
+					}
+					if(sp.getString("correspondingAuthor").equals("Y"))
+						correspondingAuthor = "Y";
+					s_knc = knc + "";
+					total_knc += knc;
+				}
+			}
+			
+		}
+		return total_knc;
+	}
+	public static void createSheetKNCTotal(HSSFWorkbook wb,
+			String facultyId, String academicYearId, Delegator delegator) {
+		Sheet sh = wb.createSheet("KNC-Total");
+
+		CellStyle styleTitle = wb.createCellStyle();
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+
+		CellStyle styleNormal = wb.createCellStyle();
+		Font fontNormal = wb.createFont();
+		fontNormal.setFontHeightInPoints((short) 12);
+		fontNormal.setFontName("Times New Roman");
+		// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontNormal.setColor(HSSFColor.BLACK.index);
+		styleNormal.setFont(fontNormal);
+		styleNormal.setWrapText(true);
+		styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+
+		sh.setColumnWidth(0, 1000);// blank
+		sh.setColumnWidth(1, 2000);// STT
+		sh.setColumnWidth(2, 8000);// Ho ten can bo
+		sh.setColumnWidth(3, 2000);// total KNC
+		
+		int i_row = 0;
+
+		i_row = 10;
+		Row rh = sh.createRow(i_row);
+
+		int i_col = 0;
+
+		i_col++;
+		Cell ch = rh.createCell(i_col);
+		ch.setCellValue("STT");
+		ch.setCellStyle(styleTitle);
+
+		
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Họ tên");
+		ch.setCellStyle(styleTitle);
+
+		
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("KNC");
+		ch.setCellStyle(styleTitle);
+		
+		
+		
+		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
+		
+		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator, academicYearId);
+		
+		HashMap<String, String> mKNCIdName = getMapPaperCategoryKNCId2Name(delegator);
+		
+		int count = 0;
+		for (GenericValue st : staffs) {
+			String staffId = st.getString("staffId");
+			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
+			
+			double knc = getKNCFromPapers(delegator, staffId, academicYearId, mCategory2Rate);
+			
+			i_row++;
+			count++;
+			rh = sh.createRow(i_row);
+			i_col = 0;
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(count);
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(st.getString("staffName"));
+			ch.setCellStyle(styleNormal);
+			
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(knc);
+			ch.setCellStyle(styleNormal);
+			
+			
+			styleNormal.setDataFormat(
+				    wb.getCreationHelper().createDataFormat().getFormat("#.##"));
+			
+		}
+				
 
 	}
 
@@ -3797,6 +3987,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createSheetListPapersKV04(wb, papers);
 
 		createSheetKNC(wb,facultyId,academicYearId,delegator);
+		
+		createSheetKNCTotal(wb,facultyId,academicYearId,delegator);
 		
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;
