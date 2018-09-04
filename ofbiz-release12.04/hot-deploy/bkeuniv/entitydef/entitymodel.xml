@@ -377,21 +377,21 @@
 		<field name="researchProductName" type="very-long"></field>
 		<field name="sourcePathUpload" type="very-long"></field>
 		
-		<field name="researchProjectProposalId" type="id-ne"></field>
+		<!-- <field name="researchProposalProductId" type="id-ne"></field> -->
 		<field name="approvedByStaffId" type="id-vlong"></field>
 		
 		<prim-key field="researchProductId"/>
 		
-		<relation rel-entity-name="ResearchProductType" type="one">
+		<!-- <relation rel-entity-name="ResearchProductType" type="one">
 			<key-map field-name="researchProductTypeId"/>
-		</relation>
+		</relation> -->
 		<!-- 
 		<relation rel-entity-name="ResearchProposalProduct" type="one">
 			<key-map field-name="researchProductRegisteredId" rel-field-name="researchProductId"/>
 		</relation>
 		 -->
-		<relation rel-entity-name="ResearchProjectProposal" type="one">
-			<key-map field-name="researchProjectProposalId"/>
+		<relation rel-entity-name="ResearchProposalProduct" type="one">
+			<key-map field-name="researchProductRegisteredId" rel-field-name="researchProductId" />
 		</relation>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="approvedByStaffId" rel-field-name="staffId"/>
@@ -407,6 +407,10 @@
 		<field name="quantity" type="numeric"></field>
 		
 		<prim-key field="researchProductId"/>
+		
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
 		
 		<relation rel-entity-name="ResearchProductType" type="one">
 			<key-map field-name="researchProductTypeId"/>

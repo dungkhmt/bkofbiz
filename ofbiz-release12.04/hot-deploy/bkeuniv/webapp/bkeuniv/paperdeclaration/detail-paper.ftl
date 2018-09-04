@@ -36,7 +36,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperName}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.paperName?exists>
 								${resultPaper.paper.paperName}
 							<#else>
@@ -47,7 +47,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivAuthors}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.authors?exists>
 								${resultPaper.paper.authors}
 							<#else>
@@ -60,7 +60,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperCategory}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.paperCategoryName?exists>
 								${resultPaper.paper.paperCategoryName}
 							<#else>
@@ -72,7 +72,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperJournalConference}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.journalConferenceName?exists>
 								${resultPaper.paper.journalConferenceName}
 							</#if>
@@ -82,7 +82,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperMonth}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.month?exists>
 								${resultPaper.paper.month}
 							</#if>
@@ -93,7 +93,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperYear}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.year?exists>
 								${resultPaper.paper.year}
 							</#if>
@@ -103,7 +103,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.researchProjectProposalName?exists>
 								${resultPaper.paper.researchProjectProposalName}
 							</#if>
@@ -113,7 +113,7 @@
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperLink}
 						</label>
-						<span style="width: 80%; display: block;" >
+						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
 							<#if resultPaper.paper.link?exists>
 								${resultPaper.paper.link}
 							</#if>
