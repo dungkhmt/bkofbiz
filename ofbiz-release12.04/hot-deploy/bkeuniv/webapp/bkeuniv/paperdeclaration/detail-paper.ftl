@@ -68,6 +68,20 @@
 							</#if>
 						</span>
 					</div>
+					
+					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 30%;">
+							Phan loai KNC
+						</label>
+						<span style="width: 70%; display: block;" >
+							<#if resultPaper.paper.paperCategoryKNCName?exists>
+								${resultPaper.paper.paperCategoryKNCName}
+							<#else>
+							
+							</#if>
+						</span>
+					</div>
+					
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivPaperJournalConference}
@@ -119,6 +133,17 @@
 							</#if>
 						</span>
 					</div>
+					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
+							${paperDeclarationUiLabelMap.BkEunivApproveStatus}
+						</label>
+						<span style="width: 80%; display: block;" >
+							<#if resultPaper.paper.paperDeclarationStatusName?exists>
+								${resultPaper.paper.paperDeclarationStatusName}
+							</#if>
+						</span>
+					</div>
+					
 				</div>
 
 				<table>
@@ -173,9 +198,8 @@
 					</tbody>
 				</table>
 
-				<#if resultPaper.paper.staffId==userLogin.userLoginId>
-					<#include "component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl"/>
-				</#if>
+				
+				<#include "component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl"/>
 			</div>
 		</div>
 	</div>

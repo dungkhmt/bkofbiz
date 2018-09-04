@@ -50,6 +50,7 @@ import org.ofbiz.utils.BKEunivUtils;
 
 
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -171,7 +172,7 @@ public class PaperDeclarationService {
 		String facultyId = (String) request.getParameter("facultyId-kv04");
 		Debug.log(module + "::exportExcelKV04, academic year = " + year);
 
-		String filename = "KV04";
+		String filename = "KV04-" + year;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
@@ -812,19 +813,30 @@ public class PaperDeclarationService {
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
-			// conds.add(EntityCondition.makeCondition("statusStaffPaper",
-			// EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+			EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			//conds.add(EntityCondition.makeCondition("approveStatusId",
+			//		EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED));
 
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			for (GenericValue gv : papers) {
+			
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for(GenericValue p: papers){
+				if(p.get("approveStatusId") == null || !p.getString("approveStatusId").equals(PaperDeclarationUtil.STATUS_CANCELLED)){
+					ret_papers.add(p);
+				}
+			}
+			
+			for (GenericValue gv : ret_papers) {
 				Debug.log(module + "::getPapersOfStaff, paper "
 						+ gv.get("paperName"));
 			}
 			Debug.log(module + "::getPapersOfStaff, papers.sz = "
-					+ papers.size());
-			retSucc.put("papers", papers);
+					+ ret_papers.size());
+			retSucc.put("papers", ret_papers);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1226,6 +1238,12 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
+		List<Object> paperCategoryKNCIds = (List<Object>) context
+				.get("paperCategoryKNCId[]");
+		String paperCategoryKNCId = "";
+		if (paperCategoryKNCIds != null && paperCategoryKNCIds.size() > 0)
+			paperCategoryKNCId = (String) (paperCategoryKNCIds.get(0));
+
 		List<Object> researchProjectProposalIds = (List<Object>) context.get("researchProjectProposalId[]");
 		String researchProjectProposalId = null;
 		if(researchProjectProposalIds != null && researchProjectProposalIds.size() > 0)
@@ -1279,6 +1297,8 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if (paperCategoryKNCId != null && !paperCategoryKNCId.equals(""))
+				p.put("paperCategoryKNCId", paperCategoryKNCId);
 			
 			if(researchProjectProposalId != null)
 				p.put("researchProjectProposalId", researchProjectProposalId);
@@ -1369,6 +1389,12 @@ public class PaperDeclarationService {
 		String paperCategoryId = "";
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
+		
+		List<Object> paperCategoryKNCIds = (List<Object>) context
+				.get("paperCategoryKNCId[]");
+		String paperCategoryKNCId = "";
+		if (paperCategoryKNCIds != null && paperCategoryKNCIds.size() > 0)
+			paperCategoryKNCId = (String) (paperCategoryKNCIds.get(0));
 
 		List<Object> researchProjectProposalIds = (List<Object>) context.get("researchProjectProposalId[]");
 		String researchProjectProposalId = null;
@@ -1434,6 +1460,8 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if (paperCategoryKNCId != null && !paperCategoryKNCId.equals(""))
+				p.put("paperCategoryKNCId", paperCategoryKNCId);
 			if(researchProjectProposalId != null)
 				p.put("researchProjectProposalId", researchProjectProposalId);
 			
@@ -2088,9 +2116,11 @@ public class PaperDeclarationService {
 		Delegator delegator = ctx.getDelegator();
 
 		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,"ENABLED"));
 			
 			List<GenericValue> listPaperCategoryKNC = delegator.findList("PaperCategoryKNC",
-					null, null, null, null,
+					EntityCondition.makeCondition(conds), null, null, null,
 					false);
 			
 			retSucc.put("listPaperCategoryKNC", listPaperCategoryKNC);

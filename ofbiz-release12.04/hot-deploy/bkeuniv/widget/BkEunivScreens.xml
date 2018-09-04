@@ -535,6 +535,8 @@
 			<actions>
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
 				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				
 				<service service-name="getListAcademicYears" result-map="result"></service>
 				<service service-name="getStaffPaperDeclarationRole" result-map="paperRoles"></service>
 				<!-- 

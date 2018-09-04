@@ -6969,24 +6969,65 @@
 	<PaperDeclarationStatus paperDeclarationStatusId="CREATED" paperDeclarationStatusName="Tạo mới"/>
 	<PaperDeclarationStatus paperDeclarationStatusId="APPROVED" paperDeclarationStatusName="Phê duyệt"/>
 	<PaperDeclarationStatus paperDeclarationStatusId="REJECTED" paperDeclarationStatusName="Không Phê duyệt"/>
+	<PaperDeclarationStatus paperDeclarationStatusId="CANCELLED" paperDeclarationStatusName="Huỷ"/>
 	
 	<StaffPaperDeclarationRole roleId="MAIN_AUTHOR" roleName="Tác giả chính"/>
 	<StaffPaperDeclarationRole roleId="CO_AUTHOR" roleName="Đồng tác giả"/>
 	
-	<PaperCategoryKNC paperCategoryKNCId="WEB_SCIENCE_Q1" paperCategoryKNCName="Tạp chí, ấn phẩm trong danh mục Web of Science, nhóm Q1" paperCategoryKNCCode="WEB_SCIENCE_Q1"/>
-	<PaperCategoryKNC paperCategoryKNCId="WEB_SCIENCE_OTHER" paperCategoryKNCName="Tạp chí, ấn phẩm trong danh mục Web of Science, các nhóm khác" paperCategoryKNCCode="WEB_SCIENCE_OTHER"/>
-	<PaperCategoryKNC paperCategoryKNCId="SCOPUS" paperCategoryKNCName="Tạp chí, ấn phẩm thuộc danh mục SCOPUS" paperCategoryKNCCode="SCOPUS"/>
-	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HUST" paperCategoryKNCName="Tạp chí KH\&CN các trường kỹ thuật (của Trường ĐHBK Hà Nội)" paperCategoryKNCCode="JOURNAL_HUST"/>
-	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_EN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Anh)" paperCategoryKNCCode="JOURNAL_HDGS_EN"/>
-	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_VN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Việt)" paperCategoryKNCCode="JOURNAL_HDGS_VN"/>
+	<PaperCategoryKNC paperCategoryKNCId="WEB_SCIENCE_Q1" paperCategoryKNCName="Tạp chí, ấn phẩm trong danh mục Web of Science, nhóm Q1" paperCategoryKNCCode="WEB_SCIENCE_Q1" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="WEB_SCIENCE_OTHER" paperCategoryKNCName="Bài báo tạp chí, ấn phẩm trong danh mục Web of Science, các nhóm khác" paperCategoryKNCCode="WEB_SCIENCE_OTHER" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="SCOPUS" paperCategoryKNCName="Bài báo tạp chí, ấn phẩm thuộc danh mục SCOPUS" paperCategoryKNCCode="SCOPUS" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HUST" paperCategoryKNCName="Bài báo tạp chí KH và CN các trường kỹ thuật (của Trường ĐHBK Hà Nội)" paperCategoryKNCCode="JOURNAL_HUST" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="PAPER_ISBN_HDGS_CN" paperCategoryKNCName="Bài báo tạp chí, ấn phẩm khác (có ISBN) được Hội đồng Chức danh Giáo sư Nhà nước công nhận" paperCategoryKNCCode="PAPER_ISBN_HDGS_CN" statusId="ENABLED"/>
+	
+	<PaperCategoryKNC paperCategoryKNCId="P_TN_ISBN_HDGS_CN" paperCategoryKNCName="Ấn phẩm trong nước khác (có ISBN) được Hội đồng Chức danh Giáo sư Nhà nước công nhận" paperCategoryKNCCode="P_TN_ISBN_HDGS_CN" statusId="DISABLED"/>
+	
+	<PaperCategoryKNC paperCategoryKNCId="P_QT_ISBN_HDGS_CN" paperCategoryKNCName="Ấn phẩm quốc tế  khác (có ISBN) được Hội đồng Chức danh Giáo sư Nhà nước công nhận" paperCategoryKNCCode="P_QT_ISBN_HDGS_CN" statusId="DISABLED"/>
+
+	<PaperCategoryKNC paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" paperCategoryKNCName="Bài báo tạp chí, ấn phẩm khác (có ISBN) chưa được Hội đồng Chức danh Giáo sư Nhà nước công nhận" paperCategoryKNCCode="PAPER_ISBN_HDGS_NCN" statusId="ENABLED"/>
+	
+	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_EN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Anh)" paperCategoryKNCCode="JOURNAL_HDGS_EN" statusId="DISABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_VN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Việt)" paperCategoryKNCCode="JOURNAL_HDGS_VN" statusId="DISABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_OTHER" paperCategoryKNCName="Tạp chí Khác" paperCategoryKNCCode="JOURNAL_OTHER" statusId="ENABLED"/>
 	
 	
-	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2017-2018" rate="1.0"/>
-	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2017-2018" rate="0.8"/>
-	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2017-2018" rate="0.6"/>
-	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2017-2018" rate="0.15"/>
-	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2017-2018" rate="0.10"/>
-	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2017-2018" rate="0.10"/>
 	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2017-2018" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2017-2018" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2017-2018" rate="0.6" rateKhoiluong="0.6" rateNangluc="0.6"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2017-2018" rate="0.15" rateKhoiluong="0.3" rateNangluc="0.15"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2017-2018" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2017-2018" rate="0.10" rateKhoiluong="0.2" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_CN" academicYearId="2017-2018" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_TN_ISBN_HDGS_CN" academicYearId="2017-2018" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2017-2018" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2017-2018" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2017-2018" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	
+
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2016-2017" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2016-2017" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2016-2017" rate="0.6" rateKhoiluong="0.6" rateNangluc="0.6"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2016-2017" rate="0.15" rateKhoiluong="0.3" rateNangluc="0.15"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2016-2017" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2016-2017" rate="0.10" rateKhoiluong="0.2" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_CN" academicYearId="2016-2017" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_TN_ISBN_HDGS_CN" academicYearId="2016-2017" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2016-2017" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2016-2017" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2016-2017" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2015-2016" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2015-2016" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2015-2016" rate="0.6" rateKhoiluong="0.6" rateNangluc="0.6"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2015-2016" rate="0.15" rateKhoiluong="0.3" rateNangluc="0.15"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2015-2016" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2015-2016" rate="0.10" rateKhoiluong="0.2" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_CN" academicYearId="2015-2016" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_TN_ISBN_HDGS_CN" academicYearId="2015-2016" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2015-2016" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2015-2016" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2015-2016" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+
 	
 </entity-engine-xml>

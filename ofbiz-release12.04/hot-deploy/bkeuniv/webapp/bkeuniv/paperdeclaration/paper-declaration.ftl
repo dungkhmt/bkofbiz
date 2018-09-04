@@ -767,6 +767,14 @@
 		</#if>
 	</#list>
 	
+	<#assign sourceKNC = [] />
+	<#list paperCategoryKNC.listPaperCategoryKNC as knc>
+		<#if knc?has_content>
+             <#assign op = { "name": knc.paperCategoryKNCName?j_string ,"value": knc.paperCategoryKNCId?j_string } />
+						<#assign sourceKNC = sourceKNC + [op] />
+		</#if>
+	</#list>
+	
 	<#assign sourceResearchProjects = [] />
 	<#assign op={"name":"","value":""}/>
 	<#assign sourceResearchProjects = sourceResearchProjects + [op] />
@@ -813,6 +821,8 @@
 		"researchProjectProposalId",
 		"researchProjectProposalName",
 		"categoryName",
+		"paperCategoryKNCName",
+		"paperCategoryKNCId",
 		"paperName",
 		"month",
 		"year",
@@ -848,6 +858,15 @@
 			"type": "select",
 			"option": {
 				"source": source,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"value": "paperCategoryKNCId",
+			"type": "select",
+			"option": {
+				"source": sourceKNC,
 				"maxItem": 1
 			}
 		},
@@ -950,6 +969,15 @@
 			}
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"value": "paperCategoryKNCId",
+			"type": "select",
+			"option": {
+				"source": sourceKNC,
+				"maxItem": 1
+			}
+		},
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
 			"value": "researchProjectProposalId",
 			"type": "select",
@@ -975,8 +1003,6 @@
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
 			"value": "impactFactor",
-			"require": "true#JS",
-			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string,
 			"pattern": "([0-9]*[.])?[0-9]+",
 			"title": "So thuc"
 		},
