@@ -3043,8 +3043,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			int start_r = i_row;
 			for (int i = 1; i < staffsOfPaper.size(); i++) {
 				GenericValue st = staffsOfPaper.get(i);
-				String staffName = (String) (mId2Staff.get(st.get("staffId"))
-						.get("staffName"));
+				String staffId =  st.getString("staffId");
+				System.out.println(name() + "::createSegmentKV04, paper " + p.getString("paperName") + ", staffId = " + staffId);
+				if(mId2Staff.get(staffId) == null) continue;
+				
+				String staffName = (String) (mId2Staff.get(staffId).get("staffName"));
 				i_row += 1;
 				r = sh.createRow(i_row);
 				c = r.createCell(11);
