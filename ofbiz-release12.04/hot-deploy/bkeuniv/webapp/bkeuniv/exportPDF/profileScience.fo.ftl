@@ -75,7 +75,7 @@
 	<#assign NumberOfDegree1 = uiLabelMap.BkEunivPatent1 /> 
 	<#assign NumberOfDegree2 = uiLabelMap.BkEunivPatent2 />
 	<#assign NameAndContent = uiLabelMap.BkEunivNameAndContent />
-	<#assign YearDegree = uiLabelMap.BkEunivYearDegree />
+	<#assign YearDegree = uiLabelMap.BkEunivYearPatent />
 	<#assign NumberOfConstruction = uiLabelMap.BkEunivNumberOfConstruction />
 	<#assign NameOfConstruction = uiLabelMap.BkEunivNameOfConstruction />
 	<#assign Model = uiLabelMap.BkEunivModel />
