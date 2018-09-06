@@ -808,5 +808,25 @@
         <value xml:lang="vi">Phân loại KNC</value>
     </property>
     
+    <property key="BkEunivManageResearchProjectProduct">
+        <value xml:lang="en">Manage product research project proposal</value>
+        <value xml:lang="vi">Quản lý sản phẩm đề tài</value>
+    </property>
+    
+    <property key="BkEunivResearchProductName">
+        <value xml:lang="en">Product name</value>
+        <value xml:lang="vi">Tên sản phẩm</value>
+    </property>
+    
+    <property key="BkEunivResearchProductType">
+        <value xml:lang="en">Product type</value>
+        <value xml:lang="vi">Loại sản phẩm</value>
+    </property>
+    
+    <property key="BkEunivFileAttachment">
+        <value xml:lang="en">File attachment</value>
+        <value xml:lang="vi">Tệp tin đính kèm</value>
+    </property>
+    
     
 </resource>

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
@@ -14,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 import java.util.Set;
@@ -60,6 +63,9 @@ import org.ofbiz.entity.util.EntityFindOptions;
 import org.ofbiz.entity.util.EntityListIterator;
 
 public class ProjectProposalSubmissionService {
+	private static final Charset UTF_8 = Charset.forName("UTF-8");
+	private static final Charset ISO = Charset.forName("ISO-8859-1");
+	
 	// public static String STATUS_CREATED = "CREATED";
 	// public static String STATUS_CANCELLED = "CANCELLED";
 
@@ -3376,5 +3382,470 @@ public class ProjectProposalSubmissionService {
 			}
 		}
 	}
+	
+	public static Map<String,Object> JQGetListResearchProjectProduct(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator list = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				String q = (String)parameters.get("q")[0].trim();
+				String[] searchKeys = {"researchProductTypeName", "researchProductName", "researchProductId"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			list = delegator.find("ResearchProjectProductView", condition, null, null, sort, opts);
+						
+			result.put("listIterator", list);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error JQGetListResearchProjectProduct");
+		}
+		
+		return result;
+	}
+	
+	public static Map<String,Object> JQGetListResearchProjectTypeProduct(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		opts.setDistinct(true);
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator list = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				String q = (String)parameters.get("q")[0].trim();
+				String[] searchKeys = {"researchProductTypeId", "researchProductTypeName"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			list = delegator.find("ResearchProjectTypeProductView", condition, null, null, sort, opts);
+						
+			result.put("listIterator", list);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error JQGetListResearchProjectTypeProduct");
+		}
+		
+		return result;
+	}
+	
+	public static void updateResearchProjectProduct(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		
+		Debug.log(module
+				+ "::uploadFileProposal \n\n\t****************************************\n\tuploadFile(HttpServletRequest request,HttpServletResponse response) - start\n\t");
+		ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory()); // Creation
+		
+		List lst = null;
+		String result = "AttachementException";
+		
+		String file_name = "";
+		String researchProductId = "";
+		String researchProductName = "";
+		String sourcePathUpload = "";
+		
+		try {
+			lst = fu.parseRequest(request);
+		} catch (FileUploadException fup_ex) {
+			Debug.log(module
+					+ "::uploadFileProposal \n\n\t****************************************\n\tException of FileUploadException \n\t");
+			fup_ex.printStackTrace();
+			result = "AttachementException";
+			retSucc.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
 
+		if (lst.size() == 0) // There is no item in lst
+		{
+			Debug.log(module
+					+ "::uploadFileProposal\n\n\t****************************************\n\tLst count is 0 \n\t");
+			result = "AttachementException";
+			retSucc.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
+
+		FileItem file_item = null;
+		FileItem selected_file_item = null;
+
+		// Checking for form fields - Start
+		for (int i = 0; i < lst.size(); i++) {
+			file_item = (FileItem) lst.get(i);
+			String fieldName = file_item.getFieldName();
+
+			switch (fieldName) {
+			case "file":
+				selected_file_item = file_item;
+
+				file_name = file_item.getName(); // Getting the file name
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\tThe selected file item's file name is : "
+						+ file_name + "\n\t");
+				break;
+			case "researchProductId":
+				researchProductId = file_item.getString();
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\n researchProductId id : "
+						+ researchProductId + "\n\t");
+				break;
+				
+			case "researchProductName":
+				researchProductName = file_item.getString();
+				researchProductName = new String(researchProductName.getBytes(ISO), UTF_8);
+				researchProductName = researchProductName.trim();
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\n researchProductName : "
+						+ researchProductName + "\n\t");
+				break;
+			}
+
+		}
+		// Checking for form fields - End
+		try {
+			GenericValue gv = delegator.findOne("ResearchProduct",
+					false, UtilMisc.toMap("researchProductId",
+							researchProductId));
+			
+		if(gv == null) {
+			retSucc.put("message", "Not found research product");
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
+		
+		String staffId = (String) gv.get("approvedByStaffId");
+		// Uploading the file content - Start
+		if (selected_file_item != null) // If selected file item is null
+		{
+
+			byte[] file_bytes = selected_file_item.get();
+			byte[] extract_bytes = new byte[file_bytes.length];
+
+			for (int l = 0; l < file_bytes.length; l++)
+				extract_bytes[l] = file_bytes[l];
+			
+			Debug.log(module + "::uploadFile, researchProductId = "
+					+ researchProductId);
+			
+				
+
+				Debug.log(module + "::uploadFileProposal, filename = " + file_name
+						+ ", staffId = " + staffId);
+				String ext = ProjectProposalSubmissionServiceUtil
+						.getExtension(file_name);
+				java.util.Date currentDate = new java.util.Date();
+				SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
+						"yyyyMMddHHmmss");
+				String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+				String filenameDB = sCurrentDate + "." + ext;
+				String fullFileName = ProjectProposalSubmissionServiceUtil
+						.establishFullFilename(staffId, filenameDB, "ResearchProject");
+
+				Debug.log(module + "::uploadFileProposal, filename = " + file_name
+						+ ", researchProductId = "
+						+ researchProductId + ", extension = " + ext
+						+ ", filenameDB = " + filenameDB + ", fullFileName = "
+						+ fullFileName);
+
+				FileOutputStream fout = new FileOutputStream(fullFileName);
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\tAfter creating outputstream");
+				fout.flush();
+				fout.write(extract_bytes);
+				fout.flush();
+				fout.close();
+
+				gv.put("sourcePathUpload", filenameDB);
+				
+
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\tuploadFile(HttpServletRequest request,HttpServletResponse response) - end\n\t");
+			
+		}
+		
+		
+		if(!researchProductName.equals("")) {
+			gv.put("researchProductName", researchProductName);			
+		}
+		
+		delegator.store(gv);
+		
+		retSucc.put("message", "Updated successfully");
+		
+		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+				response, 200);
+		
+		} catch (Exception ioe_ex) {
+			Debug.log(module
+					+ "::uploadFileProposal\n\n\t****************************************\n\tIOException occured on file writing");
+			ioe_ex.printStackTrace();
+			result = "AttachementException";
+			retSucc.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
+	}
+	
+	public static void createResearchProjectProduct(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		GenericValue userLogin = (GenericValue) request.getAttribute("userLogin");
+		String staffId = (String)userLogin.getString("userLoginId");
+		Debug.log(module
+				+ "::uploadFileProposal \n\n\t****************************************\n\tuploadFile(HttpServletRequest request,HttpServletResponse response) - start\n\t");
+		ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory()); // Creation
+		
+		List lst = null;
+		String result = "AttachementException";
+		
+		String file_name = "";
+		String researchProductRegisteredId = "";
+		String researchProductName = "";
+		String sourcePathUpload = "";
+		
+		try {
+			lst = fu.parseRequest(request);
+		} catch (FileUploadException fup_ex) {
+			Debug.log(module
+					+ "::uploadFileProposal \n\n\t****************************************\n\tException of FileUploadException \n\t");
+			fup_ex.printStackTrace();
+			result = "AttachementException";
+			retSucc.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
+
+		if (lst.size() == 0) // There is no item in lst
+		{
+			Debug.log(module
+					+ "::uploadFileProposal\n\n\t****************************************\n\tLst count is 0 \n\t");
+			result = "AttachementException";
+			retSucc.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
+
+		FileItem file_item = null;
+		FileItem selected_file_item = null;
+
+		// Checking for form fields - Start
+		for (int i = 0; i < lst.size(); i++) {
+			file_item = (FileItem) lst.get(i);
+			String fieldName = file_item.getFieldName();
+
+			switch (fieldName) {
+			case "file":
+				selected_file_item = file_item;
+
+				file_name = file_item.getName(); // Getting the file name
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\tThe selected file item's file name is : "
+						+ file_name + "\n\t");
+				break;
+			case "researchProductRegisteredId":
+				researchProductRegisteredId = file_item.getString();
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\n researchProductRegisteredId id : "
+						+ researchProductRegisteredId + "\n\t");
+				break;
+				
+			case "researchProductName":
+				researchProductName = file_item.getString();
+				researchProductName = new String(researchProductName.getBytes(ISO), UTF_8);
+				researchProductName = researchProductName.trim();
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\n researchProductName : "
+						+ researchProductName + "\n\t");
+				break;
+			}
+
+		}
+		
+		if(file_item==null) {
+			retSucc.put("message", "File upload required");
+			
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+		}
+		
+		if(researchProductRegisteredId.equals("")) {
+			retSucc.put("message", "Research project id required");
+			
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+		}
+		
+		if(researchProductName.equals("")) {
+			retSucc.put("message", "Research product name required");
+			
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+		}
+		
+		// Checking for form fields - End
+		try {
+			GenericValue gv = delegator.findOne("ResearchProposalProduct",
+					false, UtilMisc.toMap("researchProductId",
+							researchProductRegisteredId));
+			
+			if(gv == null) {
+				retSucc.put("message", "Not found research proposal product");
+				BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+						response, 200);
+				return;
+			}
+			
+			gv = delegator.makeValue("ResearchProduct");
+			gv.put("researchProductId", delegator.getNextSeqId("ResearchProduct"));
+			gv.put("researchProductRegisteredId", researchProductRegisteredId);
+			gv.put("researchProductName", researchProductName);
+		// Uploading the file content - Start
+		if (selected_file_item != null) // If selected file item is null
+		{
+
+			byte[] file_bytes = selected_file_item.get();
+			byte[] extract_bytes = new byte[file_bytes.length];
+
+			for (int l = 0; l < file_bytes.length; l++)
+				extract_bytes[l] = file_bytes[l];
+			
+				Debug.log(module + "::uploadFileProposal, filename = " + file_name
+						+ ", staffId = " + staffId);
+				String ext = ProjectProposalSubmissionServiceUtil
+						.getExtension(file_name);
+				java.util.Date currentDate = new java.util.Date();
+				SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
+						"yyyyMMddHHmmss");
+				String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+				String filenameDB = sCurrentDate + "." + ext;
+				String fullFileName = ProjectProposalSubmissionServiceUtil
+						.establishFullFilename(staffId, filenameDB, "ResearchProject");
+
+				Debug.log(module + "::uploadFileProposal, filename = " + file_name
+						+ ", researchProductRegisteredId = "
+						+ researchProductRegisteredId + ", extension = " + ext
+						+ ", filenameDB = " + filenameDB + ", fullFileName = "
+						+ fullFileName);
+
+				FileOutputStream fout = new FileOutputStream(fullFileName);
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\tAfter creating outputstream");
+				fout.flush();
+				fout.write(extract_bytes);
+				fout.flush();
+				fout.close();
+
+				gv.put("sourcePathUpload", filenameDB);
+				
+
+				Debug.log(module
+						+ "::uploadFileProposal\n\n\t****************************************\n\tuploadFile(HttpServletRequest request,HttpServletResponse response) - end\n\t");
+			
+		}
+		
+		delegator.store(gv);
+		
+		retSucc.put("message", "Created successfully");
+		
+		BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+				response, 200);
+		
+		} catch (Exception ioe_ex) {
+			Debug.log(module
+					+ "::uploadFileProposal\n\n\t****************************************\n\tIOException occured on file writing");
+			ioe_ex.printStackTrace();
+			result = "AttachementException";
+			retSucc.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(retSucc),
+					response, 200);
+			return;
+		}
+	}
+	
+	public static Map<String, Object> removeResearchProjectProduct(DispatchContext ctx, Map<String, ? extends Object> context) {
+        Delegator delegator = ctx.getDelegator();
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+        
+        GenericValue userLogin = (GenericValue) context.get("userLogin");
+        Locale locale = (Locale) context.get("locale");        
+        
+        Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+        
+        String researchProductId = (String)context.get("researchProductId");
+        try{
+        	GenericValue gv = delegator.findOne("ResearchProduct", UtilMisc.toMap("researchProductId",researchProductId), false);
+        	if(gv != null){
+        		delegator.removeValue(gv);
+        		retSucc.put("result", "Deleted record with id: " + researchProductId);
+        	} else {
+        		retSucc.put("result", "Not found record with id: " + researchProductId);
+        	}
+        	
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        }
+        return retSucc;
+	}
+	
 }

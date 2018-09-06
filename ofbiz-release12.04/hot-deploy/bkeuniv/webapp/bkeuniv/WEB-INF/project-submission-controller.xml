@@ -487,6 +487,35 @@
 		<response name="AttachementSuccess" type="view" value="GETLISTPROPOSALASSIGNEDFORREVIEW"/>
 	</request-map>
 	
+	<request-map uri="create-research-project-product">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="createResearchProjectProduct" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-research-project-product">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="updateResearchProjectProduct" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="remove-research-project-product">
+		<security https="true" auth="true"/>
+		<event type="sevice" invoke="removeResearchProjectProduct"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="manage-research-project-proposal-product">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-manage-research-project-proposal-product" />
+		<response name="error" type="view" value="view-manage-research-project-proposal-product" />
+	</request-map>
+	
 	<request-map uri="research-project-jury-members">
 		 <security https="true" auth="true"/>
 		<response name="success" type="view" value="view-research-project-jury-members" />
@@ -588,4 +617,5 @@
 
   <view-map name="list-research-project-proposal-evaluation-result" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposalEvaluationResult"/>
 
+	<view-map name="view-manage-research-project-proposal-product" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ManageResearchProjectProposalProduct"/>
 </site-conf>

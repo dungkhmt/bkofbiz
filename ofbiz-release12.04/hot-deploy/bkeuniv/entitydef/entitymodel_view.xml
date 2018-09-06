@@ -198,4 +198,39 @@
 		
 	</view-entity>
 	
+	<view-entity entity-name="ResearchProjectProductView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RP" entity-name="ResearchProduct"></member-entity>
+		<member-entity entity-alias="RPT" entity-name="ResearchProductType"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProposalProduct"></member-entity>
+		
+		<alias-all entity-alias="RP" ></alias-all>
+		<alias name="researchProductTypeName" field="researchProductTypeName" entity-alias="RPT"></alias>
+		<alias name="researchProductTypeId" field="researchProductTypeId" entity-alias="RPP"></alias>
+		
+		<view-link entity-alias="RP" rel-entity-alias="RPP">
+			<key-map field-name="researchProductRegisteredId" rel-field-name="researchProductId"/>
+		</view-link>
+		
+		<view-link entity-alias="RPP" rel-entity-alias="RPT">
+			<key-map field-name="researchProductTypeId" rel-field-name="researchProductTypeId"/>
+		</view-link>
+		
+	</view-entity>
+	
+	<view-entity entity-name="ResearchProjectTypeProductView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPT" entity-name="ResearchProductType"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProposalProduct"></member-entity>
+		
+		<alias name="researchProductId" field="researchProductId" entity-alias="RPP"></alias>
+		<alias name="researchProjectProposalId" field="researchProjectProposalId" entity-alias="RPP"></alias>
+		
+		<alias name="researchProductTypeId" field="researchProductTypeId" entity-alias="RPP"></alias>
+		<alias name="researchProductTypeName" field="researchProductTypeName" entity-alias="RPT"></alias>
+		
+		<view-link entity-alias="RPP" rel-entity-alias="RPT">
+			<key-map field-name="researchProductTypeId" rel-field-name="researchProductTypeId"/>
+		</view-link>
+		
+	</view-entity>
+	
 </entitymodel>

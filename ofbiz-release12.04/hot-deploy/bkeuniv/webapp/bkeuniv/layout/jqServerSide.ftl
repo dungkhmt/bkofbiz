@@ -294,9 +294,9 @@
 			document.getElementById("side-bar").addEventListener("click", function() {
 				resizeDataTable();
 			})
-
-			document.getElementById("jqTitlePage").innerHTML = titlePage;
-
+			<#if !titlePage??>
+				document.getElementById("jqTitlePage").innerHTML = titlePage;
+			</#if>
             jqDataTable.table = $('#${id}-content').DataTable( {
                 "processing": true,
                 "serverSide": true,
@@ -461,10 +461,22 @@
                             }
                         },
                         beforeOpen: function(event, ui) {
-                            var $menu = ui.menu,
-                                $target = ui.target,
-                                extraData = ui.extraData;
-                            ui.menu.zIndex(9999);
+							if(ui.target.length > 0) {
+								var el = ui.target.parent();
+								var data = jqDataTable.table.row( el ).data();
+								
+								if(!!data) {
+									var $menu = ui.menu,
+									$target = ui.target,
+									extraData = ui.extraData;
+									ui.menu.zIndex(9999);
+								} else {
+									var $menu = ui.menu,
+									$target = ui.target,
+									extraData = ui.extraData;
+									ui.menu.zIndex(-10);
+								}
+							}
                         }
                         });
                 </#if>

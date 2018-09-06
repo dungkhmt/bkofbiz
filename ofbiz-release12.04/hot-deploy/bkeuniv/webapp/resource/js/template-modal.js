@@ -253,8 +253,15 @@ modal.prototype._buildScriptObject = function(object = {}, result = "") {
 		var value = object[key];
 
 		if(!!fields_build.find(function(e){return e==key})) {
-			result += 'eval(\'' + value + '\')'+dot;
-			return;
+			if(typeof value == "number") {
+				result += 'eval(\'' + value + '\')'+dot;
+				return;
+			}
+
+			if(typeof value == "string") {
+				result += 'eval(\'"' + value + '"\')'+dot;
+				return;
+			}
 		}
 
 		
@@ -276,6 +283,7 @@ modal.prototype._buildScriptObject = function(object = {}, result = "") {
 		result += '\'' + value + '\'' + dot;
 	});
 	result+= "}";
+
 	return result;
 }
 
@@ -365,6 +373,8 @@ modal.prototype._select_server_side = function(column) {
 	var value = column._data, edit = column.edit, id = column.id, option = column.option;
 	var _id = "#"+id;
 	var maxItem = option.maxItem||1;
+	var require = column.require||false;
+	var customValidity = column.customValidity||"";
 	var render;
 
 	var query_custom = '{}';
@@ -438,8 +448,11 @@ modal.prototype._select_server_side = function(column) {
 						'});'+
 						selected+
 					'});'+
+					'$(function () {'+
+						(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
+					'});'+
 				'</script>';
-	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+(maxItem>1?'multiple':"")+'></select></div>'+script;
+	var a =  '<div style="width: 70%"><select class="js-states form-control" style="width: 100%" id="'+id+'" '+ (require?' required ':"")+ +(maxItem>1?'multiple':"")+'></select></div>'+script;
 	
 	return a;
 }
