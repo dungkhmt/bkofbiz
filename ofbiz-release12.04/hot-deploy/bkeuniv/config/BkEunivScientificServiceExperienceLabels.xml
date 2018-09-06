@@ -14,11 +14,11 @@
     </property>
     <property key="BkEunivSSESDescription">
         <value xml:lang="en">Description</value>
-        <value xml:lang="vi">Mô tả</value>
+        <value xml:lang="vi">Hình thức hội đồng</value>
     </property>
     <property key="BkEunivSSESQuantity">
         <value xml:lang="en">Quantity</value>
-        <value xml:lang="vi">Số lượng</value>
+        <value xml:lang="vi">Số lần</value>
     </property>
     <property key="BkEunivSSESConfirmDelete">
         <value xml:lang="en">Are you sure to delete record id? </value>
