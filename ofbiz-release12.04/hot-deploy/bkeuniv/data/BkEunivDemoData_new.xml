@@ -127,9 +127,9 @@
 
 <Function functionId="RESEARCH_SUMMARY_TEMPLATE_EXCEL" uiLabelId="research_summary_template_excel" vnLabel="Tổng hợp mẫu Excel" enLabel="summary Excel" target="research-summary-excel" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="2"/>
 
-<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS" uiLabelId="research_summary_all_papers" vnLabel="Danh sách bài báo" enLabel="summary papers" target="research-summary-list-papers-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="3"/>
+<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS" uiLabelId="research_summary_all_papers" vnLabel="Danh sách bài báo, sách" enLabel="summary papers" target="research-summary-list-papers-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="3"/>
 
-<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS_FACULTY" uiLabelId="research_summary_all_papers_faculty" vnLabel="Danh sách bài báo của khoa/viện" enLabel="summary papers" target="research-summary-list-papers-faculty-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="4"/>
+<Function functionId="RESEARCH_SUMMARY_ALL_PAPERS_FACULTY" uiLabelId="research_summary_all_papers_faculty" vnLabel="Danh sách bài báo, sách của khoa/viện" enLabel="summary papers" target="research-summary-list-papers-faculty-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="4"/>
 
 
 <!-- Quan ly li lich khoa hoc -->
@@ -168,7 +168,7 @@
 
 <Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="7"/>
 
-<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="8"/>
+<Function functionId="PAPER_DECLARATION_STAFF" uiLabelId="paper_declaration_staff" vnLabel="Kê khai bài báo, sách" enLabel="declare papers" target="paper-declaration-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="8"/>
 
 <Function functionId="PROJECT_DECLARATION_STAFF" uiLabelId="project_declaration_staff" vnLabel="Kê khai đề tài" enLabel="declare projects" target="project-declaration-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="9"/>
 
@@ -177,6 +177,11 @@
 <Function functionId="PROJECT_DECLARATION" uiLabelId="project_declaration" vnLabel="Kê khai đề tài đang thực hiện" enLabel="declare running projects" target="project-declaration" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="9"/>
 
 <Function functionId="PROJECT_WORKING_HOUR_DECLARATION" uiLabelId="project_working_hour_declaration" vnLabel="Kê khai số giờ thực hiện đề tài" enLabel="declare working hour of running projects" target="project-working-hour-declaration" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="9"/>
+
+<Function functionId="PROJECT_BUDGET_DECLARATION" uiLabelId="project_budget_declaration" vnLabel="Kê khai kinh phí đề tài được cấp theo năm" enLabel="declare budget of running projects" target="project-budget-declaration" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="10"/>
+
+<Function functionId="PROJECT_PARTICIPATION_DECLARATION" uiLabelId="project_participation_declaration" vnLabel="Kê khai mức độ đóng góp vào đề tài" enLabel="declare pảticipation of running projects" target="project-participation-declaration" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="11"/>
+
 
 <Function functionId="EXCEL_01CN_02CN" uiLabelId="excel_01_cn_02_cn" vnLabel="Kết xuất excel mẫu 01-CN và 02-CN" enLabel="generate excel 01-CN 02-CN" target="excel-01-cn-02-cn" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="10"/>
 
@@ -6452,6 +6457,10 @@
 <PaperCategory paperCategoryId="JINT_SCIE" paperCategoryName="Tạp chí khoa học quốc tế SCIE" paperCategoryCode="JINT_SCIE" journalIndexId="SCIE"/>
 <PaperCategory paperCategoryId="JINT_Other" paperCategoryName="Tạp chí khoa học quốc tế" paperCategoryCode="JINT_Other" journalIndexId="OTHERJOURNAL"/>
 <PaperCategory paperCategoryId="JINT_SCOPUS" paperCategoryName="Tạp chí danh mục Scopus" paperCategoryCode="JINT_SCOPUS" journalIndexId="SCOPUS"/>
+<PaperCategory paperCategoryId="BOOK" paperCategoryName="Sách chuyên khảo" paperCategoryCode="BOOK" journalIndexId="OTHER"/>
+<PaperCategory paperCategoryId="BOOK_CHAP" paperCategoryName="Xuất bản chương sách tiếng Anh (Book Chapter)" paperCategoryCode="BOOK_CHAP" journalIndexId="OTHER"/>
+<PaperCategory paperCategoryId="SYLLABUS" paperCategoryName="Sách giáo trình" paperCategoryCode="SYLLABUS" journalIndexId="OTHER"/>
+
 
 <PaperDeclaration paperId="1" paperCode="dung.phamquang@hust.edu.vn1" paperCategoryId="CINT_Other" staffId="dung.phamquang@hust.edu.vn" paperName="A Java library for Constraint-Based Local Search: Application to the master thesis defense timetabling problem" journalConferenceName="Proceedings of the Sixth International Symposium on Information and Communication Technology" volumn="" year="2015" month="12" sourcePath="20180330151650.pdf" ISSN="" authors="Pham Quang Dung, Huynh Thanh Trung, Ta Duy Hoang, Nguyen Thanh Hoang" academicYearId="2015-2016" statusId="ENABLED" />
 <PaperDeclaration paperId="2" paperCode="dung.phamquang@hust.edu.vn2" paperCategoryId="JINT_SCI" staffId="dung.phamquang@hust.edu.vn" paperName="Exact methods for solving the elementary shortest and longest path problems" journalConferenceName="Annals of Operations Research" volumn="vol. 238, pp 1-36" year="2016" month="9" sourcePath="20180330151650.pdf" ISSN="1572-9338" authors="BUI Quoc Trung, Yves Deville, PHAM Quang Dung" academicYearId="2016-2017" statusId="ENABLED" />
@@ -7006,6 +7015,10 @@
 	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_EN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Anh)" paperCategoryKNCCode="JOURNAL_HDGS_EN" statusId="DISABLED"/>
 	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_HDGS_VN" paperCategoryKNCName="Tạp chí được Hội đồng Chức danh Giáo sư Nhà nước công nhận (tiếng Việt)" paperCategoryKNCCode="JOURNAL_HDGS_VN" statusId="DISABLED"/>
 	<PaperCategoryKNC paperCategoryKNCId="JOURNAL_OTHER" paperCategoryKNCName="Tạp chí Khác" paperCategoryKNCCode="JOURNAL_OTHER" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="BOOK" paperCategoryKNCName="Sách chuyên khảo" paperCategoryKNCCode="BOOK" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="BOOK_CHAP" paperCategoryKNCName="Xuất bản một chương sách bằng tiếng Anh (Book Chapter)" paperCategoryKNCCode="BOOK_CHAP" statusId="ENABLED"/>
+	<PaperCategoryKNC paperCategoryKNCId="SYLLABUS" paperCategoryKNCName="Sách giáo trình" paperCategoryKNCCode="SYLLABUS" statusId="ENABLED"/>
+	
 	
 	
 	
@@ -7020,6 +7033,12 @@
 	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2017-2018" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2017-2018" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2017-2018" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK" academicYearId="2017-2018" rate="0.0" rateKhoiluong="1.5" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK_CHAP" academicYearId="2017-2018" rate="0.0" rateKhoiluong="0.25" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SYLLABUS" academicYearId="2017-2018" rate="0.0" rateKhoiluong="1.00" rateNangluc="0.0"/>
+
+	
+	
 	
 
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2016-2017" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
@@ -7033,6 +7052,9 @@
 	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2016-2017" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2016-2017" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2016-2017" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK" academicYearId="2016-2017" rate="0.0" rateKhoiluong="1.5" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK_CHAP" academicYearId="2016-2017" rate="0.0" rateKhoiluong="0.25" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SYLLABUS" academicYearId="2016-2017" rate="0.0" rateKhoiluong="1.00" rateNangluc="0.0"/>
 	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2015-2016" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2015-2016" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>
@@ -7045,6 +7067,21 @@
 	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2015-2016" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2015-2016" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2015-2016" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK" academicYearId="2015-2016" rate="0.0" rateKhoiluong="1.5" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK_CHAP" academicYearId="2015-2016" rate="0.0" rateKhoiluong="0.25" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SYLLABUS" academicYearId="2015-2016" rate="0.0" rateKhoiluong="1.00" rateNangluc="0.0"/>
+	
 
+	<PatentCategory patentCategoryId="SANG_CHE" patentCategoryName="Bằng sáng chế"/>
+	<PatentCategory patentCategoryId="GPHI" patentCategoryName="Giải pháp hữu ích"/>
+
+	<PatentCategoryKNCRateYear patentCategoryId="SANG_CHE" academicYearId="2015-2016" rateKhoiluong="1.5" rateNangluc="1.5"/>
+	<PatentCategoryKNCRateYear patentCategoryId="GPHI" academicYearId="2015-2016" rateKhoiluong="0.75" rateNangluc="0.75"/>
+	<PatentCategoryKNCRateYear patentCategoryId="SANG_CHE" academicYearId="2016-2017" rateKhoiluong="1.5" rateNangluc="1.5"/>
+	<PatentCategoryKNCRateYear patentCategoryId="GPHI" academicYearId="2016-2017" rateKhoiluong="0.75" rateNangluc="0.75"/>
+	<PatentCategoryKNCRateYear patentCategoryId="SANG_CHE" academicYearId="2017-2018" rateKhoiluong="1.5" rateNangluc="1.5"/>
+	<PatentCategoryKNCRateYear patentCategoryId="GPHI" academicYearId="2017-2018" rateKhoiluong="0.75" rateNangluc="0.75"/>
+	
+	
 	
 </entity-engine-xml>

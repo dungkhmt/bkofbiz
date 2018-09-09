@@ -21,6 +21,12 @@
 		<attribute name="patent" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getPatentCategory" engine="java" 
+    		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="getPatentCategory">
+    	
+		<attribute name="patentCategory" mode="OUT" type="List"></attribute>
+    </service>
+    
      <service name="getProject" engine="java" 
     		location="org.ofbiz.bkeuniv.appliedresearchproject.AppliedResearchProject" invoke="getProject">
 		
@@ -37,6 +43,8 @@
     		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="createPatent">
     	<attribute name="patentName" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="patentCategoryId[]" mode="IN" type="List"></attribute>
+		<attribute name="academicYearId[]" mode="IN" type="List"></attribute>
 		<attribute name="year" mode="IN" type="String" optional="true"></attribute>
 		
 		<attribute name="patent" mode="OUT" type="Map"></attribute>
@@ -60,6 +68,9 @@
     	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="patentName" mode="IN" type="String"></attribute>
     	<attribute name="year" mode="IN" type="String"></attribute>
+    	<attribute name="patentCategoryId[]" mode="IN" type="List"></attribute>
+		<attribute name="academicYearId[]" mode="IN" type="List"></attribute>
+		
     	
     	<attribute name="patent" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
@@ -81,7 +92,7 @@
     		location="org.ofbiz.bkeuniv.patentstaff.patentStaff" invoke="deletePatent">
     	<attribute name="patentId" mode="IN" type="String"></attribute>
     	
-    	<attribute name="patent" mode="OUT" type="String"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
     
     <service name="deleteProject" engine="java" 

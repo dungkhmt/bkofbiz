@@ -25,6 +25,27 @@
         <value xml:lang="en">Research Project Proposal Name</value>
         <value xml:lang="vi">Tên dự án của nghiên cứu</value>
     </property>
+    
+    <property key="ProjectParticipationPercentage">
+        <value xml:lang="en">Project Participation Percentage</value>
+        <value xml:lang="vi">Mức độ phần trăm đóng góp vào đề tài (Xét theo kinh phí thiết bị và kinh phí quản lý)</value>
+    </property>
+
+    <property key="EquipmentBudget">
+        <value xml:lang="en">Equipment Budget</value>
+        <value xml:lang="vi">Kinh phí thiết bị (VNĐ)</value>
+    </property>
+    
+    <property key="ManagementBudget">
+        <value xml:lang="en">Management Budget</value>
+        <value xml:lang="vi">Kinh phí quản lý (VNĐ)</value>
+    </property>
+    
+    <property key="AllocatedBudgetYear">
+        <value xml:lang="en">Allocated Budget Year</value>
+        <value xml:lang="vi">Tổng kinh phí được cấp (VNĐ)</value>
+    </property>
+
     <property key="ResearchProjectProposalCode">
         <value xml:lang="en">Research Project Proposal Code</value>
         <value xml:lang="vi">Mã đề tài</value>

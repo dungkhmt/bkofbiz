@@ -251,7 +251,12 @@
 		<field name="projectParticipationRoleId" type="id-vlong"></field>
 		<field name="workingdays" type="numeric"></field>
 		<field name="workinghours" type="numeric"></field>
+		<field name="equipmentBudget" type="currency-amount"></field>
+		<field name="managementBudget" type="currency-amount"></field>
+		<field name="allocatedBudgetYear" type="currency-amount"></field>
+		<field name="staffParticipationPercentage" type="numeric"></field>
 		<field name="academicYearId" type="id-ne"></field>
+		
 		
 		<prim-key field="researchProjectDeclarationYearId"/>
 		
@@ -281,8 +286,11 @@
 		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
 		<member-entity entity-alias="PPR" entity-name="ProjectParticipationRole"></member-entity>
 		<alias-all entity-alias="RPD"></alias-all>
+		
 		<alias name="academicYearName" field="academicYearName" entity-alias="AY"></alias>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
+		
+		
 		<!-- 
 		<alias name="createByStaffName" field="staffName" entity-alias="CBST"></alias>
 		 -->
@@ -316,6 +324,124 @@
 		</view-link>
 	</view-entity>
 	
+
+	<entity entity-name="ResearchProjectBudgetDeclarationYear" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectDeclarationYearId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="equipmentBudget" type="currency-amount"></field>
+		<field name="managementBudget" type="currency-amount"></field>
+		<field name="allocatedBudgetYear" type="currency-amount"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		
+		
+		<prim-key field="researchProjectDeclarationYearId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one" fk-name="BDY_ACADEMICYEARRPDY">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		 
+		<relation rel-entity-name="ResearchProjectProposal" type="one" fk-name="BDY_RESEARCHPROJECTPROPOSALDECLARATIONYEAR">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		
+	</entity>
+	
+	<view-entity entity-name="ResearchProjectBudgetDeclarationYearView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPD" entity-name="ResearchProjectBudgetDeclarationYear"></member-entity>
+		<member-entity entity-alias="AY" entity-name="AcademicYear"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<alias-all entity-alias="RPD"></alias-all>
+		
+		<alias name="academicYearName" field="academicYearName" entity-alias="AY"></alias>
+		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPP"></alias>
+		<alias name="createStaffId" field="createStaffId" entity-alias="RPP"></alias>
+		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true" >
+			<key-map rel-field-name="academicYearId" field-name="academicYearId" />
+		</view-link>
+		
+		<view-link rel-entity-alias="RPP" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+	</view-entity>
+
+	<entity entity-name="ResearchProjectParticipationDeclarationYear" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectDeclarationYearId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="projectParticipationRoleId" type="id-vlong"></field>
+		<field name="workingdays" type="numeric"></field>
+		<field name="workinghours" type="numeric"></field>
+		<field name="staffParticipationPercentage" type="numeric"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		
+		
+		<prim-key field="researchProjectDeclarationYearId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one" fk-name="PY_ACADEMICYEARRPDY">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one" fk-name="PY_STAFFRPDY">
+			<key-map field-name="staffId"/>
+		</relation>
+		 
+		<relation rel-entity-name="ResearchProjectProposal" type="one" fk-name="PY_RESEARCHPROJECTPROPOSALDECLARATIONYEAR">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		
+		<relation rel-entity-name="ProjectParticipationRole" type="one">
+         	<key-map field-name="projectParticipationRoleId"/>
+         </relation>
+	</entity>
+	
+	<view-entity entity-name="ResearchProjectParticipationDeclarationYearView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPD" entity-name="ResearchProjectParticipationDeclarationYear"></member-entity>
+		<member-entity entity-alias="AY" entity-name="AcademicYear"></member-entity>
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<!-- 
+		<member-entity entity-alias="CBST" entity-name="Staff"></member-entity>
+		 -->
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="PPR" entity-name="ProjectParticipationRole"></member-entity>
+		<alias-all entity-alias="RPD"></alias-all>
+		
+		<alias name="academicYearName" field="academicYearName" entity-alias="AY"></alias>
+		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
+		
+		
+		<!-- 
+		<alias name="createByStaffName" field="staffName" entity-alias="CBST"></alias>
+		 -->
+		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="projectParticipationRoleName" field="projectParticipationRoleName" entity-alias="PPR"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPP"></alias>
+		<alias name="createStaffId" field="createStaffId" entity-alias="RPP"></alias>
+		<!-- 
+		<alias name="staffId" field="staffId" entity-alias="CBST"></alias>
+		 -->
+		<!-- 
+		<view-link rel-entity-alias="CBST" entity-alias="RPP" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="createStaffId"/>
+		</view-link>
+		 -->
+		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true" >
+			<key-map rel-field-name="academicYearId" field-name="academicYearId" />
+		</view-link>
+		 
+		<view-link rel-entity-alias="ST" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		
+		
+		<view-link rel-entity-alias="RPP" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
+		<view-link rel-entity-alias="PPR" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="projectParticipationRoleId" field-name="projectParticipationRoleId"/>
+		</view-link>
+	</view-entity>
+
 	<entity entity-name="ResearchProjectProposalDomain" package-name="org.ofbiz.bkeuniv">
 		<field name="researchProjectProposalId" type="id-ne"></field>
 		<field name="researchDomainId" type="id-vlong"></field>
@@ -976,9 +1102,24 @@
 		<relation rel-entity-name="PaperCategoryKNC" type="one">
 			<key-map field-name="paperCategoryKNCId"/>
 		</relation>
-		
 	</entity>
 	
+	<entity entity-name="PatentCategoryKNCRateYear" package-name="org.ofbiz.bkeuniv">
+		<field name="patentCategoryKNCRateYearId" type="id-ne"></field>
+		<field name="patentCategoryId" type="id-ne"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="rate" type="floating-point"></field>
+		<field name="rateKhoiluong" type="floating-point"></field>
+		<field name="rateNangluc" type="floating-point"></field>
+		<prim-key field="patentCategoryKNCRateYearId"/>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="PatentCategory" type="one">
+			<key-map field-name="patentCategoryId"/>
+		</relation>
+	</entity>
+
 	<entity entity-name="PaperDeclarationStatus" package-name="org.ofbiz.bkeuniv">
 		<field name="paperDeclarationStatusId" type="id-ne"></field>
 		<field name="paperDeclarationStatusName" type="very-long"></field>
@@ -1378,16 +1519,43 @@
 		
 	</view-entity>
 	
+	<entity entity-name="PatentCategory" package-name="org.ofbiz.bkeuniv">
+		<field name="patentCategoryId" type="id-ne"></field>
+		<field name="patentCategoryName" type="very-long"></field>
+		<prim-key field="patentCategoryId"/>
+		
+	</entity>
+	
 	<entity entity-name="Patent" package-name="org.ofbiz.bkeuniv">
 		<field name="patentId" type="id-ne"></field>
 		<field name="patentName" type="very-long"></field>
+		<field name="patentCategoryId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="year" type="numeric"></field>
+		<field name="academicYearId" type="id"></field>
+		<field name="statusId" type="id"></field>
 		<prim-key field="patentId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>
+		<relation rel-entity-name="PatentCategory" type="one">
+			<key-map field-name="patentCategoryId"/>
+		</relation>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
 	</entity>
+	
+	<view-entity entity-name="PatentView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PT" entity-name="Patent"></member-entity>
+		<member-entity entity-alias="PC" entity-name="PatentCategory"></member-entity>
+		<alias-all entity-alias="PT"></alias-all>
+		<alias name="patentCategoryName" entity-alias="PC" field="patentCategoryName"></alias>
+		<view-link rel-entity-alias="PC" entity-alias="PT" rel-optional="true">
+			<key-map field-name="patentCategoryId"/>
+		</view-link>
+		
+	</view-entity>
 	
 	<entity entity-name="StudentSupervisionType" package-name="org.ofbiz.bkeuniv">
 		<field name="studentSupervisionTypeId" type="id-ne"></field>

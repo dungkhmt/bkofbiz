@@ -459,6 +459,8 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivPatentUiLabels" map-name="uiPatentLabelMap" global="true"/>
+				<service service-name="getPatentCategory" result-map="resultPatentCategory"></service>
+				<service service-name="getAcademicYear" result-map="academicYearS"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -1172,6 +1174,66 @@
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-working-hour-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageProjectBudgetDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProjectProposalUiLables" map-name="projectDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAcademicYear" result-map="academicYearS"></service>
+				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
+				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
+				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-budget-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageProjectParticipationDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProjectProposalUiLables" map-name="projectDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAcademicYear" result-map="academicYearS"></service>
+				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
+				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
+				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-participation-declaration.ftl" />
 							</html>
 						</platform-specific>
 

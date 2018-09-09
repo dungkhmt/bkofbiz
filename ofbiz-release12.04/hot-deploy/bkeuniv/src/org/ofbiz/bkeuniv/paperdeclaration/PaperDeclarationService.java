@@ -172,13 +172,13 @@ public class PaperDeclarationService {
 		String facultyId = (String) request.getParameter("facultyId-kv04");
 		Debug.log(module + "::exportExcelKV04, academic year = " + year);
 
-		String filename = "KV04-" + year;
+		String filename = "KNC-" + year;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
-			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV04(
-					delegator, year, facultyId);
-
+			//HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV04(delegator, year, facultyId);
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(delegator, year, facultyId);
+			
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
 			response.setHeader("content-disposition", "attachment;filename="

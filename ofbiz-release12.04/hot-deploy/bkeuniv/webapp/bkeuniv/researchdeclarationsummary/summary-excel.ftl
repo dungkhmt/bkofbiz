@@ -666,7 +666,7 @@
 		</div>
 		<div class="card-content" style="padding: 24px 10px 24px 10px;">
 			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-				KV04
+				KNC
 			</span>
 		</div>
 	</div>
