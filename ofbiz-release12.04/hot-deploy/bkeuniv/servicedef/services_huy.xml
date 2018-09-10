@@ -231,6 +231,20 @@
     	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getBudgetDeclarationOfProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclarationYear" invoke="getBudgetDeclarationOfProject">
+    	<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getParticipationDeclarationOfProject" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclarationYear" invoke="getParticipationDeclarationOfProject">
+    	<attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
+    </service>
+    
     
     <service name="getProjectWorkingHourDeclarationOfProject" engine="java" 
     		location="org.ofbiz.bkeuniv.projectdeclaration.ProjectWorkingHourDeclaration" invoke="getProjectWorkingHourDeclarationOfProject">
