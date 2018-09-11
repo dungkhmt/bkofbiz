@@ -2,6 +2,12 @@
 <site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
 
+	<request-map uri="project-declaration-year-detail">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-declaration-year-detail"></response>
+    </request-map>
+
+	
     <request-map uri="export-excel-project-proposals">
 		<security auth="true" https="true" />
 		<event type="java" path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
@@ -563,6 +569,11 @@
 		<response name="success" type="view" value="view-form-edit-project-proposal" />
 		<response name="error" type="view" value="view-form-edit-project-proposal" />
 	</request-map>
+
+
+
+  <view-map name="view-project-declaration-year-detail" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#pageProjectDeclarationYearDetailView"/>
+
 
   <view-map name="view-members-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#MembersOfProjectProposal"/>
   <view-map name="view-workpackages-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#WorkpackagesOfProjectProposal"/>

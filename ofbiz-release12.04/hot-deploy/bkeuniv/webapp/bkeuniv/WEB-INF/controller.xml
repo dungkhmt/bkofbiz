@@ -840,9 +840,33 @@
     	<response name="success" type="view" value="view-project-working-hour-declaration"></response>
     </request-map>
     
+	<request-map uri="project-budget-declaration">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-budget-declaration"></response>
+    </request-map>
+    
+	<request-map uri="project-participation-declaration">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-project-participation-declaration"></response>
+    </request-map>
+
     <request-map uri="get-project-working-hour-declaration">
     	<security https="true" auth="false"/>
     	<event type="service" invoke="getProjectWorkingHourDeclaration"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    
+    <request-map uri="get-project-participation-declaration">
+    	<security https="true" auth="false"/>
+    	<event type="service" invoke="getProjectParticipationDeclaration"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+
+    <request-map uri="get-project-budget-declaration">
+    	<security https="true" auth="false"/>
+    	<event type="service" invoke="getProjectBudgetDeclaration"></event>
     	<response name="success" type="request" value="json"></response>
     	<response name="error" type="request" value="json"></response>
     </request-map>
@@ -854,9 +878,37 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+    <request-map uri="create-project-participation-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectParticipationDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+    <request-map uri="create-project-budget-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectBudgetDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+
 	<request-map uri="update-project-working-hour-declaration">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="updateProjectWorkingHourDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="update-project-participation-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateProjectParticipationDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="update-project-budget-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateProjectBudgetDeclaration"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -864,6 +916,20 @@
 	<request-map uri="delete-project-working-hour-declaration">
 		<security https="false" auth="false"/>
 		<event type="service" invoke="deleteProjectWorkingHourDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-project-participation-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteProjectParticipationDeclaration"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-project-budget-declaration">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteProjectBudgetDeclaration"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -1000,6 +1066,8 @@
    <view-map name="view-form-change-password" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageChangePassword"/>
    <view-map name="view-project-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclarationNew"/>
    <view-map name="view-project-working-hour-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectWorkingHourDeclaration"/>
+   <view-map name="view-project-budget-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectBudgetDeclaration"/>
+   <view-map name="view-project-participation-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectParticipationDeclaration"/>
     
    <view-map name="view-synchronize-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#SynchronizeStaff"/>
 

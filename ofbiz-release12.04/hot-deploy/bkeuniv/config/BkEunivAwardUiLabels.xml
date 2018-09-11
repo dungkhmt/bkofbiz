@@ -17,12 +17,12 @@
     
     <property key="BkEunivDescription">
         <value xml:lang="en">Description</value>
-        <value xml:lang="vi">Mô tả</value>
+        <value xml:lang="vi">Hình thức và nội dung giải thưởng</value>
     </property>
     
     <property key="BkEunivYear">
         <value xml:lang="en">Year</value>
-        <value xml:lang="vi">Năm</value>
+        <value xml:lang="vi">Năm tặng thưởng</value>
     </property>
     
     <property key="BkEunivTitleEditAward">

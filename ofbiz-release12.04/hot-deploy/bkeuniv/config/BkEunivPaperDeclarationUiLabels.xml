@@ -12,7 +12,7 @@
     
     <property key="BkEunivPaperName">
         <value xml:lang="en">Paper name</value>
-        <value xml:lang="vi">Tên bài báo*</value>
+        <value xml:lang="vi">Tên bài báo, sách</value>
     </property>
     <property key="BkEunivRoleName">
         <value xml:lang="en">Role (author/co-author)</value>
@@ -21,12 +21,12 @@
     
     <property key="BkEunivPaperAuthors">
         <value xml:lang="en">Authors</value>
-        <value xml:lang="vi">Tác giả (cách nhau bởi dấu phảy)*</value>
+        <value xml:lang="vi">Tác giả (cách nhau bởi dấu phảy)</value>
     </property>
     
     <property key="BkEunivAuthors">
         <value xml:lang="en">Authors</value>
-        <value xml:lang="vi">Tác giả*</value>
+        <value xml:lang="vi">Tác giả</value>
     </property>
 
     <property key="BkEunivPaperCategory">
@@ -45,7 +45,7 @@
     
     <property key="BkEunivPaperJournalConference">
         <value xml:lang="en">Journal/Conference</value>
-        <value xml:lang="vi">Tên tạp chí, hội nghị*</value>
+        <value xml:lang="vi">Tên tạp chí, hội nghị</value>
     </property>
    
     <property key="BkEunivPaperDOI">
@@ -69,7 +69,7 @@
 
     <property key="BkEunivPaperVolumn">
         <value xml:lang="en">Volumn</value>
-        <value xml:lang="vi">Số, Trang (ví dụ: vol. 21, pp 13-25)*</value>
+        <value xml:lang="vi">Số, Trang (ví dụ: vol. 21, pp 13-25)</value>
     </property>
    
     <property key="BkEunivPaperISSN">
@@ -79,12 +79,12 @@
 
     <property key="BkEunivPaperMonth">
         <value xml:lang="en">Published Month</value>
-        <value xml:lang="vi">Tháng xuất bản*</value>
+        <value xml:lang="vi">Tháng xuất bản</value>
     </property>
    
     <property key="BkEunivPaperYear">
         <value xml:lang="en">Published Year</value>
-        <value xml:lang="vi">Năm xuất bản*</value>
+        <value xml:lang="vi">Năm xuất bản</value>
     </property>
    
     <property key="BkEunivPaperAcademicYear">

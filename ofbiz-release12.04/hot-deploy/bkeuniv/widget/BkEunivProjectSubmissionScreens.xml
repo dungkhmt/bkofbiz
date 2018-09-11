@@ -2,6 +2,84 @@
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
+	<screen name="pageProjectDeclarationYearDetailView">
+		<section>
+			<actions>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+					<include-screen name="pageProjectDeclarationYearDetail"/>
+	 				</decorator-section>
+				</decorator-screen>
+	 
+	
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageProjectDeclarationYearDetail">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="researchProjectProposalId" type="PlainString" from-field="${parameters.researchProjectProposalId}" global="true"/>
+				
+				<service service-name="getProjectProposal"
+					result-map="resultProjectProposal">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				<set field="pResultProjectProposal" from-field="resultProjectProposal" global="true"/>
+				
+				<service service-name="getMembersOfProjectProposal"
+					result-map="resultMembers">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+				<service service-name="getProjectProposalContentItem" 
+					result-map="resultContentItems">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+				<service service-name="getProjectProposalProducts" 
+					result-map="resultProducts">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+				<service service-name="getProjectWorkingHourDeclarationOfProject" 
+					result-map="resultProjectWorkingHourDeclaration">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+				<service service-name="getBudgetDeclarationOfProject" 
+					result-map="resultBudgetDeclaration">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+			</actions>
+			<widgets>
+			<!-- 
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+ -->
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/detailResearchProjectDeclarationYear.ftl" />
+							</html>
+						</platform-specific>
+
+	<!-- 				</decorator-section>
+				</decorator-screen>
+	 -->
+	
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="ProjectSubmissionManagement">
 		<section>
 			<actions>
@@ -310,6 +388,16 @@
 					<field-map field-name="researchProjectProposalId"/>
 				</service>
 
+				<service service-name="getBudgetDeclarationOfProject" 
+					result-map="resultBudgetDeclaration">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
+				<service service-name="getParticipationDeclarationOfProject" 
+					result-map="resultParticipationDeclaration">
+					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				
 			</actions>
 			<widgets>
 			<!-- 

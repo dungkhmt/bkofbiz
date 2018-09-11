@@ -35,6 +35,11 @@
         <value xml:lang="vi">Năm đạt học vị</value>
     </property>
     
+    <property key="BkEunivYearPatent">
+        <value xml:lang="en">Year patent</value>
+        <value xml:lang="vi">Năm cấp văn bằng</value>
+    </property>
+
     <property key="BkEunivName">
         <value xml:lang="en">Name</value>
         <value xml:lang="vi">Tên gọi</value>

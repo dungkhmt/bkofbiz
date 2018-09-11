@@ -1,6 +1,7 @@
 package org.ofbiz.bkeuniv.paperdeclaration;
 
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,7 +51,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	public static final String STATUS_ENABLED = "ENABLED";
 	public static final String STATUS_DISABLED = "DISABLED";
 	public static final String STATUS_CANCELLED = "CANCELLED";
-	
+
 	public static final String module = PaperDeclarationUtil.class.getName();
 	public static final String[] sSTT = new String[] { "I", "II", "III", "IV",
 			"V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV",
@@ -103,28 +104,34 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			conds.add(EntityCondition.makeCondition("statusStaffPaper",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 			/*
-			EntityCondition c1 = EntityCondition.makeCondition("approveStatusId",
-					EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED);
-			EntityCondition c2 = EntityCondition.makeCondition("approveStatusId",
-					EntityOperator.EQUALS,null);
-			List<EntityCondition> L1 = FastList.newInstance();
-			L1.add(c1);
-			L1.add(c2);
-			conds.add(EntityCondition.makeCondition(L1,EntityJoinOperator.OR));
-			*/
-			
-			//conds.add(EntityCondition.makeCondition("approveStatusId",
-			//		EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED));
+			 * EntityCondition c1 =
+			 * EntityCondition.makeCondition("approveStatusId",
+			 * EntityOperator.NOT_EQUAL, PaperDeclarationUtil.STATUS_CANCELLED);
+			 * EntityCondition c2 =
+			 * EntityCondition.makeCondition("approveStatusId",
+			 * EntityOperator.EQUALS,null); List<EntityCondition> L1 =
+			 * FastList.newInstance(); L1.add(c1); L1.add(c2);
+			 * conds.add(EntityCondition
+			 * .makeCondition(L1,EntityJoinOperator.OR));
+			 */
+
+			// conds.add(EntityCondition.makeCondition("approveStatusId",
+			// EntityOperator.NOT_EQUAL,
+			// PaperDeclarationUtil.STATUS_CANCELLED));
 
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			
+
 			List<GenericValue> ret_papers = FastList.newInstance();
-			for(GenericValue p: papers){
-				System.out.println(module + "::getPapersOfStaffAcademicYear, " + p.get("approveStatusId"));
-				
-				if(p.get("approveStatusId") == null || !p.getString("approveStatusId").equals(PaperDeclarationUtil.STATUS_CANCELLED)){
+			for (GenericValue p : papers) {
+				// System.out.println(module +
+				// "::getPapersOfStaffAcademicYear, " +
+				// p.get("approveStatusId"));
+
+				if (p.get("approveStatusId") == null
+						|| !p.getString("approveStatusId").equals(
+								PaperDeclarationUtil.STATUS_CANCELLED)) {
 					ret_papers.add(p);
 				}
 			}
@@ -197,7 +204,6 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 	}
 
-	
 	public static List<GenericValue> getDepartments(Delegator delegator,
 			String facultyId) {
 		try {
@@ -213,12 +219,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			return null;
 		}
 	}
+
 	public static GenericValue getDepartment(Delegator delegator,
 			String departmentId) {
 		try {
-			
-			GenericValue d = delegator.findOne("Department", 
-					UtilMisc.toMap("departmentId", departmentId),false);
+
+			GenericValue d = delegator.findOne("Department",
+					UtilMisc.toMap("departmentId", departmentId), false);
 			return d;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -486,7 +493,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					continue;
 
 				long hours = 0;
-				if(g.getLong("workinghours") != null)
+				if (g.getLong("workinghours") != null)
 					hours = g.getLong("workinghours");
 				if (retSucc.get(staffId) == null)
 					retSucc.put(staffId, hours);
@@ -1010,7 +1017,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	public static int createContentTablePaperKV03(Sheet sh,
 			List<GenericValue> data,
 			HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
-			HSSFCellStyle cellStyle, int firstRow, int firstColumn, Map<String, Object> mPaper2AuthorInfo) {
+			HSSFCellStyle cellStyle, int firstRow, int firstColumn,
+			Map<String, Object> mPaper2AuthorInfo) {
 		int currRow = firstRow;
 		List<List<String>> papers = new ArrayList<List<String>>();
 
@@ -1053,28 +1061,36 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			paper.add(String.valueOf(nbIntAuthors));
 
 			String paperId = p.getString("paperId");
-			Map<String, Object> info = (Map<String, Object>)mPaper2AuthorInfo.get(paperId);
-			
+			Map<String, Object> info = (Map<String, Object>) mPaper2AuthorInfo
+					.get(paperId);
+
 			String firstAuthorIsCorresponding = "";
 			String firstAuthorIsNotCorresponding = "";
 			String correspondingAuthor = "";
 			String nonCorrespondingAuthor = "";
-			if(info != null){
-				firstAuthorIsCorresponding = (String)info.get("firstAuthorIsCorresponding");
-				firstAuthorIsNotCorresponding = (String)info.get("firstAuthorIsNotCorresponding");
-				correspondingAuthor = (String)info.get("correspondingAuthor");
-				nonCorrespondingAuthor = (String) info.get("nonCorrespondingAuthor");
+			if (info != null) {
+				firstAuthorIsCorresponding = (String) info
+						.get("firstAuthorIsCorresponding");
+				firstAuthorIsNotCorresponding = (String) info
+						.get("firstAuthorIsNotCorresponding");
+				correspondingAuthor = (String) info.get("correspondingAuthor");
+				nonCorrespondingAuthor = (String) info
+						.get("nonCorrespondingAuthor");
 			}
-			if(firstAuthorIsCorresponding.equals("T")) firstAuthorIsCorresponding = "X";
-			else firstAuthorIsCorresponding = "";
-			if(firstAuthorIsNotCorresponding.equals("T")) firstAuthorIsNotCorresponding = "X";
-			else firstAuthorIsNotCorresponding = "";
-			
+			if (firstAuthorIsCorresponding.equals("T"))
+				firstAuthorIsCorresponding = "X";
+			else
+				firstAuthorIsCorresponding = "";
+			if (firstAuthorIsNotCorresponding.equals("T"))
+				firstAuthorIsNotCorresponding = "X";
+			else
+				firstAuthorIsNotCorresponding = "";
+
 			paper.add(firstAuthorIsCorresponding);
 			paper.add(firstAuthorIsNotCorresponding);
 			paper.add(correspondingAuthor);
 			paper.add(nonCorrespondingAuthor);
-			
+
 			papers.add(paper);
 		}
 		currRow = createContentTable(sh, papers, cellStyle, currRow,
@@ -1985,7 +2001,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			List<GenericValue> lst_domestic_conference_papers1,
 			List<GenericValue> lst_domestic_conference_papers2,
 			String academicYearId, String facultyName,
-			HashMap<GenericValue, Integer> mPaper2NbIntAuthors, Map<String, Object> mPaper2AuthorInfo) {
+			HashMap<GenericValue, Integer> mPaper2NbIntAuthors,
+			Map<String, Object> mPaper2AuthorInfo) {
 
 		String[] year = academicYearId.split("-");
 
@@ -2184,7 +2201,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createCellNull(rh, cellStyleSubSection, E, M);
 
 		currRow = createContentTablePaperKV03(sh, lst_domestic_journal_papers1,
-				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B,
+				mPaper2AuthorInfo);
 
 		currRow++;
 		rh = sh.createRow(currRow);
@@ -2254,7 +2272,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createCellNull(rh, cellStyleSubSection, E, M);
 
 		currRow = createContentTablePaperKV03(sh, lst_domestic_journal_papers2,
-				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B, mPaper2AuthorInfo);
+				mPaper2NbIntAuthors, cellStyleContent, currRow + 1, B,
+				mPaper2AuthorInfo);
 
 		currRow++;
 		rh = sh.createRow(currRow);
@@ -2531,39 +2550,51 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			String correspondingAuthor = "";
 			String nonCorrespondingAuthor = "";
 			for (GenericValue g : lst_ext) {
-				if (g.getString("correspondingAuthor") != null && g.getString("correspondingAuthor").equals("Y")) {
-					if (g.getLong("sequence") != null && g.getLong("sequence") == 1) {
+				if (g.getString("correspondingAuthor") != null
+						&& g.getString("correspondingAuthor").equals("Y")) {
+					if (g.getLong("sequence") != null
+							&& g.getLong("sequence") == 1) {
 						firstAuthorIsCorresponding = "T";
 					}
-					//else{
-					//	firstAuthorIsNotCorresponding = "T";
-					//}
-					if(g.getString("staffName") != null)correspondingAuthor += g.getString("staffName") + ", ";
+					// else{
+					// firstAuthorIsNotCorresponding = "T";
+					// }
+					if (g.getString("staffName") != null)
+						correspondingAuthor += g.getString("staffName") + ", ";
 				} else {
-					if(g.getString("staffName") != null)nonCorrespondingAuthor += g.getString("staffName") + ", ";
+					if (g.getString("staffName") != null)
+						nonCorrespondingAuthor += g.getString("staffName")
+								+ ", ";
 				}
 			}
 
 			for (GenericValue g : lst_int) {
-				if (g.getString("correspondingAuthor") != null && g.getString("correspondingAuthor").equals("Y")) {
-					if (g.getLong("sequence") != null && g.getLong("sequence") == 1) {
+				if (g.getString("correspondingAuthor") != null
+						&& g.getString("correspondingAuthor").equals("Y")) {
+					if (g.getLong("sequence") != null
+							&& g.getLong("sequence") == 1) {
 						firstAuthorIsCorresponding = "T";
 					}
-					//else{
-					//	firstAuthorIsNotCorresponding = "T";
-					//}
-					if(g.getString("staffName") != null) correspondingAuthor += g.getString("staffName") + ", ";
+					// else{
+					// firstAuthorIsNotCorresponding = "T";
+					// }
+					if (g.getString("staffName") != null)
+						correspondingAuthor += g.getString("staffName") + ", ";
 				} else {
-					if(g.getString("staffName") != null) nonCorrespondingAuthor += g.getString("staffName") + ", ";
+					if (g.getString("staffName") != null)
+						nonCorrespondingAuthor += g.getString("staffName")
+								+ ", ";
 				}
 			}
-			if(firstAuthorIsCorresponding.equals("T"))
+			if (firstAuthorIsCorresponding.equals("T"))
 				firstAuthorIsNotCorresponding = "F";
 			else
 				firstAuthorIsNotCorresponding = "T";
-			
-			retSucc.put("firstAuthorIsCorresponding", firstAuthorIsCorresponding);
-			retSucc.put("firstAuthorIsNotCorresponding", firstAuthorIsNotCorresponding);
+
+			retSucc.put("firstAuthorIsCorresponding",
+					firstAuthorIsCorresponding);
+			retSucc.put("firstAuthorIsNotCorresponding",
+					firstAuthorIsNotCorresponding);
 			retSucc.put("correspondingAuthor", correspondingAuthor);
 			retSucc.put("nonCorrespondingAuthor", nonCorrespondingAuthor);
 		} catch (Exception ex) {
@@ -2579,12 +2610,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					delegator, facultyId, academicYearId);
 
 			Map<String, Object> mPaper2AuthorInfo = FastMap.newInstance();
-			for(GenericValue p: all_papers){
+			for (GenericValue p : all_papers) {
 				String paperId = p.getString("paperId");
 				Map<String, Object> infos = getAuthorInfos(delegator, paperId);
 				mPaper2AuthorInfo.put(paperId, infos);
 			}
-			
+
 			// Sheet sh = wb.createSheet("KV03");
 			List<GenericValue> lst_isi_papers1 = FastList.newInstance();
 			List<GenericValue> lst_isi_papers2 = FastList.newInstance();
@@ -3043,7 +3074,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			int start_r = i_row;
 			for (int i = 1; i < staffsOfPaper.size(); i++) {
 				GenericValue st = staffsOfPaper.get(i);
-				String staffName = (String) (mId2Staff.get(st.get("staffId"))
+				String staffId = st.getString("staffId");
+				System.out.println(name() + "::createSegmentKV04, paper "
+						+ p.getString("paperName") + ", staffId = " + staffId);
+				if (mId2Staff.get(staffId) == null)
+					continue;
+
+				String staffName = (String) (mId2Staff.get(staffId)
 						.get("staffName"));
 				i_row += 1;
 				r = sh.createRow(i_row);
@@ -3069,9 +3106,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		}
 		return i_row;
 	}
-	
-	
-	
+
 	public static void createSheetListPapersKV04(HSSFWorkbook wb,
 			List<GenericValue> papers) {
 		Sheet sh = wb.createSheet("danh sach bai bao");
@@ -3245,66 +3280,104 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 	}
 
-	public static GenericValue getStaffPaperDeclaration(Delegator delegator, String paperId, String staffId){
-		try{
+	public static GenericValue getStaffPaperDeclaration(Delegator delegator,
+			String paperId, String staffId) {
+		try {
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition.makeCondition("paperId",EntityOperator.EQUALS,paperId));
-			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
-			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,PaperDeclarationUtil.STATUS_ENABLED));
-			List<GenericValue> L = delegator.findList("StaffPaperDeclaration", 
-					EntityCondition.makeCondition(conds), null,null,null,false);
-			if(L != null && L.size() > 0)
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			List<GenericValue> L = delegator.findList("StaffPaperDeclaration",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			if (L != null && L.size() > 0)
 				return L.get(0);
 			else
 				return null;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
 		}
 	}
-	public static HashMap<String, Double> getRateKNCPaper(Delegator delegator, String academicYearId){
-		try{
+
+	public static HashMap<String, Double> getRateKNCPaper(Delegator delegator,
+			String academicYearId) {
+		try {
 			HashMap<String, Double> mCategory2Rate = new HashMap<String, Double>();
 			List<EntityCondition> conds = FastList.newInstance();
-			conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
-			List<GenericValue> L = delegator.findList("PaperCategoryKNCRateYear", 
-					EntityCondition.makeCondition(conds), null,null,null,false);
-			for(GenericValue g: L){
+			conds.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+			List<GenericValue> L = delegator.findList(
+					"PaperCategoryKNCRateYear",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			for (GenericValue g : L) {
 				String cat = g.getString("paperCategoryKNCId");
 				double rate = g.getDouble("rateNangluc");
 				mCategory2Rate.put(cat, rate);
 			}
 			return mCategory2Rate;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			
+
 		}
 		return null;
 	}
-	public static HashMap<String, String> getMapPaperCategoryKNCId2Name(Delegator delegator){
-		try{
+
+	public static HashMap<String, Double> getRateKKLPaper(Delegator delegator,
+			String academicYearId) {
+		try {
+			HashMap<String, Double> mCategory2Rate = new HashMap<String, Double>();
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+			List<GenericValue> L = delegator.findList(
+					"PaperCategoryKNCRateYear",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			for (GenericValue g : L) {
+				String cat = g.getString("paperCategoryKNCId");
+				double rate = g.getDouble("rateKhoiluong");
+				mCategory2Rate.put(cat, rate);
+			}
+			return mCategory2Rate;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+		return null;
+	}
+
+	public static HashMap<String, String> getMapPaperCategoryKNCId2Name(
+			Delegator delegator) {
+		try {
 			HashMap<String, String> m = new HashMap<String, String>();
-			//List<EntityCondition> conds = FastList.newInstance();
-			//conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
-			List<GenericValue> L = delegator.findList("PaperCategoryKNC", 
-					null, null,null,null,false);
-			for(GenericValue g: L){
+			// List<EntityCondition> conds = FastList.newInstance();
+			// conds.add(EntityCondition.makeCondition("academicYearId",EntityOperator.EQUALS,academicYearId));
+			List<GenericValue> L = delegator.findList("PaperCategoryKNC", null,
+					null, null, null, false);
+			for (GenericValue g : L) {
 				String cat = g.getString("paperCategoryKNCId");
 				String name = g.getString("paperCategoryKNCName");
 				m.put(cat, name);
 			}
 			return m;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			
+
 		}
 		return null;
 	}
-	public static String name(){
+
+	public static String name() {
 		return "paperDeclarationUtil";
 	}
-	public static void createSheetKNC(HSSFWorkbook wb,
-			String facultyId, String academicYearId, Delegator delegator) {
+
+	public static void createSheetKNC(HSSFWorkbook wb, String facultyId,
+			String academicYearId, Delegator delegator) {
 		Sheet sh = wb.createSheet("KNC");
 
 		CellStyle styleTitle = wb.createCellStyle();
@@ -3346,7 +3419,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(7, 3000);// rate_nangluc
 		sh.setColumnWidth(8, 4000);// KNC
 		sh.setColumnWidth(9, 5000);// Ghi chu
-		//sh.setColumnWidth(10, 10000);// GHi chu
+		// sh.setColumnWidth(10, 10000);// GHi chu
 
 		int i_row = 0;
 
@@ -3360,17 +3433,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("STT");
 		ch.setCellStyle(styleTitle);
 
-		
-		//i_col++;
-		//ch = rh.createCell(i_col);
-		//ch.setCellValue("Họ tên");
-		//ch.setCellStyle(styleTitle);
+		// i_col++;
+		// ch = rh.createCell(i_col);
+		// ch.setCellValue("Họ tên");
+		// ch.setCellStyle(styleTitle);
 
 		i_col++;
 		ch = rh.createCell(i_col);
-		ch.setCellValue("Tên bài báo");
+		ch.setCellValue("Tên bài báo, sách");
 		ch.setCellStyle(styleTitle);
-
 
 		i_col++;
 		ch = rh.createCell(i_col);
@@ -3381,43 +3452,45 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch = rh.createCell(i_col);
 		ch.setCellValue("D/S Tác giả");
 		ch.setCellStyle(styleTitle);
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("Số tác giả");
 		ch.setCellStyle(styleTitle);
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("Corresponding");
 		ch.setCellStyle(styleTitle);
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("Điểm năng lực");
 		ch.setCellStyle(styleTitle);
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
-		
+
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("Ghi chú");
 		ch.setCellStyle(styleTitle);
-		
+
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
-		
-		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator, academicYearId);
-		
+
+		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator,
+				academicYearId);
+
 		HashMap<String, String> mKNCIdName = getMapPaperCategoryKNCId2Name(delegator);
-		
+
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
-			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
-			
+			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
+					staffId, academicYearId);
+
 			i_row++;
 			count++;
 			rh = sh.createRow(i_row);
@@ -3432,134 +3505,140 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch = rh.createCell(i_col);
 			ch.setCellValue(st.getString("staffName"));
 			ch.setCellStyle(styleNormal);
-			
-			for(int k = 3; k <= 9; k++){
+
+			for (int k = 3; k <= 9; k++) {
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellStyle(styleNormal);
 			}
-			
-			
+
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 9));
-			
+
 			double total_knc = 0;
-			for(GenericValue p: papers){
+			for (GenericValue p : papers) {
 				String paperId = p.getString("paperId");
 				String authors = p.getString("authors");
 				String paperCategoryKNCId = p.getString("paperCategoryKNCId");
-				
-				GenericValue sp = getStaffPaperDeclaration(delegator, paperId, staffId);
-				
+
+				GenericValue sp = getStaffPaperDeclaration(delegator, paperId,
+						staffId);
+
 				String s_rate = "";
 				String s_knc = "";
 				double knc = 0;
 				int nbAuthors = 1;
 				String correspondingAuthor = "N";
 				String description = "";
-				if(sp.get("sequence") == null){
+				if (sp.get("sequence") == null) {
 					description += "Không có thông tin về số thứ tự của tác giả. ";
 				}
-				if(paperCategoryKNCId == null){
+				if (paperCategoryKNCId == null) {
 					description += "Không có thông tin về phân loại KNC. ";
 				}
-				if(authors != null && !authors.equals("")){
+				if (authors != null && !authors.equals("")) {
 					String[] s = authors.split(",");
 					nbAuthors = s.length;
 				}
-				
-				if(paperCategoryKNCId != null && sp != null){
+
+				if (paperCategoryKNCId != null && sp != null) {
 					Double x = mCategory2Rate.get(paperCategoryKNCId);
-					
-					System.out.println(name() + "::createSheetKNC paper " + p.getString("paperName") + ", categoryKNC = " + 
-				paperCategoryKNCId + ", sequence = " + sp.getLong("sequence") + ", corresponding = " + 
-							sp.getString("correspondingAuthor") + ", rate = " + x + ", authors = " + authors);
-					
-					
-					
-					if(x != null && sp.getLong("sequence") != null && 
-							sp.getString("correspondingAuthor")!=null && authors != null && !authors.equals("")){
+
+					System.out.println(name() + "::createSheetKNC paper "
+							+ p.getString("paperName") + ", categoryKNC = "
+							+ paperCategoryKNCId + ", sequence = "
+							+ sp.getLong("sequence") + ", corresponding = "
+							+ sp.getString("correspondingAuthor") + ", rate = "
+							+ x + ", authors = " + authors);
+
+					if (x != null && sp.getLong("sequence") != null
+							&& sp.getString("correspondingAuthor") != null
+							&& authors != null && !authors.equals("")) {
 						s_rate = x + "";
 						long seq = sp.getLong("sequence");
-						
-						
-						if(seq == 1 && sp.getString("correspondingAuthor").equals("Y")){
-							knc = 0.4*x + (0.6*x*1.0/nbAuthors);
-						}else if(seq == 1){
-							knc = 0.2*x + (0.6*x*1.0/nbAuthors);
-						}else if(sp.getString("correspondingAuthor").equals("Y")){
-							knc = 0.2*x + (0.6*x*1.0/nbAuthors);
-						}else{
-							knc = (0.6*x*1.0/nbAuthors);
+
+						if (seq == 1
+								&& sp.getString("correspondingAuthor").equals(
+										"Y")) {
+							knc = 0.4 * x + (0.6 * x * 1.0 / nbAuthors);
+						} else if (seq == 1) {
+							knc = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+						} else if (sp.getString("correspondingAuthor").equals(
+								"Y")) {
+							knc = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+						} else {
+							knc = (0.6 * x * 1.0 / nbAuthors);
 						}
-						if(sp.getString("correspondingAuthor").equals("Y"))
+						if (sp.getString("correspondingAuthor").equals("Y"))
 							correspondingAuthor = "Y";
 						s_knc = knc + "";
 						total_knc += knc;
 					}
 				}
-				
+
 				i_row++;
 				rh = sh.createRow(i_row);
 				i_col = 0;
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(p.getString("paperName"));
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
-				String catKNCName = mKNCIdName.get(p.getString("paperCategoryKNCId")); 
-				if(catKNCName != null)
+				String catKNCName = mKNCIdName.get(p
+						.getString("paperCategoryKNCId"));
+				if (catKNCName != null)
 					ch.setCellValue(catKNCName);
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(p.getString("authors"));
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(nbAuthors + "");
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(correspondingAuthor);
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(s_rate);
 				ch.setCellStyle(styleNormal);
-				
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(s_knc);
 				ch.setCellStyle(styleNormal);
-				styleNormal.setDataFormat(
-					    wb.getCreationHelper().createDataFormat().getFormat("#.#"));
-				
+				styleNormal.setDataFormat(wb.getCreationHelper()
+						.createDataFormat().getFormat("#.#"));
+
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellValue(description);
 				ch.setCellStyle(styleNormal);
+
 			}
 			i_row++;
 			rh = sh.createRow(i_row);
 			i_col = 0;
-			
+
 			i_col++;
 			ch = rh.createCell(i_col);
 			ch.setCellValue("Tổng");
 			ch.setCellStyle(styleNormal);
-		
-			for(int k = 1; k <= 6; k++){
+
+			for (int k = 1; k <= 6; k++) {
 				i_col++;
 				ch = rh.createCell(i_col);
 				ch.setCellStyle(styleNormal);
@@ -3568,80 +3647,693 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch = rh.createCell(i_col);
 			ch.setCellValue(total_knc + "");
 			ch.setCellStyle(styleNormal);
-			
+
 			i_col++;
 			ch = rh.createCell(i_col);
 			ch.setCellStyle(styleNormal);
-			
+
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
 		}
 
 	}
-	public static double getKNCFromPapers(Delegator delegator, String staffId, String academicYearId,
-			HashMap<String, Double> mCategory2Rate){
-		List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
-		
-		
+
+	public static Map<String, Object> computeRateKKLOfProject(Delegator delegator,
+			String researchProjectProposalId, String academicYearId) {
+		Map<String, Object> ret = FastMap.newInstance();
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.clear();
+			conds.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+			conds.add(EntityCondition.makeCondition(
+					"researchProjectProposalId", EntityOperator.EQUALS,
+					researchProjectProposalId));
+
+			List<GenericValue> list_budget = delegator.findList(
+					"ResearchProjectBudgetDeclarationYear",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+
+			BigDecimal total = BigDecimal.ZERO;
+			for (GenericValue b : list_budget) {
+				BigDecimal eb = b.getBigDecimal("equipmentBudget");
+				BigDecimal mb = b.getBigDecimal("managementBudget");
+				BigDecimal budget = eb.add(mb);
+				total = total.add(budget);
+			}
+			BigDecimal trieu = new BigDecimal(1000000);
+			total = total.divide(trieu);
+			double budget = total.doubleValue();
+			double rate = 0;
+			if (20 <= budget && budget <= 200) {
+				rate = (budget - 20) * (1 - 0.1) / (200 - 20) + 0.1;
+			} else if (budget > 200) {
+				rate = 1.0 + (budget - 200) * 0.1 / (100);
+			}
+			Debug.log(module + "::computeRateKKLOfProject, project "
+					+ researchProjectProposalId + " year " + academicYearId
+					+ ", budget = " + budget + ", rate = " + rate);
+
+			ret.put("rate", rate);
+			ret.put("budget", budget);
+			
+			/*
+			 * BigDecimal m1 = new BigDecimal(20000000); BigDecimal m2 = new
+			 * BigDecimal(200000000); BigDecimal m = new BigDecimal(100000000);
+			 * BigDecimal m21 = m2.subtract(m1); BigDecimal r1 = new
+			 * BigDecimal(0.1); BigDecimal r2 = new BigDecimal(1.0); BigDecimal
+			 * r21 = r2.subtract(r1); double rate = 0; if (total.compareTo(m1)
+			 * >= 0 && total.compareTo(m2) <= 0) { BigDecimal a =
+			 * total.subtract(m1); a = a.multiply(r21); a = a.divide(m21); rate
+			 * = a.doubleValue() + 0.1; } else if (total.compareTo(m2) > 0) {
+			 * rate = 1.0; BigDecimal a = total.subtract(m2); a = a.divide(m);
+			 * rate += a.doubleValue(); }
+			 */
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			//return 0;
+		}
+		return ret;
+	}
+
+	public static double computeKKLFromProjectOfStaff(Delegator delegator,
+			String staffId, String academicYearId) {
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+
+			List<GenericValue> list = delegator.findList(
+					"ResearchProjectParticipationDeclarationYear",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			double total_kkl = 0;
+
+			for (GenericValue p : list) {
+				String researchProjectProposalId = p
+						.getString("researchProjectProposalId");
+				long percentage = p.getLong("staffParticipationPercentage");
+				/*
+				 * conds.clear();
+				 * conds.add(EntityCondition.makeCondition("academicYearId"
+				 * ,EntityOperator.EQUALS,academicYearId));
+				 * conds.add(EntityCondition
+				 * .makeCondition("researchProjectProposalId"
+				 * ,EntityOperator.EQUALS,researchProjectProposalId));
+				 * 
+				 * List<GenericValue> list_budget =
+				 * delegator.findList("ResearchProjectBudgetDeclarationYear",
+				 * EntityCondition.makeCondition(conds), null,null,null,false);
+				 * 
+				 * BigDecimal total = BigDecimal.ZERO; for(GenericValue b:
+				 * list_budget){ BigDecimal eb =
+				 * b.getBigDecimal("equipmentBudget"); BigDecimal mb =
+				 * b.getBigDecimal("managementBudget"); BigDecimal budget =
+				 * eb.add(mb); total = total.add(budget); } BigDecimal m1 = new
+				 * BigDecimal(20000000); BigDecimal m2 = new
+				 * BigDecimal(200000000); BigDecimal m = new
+				 * BigDecimal(100000000); BigDecimal m21 = m2.subtract(m1);
+				 * BigDecimal r1 = new BigDecimal(0.1); BigDecimal r2 = new
+				 * BigDecimal(1.0); BigDecimal r21 = r2.subtract(r1); double
+				 * rate = 0; if(total.compareTo(m1) >= 0 && total.compareTo(m2)
+				 * <= 0 ){ BigDecimal a = total.subtract(m1); a =
+				 * a.multiply(r21); a = a.divide(m21); rate = a.doubleValue() +
+				 * 0.1; }else if(total.compareTo(m2) > 0){ rate = 1.0;
+				 * BigDecimal a = total.subtract(m2); a = a.divide(m); rate +=
+				 * a.doubleValue(); }
+				 */
+				Map<String, Object> m = computeRateKKLOfProject(delegator,
+						researchProjectProposalId, academicYearId);
+				double rate = (double)m.get("rate");
+				total_kkl += (rate * percentage * 1.0) / 100.0;
+			}
+			return total_kkl;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return 0;
+		}
+
+	}
+
+	public static void createSheetKKL(HSSFWorkbook wb, String facultyId,
+			String academicYearId, Delegator delegator) {
+		Sheet sh = wb.createSheet("K-KhoiLuong");
+
+		CellStyle styleTitle = wb.createCellStyle();
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+
+		CellStyle styleNormal = wb.createCellStyle();
+		Font fontNormal = wb.createFont();
+		fontNormal.setFontHeightInPoints((short) 12);
+		fontNormal.setFontName("Times New Roman");
+		// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontNormal.setColor(HSSFColor.BLACK.index);
+		styleNormal.setFont(fontNormal);
+		styleNormal.setWrapText(true);
+		styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+
+		sh.setColumnWidth(0, 1000);// blank
+		sh.setColumnWidth(1, 1000);// STT
+		sh.setColumnWidth(2, 6000);// Ho ten (ten bai bao)
+		sh.setColumnWidth(3, 8000);// Loai hinh
+		sh.setColumnWidth(4, 8000);// D/S tac gia
+		sh.setColumnWidth(5, 3000);// so tac gia
+		sh.setColumnWidth(6, 3000);// corresponding
+		sh.setColumnWidth(7, 3000);// rate_nangluc
+		sh.setColumnWidth(8, 4000);// KNC
+		sh.setColumnWidth(9, 5000);// Ghi chu
+		// sh.setColumnWidth(10, 10000);// GHi chu
+
+		int i_row = 0;
+
+		i_row = 10;
+		Row rh = sh.createRow(i_row);
+
+		int i_col = 0;
+
+		i_col++;
+		Cell ch = rh.createCell(i_col);
+		ch.setCellValue("STT");
+		ch.setCellStyle(styleTitle);
+
+		// i_col++;
+		// ch = rh.createCell(i_col);
+		// ch.setCellValue("Họ tên");
+		// ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Tên bài báo, sách");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Loại hình");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("D/S Tác giả");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Số tác giả");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Corresponding");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Điểm khối lượng");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("KKL");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Ghi chú");
+		ch.setCellStyle(styleTitle);
+
+		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
+
+		HashMap<String, Double> mCategory2RateKL = getRateKKLPaper(delegator,
+				academicYearId);
+
+		HashMap<String, String> mKNCIdName = getMapPaperCategoryKNCId2Name(delegator);
+
+		int count = 0;
+		for (GenericValue st : staffs) {
+			String staffId = st.getString("staffId");
+			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
+					staffId, academicYearId);
+
+			i_row++;
+			count++;
+			rh = sh.createRow(i_row);
+			i_col = 0;
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(count);
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(st.getString("staffName"));
+			ch.setCellStyle(styleNormal);
+
+			for (int k = 3; k <= 9; k++) {
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+			}
+
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 9));
+
+			double total_kkl = 0;
+			for (GenericValue p : papers) {
+				String paperId = p.getString("paperId");
+				String authors = p.getString("authors");
+				String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+
+				GenericValue sp = getStaffPaperDeclaration(delegator, paperId,
+						staffId);
+
+				String s_rate = "";
+				String s_kkl = "";
+				double kkl = 0;
+				int nbAuthors = 1;
+				String correspondingAuthor = "N";
+				String description = "";
+				if (sp.get("sequence") == null) {
+					description += "Không có thông tin về số thứ tự của tác giả. ";
+				}
+				if (paperCategoryKNCId == null) {
+					description += "Không có thông tin về phân loại KNC. ";
+				}
+				if (authors != null && !authors.equals("")) {
+					String[] s = authors.split(",");
+					nbAuthors = s.length;
+				}
+
+				if (paperCategoryKNCId != null && sp != null) {
+					Double x = mCategory2RateKL.get(paperCategoryKNCId);
+
+					System.out.println(name() + "::createSheetKKL paper "
+							+ p.getString("paperName") + ", categoryKNC = "
+							+ paperCategoryKNCId + ", sequence = "
+							+ sp.getLong("sequence") + ", corresponding = "
+							+ sp.getString("correspondingAuthor") + ", rate = "
+							+ x + ", authors = " + authors);
+
+					if (x != null && sp.getLong("sequence") != null
+							&& sp.getString("correspondingAuthor") != null
+							&& authors != null && !authors.equals("")) {
+						s_rate = x + "";
+						long seq = sp.getLong("sequence");
+
+						if (seq == 1
+								&& sp.getString("correspondingAuthor").equals(
+										"Y")) {
+							kkl = 0.4 * x + (0.6 * x * 1.0 / nbAuthors);
+						} else if (seq == 1) {
+							kkl = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+						} else if (sp.getString("correspondingAuthor").equals(
+								"Y")) {
+							kkl = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+						} else {
+							kkl = (0.6 * x * 1.0 / nbAuthors);
+						}
+						if (sp.getString("correspondingAuthor").equals("Y"))
+							correspondingAuthor = "Y";
+						s_kkl = kkl + "";
+						total_kkl += kkl;
+					}
+				}
+
+				i_row++;
+				rh = sh.createRow(i_row);
+				i_col = 0;
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(p.getString("paperName"));
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				String catKNCName = mKNCIdName.get(p
+						.getString("paperCategoryKNCId"));
+				if (catKNCName != null)
+					ch.setCellValue(catKNCName);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(p.getString("authors"));
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(nbAuthors + "");
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(correspondingAuthor);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(s_rate);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(s_kkl);
+				ch.setCellStyle(styleNormal);
+				styleNormal.setDataFormat(wb.getCreationHelper()
+						.createDataFormat().getFormat("#.#"));
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(description);
+				ch.setCellStyle(styleNormal);
+			}
+
+			// tính khoi luong tu kinh phi de tai
+			List<GenericValue> list = FastList.newInstance();
+			try {
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition("staffId",
+						EntityOperator.EQUALS, staffId));
+				conds.add(EntityCondition.makeCondition("academicYearId",
+						EntityOperator.EQUALS, academicYearId));
+
+				list = delegator.findList(
+						"ResearchProjectParticipationDeclarationYearView",
+						EntityCondition.makeCondition(conds), null, null, null,
+						false);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			if (list.size() > 0) {
+				Debug.log(module + "::createSheetKKL, staffId = " + staffId
+						+ ", project.sz = " + list.size());
+			}
+
+			for (GenericValue pp : list) {
+				String researchProjectProposalId = pp
+						.getString("researchProjectProposalId");
+				long percentage = pp.getLong("staffParticipationPercentage");
+				Map<String, Object> m = computeRateKKLOfProject(delegator,
+						researchProjectProposalId, academicYearId);
+				double rate = (double) m.get("rate");
+				double budget = (double)m.get("budget");
+				
+				double kkl_prj = (rate * percentage * 1.0) / 100.0;
+
+				Debug.log(module + "::createSheetKKL, staffId = " + staffId
+						+ ", project "
+						+ pp.getString("researchProjectProposalName")
+						+ ", percentage = " + percentage + ", rate = " + rate);
+
+				String description = "Đề tài, kinh phí thiết bị và quản lý = " + budget + ", mức độ đóng góp = " + percentage + "%";
+				
+				i_row++;
+				rh = sh.createRow(i_row);
+				i_col = 0;
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(pp.getString("researchProjectProposalName"));
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				// ch.setCellValue(p.getString("authors"));
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				// ch.setCellValue(nbAuthors + "");
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				// ch.setCellValue(correspondingAuthor);
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(rate + "");
+				ch.setCellStyle(styleNormal);
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(kkl_prj + "");
+				ch.setCellStyle(styleNormal);
+				styleNormal.setDataFormat(wb.getCreationHelper()
+						.createDataFormat().getFormat("#.#"));
+
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellValue(description);
+				ch.setCellStyle(styleNormal);
+
+				total_kkl += kkl_prj;
+			}
+
+			i_row++;
+			rh = sh.createRow(i_row);
+			i_col = 0;
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue("Tổng");
+			ch.setCellStyle(styleNormal);
+
+			for (int k = 1; k <= 6; k++) {
+				i_col++;
+				ch = rh.createCell(i_col);
+				ch.setCellStyle(styleNormal);
+			}
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(total_kkl + "");
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellStyle(styleNormal);
+
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
+			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
+		}
+
+	}
+
+	public static double getKNCFromPapers(Delegator delegator, String staffId,
+			String academicYearId, HashMap<String, Double> mCategory2Rate) {
+		List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
+				staffId, academicYearId);
+
 		double total_knc = 0;
-		for(GenericValue p: papers){
+		for (GenericValue p : papers) {
 			String paperId = p.getString("paperId");
 			String authors = p.getString("authors");
 			String paperCategoryKNCId = p.getString("paperCategoryKNCId");
-			
-			GenericValue sp = getStaffPaperDeclaration(delegator, paperId, staffId);
-			
+
+			GenericValue sp = getStaffPaperDeclaration(delegator, paperId,
+					staffId);
+
 			String s_rate = "";
 			String s_knc = "";
 			double knc = 0;
 			int nbAuthors = 1;
 			String correspondingAuthor = "N";
 			String description = "";
-			if(sp.get("sequence") == null){
+			if (sp.get("sequence") == null) {
 				description += "Không có thông tin về số thứ tự của tác giả. ";
 			}
-			if(paperCategoryKNCId == null){
+			if (paperCategoryKNCId == null) {
 				description += "Không có thông tin về phân loại KNC. ";
 			}
-			if(authors != null && !authors.equals("")){
+			if (authors != null && !authors.equals("")) {
 				String[] s = authors.split(",");
 				nbAuthors = s.length;
 			}
-			
-			if(paperCategoryKNCId != null && sp != null){
+
+			if (paperCategoryKNCId != null && sp != null) {
 				Double x = mCategory2Rate.get(paperCategoryKNCId);
-				
-				System.out.println(name() + "::createSheetKNC paper " + p.getString("paperName") + ", categoryKNC = " + 
-			paperCategoryKNCId + ", sequence = " + sp.getLong("sequence") + ", corresponding = " + 
-						sp.getString("correspondingAuthor") + ", rate = " + x + ", authors = " + authors);
-				
-				if(x != null && sp.getLong("sequence") != null && 
-						sp.getString("correspondingAuthor")!=null && authors != null && !authors.equals("")){
+
+				System.out.println(name() + "::createSheetKNC paper "
+						+ p.getString("paperName") + ", categoryKNC = "
+						+ paperCategoryKNCId + ", sequence = "
+						+ sp.getLong("sequence") + ", corresponding = "
+						+ sp.getString("correspondingAuthor") + ", rate = " + x
+						+ ", authors = " + authors);
+
+				if (x != null && sp.getLong("sequence") != null
+						&& sp.getString("correspondingAuthor") != null
+						&& authors != null && !authors.equals("")) {
 					s_rate = x + "";
 					long seq = sp.getLong("sequence");
-					
-					
-					if(seq == 1 && sp.getString("correspondingAuthor").equals("Y")){
-						knc = 0.4*x + (0.6*x*1.0/nbAuthors);
-					}else if(seq == 1){
-						knc = 0.2*x + (0.6*x*1.0/nbAuthors);
-					}else if(sp.getString("correspondingAuthor").equals("Y")){
-						knc = 0.2*x + (0.6*x*1.0/nbAuthors);
-					}else{
-						knc = (0.6*x*1.0/nbAuthors);
+
+					if (seq == 1
+							&& sp.getString("correspondingAuthor").equals("Y")) {
+						knc = 0.4 * x + (0.6 * x * 1.0 / nbAuthors);
+					} else if (seq == 1) {
+						knc = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+					} else if (sp.getString("correspondingAuthor").equals("Y")) {
+						knc = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+					} else {
+						knc = (0.6 * x * 1.0 / nbAuthors);
 					}
-					if(sp.getString("correspondingAuthor").equals("Y"))
+					if (sp.getString("correspondingAuthor").equals("Y"))
 						correspondingAuthor = "Y";
 					s_knc = knc + "";
 					total_knc += knc;
 				}
 			}
-			
+
 		}
 		return total_knc;
 	}
-	public static void createSheetKNCTotal(HSSFWorkbook wb,
-			String facultyId, String academicYearId, Delegator delegator) {
+
+	public static double getKKLFromPapers(Delegator delegator, String staffId,
+			String academicYearId, HashMap<String, Double> mCategory2Rate) {
+		List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
+				staffId, academicYearId);
+
+		double total_kkl = 0;
+		for (GenericValue p : papers) {
+			String paperId = p.getString("paperId");
+			String authors = p.getString("authors");
+			String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+
+			GenericValue sp = getStaffPaperDeclaration(delegator, paperId,
+					staffId);
+
+			String s_rate = "";
+			String s_kkl = "";
+			double kkl = 0;
+			int nbAuthors = 1;
+			String correspondingAuthor = "N";
+			String description = "";
+			if (sp.get("sequence") == null) {
+				description += "Không có thông tin về số thứ tự của tác giả. ";
+			}
+			if (paperCategoryKNCId == null) {
+				description += "Không có thông tin về phân loại KNC. ";
+			}
+			if (authors != null && !authors.equals("")) {
+				String[] s = authors.split(",");
+				nbAuthors = s.length;
+			}
+
+			if (paperCategoryKNCId != null && sp != null) {
+				Double x = mCategory2Rate.get(paperCategoryKNCId);
+
+				System.out.println(name() + "::getKKLFromPapers paper "
+						+ p.getString("paperName") + ", categoryKNC = "
+						+ paperCategoryKNCId + ", sequence = "
+						+ sp.getLong("sequence") + ", corresponding = "
+						+ sp.getString("correspondingAuthor") + ", rate = " + x
+						+ ", authors = " + authors);
+
+				if (x != null && sp.getLong("sequence") != null
+						&& sp.getString("correspondingAuthor") != null
+						&& authors != null && !authors.equals("")) {
+					s_rate = x + "";
+					long seq = sp.getLong("sequence");
+
+					if (seq == 1
+							&& sp.getString("correspondingAuthor").equals("Y")) {
+						kkl = 0.4 * x + (0.6 * x * 1.0 / nbAuthors);
+					} else if (seq == 1) {
+						kkl = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+					} else if (sp.getString("correspondingAuthor").equals("Y")) {
+						kkl = 0.2 * x + (0.6 * x * 1.0 / nbAuthors);
+					} else {
+						kkl = (0.6 * x * 1.0 / nbAuthors);
+					}
+					if (sp.getString("correspondingAuthor").equals("Y"))
+						correspondingAuthor = "Y";
+					s_kkl = kkl + "";
+					total_kkl += kkl;
+				}
+			}
+
+		}
+		
+		// tinh diem khoi luong tu de tai
+		List<GenericValue> list = FastList.newInstance();
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("academicYearId",
+					EntityOperator.EQUALS, academicYearId));
+
+			list = delegator.findList(
+					"ResearchProjectParticipationDeclarationYearView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		if (list.size() > 0) {
+			Debug.log(module + "::getKKLFromPapers, staffId = " + staffId
+					+ ", project.sz = " + list.size());
+		}
+
+		for (GenericValue pp : list) {
+			String researchProjectProposalId = pp
+					.getString("researchProjectProposalId");
+			long percentage = pp.getLong("staffParticipationPercentage");
+			Map<String, Object> m = computeRateKKLOfProject(delegator,
+					researchProjectProposalId, academicYearId);
+			double rate = (double) m.get("rate");
+			double budget = (double)m.get("budget");
+			
+			double kkl_prj = (rate * percentage * 1.0) / 100.0;
+
+			Debug.log(module + "::getKKLFromPapers, staffId = " + staffId
+					+ ", project "
+					+ pp.getString("researchProjectProposalName")
+					+ ", percentage = " + percentage + ", rate = " + rate);
+
+			
+
+			total_kkl += kkl_prj;
+		}
+
+		
+		return total_kkl;
+	}
+
+	public static void createSheetKNCTotal(HSSFWorkbook wb, String facultyId,
+			String academicYearId, Delegator delegator) {
 		Sheet sh = wb.createSheet("KNC-Total");
 
 		CellStyle styleTitle = wb.createCellStyle();
@@ -3677,7 +4369,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		sh.setColumnWidth(1, 2000);// STT
 		sh.setColumnWidth(2, 8000);// Ho ten can bo
 		sh.setColumnWidth(3, 2000);// total KNC
-		
+
 		int i_row = 0;
 
 		i_row = 10;
@@ -3690,33 +4382,32 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("STT");
 		ch.setCellStyle(styleTitle);
 
-		
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("Họ tên");
 		ch.setCellStyle(styleTitle);
 
-		
 		i_col++;
 		ch = rh.createCell(i_col);
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
-		
-		
-		
+
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
-		
-		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator, academicYearId);
-		
+
+		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator,
+				academicYearId);
+
 		HashMap<String, String> mKNCIdName = getMapPaperCategoryKNCId2Name(delegator);
-		
+
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
-			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator, staffId, academicYearId);
-			
-			double knc = getKNCFromPapers(delegator, staffId, academicYearId, mCategory2Rate);
-			
+			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
+					staffId, academicYearId);
+
+			double knc = getKNCFromPapers(delegator, staffId, academicYearId,
+					mCategory2Rate);
+
 			i_row++;
 			count++;
 			rh = sh.createRow(i_row);
@@ -3731,18 +4422,119 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			ch = rh.createCell(i_col);
 			ch.setCellValue(st.getString("staffName"));
 			ch.setCellStyle(styleNormal);
-			
+
 			i_col++;
 			ch = rh.createCell(i_col);
 			ch.setCellValue(knc);
 			ch.setCellStyle(styleNormal);
-			
-			
-			styleNormal.setDataFormat(
-				    wb.getCreationHelper().createDataFormat().getFormat("#.##"));
-			
+
+			styleNormal.setDataFormat(wb.getCreationHelper().createDataFormat()
+					.getFormat("#.##"));
+
 		}
-				
+
+	}
+
+	public static void createSheetKKLTotal(HSSFWorkbook wb, String facultyId,
+			String academicYearId, Delegator delegator) {
+		Sheet sh = wb.createSheet("K-KhoiLuong-Total");
+
+		CellStyle styleTitle = wb.createCellStyle();
+		Font fontTitle = wb.createFont();
+		fontTitle.setFontHeightInPoints((short) 12);
+		fontTitle.setFontName("Times New Roman");
+		fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontTitle.setColor(HSSFColor.BLACK.index);
+		styleTitle.setFont(fontTitle);
+		styleTitle.setAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setVerticalAlignment(styleTitle.ALIGN_CENTER);
+		styleTitle.setWrapText(true);
+		styleTitle.setBorderBottom(CellStyle.BORDER_THIN);
+		styleTitle.setBorderTop(CellStyle.BORDER_THIN);
+		styleTitle.setBorderLeft(CellStyle.BORDER_THIN);
+		styleTitle.setBorderRight(CellStyle.BORDER_THIN);
+
+		CellStyle styleNormal = wb.createCellStyle();
+		Font fontNormal = wb.createFont();
+		fontNormal.setFontHeightInPoints((short) 12);
+		fontNormal.setFontName("Times New Roman");
+		// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		fontNormal.setColor(HSSFColor.BLACK.index);
+		styleNormal.setFont(fontNormal);
+		styleNormal.setWrapText(true);
+		styleNormal.setVerticalAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleNormal.setBorderBottom(CellStyle.BORDER_THIN);
+		styleNormal.setBorderTop(CellStyle.BORDER_THIN);
+		styleNormal.setBorderLeft(CellStyle.BORDER_THIN);
+		styleNormal.setBorderRight(CellStyle.BORDER_THIN);
+
+		sh.setColumnWidth(0, 1000);// blank
+		sh.setColumnWidth(1, 2000);// STT
+		sh.setColumnWidth(2, 8000);// Ho ten can bo
+		sh.setColumnWidth(3, 2000);// total KNC
+
+		int i_row = 0;
+
+		i_row = 10;
+		Row rh = sh.createRow(i_row);
+
+		int i_col = 0;
+
+		i_col++;
+		Cell ch = rh.createCell(i_col);
+		ch.setCellValue("STT");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("Họ tên");
+		ch.setCellStyle(styleTitle);
+
+		i_col++;
+		ch = rh.createCell(i_col);
+		ch.setCellValue("KNC");
+		ch.setCellStyle(styleTitle);
+
+		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
+
+		HashMap<String, Double> mCategory2Rate = getRateKKLPaper(delegator,
+				academicYearId);
+
+		HashMap<String, String> mKNCIdName = getMapPaperCategoryKNCId2Name(delegator);
+
+		int count = 0;
+		for (GenericValue st : staffs) {
+			String staffId = st.getString("staffId");
+			//List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
+			//		staffId, academicYearId);
+
+			double kkl = getKKLFromPapers(delegator, staffId, academicYearId,
+					mCategory2Rate);
+
+			i_row++;
+			count++;
+			rh = sh.createRow(i_row);
+			i_col = 0;
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(count);
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(st.getString("staffName"));
+			ch.setCellStyle(styleNormal);
+
+			i_col++;
+			ch = rh.createCell(i_col);
+			ch.setCellValue(kkl);
+			ch.setCellStyle(styleNormal);
+
+			styleNormal.setDataFormat(wb.getCreationHelper().createDataFormat()
+					.getFormat("#.##"));
+
+		}
 
 	}
 
@@ -3986,10 +4778,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		createSheetListPapersKV04(wb, papers);
 
-		createSheetKNC(wb,facultyId,academicYearId,delegator);
-		
-		createSheetKNCTotal(wb,facultyId,academicYearId,delegator);
-		
+		createSheetKNC(wb, facultyId, academicYearId, delegator);
+
+		createSheetKNCTotal(wb, facultyId, academicYearId, delegator);
+
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;
 		 * Row r = sh.createRow(i_row);
@@ -4062,6 +4854,101 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		return wb;
 	}
 
+	public static HSSFWorkbook createExcelFormKNC(Delegator delegator,
+			String academicYearId, String facultyId) {
+
+		// get list of paper category hour-budget
+		List<GenericValue> paperHourBudget = getPaperCategoryHourBudget(
+				delegator, academicYearId);
+		Map<String, Long> mPaperCategory2Money = FastMap.newInstance();
+
+		if (paperHourBudget != null) {
+			for (GenericValue gv : paperHourBudget) {
+				String cat = (String) gv.get("paperCategoryId");
+				long money = (long) gv.get("budget");
+				mPaperCategory2Money.put(cat, money);
+			}
+		} else {
+			Debug.log(module + "::createExcelFormKNC, hour-budget of year "
+					+ academicYearId + " NOT EXISTS");
+			;
+
+		}
+
+		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
+		List<GenericValue> all_staffs = getListStaffs(delegator);
+
+		HashMap<String, GenericValue> mId2Staff = new HashMap<String, GenericValue>();
+
+		List<String> staffIDs = FastList.newInstance();
+		for (GenericValue gv : staffs) {
+			staffIDs.add((String) gv.get("staffId"));
+		}
+		for (GenericValue st : all_staffs) {
+			mId2Staff.put((String) st.get("staffId"), st);
+		}
+
+		List<EntityCondition> conds = FastList.newInstance();
+		conds.add(EntityCondition.makeCondition("academicYearId",
+				EntityOperator.EQUALS, academicYearId));
+		conds.add(EntityCondition.makeCondition("statusId",
+				EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+		List<GenericValue> papers = FastList.newInstance();
+		try {
+			papers = delegator.findList("PaperView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		Debug.log(module + "::createExcelFormKNC, papers.sz = " + papers.size());
+
+		List<GenericValue> list_paper_international_journals = FastList
+				.newInstance();
+		List<GenericValue> list_paper_national_journals = FastList
+				.newInstance();
+		List<GenericValue> list_paper_international_conferences = FastList
+				.newInstance();
+		List<GenericValue> list_paper_national_conferences = FastList
+				.newInstance();
+
+		for (GenericValue p : papers) {
+			String paperCategoryId = (String) p.get("paperCategoryId");
+			Debug.log(module + "::createExcelFormKV04, paper "
+					+ (String) p.get("paperName") + ", category = "
+					+ paperCategoryId);
+			if (paperCategoryId == null || paperCategoryId.equals(""))
+				continue;
+
+			if (paperCategoryId.equals("JINT_Other")) {
+				list_paper_international_journals.add(p);
+			} else if (paperCategoryId.equals("JDOM_Other")) {
+				list_paper_national_journals.add(p);
+			} else if (paperCategoryId.equals("CINT_Other")) {
+				list_paper_international_conferences.add(p);
+			} else if (paperCategoryId.equals("CDOM_Other")) {
+				list_paper_national_conferences.add(p);
+			}
+		}
+
+		// start renderExcel
+		HSSFWorkbook wb = new HSSFWorkbook();
+
+		createSheetListPapersKV04(wb, papers);
+
+		// chi so KNC
+		createSheetKNC(wb, facultyId, academicYearId, delegator);
+		createSheetKNCTotal(wb, facultyId, academicYearId, delegator);
+
+		// chi so Khoi luong
+		createSheetKKL(wb, facultyId, academicYearId, delegator);
+		createSheetKKLTotal(wb, facultyId, academicYearId, delegator);
+
+		return wb;
+	}
+
 	public static void createISISheet(HSSFWorkbook wb,
 			List<GenericValue> papers1, List<GenericValue> papers2,
 			String academicYearId, String facultyId, Delegator delegator) {
@@ -4128,9 +5015,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		row_header_table = sh.createRow(i_row);
 		String[] str2 = new String[] { "", "", "", "Tên tạp chí",
-				"Số và thời gian xuất bản", "Đường link", "Chỉ số ISSN","Tổng số tác giả", "Số tác giả của trường",
-				"Tác giả đầu tiên là Corresponding author", "Tác giả đầu tiên không phải là Corresponding author", 
-				"Tác giả là Corresponding author", "Các tác giả còn lại"};
+				"Số và thời gian xuất bản", "Đường link", "Chỉ số ISSN",
+				"Tổng số tác giả", "Số tác giả của trường",
+				"Tác giả đầu tiên là Corresponding author",
+				"Tác giả đầu tiên không phải là Corresponding author",
+				"Tác giả là Corresponding author", "Các tác giả còn lại" };
 		createRowInExcel(1, 13, str2, row_header_table,
 				cellStyleCenterBoldFullBorder);
 		// ----end header table in excel
@@ -4159,12 +5048,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					p.getString("paperId"));
 			int nbAuthors = 0;
 			String[] s = authors.split(",");
-			if(s != null) nbAuthors = s.length;
-			
+			if (s != null)
+				nbAuthors = s.length;
+
 			String[] str_papers1 = new String[] { authors, name, journal, vol,
-					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
-			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
-			
+					p.getString("link"), issn, nbAuthors + "",
+					nbIntAuthors + "" };
+			Map<String, Object> infos = getAuthorInfos(delegator,
+					p.getString("paperId"));
+
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -4173,35 +5065,37 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellValue(m);
 
 			createRowInExcel(2, 9, str_papers1, r, cellStyleLeft);
-		
+
 			// add author information
-			int i_col=9;
+			int i_col = 9;
 			String mark = "";
 			i_col++;
 			c = r.createCell(i_col);
-			if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
+			if (infos.get("firstAuthorIsCorresponding") != null
+					&& infos.get("firstAuthorIsCorresponding").equals("T"))
 				mark = "X";
 			c.setCellValue(mark);
 			c.setCellStyle(cellStyleLeft);
-			
+
 			i_col++;
-			mark="";
+			mark = "";
 			c = r.createCell(i_col);
-			if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
+			if (infos.get("firstAuthorIsNotCorresponding") != null
+					&& infos.get("firstAuthorIsNotCorresponding").equals("T"))
 				mark = "X";
 			c.setCellValue(mark);
 			c.setCellStyle(cellStyleLeft);
-			
+
 			i_col++;
 			c = r.createCell(i_col);
-			if(infos.get("correspondingAuthor")!=null)
-				c.setCellValue((String)infos.get("correspondingAuthor"));
+			if (infos.get("correspondingAuthor") != null)
+				c.setCellValue((String) infos.get("correspondingAuthor"));
 			c.setCellStyle(cellStyleLeft);
-			
+
 			i_col++;
 			c = r.createCell(i_col);
-			if(infos.get("nonCorrespondingAuthor")!=null)
-				c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
+			if (infos.get("nonCorrespondingAuthor") != null)
+				c.setCellValue((String) infos.get("nonCorrespondingAuthor"));
 			c.setCellStyle(cellStyleLeft);
 		}
 		i_row++;
@@ -4223,12 +5117,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					p.getString("paperId"));
 			int nbAuthors = 0;
 			String[] s = authors.split(",");
-			if(s != null) nbAuthors = s.length;
-			
+			if (s != null)
+				nbAuthors = s.length;
+
 			String[] str_papers2 = new String[] { authors, name, journal, vol,
-					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
-			
-			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
+					p.getString("link"), issn, nbAuthors + "",
+					nbIntAuthors + "" };
+
+			Map<String, Object> infos = getAuthorInfos(delegator,
+					p.getString("paperId"));
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -4239,33 +5136,35 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			createRowInExcel(2, 9, str_papers2, r, cellStyleLeft);
 			int i_col = 9;
 			// add author information
-						String mark = "";
-						i_col++;
-						c = r.createCell(i_col);
-						if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
-							mark = "X";
-						c.setCellStyle(cellStyleLeft);
-						c.setCellValue(mark);
-						
-						i_col++;
-						mark="";
-						c = r.createCell(i_col);
-						if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
-							mark = "X";
-						c.setCellValue(mark);
-						c.setCellStyle(cellStyleLeft);
-						
-						i_col++;
-						c = r.createCell(i_col);
-						if(infos.get("correspondingAuthor")!=null)
-							c.setCellValue((String)infos.get("correspondingAuthor"));
-						c.setCellStyle(cellStyleLeft);
-						
-						i_col++;
-						c = r.createCell(i_col);
-						if(infos.get("nonCorrespondingAuthor")!=null)
-							c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
-						c.setCellStyle(cellStyleLeft);
+			String mark = "";
+			i_col++;
+			c = r.createCell(i_col);
+			if (infos.get("firstAuthorIsCorresponding") != null
+					&& infos.get("firstAuthorIsCorresponding").equals("T"))
+				mark = "X";
+			c.setCellStyle(cellStyleLeft);
+			c.setCellValue(mark);
+
+			i_col++;
+			mark = "";
+			c = r.createCell(i_col);
+			if (infos.get("firstAuthorIsNotCorresponding") != null
+					&& infos.get("firstAuthorIsNotCorresponding").equals("T"))
+				mark = "X";
+			c.setCellValue(mark);
+			c.setCellStyle(cellStyleLeft);
+
+			i_col++;
+			c = r.createCell(i_col);
+			if (infos.get("correspondingAuthor") != null)
+				c.setCellValue((String) infos.get("correspondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
+
+			i_col++;
+			c = r.createCell(i_col);
+			if (infos.get("nonCorrespondingAuthor") != null)
+				c.setCellValue((String) infos.get("nonCorrespondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
 		}
 		// ----end table
 
@@ -4355,9 +5254,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		i_row++;
 		row_header_table = sh.createRow(i_row);
 		String[] str2 = new String[] { "", "", "", "Tên tạp chí",
-				"Số và thời gian xuất bản", "Đường link", "Chỉ số ISSN","Tổng số tác giả", "Số tác giả của trường",
-				"Tác giả đầu tiên là Corresponding author", "Tác giả đầu tiên không phải là Corresponding author", 
-				"Tác giả là Corresponding author", "Các tác giả còn lại"};
+				"Số và thời gian xuất bản", "Đường link", "Chỉ số ISSN",
+				"Tổng số tác giả", "Số tác giả của trường",
+				"Tác giả đầu tiên là Corresponding author",
+				"Tác giả đầu tiên không phải là Corresponding author",
+				"Tác giả là Corresponding author", "Các tác giả còn lại" };
 		createRowInExcel(1, 13, str2, row_header_table,
 				cellStyleCenterBoldFullBorder);
 		// ----end header table in excel
@@ -4386,12 +5287,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					p.getString("paperId"));
 			int nbAuthors = 0;
 			String[] s = authors.split(",");
-			if(s != null) nbAuthors = s.length;
-			
+			if (s != null)
+				nbAuthors = s.length;
+
 			String[] str_papers1 = new String[] { authors, name, journal, vol,
-					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
-			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
-			
+					p.getString("link"), issn, nbAuthors + "",
+					nbIntAuthors + "" };
+			Map<String, Object> infos = getAuthorInfos(delegator,
+					p.getString("paperId"));
+
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -4400,35 +5304,37 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			c.setCellValue(m);
 
 			createRowInExcel(2, 9, str_papers1, r, cellStyleLeft);
-		
+
 			// add author information
-			int i_col=9;
+			int i_col = 9;
 			String mark = "";
 			i_col++;
 			c = r.createCell(i_col);
-			if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
+			if (infos.get("firstAuthorIsCorresponding") != null
+					&& infos.get("firstAuthorIsCorresponding").equals("T"))
 				mark = "X";
 			c.setCellValue(mark);
 			c.setCellStyle(cellStyleLeft);
-			
+
 			i_col++;
-			mark="";
+			mark = "";
 			c = r.createCell(i_col);
-			if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
+			if (infos.get("firstAuthorIsNotCorresponding") != null
+					&& infos.get("firstAuthorIsNotCorresponding").equals("T"))
 				mark = "X";
 			c.setCellValue(mark);
 			c.setCellStyle(cellStyleLeft);
-			
+
 			i_col++;
 			c = r.createCell(i_col);
-			if(infos.get("correspondingAuthor")!=null)
-				c.setCellValue((String)infos.get("correspondingAuthor"));
+			if (infos.get("correspondingAuthor") != null)
+				c.setCellValue((String) infos.get("correspondingAuthor"));
 			c.setCellStyle(cellStyleLeft);
-			
+
 			i_col++;
 			c = r.createCell(i_col);
-			if(infos.get("nonCorrespondingAuthor")!=null)
-				c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
+			if (infos.get("nonCorrespondingAuthor") != null)
+				c.setCellValue((String) infos.get("nonCorrespondingAuthor"));
 			c.setCellStyle(cellStyleLeft);
 		}
 		i_row++;
@@ -4450,12 +5356,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					p.getString("paperId"));
 			int nbAuthors = 0;
 			String[] s = authors.split(",");
-			if(s != null) nbAuthors = s.length;
-			
+			if (s != null)
+				nbAuthors = s.length;
+
 			String[] str_papers2 = new String[] { authors, name, journal, vol,
-					p.getString("link"),issn, nbAuthors+"", nbIntAuthors+"" };
-			
-			Map<String, Object> infos = getAuthorInfos(delegator, p.getString("paperId"));
+					p.getString("link"), issn, nbAuthors + "",
+					nbIntAuthors + "" };
+
+			Map<String, Object> infos = getAuthorInfos(delegator,
+					p.getString("paperId"));
 			m++;
 			i_row++;
 			Row r = sh.createRow(i_row);
@@ -4466,33 +5375,35 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			createRowInExcel(2, 9, str_papers2, r, cellStyleLeft);
 			int i_col = 9;
 			// add author information
-						String mark = "";
-						i_col++;
-						c = r.createCell(i_col);
-						if(infos.get("firstAuthorIsCorresponding")!=null && infos.get("firstAuthorIsCorresponding").equals("T"))
-							mark = "X";
-						c.setCellStyle(cellStyleLeft);
-						c.setCellValue(mark);
-						
-						i_col++;
-						mark="";
-						c = r.createCell(i_col);
-						if(infos.get("firstAuthorIsNotCorresponding")!=null && infos.get("firstAuthorIsNotCorresponding").equals("T"))
-							mark = "X";
-						c.setCellValue(mark);
-						c.setCellStyle(cellStyleLeft);
-						
-						i_col++;
-						c = r.createCell(i_col);
-						if(infos.get("correspondingAuthor")!=null)
-							c.setCellValue((String)infos.get("correspondingAuthor"));
-						c.setCellStyle(cellStyleLeft);
-						
-						i_col++;
-						c = r.createCell(i_col);
-						if(infos.get("nonCorrespondingAuthor")!=null)
-							c.setCellValue((String)infos.get("nonCorrespondingAuthor"));
-						c.setCellStyle(cellStyleLeft);
+			String mark = "";
+			i_col++;
+			c = r.createCell(i_col);
+			if (infos.get("firstAuthorIsCorresponding") != null
+					&& infos.get("firstAuthorIsCorresponding").equals("T"))
+				mark = "X";
+			c.setCellStyle(cellStyleLeft);
+			c.setCellValue(mark);
+
+			i_col++;
+			mark = "";
+			c = r.createCell(i_col);
+			if (infos.get("firstAuthorIsNotCorresponding") != null
+					&& infos.get("firstAuthorIsNotCorresponding").equals("T"))
+				mark = "X";
+			c.setCellValue(mark);
+			c.setCellStyle(cellStyleLeft);
+
+			i_col++;
+			c = r.createCell(i_col);
+			if (infos.get("correspondingAuthor") != null)
+				c.setCellValue((String) infos.get("correspondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
+
+			i_col++;
+			c = r.createCell(i_col);
+			if (infos.get("nonCorrespondingAuthor") != null)
+				c.setCellValue((String) infos.get("nonCorrespondingAuthor"));
+			c.setCellStyle(cellStyleLeft);
 		}
 		// ----end table
 
