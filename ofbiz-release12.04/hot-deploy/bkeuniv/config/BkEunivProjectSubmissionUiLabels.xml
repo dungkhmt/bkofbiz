@@ -338,5 +338,25 @@
         <value xml:lang="en">Excel</value>
         <value xml:lang="vi">Excel</value>
     </property>
+    
+    <property key="ProductName">
+        <value xml:lang="en">Product name</value>
+        <value xml:lang="vi">Tên sản phẩm</value>
+    </property>
+    
+    <property key="ProductType">
+        <value xml:lang="en">Product type</value>
+        <value xml:lang="vi">Loại sản phẩm</value>
+    </property>
+    
+     <property key="ListOfRegisteredProducts">
+        <value xml:lang="en">List of registered products</value>
+        <value xml:lang="vi">Danh sách sản phẩm đã đăng ký</value>
+    </property>
+    
+    <property key="ListOfFinishedProducts">
+        <value xml:lang="en">List of finished products</value>
+        <value xml:lang="vi">Danh sách sản phẩm đã hoàn thành</value>
+    </property>
 
 </resource>

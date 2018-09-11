@@ -131,6 +131,10 @@
 
 <Function functionId="RESEARCH_SUMMARY_ALL_PAPERS_FACULTY" uiLabelId="research_summary_all_papers_faculty" vnLabel="Danh sách bài báo của khoa/viện" enLabel="summary papers" target="research-summary-list-papers-faculty-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="4"/>
 
+<Function functionId="EDIT_APPROVE_PAPER" uiLabelId="edit_approve_paper" vnLabel="Cập nhật, Phê duyệt bài báo" enLabel="Edit, approve papers" target="research-summary-list-papers-faculty-setting" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="10"/>
+
+<Function functionId="UPDATE_RESEARCH_PROJECT_PROPOSAL" uiLabelId="update_research_project_proposal" vnLabel="Cập nhật đề tài" enLabel="Update research project proposal" target="update-research-project-proposal" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="11"/>
+
 
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>

@@ -153,13 +153,12 @@
 
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; padding: 10px 16px 10px 16px;">
 						<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-							<#if edit>
+							<#--  <#if edit>
 								<a href="/bkeuniv/control/manage-research-project-proposal-product?researchProjectProposalId=${researchProjectProposalId}">
 									${uiLabel.ListProducts}
 								</a>
-							<#else>
-								${uiLabel.ListProducts}
-							</#if>
+							<#else>  -->
+							${uiLabel.ListProducts}
 						</div>
 						<table>
 							<thead>

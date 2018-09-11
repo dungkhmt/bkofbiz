@@ -204,6 +204,7 @@
 		<member-entity entity-alias="RPP" entity-name="ResearchProposalProduct"></member-entity>
 		
 		<alias-all entity-alias="RP" ></alias-all>
+		<alias name="researchProjectProposalId" field="researchProjectProposalId" entity-alias="RPP"></alias>
 		<alias name="researchProductTypeName" field="researchProductTypeName" entity-alias="RPT"></alias>
 		<alias name="researchProductTypeId" field="researchProductTypeId" entity-alias="RPP"></alias>
 		

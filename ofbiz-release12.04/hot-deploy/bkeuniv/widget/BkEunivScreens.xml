@@ -1151,6 +1151,36 @@
 			</widgets>
 		</section>
 	</screen>
+
+	<screen name="pageListUpdateProjectDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProjectProposalUiLables" map-name="projectDeclarationUiLabelMap" global="true"/>
+						
+				<service service-name="getProjectProposalStatus" result-map="projectProposalStatusS"></service>
+				<service service-name="getProjectCall" result-map="projectCallS"></service>
+				<service service-name="getProjectCategory" result-map="projectCategoryS"></service>
+				<service service-name="getFaculty" result-map="facultyS"></service>
+				<service service-name="getStaff" result-map="staffS"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/list-update-project-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
 	
 	<screen name="pageProjectWorkingHourDeclaration">
 		<section>

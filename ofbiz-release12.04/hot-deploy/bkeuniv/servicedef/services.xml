@@ -138,6 +138,15 @@
         <implements service="jqxGetListInterface"/>
    	</service>
    	
+   	<service name="JQGetMembersOfProjectProposal" engine="java" invoke="JQGetMembersOfProjectProposal" location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService">
+        <implements service="JQGetMembersOfProjectProposal"/>
+   	</service>
+   	
+   	<service name="getListResearchProjectProduct" engine="java" invoke="getListResearchProjectProduct" location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService">
+        <attribute name="researchProjectProposalId" mode="IN" type="String"></attribute>
+   		<attribute name="list" mode="OUT" type="List"></attribute>
+   	</service>
+   	
    	<service name="removeResearchProjectProduct" engine="java" invoke="removeResearchProjectProduct" location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService">
    		<attribute name="researchProductId" mode="IN" type="String"></attribute>
    		<attribute name="result" mode="OUT" type="String"></attribute>

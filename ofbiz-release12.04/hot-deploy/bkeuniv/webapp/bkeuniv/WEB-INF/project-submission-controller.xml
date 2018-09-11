@@ -558,6 +558,12 @@
 		<response name="error" type="view" value="view-list-research-project-proposal-evaluation-result" />
 	</request-map>
 
+	<request-map uri="form-edit-project-proposal">
+		 <security https="true" auth="true"/>
+		<response name="success" type="view" value="view-form-edit-project-proposal" />
+		<response name="error" type="view" value="view-form-edit-project-proposal" />
+	</request-map>
+
   <view-map name="view-members-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#MembersOfProjectProposal"/>
   <view-map name="view-workpackages-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#WorkpackagesOfProjectProposal"/>
   <view-map name="view-form-add-workpackages-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddWorkpackagesOfProjectProposal"/>
@@ -565,6 +571,8 @@
   <view-map name="view-form-add-products-of-project-proposals" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormAddProductsOfProjectProposal"/>
 
   <view-map name="view-detail-project-call" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailProjectCall"/>
+  
+  <view-map name="view-form-edit-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#FormEditProjectProposal"/>
 
   <view-map name="view-list-research-project-proposal-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalSchoolSetting"/>
   <view-map name="view-list-research-project-proposal-university" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalUniversitySetting"/>

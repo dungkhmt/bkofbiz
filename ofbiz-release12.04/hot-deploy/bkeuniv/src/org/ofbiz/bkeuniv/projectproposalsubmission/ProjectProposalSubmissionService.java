@@ -1531,6 +1531,63 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
+	
+	public static Map<String,Object> JQGetMembersOfProjectProposal(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator list = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				String q = (String)parameters.get("q")[0].trim();
+				String[] searchKeys = {"staffId", "staffName", "roleTypeName"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+			if(parameters.containsKey("researchProjectProposalId")) {
+				return ServiceUtil.returnError("Error researchProjectProposalId is required");
+			}
+			
+			String researchProjectProposalId = (String)parameters.get("researchProjectProposalId")[0].trim();
+			
+			listAllConditions.add(EntityCondition.makeCondition(
+					"researchProjectProposalId", EntityOperator.EQUALS,
+					researchProjectProposalId));
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			list = delegator.find("ProjectProposalMemberView", condition, null, null, sort, opts);
+			
+						
+			result.put("listIterator", list);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error getListProjectCallsAndProposalJuriesUniversity");
+		}
+		
+		return result;
+	}
 
 	public static Map<String, Object> getListProjectProposalRoleTypes(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -3381,6 +3438,29 @@ public class ProjectProposalSubmissionService {
 				}
 			}
 		}
+	}
+	
+	public static Map<String,Object> getListResearchProjectProduct(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		
+		Map<String,Object> result = FastMap.newInstance();
+		List<GenericValue> list = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			
+		 	EntityCondition condition = EntityCondition.makeCondition("researchProjectProposalId", EntityOperator.EQUALS, (String)context.get("researchProjectProposalId"));
+			
+			list = delegator.findList("ResearchProjectProductView", condition, null, null, null, false);
+						
+			result.put("list", list);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error getListResearchProjectProduct");
+		}
+		
+		return result;
 	}
 	
 	public static Map<String,Object> JQGetListResearchProjectProduct(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
