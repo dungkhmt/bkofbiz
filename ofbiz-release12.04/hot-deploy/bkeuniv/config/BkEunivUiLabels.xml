@@ -828,5 +828,10 @@
         <value xml:lang="vi">Tệp tin đính kèm</value>
     </property>
     
+    <property key="BkEunivUpdateProjectProposal">
+        <value xml:lang="en">Update project proposal</value>
+        <value xml:lang="vi">Cập nhật đề tài</value>
+    </property>
+    
     
 </resource>

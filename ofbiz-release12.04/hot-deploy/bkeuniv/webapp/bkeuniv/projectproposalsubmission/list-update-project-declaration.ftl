@@ -1,4 +1,45 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
+
+<script>
+	function createContextMenu(id) {
+		$(document).contextmenu({
+			delegate: '#'+id+ ' td',
+		menu: [
+			{title: '${uiLabelMap.BkEunivDownload}', cmd: "download", uiIcon: "fa fa-download"},
+			{title: '${uiLabelMap.BkEunivUpdateProjectProposal}', cmd: "update", uiIcon: "fa fa-pencil"},
+			{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+            {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+		],
+		select: function(event, ui) {
+			var el = ui.target.parent();
+			var data = jqDataTable.table.row( el ).data();
+			switch(ui.cmd){
+				
+				case "update":
+					window.open("/bkeuniv/control/form-edit-project-proposal?researchProjectProposalId="+data.researchProjectProposalId);
+					break;
+				case "download":
+					window.open("/bkeuniv/control/download-file-research-project-proposal?researchProjectProposalId="+data.researchProjectProposalId, "_blank")
+					break;
+                case "edit":
+                    jqChange(data)
+                    break;
+                case "delete":
+                    jqDelete(data);
+                    break;
+                }
+			},
+			beforeOpen: function(event, ui) {
+				var $menu = ui.menu,
+					$target = ui.target,
+					extraData = ui.extraData;
+				ui.menu.zIndex(9999);
+			}
+			});
+	}
+
+</script>
+
 <body>
 <div class="body">
 	<#assign columns=[
@@ -11,7 +52,7 @@
 			"width": "300px",
 			"data": "researchProjectProposalName",
 			"render": 'function(value, name, dataColumns, id) {
-                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+                return "<a href=\\"/bkeuniv/control/form-edit-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
 			}'
 		},
 		{
@@ -190,5 +231,7 @@
 		titleChange=projectDeclarationUiLabelMap.TitleEditProjectDeclaration?j_string
 		titleNew=projectDeclarationUiLabelMap.TitleNewProjectDeclaration?j_string
 		titleDelete=projectDeclarationUiLabelMap.TitleDeleteProjectDeclaration?j_string
+		contextmenu=false
+		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
 	/>
 </div>
