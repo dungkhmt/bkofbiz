@@ -3514,6 +3514,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 9));
 
+			HashMap<GenericValue, Double> mPaper2KNC = new HashMap<GenericValue, Double>();
+			
 			double total_knc = 0;
 			for (GenericValue p : papers) {
 				String paperId = p.getString("paperId");
@@ -3526,6 +3528,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				String s_rate = "";
 				String s_knc = "";
 				double knc = 0;
+				
+				
 				int nbAuthors = 1;
 				String correspondingAuthor = "N";
 				String description = "";
@@ -3575,6 +3579,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					}
 				}
 
+				mPaper2KNC.put(p, knc);
+				
 				i_row++;
 				rh = sh.createRow(i_row);
 				i_col = 0;
@@ -3629,6 +3635,23 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				ch.setCellStyle(styleNormal);
 
 			}
+			
+			total_knc = 0;
+			double knc_web_science_scopus = 0;
+			double knc_remain = 0;
+			for(GenericValue p: papers){
+				String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+				if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
+						||paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
+						||paperCategoryKNCId.equals("SCOPUS")
+						){
+					knc_web_science_scopus += mPaper2KNC.get(p);
+				}else{
+					knc_remain += mPaper2KNC.get(p);
+				}
+			}
+			total_knc = knc_web_science_scopus + knc_remain;
+			
 			i_row++;
 			rh = sh.createRow(i_row);
 			i_col = 0;
@@ -4158,6 +4181,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				staffId, academicYearId);
 
 		double total_knc = 0;
+		HashMap<GenericValue, Double> mPaper2KNC = new HashMap<GenericValue, Double>();
+		
 		for (GenericValue p : papers) {
 			String paperId = p.getString("paperId");
 			String authors = p.getString("authors");
@@ -4216,7 +4241,25 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				}
 			}
 
+			mPaper2KNC.put(p, knc);
 		}
+		
+		total_knc = 0;
+		double knc_web_science_scopus = 0;
+		double knc_remain = 0;
+		for(GenericValue p: papers){
+			String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+			if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
+					||paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
+					||paperCategoryKNCId.equals("SCOPUS")
+					){
+				knc_web_science_scopus += mPaper2KNC.get(p);
+			}else{
+				knc_remain += mPaper2KNC.get(p);
+			}
+		}
+		total_knc = knc_web_science_scopus + knc_remain;
+		
 		return total_knc;
 	}
 
