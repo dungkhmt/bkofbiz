@@ -3641,6 +3641,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			double knc_remain = 0;
 			for(GenericValue p: papers){
 				String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+				if(paperCategoryKNCId == null) continue;
+				
 				if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
 						||paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
 						||paperCategoryKNCId.equals("SCOPUS")
@@ -4249,6 +4251,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		double knc_remain = 0;
 		for(GenericValue p: papers){
 			String paperCategoryKNCId = p.getString("paperCategoryKNCId");
+			if(paperCategoryKNCId == null) continue;
 			if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
 					||paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
 					||paperCategoryKNCId.equals("SCOPUS")
