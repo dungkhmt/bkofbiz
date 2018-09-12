@@ -72,6 +72,12 @@
 			"width": "150px"
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"data": "paperCategoryKNCName",
+			"width": "150px"
+		},
+		
+		{
 			"name": "Thuoc de tai"?j_string,
 			"width": "200px",
 			"data": "researchProjectProposalName"
@@ -109,6 +115,8 @@
 		"authors",
 		"paperName",
 		"paperCategoryName",
+		"paperCategoryKNCName",
+		"paperCategoryKNCId",
 		"journalConferenceName",
 		"researchProjectProposalName",
 		"departmentName",
