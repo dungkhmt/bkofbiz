@@ -3652,6 +3652,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					knc_remain += mPaper2KNC.get(p);
 				}
 			}
+			if(knc_remain > 0.5) knc_remain = 0.5;
+			
 			total_knc = knc_web_science_scopus + knc_remain;
 			
 			i_row++;
@@ -4264,6 +4266,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				knc_remain += mPaper2KNC.get(p);
 			}
 		}
+		if(knc_remain > 0.5) knc_remain = 0.5;
+		
 		total_knc = knc_web_science_scopus + knc_remain;
 		
 		return total_knc;
