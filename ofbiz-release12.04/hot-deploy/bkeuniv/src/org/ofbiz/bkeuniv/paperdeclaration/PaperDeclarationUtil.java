@@ -3675,10 +3675,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			i_col++;
 			ch = rh.createCell(i_col);
+			String description = "KNC của các bài báo Web Science and Scopus là " + knc_web_science_scopus
+					+ ", KNC của các bài báo còn lại là " + knc_remain;
+			ch.setCellValue(description);
 			ch.setCellStyle(styleNormal);
 
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
-			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
+			//sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
 		}
 
 	}
