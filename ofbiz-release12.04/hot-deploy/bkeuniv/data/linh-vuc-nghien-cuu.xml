@@ -1,0 +1,28 @@
+	<ResearchDomain researchDomainId="00001" researchDomainName="Khoa học tự nhiên"/>
+	<ResearchDomain researchDomainId="00002" researchDomainName="Khoa học kỹ thuật và công nghệ"/>
+	<ResearchDomain researchDomainId="00003" researchDomainName="Khoa học Y, Dược"/>
+	<ResearchDomain researchDomainId="00004" researchDomainName="Khoa học nông nghiệp"/>
+	<ResearchDomain researchDomainId="00005" researchDomainName="Khoa học xã hội"/>
+	<ResearchDomain researchDomainId="00006" researchDomainName="Khoa học nhân văn"/>
+	
+	<ResearchSubDomain  researchDomainId="00001" researchSubDomainSeqId="00001" researchSubDomainName="Toán học và Thống kê" researchSubDomainCode="101"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00002" researchSubDomainName="Khoa học máy tính và thông tin" researchSubDomainCode="102"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00003" researchSubDomainName="Vật lý" researchSubDomainCode="103" />
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00004" researchSubDomainName="Hoá học" researchSubDomainCode="104" />
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00005" researchSubDomainName="Các khoa học trái đất và môi trường liên quan" researchSubDomainCode="105"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00006" researchSubDomainName="Sinh học" researchSubDomainCode="106" />
+	<ResearchSubDomain researchDomainId="00001"  researchSubDomainSeqId="00007" researchSubDomainName="Khoa học tự nhiên khác" researchSubDomainCode="199"mainId="00001"/>
+	
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00001" researchSubDomainName="Kỹ thuật dân dụng" researchSubDomainCode="201" />
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00002" researchSubDomainName="Kỹ thuật điện, kỹ thuật điện tử, kỹ thuật thông tin" researchSubDomainCode="202"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00003" researchSubDomainName="Kỹ thuật cơ khí chế tạo" researchSubDomainCode="203"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00004" researchSubDomainName="Kỹ thuật Hoá học" researchSubDomainCode="204" />
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00005" researchSubDomainName="Kỹ thuật vật liệu và luyện kim" researchSubDomainCode="205"/>
+	
+		
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Toán học cơ bản" researchSpecialityCode="10101"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Toán học ứng dụng" researchSpecialityCode="10102"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật kiến trúc" researchSpecialityCode="20101"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật xây dựng" researchSpecialityCode="20102"/>
+	

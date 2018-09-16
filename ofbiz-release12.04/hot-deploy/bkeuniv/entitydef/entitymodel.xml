@@ -1202,6 +1202,48 @@
 			<key-map field-name="paperId"/>
 		</relation>
 	</entity>
+	
+	<entity entity-name="CVPaper" package-name="org.ofbiz.bkeuniv">
+		<field name="cvPaperId" type="id-ne"></field>
+		<field name="staffPaperDeclarationId" type="id-vlong"></field>
+		<field name="sequenceInCVPaper" type="numeric"></field>
+		<prim-key field="cvPaperId"/>
+		<relation rel-entity-name="StaffPaperDeclaration" type="one">
+			<key-map field-name="staffPaperDeclarationId"/>
+		</relation>	
+	</entity>
+	
+	<view-entity entity-name="CVPaperView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="CVP" entity-name="CVPaper"></member-entity>
+		<member-entity entity-alias="PSV" entity-name="PapersStaffView"></member-entity>
+		<alias-all entity-alias="PSV"></alias-all>
+		<alias name="sequenceInCVPaper" entity-alias="CVP"></alias>
+		<view-link rel-entity-alias="PSV" entity-alias="CVP">
+			<key-map field-name="staffPaperDeclarationId" rel-field-name="staffPaperDeclarationId"/>
+		</view-link>
+	</view-entity>
+	
+	
+	<entity entity-name="CVProject" package-name="org.ofbiz.bkeuniv">
+		<field name="cvProjectId" type="id-ne"></field>
+		<field name="projectProposalMemberId" type="id-vlong"></field>
+		<field name="sequenceInCVProject" type="numeric"></field>
+		<prim-key field="cvProjectId"/>
+		<relation rel-entity-name="ProjectProposalMember" type="one">
+			<key-map field-name="projectProposalMemberId"/>
+		</relation>	
+	</entity>
+	
+	<view-entity entity-name="CVProjectView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="CVP" entity-name="CVProject"></member-entity>
+		<member-entity entity-alias="PPMV" entity-name="ProjectProposalMemberView"></member-entity>
+		<alias-all entity-alias="PPMV"></alias-all>
+		<alias name="sequenceInCVProject" entity-alias="CVP"></alias>
+		<view-link rel-entity-alias="PPMV" entity-alias="CVP">
+			<key-map field-name="projectProposalMemberId" rel-field-name="projectProposalMemberId"/>
+		</view-link>
+	</view-entity>
+	
 	<entity entity-name="YesNo" package-name="org.ofbiz.bkeuniv">
 		<field name="name" type="id-vlong"></field>
 		<field name="value" type="id-vlong"></field>

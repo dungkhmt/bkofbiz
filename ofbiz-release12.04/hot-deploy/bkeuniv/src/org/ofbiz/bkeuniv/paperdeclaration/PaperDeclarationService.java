@@ -170,14 +170,16 @@ public class PaperDeclarationService {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String year = (String) request.getParameter("reportyear-kv04");
 		String facultyId = (String) request.getParameter("facultyId-kv04");
-		Debug.log(module + "::exportExcelKV04, academic year = " + year);
+		GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+		String userLoginId = userLogin.getString("userLoginId");
+		Debug.log(module + "::exportExcelKV04, academic year = " + year + ", userLoginId = " + userLoginId);
 
-		String filename = "KNC-" + year;
+		String filename = "KNC-" + facultyId + "-" + year;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
 			//HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV04(delegator, year, facultyId);
-			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(delegator, year, facultyId);
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(delegator, year, facultyId, userLoginId);
 			
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();

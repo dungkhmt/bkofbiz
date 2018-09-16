@@ -42,6 +42,7 @@ import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
+import org.ofbiz.utils.BKEunivUtils;
 
 import java.util.ArrayList;
 
@@ -3377,7 +3378,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	}
 
 	public static void createSheetKNC(HSSFWorkbook wb, String facultyId,
-			String academicYearId, Delegator delegator) {
+			String academicYearId, Delegator delegator, String userLoginId) {
 		Sheet sh = wb.createSheet("KNC");
 
 		CellStyle styleTitle = wb.createCellStyle();
@@ -3478,6 +3479,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("Ghi chú");
 		ch.setCellStyle(styleTitle);
 
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		boolean staffOnly = true;
+		for(String g: groups){
+			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+				staffOnly = false;
+		}
+		
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator,
@@ -3488,6 +3496,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
+			if(staffOnly){
+				if(!staffId.equals(userLoginId)) continue;
+			}
 			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 					staffId, academicYearId);
 
@@ -3810,7 +3821,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	}
 
 	public static void createSheetKKL(HSSFWorkbook wb, String facultyId,
-			String academicYearId, Delegator delegator) {
+			String academicYearId, Delegator delegator, String userLoginId) {
 		Sheet sh = wb.createSheet("K-KhoiLuong");
 
 		CellStyle styleTitle = wb.createCellStyle();
@@ -3911,6 +3922,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("Ghi chú");
 		ch.setCellStyle(styleTitle);
 
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		boolean staffOnly = true;
+		for(String g: groups){
+			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+				staffOnly = false;
+		}
+		
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2RateKL = getRateKKLPaper(delegator,
@@ -3921,6 +3939,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
+			if(staffOnly){
+				if(!staffId.equals(userLoginId)) continue;
+			}
 			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 					staffId, academicYearId);
 
@@ -4386,7 +4407,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	}
 
 	public static void createSheetKNCTotal(HSSFWorkbook wb, String facultyId,
-			String academicYearId, Delegator delegator) {
+			String academicYearId, Delegator delegator, String userLoginId) {
 		Sheet sh = wb.createSheet("KNC-Total");
 
 		CellStyle styleTitle = wb.createCellStyle();
@@ -4445,6 +4466,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
 
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		boolean staffOnly = true;
+		for(String g: groups){
+			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+				staffOnly = false;
+		}
+		
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator,
@@ -4455,6 +4483,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
+			if(staffOnly){
+				if(!staffId.equals(userLoginId)) continue;
+			}
+			
 			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 					staffId, academicYearId);
 
@@ -4489,7 +4521,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	}
 
 	public static void createSheetKKLTotal(HSSFWorkbook wb, String facultyId,
-			String academicYearId, Delegator delegator) {
+			String academicYearId, Delegator delegator, String userLoginId) {
 		Sheet sh = wb.createSheet("K-KhoiLuong-Total");
 
 		CellStyle styleTitle = wb.createCellStyle();
@@ -4548,6 +4580,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
 
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		boolean staffOnly = true;
+		for(String g: groups){
+			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+				staffOnly = false;
+		}
+		
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2Rate = getRateKKLPaper(delegator,
@@ -4558,6 +4597,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
+			if(staffOnly){
+				if(!staffId.equals(userLoginId)) continue;
+			}
 			//List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 			//		staffId, academicYearId);
 
@@ -4592,7 +4634,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	}
 
 	public static HSSFWorkbook createExcelFormKV04(Delegator delegator,
-			String academicYearId, String facultyId) {
+			String academicYearId, String facultyId, String userLoginId) {
 
 		// get list of paper category hour-budget
 		List<GenericValue> paperHourBudget = getPaperCategoryHourBudget(
@@ -4831,9 +4873,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		createSheetListPapersKV04(wb, papers);
 
-		createSheetKNC(wb, facultyId, academicYearId, delegator);
+		createSheetKNC(wb, facultyId, academicYearId, delegator, userLoginId);
 
-		createSheetKNCTotal(wb, facultyId, academicYearId, delegator);
+		createSheetKNCTotal(wb, facultyId, academicYearId, delegator, userLoginId);
 
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;
@@ -4908,7 +4950,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	}
 
 	public static HSSFWorkbook createExcelFormKNC(Delegator delegator,
-			String academicYearId, String facultyId) {
+			String academicYearId, String facultyId, String userLoginId) {
 
 		// get list of paper category hour-budget
 		List<GenericValue> paperHourBudget = getPaperCategoryHourBudget(
@@ -4992,12 +5034,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		createSheetListPapersKV04(wb, papers);
 
 		// chi so KNC
-		createSheetKNC(wb, facultyId, academicYearId, delegator);
-		createSheetKNCTotal(wb, facultyId, academicYearId, delegator);
+		createSheetKNC(wb, facultyId, academicYearId, delegator, userLoginId);
+		createSheetKNCTotal(wb, facultyId, academicYearId, delegator, userLoginId);
 
 		// chi so Khoi luong
-		createSheetKKL(wb, facultyId, academicYearId, delegator);
-		createSheetKKLTotal(wb, facultyId, academicYearId, delegator);
+		createSheetKKL(wb, facultyId, academicYearId, delegator, userLoginId);
+		createSheetKKLTotal(wb, facultyId, academicYearId, delegator, userLoginId);
 
 		return wb;
 	}
