@@ -338,6 +338,11 @@
     	
     	<attribute name="yn" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getNoYes" engine="java" 
+    		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getNoYes">
+    	
+    	<attribute name="ny" mode="OUT" type="List"></attribute>
+    </service>
     
     <service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
@@ -370,6 +375,8 @@
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="affiliationOutsideUniversity[]" mode="IN" type="List" optional="true"></attribute>
+    	
     	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		
@@ -414,6 +421,7 @@
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="affiliationOutsideUniversity[]" mode="IN" type="List" optional="true"></attribute>
     	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		

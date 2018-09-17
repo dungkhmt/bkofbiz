@@ -740,6 +740,10 @@
 				</service>
 				<service service-name="getYesNo" result-map="resultYesNo">
 				</service>
+				<service service-name="getNoYes" result-map="resultNoYes">
+				</service>
+				
+				
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

@@ -1170,6 +1170,19 @@ public class PaperDeclarationService {
 		}
 		return retSucc;
 	}
+	public static Map<String, Object> getNoYes(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try{
+			List<GenericValue> list = delegator.findList("NoYes", null, null, null, null, false);
+			retSucc.put("ny", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 
 	public static Map<String, Object> getPaperDeclarationStatus(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -1737,10 +1750,15 @@ public class PaperDeclarationService {
 		List<String> list_roleId = (List<String>)context.get("roleId[]");
 		String s_sequence = (String)context.get("sequence");
 		List<String> list_correspondingAuthors = (List<String>)context.get("correspondingAuthor[]");
+		List<String> list_affiliationOutsideUniversity = (List<String>)context.get("affiliationOutsideUniversity[]");
+		
 		String correspondingAuthor = null;
 		if(list_correspondingAuthors != null && list_correspondingAuthors.size() > 0)
 			correspondingAuthor = list_correspondingAuthors.get(0);
 		
+		String affiliationOutsideUniversity = null;
+		if(list_affiliationOutsideUniversity != null && list_affiliationOutsideUniversity.size() > 0)
+			affiliationOutsideUniversity = list_affiliationOutsideUniversity.get(0);
 		Delegator delegator = ctx.getDelegator();
 		String staffId = null;
 		if(list_staffId != null && list_staffId.size() > 0)
@@ -1772,7 +1790,10 @@ public class PaperDeclarationService {
 			sp.put("staffPaperDeclarationId", staffPaperDeclarationId);
 			if(paperId != null) sp.put("paperId", paperId);
 			if(staffId != null) sp.put("staffId", staffId);
-			if(correspondingAuthor != null)sp.put("correspondingAuthor", correspondingAuthor);
+			if(correspondingAuthor != null)
+				sp.put("correspondingAuthor", correspondingAuthor);
+			if(affiliationOutsideUniversity != null)
+				sp.put("affiliationOutsideUniversity", affiliationOutsideUniversity);
 			
 			sp.put("sequence", sequence);
 			if(roleId != null)sp.put("roleId", roleId);
@@ -1804,6 +1825,7 @@ public class PaperDeclarationService {
 			else spv.put("roleName", "");
 			spv.put("sequence", sequence);
 			spv.put("correspondingAuthor", correspondingAuthor);
+			spv.put("affiliationOutsideUniversity", affiliationOutsideUniversity);
 			
 			retSucc.put("staffs", spv);
 			retSucc.put("message", "successfully");
@@ -1987,9 +2009,18 @@ public class PaperDeclarationService {
 		List<String> list_roleId = (List<String>)context.get("roleId[]");
 		String s_sequence = (String)context.get("sequence");
 		List<String> list_correspondingAuthors = (List<String>)context.get("correspondingAuthor[]");
+		List<String> list_affiliationOutsideUniversity = (List<String>)context.get("affiliationOutsideUniversity[]");
+		
 		String correspondingAuthor = null;
 		if(list_correspondingAuthors != null && list_correspondingAuthors.size() > 0)
 			correspondingAuthor = list_correspondingAuthors.get(0);
+		
+		String affiliationOutsideUniversity = null;
+		if(list_affiliationOutsideUniversity != null && list_affiliationOutsideUniversity.size() > 0)
+			affiliationOutsideUniversity = list_affiliationOutsideUniversity.get(0);
+		
+		
+		
 		Delegator delegator = ctx.getDelegator();
 		String staffId = null;
 		if(list_staffId != null && list_staffId.size() > 0)
@@ -2018,6 +2049,9 @@ public class PaperDeclarationService {
 					
 				if(correspondingAuthor != null)
 					sp.put("correspondingAuthor", correspondingAuthor);
+				if(affiliationOutsideUniversity != null)
+					sp.put("affiliationOutsideUniversity", affiliationOutsideUniversity);
+				
 				//else sp.put("correspondingAuthor", "");
 				sp.put("sequence", sequence);
 				sp.put("statusId", "ENABLED");
@@ -2042,6 +2076,10 @@ public class PaperDeclarationService {
 				else spv.put("staffName", "");
 				if(role != null && role.getString("roleName") != null) spv.put("roleName", role.getString("roleName"));
 				else spv.put("roleName", "");
+				
+				if(correspondingAuthor != null)spv.put("correspondingAuthor", correspondingAuthor);
+				if(affiliationOutsideUniversity != null)spv.put("affiliationOutsideUniversity", affiliationOutsideUniversity);
+				
 				
 				retSucc.put("staffs", spv);
 				retSucc.put("message", "successfully");

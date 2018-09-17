@@ -4239,6 +4239,9 @@
 <YesNo name="Có" value="Y"/>
 <YesNo name="Không" value="N"/>
 
+<NoYes name="Không" value="N"/>
+<NoYes name="Có" value="Y"/>
+
 
 <ProjectStatus projectStatusId="CANCELLED" projectStatusName="Đã huỷ"/>
 <ProjectStatus projectStatusId="CREATED" projectStatusName="Tạo mới"/>

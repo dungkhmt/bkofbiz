@@ -1188,6 +1188,7 @@
 		<field name="roleId" type="id-vlong"></field>
 		<field name="sequence" type="numeric"></field>
 		<field name="correspondingAuthor" type="id-vlong"></field>
+		<field name="affiliationOutsideUniversity" type="id-vlong"></field>
 		<prim-key field="staffPaperDeclarationId"/>
 		<!-- 
 		<relation rel-entity-name="StaffPaperDeclarationRole" type="one">
@@ -1249,6 +1250,12 @@
 		<field name="value" type="id-vlong"></field>
 		<prim-key field="name"/>
 	</entity>
+	<entity entity-name="NoYes" package-name="org.ofbiz.bkeuniv">
+		<field name="name" type="id-vlong"></field>
+		<field name="value" type="id-vlong"></field>
+		<prim-key field="name"/>
+	</entity>
+	
 	
 	<entity entity-name="ExternalMemberPaperDeclaration" package-name="org.ofbiz.bkeuniv">
 		<field name="externalMemberPaperDeclarationId" type="id-vlong"></field>
@@ -1302,6 +1309,7 @@
 		<alias name="roleId" entity-alias="SPD" field="roleId"></alias>
 		<alias name="sequence" entity-alias="SPD" field="sequence"></alias>
 		<alias name="correspondingAuthor" entity-alias="SPD" field="correspondingAuthor"></alias>
+		<alias name="affiliationOutsideUniversity" entity-alias="SPD" field="affiliationOutsideUniversity"></alias>
 		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
 		<alias name="staffPaperDeclarationId" entity-alias="SPD"></alias>
 		<alias name="staffId" entity-alias="SPD"></alias>

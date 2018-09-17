@@ -3585,6 +3585,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						}
 						if (sp.getString("correspondingAuthor").equals("Y"))
 							correspondingAuthor = "Y";
+						
+						if(sp.getString("affiliationOutsideUniversity") != null &&
+								sp.getString("affiliationOutsideUniversity").equals("Y")){
+							knc = knc*0.5;
+							description += "Affiliation NGOÀI TRƯỜNG -> KNC chia đôi. ";
+						}
 						s_knc = knc + "";
 						total_knc += knc;
 					}
@@ -4262,6 +4268,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					} else {
 						knc = (0.6 * x * 1.0 / nbAuthors);
 					}
+					
+					if(sp.getString("affiliationOutsideUniversity") != null &&
+							sp.getString("affiliationOutsideUniversity").equals("Y")){
+						knc = knc*0.5;
+					}
+					
 					if (sp.getString("correspondingAuthor").equals("Y"))
 						correspondingAuthor = "Y";
 					s_knc = knc + "";
