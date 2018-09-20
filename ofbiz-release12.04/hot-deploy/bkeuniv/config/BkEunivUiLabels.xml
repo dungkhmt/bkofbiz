@@ -415,6 +415,10 @@
     	<value xml:lang="en">Time (from ... to ...)</value>
     	<value xml:lang="vi">Thời gian (bắt đầu - kết thúc)</value>
     </property>
+    <property key="BkEunivPeriod">
+    	<value xml:lang="en">Period</value>
+    	<value xml:lang="vi">Giai đoạn</value>
+    </property>
     
     <property key="BkEunivProgram">
     	<value xml:lang="en">Program</value>
@@ -448,17 +452,22 @@
     
     <property key="BkEunivScientificService2">
     	<value xml:lang="en">in 5 years recently</value>
-    	<value xml:lang="vi"> đánh giá các chương trình, đề tài, dự án KH-CN cấp quốc gia hoặc tương đương trong và ngoài nước đã tham gia trong 5 năm gần đây)</value>
+    	<value xml:lang="vi"> đánh giá các chương trình, đề tài, dự án KH-CN cấp quốc gia hoặc tương đương, thành viên ban biên tập tạp chí KHCN)</value>
     </property>
     
     <property key="BkEunivModelCouncil">
-    	<value xml:lang="en">Model Council</value>
-    	<value xml:lang="vi">Hình thức hội đồng</value>
+    	<value xml:lang="en">Review position</value>
+    	<value xml:lang="vi">Vị trí đánh giá KHCN</value>
     </property>
     
     <property key="BkEunivTime">
     	<value xml:lang="en">Times</value>
     	<value xml:lang="vi">Số lần</value>
+    </property>
+    
+    <property key="BkEunivDetail">
+    	<value xml:lang="en">Detail</value>
+    	<value xml:lang="vi">Chi tiết</value>
     </property>
     
     <property key="BkEunivNumberOfConstruction">

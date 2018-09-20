@@ -42,7 +42,7 @@
 					<fo:table-cell />
 					
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${Time}</fo:block>
+						<fo:block >${WorkProgressPeriod}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />

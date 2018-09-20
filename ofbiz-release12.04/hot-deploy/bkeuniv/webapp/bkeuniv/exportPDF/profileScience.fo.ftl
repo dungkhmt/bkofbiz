@@ -55,6 +55,7 @@
 	<#assign English = "Tieng Anh" />
 	<#assign BussinessProgress = uiLabelMap.BkEunivWorkProgress  />
 	<#assign Time = uiLabelMap.BkEunivTime />
+	<#assign WorkProgressPeriod = uiLabelMap.BkEunivPeriod />
 	<#assign PositionBussiness = uiLabelMap.BkEunivPositionBussiness />
 	<#assign Domain = uiLabelMap.BkEunivDomain />
 	<#assign Company = uiLabelMap.BkEunivCompany />
@@ -95,7 +96,7 @@
 	
 		 
 	<#assign ModelCouncil = uiLabelMap.BkEunivModelCouncil />
-	<#assign Times = uiLabelMap.BkEunivTime />
+	<#assign Times = uiLabelMap.BkEunivDetail />
 	<#assign ExperienceSuccess = uiLabelMap.BkEunivPHDDefensed />
 	<#assign FirstAndLastName = uiLabelMap.BkEunivFirstAndLastName />
 	<#assign Guide = uiLabelMap.BkEunivGuide />

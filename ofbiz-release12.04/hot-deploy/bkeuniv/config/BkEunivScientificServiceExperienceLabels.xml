@@ -13,12 +13,12 @@
         <value xml:lang="vi">Nhân viên</value>
     </property>
     <property key="BkEunivSSESDescription">
-        <value xml:lang="en">Description</value>
-        <value xml:lang="vi">Hình thức hội đồng</value>
+        <value xml:lang="en">Review</value>
+        <value xml:lang="vi">Vị trí đánh giá KHCN</value>
     </property>
     <property key="BkEunivSSESQuantity">
-        <value xml:lang="en">Quantity</value>
-        <value xml:lang="vi">Số lần</value>
+        <value xml:lang="en">Detail</value>
+        <value xml:lang="vi">Chi tiết</value>
     </property>
     <property key="BkEunivSSESConfirmDelete">
         <value xml:lang="en">Are you sure to delete record id? </value>
