@@ -842,5 +842,14 @@
         <value xml:lang="vi">Cập nhật đề tài</value>
     </property>
     
+    <property key="CVPaperName">
+        <value xml:lang="en">Paper Name</value>
+        <value xml:lang="vi">Tên bài báo</value>
+    </property>
+    
+    <property key="CVPaperSequence">
+        <value xml:lang="en">Sequence of paper</value>
+        <value xml:lang="vi">Thứ tự xuất hiện</value>
+    </property>
     
 </resource>

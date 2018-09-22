@@ -67,6 +67,12 @@
         <response name="error" type="view" value="login"/>
     </request-map> -->
     
+    <request-map uri="recent-publications">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-recent-publications"></response>	
+	</request-map>
+    
+    
 	<request-map uri="get-members-of-a-paper">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getMembersOfAPaper"></event>
@@ -1039,6 +1045,9 @@
     <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
+    
+    <view-map name="view-recent-publications" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentPublication"/>
+    
     <view-map name="profile-science-PDF" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDF" content-type="application/pdf" encoding="none"/>
     <view-map name="profile-science-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFSetting"/>
     <view-map name="view-profile-science-staffs-list" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFStaffsList"/>

@@ -935,6 +935,22 @@
 		<field name="academicYearName" type="id"></field>
 		<prim-key field="academicYearId"/>
 	</entity>
+
+	<entity entity-name="HocHam" package-name="org.ofbiz.bkeuniv">
+		<field name="hocHamId" type="id-ne"></field>
+		<field name="hocHamName" type="id-vlong"></field>
+		<prim-key field="hocHamId"/>
+	</entity>	
+	<entity entity-name="HocVi" package-name="org.ofbiz.bkeuniv">
+		<field name="hocViId" type="id-ne"></field>
+		<field name="hocViName" type="id-vlong"></field>
+		<prim-key field="hocViId"/>
+	</entity>	
+	<entity entity-name="ChucDanhNghienCuu" package-name="org.ofbiz.bkeuniv">
+		<field name="chucDanhNghienCuuId" type="id-ne"></field>
+		<field name="chucDanhNghienCuuName" type="id-vlong"></field>
+		<prim-key field="chucDanhNghienCuuId"/>
+	</entity>	
 	
 	
 	<entity entity-name="Staff" package-name="org.ofbiz.bkeuniv">
@@ -950,6 +966,18 @@
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
 		<field name="statusId" type="id-ne"></field>
+		
+		<field name="hocHamId" type="id-ne"></field>
+		<field name="yearHocHam" type="numeric"></field>
+		<field name="hocViId" type="id-ne"></field>
+		<field name="yearHocVi" type="numeric"></field>
+		<field name="chucDanhNghienCuuId" type="id-ne"></field>
+		<field name="chucVuHienNay" type="id-vlong"></field>
+		<field name="recentResearchDomain" type="id-vlong"></field>
+		<field name="researchDirection4PhDMaster" type="id-vlong"></field>
+		<field name="researchKeywords" type="id-vlong"></field>
+		
+		
 		<prim-key field="staffId"/>
 		<relation rel-entity-name="Department" type="one">
 			<key-map field-name="departmentId"/>
@@ -1204,6 +1232,38 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="PhDSupervision" package-name="org.ofbiz.bkeuniv">
+		<field name="phDSupervisionId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="studentName" type="id-vlong"></field>
+		<field name="thesisName" type="very-long"></field>
+		<field name="coSupervion" type="id-ne"><description>Y/N</description></field>
+		<field name="graduateYear" type="numeric"></field>
+		
+		<prim-key field="phDSupervisionId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="EducationLevel" package-name="org.ofbiz.bkeuniv">
+		<field name="educationLevelId" type="id-ne"></field>
+		<field name="educationLevelName" type="very-long"></field>
+		<prim-key field="educationLevelId"/>
+	</entity>
+	
+	<entity entity-name="ThesisSubjectPhDMaster" package-name="org.ofbiz.bkeuniv">
+		<field name="thesisSubjectPhDMasterId" type="id-ne"></field>
+		<field name="thesisSubjectPhDMasterName" type="very-long"></field>
+		<field name="description" type="very-long"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<prim-key field="thesisSubjectPhDMasterId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		
+	</entity>
+	
 	<entity entity-name="CVPaper" package-name="org.ofbiz.bkeuniv">
 		<field name="cvPaperId" type="id-ne"></field>
 		<field name="staffPaperDeclarationId" type="id-vlong"></field>
@@ -1244,6 +1304,7 @@
 			<key-map field-name="projectProposalMemberId" rel-field-name="projectProposalMemberId"/>
 		</view-link>
 	</view-entity>
+	
 	
 	<entity entity-name="YesNo" package-name="org.ofbiz.bkeuniv">
 		<field name="name" type="id-vlong"></field>

@@ -794,6 +794,37 @@
 		</section>
 	</screen>
 
+
+	<screen name="paperCVRecentPublication">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				
+				<service service-name="getPapersOfStaff" result-map="resultPapers">
+				
+				</service>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-publication.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="summaryPaperDeclaration">
 		<section>
 			<actions>
