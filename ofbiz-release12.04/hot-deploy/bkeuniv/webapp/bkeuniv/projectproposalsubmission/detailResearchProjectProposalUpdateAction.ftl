@@ -26,7 +26,8 @@ projectProposalStatus: ${pResultProjectProposal.projectproposal.statusId}
 		<td>
 		<table>
 			<#assign view_update=0/>
-			<#if pResultProjectProposal.projectCallStatusId == "OPEN" || pResultProjectProposal.projectCallStatusId == "OPEN_REVISED">
+			<#if pResultProjectProposal.projectCallStatusId == "OPEN" || 
+				pResultProjectProposal.projectCallStatusId == "OPEN_REVISED">
 				<#if pResultProjectProposal.projectproposal.statusId == "CREATED" || 
 				pResultProjectProposal.projectproposal.statusId == "ACCEPT_REVISE" ||	
 				pResultProjectProposal.projectproposal.statusId == "ACCEPT_REVISE_UNIVERSITY">

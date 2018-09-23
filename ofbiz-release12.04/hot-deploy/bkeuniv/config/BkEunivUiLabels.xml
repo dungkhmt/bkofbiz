@@ -848,7 +848,17 @@
     </property>
     
     <property key="CVPaperSequence">
-        <value xml:lang="en">Sequence of paper</value>
+        <value xml:lang="en">Sequence</value>
+        <value xml:lang="vi">Thứ tự xuất hiện</value>
+    </property>
+    
+    <property key="CVProjectName">
+        <value xml:lang="en">Project Name</value>
+        <value xml:lang="vi">Tên đề tài</value>
+    </property>
+    
+    <property key="CVProjectSequence">
+        <value xml:lang="en">Sequence</value>
         <value xml:lang="vi">Thứ tự xuất hiện</value>
     </property>
     

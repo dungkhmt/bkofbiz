@@ -179,7 +179,6 @@
 <Function functionId="DETAIL_PAPER" uiLabelId="detail_paper" vnLabel="Chi tiết bài báo" enLabel="detail paper" target="detail-paper" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
 
 
-
 <Function functionId="RESEARCH_DOMAIN_STAFF" uiLabelId="research_domain_staff" vnLabel="Lĩnh vực nghiên cứu" enLabel="research domain" target="research-domain-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
 
 <Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="7"/>
