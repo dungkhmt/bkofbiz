@@ -740,6 +740,10 @@
 				</service>
 				<service service-name="getYesNo" result-map="resultYesNo">
 				</service>
+				<service service-name="getNoYes" result-map="resultNoYes">
+				</service>
+				
+				
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -780,6 +784,68 @@
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/external-members-of-a-paper.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+
+	<screen name="paperCVRecentPublication">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				
+				<service service-name="getPapersOfStaff" result-map="resultPapers">
+				
+				</service>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-publication.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="paperCVRecentProjects">
+		<section>
+			<actions>
+				<!-- 
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				 -->
+				<service service-name="getProjectsOfStaff" result-map="resultProjects">
+				
+				</service>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-project.ftl" />
 							</html>
 						</platform-specific>
 					

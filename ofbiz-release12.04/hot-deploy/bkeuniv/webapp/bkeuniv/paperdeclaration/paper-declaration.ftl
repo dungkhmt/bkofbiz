@@ -735,6 +735,12 @@
 			"data": "categoryName"
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"data": "paperCategoryKNCName"
+		},
+		
+		
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
 			"data": "authors"
 		},

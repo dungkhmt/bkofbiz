@@ -152,6 +152,12 @@
     	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
     </service>
     
+    <service name="getProjectsOfStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ResearchProjectProposal" invoke="getProjectsOfStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
+    </service>
+    
     <service name="getProjectProposalStatus" engine="java" 
     		location="org.ofbiz.bkeuniv.projectdeclaration.ResearchProjectProposal" invoke="getProjectProposalStatus">
     	<attribute name="projectProposalStatus" mode="OUT" type="List"></attribute>

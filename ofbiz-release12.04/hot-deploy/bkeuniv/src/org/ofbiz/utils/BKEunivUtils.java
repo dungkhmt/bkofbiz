@@ -45,6 +45,28 @@ public class BKEunivUtils {
 	public static final String module = BKEunivUtils.class.getName();
 	
 	
+	public static List<String> getListSecurityGroupsOfUserLogin(Delegator delegator, String staffId){
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("userLoginId",EntityOperator.EQUALS,staffId));
+			
+			
+			List<GenericValue> list = delegator.findList("UserLoginSecurityGroup", 
+					EntityCondition.makeCondition(conds),
+					null, null, null, false);
+			
+			List<String> retList = FastList.newInstance();
+			
+			for(GenericValue gv: list){
+				retList.add(gv.getString("groupId"));
+			}
+			return retList;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
 	
 	public static List<GenericValue> getListDepartmentsOfFaculty(Delegator delegator,
 			String facultyId) {

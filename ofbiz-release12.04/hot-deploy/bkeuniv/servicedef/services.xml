@@ -271,6 +271,63 @@
     	<attribute name="educationProgress" mode="OUT" type="List"></attribute>
     </service>
     
+	<service name="getCVProjects" engine="java"
+		location="org.ofbiz.bkeuniv.cv.CVProject" invoke="getCVProjects">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projects" mode="OUT" type="List"></attribute>
+	</service>
+    <service name="addCVProject" engine="java"
+    	location="org.ofbiz.bkeuniv.cv.CVProject" invoke="addCVProject">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectProposalMemberId[]" mode="IN" type="List"></attribute>
+    	<attribute name="sequenceInCVProject" mode="IN" type="String"></attribute>
+    	<attribute name="projects" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    <service name="updateCVProject" engine="java"
+    	location="org.ofbiz.bkeuniv.cv.CVProject" invoke="updateCVProject">
+    	<attribute name="cvProjectId" mode="IN" type="String"></attribute>
+    	<attribute name="projectProposalMemberId[]" mode="IN" type="List"></attribute>
+    	<attribute name="sequenceInCVProject" mode="IN" type="String"></attribute>
+    	<attribute name="projects" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    <service name="deleteCVProject" engine="java"
+    	location="org.ofbiz.bkeuniv.cv.CVProject" invoke="deleteCVProject">
+    	<attribute name="cvProjectId" mode="IN" type="String"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+
+    <service name="getCVPapers" engine="java"
+    	location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getCVPapers">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="papers" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="addCVPaper" engine="java"
+    	location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="addCVPaper">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffPaperDeclarationId[]" mode="IN" type="List"></attribute>
+    	<attribute name="sequenceInCVPaper" mode="IN" type="String"></attribute>
+    	<attribute name="papers" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <service name="updateCVPaper" engine="java"
+    	location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="updateCVPaper">
+    	<attribute name="cvPaperId" mode="IN" type="String"></attribute>
+    	<attribute name="staffPaperDeclarationId[]" mode="IN" type="List"></attribute>
+    	<attribute name="sequenceInCVPaper" mode="IN" type="String"></attribute>
+    	<attribute name="papers" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+
+    <service name="deleteCVPaper" engine="java"
+    	location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="deleteCVPaper">
+    	<attribute name="cvPaperId" mode="IN" type="String"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+
     
     <service name="getCVProfileOfStaff" engine="java" 
     		location="org.ofbiz.bkeuniv.staffmanagement.StaffService" invoke="getCVProfileOfStaff">
@@ -338,6 +395,11 @@
     	
     	<attribute name="yn" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getNoYes" engine="java" 
+    		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getNoYes">
+    	
+    	<attribute name="ny" mode="OUT" type="List"></attribute>
+    </service>
     
     <service name="getPapersOfStaff" engine="java" 
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getPapersOfStaff">
@@ -370,6 +432,8 @@
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="affiliationOutsideUniversity[]" mode="IN" type="List" optional="true"></attribute>
+    	
     	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		
@@ -414,6 +478,7 @@
     	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
     	<attribute name="sequence" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="correspondingAuthor[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="affiliationOutsideUniversity[]" mode="IN" type="List" optional="true"></attribute>
     	
     	<attribute name="roleId[]" mode="IN" type="List" optional="true"></attribute>
 		

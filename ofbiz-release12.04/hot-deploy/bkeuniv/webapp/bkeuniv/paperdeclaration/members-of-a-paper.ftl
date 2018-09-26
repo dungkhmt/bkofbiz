@@ -18,6 +18,11 @@
 			"data": "correspondingAuthor"
 		},
 		{
+			"name": uiLabelMap.AffiliationOutsideUniversity?j_string,
+			"data": "affiliationOutsideUniversity"
+		},
+		
+		{
 			"name": uiLabelMap.BkEunivRoleName?j_string,
 			"data": "roleName"
 		}
@@ -30,6 +35,7 @@
 		"staffId",
 		"sequence",
 		"correspondingAuthor",
+		"affiliationOutsideUniversity",
 		"roleId",
 		"roleName"
 	] />
@@ -41,7 +47,7 @@
     </#if>
   </#list>
 
-	<#assign yesnoList=[]/>
+  <#assign yesnoList=[]/>
   <#list resultYesNo.yn as yn>
     <#if yn?has_content>
              <#assign op = { "name": yn.name?j_string ,"value": yn.value?j_string } />
@@ -49,7 +55,15 @@
     </#if>
   </#list>
   
-	<#assign columnsChange=[
+  <#assign noyesList=[]/>
+  <#list resultNoYes.ny as ny>
+    <#if ny?has_content>
+             <#assign op = { "name": ny.name?j_string ,"value": ny.value?j_string } />
+            <#assign noyesList = noyesList + [op] />
+    </#if>
+  </#list>
+
+		<#assign columnsChange=[
 		{
 			"name": uiLabelMap.BkEunivPaperMembers?j_string,
 			"value": "staffId",
@@ -75,7 +89,15 @@
 				"maxItem": 1
 			}
 		},
-
+		{
+			"name": uiLabelMap.AffiliationOutsideUniversity?j_string,
+			"value": "affiliationOutsideUniversity",
+			"type": "select",
+			"option":{
+				"source": noyesList,
+				"maxItem": 1
+			}
+		},
 		{
 			"name": uiLabelMap.BkEunivRoleName?j_string,
 			"value": "roleId",
@@ -112,6 +134,15 @@
 			"type": "select",
 			"option":{
 				"source": yesnoList,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": uiLabelMap.AffiliationOutsideUniversity?j_string,
+			"value": "affiliationOutsideUniversity",
+			"type": "select",
+			"option":{
+				"source": noyesList,
 				"maxItem": 1
 			}
 		},

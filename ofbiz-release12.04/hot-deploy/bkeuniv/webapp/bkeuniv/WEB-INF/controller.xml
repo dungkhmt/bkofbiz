@@ -67,6 +67,17 @@
         <response name="error" type="view" value="login"/>
     </request-map> -->
     
+    <request-map uri="recent-publications">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-recent-publications"></response>	
+	</request-map>
+	
+    <request-map uri="recent-projects">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-recent-projects"></response>	
+	</request-map>
+    
+    
 	<request-map uri="get-members-of-a-paper">
 		<security https="true" auth="true"/>
 		<event type="service" invoke="getMembersOfAPaper"></event>
@@ -217,6 +228,62 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 
+    <request-map uri="get-cv-project">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getCVProjects"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+    <request-map uri="get-cv-papers">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="getCVPapers"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+    <request-map uri="add-a-cv-project">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="addCVProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-a-cv-project">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateCVProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="delete-a-cv-project">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteCVProject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+    <request-map uri="add-a-cv-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="addCVPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-a-cv-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="updateCVPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-a-cv-paper">
+		<security https="true" auth="true"/>
+		<event type="service" invoke="deleteCVPaper"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 
     <request-map uri="get-staffs">
 		<security https="true" auth="true"/>
@@ -1055,6 +1122,10 @@
     <view-map name="view-scientificserviceexperience" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#scientificserviceexperience"/>
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
+    
+    <view-map name="view-recent-publications" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentPublication"/>
+    <view-map name="view-recent-projects" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentProjects"/>
+    
     <view-map name="profile-science-PDF" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDF" content-type="application/pdf" encoding="none"/>
     <view-map name="profile-science-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFSetting"/>
     <view-map name="view-profile-science-staffs-list" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFStaffsList"/>

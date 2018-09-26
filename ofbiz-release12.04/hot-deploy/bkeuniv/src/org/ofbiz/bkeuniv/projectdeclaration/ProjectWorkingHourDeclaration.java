@@ -226,8 +226,10 @@ public class ProjectWorkingHourDeclaration {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 		try{
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("academicYearId");
 			List<GenericValue> list = delegator.findList("AcademicYear",
-					EntityCondition.makeCondition(),null, null, null, false);
+					EntityCondition.makeCondition(),null, orderBy, null, false);
 			List<Map> academicYears = FastList.newInstance();
 			for(GenericValue gv : list){
 				Map<String, Object> map = FastMap.newInstance();
