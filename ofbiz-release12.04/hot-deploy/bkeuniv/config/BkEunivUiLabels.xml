@@ -833,5 +833,79 @@
         <value xml:lang="vi">Cập nhật đề tài</value>
     </property>
     
+    <property key="BkEunivAddNewPaperDeclaration">
+        <value xml:lang="en">Add new paper declaration</value>
+        <value xml:lang="vi">Thêm mới kê khai bài báo</value>
+    </property>
+    
+    <property key="BkEunivBasicPaperInformation">
+        <value xml:lang="en">Information</value>
+        <value xml:lang="vi">Thông tin cơ bản</value>
+    </property>
+    
+    <property key="BkEunivDetailPaperInformation">
+        <value xml:lang="en">Detail information</value>
+        <value xml:lang="vi">Chi tiết bài báo</value>
+    </property>
+    
+    <property key="BkEunivMembersPaper">
+        <value xml:lang="en">Members</value>
+        <value xml:lang="vi">Thành viên</value>
+    </property>
+    
+    <property key="BkEunivConfirm">
+        <value xml:lang="en">Confirm</value>
+        <value xml:lang="vi">Xác nhận</value>
+    </property>
+    
+    <property key="BkEunivQuestionIsRequired">
+        <value xml:lang="en">The question is required</value>
+        <value xml:lang="vi">Câu hỏi bắt buộc</value>
+    </property>
+    
+    <property key="BkEunivNext">
+        <value xml:lang="en">Next</value>
+        <value xml:lang="vi">Kế tiếp</value>
+    </property>
+    
+    <property key="BkEunivPrevious">
+        <value xml:lang="en">Previous</value>
+        <value xml:lang="vi">Quay lại</value>
+    </property>
+    
+    <property key="BkEunivFloat">
+        <value xml:lang="en">Float</value>
+        <value xml:lang="vi">Số thực</value>
+    </property>
+    
+    <property key="BkEunivInteger">
+        <value xml:lang="en">Integer</value>
+        <value xml:lang="vi">Số nguyên dương</value>
+    </property>
+    
+    <property key="BkEunivNoMembers">
+        <value xml:lang="en">No data available in table</value>
+        <value xml:lang="vi">Không có thành viên</value>
+    </property>
+    
+    <property key="BkEunivNotNullMembers">
+        <value xml:lang="en">Members paper is required</value>
+        <value xml:lang="vi">Chưa thêm thành viên bài báo</value>
+    </property>
+    
+    <property key="BkEunivSaveAndViewList">
+        <value xml:lang="en">Save and view list</value>
+        <value xml:lang="vi">Lưu và xem danh sách</value>
+    </property>
+    
+    <property key="BkEunivMemberAlreadyExisted">
+        <value xml:lang="en">Member already existed</value>
+        <value xml:lang="vi">Thành viên đã tồn tại</value>
+    </property>
+    
+    <property key="BkEunivEditingHasNotYetBeenSaved">
+        <value xml:lang="en">Editing has not yet been saved</value>
+        <value xml:lang="vi">Có chỉnh sửa chưa được lưu lại</value>
+    </property>
     
 </resource>

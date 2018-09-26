@@ -70,7 +70,7 @@
 					</div>
 					
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
-						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 30%;">
+						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							Phan loai KNC
 						</label>
 						<span style="width: 70%; display: block;" >
@@ -161,11 +161,8 @@
 					<#list members.staffPaperDeclaration as m>
 						<tr>
 							
-							<#if m.sequence?exists>
-								<td>${m.sequence}</td>
-							<#else>
-								<td></td>
-							</#if>
+							
+							<td>${stt}</td>
 							<#if m.staffName?exists>
 								<td>${m.staffName}</td>
 							<#else>
@@ -180,11 +177,9 @@
 					<#list members.externalMemberPaperDeclaration as m>
 						<tr>
 							
-							<#if m.sequence?exists>
-								<td>${m.sequence}</td>
-							<#else>
-								<td></td>
-							</#if>
+							
+							<td>${stt}</td>
+							
 							<#if m.staffName?exists>
 								<td>${m.staffName}</td>
 							<#else>
