@@ -915,6 +915,7 @@
     <property key="BkEunivEditingHasNotYetBeenSaved">
         <value xml:lang="en">Editing has not yet been saved</value>
         <value xml:lang="vi">Có chỉnh sửa chưa được lưu lại</value>
+    </property>    
     <property key="CVPaperName">
         <value xml:lang="en">Paper Name</value>
         <value xml:lang="vi">Tên bài báo</value>
