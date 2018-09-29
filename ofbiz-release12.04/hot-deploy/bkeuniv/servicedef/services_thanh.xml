@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>BkEuniv Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+    <service name="getCVInformation" engine="java" 
+    	location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience"
+    	invoke="getCVInformation" >
+    	<attribute name="staffId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="staffCVInfo" mode="OUT" type="Map" optional="false"></attribute>
+    </service>
+    
+    <service name="getListAcademicRank" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="getListAcademicRank" >
+    	<attribute name="listAcademicRank" mode="OUT" type="List" optional="false"></attribute>
+    </service>
+    
+    <service name="getListDegree" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="getListDegree" >
+    	<attribute name="listDegree" mode="OUT" type="List" optional="false"></attribute>
+    </service>
+    
+    <service name="updateCVInfo" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="updateCVInfo" >
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="academicRankId" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="degreeId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="academicRankYear" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="degreeYear" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="duty" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="statusCode" mode="OUT" type="String" optional="false"></attribute>
+    </service>
+    
+    
+</services>
