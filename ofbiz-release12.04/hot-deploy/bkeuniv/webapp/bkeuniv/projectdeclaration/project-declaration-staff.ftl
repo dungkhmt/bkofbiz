@@ -11,7 +11,7 @@
 			"width": "300px",
 			"data": "researchProjectProposalName",
 			"render": 'function(value, name, dataColumns, id) {
-                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
 			}'
 		},
 		{
@@ -176,7 +176,7 @@
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
 	
 	<@jqDataTable
-		urlData="/bkeuniv/control/get-project-declaration-new" 
+		urlData="/bkeuniv/control/get-project-declaration-of-staff" 
 		columns=columns 
 		columnsNew=columnsNew 
 		columnsChange=columnsChange 
@@ -184,7 +184,7 @@
 		sizeTable=sizeTable
 		keysId=["researchProjectProposalId"] 
 		fieldDataResult = "projectDeclarations"
-		urlAdd="/bkeuniv/control/create-project-declaration-new" 
+		urlAdd="/bkeuniv/control/create-project-declaration-staff" 
 		urlUpdate="/bkeuniv/control/update-project-declaration-new" 
 		urlDelete="/bkeuniv/control/delete-project-declaration-new"
 		titleChange=projectDeclarationUiLabelMap.TitleEditProjectDeclaration?j_string

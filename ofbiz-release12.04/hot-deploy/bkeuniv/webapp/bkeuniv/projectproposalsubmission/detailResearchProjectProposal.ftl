@@ -102,7 +102,11 @@
 							<#list resultMembers.members as m>
 								<tr>
 									<td>${m.staffName}</td>
-									<td>${m.roleTypeName}</td>
+									<#if m.roleTypeName?exists>
+										<td>${m.roleTypeName}</td>
+									<#else>
+										<td></td>	
+									</#if>
 								<tr>
 							</#list>
 							<tbody>
@@ -292,8 +296,11 @@
 							</tbody>
 						</table>
 					</div>
-															
+					
+					<#include "component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailResearchProjectProposalUpdateAction.ftl"/>										
+																																			
 				</div>
 			</div>
+			
 		</div>
 	</div>

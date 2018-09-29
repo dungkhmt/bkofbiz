@@ -624,7 +624,9 @@
 		<alias-all entity-alias="PPR"></alias-all>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
 		<alias name="roleTypeName" field="roleTypeName" entity-alias="RT"></alias>
-		
+		<alias name="projectCategoryName" field="projectCategoryName" entity-alias="RPPV"></alias>
+		<alias name="totalBudget" field="totalBudget" entity-alias="RPPV"></alias>
+		<alias name="researchProjectProposalCode" field="researchProjectProposalCode" entity-alias="RPPV"></alias>
 		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPPV"></alias>
 		
 		<view-link rel-entity-alias="ST" entity-alias="PPR" rel-optional="true">

@@ -1208,9 +1208,14 @@
 
 						<platform-specific>
 							<html>
+							<!-- 
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-declaration-new.ftl" />
+							 -->
+							 <html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-declaration-staff.ftl" />
 							</html>
+							
 						</platform-specific>
 
 					</decorator-section>

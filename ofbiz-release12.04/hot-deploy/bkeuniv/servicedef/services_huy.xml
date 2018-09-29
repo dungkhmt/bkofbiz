@@ -151,6 +151,26 @@
     	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
     </service>
+    <service name="getProjectDeclarationOfStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ResearchProjectProposal" invoke="getProjectDeclarationOfStaff">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="projectDeclarations" mode="OUT" type="List"></attribute>
+    </service>
+    <service name="createProjectDeclarationStaff" engine="java" 
+    		location="org.ofbiz.bkeuniv.projectdeclaration.ResearchProjectProposal" invoke="createProjectDeclarationStaff">
+		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="projectCategoryId[]" mode="IN" type="List" optional="true"></attribute>
+		<attribute name="researchProjectProposalName" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="researchProjectProposalCode" type="String" mode="IN" optional="true"></attribute>
+		
+		<attribute name="totalBudget" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="startDate" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="endDate" mode="IN" type="String" optional="true"></attribute>
+		
+		<attribute name="projectDeclarations" mode="OUT" type="Map"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
     
     <service name="getProjectsOfStaff" engine="java" 
     		location="org.ofbiz.bkeuniv.projectdeclaration.ResearchProjectProposal" invoke="getProjectsOfStaff">

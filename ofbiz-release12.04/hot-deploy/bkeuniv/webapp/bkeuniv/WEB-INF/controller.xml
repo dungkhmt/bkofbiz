@@ -880,6 +880,19 @@
     	<response name="success" type="request" value="json"></response>
     	<response name="error" type="request" value="json"></response>
     </request-map>
+    <request-map uri="get-project-declaration-of-staff">
+    	<security https="true" auth="false"/>
+    	<event type="service" invoke="getProjectDeclarationOfStaff"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    <request-map uri="create-project-declaration-staff">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectDeclarationStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     
     <request-map uri="create-project-declaration-new">
 		<security https="false" auth="false"/>
@@ -887,6 +900,7 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
 	
 	<request-map uri="update-project-declaration-new">
 		<security https="false" auth="false"/>
