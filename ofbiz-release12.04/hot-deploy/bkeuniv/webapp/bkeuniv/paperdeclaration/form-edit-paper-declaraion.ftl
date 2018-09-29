@@ -991,7 +991,7 @@
                                         <#if prj?has_content>
                                             <#if prj.researchProjectProposalName?exists>
                                             <option value="${prj.researchProjectProposalId?j_string}"
-                                            <#if resultPaper.paper.paperCategoryKNCId??&&resultPaper.paper.paperCategoryKNCId==knc.paperCategoryKNCId>
+                                            <#if resultPaper.paper.researchProjectProposalId??&&resultPaper.paper.researchProjectProposalId==prj.researchProjectProposalId>
                                                 selected
                                             </#if>
                                             >${prj.researchProjectProposalName?j_string}</option>
@@ -1010,7 +1010,7 @@
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperJournalConference}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
-                        <input type="text" class="form-control" id="journalconferencename" value="" required>
+                        <input type="text" class="form-control" id="journalconferencename" value="<#if resultPaper.paper.journalConferenceName?exists> ${resultPaper.paper.journalConferenceName} </#if>" required>
                             <script type="text/javascript">
                                 $(function () {
                                     setCustomValidity("#journalconferencename", "${StringUtil.wrapString(uiLabelMap.BkEunivNotNull)}");
@@ -1023,7 +1023,11 @@
                             <div style="width: 70%"><select class="form-control" style="width: 100%" id="academicyearid">
                                     <#list result.academicYears as y>
                                         <#if y?has_content>
-                                            <option value="${y.academicYearId?j_string}">${y.academicYearName?j_string}</option>
+                                            <option value="${y.academicYearId?j_string}" 
+                                            <#if resultPaper.paper.academicYearId??&&resultPaper.paper.academicYearId==y.academicYearId>
+                                            selected
+                                            </#if>
+                                            >${y.academicYearName?j_string}</option>
                                         </#if>
                                     </#list>
                                 </select>

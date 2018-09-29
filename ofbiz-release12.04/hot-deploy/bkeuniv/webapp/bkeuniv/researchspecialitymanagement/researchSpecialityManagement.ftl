@@ -39,6 +39,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
+				"eventChange": '$("#jqModalChange #researchsubdomainseqid").empty',
 				"value": "researchDomainId",
 				"name": "researchDomainName",
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement"
@@ -50,6 +51,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
+				"eventChange": '$("#jqModalChange #researchspecialityseqid").empty',
 				"query": {
 					"filter": { "field": "researchDomainId", "value": '$("#jqModalChange #researchdomainid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
 				},
@@ -87,6 +89,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
+				"eventChange": '$("#jqModalAdd #researchsubdomainseqid").empty',
 				"value": "researchDomainId",
 				"name": "researchDomainName",
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement"
@@ -98,6 +101,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
+				"eventChange": '$("#jqModalAdd #researchspecialityseqid").empty',
 				"query": {
 					"filter": {"field": "researchDomainId", "value": '$("#jqModalAdd #researchdomainid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
 				},
@@ -112,9 +116,15 @@
 			"option":{
 				"maxItem": 1,
 				"query": {
-					"filter": {"field": "researchSubDomainSeqId", "value": '$("#jqModalAdd #researchsubdomainseqid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
+					"filter": {
+						"expressions": 
+							[
+								{ "field": "researchDomainId", "value": '$("#jqModalAdd #researchdomainid").val()||""', "operation": "EQUAL",  "build_script": ["value"]},
+								{"field": "researchSubDomainSeqId", "value": '$("#jqModalAdd #researchsubdomainseqid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
+							],
+						"operation": "AND"
+					}
 				},
-
 				"render": 'function(r){return {id: r.researchSpecialitySeqId, text: "[" + r.researchSpecialityCode + "] "+ r.researchSpecialityName}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSpecialityManagement"
 			}

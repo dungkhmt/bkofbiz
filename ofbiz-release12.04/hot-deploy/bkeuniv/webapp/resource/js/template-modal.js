@@ -401,6 +401,14 @@ modal.prototype._select_server_side = function(column) {
 		'});';
 
 	}
+
+	var eventChange="";
+	if(!!option.eventChange) {
+		eventChange= '$("'+[this.id, _id].join(" ")+'").on("change", function(e) {'+
+			'var id = e.target.value;'+
+			option.eventChange+'(id);'+
+		'});'
+	}
 	
 	var script = '<script type="text/javascript">'+
 					'$(function () {'+
@@ -434,6 +442,7 @@ modal.prototype._select_server_side = function(column) {
 							(maxItem>1?'maximumSelectionLength: ' + maxItem:"")+
 						'});'+
 						selected+
+						eventChange+
 					'});'+
 					'$(function () {'+
 						(require&&!!customValidity?'setCustomValidity("'+[this.id, _id].join(" ") +'","'+ customValidity + '");':"")+
