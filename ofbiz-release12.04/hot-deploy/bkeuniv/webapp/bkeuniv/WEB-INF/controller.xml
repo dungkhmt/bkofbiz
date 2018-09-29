@@ -1100,6 +1100,11 @@
 		<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-form-add-paper-declaration"/>
 	</request-map>
+
+	<request-map uri="form-edit-paper-declaration">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-form-edit-paper-declaration"/>
+	</request-map>
 	
 	
     <!-- View Mappings -->
@@ -1162,5 +1167,6 @@
    <view-map name="view-list-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListOfficialDocument"/>
    <view-map name="manage-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageManageOfficialDocument"/>
 	<view-map name="view-form-add-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormAddPaperDeclaration"/>
+	<view-map name="view-form-edit-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormEditPaperDeclaration"/>
 
 </site-conf>

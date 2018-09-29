@@ -1033,6 +1033,63 @@
 		</section>
 	</screen>
 
+	<screen name="pageFormEditPaperDeclaration">
+		<section>
+			<actions>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/selectize.default.css" global="true" />
+
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/selectize.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+			
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				
+				<service service-name="getListAcademicYears" result-map="result"></service>
+				<service service-name="getStaffPaperDeclarationRole" result-map="paperRoles"></service>
+				<service service-name="getAllRunningResearchProjectProposal" result-map="projects"></service>
+				<service service-name="getStaffPaperDeclarationRole" result-map="resultRole">
+				</service>
+				<service service-name="getYesNo" result-map="resultYesNo">
+				</service>
+				<service service-name="getStaffInfo" result-map="staff"></service>
+
+
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getMembersPaperDeclaration" result-map="members">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<set field="paper" from-field="resultPaper" global="true"/>
+
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<actions>
+								<set field="titlePage" from-field="uiLabelMap.BkEunivEditPaperDeclaration" global="true" />
+							</actions>
+							<widgets>
+								<platform-specific>
+									<html>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/form-edit-paper-declaraion.ftl" />
+									</html>
+								</platform-specific>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="paperViewResearchSummaryExcel">
 		<section>
 			<actions>

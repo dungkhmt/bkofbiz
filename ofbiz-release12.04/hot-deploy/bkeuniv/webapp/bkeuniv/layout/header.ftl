@@ -17,8 +17,8 @@
 		
 		<!-- import js -->
 		<script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
-		<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
 		<script src="/resource/bkeuniv/js/lib/materialize.min.js"></script>
+		<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
 		<#--  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>  -->
 		
 		<script src="/resource/bkeuniv/js/lib/dragula.min.js"></script>

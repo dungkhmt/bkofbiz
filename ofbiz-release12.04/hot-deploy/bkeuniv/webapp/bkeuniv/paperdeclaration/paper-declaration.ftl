@@ -267,7 +267,10 @@
 				var data = jqDataTable.table.row( el ).data();
 				switch(ui.cmd){
 					case "edit":
-						jqChange(data)
+						setTimeout(function(){
+							window.location.href="/bkeuniv/control/form-edit-paper-declaration?paperId="+data.paperId;
+						}, 200);
+						//jqChange(data)
 						break;
 					case "delete":
 						jqDelete(data);
