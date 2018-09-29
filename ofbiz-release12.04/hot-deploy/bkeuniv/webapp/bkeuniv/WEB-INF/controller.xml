@@ -564,6 +564,17 @@
             <response name="AttachementSuccess" type="view" value="UploadFile"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    
+    <request-map uri="create-new-paper-declaration">
+            <security https="true" auth="true"/>
+			
+			<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="createNewPaperDeclaration"/>
+			
+			<response name="success" type="request" value="json"></response>
+    		<response name="error" type="request" value="json"></response>
+    </request-map>    
+    
 	<request-map uri="get-academic-years">
             <security https="true" auth="true"/>
           
@@ -1098,6 +1109,11 @@
 		<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-list-paper-declaration"/>
 	</request-map>
+
+	<request-map uri="form-add-paper-declaration">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-form-add-paper-declaration"/>
+	</request-map>
 	
 	
     <!-- View Mappings -->
@@ -1159,5 +1175,6 @@
    <view-map name="view-upload-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageUploadOfficialDocument"/>
    <view-map name="view-list-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListOfficialDocument"/>
    <view-map name="manage-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageManageOfficialDocument"/>
-      
+	<view-map name="view-form-add-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormAddPaperDeclaration"/>
+
 </site-conf>
