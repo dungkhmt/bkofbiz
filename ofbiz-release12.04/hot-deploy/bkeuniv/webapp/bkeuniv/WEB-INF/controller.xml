@@ -1101,6 +1101,38 @@
     	<response name="success" type="view" value="view-form-add-paper-declaration"/>
 	</request-map>
 	
+	<request-map uri="cv-general-information">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-cv-general-information"/>
+	</request-map>
+	
+	<request-map uri="get-cv-general-information">
+		<security auth="true" https="true" />
+		<event type="service" invoke="getCVInformation"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-list-academic-rank">
+		<security auth="true" https="true" />
+		<event type="service" invoke="getListAcademicRank"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-list-degree">
+		<security auth="true" https="true" />
+		<event type="service" invoke="getListDegree"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-cv-general-info">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateCVInfo"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -1161,6 +1193,7 @@
    <view-map name="view-upload-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageUploadOfficialDocument"/>
    <view-map name="view-list-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListOfficialDocument"/>
    <view-map name="manage-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageManageOfficialDocument"/>
+   <view-map name="view-cv-general-information" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageGenaralInfomation"/>
 	<view-map name="view-form-add-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormAddPaperDeclaration"/>
 
 </site-conf>

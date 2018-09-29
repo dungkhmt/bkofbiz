@@ -12,8 +12,11 @@ import org.ofbiz.bkeuniv.projectdeclaration.ProjectDeclaration;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
+import org.ofbiz.entity.util.EntityUtil;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
@@ -154,5 +157,40 @@ public class ScientificServiceExperience {
         }
         return retSucc;
 	}
+	
+	@SuppressWarnings("unused")
+	public static Map<String, Object> getCVInformation(DispatchContext ctx, Map<String, ? extends Object> context) {
+        LocalDispatcher dispatcher = ctx.getDispatcher();
+		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		
+		String staffId = (String) context.get("staffId");
+        Map<String, Object> returnResult = FastMap.newInstance();
+		
+        try{
+        	EntityCondition cond = EntityCondition.makeCondition("staffId", staffId);
+        	List<GenericValue> listResult = delegator.findList("StaffGenaralInformation", cond, null, null, null, false);
+        	if(!listResult.isEmpty()) {
+        		GenericValue result = listResult.get(0);
+        		returnResult.put("academicName", result.get("hocHamName"));
+        		returnResult.put("academicRankId", result.get("hocHamId"));
+        		returnResult.put("degreeId", result.get("hocViId"));
+        		returnResult.put("degreeName", result.get("hocViName"));
+        		returnResult.put("departmentName", result.get("departmentName"));
+        		returnResult.put("staffName", result.get("staffName"));
+        		returnResult.put("academicRankYear", result.get("yearHocHam"));
+        		returnResult.put("degreeYear", result.get("yearHocVi"));
+        		returnResult.put("duty", result.get("chucVuHienNay"));
+        		retSucc.put("staffCVInfo", returnResult);
+        	}
+        	
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        	return ServiceUtil.returnError(ex.getMessage());
+        }
+        return retSucc;
+	}
+	
+	
 	
 }

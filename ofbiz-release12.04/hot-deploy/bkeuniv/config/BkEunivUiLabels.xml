@@ -935,4 +935,59 @@
         <value xml:lang="vi">Thứ tự xuất hiện</value>
     </property>
     
+    <property key="CVGeneralInformation">
+        <value xml:lang="en">General Information</value>
+        <value xml:lang="vi">Thông tin chung</value>
+    </property>
+    
+    <property key="CVStaffName">
+        <value xml:lang="en">Staff name</value>
+        <value xml:lang="vi">Họ và tên</value>
+    </property>
+    
+    <property key="CVDepartment">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="vi">Khoa/Viện</value>
+    </property>
+    
+    <property key="CVAcademicRank">
+        <value xml:lang="en">Academic rank</value>
+        <value xml:lang="vi">Học hàm</value>
+    </property>
+    
+    <property key="CVDegree">
+        <value xml:lang="en">Degree</value>
+        <value xml:lang="vi">Học vị</value>
+    </property>
+    
+    <property key="CVAcademicRankYear">
+        <value xml:lang="en">Academic year</value>
+        <value xml:lang="vi">Năm thụ phong học hàm</value>
+    </property>
+    
+    <property key="CVDegreeYear">
+        <value xml:lang="en">Degree year</value>
+        <value xml:lang="vi">Năm đạt học vị</value>
+    </property>
+    
+    <property key="CVDutyPosition">
+        <value xml:lang="en">Duty</value>
+        <value xml:lang="vi">Chức vụ hiện nay</value>
+    </property>
+    
+    <property key="CVUpdateInfo">
+        <value xml:lang="en">Update information</value>
+        <value xml:lang="vi">Cập nhật thông tin</value>
+    </property>
+    
+    <property key="CVSave">
+        <value xml:lang="en">General Information</value>
+        <value xml:lang="vi">Cập nhật</value>
+    </property>
+    
+    <property key="CVClose">
+        <value xml:lang="en">General Information</value>
+        <value xml:lang="vi">Đóng</value>
+    </property>
+    
 </resource>

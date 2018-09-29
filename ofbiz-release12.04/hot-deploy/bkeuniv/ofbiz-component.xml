@@ -37,6 +37,8 @@
     <service-resource type="model" loader="main" location="servicedef/services_dpt.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_faculty.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_test_acctgTrans.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_thanh.xml"/>
+    
 
     <!--
     <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
