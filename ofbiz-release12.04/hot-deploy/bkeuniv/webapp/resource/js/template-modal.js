@@ -259,7 +259,7 @@ modal.prototype._buildScriptObject = function(object = {}, result = "") {
 			}
 
 			if(typeof value == "string") {
-				result += 'eval(\'"' + value + '"\')'+dot;
+				result += 'eval(\'' + value + '\')'+dot;
 				return;
 			}
 		}
@@ -289,23 +289,10 @@ modal.prototype._buildScriptObject = function(object = {}, result = "") {
 
 modal.prototype._buildScriptArray = function(array = [], result = "") {
 	result+= "[";
-	indexs_build = object.build_script||[];
 	var that = this;
 
 	array.forEach(function (value, index, array) {
 		var dot = ",";
-		if(index == array.length - 1||((index == array.length -2)&&(array[index+1]==="build_script"))) {
-			dot = "";
-		}
-
-		if(key === "build_script") {
-			return;
-		}
-
-		if(!!indexs_build.find(function(e){return e==index})) {
-			result += 'eval(\'' + value + '\')' + dot;
-			return;
-		}
 		
 		if(value instanceof Array) {
 			result += that._buildScriptArray(value) + dot;

@@ -51,7 +51,7 @@
 			"option":{
 				"maxItem": 1,
 				"query": {
-					"filter": {"field": "researchDomainId", "value": '$("#jqModalAdd #researchdomainid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
+					"filter": { "field": "researchDomainId", "value": '$("#jqModalChange #researchdomainid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
 				},
 				"render": 'function(r){return {id: r.researchSubDomainSeqId, text: "[" + r.researchSubDomainCode + "] "+ r.researchSubDomainName}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSubDomainManagement"
@@ -64,7 +64,14 @@
 			"option":{
 				"maxItem": 1,
 				"query": {
-					"filter": {"field": "researchSubDomainSeqId", "value": '$("#jqModalAdd #researchsubdomainseqid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
+					"filter": {
+						"expressions": 
+							[
+								{ "field": "researchDomainId", "value": '$("#jqModalChange #researchdomainid").val()||""', "operation": "EQUAL",  "build_script": ["value"]},
+								{"field": "researchSubDomainSeqId", "value": '$("#jqModalChange #researchsubdomainseqid").val()||""', "operation": "EQUAL",  "build_script": ["value"]}
+							],
+						"operation": "AND"
+					}
 				},
 
 				"render": 'function(r){return {id: r.researchSpecialitySeqId, text: "[" + r.researchSpecialityCode + "] "+ r.researchSpecialityName}}',
