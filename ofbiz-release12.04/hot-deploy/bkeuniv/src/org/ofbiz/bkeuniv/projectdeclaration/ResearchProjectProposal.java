@@ -26,6 +26,33 @@ public class ResearchProjectProposal {
 		"endDate", "deliverable", "materialBudget", "evaluationOpenFlag", "createStaffName",
 		"projectCallName", "projectCategoryName", "facultyName", "statusName"};
 	
+	public static Map<String, Object> getProjectsOfStaff(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffId = (String)context.get("staffId");
+		if(staffId == null){
+			GenericValue userLogin = (GenericValue)context.get("userLogin");
+			staffId = userLogin.getString("userLoginId");
+		}
+		Debug.log(module + "::getProjectsOfStaff, staffId = " + staffId);
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			
+			List<GenericValue> lst = delegator.findList("ProjectProposalMemberView",
+					EntityCondition.makeCondition(conds), null,null,null, false);
+			
+			Debug.log(module + "::getProjectsOfStaff, staffId = " + staffId + ", lst.sz = " + lst.size());
+			
+			retSucc.put("projectDeclarations",lst);
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 	public static Map<String, Object> getProjectDeclaration(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 			

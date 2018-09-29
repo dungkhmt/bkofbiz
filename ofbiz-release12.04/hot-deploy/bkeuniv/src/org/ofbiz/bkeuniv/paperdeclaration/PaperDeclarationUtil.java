@@ -3479,13 +3479,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("Ghi chú");
 		ch.setCellStyle(styleTitle);
 
-		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
 		boolean staffOnly = true;
-		for(String g: groups){
-			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
 				staffOnly = false;
 		}
-		
+
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator,
@@ -3496,8 +3498,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
-			if(staffOnly){
-				if(!staffId.equals(userLoginId)) continue;
+			if (staffOnly) {
+				if (!staffId.equals(userLoginId))
+					continue;
 			}
 			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 					staffId, academicYearId);
@@ -3526,7 +3529,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 2, 9));
 
 			HashMap<GenericValue, Double> mPaper2KNC = new HashMap<GenericValue, Double>();
-			
+
 			double total_knc = 0;
 			for (GenericValue p : papers) {
 				String paperId = p.getString("paperId");
@@ -3539,8 +3542,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				String s_rate = "";
 				String s_knc = "";
 				double knc = 0;
-				
-				
+
 				int nbAuthors = 1;
 				String correspondingAuthor = "N";
 				String description = "";
@@ -3585,10 +3587,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						}
 						if (sp.getString("correspondingAuthor").equals("Y"))
 							correspondingAuthor = "Y";
-						
-						if(sp.getString("affiliationOutsideUniversity") != null &&
-								sp.getString("affiliationOutsideUniversity").equals("Y")){
-							knc = knc*0.5;
+
+						if (sp.getString("affiliationOutsideUniversity") != null
+								&& sp.getString("affiliationOutsideUniversity")
+										.equals("Y")) {
+							knc = knc * 0.5;
 							description += "Affiliation NGOÀI TRƯỜNG -> KNC chia đôi. ";
 						}
 						s_knc = knc + "";
@@ -3597,7 +3600,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				}
 
 				mPaper2KNC.put(p, knc);
-				
+
 				i_row++;
 				rh = sh.createRow(i_row);
 				i_col = 0;
@@ -3652,27 +3655,28 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				ch.setCellStyle(styleNormal);
 
 			}
-			
+
 			total_knc = 0;
 			double knc_web_science_scopus = 0;
 			double knc_remain = 0;
-			for(GenericValue p: papers){
+			for (GenericValue p : papers) {
 				String paperCategoryKNCId = p.getString("paperCategoryKNCId");
-				if(paperCategoryKNCId == null) continue;
-				
-				if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
-						||paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
-						||paperCategoryKNCId.equals("SCOPUS")
-						){
+				if (paperCategoryKNCId == null)
+					continue;
+
+				if (paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
+						|| paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
+						|| paperCategoryKNCId.equals("SCOPUS")) {
 					knc_web_science_scopus += mPaper2KNC.get(p);
-				}else{
+				} else {
 					knc_remain += mPaper2KNC.get(p);
 				}
 			}
-			if(knc_remain > 0.5) knc_remain = 0.5;
-			
+			if (knc_remain > 0.5)
+				knc_remain = 0.5;
+
 			total_knc = knc_web_science_scopus + knc_remain;
-			
+
 			i_row++;
 			rh = sh.createRow(i_row);
 			i_col = 0;
@@ -3694,19 +3698,21 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			i_col++;
 			ch = rh.createCell(i_col);
-			String description = "KNC của các bài báo Web Science and Scopus là " + knc_web_science_scopus
+			String description = "KNC của các bài báo Web Science and Scopus là "
+					+ knc_web_science_scopus
 					+ ", KNC của các bài báo còn lại là " + knc_remain;
 			ch.setCellValue(description);
 			ch.setCellStyle(styleNormal);
 
 			sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 1, 7));
-			//sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
+			// sh.addMergedRegion(new CellRangeAddress(i_row, i_row, 8, 9));
 		}
 
 	}
 
-	public static Map<String, Object> computeRateKKLOfProject(Delegator delegator,
-			String researchProjectProposalId, String academicYearId) {
+	public static Map<String, Object> computeRateKKLOfProject(
+			Delegator delegator, String researchProjectProposalId,
+			String academicYearId) {
 		Map<String, Object> ret = FastMap.newInstance();
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
@@ -3744,7 +3750,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			ret.put("rate", rate);
 			ret.put("budget", budget);
-			
+
 			/*
 			 * BigDecimal m1 = new BigDecimal(20000000); BigDecimal m2 = new
 			 * BigDecimal(200000000); BigDecimal m = new BigDecimal(100000000);
@@ -3757,10 +3763,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			 * rate = 1.0; BigDecimal a = total.subtract(m2); a = a.divide(m);
 			 * rate += a.doubleValue(); }
 			 */
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			//return 0;
+			// return 0;
 		}
 		return ret;
 	}
@@ -3815,7 +3821,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				 */
 				Map<String, Object> m = computeRateKKLOfProject(delegator,
 						researchProjectProposalId, academicYearId);
-				double rate = (double)m.get("rate");
+				double rate = (double) m.get("rate");
 				total_kkl += (rate * percentage * 1.0) / 100.0;
 			}
 			return total_kkl;
@@ -3928,13 +3934,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("Ghi chú");
 		ch.setCellStyle(styleTitle);
 
-		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
 		boolean staffOnly = true;
-		for(String g: groups){
-			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
 				staffOnly = false;
 		}
-		
+
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2RateKL = getRateKKLPaper(delegator,
@@ -3945,8 +3953,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
-			if(staffOnly){
-				if(!staffId.equals(userLoginId)) continue;
+			if (staffOnly) {
+				if (!staffId.equals(userLoginId))
+					continue;
 			}
 			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 					staffId, academicYearId);
@@ -4117,8 +4126,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				Map<String, Object> m = computeRateKKLOfProject(delegator,
 						researchProjectProposalId, academicYearId);
 				double rate = (double) m.get("rate");
-				double budget = (double)m.get("budget");
-				
+				double budget = (double) m.get("budget");
+
 				double kkl_prj = (rate * percentage * 1.0) / 100.0;
 
 				Debug.log(module + "::createSheetKKL, staffId = " + staffId
@@ -4126,8 +4135,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						+ pp.getString("researchProjectProposalName")
 						+ ", percentage = " + percentage + ", rate = " + rate);
 
-				String description = "Đề tài, kinh phí thiết bị và quản lý = " + budget + ", mức độ đóng góp = " + percentage + "%";
-				
+				String description = "Đề tài, kinh phí thiết bị và quản lý = "
+						+ budget + ", mức độ đóng góp = " + percentage + "%";
+
 				i_row++;
 				rh = sh.createRow(i_row);
 				i_col = 0;
@@ -4216,7 +4226,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		double total_knc = 0;
 		HashMap<GenericValue, Double> mPaper2KNC = new HashMap<GenericValue, Double>();
-		
+
 		for (GenericValue p : papers) {
 			String paperId = p.getString("paperId");
 			String authors = p.getString("authors");
@@ -4268,12 +4278,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					} else {
 						knc = (0.6 * x * 1.0 / nbAuthors);
 					}
-					
-					if(sp.getString("affiliationOutsideUniversity") != null &&
-							sp.getString("affiliationOutsideUniversity").equals("Y")){
-						knc = knc*0.5;
+
+					if (sp.getString("affiliationOutsideUniversity") != null
+							&& sp.getString("affiliationOutsideUniversity")
+									.equals("Y")) {
+						knc = knc * 0.5;
 					}
-					
+
 					if (sp.getString("correspondingAuthor").equals("Y"))
 						correspondingAuthor = "Y";
 					s_knc = knc + "";
@@ -4283,26 +4294,27 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			mPaper2KNC.put(p, knc);
 		}
-		
+
 		total_knc = 0;
 		double knc_web_science_scopus = 0;
 		double knc_remain = 0;
-		for(GenericValue p: papers){
+		for (GenericValue p : papers) {
 			String paperCategoryKNCId = p.getString("paperCategoryKNCId");
-			if(paperCategoryKNCId == null) continue;
-			if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
-					||paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
-					||paperCategoryKNCId.equals("SCOPUS")
-					){
+			if (paperCategoryKNCId == null)
+				continue;
+			if (paperCategoryKNCId.equals("WEB_SCIENCE_Q1")
+					|| paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")
+					|| paperCategoryKNCId.equals("SCOPUS")) {
 				knc_web_science_scopus += mPaper2KNC.get(p);
-			}else{
+			} else {
 				knc_remain += mPaper2KNC.get(p);
 			}
 		}
-		if(knc_remain > 0.5) knc_remain = 0.5;
-		
+		if (knc_remain > 0.5)
+			knc_remain = 0.5;
+
 		total_knc = knc_web_science_scopus + knc_remain;
-		
+
 		return total_knc;
 	}
 
@@ -4371,7 +4383,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			}
 
 		}
-		
+
 		// tinh diem khoi luong tu de tai
 		List<GenericValue> list = FastList.newInstance();
 		try {
@@ -4400,8 +4412,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			Map<String, Object> m = computeRateKKLOfProject(delegator,
 					researchProjectProposalId, academicYearId);
 			double rate = (double) m.get("rate");
-			double budget = (double)m.get("budget");
-			
+			double budget = (double) m.get("budget");
+
 			double kkl_prj = (rate * percentage * 1.0) / 100.0;
 
 			Debug.log(module + "::getKKLFromPapers, staffId = " + staffId
@@ -4409,12 +4421,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					+ pp.getString("researchProjectProposalName")
 					+ ", percentage = " + percentage + ", rate = " + rate);
 
-			
-
 			total_kkl += kkl_prj;
 		}
 
-		
 		return total_kkl;
 	}
 
@@ -4478,13 +4487,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
 
-		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
 		boolean staffOnly = true;
-		for(String g: groups){
-			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
 				staffOnly = false;
 		}
-		
+
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2Rate = getRateKNCPaper(delegator,
@@ -4495,10 +4506,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
-			if(staffOnly){
-				if(!staffId.equals(userLoginId)) continue;
+			if (staffOnly) {
+				if (!staffId.equals(userLoginId))
+					continue;
 			}
-			
+
 			List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
 					staffId, academicYearId);
 
@@ -4592,13 +4604,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		ch.setCellValue("KNC");
 		ch.setCellStyle(styleTitle);
 
-		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(delegator, userLoginId);
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
 		boolean staffOnly = true;
-		for(String g: groups){
-			if(g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN") || g.equals("SUPER_ADMIN"))
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
 				staffOnly = false;
 		}
-		
+
 		List<GenericValue> staffs = getListStaffsOfFaculty(delegator, facultyId);
 
 		HashMap<String, Double> mCategory2Rate = getRateKKLPaper(delegator,
@@ -4609,11 +4623,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		int count = 0;
 		for (GenericValue st : staffs) {
 			String staffId = st.getString("staffId");
-			if(staffOnly){
-				if(!staffId.equals(userLoginId)) continue;
+			if (staffOnly) {
+				if (!staffId.equals(userLoginId))
+					continue;
 			}
-			//List<GenericValue> papers = getPapersOfStaffAcademicYear(delegator,
-			//		staffId, academicYearId);
+			// List<GenericValue> papers =
+			// getPapersOfStaffAcademicYear(delegator,
+			// staffId, academicYearId);
 
 			double kkl = getKKLFromPapers(delegator, staffId, academicYearId,
 					mCategory2Rate);
@@ -4887,7 +4903,8 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		createSheetKNC(wb, facultyId, academicYearId, delegator, userLoginId);
 
-		createSheetKNCTotal(wb, facultyId, academicYearId, delegator, userLoginId);
+		createSheetKNCTotal(wb, facultyId, academicYearId, delegator,
+				userLoginId);
 
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;
@@ -5043,15 +5060,26 @@ public class PaperDeclarationUtil extends java.lang.Object {
 		// start renderExcel
 		HSSFWorkbook wb = new HSSFWorkbook();
 
-		createSheetListPapersKV04(wb, papers);
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
+		boolean staffOnly = true;
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
+				staffOnly = false;
+		}
+		if(!staffOnly)
+			createSheetListPapersKV04(wb, papers);
 
 		// chi so KNC
 		createSheetKNC(wb, facultyId, academicYearId, delegator, userLoginId);
-		createSheetKNCTotal(wb, facultyId, academicYearId, delegator, userLoginId);
+		createSheetKNCTotal(wb, facultyId, academicYearId, delegator,
+				userLoginId);
 
 		// chi so Khoi luong
 		createSheetKKL(wb, facultyId, academicYearId, delegator, userLoginId);
-		createSheetKKLTotal(wb, facultyId, academicYearId, delegator, userLoginId);
+		createSheetKKLTotal(wb, facultyId, academicYearId, delegator,
+				userLoginId);
 
 		return wb;
 	}

@@ -242,6 +242,13 @@
 	var modal;
 	var span;
 	var selectedEntry;
+
+	function gotoAddPaper() {
+		setTimeout(function(){
+			window.location.href="/bkeuniv/control/form-add-paper-declaration";
+		}, 200);
+	}
+
 	function createContextMenu(id) {
 		
 		$(document).contextmenu({
@@ -1065,7 +1072,7 @@
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
-	
+	<#--  urlAdd="/bkeuniv/control/create-paper-declaration"   -->
 	<@jqDataTable
 		urlData="/bkeuniv/control/get-papers-of-staff" 
 		columns=columns 
@@ -1074,7 +1081,15 @@
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-paper" 
-		urlAdd="/bkeuniv/control/create-paper-declaration" 
+		advanceActionButton=[
+			{
+				"id": "synchronize-staff",
+				"onClick": "gotoAddPaper()",
+				"width": "120px",
+				"dImage": "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+				"text": uiLabelMap.BkEunivAdd
+			}
+		]
 		urlDelete="/bkeuniv/control/delete-paper-declaration" 
 		keysId=["paperId"] 
 		fieldDataResult = "papers" 

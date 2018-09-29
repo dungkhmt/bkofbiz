@@ -4,7 +4,7 @@
 <body>
 <div class="body">
 
-	<#assign source = [] />
+	
 
 	<#assign columns=[
 		{
@@ -18,6 +18,7 @@
 	] />
 	
 	<#assign fields=[
+		"cvPaperId",
 		"staffPaperDeclarationId",
 		"sequenceInCVPaper",
 		"paperName"
@@ -44,9 +45,9 @@
 		},
 		{
 			"name": uiLabelMap.CVPaperSequence?j_string,
-			"value": "year",
+			"value": "sequenceInCVPaper",
 			"pattern": "[1-9]([0-9]{0,3})",
-			"title": "Nam phai la so nguyen duong"
+			"title": "So thu tu phai la so nguyen duong"
 		}
 	]/>
 	
@@ -62,31 +63,31 @@
 		},
 		{
 			"name": uiLabelMap.CVPaperSequence?j_string,
-			"value": "year",
+			"value": "sequenceInCVPaper",
 			"pattern": "[1-9]([0-9]{0,3})",
-			"title": "Nam phai la so nguyen duong"
+			"title": "So thu tu phai la so nguyen duong"
 		}
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
 	
 	<@jqDataTable
-		id="DataTable-Award"
-		urlData="/bkeuniv/control/???" 
+		id="DataTable-CVPaper"
+		urlData="/bkeuniv/control/get-cv-papers" 
 		columns=columns 
 		dataFields=fields 
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="/bkeuniv/control/??" 
-		urlAdd="/bkeuniv/control/??" 
-		urlDelete="/bkeuniv/control/??" 
-		keysId=["awardId"] 
-		fieldDataResult = "award" 
-		titleChange=uiAwardLabelMap.BkEunivTitleEditAward
-		titleNew=uiAwardLabelMap.BkEunivAddRow
-		titleDelete=uiAwardLabelMap.BkEunivTitleDeleteAward
-		jqTitle=uiAwardLabelMap.BkEunivAward
+		urlUpdate="/bkeuniv/control/update-a-cv-paper" 
+		urlAdd="/bkeuniv/control/add-a-cv-paper" 
+		urlDelete="/bkeuniv/control/delete-a-cv-paper" 
+		keysId=["cvPaperId"] 
+		fieldDataResult = "papers" 
+		titleChange="Cap nhat"
+		titleNew="Them moi"
+		titleDelete="Xoa"
+		jqTitle="Cong trinh nghien cuu 5 nam gan day"
 		contextmenu=true
 	/>
 </div>

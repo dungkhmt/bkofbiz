@@ -273,12 +273,21 @@ public class StaffService {
 			cv.put("educationProgress", result_ep.get("educationProgress"));
 			
 			// get papers
+			/*
 			param.clear();
 			param.put("authorStaffId", staffId);
 			Map<String, Object> result_papers = dispatcher.runSync("getPapersOfStaff", param);
 			cv.put("papers", result_papers.get("papers"));
 			List<GenericValue> lstPapers = (List<GenericValue>)cv.get("papers");
 			Debug.log(module + "::getCVProfileOfStaff, publications = " + lstPapers.size());
+			*/
+			param.clear();
+			param.put("staffId", staffId);
+			Map<String, Object> result_papers = dispatcher.runSync("getCVPapers", param);
+			cv.put("papers", result_papers.get("papers"));
+			List<GenericValue> lstPapers = (List<GenericValue>)cv.get("papers");
+			Debug.log(module + "::getCVProfileOfStaff, publications = " + lstPapers.size());
+			
 			
 			// get patents
 			param.clear();
