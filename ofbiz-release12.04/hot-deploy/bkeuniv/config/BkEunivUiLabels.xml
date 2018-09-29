@@ -847,6 +847,11 @@
         <value xml:lang="vi">Thêm mới kê khai bài báo</value>
     </property>
     
+    <property key="BkEunivEditPaperDeclaration">
+        <value xml:lang="en">Edit paper declaration</value>
+        <value xml:lang="vi">Chỉnh sửa bài báo</value>
+    </property>
+    
     <property key="BkEunivBasicPaperInformation">
         <value xml:lang="en">Information</value>
         <value xml:lang="vi">Thông tin cơ bản</value>
@@ -915,7 +920,8 @@
     <property key="BkEunivEditingHasNotYetBeenSaved">
         <value xml:lang="en">Editing has not yet been saved</value>
         <value xml:lang="vi">Có chỉnh sửa chưa được lưu lại</value>
-    </property>    
+    </property>
+
     <property key="CVPaperName">
         <value xml:lang="en">Paper Name</value>
         <value xml:lang="vi">Tên bài báo</value>

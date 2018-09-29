@@ -119,9 +119,9 @@ access. For a detailed description see the core/docs/entityconfig.html file.
 
         <inline-jdbc
             jdbc-driver="org.postgresql.Driver"
-            jdbc-uri="jdbc:postgresql://127.0.0.1/bkofbiz"
+            jdbc-uri="jdbc:postgresql://127.0.0.1/ofbiz"
             jdbc-username="postgres"
-            jdbc-password="ofbiz"
+            jdbc-password="123456"
             pool-minsize="2"
             pool-maxsize="30"
             isolation-level="ReadCommitted"
@@ -153,9 +153,9 @@ access. For a detailed description see the core/docs/entityconfig.html file.
 
         <inline-jdbc
             jdbc-driver="org.postgresql.Driver"
-            jdbc-uri="jdbc:postgresql://127.0.0.1/bkofbizolap"
+            jdbc-uri="jdbc:postgresql://127.0.0.1/ofbizolap"
             jdbc-username="postgres"
-            jdbc-password="ofbiz"
+            jdbc-password="123456"
             pool-minsize="2"
             pool-maxsize="10"
             isolation-level="ReadCommitted"
@@ -184,9 +184,9 @@ access. For a detailed description see the core/docs/entityconfig.html file.
 
         <inline-jdbc
             jdbc-driver="org.postgresql.Driver"
-            jdbc-uri="jdbc:postgresql://127.0.0.1/bkofbiztenant"
+            jdbc-uri="jdbc:postgresql://127.0.0.1/ofbiztenant"
             jdbc-username="postgres"
-            jdbc-password="ofbiz"
+            jdbc-password="123456"
             pool-minsize="2"
             pool-maxsize="10"
             isolation-level="ReadCommitted"
