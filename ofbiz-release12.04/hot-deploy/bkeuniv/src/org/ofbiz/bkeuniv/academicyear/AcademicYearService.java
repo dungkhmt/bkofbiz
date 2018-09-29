@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javolution.util.FastList;
 import javolution.util.FastMap;
 
 import org.apache.commons.net.ntp.TimeStamp;
@@ -37,9 +38,10 @@ public class AcademicYearService {
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		try {
-
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("academicYearId");
 			List<GenericValue> acaYears = delegator.findList("AcademicYear",
-					null, null, null, null, false);
+					null, null, orderBy, null, false);
 			Debug.log(module + "::getListAcademicYears, years.sz = "
 					+ acaYears.size());
 
@@ -71,8 +73,10 @@ public class AcademicYearService {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		try {
 			Delegator delegator = ctx.getDelegator();
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("academicYearId");
 			List<GenericValue> acaYears = delegator.findList("AcademicYear",
-					null, null, null, null, false);
+					null, null, orderBy, null, false);
 			Debug.log(module + "::getListAcademicYears, years.sz = "
 					+ acaYears.size());
 
