@@ -1163,6 +1163,32 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="phd-student-supervision">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-phd-student-supervision"/>
+	</request-map>
+	
+	<request-map uri="create-phd-student-supervision">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createPhdStudentSupervision"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-phd-student-supervision">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updatePhdStudentSupervision"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-phd-student-supervision">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deletePhdStudentSupervision"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -1225,5 +1251,5 @@
    <view-map name="view-cv-general-information" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageGenaralInfomation"/>
 	<view-map name="view-form-add-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormAddPaperDeclaration"/>
 	<view-map name="view-form-edit-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormEditPaperDeclaration"/>
-
+	<view-map name="view-list-phd-student-supervision" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListPhDStudent"/>
 </site-conf>
