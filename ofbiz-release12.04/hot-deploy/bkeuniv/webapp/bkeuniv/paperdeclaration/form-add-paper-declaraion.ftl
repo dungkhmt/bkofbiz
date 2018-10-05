@@ -60,7 +60,7 @@
 <#assign roleTypeList=[]/>
 <#list resultRole.roles as rt>
     <#if rt?has_content>
-        <#assign op = { "name": rt.roleName?j_string ,"value": rt.roleId?j_string } />
+        <#assign op = { "name": rt.roleName ,"value": rt.roleId } />
         <#assign roleTypeList = roleTypeList + [op] />
     </#if>
 </#list>
@@ -68,7 +68,7 @@
 <#assign yesnoList=[]/>
 <#list resultYesNo.yn as yn>
     <#if yn?has_content>
-        <#assign op = { "name": yn.name?j_string ,"value": yn.value?j_string } />
+        <#assign op = { "name": yn.name ,"value": yn.value } />
         <#assign yesnoList = yesnoList + [op] />
     </#if>
 </#list>
@@ -169,10 +169,10 @@
         $("#value-role-name").text(paper.roleName);
         $("#value-corresponding-author").text(paper.correspondingAuthorName);
         $("#value-paper-category-name").text(paper.paperCategoryName);
-        $("#value-paper-category-knc-name").text(paper.academicYearName);
-        $("#value-research-project-paper").text(paper.paperCategoryKNCName);
-        $("#value-paper-journal-conference").text(paper.researchProjectProposalName);
-        $("#value-paper-academic-year").text(paper.journalConferenceName);
+        $("#value-paper-category-knc-name").text(paper.paperCategoryKNCName);
+        $("#value-research-project-paper").text(paper.researchProjectProposalName);
+        $("#value-paper-journal-conference").text(paper.journalConferenceName);
+        $("#value-paper-academic-year").text(paper.academicYearName);
         
 
         $("#value-paper-link").text(paper.link);
@@ -565,7 +565,7 @@
         //update row
         staffE.innerHTML=staffName;
         role.innerHTML=roleName;
-        correspondingAuthor.innerHTML=CAId;
+        correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
         addM=false;
@@ -597,6 +597,10 @@
             for(var i = 0; i < rows.length; ++i) {
                 var r = rows[i];
                 r.children[0].innerHTML = i + 1;
+            }
+
+            if(members.length ===0) {
+                $('#table-members-paper > tbody:last-child').append('<tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>');
             }
         }
         
@@ -683,7 +687,7 @@
         staffE.innerHTML=staffName;
         affilliationE.innerHTML=affilliation;
         role.innerHTML=roleName;
-        correspondingAuthor.innerHTML=CAId;
+        correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
         addEM=false;
@@ -715,6 +719,10 @@
             for(var i = 0; i < rows.length; ++i) {
                 var r = rows[i];
                 r.children[0].innerHTML = i + 1;
+            }
+
+            if(externalMembers.length ===0) {
+                $('#table-external-members-paper > tbody:last-child').append('<tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>');
             }
         }
         
@@ -790,7 +798,7 @@
                     return myXhr;
             },
             success:function(rs){
-                alertify.success('${uiLabelMap.BkEunivLoaded}');
+                alertify.success('${uiLabelMap.BkEunivSaveSuccess}');
                 setTimeout(function(){
                     window.location.href=urlRedirect;
                 }, 500);

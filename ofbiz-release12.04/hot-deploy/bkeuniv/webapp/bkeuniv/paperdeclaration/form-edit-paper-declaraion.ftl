@@ -1,4 +1,5 @@
 <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/util.ftl"/>
 <style>
     label#title-modal-input {
         padding: 5px;
@@ -60,7 +61,7 @@
 <#assign roleTypeList=[]/>
 <#list resultRole.roles as rt>
     <#if rt?has_content>
-        <#assign op = { "name": rt.roleName?j_string ,"value": rt.roleId?j_string } />
+        <#assign op = { "name": rt.roleName ,"value": rt.roleId } />
         <#assign roleTypeList = roleTypeList + [op] />
     </#if>
 </#list>
@@ -68,7 +69,7 @@
 <#assign yesnoList=[]/>
 <#list resultYesNo.yn as yn>
     <#if yn?has_content>
-        <#assign op = { "name": yn.name?j_string ,"value": yn.value?j_string } />
+        <#assign op = { "name": yn.name ,"value": yn.value } />
         <#assign yesnoList = yesnoList + [op] />
     </#if>
 </#list>
@@ -131,7 +132,31 @@
     });
 
     var addM = false, addEM = false;
-    var members = [], externalMembers = [];
+    var members = [
+        <#list members.staffPaperDeclaration as m>
+            {
+                staffId: "${StringUtil.wrapString(m.staffId)}",
+                staffName: "${StringUtil.wrapString(m.staffName)}",
+                roleId: "${m.roleId}",
+                roleName: "<#if m.roleId?exists><#list roleTypeList as type><#if m.roleId==type.value>${StringUtil.wrapString(type.name)}</#if></#list></#if>",
+                CAId: "${m.correspondingAuthor}",
+                CAName: "<#if m.correspondingAuthor?exists><#list yesnoList as yesno><#if m.correspondingAuthor==yesno.value>${StringUtil.wrapString(yesno.name)}</#if></#list></#if>",
+                sequence: "${m.sequence}"
+            },
+        </#list>
+    ], externalMembers = [
+        <#list members.externalMemberPaperDeclaration as m>
+            {
+                staffName: "${StringUtil.wrapString(m.staffName)}",
+                roleId: "${m.roleId}",
+                roleName: "<#if m.roleId?exists><#list roleTypeList as type><#if m.roleId==type.value>${StringUtil.wrapString(type.name)}</#if></#list></#if>",
+                CAId: "${m.correspondingAuthor}",
+                CAName: "<#if m.correspondingAuthor?exists><#list yesnoList as yesno><#if m.correspondingAuthor==yesno.value>${StringUtil.wrapString(yesno.name)}</#if></#list></#if>",
+                affilliation: "${StringUtil.wrapString(m.affilliation)}",
+                sequence: "${m.sequence}"
+            },
+        </#list>
+    ];
     var paper = {};
     var me = {};
 
@@ -169,10 +194,10 @@
         $("#value-role-name").text(paper.roleName);
         $("#value-corresponding-author").text(paper.correspondingAuthorName);
         $("#value-paper-category-name").text(paper.paperCategoryName);
-        $("#value-paper-category-knc-name").text(paper.academicYearName);
-        $("#value-research-project-paper").text(paper.paperCategoryKNCName);
-        $("#value-paper-journal-conference").text(paper.researchProjectProposalName);
-        $("#value-paper-academic-year").text(paper.journalConferenceName);
+        $("#value-paper-category-knc-name").text(paper.paperCategoryKNCName);
+        $("#value-research-project-paper").text(paper.researchProjectProposalName);
+        $("#value-paper-journal-conference").text(paper.journalConferenceName);
+        $("#value-paper-academic-year").text(paper.academicYearName);
         
 
         $("#value-paper-link").text(paper.link);
@@ -185,6 +210,10 @@
 
         if(paper.files.length > 0) {
             $("#value-paper-file-name").text(paper.files[0].name);
+        } else {
+            <#if resultPaper.paper.sourcePath??>
+                $("#value-paper-file-name").text('${resultPaper.paper.sourcePath}');
+            </#if>   
         }
 
          //update sequence
@@ -565,7 +594,7 @@
         //update row
         staffE.innerHTML=staffName;
         role.innerHTML=roleName;
-        correspondingAuthor.innerHTML=CAId;
+        correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
         addM=false;
@@ -597,6 +626,10 @@
             for(var i = 0; i < rows.length; ++i) {
                 var r = rows[i];
                 r.children[0].innerHTML = i + 1;
+            }
+
+            if(members.length ===0) {
+                $('#table-members-paper > tbody:last-child').append('<tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>');
             }
         }
         
@@ -683,7 +716,7 @@
         staffE.innerHTML=staffName;
         affilliationE.innerHTML=affilliation;
         role.innerHTML=roleName;
-        correspondingAuthor.innerHTML=CAId;
+        correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
         addEM=false;
@@ -715,6 +748,10 @@
             for(var i = 0; i < rows.length; ++i) {
                 var r = rows[i];
                 r.children[0].innerHTML = i + 1;
+            }
+
+            if(externalMembers.length ===0) {
+                $('#table-external-members-paper > tbody:last-child').append('<tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>');
             }
         }
         
@@ -749,8 +786,9 @@
         }  -->
     }
 
-    function createNewPaper(urlRedirect) {
+    function updatePaper(urlRedirect) {
         var formData = new FormData();
+        formData.append('paperId', "${parameters.paperId}");
         formData.append('paperName', paper.paperName);
         formData.append('authors', paper.authors);
         formData.append('roleId', paper.roleId);
@@ -774,7 +812,7 @@
         }
 
         $.ajax({
-            url: "/bkeuniv/control/create-new-paper-declaration",
+            url: "/bkeuniv/control/update-paper-declaration",
             type: 'POST',
             method: 'POST',
             contentType: false,
@@ -790,7 +828,7 @@
                     return myXhr;
             },
             success:function(rs){
-                alertify.success('${uiLabelMap.BkEunivLoaded}');
+                alertify.success('${uiLabelMap.BkEunivSaveSuccess}');
                 setTimeout(function(){
                     window.location.href=urlRedirect;
                 }, 500);
@@ -820,6 +858,14 @@
 		}  
 	}
 </script>
+
+<#assign me={}/>
+<#list members.staffPaperDeclaration as m>
+    <#if m.staffId==userLogin.userLoginId>
+        <#assign me=m/>
+    </#if>
+</#list>
+
 <body>
 	<div class="body">
 		<div id="information-paper" style="flex: 1 1 0%; padding: 2em 3em 6em 3em; width: 100%;overflow-y: auto; height: 100%;background-color: rgb(237, 236, 236);">
@@ -904,7 +950,9 @@
                                 <select class="form-control" style="width: 100%" id="roleid" required>
                                     <#list paperRoles.roles as r>
                                         <#if r?has_content>
-                                            <option value="${r.roleId}">${r.roleName}</option>
+                                            <option value="${r.roleId}"
+                                            <#if me.roleId??&&me.roleId==r.roleId>selected</#if>
+                                            >${r.roleName}</option>
                                         </#if>
                                     </#list>
                                 </select>
@@ -923,7 +971,9 @@
                                 <select class="form-control" style="width: 100%" id="corresponding-author" required>
                                     <#list yesnoList as yesno>
                                         <#if yesno?has_content>
-                                            <option value="${yesno.value}">${yesno.name}</option>
+                                            <option value="${yesno.value}"
+                                            <#if me.correspondingAuthor??&&me.correspondingAuthor==yesno.value>selected</#if>
+                                            >${yesno.name}</option>
                                         </#if>
                                     </#list>
                                 </select>
@@ -1056,20 +1106,21 @@
                 </div>
                 <div id="swipe-2" class="col s12">
                     <form id="form-detail" action="javascript:void(0);" class="container-fluid">
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperLink}</label><input type="text" class="form-control"
-                                id="link" value="">
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperLink}</label>
+                        <input type="text" class="form-control"
+                                id="link" value="<#if resultPaper.paper.link?exists>${resultPaper.paper.link}</#if>">
                             <script type="text/javascript">
                                 $(function () {});
                             </script>
                         </div>
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperVolumn}</label><input type="text"
-                                class="form-control" id="volumn" value="">
+                                class="form-control" id="volumn" value="<#if resultPaper.paper.volumn?exists>${resultPaper.paper.volumn}</#if>">
                             <script type="text/javascript">
                                 $(function () {});
                             </script>
                         </div>
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperMonth}<span style="color: #db4437;" title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label><input
-                                type="number" class="form-control" pattern="[1-9]([0-9]{0,2})" id="month" value="" required="" min="1" max="12">
+                                type="number" class="form-control" pattern="[1-9]([0-9]{0,2})" id="month" value="<#if resultPaper.paper.month?exists>${resultPaper.paper.month}</#if>" required="" min="1" max="12">
                             <div class="input-validation"></div>
                             <script type="text/javascript">
                                 $(function () {
@@ -1079,7 +1130,7 @@
                             </script>
                         </div>
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperYear}<span style="color: #db4437;" title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label><input
-                                type="number" class="form-control" id="year" pattern="[1-9]([0-9]{0,4})" min='1971' max='${.now?string("yyyy")?number}' value="" required="">
+                                type="number" class="form-control" id="year" pattern="[1-9]([0-9]{0,4})" min='1971' max='${.now?string("yyyy")?number}' value="<#if resultPaper.paper.year?exists>${resultPaper.paper.year}</#if>" required="">
                             <div class="input-validation"></div>
                             <script type="text/javascript">
                                 $(function () {
@@ -1088,20 +1139,23 @@
                                 });
                             </script>
                         </div>
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperISSN}</label><input type="text" class="form-control" id="issn"
-                                value="">
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperISSN}</label>
+                        <input type="text" class="form-control" id="issn"
+                                value="<#if resultPaper.paper.ISSN?exists>${resultPaper.paper.ISSN}</#if>">
                             <script type="text/javascript">
                                 $(function () {});
                             </script>
                         </div>
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperDOI}</label><input type="text" class="form-control" id="doi"
-                                value="">
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperDOI}</label>
+                        <input type="text" class="form-control" id="doi"
+                                value="<#if resultPaper.paper.DOI?exists>${resultPaper.paper.DOI}</#if>">
                             <script type="text/javascript">
                                 $(function () {});
                             </script>
                         </div>
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperIF}</label><input type="text" class="form-control"
-                                id="impactfactor" pattern="([0-9]*[.])?[0-9]+" value="">
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperIF}</label>
+                        <input type="text" class="form-control"
+                                id="impactfactor" pattern="([0-9]*[.])?[0-9]+" value="<#if resultPaper.paper.impactFactor?exists>${resultPaper.paper.impactFactor?c}</#if>">
                             <div class="input-validation"></div>
                             <script type="text/javascript">
                                 $(function () {
@@ -1121,6 +1175,9 @@
                                 id="file-upload-dropify"
                                 class="dropify"
                                 accept=".doc, .docx, .pdf, .csv, .xls, .xlsx"
+                                <#if resultPaper.paper.sourcePath??>
+                                    data-default-file='${resultPaper.paper.sourcePath}'
+                                </#if>
                                 require
                                 />
                             <div class="input-validation"></div>
@@ -1179,9 +1236,50 @@
                                         <th></th>
                                     </tr>
                                     </thead>
-
+                                    
+                                    <#assign stt=1/>
                                     <tbody>
-                                        <tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>
+                                        <#if members.staffPaperDeclaration?size gt 0>
+                                            <#assign code=random(1, 999999)?string["000000"] />
+                                            <#list members.staffPaperDeclaration as m>
+                                                <tr>
+                                                    <td>${stt}</td>
+                                                    <#if m.staffName?exists>
+                                                        <td>${m.staffName}</td>
+                                                    <#else>
+                                                        <td></td>
+                                                    </#if>
+
+                                                    <td>
+                                                        <#if m.roleId?exists>
+                                                            <#list roleTypeList as type>
+                                                                <#if m.roleId==type.value>
+                                                                    ${type.name}
+                                                                </#if>  
+                                                            </#list>
+                                                        </#if>
+                                                    </td>
+
+                                                    <td>
+                                                        <#if m.correspondingAuthor?exists>
+                                                            <#list yesnoList as yesno>
+                                                                <#if m.correspondingAuthor==yesno.value>
+                                                                    ${yesno.name}
+                                                                </#if>  
+                                                            </#list>
+                                                        </#if>
+                                                    </td>
+
+                                                    <td><select id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
+                                                    <#if staff.staff.staffId!=m.staffId>
+                                                        <td><button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeMember(event)">&#xe014;</button></td>
+                                                    </#if>
+                                                    <#assign stt=stt+1/>
+                                                </tr>
+                                            </#list>
+                                        <#else>
+                                            <tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>
+                                        </#if>
                                     </tbody>
                                 </table>
                             </div>
@@ -1211,7 +1309,53 @@
                                     </thead>
 
                                     <tbody>
-                                        <tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>
+                                        <#assign stt=1/>
+                                        
+                                        <#if members.externalMemberPaperDeclaration?size gt 0>
+                                            <#assign code=random(1, 999999)?string["000000"] />
+                                            <#list members.externalMemberPaperDeclaration as m>
+                                                <tr>
+                                                    <td>${stt}</td>
+                                                    <#if m.staffName?exists>
+                                                        <td>${m.staffName}</td>
+                                                    <#else>
+                                                        <td></td>
+                                                    </#if>
+
+                                                    <td>
+                                                        <#if m.affilliation?exists>
+                                                            ${m.affilliation}
+                                                        </#if>
+                                                    </td>
+
+                                                    <td>
+                                                        <#if m.roleId?exists>
+                                                            <#list roleTypeList as type>
+                                                                <#if m.roleId==type.value>
+                                                                    ${type.name}
+                                                                </#if>  
+                                                            </#list>
+                                                        </#if>
+                                                    </td>
+
+                                                    <td>
+                                                        <#if m.correspondingAuthor?exists>
+                                                            <#list yesnoList as yesno>
+                                                                <#if m.correspondingAuthor==yesno.value>
+                                                                    ${yesno.name}
+                                                                </#if>  
+                                                            </#list>
+                                                        </#if>
+                                                    </td>
+
+                                                    <td><select id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
+                                                    <td><button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeExternalMember(event)">&#xe014;</button></td>
+                                                    <#assign stt=stt+1/>
+                                                </tr>
+                                            </#list>
+                                        <#else>
+                                            <tr><td>${StringUtil.wrapString(uiLabelMap.BkEunivNoMembers)}</td></tr>
+                                        </#if>
                                     </tbody>
                                 </table>
                             </div>
@@ -1355,13 +1499,13 @@
                         </svg>
                         ${uiLabelMap.BkEunivPrevious}
                     </@FlatButton>
-                    <@FlatButton id="save-1" onClick='createNewPaper("/bkeuniv/control/form-add-paper-declaration")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 150px">
+                    <@FlatButton id="save-1" onClick='updatePaper("/bkeuniv/control/detail-paper?paperId=${parameters.paperId}")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 150px">
                         <svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
                             <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path>
                         </svg>
                         ${uiLabelMap.BkEunivSave}
                     </@FlatButton>
-                    <@FlatButton id="save-2" onClick='createNewPaper("/bkeuniv/control/paper-declaration-staff")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
+                    <@FlatButton id="save-2" onClick='updatePaper("/bkeuniv/control/paper-declaration-staff")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
                         <svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
                         </svg>

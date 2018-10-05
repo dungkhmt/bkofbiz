@@ -1772,10 +1772,10 @@ public class PaperDeclarationService {
 				String externalMemberPaperDeclarationId = delegator.getNextSeqId("ExternalMemberPaperDeclaration");
 				
 				gv.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
-				gv.put("staffName", StringEscapeUtils.unescapeHtml(member.getString("staffName")).trim());
+				gv.put("staffName", new String(member.getString("staffName").getBytes(ISO), UTF_8).trim());
 
-				if(member.getString("affilliation")!=null&&member.getString("affilliation").equals("")){
-					gv.put("affilliation", StringEscapeUtils.unescapeHtml(member.getString("affilliation")).trim());						
+				if(member.getString("affilliation")!=null&&!member.getString("affilliation").equals("")){
+					gv.put("affilliation", new String(member.getString("affilliation").getBytes(ISO), UTF_8).trim());						
 				}
 				gv.put("paperId", paperId);
 				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
@@ -1825,6 +1825,387 @@ public class PaperDeclarationService {
 			System.out
 					.println("\n\n\t****************************************\n\tcreateNewPaperDeclaration - end\n\t");
 			m.put("message", "Create a successful paper");
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+
+		} catch (Exception ioe_ex) {
+			System.out
+					.println("\n\n\t****************************************\n\tIOException occured on file writing");
+			ioe_ex.printStackTrace();
+			result = "AttachementException";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+	}
+	
+	public static void updatePaperDeclaration(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> m = FastMap.newInstance();
+
+		System.out
+				.println("\n\n\t****************************************\n\tupdatePaperDeclaration - start\n\t");
+		ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory()); // Creation
+																					// of
+																					// servletfileupload
+		
+		
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String staffId = (String) userLogin.getString("userLoginId");
+		
+		List lst = null;
+		
+		String result = "AttachementException";
+		String file_name = "";
+		
+		String paperId = "";
+		String paperName = "";
+		String authors = "";
+        String roleId = "";
+        String paperCategoryId = "";
+        String paperCategoryKNCId = "";
+        String researchProjectProposalId = "";
+        String journalConferenceName = "";
+        String academicYearId = "";
+        String link = "";
+        String volumn = "";
+        String month = "";
+        String year = "";
+        String issn = "";
+        String doi = "";
+        String impactFactor = "";
+        
+
+        JSONArray members = null ;
+        JSONArray externalMembers = null;
+
+		try {
+			lst = fu.parseRequest(request);
+		} catch (FileUploadException fup_ex) {
+			System.out
+					.println("\n\n\t****************************************\n\tException of FileUploadException \n\t");
+			fup_ex.printStackTrace();
+			result = "AttachementException";
+			m.put("result", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+		if (lst.size() == 0) // There is no item in lst
+		{
+			System.out
+					.println("\n\n\t****************************************\n\not found param \n\t");
+			result = "Not found param";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+		FileItem file_item = null;
+		FileItem selected_file_item = null;
+
+		// Checking for form fields - Start
+		for (int i = 0; i < lst.size(); i++) {
+			file_item = (FileItem) lst.get(i);
+			String fieldName = file_item.getFieldName();
+
+			switch (fieldName) {
+			case "file":
+				selected_file_item = file_item;
+
+				file_name = file_item.getName(); // Getting the file name
+				System.out
+						.println("\n\n\t****************************************\n\tThe selected file item's file name is : "
+								+ file_name + "\n\t");
+				break;
+				
+			case "paperId":
+				paperId = file_item.getString();
+				paperId = new String(paperId.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "paperName":
+				paperName = file_item.getString();
+				paperName = new String(paperName.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "authors":
+				authors = file_item.getString();
+				authors = new String(authors.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "roleId":
+				roleId = file_item.getString();
+				roleId = new String(roleId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "paperCategoryId":
+				paperCategoryId = file_item.getString();
+				paperCategoryId = new String(paperCategoryId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "paperCategoryKNCId":
+				paperCategoryKNCId = file_item.getString();
+				paperCategoryKNCId = new String(paperCategoryKNCId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "researchProjectProposalId":
+				researchProjectProposalId = file_item.getString();
+				researchProjectProposalId = new String(researchProjectProposalId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "journalConferenceName":
+				journalConferenceName = file_item.getString();
+				journalConferenceName = new String(journalConferenceName.getBytes(ISO), UTF_8).trim();
+				break;
+			case "academicYearId":
+				academicYearId = file_item.getString();
+				academicYearId = new String(academicYearId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "link":
+				link = file_item.getString();
+				link = new String(link.getBytes(ISO), UTF_8).trim();
+				break;
+			case "volumn":
+				volumn = file_item.getString();
+				volumn = new String(volumn.getBytes(ISO), UTF_8).trim();
+				break;
+			case "month":
+				month = file_item.getString();
+				month = new String(month.getBytes(ISO), UTF_8).trim();
+				break;
+			case "year":
+				year = file_item.getString();
+				year = new String(year.getBytes(ISO), UTF_8).trim();
+				break;
+			case "issn":
+				issn = file_item.getString();
+				issn = new String(issn.getBytes(ISO), UTF_8).trim();
+				break;
+			case "doi":
+				doi = file_item.getString();
+				doi = new String(doi.getBytes(ISO), UTF_8).trim();
+				break;
+			case "impactFactor":
+				impactFactor = file_item.getString();
+				impactFactor = new String(impactFactor.getBytes(ISO), UTF_8).trim();
+				break;
+			case "members":
+				members = JSONArray.fromObject(file_item.getString());
+				
+				break;
+			case "externalMembers":
+				externalMembers = JSONArray.fromObject(file_item.getString());
+				break;
+			}
+
+		}
+		// Checking for form fields - End
+		if(paperId.equals("") || paperName.equals("") || authors.equals("") || roleId.equals("")
+			|| paperCategoryId.equals("") || paperCategoryKNCId.equals("")
+			|| researchProjectProposalId.equals("") || journalConferenceName.equals("")
+			|| academicYearId.equals("") || month.equals("") || year.equals("")
+			|| members.size() < 0
+				) {
+			System.out
+				.println("\n\n\t****************************************\n\t Param is missing or the value is empty  \n\t");
+			result = "Param is missing or the value is empty";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+		
+		try {
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			
+			GenericValue p = delegator.findOne("PaperDeclaration", false,
+					UtilMisc.toMap("paperId", paperId));
+			
+			if(p==null) {
+				System.out
+					.println("\n\n\t****************************************\n\t Not found Paper Declaration  \n\t");
+				result = "Not found Paper Declaration";
+				m.put("message", result);
+				BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+						response, 200);
+				return;
+			}
+			
+			p.put("staffId", staffId);
+			
+			p.put("paperName", paperName);
+			p.put("authors", authors);
+			p.put("paperCategoryId", paperCategoryId);
+			p.put("paperCategoryKNCId", paperCategoryKNCId);
+			p.put("researchProjectProposalId", researchProjectProposalId);
+			p.put("journalConferenceName", journalConferenceName);
+			p.put("academicYearId", academicYearId);
+			p.put("year", Long.valueOf(year));
+			p.put("month", Long.valueOf(month));
+			
+			if (doi != null
+					&& !doi.equals(""))
+				p.put("DOI", doi);
+			
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
+			if (impactFactor != null
+					&& !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+			
+			if (issn != null
+					&& !issn.equals(""))
+				p.put("ISSN", issn);
+			
+			if (volumn != null
+					&& !volumn.equals(""))
+				p.put("volumn", volumn);
+			
+			delegator.store(p);
+			
+//			PaperDeclarationUtil.createStaffPaperDeclarationc(
+//					paperId, staffId, roleId, delegator);
+			
+			if (selected_file_item != null) // If selected file item is null
+			{
+				System.out
+						.println("\n\n\t****************************************\n\tThe selected save file item \n\t");
+				
+				byte[] file_bytes = selected_file_item.get();
+				byte[] extract_bytes = new byte[file_bytes.length];
+
+				for (int l = 0; l < file_bytes.length; l++)
+					extract_bytes[l] = file_bytes[l];
+				
+				GenericValue gv = delegator.findOne("PaperDeclaration", false,
+						UtilMisc.toMap("paperId", paperId));
+				
+				Debug.log(module + "::uploadFile, filename = " + file_name
+						+ ", paperName = " + (String) gv.get("paperName")
+						+ ", staffId = " + staffId);
+				
+				String ext = getExtension(file_name);
+				java.util.Date currentDate = new java.util.Date();
+				//SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("HHmmssddMMyyyy");
+				SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				
+				String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+				String filenameDB = sCurrentDate + "." + ext;
+				String fullFileName = establishFullFilename(staffId, filenameDB);
+
+				Debug.log(module + "::uploadFile, filename = " + file_name
+						+ ", paperId = " + paperId + ", extension = " + ext
+						+ ", filenameDB = " + filenameDB + ", fullFileName = "
+						+ fullFileName);
+
+				FileOutputStream fout = new FileOutputStream(fullFileName);
+				System.out
+						.println("\n\n\t****************************************\n\tAfter creating outputstream");
+				fout.flush();
+				fout.write(extract_bytes);
+				fout.flush();
+				fout.close();
+
+				gv.put("sourcePath", filenameDB);
+				delegator.store(gv);
+				
+			}
+			
+			List<GenericValue> lpv;
+			lpv = delegator.findList("ExternalMemberPaperDeclaration",
+					EntityCondition.makeCondition("paperId",
+							EntityOperator.EQUALS, paperId), null, null, null,
+					false);
+			
+        	if(lpv.size() > 0){
+        		for(GenericValue pv: lpv) {
+        			delegator.removeValue(pv);        			
+        		}
+        	}
+
+			for(int i = 0; i < externalMembers.size(); ++i) {
+				JSONObject member = externalMembers.getJSONObject(i);
+				
+				if(member.getString("staffName")==null||member.getString("staffName").equals("")
+						||member.getString("roleId")==null||member.getString("roleId").equals("")
+						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						) {
+					break;
+				}
+				
+				GenericValue gv = delegator.makeValue("ExternalMemberPaperDeclaration");
+				String externalMemberPaperDeclarationId = delegator.getNextSeqId("ExternalMemberPaperDeclaration");
+				
+				gv.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
+				gv.put("staffName", new String(member.getString("staffName").getBytes(ISO), UTF_8).trim());
+
+				if(member.getString("affilliation")!=null&&!member.getString("affilliation").equals("")){
+					gv.put("affilliation", new String(member.getString("affilliation").getBytes(ISO), UTF_8).trim());						
+				}
+				gv.put("paperId", paperId);
+				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+				gv.put("roleId", member.getString("roleId"));
+				
+				if(member.containsKey("sequence")){
+					gv.put("sequence", Long.valueOf(member.getString("sequence")));						
+				}
+				
+				gv.put("correspondingAuthor", member.getString("CAId"));
+				
+				delegator.create(gv);
+				
+			}
+			
+			lpv = delegator.findList("StaffPaperDeclaration",
+					EntityCondition.makeCondition("paperId",
+							EntityOperator.EQUALS, paperId), null, null, null,
+					false);
+			
+        	if(lpv.size() > 0){
+        		for(GenericValue pv: lpv) {
+        			delegator.removeValue(pv);        			
+        		}
+        	}
+			
+			for(int i = 0; i < members.size(); ++i) {
+				JSONObject member = members.getJSONObject(i);
+				
+				if(member.getString("staffId")==null||member.getString("staffId").equals("")
+						||member.getString("roleId")==null||member.getString("roleId").equals("")
+						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						) {
+					break;
+				}
+				
+				GenericValue gv = delegator.makeValue("StaffPaperDeclaration");
+				String staffPaperDeclarationId = delegator.getNextSeqId("StaffPaperDeclaration");
+				
+				gv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				gv.put("staffId", StringEscapeUtils.unescapeHtml(member.getString("staffId")));
+				gv.put("paperId", paperId);
+				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+				gv.put("roleId", member.getString("roleId"));
+				
+				if(member.containsKey("sequence")){
+					gv.put("sequence", Long.valueOf(member.getString("sequence")));						
+				}
+				
+				gv.put("correspondingAuthor", member.getString("CAId"));
+				
+				delegator.create(gv);
+				
+			}
+			 
+			
+			
+			System.out
+					.println("\n\n\t****************************************\n\tupdateNewPaperDeclaration - end\n\t");
+			m.put("message", "Update a successful paper");
 			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
 					response, 200);
 

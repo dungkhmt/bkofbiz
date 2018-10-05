@@ -575,6 +575,16 @@
     		<response name="error" type="request" value="json"></response>
     </request-map>    
     
+    <request-map uri="update-paper-declaration">
+            <security https="true" auth="true"/>
+			
+			<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="updatePaperDeclaration"/>
+			
+			<response name="success" type="request" value="json"></response>
+    		<response name="error" type="request" value="json"></response>
+    </request-map>  
+    
 	<request-map uri="get-academic-years">
             <security https="true" auth="true"/>
           
