@@ -3,6 +3,10 @@
 	function download() {
 		window.open("/bkeuniv/control/download-file-paper?id-paper=${resultPaper.paper.paperId}", "_blank")
 	}
+
+	function editpaper() {
+		window.location.href='/bkeuniv/control/form-edit-paper-declaration?paperId=${resultPaper.paper.paperId}';
+	}
 </script>
 <body>
 	<div class="body">
@@ -32,17 +36,40 @@
 				</div>
 				<hr class="side-bar-separator">
 				<div class="content" style="position: relative; margin-bottom: 10px; ">
-					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
-						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
-							${paperDeclarationUiLabelMap.BkEunivPaperName}
-						</label>
-						<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
-							<#if resultPaper.paper.paperName?exists>
-								${resultPaper.paper.paperName}
-							<#else>
-							</#if>
-						</span>
-					</div>
+					<#if userLogin.userLoginId==resultPaper.paper.staffId>
+						<div class="row inline-box" style="float: right; margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+							<@FlatButton id="edit-paper" onClick="editpaper()" style="color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
+								<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
+									<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+								</svg>
+								${uiLabelMap.BkEunivEditPaperDeclaration}
+							</@FlatButton>
+						</div>
+						<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+							<label style="width: calc(20% + 55px); padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block;">
+								${paperDeclarationUiLabelMap.BkEunivPaperName}
+							</label>
+							<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
+								<#if resultPaper.paper.paperName?exists>
+									${resultPaper.paper.paperName}
+								<#else>
+								</#if>
+							</span>
+						</div>
+					<#else>
+						<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
+							<label style="width: 20%; padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block;">
+								${paperDeclarationUiLabelMap.BkEunivPaperName}
+							</label>
+							<span style="width: 80%; display: block; padding: 5px; line-height: 1.5; flex: 1 1 auto;" >
+								<#if resultPaper.paper.paperName?exists>
+									${resultPaper.paper.paperName}
+								<#else>
+								</#if>
+							</span>
+						</div>
+					</#if>
+					
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
 						<label style="padding: 5px; line-height: 1.5; flex: 1 1 auto; display: block; width: 20%;">
 							${paperDeclarationUiLabelMap.BkEunivAuthors}
@@ -194,7 +221,7 @@
 				</table>
 
 				
-				<#include "component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl"/>
+				<#--  <#include "component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl"/>  -->
 			</div>
 		</div>
 	</div>
