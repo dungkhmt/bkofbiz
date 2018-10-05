@@ -1251,6 +1251,8 @@
 		<field name="thesisName" type="very-long"></field>
 		<field name="coSupervion" type="id-ne"><description>Y/N</description></field>
 		<field name="graduateYear" type="numeric"></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
 		
 		<prim-key field="phDSupervisionId"/>
 		<relation rel-entity-name="Staff" type="one">

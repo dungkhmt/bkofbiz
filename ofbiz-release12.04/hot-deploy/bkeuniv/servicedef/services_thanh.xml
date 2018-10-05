@@ -11,6 +11,36 @@
         </description>
     </service> 
     
+    <service name="jqxGetListInterface" engine="interface" >
+ 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="org.ofbiz.entity.util.EntityListIterator" optional="true"></attribute>
+   </service>
+   
+   <service name="jqxGetListInterfaceList" engine="interface" >
+ 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="List" optional="true"></attribute>
+   </service>
+ 
+ 	<service name="jqxGridGeneralServicer" engine="java"
+            location="org.ofbiz.bkeuniv.service.JqxWidgetServices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
+        <attribute name="request" mode="IN" type="javax.servlet.http.HttpServletRequest" optional="true"></attribute>
+        <attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+        <attribute name="results" mode="OUT" type="List" ></attribute>
+        <attribute name="totalRows" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <!-- services cv general information -->
+    
     <service name="getCVInformation" engine="java" 
     	location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience"
     	invoke="getCVInformation" >
@@ -40,6 +70,41 @@
     	<attribute name="degreeYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="duty" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="statusCode" mode="OUT" type="String" optional="false"></attribute>
+    </service>
+    
+    <!-- services phd student supervision -->
+    
+    <service name="jqGetListPhdStudentSupervison" engine="java" invoke="JQGetListPhdStudentSupervison" location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
+    
+    <service name="createPhdStudentSupervision" engine="java" 
+    	location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement"
+    	invoke="createPhdStudentSupervision" >
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="studentName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="thesisName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="coSupervion[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="graduateYear" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updatePhdStudentSupervision" engine="java" 
+    	location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement"
+    	invoke="updatePhdStudentSupervision" >
+    	<attribute name="phDSupervisionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="studentName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="thesisName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="coSupervion[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="graduateYear" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="deletePhdStudentSupervision" engine="java" 
+    	location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement"
+    	invoke="deletePhdStudentSupervision" >
+    	<attribute name="phDSupervisionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
     </service>
     
     

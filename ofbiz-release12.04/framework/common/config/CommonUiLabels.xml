@@ -5714,6 +5714,7 @@
         <value xml:lang="zh">否</value>
         <value xml:lang="zh_CN">不</value>
         <value xml:lang="zh_TW">否</value>
+		<value xml:lang="vi">Không</value>        
     </property>
     <property key="CommonNoAccess">
         <value xml:lang="de">Sie haben keine Berechtigung für diese Fumktion; falls Sie dies für einen Fehler halten, wenden Sie sich an Ihren Systemadministrator</value>

@@ -657,6 +657,4 @@
     	<attribute name="result" mode="OUT" type="String" optional="true"></attribute>
     </service>
     
-    
-	
 </services>
