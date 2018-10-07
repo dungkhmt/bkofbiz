@@ -84,7 +84,7 @@
 	<#assign Topic = uiLabelMap.BkEunivRecent5YearProjects />
 	<#assign SubTopic1 = uiLabelMap.BkEunivTopic1  />
 	<#assign SubTopic2 = "Cac de tai, du an, nhiem vu KH-CN tham gia" />
-	<#assign TimeStart = uiLabelMap.BkEunivTime  />
+	<#assign TimeStart = uiLabelMap.FromTimeToTime/>
 	<#assign Program = uiLabelMap.BkEunivProgram />
 	<#assign Status1 = uiLabelMap.BkEunivStatus1 />
 	<#assign Status2 = "Tinh trang (da nghiem thu, chua nghiem thu)" />

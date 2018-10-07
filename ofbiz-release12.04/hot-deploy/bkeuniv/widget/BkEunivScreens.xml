@@ -1253,6 +1253,31 @@
 		</section>
 	</screen>
 	
+	<screen name="pageForeignLanguageStaff">
+		<section>
+			<actions>
+			<!-- 
+				<property-map resource="BkEunivWorkProgressUiLabels" map-name="workProgressUiLabelMap" global="true"/>
+			 -->
+			 	<service service-name="getListForeignLanguageCatalog" result-map="resultForeignLanguageCatalog"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/foreignlanguage/foreign-language.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
 	
 	<screen name="pageStaffResearchDomain">
 		<section>

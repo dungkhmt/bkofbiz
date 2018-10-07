@@ -90,7 +90,7 @@
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${se.quantity}</fo:block>
+						<fo:block>${se.descriptionDetail}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
 				</#list>

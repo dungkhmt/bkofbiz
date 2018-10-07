@@ -432,7 +432,9 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			List<GenericValue> isiPapers = new ArrayList<GenericValue>();
 			for (GenericValue p : papers) {
-				String paperCategoryId = (String) p.get("paperCategoryId");
+				//String paperCategoryId = (String) p.get("paperCategoryId");
+				String paperCategoryKNCId = (String) p.get("paperCategoryKNCId");
+				
 				String paperId = (String) p.get("paperId");
 				List<String> staffID = getStaffIDOfPaper(delegator, paperId);
 				boolean ok = false;
@@ -441,8 +443,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						ok = true;
 					}
 				}
-				if (ok && (paperCategoryId.equals("JINT_SCOPUS")))
+				//if (ok && (paperCategoryId.equals("JINT_SCOPUS")))
+				if (ok && (paperCategoryKNCId.equals("SCOPUS")))
 					isiPapers.add(p);
+				
 			}
 			Debug.log(module + "::getListPaperScopus, scopus papers = "
 					+ isiPapers.size());

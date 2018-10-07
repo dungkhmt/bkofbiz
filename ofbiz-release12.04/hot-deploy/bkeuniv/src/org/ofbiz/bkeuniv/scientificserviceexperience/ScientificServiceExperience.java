@@ -49,7 +49,8 @@ public class ScientificServiceExperience {
 					map.put("staffId", gv.getString("staffId"));
 					map.put("staffName", gv.getString("staffName"));
 					map.put("description", gv.getString("description"));
-					map.put("quantity", gv.getString("quantity"));
+					map.put("descriptionDetail", gv.getString("descriptionDetail"));
+					//map.put("quantity", gv.getString("quantity"));
 				
 					scientificServiceExperiences.add(map);
 			}
@@ -69,8 +70,10 @@ public class ScientificServiceExperience {
 		String staffId = (String)userLogin.get("userLoginId");
 		
 		String description = (String)context.get("description");
-		Long quantity = Long.parseLong((String)context.get("quantity"));
-		System.out.println("ScientificServiceExperience"+" "+staffId+" "+description+" "+quantity);
+		String descriptionDetail = (String)context.get("descriptionDetail");
+		
+		//Long quantity = Long.parseLong((String)context.get("quantity"));
+		//System.out.println("ScientificServiceExperience"+" "+staffId+" "+description+" "+quantity);
 		
 		Delegator delegator = ctx.getDelegator();
 		try {
@@ -78,7 +81,9 @@ public class ScientificServiceExperience {
 				gv.put("scientificServiceExperienceId", delegator.getNextSeqId("ScientificServiceExperience"));
 				gv.put("staffId", staffId);
 				gv.put("description", description);
-				gv.put("quantity", quantity);
+				gv.put("descriptionDetail", descriptionDetail);
+				
+				//gv.put("quantity", quantity);
 			delegator.create(gv);
 			
 			GenericValue result = delegator.findOne("ScientificServiceExperienceView", false, UtilMisc.toMap("scientificServiceExperienceId",
@@ -88,7 +93,9 @@ public class ScientificServiceExperience {
 				map.put("staffId", result.getString("staffId"));
 				map.put("staffName", result.getString("staffName"));
 				map.put("description", result.getString("description"));
-				map.put("quantity", result.getString("quantity"));
+				map.put("descriptionDetail", result.getString("descriptionDetail"));
+				
+				//map.put("quantity", result.getString("quantity"));
 			
 			retSucc.put("scientificServiceExperiences", map);
 			retSucc.put("message", "Successfully");
@@ -107,7 +114,9 @@ public class ScientificServiceExperience {
 		
 		String scientificServiceExperienceId = (String)context.get("scientificServiceExperienceId");
 		String description = (String)context.get("description");
-		Long quantity = Long.parseLong((String)context.get("quantity"));
+		String descriptionDetail = (String)context.get("descriptionDetail");
+		
+		//Long quantity = Long.parseLong((String)context.get("quantity"));
 		
 		Delegator delegator = ctx.getDelegator();
 		try{
@@ -115,7 +124,9 @@ public class ScientificServiceExperience {
 			if(gv != null){
 				gv.put("staffId", staffId);
 				gv.put("description", description);
-				gv.put("quantity", quantity);
+				gv.put("descriptionDetail", descriptionDetail);
+				
+				//gv.put("quantity", quantity);
 				delegator.store(gv);
 				
 				GenericValue result = delegator.findOne("ScientificServiceExperienceView", false, UtilMisc.toMap("scientificServiceExperienceId",
@@ -125,7 +136,9 @@ public class ScientificServiceExperience {
 					map.put("staffId", result.getString("staffId"));
 					map.put("staffName", result.getString("staffName"));
 					map.put("description", result.getString("description"));
-					map.put("quantity", result.getString("quantity"));
+					map.put("descriptionDetail", result.getString("descriptionDetail"));
+					
+					//map.put("quantity", result.getString("quantity"));
 				
 				retSucc.put("scientificServiceExperiences", map);
         		retSucc.put("message", "Updated record with id: " + scientificServiceExperienceId);

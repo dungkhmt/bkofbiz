@@ -75,12 +75,14 @@
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${p.projectName}</fo:block>
+						<fo:block >${p.researchProjectProposalName}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${p.startDate} - ${p.endDate}</fo:block>
+						<fo:block>
+						<#if p.startDate?exists>${p.startDate}</#if> - <#if p.endDate?exists>${p.endDate}</#if>
+						</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
@@ -94,7 +96,7 @@
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${p.projectStatusName}</fo:block>
+						<fo:block>${p.statusName}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
 				</#list>
@@ -129,12 +131,14 @@
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${p.projectName}</fo:block>
+						<fo:block >${p.researchProjectProposalName}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${p.startDate} - ${p.endDate}</fo:block>
+						<fo:block>
+						<#if p.startDate?exists>${p.startDate}</#if> - <#if p.endDate?exists>${p.endDate}</#if>
+						</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
@@ -148,7 +152,7 @@
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${p.projectStatusName}</fo:block>
+						<fo:block>${p.statusName}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
 				</#list>

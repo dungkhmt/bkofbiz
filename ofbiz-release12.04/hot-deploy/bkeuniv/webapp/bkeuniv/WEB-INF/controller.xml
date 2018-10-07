@@ -777,6 +777,37 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="foreign-language-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-foreign-language-staff"></response>
+    </request-map>
+    <request-map uri="get-foreign-language-staff">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getForeignLanguage"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    <request-map uri="create-foreign-language">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="update-foreign-language">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="delete-foreign-language">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+
 	<request-map uri="work-progress">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-work-progress"></response>
@@ -1228,6 +1259,8 @@
 	 -->
 	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclarationNew"/>
 	<view-map name="view-list-update-project-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListUpdateProjectDeclaration"/>
+
+	<view-map name="view-foreign-language-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageForeignLanguageStaff"/>
 	
 	<view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
 	<view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>

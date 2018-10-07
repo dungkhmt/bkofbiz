@@ -40,10 +40,7 @@
 
 <div class="body">
 	<#assign columns=[
-		{
-			"name": bkEunivUiLabelMap.PhDSupervisionId?j_string,
-			"data": "phDSupervisionId"
-		},
+		
 		{
 			"name": bkEunivUiLabelMap.PhDStudentName?j_string,
 			"data": "studentName"
@@ -58,7 +55,11 @@
 		},
 		{
 			"name": bkEunivUiLabelMap.PhDGraduateYear?j_string,
-			"data": "graduateYear"
+			"data": "graduateYear",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		}
 	] />
 	
@@ -92,7 +93,11 @@
 		},
 		{
 			"name": bkEunivUiLabelMap.PhDGraduateYear?j_string,
-			"value": "graduateYear"
+			"value": "graduateYear",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		}
 	] />
 	
@@ -116,7 +121,11 @@
 		},
 		{
 			"name": bkEunivUiLabelMap.PhDGraduateYear?j_string,
-			"value": "graduateYear"
+			"value": "graduateYear",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		}
 	] />
 	

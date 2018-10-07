@@ -469,9 +469,9 @@
 		<value xml:lang="vi">Vị trí đánh giá KHCN</value>
 	</property>
 
-	<property key="BkEunivTime">
-		<value xml:lang="en">Times</value>
-		<value xml:lang="vi">Số lần</value>
+	<property key="FromTimeToTime">
+		<value xml:lang="en">From Time To Time</value>
+		<value xml:lang="vi">Thời gian</value>
 	</property>
 
 	<property key="BkEunivDetail">
@@ -1035,8 +1035,8 @@
 	</property>
 
 	<property key="PhDCoSupervision">
-		<value xml:lang="en">PhD co supervision</value>
-		<value xml:lang="vi">Đồng hướng dẫn</value>
+		<value xml:lang="en">Main supervisor</value>
+		<value xml:lang="vi">Hướng dẫn chính</value>
 	</property>
 	
 	<property key="AddNewPhDSupervision">
@@ -1054,4 +1054,27 @@
 		<value xml:lang="vi">Xóa thông tin nghiên cứu sinh</value>
 	</property>
 
+	<property key="ForeignLanguageName">
+		<value xml:lang="en">Foreign Language</value>
+		<value xml:lang="vi">Tên Ngoại Ngữ</value>
+	</property>
+	
+	<property key="Listen">
+		<value xml:lang="en">Listen</value>
+		<value xml:lang="vi">Nghe</value>
+	</property>
+	
+	<property key="Speaking">
+		<value xml:lang="en">Speaking</value>
+		<value xml:lang="vi">Nói</value>
+	</property>
+	<property key="Reading">
+		<value xml:lang="en">Reading</value>
+		<value xml:lang="vi">Đọc</value>
+	</property>
+	<property key="Writting">
+		<value xml:lang="en">Writting</value>
+		<value xml:lang="vi">Viết</value>
+	</property>
+	
 </resource>

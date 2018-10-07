@@ -78,6 +78,49 @@
     	<attribute name="projectDeclarationId" mode="IN" type="String"></attribute>
     	<attribute name="result" mode="OUT" type="String"></attribute>
     </service>
+
+ 	<service name="getListForeignLanguageCatalog" engine="java" 
+    		location="org.ofbiz.bkeuniv.foreignlanguage.ForeignLanguage" invoke="getListForeignLanguageCatalog">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
+    	<attribute name="foreignlanguageCatalog" mode="OUT" type="List"></attribute>
+    </service>
+    
+    <service name="getForeignLanguage" engine="java" 
+    		location="org.ofbiz.bkeuniv.foreignlanguage.ForeignLanguage" invoke="getForeignLanguage">
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>	
+    	<attribute name="foreignlanguages" mode="OUT" type="List"></attribute>
+    </service>
+    <service name="createForeignLanguage" engine="java" 
+    		location="org.ofbiz.bkeuniv.foreignlanguage.ForeignLanguage" invoke="createForeignLanguage">
+    	
+    	<attribute name="foreignLanguageCatalogId[]" mode="IN" type="List"></attribute>
+    	<attribute name="listen" mode="IN" type="String"></attribute>
+    	<attribute name="speaking" mode="IN" type="String"></attribute>
+    	<attribute name="reading" mode="IN" type="String"></attribute>
+    	<attribute name="writing" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="foreignlanguages" mode="OUT" type="GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    <service name="updateForeignLanguage" engine="java" 
+    		location="org.ofbiz.bkeuniv.foreignlanguage.ForeignLanguage" invoke="updateForeignLanguage">
+    	<attribute name="foreignLanguageId" mode="IN" type="String"></attribute>
+    	<attribute name="foreignLanguageCatalogId[]" mode="IN" type="List"></attribute>
+    	<attribute name="listen" mode="IN" type="String"></attribute>
+    	<attribute name="speaking" mode="IN" type="String"></attribute>
+    	<attribute name="reading" mode="IN" type="String"></attribute>
+    	<attribute name="writing" mode="IN" type="String"></attribute>
+    	
+    	<attribute name="foreignlanguages" mode="OUT" type="GenericValue"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    <service name="deleteForeignLanguage" engine="java" 
+    		location="org.ofbiz.bkeuniv.foreignlanguage.ForeignLanguage" invoke="deleteForeignLanguage">
+    	<attribute name="foreignLanguageId" mode="IN" type="String"></attribute>
+    	<attribute name="message" mode="OUT" type="String"></attribute>
+    </service>
+    
+    
     
     <service name="getWorkProgress" engine="java" 
     		location="org.ofbiz.bkeuniv.workprogress.WorkProgress" invoke="getWorkProgress">
@@ -123,8 +166,11 @@
     <service name="createScientificServiceExperience" engine="java" 
     		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="createScientificServiceExperience">
 		<attribute name="description" type="String" mode="IN"></attribute>
-		<attribute name="quantity" type="String" mode="IN"></attribute>
+		<attribute name="descriptionDetail" type="String" mode="IN"></attribute>
 		
+		<!-- 
+		<attribute name="quantity" type="String" mode="IN"></attribute>
+		 -->
 		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service> 
@@ -133,8 +179,11 @@
     		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="updateScientificServiceExperience">
     	<attribute name="scientificServiceExperienceId" type="String" mode="IN"></attribute>
 		<attribute name="description" type="String" mode="IN"></attribute>
-		<attribute name="quantity" type="String" mode="IN"></attribute>
+		<attribute name="descriptionDetail" type="String" mode="IN"></attribute>
 		
+		<!-- 
+		<attribute name="quantity" type="String" mode="IN"></attribute>
+		 -->
 		<attribute name="scientificServiceExperiences" mode="OUT" type="Map"></attribute>
     	<attribute name="message" mode="OUT" type="String"></attribute>
     </service>
