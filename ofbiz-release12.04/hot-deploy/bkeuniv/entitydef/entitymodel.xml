@@ -1273,6 +1273,9 @@
 		<field name="thesisSubjectPhDMasterName" type="very-long"></field>
 		<field name="description" type="very-long"></field>
 		<field name="staffId" type="id-vlong"></field>
+		<field name="educationLevelId" type="id-ne"></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="thesisSubjectPhDMasterId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>

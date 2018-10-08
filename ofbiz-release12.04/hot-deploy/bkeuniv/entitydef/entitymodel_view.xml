@@ -272,4 +272,19 @@
 		
 	</view-entity>
 	
+	<view-entity entity-name="ThesisSubjectView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="TSPDM" entity-name="ThesisSubjectPhDMaster"></member-entity>
+		<member-entity entity-alias="EL" entity-name="EducationLevel"></member-entity>
+		
+		<alias-all entity-alias="TSPDM"></alias-all>
+		<alias name="educationLevelName" entity-alias="EL"></alias>
+		
+		<view-link entity-alias="TSPDM" rel-entity-alias="EL" rel-optional="true">
+			<key-map field-name="educationLevelId" rel-field-name="educationLevelId" />
+		</view-link>
+		
+	</view-entity>
+	
+	
+	
 </entitymodel>

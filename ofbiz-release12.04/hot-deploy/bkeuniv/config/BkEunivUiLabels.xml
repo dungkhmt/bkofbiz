@@ -1053,6 +1053,36 @@
 		<value xml:lang="en">Delete PhD supervision</value>
 		<value xml:lang="vi">Xóa thông tin nghiên cứu sinh</value>
 	</property>
+	
+	<property key="AddThesisSubject">
+		<value xml:lang="en">Add the sis subject</value>
+		<value xml:lang="vi">Thêm mới hướng nghiên cứu</value>
+	</property>
+	
+	<property key="UpdateThesisSubject">
+		<value xml:lang="en">Update the sis subject</value>
+		<value xml:lang="vi">Cập nhật hướng nghiên cứu</value>
+	</property>
+	
+	<property key="DeleteThesisSubject">
+		<value xml:lang="en">Delete the sis subject</value>
+		<value xml:lang="vi">Xóa hướng nghiên cứu</value>
+	</property>
+	
+	<property key="ThesisSubjectId">
+		<value xml:lang="en">The sis subject id</value>
+		<value xml:lang="vi">Mã hướng nghiên cứu</value>
+	</property>
+	
+	<property key="ThesisSubjectName">
+		<value xml:lang="en">The sis subject name</value>
+		<value xml:lang="vi">Hướng nghiên cứu</value>
+	</property>
+	
+	<property key="EducationLevel">
+		<value xml:lang="en">Education level</value>
+		<value xml:lang="vi">Cấp độ đào tạo</value>
+	</property>
 
 	<property key="ForeignLanguageName">
 		<value xml:lang="en">Foreign Language</value>
