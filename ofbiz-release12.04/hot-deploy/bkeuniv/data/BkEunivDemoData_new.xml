@@ -7125,7 +7125,7 @@
 	<ChucDanhNghienCuu chucDanhNghienCuuName="Nghiên cứu viên"/>
 	<ChucDanhNghienCuu chucDanhNghienCuuName="Thạc sỹ"/>
 	
-	<EducationLevel educationLevelName="Tiến sỹ"/>
-	<EducationLevel educationLevelName="Thạc sỹ"/>
+	<EducationLevel educationLevelId="10000" educationLevelName="Tiến sỹ"/>
+	<EducationLevel educationLevelId="10010" educationLevelName="Thạc sỹ"/>
 
 </entity-engine-xml>

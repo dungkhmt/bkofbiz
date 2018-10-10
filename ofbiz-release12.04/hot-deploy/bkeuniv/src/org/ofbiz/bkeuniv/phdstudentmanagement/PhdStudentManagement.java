@@ -147,6 +147,7 @@ public class PhdStudentManagement{
 		phdSupervisionItem.set("thesisName", thesisName);
 		phdSupervisionItem.set("coSupervion", coSupervion);
 		phdSupervisionItem.set("graduateYear", graduateYear);
+		phdSupervisionItem.set("startDate", UtilDateTime.nowTimestamp());
 		
 		try {
 			delegator.create(phdSupervisionItem);
@@ -193,7 +194,6 @@ public class PhdStudentManagement{
 			phdSupervisionItem.set("thesisName", thesisName);
 			phdSupervisionItem.set("coSupervion", coSupervion);
 			phdSupervisionItem.set("graduateYear", graduateYear);
-			phdSupervisionItem.set("startDate", UtilDateTime.nowTimestamp());
 		
 			delegator.createOrStore(phdSupervisionItem);
 		} catch (GenericEntityException e) {

@@ -1220,6 +1220,34 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="cv-thesis-subject-for-student">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-cv-thesis-subject-for-student"/>
+	</request-map>
+	
+	<request-map uri="create-cv-thesis-subject-for-student">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createThesisSubject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-cv-thesis-subject-for-student">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateThesisSubject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-cv-thesis-subject-for-student">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteThesisSubject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -1285,4 +1313,5 @@
 	<view-map name="view-form-add-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormAddPaperDeclaration"/>
 	<view-map name="view-form-edit-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormEditPaperDeclaration"/>
 	<view-map name="view-list-phd-student-supervision" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListPhDStudent"/>
+	<view-map name="view-cv-thesis-subject-for-student" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTheSisSubjectForStudent"/>
 </site-conf>

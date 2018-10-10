@@ -107,5 +107,35 @@
     	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
     </service>
     
+    <!-- service thesis for student -->
+    
+    <service name="jqGetListThesisSubject" engine="java" invoke="jqGetListThesisSubject" location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="createThesisSubject" engine="java" 
+    	location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService"
+    	invoke="createThesisSubject" >
+    	<attribute name="thesisSubjectPhDMasterName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="educationLevelId[]" mode="IN" type="List" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updateThesisSubject" engine="java" 
+    	location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService"
+    	invoke="updateThesisSubject" >
+    	<attribute name="thesisSubjectPhDMasterId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="thesisSubjectPhDMasterName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="educationLevelId[]" mode="IN" type="List" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteThesisSubject" engine="java" 
+    	location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService"
+    	invoke="deleteThesisSubject" >
+    	<attribute name="thesisSubjectPhDMasterId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
+    </service>
     
 </services>
