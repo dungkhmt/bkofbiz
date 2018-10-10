@@ -548,10 +548,10 @@
                         '});'+
                     '<\/script>';
                     
-            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveMember(event)">&#xe173;</button>'
+            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveMember(event)"></button>'
             var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
             
-            $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
+            $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
             
             addM = true;
         }
@@ -679,10 +679,10 @@
                             '});'+
                         '<\/script>';
                 
-            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveExternalMember(event)">&#xe173;</button>'
+            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveExternalMember(event)"></button>'
             var idSequence = 'sequence-external-member-'+Math.floor((Math.random() * 1000000));
             
-            $('#table-external-members-paper > tbody:last-child').append('<tr> <td>'+(externalMembers.length+1)+'</td> <td><input type="text" value="" /></td> <td><input type="text" value="" /></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select id="'+idSequence+'" value="'+(externalMembers.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
+            $('#table-external-members-paper > tbody:last-child').append('<tr> <td>'+(externalMembers.length+1)+'</td> <td><input type="text" value="" /></td> <td><input type="text" value="" /></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(externalMembers.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
             addEM = true;
         }
     }
@@ -1232,7 +1232,7 @@
                                         <th style="width: 40%;">${uiLabelMap.BkEunivPaperMembers}</th>
                                         <th>${uiLabelMap.BkEunivRoleName}</th>
                                         <th title="Corresponding author">CA</th>
-                                        <th>Sequence</th>
+                                        <th style="width: 50px;">Sequence</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -1270,7 +1270,7 @@
                                                         </#if>
                                                     </td>
 
-                                                    <td><select id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
+                                                    <td><select style="width: 50px;" id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
                                                     <#if staff.staff.staffId!=m.staffId>
                                                         <td><button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeMember(event)">&#xe014;</button></td>
                                                     </#if>
@@ -1303,7 +1303,7 @@
                                         <th style="width: 20%;">${uiLabelMap.Affiliation}</th>
                                         <th>${uiLabelMap.BkEunivRoleName}</th>
                                         <th title="Corresponding author">CA</th>
-                                        <th>Sequence</th>
+                                        <th style="width: 50px;">Sequence</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -1348,7 +1348,7 @@
                                                         </#if>
                                                     </td>
 
-                                                    <td><select id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
+                                                    <td><select style="width: 50px;" id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
                                                     <td><button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeExternalMember(event)">&#xe014;</button></td>
                                                     <#assign stt=stt+1/>
                                                 </tr>
@@ -1499,13 +1499,13 @@
                         </svg>
                         ${uiLabelMap.BkEunivPrevious}
                     </@FlatButton>
-                    <@FlatButton id="save-1" onClick='updatePaper("/bkeuniv/control/detail-paper?paperId=${parameters.paperId}")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 150px">
+                    <@FlatButton id="save-1" onClick='updatePaper("/bkeuniv/control/detail-paper?paperId=${parameters.paperId}")' style="left: calc(100% - 600px); color: rgb(0, 188, 212); text-transform: uppercase;width: 150px">
                         <svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
                             <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path>
                         </svg>
                         ${uiLabelMap.BkEunivSave}
                     </@FlatButton>
-                    <@FlatButton id="save-2" onClick='updatePaper("/bkeuniv/control/paper-declaration-staff")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
+                    <@FlatButton id="save-2" onClick='updatePaper("/bkeuniv/control/paper-declaration-staff")' style="left: calc(100% - 600px); color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
                         <svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
                         </svg>
