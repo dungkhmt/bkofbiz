@@ -6,12 +6,17 @@
 	<view-entity entity-name="DepartmentDetail" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="Dpt" entity-name="Department" />
 		<member-entity entity-alias="Fcl" entity-name="Faculty" />
+		<member-entity entity-alias="Unv" entity-name="University"></member-entity>
 		<alias-all entity-alias="Dpt"/>
-		<alias-all entity-alias="Fcl">
-			<exclude field="universityId" />
-		</alias-all>
+		<alias-all entity-alias="Fcl"/>
+		<alias-all entity-alias="Unv"/>
+		
 		<view-link entity-alias="Dpt" rel-entity-alias="Fcl">
 			<key-map field-name="facultyId" />
+		</view-link>
+		
+		<view-link entity-alias="Fcl" rel-entity-alias="Unv">
+			<key-map field-name="universityId" rel-field-name="universityId" />
 		</view-link>
 	</view-entity>
 
@@ -239,11 +244,13 @@
 		<member-entity entity-alias="HH" entity-name="HocHam"></member-entity>
 		<member-entity entity-alias="HV" entity-name="HocVi"></member-entity>
 		<member-entity entity-alias="DE" entity-name="Department"></member-entity>
+		<member-entity entity-alias="GEN" entity-name="Gender"></member-entity>
 		
 		<alias-all entity-alias="STF"></alias-all>
 		<alias name="hocHamName" entity-alias="HH"></alias>
 		<alias name="hocViName" entity-alias="HV"></alias>
 		<alias name="departmentName" entity-alias="DE"></alias>
+		<alias name="genderName" entity-alias="GEN"></alias>
 		
 		<view-link entity-alias="STF" rel-entity-alias="HH" rel-optional="true">
 			<key-map field-name="hocHamId" rel-field-name="hocHamId" />
@@ -255,6 +262,10 @@
 		
 		<view-link entity-alias="STF" rel-entity-alias="DE">
 			<key-map field-name="departmentId"/>
+		</view-link>
+		
+		<view-link entity-alias="STF" rel-entity-alias="GEN">
+			<key-map field-name="staffGenderId" rel-field-name="genderId"/>
 		</view-link>
 		
 	</view-entity>
@@ -284,7 +295,6 @@
 		</view-link>
 		
 	</view-entity>
-	
 	
 	
 </entitymodel>

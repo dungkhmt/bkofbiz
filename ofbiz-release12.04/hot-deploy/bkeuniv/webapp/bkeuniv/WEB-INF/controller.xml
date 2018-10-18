@@ -1246,6 +1246,21 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="update-staff-agency-work">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateStaffAgencyWork"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+	<request-map uri="create-staff-agency-work">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createStaffAgencyWork"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	
 	
     <!-- View Mappings -->

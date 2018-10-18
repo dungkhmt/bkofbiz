@@ -50,68 +50,69 @@
 					</div>
 				</li>
 
+				<li style="list-style-type: none;" id="foreign-language">
+					<div class="collapsible-header"><div style="font-weight: bold;">3.&nbsp;</div>${uiLabelMap.BkEunivForeignLanguage}</div>
+					<div class="collapsible-body">
+						<img src="/resource/bkeuniv/image/education-progress.png" alt="${uiLabelMap.BkEunivForeignLanguage}" height="auto" width="100%">
+					</div>
+				</li>
+
 				<li style="list-style-type: none;" id="work-progress">
-					<div class="collapsible-header"><div style="font-weight: bold;">3.&nbsp;</div>${uiLabelMap.BkEunivWorkProgress}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">4.&nbsp;</div>${uiLabelMap.BkEunivWorkProgress}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/work-progress.png" alt="${uiLabelMap.BkEunivWorkProgress}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="publications">
-					<div class="collapsible-header"><div style="font-weight: bold;">4.&nbsp;</div>${uiLabelMap.BkEunivPublications}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">5.&nbsp;</div>${uiLabelMap.BkEunivPublications}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/publications.png" alt="${uiLabelMap.BkEunivPublications}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="recent-5-year-projects">
-					<div class="collapsible-header"><div style="font-weight: bold;">5.&nbsp;</div>${uiLabelMap.BkEunivRecent5YearProjects}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">6.&nbsp;</div>${uiLabelMap.BkEunivRecent5YearProjects}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/recent5year-projects.png" alt="${uiLabelMap.BkEunivRecent5YearProjects}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="award">
-					<div class="collapsible-header"><div style="font-weight: bold;">6.&nbsp;</div>${uiLabelMap.BkEunivAward}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">7.&nbsp;</div>${uiLabelMap.BkEunivAward}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/award.png" alt="${uiLabelMap.BkEunivAward}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="scientific-service">
-					<div class="collapsible-header"><div style="font-weight: bold;">7.&nbsp;</div>${uiLabelMap.BkEunivScientificService1}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">8.&nbsp;</div>${uiLabelMap.BkEunivScientificService1}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/scientific-service.png" alt="${uiLabelMap.BkEunivScientificService1}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="projects-applied">
-					<div class="collapsible-header"><div style="font-weight: bold;">8.&nbsp;</div>${uiLabelMap.BkEunivProjectsApplied}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">9.&nbsp;</div>${uiLabelMap.BkEunivProjectsApplied}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/projects-applied.png" alt="${uiLabelMap.BkEunivProjectsApplied}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="patent">
-					<div class="collapsible-header"><div style="font-weight: bold;">9.&nbsp;</div>${uiLabelMap.BkEunivPatent1}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">10.&nbsp;</div>${uiLabelMap.BkEunivPatent1}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/patent.png" alt="${uiLabelMap.BkEunivPatent1}" height="auto" width="100%">
 					</div>
 				</li>
 
 				<li style="list-style-type: none;" id="phd-defensed">
-					<div class="collapsible-header"><div style="font-weight: bold;">10.&nbsp;</div>${uiLabelMap.BkEunivPHDDefensed}</div>
+					<div class="collapsible-header"><div style="font-weight: bold;">11.&nbsp;</div>${uiLabelMap.BkEunivPHDDefensed}</div>
 					<div class="collapsible-body">
 						<img src="/resource/bkeuniv/image/phd-defensed.png" alt="${uiLabelMap.BkEunivPHDDefensed}" height="auto" width="100%">
 					</div>
 				</li>
 
-				<li style="list-style-type: none;" id="graduate-students">
-					<div class="collapsible-header"><div style="font-weight: bold;">11.&nbsp;</div>${uiLabelMap.BkEunivGraduateStudents}</div>
-					<div class="collapsible-body">
-						<img src="/resource/bkeuniv/image/current-graduate-students.png" alt="${uiLabelMap.BkEunivGraduateStudents}" height="auto" width="100%">
-					</div>
-				</li>
 			</ul>
 			<div id='right-events' style="margin: 0;border: solid 1px #00000038; padding-right: 0px; padding-left: 0px; min-height: 600px;" class="col-sm-6 collapsible collapsible-accordion" data-collapsible="accordion">
 			</div>

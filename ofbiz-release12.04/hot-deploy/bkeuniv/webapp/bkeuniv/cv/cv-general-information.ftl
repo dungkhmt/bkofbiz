@@ -41,10 +41,10 @@
       <!-- end-title -->
 
       <!-- form -->
-      <div class="row" style="display: flex">
+      <div class="row form-group" style="display: flex">
         <div class="col-10 col-md-10" style="margin: auto">
           <!-- <form class="form-horizontal">0 -->
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVStaffName?if_exists}
             </label>
@@ -54,7 +54,7 @@
                 </#if>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVDepartment?if_exists}
             </label>
@@ -66,7 +66,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVAcademicRank?if_exists}
             </label>
@@ -76,7 +76,7 @@
                 </#if>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVAcademicRankYear?if_exists}
             </label>
@@ -86,7 +86,7 @@
                </#if>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVDegree?if_exists}
             </label>
@@ -96,7 +96,7 @@
                  </#if>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVDegreeYear?if_exists}
             </label>
@@ -106,7 +106,7 @@
                 </#if>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.CVDutyPosition?if_exists}
             </label>
@@ -116,7 +116,51 @@
                </#if>
             </div>
           </div>
-          <div class="row" style="display: flex;">
+          
+          <div class="row form-group">
+            <label class="col-6 col-md-6 control-label">
+            	${bkEunivUiLabelMap.BkEunivNameLeader?if_exists}
+            </label>
+            <div class="col-6 col-md-6">
+              <#if staffInfo.staffCVInfo.duty?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkLeaderName)}
+               </#if>
+            </div>
+          </div>
+          
+          <div class="row form-group">
+            <label class="col-6 col-md-6 control-label">
+            	${bkEunivUiLabelMap.BkEunivCompanyAddress?if_exists}
+            </label>
+            <div class="col-6 col-md-6">
+              <#if staffInfo.staffCVInfo.duty?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkAddress)}
+               </#if>
+            </div>
+          </div>
+          
+          <div class="row form-group">
+            <label class="col-6 col-md-6 control-label">
+            	${bkEunivUiLabelMap.BkEnuivPhone?if_exists}
+            </label>
+            <div class="col-6 col-md-6">
+              <#if staffInfo.staffCVInfo.duty?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkPhone)}
+               </#if>
+            </div>
+          </div>
+          
+          <div class="row form-group">
+            <label class="col-6 col-md-6 control-label">
+            	${bkEunivUiLabelMap.BkEnuivFax?if_exists}
+            </label>
+            <div class="col-6 col-md-6">
+              <#if staffInfo.staffCVInfo.duty?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkFax)}
+               </#if>
+            </div>
+          </div>
+          <div class="row form-group" style="display: flex;">
             <div style="margin: auto;">
               <button id="updateInfoBtn" type="button" class="btn btn-success">	
             	${bkEunivUiLabelMap.CVUpdateInfo?if_exists}

@@ -8,9 +8,6 @@
 		<value xml:lang="en">BkEuniv Application</value>
 		<value xml:lang="zh">BkEuniv应用程序</value>
 	</property>
-	<property key="BkEunivCompanyName">
-		<value xml:lang="en">OFBiz: BkEuniv</value>
-	</property>
 	<property key="BkEunivCompanySubtitle">
 		<value xml:lang="en">Part of the Open For Business Family of Open
 			Source Software</value>
@@ -604,16 +601,15 @@
 		<value xml:lang="vi">Cơ quan công tác</value>
 	</property>
 
-	<property key="BkEunivCompanyName">
-		<value xml:lang="en">Company Name</value>
-		<value xml:lang="vi">Tên cơ quan</value>
-	</property>
-
-
 	<property key="BkEunivForeignLanguageSuggest">
 		<value xml:lang="en">Foreign language</value>
 		<value xml:lang="vi">Trình độ ngoại ngữ (mỗi mục đề nghị ghi rõ mục
 			đó: Tốt/Khá/TB)</value>
+	</property>
+	
+	<property key="BkEunivForeignLanguage">
+		<value xml:lang="en">Foreign language</value>
+		<value xml:lang="vi">Trình độ ngoại ngữ</value>
 	</property>
 
 	<property key="BkEunivSetting">
@@ -1106,5 +1102,6 @@
 		<value xml:lang="en">Writting</value>
 		<value xml:lang="vi">Viết</value>
 	</property>
+	
 	
 </resource>

@@ -69,7 +69,33 @@
     	<attribute name="academicRankYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="degreeYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="duty" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="statusCode" mode="OUT" type="String" optional="false"></attribute>
+    </service>
+    
+    <service name="updateStaffAgencyWork" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="updateStaffAgencyWork" >
+    	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="createStaffAgencyWork" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="createStaffAgencyWork" >
+	    <attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
     </service>
     
     <!-- services phd student supervision -->

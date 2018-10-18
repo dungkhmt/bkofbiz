@@ -3,7 +3,7 @@
 	<#assign stt=1 />
 	<#assign fullName=resultCV.cv.info.staffName />
 	<#assign BkEunivBirthday=resultCV.cv.info.staffDateOfBirth?if_exists />
-	<#assign BkEunivGender="" />
+	<#assign BkEunivGender=resultCV.cv.info.staffGenderId?if_exists />
 	<#assign BkEunivAcademic="" />
 	<#assign BkEunivYearAcademic="" />
 	<#assign BkEunivDegree="" />
@@ -27,11 +27,6 @@
 	<#assign BkEunivMobile = ""/>
 	<#assign BkEunivEmail = ""/>	
 	<#assign agencyWork = uiLabelMap.BkEunivAgencyWork/>
-	<#assign BkEunivCompanyName = uiLabelMap.BkEunivCompanyName />
-	<#assign BkEunivNameLeader = "" />
-	<#assign BkEunivCompanyAddress = "" />
-	<#assign BkEnuivPhone = "" />
-	<#assign BkEnuivFax = "" />
 	<#assign EducationProgress = uiLabelMap.BkEunivEducationProgress />
 	<#assign ForeignLanguage = uiLabelMap.BkEunivForeignLanguageSuggest /> 
 	<#assign EducationType = uiLabelMap.BkEunivEducationType />
@@ -45,11 +40,11 @@
 	<#assign Degree = "Tien si" />
 	<#assign Internship = "Thuc tap sinh khoa hoc" />
 	<#assign ID = "STT" />
-	<#assign ForeignLanguageName = "Ten ngoai ngu" />
-	<#assign Listen = "Nghe" />
-	<#assign Speak = "Noi" />
-	<#assign Read = "Doc" />
-	<#assign Write = "Viet" />
+	<#assign ForeignLanguageName = uiLabelMap.ForeignLanguageName />
+	<#assign Listen = uiLabelMap.Listen />
+	<#assign Speak = uiLabelMap.Speaking />
+	<#assign Read = uiLabelMap.Reading />
+	<#assign Write = uiLabelMap.Writting />
 	<#assign Russia = "Tieng Nga" />
 	<#assign Level = "Tot" />
 	<#assign English = "Tieng Anh" />
@@ -188,11 +183,11 @@
 					<#assign stt=stt+1 />
 
 					<fo:table-cell>
-						<fo:block>${uiLabelMap.BkEunivGender}: ${BkEunivGender}</fo:block>
+						<fo:block>${uiLabelMap.BkEunivGender}: ${genderName?if_exists}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>
 					
-				<fo:table-row border-bottom-style="dotted" height="20pt" >
+				<fo:table-row border-bottom-style="dotted" height="20pt">
 					//STT
 					<fo:table-cell>
 						<fo:block font-weight="bold">${stt}.</fo:block>
@@ -200,13 +195,13 @@
 					<#assign stt=stt+1 />
 
 					<fo:table-cell>
-						<fo:block>${uiLabelMap.BkEunivAcademic}: ${BkEunivAcademic}</fo:block>
+						<fo:block>${uiLabelMap.BkEunivAcademic}: ${hocHamName?if_exists}</fo:block>
 					</fo:table-cell>
 
 					<fo:table-cell />
 
 					<fo:table-cell>
-						<fo:block>${uiLabelMap.BkEunivYearAcademic}: ${BkEunivDegree}</fo:block>
+						<fo:block>${uiLabelMap.BkEunivYearAcademic}: ${yearHocHam?if_exists}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>
 					
@@ -214,13 +209,13 @@
 					<fo:table-cell />
 
 					<fo:table-cell>
-						<fo:block>${uiLabelMap.BkEunivDegree}: ${BkEunivDegree}</fo:block>
+						<fo:block>${uiLabelMap.BkEunivDegree}: ${hocViName?if_exists}</fo:block>
 					</fo:table-cell>
 
 					<fo:table-cell />
 
 					<fo:table-cell>
-						<fo:block>${uiLabelMap.BkEunivYearDegree}: ${BkEunivYearDegree}</fo:block>
+						<fo:block>${uiLabelMap.BkEunivYearDegree}: ${yearHocVi?if_exists}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>																											
 				</fo:table-body>
@@ -242,7 +237,7 @@
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
 			    	<#assign stt=stt+1 />
-<#assign researchDomain = resultCV.cv.researchDomain />
+						<#assign researchDomain = resultCV.cv.researchDomain />
 		        <fo:table-cell>
 		          <fo:block font-weight="bold">${ResearchDomain}</fo:block>
 		        </fo:table-cell>
@@ -491,82 +486,10 @@
 		       <fo:table-row>
 						//STT
 		        <fo:table-cell />
-		        <fo:table-cell>
-		          <fo:block font-weight="bold">${uiLabelMap.BkEunivCurrentPosition}: ${BkEunivCurrentPosition}</fo:block>
+		        <fo:table-cell padding-top="5px">
+		          <fo:block font-weight="bold">${uiLabelMap.BkEunivCurrentPosition}: ${duty?if_exists}</fo:block>
 		        </fo:table-cell>
 		      </fo:table-row>
-		    </fo:table-body>
-		  </fo:table>
-        </fo:table-cell>
-      </fo:table-row>
-      
-      <fo:table-row>
-       	<fo:table-cell height="20pt" display-align="center" border-left-style="solid" border-right-style= "solid" border-bottom-style="dotted">
-          
-          //Full name
-          <fo:table table-layout="fixed">
-          	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(30)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		        <fo:table-cell>
-			      	<fo:block font-weight="bold">${stt}.</fo:block>
-			    	</fo:table-cell>
-			    	<#assign stt=stt+1 />
-
-		        <fo:table-cell>
-		          <fo:block font-weight="bold">${BkEunivAdrressHome}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
-		    </fo:table-body>
-		  </fo:table>
-        </fo:table-cell>
-      </fo:table-row>
-      
-       <fo:table-row>
-       	<fo:table-cell height="20pt" display-align="center" border-left-style="solid" border-right-style= "solid" border-bottom-style="dotted">
-          
-          //Full name
-          <fo:table table-layout="fixed">
-          	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(9)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(9)"/>
-		  	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(9)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		        <fo:table-cell />
-			      	
-		        <fo:table-cell>
-		        	<fo:block>${uiLabelMap.BkEunivPhoneAddress}: ${BkEunivPhoneAddress}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell />
-			      	
-		        <fo:table-cell>
-		        	<fo:block >${uiLabelMap.BkEunivCQ}: ${BkEunivCQ}</fo:block>
-		        </fo:table-cell>
-		        
-		        <fo:table-cell />
-			      	
-		        <fo:table-cell>
-		        	<fo:block >${uiLabelMap.BkEunivMobile}: ${BkEunivMobile}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
-		      
-		       <fo:table-row>
-						//STT
-		        <fo:table-cell />
-			      	
-		        <fo:table-cell>
-		        	<fo:block>${uiLabelMap.BkEunivEmail}: ${BkEunivEmail}</fo:block>
-		        </fo:table-cell>
-		       
-		      </fo:table-row>
-		      
 		    </fo:table-body>
 		  </fo:table>
         </fo:table-cell>
@@ -613,56 +536,54 @@
 			<fo:table-body>
 				<fo:table-row height="20pt" >
 				//STT
-					<fo:table-cell />
-						<fo:table-cell>
-							<fo:block>${BkEunivCompanyName}:</fo:block>
+						<fo:table-cell />
+						<fo:table-cell number-columns-spanned ="5" padding-top="3px" >
+							<fo:block>${uiLabelMap.BkEunivCompanyName}: ${departmentName?if_exists} - ${facultyName?if_exists} - ${universityName?if_exists}	</fo:block>
 						</fo:table-cell>
-						
+
 						</fo:table-row>
 
 						<fo:table-row height="20pt" >
 							<fo:table-cell />
-
-							<fo:table-cell>
-								<fo:block>${uiLabelMap.BkEunivNameLeader}: ${BkEunivNameLeader}</fo:block>
+							<fo:table-cell number-columns-spanned ="5" padding-top="3px" >
+								<fo:block>${uiLabelMap.BkEunivNameLeader}: ${leaderName?if_exists} </fo:block>
 							</fo:table-cell>
 								
 						</fo:table-row>
 							
 						<fo:table-row height="20pt" >
 							<fo:table-cell />
-
-							<fo:table-cell>
-								<fo:block>${uiLabelMap.BkEunivCompanyAddress}: ${BkEunivCompanyAddress}</fo:block>
+							<fo:table-cell  number-columns-spanned ="5" padding-top="3px" >
+								<fo:block>${uiLabelMap.BkEunivCompanyAddress}: ${companyAddress?if_exists}</fo:block>
 							</fo:table-cell>
 								
 							</fo:table-row>
 							
 							<fo:table-row height="20pt" >
 								<fo:table-cell />
-
-								<fo:table-cell>
-									<fo:block>${uiLabelMap.BkEnuivPhone}: ${BkEnuivPhone}</fo:block>
-								</fo:table-cell>
-								<fo:table-cell />
 								
-								<fo:table-cell />
-
-								<fo:table-cell>
-									<fo:block>${uiLabelMap.BkEnuivFax}: ${BkEnuivFax}</fo:block>
+								<fo:table-cell  number-columns-spanned ="3" padding-top="3px" >
+									<fo:block>${uiLabelMap.BkEnuivPhone}: ${companyPhone?if_exists}</fo:block>
 								</fo:table-cell>
-								<fo:table-cell />
+								
+								<fo:table-cell number-columns-spanned ="2" padding-top="3px" >
+									<fo:block>${uiLabelMap.BkEnuivFax}: ${companyFax?if_exists}</fo:block>
+								</fo:table-cell>
 							</fo:table-row>																	
 						</fo:table-body>
 				</fo:table>
        		 </fo:table-cell>
      	 </fo:table-row>
- 	<#assign indexS=9 />
+ 	<#assign indexS=8 />
  	<#if sections??>
 		<#list sections as section>
 			<#switch section>
                 <#case "education-progress">
                     <#include "pdf-education-progress.fo.ftl"/>
+										<#assign indexS=indexS+1 />
+                    <#break>
+								<#case "foreign-language">
+                    <#include "pdf-foreign-language.fo.ftl"/>
 										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "patent">
@@ -675,10 +596,6 @@
                     <#break>
                 <#case "phd-defensed">
                     <#include "pdf-phd-defensed.fo.ftl"/>
-										<#assign indexS=indexS+1 />
-                    <#break>
-                <#case "graduate-students">
-                    <#include "pdf-current-graduate-students.fo.ftl"/>
 										<#assign indexS=indexS+1 />
                     <#break>
                 <#case "publications">

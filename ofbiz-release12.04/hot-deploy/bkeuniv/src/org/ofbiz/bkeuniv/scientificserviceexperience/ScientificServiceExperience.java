@@ -181,8 +181,8 @@ public class ScientificServiceExperience {
         Map<String, Object> returnResult = FastMap.newInstance();
 		
         try{
-        	EntityCondition cond = EntityCondition.makeCondition("staffId", staffId);
-        	List<GenericValue> listResult = delegator.findList("StaffGenaralInformation", cond, null, null, null, false);
+        	EntityCondition idCond = EntityCondition.makeCondition("staffId", staffId);
+        	List<GenericValue> listResult = delegator.findList("StaffGenaralInformation", idCond, null, null, null, false);
         	if(!listResult.isEmpty()) {
         		GenericValue result = listResult.get(0);
         		returnResult.put("academicName", result.get("hocHamName"));
@@ -194,8 +194,22 @@ public class ScientificServiceExperience {
         		returnResult.put("academicRankYear", result.get("yearHocHam"));
         		returnResult.put("degreeYear", result.get("yearHocVi"));
         		returnResult.put("duty", result.get("chucVuHienNay"));
-        		retSucc.put("staffCVInfo", returnResult);
         	}
+        	
+        	List<EntityCondition> listAgencyWorkCond = FastList.newInstance();
+        	listAgencyWorkCond.add(idCond);
+        	listAgencyWorkCond.add(EntityCondition.makeCondition("thruDate", EntityOperator.EQUALS, null));
+        	List<GenericValue> listStaffAgencyWorkInfo = delegator.findList("StaffAgencyWork", EntityCondition.makeCondition(listAgencyWorkCond, EntityOperator.AND), null, null, null, false);
+        	
+        	if(listStaffAgencyWorkInfo != null && !listStaffAgencyWorkInfo.isEmpty()) {
+        		GenericValue staffAgencyWorkInfo = listStaffAgencyWorkInfo.get(0);
+        		returnResult.put("staffAgencyWorkId", staffAgencyWorkInfo.getString("staffAgencyWorkId"));
+        		returnResult.put("agencyWorkLeaderName", staffAgencyWorkInfo.getString("leaderName"));
+        		returnResult.put("agencyWorkAddress", staffAgencyWorkInfo.getString("address"));
+        		returnResult.put("agencyWorkPhone", staffAgencyWorkInfo.getString("phone"));
+        		returnResult.put("agencyWorkFax", staffAgencyWorkInfo.getString("fax"));
+        	}
+    		retSucc.put("staffCVInfo", returnResult);
         	
         }catch(Exception ex){
         	ex.printStackTrace();

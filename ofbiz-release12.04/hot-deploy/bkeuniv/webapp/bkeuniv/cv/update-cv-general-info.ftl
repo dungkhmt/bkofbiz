@@ -6,11 +6,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">${bkEunivUiLabelMap.CVUpdateInfo?if_exists}</h4>
             </div>
             <div class="modal-body">
             <form>
-                <div class="row">
+                <div class="row form-group">
                     <label for="academicRank" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVAcademicRank?if_exists}</label>
                     <div class="col-8 col-md-8">
                         <select id="academicRankId" class="form-control" style="width: 100%" type="text" width="1000">
@@ -23,13 +23,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row form-group">
                     <label for="academicRankYear" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVAcademicRankYear?if_exists}</label>
                     <div class="col-8 col-md-8">
                         <input type="number" class="form-control" id="academicRankYear" style="ime-mode: disabled" placeholder="yyyy" maxlength="4"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row form-group">
                     <label for="degreeId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVDegree?if_exists}</label>
                     <div class="col-8 col-md-8">
                         <select id="degreeId" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
@@ -42,16 +42,40 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row form-group">
                     <label for="academicRankYear" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVDegreeYear?if_exists}</label>
                     <div class="col-8 col-md-8">
                         <input type="number" class="form-control" id="degreeYear" style="ime-mode: disabled" placeholder="yyyy" maxlength="4"/>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row form-group">
                     <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVDutyPosition?if_exists}</label>
                     <div class="col-8 col-md-8">
                         <input type="text" class="form-control" id="duty" placeholder="Chức vụ">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="agencyWorkLeaderName" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEunivNameLeader?if_exists}</label>
+                    <div class="col-8 col-md-8">
+                        <input type="text" class="form-control" id="agencyWorkLeaderName" placeholder="Tên thủ trưởng cơ quan">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEunivCompanyAddress?if_exists}</label>
+                    <div class="col-8 col-md-8">
+                        <input type="text" class="form-control" id="agencyWorkAddress" placeholder="Địa chỉ cơ quan">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEnuivPhone?if_exists}</label>
+                    <div class="col-8 col-md-8">
+                        <input type="text" class="form-control" id="agencyWorkPhone" placeholder="Điện thoại cơ quan">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEnuivFax?if_exists}</label>
+                    <div class="col-8 col-md-8">
+                        <input type="text" class="form-control" id="agencyWorkFax" placeholder="Fax cơ quan">
                     </div>
                 </div>
             </div>
@@ -75,6 +99,11 @@
 			academicRankYear: '${staffInfo.staffCVInfo.academicRankYear?if_exists}', 
 			degreeYear: '${staffInfo.staffCVInfo.degreeYear?if_exists}',
 			duty: '${StringUtil.wrapString(staffInfo.staffCVInfo.duty?if_exists)}',
+            staffAgencyWorkId: '${StringUtil.wrapString(staffInfo.staffCVInfo.staffAgencyWorkId?if_exists)}',
+            agencyWorkLeaderName: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkLeaderName?if_exists)}',
+            agencyWorkAddress: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkAddress?if_exists)}',
+            agencyWorkPhone: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkPhone?if_exists)}',
+            agencyWorkFax: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkFax?if_exists)}',
 		}
 	</#if>
 
@@ -123,6 +152,10 @@
         	$('#academicRankYear').val(staff.academicRankYear);
         	$('#degreeYear').val(staff.degreeYear);
         	$('#duty').val(staff.duty);
+            $('#agencyWorkLeaderName').val(staff.agencyWorkLeaderName);
+            $('#agencyWorkAddress').val(staff.agencyWorkAddress);
+            $('#agencyWorkPhone').val(staff.agencyWorkPhone);
+            $('#agencyWorkFax').val(staff.agencyWorkFax);
         }
         
         function clearData () {
@@ -131,6 +164,10 @@
         	$('#academicRankYear').val('');
         	$('#degreeYear').val('');
         	$('#duty').val('');
+            $('#agencyWorkLeaderName').val('');
+            $('#agencyWorkAddress').val('');
+            $('#agencyWorkPhone').val('');
+            $('#agencyWorkFax').val('');
         }
         
         function getUserInfo () {
@@ -140,7 +177,12 @@
         		degreeId: $('#degreeId').val(),
         		academicRankYear: $('#academicRankYear').val(),
         		degreeYear: $('#degreeYear').val(),
-        		duty: $('#duty').val()
+        		duty: $('#duty').val(),
+                staffAgencyWorkId: staff.staffAgencyWorkId,
+                agencyWorkLeaderName: $('#agencyWorkLeaderName').val(),
+                agencyWorkAddress: $('#agencyWorkAddress').val(),
+                agencyWorkPhone: $('#agencyWorkPhone').val(),
+                agencyWorkFax: $('#agencyWorkFax').val()
         	}
         }
         
