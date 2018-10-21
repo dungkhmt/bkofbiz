@@ -1037,6 +1037,7 @@
                                     
                             <div style="width: 70%">
                                 <select class="form-control" style="width: 100%" id="researchprojectproposalid">
+                                    <option value=""></option>
                                     <#list projects.researchProjectProposals as prj>
                                         <#if prj?has_content>
                                             <#if prj.researchProjectProposalName?exists>

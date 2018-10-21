@@ -90,8 +90,8 @@
 
 <script>
 	
-	<#if staffInfo.staffCVInfo?has_content>
-		var staff = {
+	
+			var staff = {
 			staffId: '${StringUtil.wrapString(userLogin.userLoginId?if_exists)}',
 			staffName: '${StringUtil.wrapString(staffInfo.staffCVInfo.staffName?if_exists)}',
 			academicRankId: '${StringUtil.wrapString(staffInfo.staffCVInfo.academicRankId?if_exists)}',
@@ -105,7 +105,7 @@
             agencyWorkPhone: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkPhone?if_exists)}',
             agencyWorkFax: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkFax?if_exists)}',
 		}
-	</#if>
+	
 
     $(document).ready(function () {
         updateGeneralInfoObj.getInstance();

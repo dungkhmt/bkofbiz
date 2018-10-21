@@ -74,10 +74,15 @@ public class CiriculumVitaeService {
 		String academicRankId = (String) context.get("academicRankId");
 		String degreeId = (String) context.get("degreeId");
 
-		Long academicRankYear = Long.parseLong(String.valueOf(context.get("academicRankYear")));
+		Long academicRankYear = null;
+		Long degreeYear = null;
 
-		Long degreeYear = Long.parseLong(String.valueOf(context.get("degreeYear")));
-
+		try{
+			academicRankYear = Long.parseLong(String.valueOf(context.get("academicRankYear")));
+			degreeYear = Long.parseLong(String.valueOf(context.get("degreeYear")));
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 		String duty = (String) context.get("duty");
 
 		String staffAgencyWorkId = (String) context.get("staffAgencyWorkId");
@@ -89,11 +94,12 @@ public class CiriculumVitaeService {
 		try {
 			GenericValue staff = delegator.findOne("Staff", UtilMisc.toMap("staffId", staffId), false);
 			if (UtilValidate.isNotEmpty(staff)) {
-				staff.set("hocHamId", academicRankId);
-				staff.set("hocViId", degreeId);
-				staff.set("yearHocHam", academicRankYear);
-				staff.set("yearHocVi", degreeYear);
-				staff.set("chucVuHienNay", duty);
+				if(academicRankId != null) staff.set("hocHamId", academicRankId);
+				if(degreeId != null) staff.set("hocViId", degreeId);
+				if(academicRankYear != null)staff.set("yearHocHam", academicRankYear);
+				if(degreeYear != null)staff.set("yearHocVi", degreeYear);
+				if(duty != null) staff.set("chucVuHienNay", duty);
+				
 				delegator.createOrStore(staff);
 
 				returnResult.put("statusCode", "200");
