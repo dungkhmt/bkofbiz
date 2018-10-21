@@ -1154,7 +1154,7 @@ under the License.
 
     <target name="build-restart-debug" description="Restart in debugging mode OFBiz">
 		<antcall target="stop"></antcall>
-		<sleep seconds="4"/>
+		<sleep seconds="1"/>
 		<antcall target="build"></antcall>
 		<antcall target="start-debug"></antcall>
 	</target>

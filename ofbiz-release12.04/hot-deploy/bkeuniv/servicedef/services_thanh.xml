@@ -42,7 +42,7 @@
     <!-- services cv general information -->
     
     <service name="getCVInformation" engine="java" 
-    	location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience"
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
     	invoke="getCVInformation" >
     	<attribute name="staffId" mode="IN" type="String" optional="false"></attribute>
     	<attribute name="staffCVInfo" mode="OUT" type="Map" optional="false"></attribute>
@@ -69,6 +69,7 @@
     	<attribute name="academicRankYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="degreeYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="duty" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchPositionId" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
        	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
 	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>

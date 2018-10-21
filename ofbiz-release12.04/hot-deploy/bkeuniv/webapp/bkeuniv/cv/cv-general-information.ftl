@@ -116,14 +116,23 @@
                </#if>
             </div>
           </div>
-          
+           <div class="row form-group">
+            <label class="col-6 col-md-6 control-label">
+            	${bkEunivUiLabelMap.CVResearchPosition?if_exists}
+            </label>
+            <div class="col-6 col-md-6">
+              <#if staffInfo.staffCVInfo.researchPosition?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.researchPosition?if_exists)}
+               </#if>
+            </div>
+          </div>
           <div class="row form-group">
             <label class="col-6 col-md-6 control-label">
             	${bkEunivUiLabelMap.BkEunivNameLeader?if_exists}
             </label>
             <div class="col-6 col-md-6">
-              <#if staffInfo.staffCVInfo.duty?has_content>
-                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkLeaderName)}
+              <#if staffInfo.staffCVInfo.agencyWorkLeaderName?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkLeaderName?if_exists)}
                </#if>
             </div>
           </div>
@@ -133,8 +142,8 @@
             	${bkEunivUiLabelMap.BkEunivCompanyAddress?if_exists}
             </label>
             <div class="col-6 col-md-6">
-              <#if staffInfo.staffCVInfo.duty?has_content>
-                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkAddress)}
+              <#if staffInfo.staffCVInfo.agencyWorkAddress?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkAddress?if_exists)}
                </#if>
             </div>
           </div>
@@ -144,8 +153,8 @@
             	${bkEunivUiLabelMap.BkEnuivPhone?if_exists}
             </label>
             <div class="col-6 col-md-6">
-              <#if staffInfo.staffCVInfo.duty?has_content>
-                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkPhone)}
+              <#if staffInfo.staffCVInfo.agencyWorkPhone?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkPhone?if_exists)}
                </#if>
             </div>
           </div>
@@ -155,8 +164,8 @@
             	${bkEunivUiLabelMap.BkEnuivFax?if_exists}
             </label>
             <div class="col-6 col-md-6">
-              <#if staffInfo.staffCVInfo.duty?has_content>
-                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkFax)}
+              <#if staffInfo.staffCVInfo.agencyWorkFax?has_content>
+                  ${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkFax?if_exists)}
                </#if>
             </div>
           </div>

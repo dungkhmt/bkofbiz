@@ -55,6 +55,19 @@
                     </div>
                 </div>
                 <div class="row form-group">
+                    <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVResearchPosition?if_exists}</label>
+                    <div class="col-8 col-md-8">
+                        <select id="researchPositionId" class="form-control" style="width: 100%" type="text" width="1000">
+                            <option value=""></option>
+                            <#if listResearchDuty?has_content>
+                                <#list listResearchDuty as researchDuty>
+                                    <option value="${researchDuty.chucDanhNghienCuuId}">${researchDuty.chucDanhNghienCuuName}</option>
+                                </#list>
+                            </#if>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
                     <label for="agencyWorkLeaderName" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEunivNameLeader?if_exists}</label>
                     <div class="col-8 col-md-8">
                         <input type="text" class="form-control" id="agencyWorkLeaderName" placeholder="Tên thủ trưởng cơ quan">
@@ -99,6 +112,7 @@
 			academicRankYear: '${staffInfo.staffCVInfo.academicRankYear?if_exists}', 
 			degreeYear: '${staffInfo.staffCVInfo.degreeYear?if_exists}',
 			duty: '${StringUtil.wrapString(staffInfo.staffCVInfo.duty?if_exists)}',
+			researchPositionId: '${StringUtil.wrapString(staffInfo.staffCVInfo.researchPositionId?if_exists)}',
             staffAgencyWorkId: '${StringUtil.wrapString(staffInfo.staffCVInfo.staffAgencyWorkId?if_exists)}',
             agencyWorkLeaderName: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkLeaderName?if_exists)}',
             agencyWorkAddress: '${StringUtil.wrapString(staffInfo.staffCVInfo.agencyWorkAddress?if_exists)}',
@@ -109,6 +123,7 @@
 
     $(document).ready(function () {
         updateGeneralInfoObj.getInstance();
+        console.log(staff);
     });
 
     var updateGeneralInfoObj = (function () {
@@ -152,6 +167,7 @@
         	$('#academicRankYear').val(staff.academicRankYear);
         	$('#degreeYear').val(staff.degreeYear);
         	$('#duty').val(staff.duty);
+        	$('#researchPositionId').val(staff.researchPositionId);
             $('#agencyWorkLeaderName').val(staff.agencyWorkLeaderName);
             $('#agencyWorkAddress').val(staff.agencyWorkAddress);
             $('#agencyWorkPhone').val(staff.agencyWorkPhone);
@@ -178,6 +194,7 @@
         		academicRankYear: $('#academicRankYear').val(),
         		degreeYear: $('#degreeYear').val(),
         		duty: $('#duty').val(),
+        		researchPositionId: $('#researchPositionId').val(),
                 staffAgencyWorkId: staff.staffAgencyWorkId,
                 agencyWorkLeaderName: $('#agencyWorkLeaderName').val(),
                 agencyWorkAddress: $('#agencyWorkAddress').val(),

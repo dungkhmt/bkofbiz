@@ -479,7 +479,7 @@
 			    	<#assign stt=stt+1 />
 
 		        <fo:table-cell>
-		          <fo:block font-weight="bold">${uiLabelMap.BkEunivResearchSpecial}: ${BkEunivResearchSpecial}</fo:block>
+		          <fo:block font-weight="bold">${uiLabelMap.CVResearchPosition}: ${researchPosition?if_exists}</fo:block>
 		        </fo:table-cell>
 		      </fo:table-row>
 		      

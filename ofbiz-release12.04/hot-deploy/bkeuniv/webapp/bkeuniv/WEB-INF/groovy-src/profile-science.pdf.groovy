@@ -46,6 +46,7 @@ if(staffBasicInfo != null) {
 	context.departmentName = staffBasicInfo.getString("departmentName");
 	context.genderName = staffBasicInfo.getString("genderName");
 	context.duty = staffBasicInfo.getString("chucVuHienNay");
+	context.researchPosition = staffBasicInfo.getString("chucDanhNghienCuuName");
 	
 	List<GenericValue> listDivision = delegator.findList("DepartmentDetail", EntityCondition.makeCondition("departmentId", departmentId), null, null, null, false);
 	if(!UtilValidate.isEmpty(listDivision)) {

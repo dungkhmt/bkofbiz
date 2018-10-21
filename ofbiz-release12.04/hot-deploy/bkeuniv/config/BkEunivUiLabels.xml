@@ -994,6 +994,11 @@
 		<value xml:lang="en">Duty</value>
 		<value xml:lang="vi">Chức vụ hiện nay</value>
 	</property>
+	
+	<property key="CVResearchPosition">
+		<value xml:lang="en">Research position</value>
+		<value xml:lang="vi">Chức danh nghiên cứu</value>
+	</property>
 
 	<property key="CVUpdateInfo">
 		<value xml:lang="en">Update information</value>
