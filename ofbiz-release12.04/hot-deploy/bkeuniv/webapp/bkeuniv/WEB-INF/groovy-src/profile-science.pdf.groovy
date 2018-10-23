@@ -102,3 +102,20 @@ List<GenericValue> listForeignLanguage = delegator.findList("ForeignLanguageStaf
 
 context.listForeignLanguage = listForeignLanguage;
 
+
+/* get list subject for phd student */
+
+List<EntityCondition> listThesisSubjectCond = FastList.newInstance();
+
+listThesisSubjectCond.add(EntityCondition.makeCondition(EntityFunction.UPPER_FIELD("staffId"), EntityOperator.EQUALS, EntityFunction.UPPER(userLoginId)));
+listThesisSubjectCond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.EQUALS, null));
+
+EntityCondition thesisSubjectPhdCond = EntityCondition.makeCondition(listThesisSubjectCond, EntityOperator.AND);
+
+List<GenericValue> listThesisSubjects = delegator.findList("ThesisSubjectView", thesisSubjectPhdCond, null, null, null, false);
+
+
+if(UtilValidate.isNotEmpty(listThesisSubjects) && !listThesisSubjects.isEmpty()) {
+	context.listThesisSubjects = listThesisSubjects;
+	println(listThesisSubjects);
+}

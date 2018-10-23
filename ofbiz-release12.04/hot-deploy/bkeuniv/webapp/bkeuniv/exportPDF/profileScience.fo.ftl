@@ -139,7 +139,7 @@
 		  	<fo:table-column column-width="proportional-column-width(30)"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
+					
 		        <fo:table-cell>
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
@@ -166,7 +166,7 @@
 						
 			<fo:table-body>
 				<fo:table-row border-bottom-style="dotted" height="20pt" >
-					//STT
+				
 					<fo:table-cell >
 						<fo:block font-weight="bold">${stt}.</fo:block>
 					</fo:table-cell>
@@ -176,7 +176,7 @@
 						<fo:block>${uiLabelMap.BkEunivBirthday}: ${BkEunivBirthday}</fo:block>
 					</fo:table-cell>
 
-					//STT
+				
 					<fo:table-cell>
 						<fo:block font-weight="bold">${stt}.</fo:block>
 					</fo:table-cell>
@@ -188,7 +188,7 @@
 				</fo:table-row>
 					
 				<fo:table-row border-bottom-style="dotted" height="20pt">
-					//STT
+				
 					<fo:table-cell>
 						<fo:block font-weight="bold">${stt}.</fo:block>
 					</fo:table-cell>
@@ -232,7 +232,7 @@
 		  	<fo:table-column column-width="proportional-column-width(30)"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
+					
 		        <fo:table-cell>
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
@@ -287,7 +287,7 @@
 											
 											<fo:table-body>
 												<fo:table-row>
-													//STT
+												
 													<fo:table-cell>
 														<fo:block font-size="14pt" font-family="wingdings" >&#254;</fo:block>
 													</fo:table-cell>
@@ -300,7 +300,7 @@
 										
 										<fo:table-body>
 											<fo:table-row>
-												//STT
+											
 												<fo:table-cell>
 													<fo:block font-size="14pt" font-family="wingdings" >&#111;</fo:block>
 												</fo:table-cell>
@@ -317,7 +317,7 @@
 												
 												<fo:table-body>
 													<fo:table-row>
-														//STT
+													
 														<fo:table-cell>
 															<fo:block font-size="14pt" font-family="wingdings" >&#254;</fo:block>
 														</fo:table-cell>
@@ -330,7 +330,7 @@
 											
 											<fo:table-body>
 												<fo:table-row>
-													//STT
+												
 													<fo:table-cell>
 														<fo:block font-size="14pt" font-family="wingdings" >&#111;</fo:block>
 													</fo:table-cell>
@@ -451,7 +451,7 @@
 						<fo:table-column column-width="proportional-column-width(30)"/>
 						<fo:table-body>
 							<fo:table-row>
-								//STT
+							
 								<fo:table-cell />
 
 								<fo:table-cell>
@@ -472,7 +472,7 @@
 		  	<fo:table-column column-width="proportional-column-width(30)"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
+					
 		        <fo:table-cell>
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
@@ -484,7 +484,7 @@
 		      </fo:table-row>
 		      
 		       <fo:table-row>
-						//STT
+					
 		        <fo:table-cell />
 		        <fo:table-cell padding-top="5px">
 		          <fo:block font-weight="bold">${uiLabelMap.BkEunivCurrentPosition}: ${duty?if_exists}</fo:block>
@@ -504,7 +504,7 @@
 		  	<fo:table-column column-width="proportional-column-width(30)"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
+					
 		        <fo:table-cell>
 			      	<fo:block font-weight="bold">${stt}.</fo:block>
 			    	</fo:table-cell>
@@ -535,7 +535,7 @@
 						
 			<fo:table-body>
 				<fo:table-row height="20pt" >
-				//STT
+			
 						<fo:table-cell />
 						<fo:table-cell number-columns-spanned ="5" padding-top="3px" >
 							<fo:block>${uiLabelMap.BkEunivCompanyName}: ${departmentName?if_exists} - ${facultyName?if_exists} - ${universityName?if_exists}	</fo:block>
@@ -667,76 +667,87 @@
     
     
       
-      <fo:table-row>
+      <fo:table-row >
         <fo:table-cell height="20pt" display-align="center" >
           
-          //Full name
           <fo:table table-layout="fixed">
           	<fo:table-column column-width="proportional-column-width(1)"/>
           	<fo:table-column column-width="proportional-column-width(1)"/>
-		  	<fo:table-column column-width="proportional-column-width(30)"/>
-		    <fo:table-body>
-		      <fo:table-row>
-						//STT
-		       <fo:table-cell />
-		        <fo:table-cell>
-			      	<fo:block ><#if indexS??>${indexS}</#if>.</fo:block>
-			    	</fo:table-cell>
+						<fo:table-column column-width="proportional-column-width(1)"/>
+          	<fo:table-column column-width="proportional-column-width(1)"/>
+		  			<fo:table-column column-width="proportional-column-width(30)"/>
+		    	<fo:table-body >
+		      	<fo:table-row >
+					
+		        	<fo:table-cell padding-top="10px" padding-bottom="10pt">
+			      		<fo:block font-weight="bold"><#if indexS??>${indexS}</#if>.</fo:block>
+			    		</fo:table-cell>
 
-		        <fo:table-cell >
-		          <fo:block >${Information1}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
+		        	<fo:table-cell padding-top="10px" padding-bottom="10pt" number-columns-spanned ="4">
+		          	<fo:block font-weight="bold">${Information1}</fo:block>
+		        	</fo:table-cell>
+
+		      	</fo:table-row>
 		      
-		      <fo:table-row>
-						//STT
-		       <fo:table-cell />
-		       <fo:table-cell />
+		      	<fo:table-row>
+					
+		       		<fo:table-cell padding-bottom="10pt"/>
 		       
-		        <fo:table-cell >
-		          <fo:block >${Information2}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
+		       	 	<fo:table-cell font-weight="bold" padding-bottom="10pt" number-columns-spanned ="4">
+		          	<fo:block >${Information2}</fo:block>
+		        	</fo:table-cell>
+
+		      	</fo:table-row>
 		      
-		      <fo:table-row>
-						//STT
-		       <fo:table-cell />
-		        <fo:table-cell />
+		      	<fo:table-row>
+		       		<fo:table-cell padding-bottom="10pt"/>
 		        
-		        <fo:table-cell >
-		          <fo:block >${Information3}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
+		        	<fo:table-cell font-weight="bold" padding-bottom="10pt" number-columns-spanned ="4">
+		          	<fo:block >${Information3}</fo:block>
+		        	</fo:table-cell>
+				
+		      	</fo:table-row>
+
+					<#if listThesisSubjects?has_content>
+						<#list listThesisSubjects as thesis>
+							<fo:table-row padding-right="10px">
+								<fo:table-cell padding-bottom="5pt"/>
+		        		<fo:table-cell padding-bottom="5pt"/>
+		  
+		        		<fo:table-cell padding-bottom="5pt" number-columns-spanned ="3">
+		          		<fo:block>- ${thesis.thesisSubjectPhDMasterName?if_exists} (${thesis.educationLevelName?if_exists})</fo:block>
+		        		</fo:table-cell>
+
+		      		</fo:table-row>
+						</#list>
+					</#if>
 		      
-		       <fo:table-row>
-						//STT
-		       <fo:table-cell />
-		        <fo:table-cell />
-		        
-		        <fo:table-cell >
-		          <fo:block >${Information4}</fo:block>
-		        </fo:table-cell>
-		      </fo:table-row>
-		      
+		       	<fo:table-row>
+							<fo:table-cell padding-top="10pt"/>
+		        	<fo:table-cell padding-top="10pt" number-columns-spanned ="4">
+		          	<fo:block >${Information4}</fo:block>
+		        	</fo:table-cell>
+		      	</fo:table-row>
 		       
-		    </fo:table-body>
+		   		</fo:table-body>
 		  </fo:table>
-        </fo:table-cell>
+        
+			</fo:table-cell>
       </fo:table-row>
       
-      <fo:table-row>
+      <fo:table-row >
         <fo:table-cell height="20pt" display-align="center" >
           
           //Full name
           <fo:table table-layout="fixed">
-          	<fo:table-column column-width="proportional-column-width(15)"/>
-		  	<fo:table-column column-width="proportional-column-width(15)"/>
+          	<fo:table-column column-width="65%"/>
+		  			<fo:table-column column-width="35%"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
-		        <fo:table-cell />
+					
+		        <fo:table-cell padding-top="30pt"/>
 
-		        <fo:table-cell >
+		        <fo:table-cell padding-top="30pt">
 		          <fo:block >${Information5}</fo:block>
 		        </fo:table-cell>
 		      </fo:table-row>
@@ -751,12 +762,12 @@
           
           //Full name
           <fo:table table-layout="fixed">
-          	<fo:table-column column-width="proportional-column-width(17)"/>
-		  	<fo:table-column column-width="proportional-column-width(13)"/>
+          	<fo:table-column column-width="73%"/>
+		  			<fo:table-column column-width="27%"/>
 		    <fo:table-body>
 		      
 		      <fo:table-row>
-						//STT
+					
 		        <fo:table-cell />
 
 		        <fo:table-cell >
@@ -774,11 +785,11 @@
           
           //Full name
           <fo:table table-layout="fixed">
-          	<fo:table-column column-width="proportional-column-width(16)"/>
-		  	<fo:table-column column-width="proportional-column-width(14)"/>
+          	<fo:table-column column-width="69%"/>
+		  			<fo:table-column column-width="31%"/>
 		    <fo:table-body>
 		      <fo:table-row>
-						//STT
+					
 		        <fo:table-cell />
 
 		        <fo:table-cell >

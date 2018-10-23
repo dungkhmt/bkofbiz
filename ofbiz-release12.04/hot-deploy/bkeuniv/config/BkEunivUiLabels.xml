@@ -656,8 +656,7 @@
 
 	<property key="BkEunivInformation4">
 		<value xml:lang="en">I declare that all the aboves is correct</value>
-		<value xml:lang="vi">Tôi xin cam đoan những thông tin được ghi ở trên
-			là hoàn toàn chính xác.</value>
+		<value xml:lang="vi">Tôi xin cam đoan những thông tin được ghi ở trên là hoàn toàn chính xác.</value>
 	</property>
 
 	<property key="BkEunivInformation5">
