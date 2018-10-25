@@ -1107,5 +1107,30 @@
 		<value xml:lang="vi">Viết</value>
 	</property>
 	
+	<property key="BkEunivRecentResearchDirection">
+		<value xml:lang="en">Recent research direction</value>
+		<value xml:lang="vi">Hướng nghiên cứu</value>
+	</property>
+	
+	<property key="BkEunivCreateRecentResearchDirection">
+		<value xml:lang="en">Create recent research direction</value>
+		<value xml:lang="vi">Thêm mới hướng nghiên cứu</value>
+	</property>
+	
+	<property key="BkEunivUpdateRecentResearchDirection">
+		<value xml:lang="en">Update recent research direction</value>
+		<value xml:lang="vi">Cập nhật hướng nghiên cứu</value>
+	</property>
+	
+	<property key="BkDeleteRecentResearchDirection">
+		<value xml:lang="en">Delete recent research direction</value>
+		<value xml:lang="vi">Xóa hướng nghiên cứu</value>
+	</property>
+	
+	<property key="BkYearOfRecentResearchDirection">
+		<value xml:lang="en">Year of recent research direction</value>
+		<value xml:lang="vi">Năm bắt đầu nghiên cứu</value>
+	</property>
+	
 	
 </resource>

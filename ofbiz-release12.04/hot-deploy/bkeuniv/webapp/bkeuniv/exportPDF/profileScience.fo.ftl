@@ -698,6 +698,20 @@
 		        	</fo:table-cell>
 
 		      	</fo:table-row>
+
+					<#if listRecentResearchDirection?has_content>
+						<#list listRecentResearchDirection as researchDirection>
+							<fo:table-row padding-right="10px">
+								<fo:table-cell padding-bottom="5pt"/>
+		        		<fo:table-cell padding-bottom="5pt"/>
+		  
+		        		<fo:table-cell padding-bottom="5pt" number-columns-spanned ="3">
+		          		<fo:block>- ${researchDirection.keywords?if_exists} (${researchDirection.startYear?if_exists})</fo:block>
+		        		</fo:table-cell>
+
+		      		</fo:table-row>
+						</#list>
+					</#if>
 		      
 		      	<fo:table-row>
 		       		<fo:table-cell padding-bottom="10pt"/>

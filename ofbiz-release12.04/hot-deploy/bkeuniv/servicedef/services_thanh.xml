@@ -165,4 +165,34 @@
     	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
     </service>
     
+    <!-- service recent research direction -->
+    
+    <service name="jqGetListRecentResearchDirection" engine="java" invoke="jqGetListRecentResearchDirection" location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
+   	
+   	<service name="createRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="createRecentResearchDirection" >
+    	<attribute name="keywords" mode="IN" type="String" optional="false"></attribute>
+       	<attribute name="startYear" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updateRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="updateRecentResearchDirection" >
+    	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="keywords" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="startYear" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="deleteRecentResearchDirection" >
+    	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
+    </service>
+    
 </services>

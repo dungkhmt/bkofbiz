@@ -1261,6 +1261,31 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="recent-research-direction">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-recent-research-direction"/>
+	</request-map>
+	
+	<request-map uri="create-recent-research-direction">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createRecentResearchDirection"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-recent-research-direction">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateRecentResearchDirection"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-recent-research-direction">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteRecentResearchDirection"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 	
 	
     <!-- View Mappings -->
@@ -1329,4 +1354,5 @@
 	<view-map name="view-form-edit-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormEditPaperDeclaration"/>
 	<view-map name="view-list-phd-student-supervision" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListPhDStudent"/>
 	<view-map name="view-cv-thesis-subject-for-student" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTheSisSubjectForStudent"/>
+	<view-map name="view-recent-research-direction" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageRecentResearchDirection"/>
 </site-conf>

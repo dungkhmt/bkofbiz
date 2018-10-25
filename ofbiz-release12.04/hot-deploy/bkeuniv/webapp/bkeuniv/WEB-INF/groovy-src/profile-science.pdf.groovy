@@ -119,3 +119,14 @@ if(UtilValidate.isNotEmpty(listThesisSubjects) && !listThesisSubjects.isEmpty())
 	context.listThesisSubjects = listThesisSubjects;
 	println(listThesisSubjects);
 }
+
+/* get list recent research direction */
+
+List<EntityCondition> listRecentResearchDirectionCond = FastList.newInstance();
+
+List<GenericValue> listRecentResearchDirection = delegator.findList("RecentResearchDirection", thesisSubjectPhdCond, null, null, null, false);
+
+if(UtilValidate.isNotEmpty(listRecentResearchDirection) && !listRecentResearchDirection.isEmpty()) {
+	context.listRecentResearchDirection = listRecentResearchDirection;
+	println(listRecentResearchDirection);
+}
