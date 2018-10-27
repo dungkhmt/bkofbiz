@@ -1622,12 +1622,12 @@
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<property-map resource="BkEunivProfileLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
-					
 				<service service-name="getCVInformation" result-map="staffInfo">
 					<field-map field-name="staffId" value="${userLogin.userLoginId}"/>
 				</service>
 				<service service-name="getListAcademicRank" result-map="academicRank"></service>
 				<service service-name="getListDegree" result-map="degree"></service>
+				<entity-condition list="listResearchDuty" entity-name="ChucDanhNghienCuu"></entity-condition>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -1688,6 +1688,31 @@
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/thesissubject/list-thesis-subject.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageRecentResearchDirection">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/recentresearchdirection/recent-research-direction.ftl" />
 							</html>
 						</platform-specific>
 

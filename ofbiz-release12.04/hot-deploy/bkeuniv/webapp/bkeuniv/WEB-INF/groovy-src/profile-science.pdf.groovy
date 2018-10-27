@@ -46,6 +46,7 @@ if(staffBasicInfo != null) {
 	context.departmentName = staffBasicInfo.getString("departmentName");
 	context.genderName = staffBasicInfo.getString("genderName");
 	context.duty = staffBasicInfo.getString("chucVuHienNay");
+	context.researchPosition = staffBasicInfo.getString("chucDanhNghienCuuName");
 	
 	List<GenericValue> listDivision = delegator.findList("DepartmentDetail", EntityCondition.makeCondition("departmentId", departmentId), null, null, null, false);
 	if(!UtilValidate.isEmpty(listDivision)) {
@@ -101,3 +102,31 @@ List<GenericValue> listForeignLanguage = delegator.findList("ForeignLanguageStaf
 
 context.listForeignLanguage = listForeignLanguage;
 
+
+/* get list subject for phd student */
+
+List<EntityCondition> listThesisSubjectCond = FastList.newInstance();
+
+listThesisSubjectCond.add(EntityCondition.makeCondition(EntityFunction.UPPER_FIELD("staffId"), EntityOperator.EQUALS, EntityFunction.UPPER(userLoginId)));
+listThesisSubjectCond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.EQUALS, null));
+
+EntityCondition thesisSubjectPhdCond = EntityCondition.makeCondition(listThesisSubjectCond, EntityOperator.AND);
+
+List<GenericValue> listThesisSubjects = delegator.findList("ThesisSubjectView", thesisSubjectPhdCond, null, null, null, false);
+
+
+if(UtilValidate.isNotEmpty(listThesisSubjects) && !listThesisSubjects.isEmpty()) {
+	context.listThesisSubjects = listThesisSubjects;
+	println(listThesisSubjects);
+}
+
+/* get list recent research direction */
+
+List<EntityCondition> listRecentResearchDirectionCond = FastList.newInstance();
+
+List<GenericValue> listRecentResearchDirection = delegator.findList("RecentResearchDirection", thesisSubjectPhdCond, null, null, null, false);
+
+if(UtilValidate.isNotEmpty(listRecentResearchDirection) && !listRecentResearchDirection.isEmpty()) {
+	context.listRecentResearchDirection = listRecentResearchDirection;
+	println(listRecentResearchDirection);
+}
