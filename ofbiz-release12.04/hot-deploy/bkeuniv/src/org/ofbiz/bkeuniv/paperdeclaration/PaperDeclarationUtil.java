@@ -62,6 +62,42 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			Q = 16, R = 17, S = 18, T = 19, U = 20, V = 21, W = 22, X = 23,
 			Y = 24, Z = 25;
 
+	public static void removePaperCV(Delegator delegator, String staffPaperDeclarationId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffPaperDeclarationId", EntityOperator.EQUALS,staffPaperDeclarationId));
+			List<GenericValue> lst = delegator.findList("CVPaper", 
+					EntityCondition.makeCondition(conds), null,null,null, false);
+			for(GenericValue p: lst){
+				delegator.removeValue(p);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	public static void addUpdatePaperCV(Delegator delegator, String staffPaperDeclarationId, long sequenceInCVPaper){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffPaperDeclarationId", EntityOperator.EQUALS,staffPaperDeclarationId));
+			List<GenericValue> lst = delegator.findList("CVPaper", 
+					EntityCondition.makeCondition(conds), null,null,null, false);
+			if(lst == null || lst.size() == 0){
+				String cvPaperId = delegator.getNextSeqId("CVPaper");
+				GenericValue cvPaper = delegator.makeValue("CVPaper");
+				cvPaper.put("cvPaperId", cvPaperId);
+				cvPaper.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				cvPaper.put("sequenceInCVPaper", sequenceInCVPaper);
+				delegator.create(cvPaper);
+			}else{
+				for(GenericValue cvPaper: lst){
+					cvPaper.put("sequenceInCVPaper", sequenceInCVPaper);
+					delegator.store(cvPaper);
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	public static List<GenericValue> getPapersOfStaff(Delegator delegator,
 			String staffId) {
 		try {

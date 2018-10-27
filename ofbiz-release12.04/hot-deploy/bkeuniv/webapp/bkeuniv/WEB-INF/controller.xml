@@ -67,11 +67,36 @@
         <response name="error" type="view" value="login"/>
     </request-map> -->
     
+     <request-map uri="update-cv-papers">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="updateCVPapers"/>
+           <response name="AttachementSuccess" type="view" value="UPDATECVPAPERS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>
+    
+     <request-map uri="update-cv-projects">
+            <security https="true" auth="true"/>
+           <event type="java" path="org.ofbiz.bkeuniv.projectdeclaration.ResearchProjectProposal" 
+           invoke="updateCVProjects"/>
+           <response name="AttachementSuccess" type="view" value="UPDATECVPROJECTS"/>
+            <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
+    </request-map>
+
+    <request-map uri="recent-publications-new">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-recent-publications-new"></response>	
+	</request-map>
+	
     <request-map uri="recent-publications">
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="view-recent-publications"></response>	
 	</request-map>
 	
+    <request-map uri="recent-projects-new">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-recent-projects-new"></response>	
+	</request-map>
     <request-map uri="recent-projects">
 		<security https="true" auth="true"/>
 		<response name="success" type="view" value="view-recent-projects"></response>	
@@ -1284,8 +1309,11 @@
     <view-map name="view-manage-education-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#educationProgress"/>
     <view-map name="view-paper-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperDeclaration"/>
     
+    <view-map name="view-recent-publications-new" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentPublicationNew"/>
+
     <view-map name="view-recent-publications" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentPublication"/>
     <view-map name="view-recent-projects" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentProjects"/>
+    <view-map name="view-recent-projects-new" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#paperCVRecentProjectsNew"/>
     
     <view-map name="profile-science-PDF" type="screenfop" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDF" content-type="application/pdf" encoding="none"/>
     <view-map name="profile-science-setting" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#profilePDFSetting"/>

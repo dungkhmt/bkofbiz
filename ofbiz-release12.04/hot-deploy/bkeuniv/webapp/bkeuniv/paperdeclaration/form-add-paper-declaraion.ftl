@@ -519,7 +519,9 @@
                         '});'+
                     '<\/script>';
                     
-            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveMember(event)">&#xe173;</button>'
+            //var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveMember(event)">&#xe173;</button>'
+            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveMember(event)"></button>'
+            
             var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
             
             $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
@@ -650,7 +652,9 @@
                             '});'+
                         '<\/script>';
                 
-            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveExternalMember(event)">&#xe173;</button>'
+            //var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveExternalMember(event)">&#xe173;</button>'
+            var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveExternalMember(event)"></button>'
+            
             var idSequence = 'sequence-external-member-'+Math.floor((Math.random() * 1000000));
             
             $('#table-external-members-paper > tbody:last-child').append('<tr> <td>'+(externalMembers.length+1)+'</td> <td><input type="text" value="" /></td> <td><input type="text" value="" /></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select id="'+idSequence+'" value="'+(externalMembers.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
