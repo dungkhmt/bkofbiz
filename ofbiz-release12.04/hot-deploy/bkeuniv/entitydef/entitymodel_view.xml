@@ -245,12 +245,14 @@
 		<member-entity entity-alias="HV" entity-name="HocVi"></member-entity>
 		<member-entity entity-alias="DE" entity-name="Department"></member-entity>
 		<member-entity entity-alias="GEN" entity-name="Gender"></member-entity>
+		<member-entity entity-alias="CDNC" entity-name="ChucDanhNghienCuu"></member-entity>
 		
 		<alias-all entity-alias="STF"></alias-all>
 		<alias name="hocHamName" entity-alias="HH"></alias>
 		<alias name="hocViName" entity-alias="HV"></alias>
 		<alias name="departmentName" entity-alias="DE"></alias>
 		<alias name="genderName" entity-alias="GEN"></alias>
+		<alias name="chucDanhNghienCuuName" entity-alias="CDNC"></alias>
 		
 		<view-link entity-alias="STF" rel-entity-alias="HH" rel-optional="true">
 			<key-map field-name="hocHamId" rel-field-name="hocHamId" />
@@ -260,12 +262,16 @@
 			<key-map field-name="hocViId" rel-field-name="hocViId"/>
 		</view-link>
 		
-		<view-link entity-alias="STF" rel-entity-alias="DE">
+		<view-link entity-alias="STF" rel-entity-alias="DE" rel-optional="true">
 			<key-map field-name="departmentId"/>
 		</view-link>
 		
-		<view-link entity-alias="STF" rel-entity-alias="GEN">
+		<view-link entity-alias="STF" rel-entity-alias="GEN" rel-optional="true">
 			<key-map field-name="staffGenderId" rel-field-name="genderId"/>
+		</view-link>
+		
+		<view-link entity-alias="STF" rel-entity-alias="CDNC" rel-optional="true">
+			<key-map field-name="chucDanhNghienCuuId" rel-field-name="chucDanhNghienCuuId"/>
 		</view-link>
 		
 	</view-entity>

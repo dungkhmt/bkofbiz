@@ -171,53 +171,5 @@ public class ScientificServiceExperience {
         return retSucc;
 	}
 	
-	@SuppressWarnings("unused")
-	public static Map<String, Object> getCVInformation(DispatchContext ctx, Map<String, ? extends Object> context) {
-        LocalDispatcher dispatcher = ctx.getDispatcher();
-		Map<String,Object> retSucc = ServiceUtil.returnSuccess();
-		Delegator delegator = ctx.getDelegator();
-		
-		String staffId = (String) context.get("staffId");
-        Map<String, Object> returnResult = FastMap.newInstance();
-		
-        try{
-        	EntityCondition idCond = EntityCondition.makeCondition("staffId", staffId);
-        	List<GenericValue> listResult = delegator.findList("StaffGenaralInformation", idCond, null, null, null, false);
-        	if(!listResult.isEmpty()) {
-        		GenericValue result = listResult.get(0);
-        		returnResult.put("academicName", result.get("hocHamName"));
-        		returnResult.put("academicRankId", result.get("hocHamId"));
-        		returnResult.put("degreeId", result.get("hocViId"));
-        		returnResult.put("degreeName", result.get("hocViName"));
-        		returnResult.put("departmentName", result.get("departmentName"));
-        		returnResult.put("staffName", result.get("staffName"));
-        		returnResult.put("academicRankYear", result.get("yearHocHam"));
-        		returnResult.put("degreeYear", result.get("yearHocVi"));
-        		returnResult.put("duty", result.get("chucVuHienNay"));
-        	}
-        	
-        	List<EntityCondition> listAgencyWorkCond = FastList.newInstance();
-        	listAgencyWorkCond.add(idCond);
-        	listAgencyWorkCond.add(EntityCondition.makeCondition("thruDate", EntityOperator.EQUALS, null));
-        	List<GenericValue> listStaffAgencyWorkInfo = delegator.findList("StaffAgencyWork", EntityCondition.makeCondition(listAgencyWorkCond, EntityOperator.AND), null, null, null, false);
-        	
-        	if(listStaffAgencyWorkInfo != null && !listStaffAgencyWorkInfo.isEmpty()) {
-        		GenericValue staffAgencyWorkInfo = listStaffAgencyWorkInfo.get(0);
-        		returnResult.put("staffAgencyWorkId", staffAgencyWorkInfo.getString("staffAgencyWorkId"));
-        		returnResult.put("agencyWorkLeaderName", staffAgencyWorkInfo.getString("leaderName"));
-        		returnResult.put("agencyWorkAddress", staffAgencyWorkInfo.getString("address"));
-        		returnResult.put("agencyWorkPhone", staffAgencyWorkInfo.getString("phone"));
-        		returnResult.put("agencyWorkFax", staffAgencyWorkInfo.getString("fax"));
-        	}
-    		retSucc.put("staffCVInfo", returnResult);
-        	
-        }catch(Exception ex){
-        	ex.printStackTrace();
-        	return ServiceUtil.returnError(ex.getMessage());
-        }
-        return retSucc;
-	}
-	
-	
 	
 }
