@@ -8,7 +8,7 @@
 	<#assign BkEunivYearAcademic="" />
 	<#assign BkEunivDegree="" />
 	<#assign BkEunivYearDegree="" />
-	<#assign ResearchDomain=uiLabelMap.BkEunivRecentResearchDomain />
+	<#assign ResearchDomain=uiLabelMap.BkEunivResearchDomain />
 	<#assign NatureScience="Khoa hoc va tu nhien"/>
 	<#assign ScienceAndTechnology="Khoa hoc Ky thuat va Cong nghe"/>
 	<#assign MedicalScience="Khoa hoc Y duoc"/>
@@ -78,7 +78,7 @@
 	<#assign TimeConstruction = uiLabelMap.BkEunivTimeConstruction /> 
 	<#assign Topic = uiLabelMap.BkEunivRecent5YearProjects />
 	<#assign SubTopic1 = uiLabelMap.BkEunivTopic1  />
-	<#assign SubTopic2 = "Cac de tai, du an, nhiem vu KH-CN tham gia" />
+	<#assign SubTopic2 = uiLabelMap.BkEunivTopic2 />
 	<#assign TimeStart = uiLabelMap.FromTimeToTime/>
 	<#assign Program = uiLabelMap.BkEunivProgram />
 	<#assign Status1 = uiLabelMap.BkEunivStatus1 />

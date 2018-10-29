@@ -68,7 +68,7 @@
 				</fo:table-row>	
 			
 				<#assign index = 0>
-				<#list resultCV.cv.patents as pt>
+				<#list listPatents as pt>
 					<#assign index = index + 1>
 					<fo:table-row height="20pt" >
 				
