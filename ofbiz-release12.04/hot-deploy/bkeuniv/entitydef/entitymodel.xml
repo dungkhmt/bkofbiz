@@ -624,9 +624,13 @@
 		<alias-all entity-alias="PPR"></alias-all>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
 		<alias name="roleTypeName" field="roleTypeName" entity-alias="RT"></alias>
-		
+		<alias name="projectCategoryName" field="projectCategoryName" entity-alias="RPPV"></alias>
+		<alias name="totalBudget" field="totalBudget" entity-alias="RPPV"></alias>
+		<alias name="researchProjectProposalCode" field="researchProjectProposalCode" entity-alias="RPPV"></alias>
 		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPPV"></alias>
-		
+		<alias name="statusName" field="statusName" entity-alias="RPPV"></alias>
+		<alias name="startDate" field="startDate" entity-alias="RPPV"></alias>
+		<alias name="endDate" field="endDate" entity-alias="RPPV"></alias>
 		<view-link rel-entity-alias="ST" entity-alias="PPR" rel-optional="true">
 			<key-map  rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
@@ -976,7 +980,7 @@
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
 		<field name="statusId" type="id-ne"></field>
-		
+    	
 		<field name="hocHamId" type="id-ne"></field>
 		<field name="yearHocHam" type="numeric"></field>
 		<field name="hocViId" type="id-ne"></field>
@@ -1046,6 +1050,7 @@
 			<condition-list combine="and">
 				<condition-list>
 					<condition-expr field-name="thruDate" entity-alias="ST" value=""/>
+					<condition-expr field-name="staffUserLoginId" entity-alias="ST" value="" operator="not-equals"/>
 				</condition-list>
 			</condition-list>
 		</entity-condition>
@@ -1249,6 +1254,8 @@
 		<field name="thesisName" type="very-long"></field>
 		<field name="coSupervion" type="id-ne"><description>Y/N</description></field>
 		<field name="graduateYear" type="numeric"></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
 		
 		<prim-key field="phDSupervisionId"/>
 		<relation rel-entity-name="Staff" type="one">
@@ -1267,6 +1274,9 @@
 		<field name="thesisSubjectPhDMasterName" type="very-long"></field>
 		<field name="description" type="very-long"></field>
 		<field name="staffId" type="id-vlong"></field>
+		<field name="educationLevelId" type="id-ne"></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="thesisSubjectPhDMasterId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
@@ -1595,6 +1605,15 @@
 		<field name="foreignLanguageCatalogName" type="very-long"></field>
 		<prim-key field="foreignLanguageCatalogId"/>
 	</entity>
+	<view-entity entity-name="ForeignLanguageStaffView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="FL" entity-name="ForeignLanguage"></member-entity>
+		<member-entity entity-alias="FLC" entity-name="ForeignLanguageCatalog"></member-entity>
+		<alias-all entity-alias="FL"></alias-all>
+		<alias name="foreignLanguageCatalogName" entity-alias="FLC"></alias>
+		<view-link rel-entity-alias="FLC" entity-alias="FL">
+			<key-map field-name="foreignLanguageCatalogId" rel-field-name="foreignLanguageCatalogId"/>
+		</view-link>
+	</view-entity>
 	
 	<entity entity-name="AppliedResearchProject" package-name="org.ofbiz.bkeuniv">
 		<field name="appliedResearchProjectId" type="id-ne"></field>
@@ -1624,6 +1643,7 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="description" type="very-long"></field>
 		<field name="quantity" type="numeric"></field>
+		<field name="descriptionDetail" type="very-long"></field>
 		<prim-key field="scientificServiceExperienceId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
@@ -1767,6 +1787,27 @@
       </view-link>
     </view-entity>
     
+    <entity entity-name="StaffAgencyWork" package-name="org.ofbiz.bkeuniv">
+    	<field name="staffAgencyWorkId" type="id-ne"></field>
+    	<field name="staffId" type="id-vlong"></field> 
+    	<field name="leaderName" type="name"></field>
+    	<field name="address" type="id-vlong"></field>
+    	<field name="phone" type="tel-number"></field>
+    	<field name="fax" type="tel-number"></field>
+    	<field name="startDate" type="date-time"></field>
+    	<field name="thruDate" type="date-time"></field>
+    	<prim-key field="staffAgencyWorkId"/>
+    </entity> 
     
+    <entity entity-name="RecentResearchDirection" package-name="org.ofbiz.bkeuniv">
+    	<field name="recentResearchDirectionId" type="id-ne"></field>
+    	<field name="staffId" type="id-vlong"></field> 
+    	<field name="keywords" type="very-long"></field>
+    	<field name="startYear" type="numeric"></field>
+    	<field name="description" type="very-long"></field>
+    	<field name="startDate" type="date-time"></field>
+    	<field name="thruDate" type="date-time"></field>
+    	<prim-key field="recentResearchDirectionId"/>
+    </entity> 
     
 </entitymodel>

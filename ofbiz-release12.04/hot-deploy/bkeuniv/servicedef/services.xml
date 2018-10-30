@@ -50,6 +50,7 @@
    		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
    		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
    		<attribute name="listIterator" mode="OUT" type="org.ofbiz.entity.util.EntityListIterator" optional="true"></attribute>
+   		<attribute name="extend" mode="OUT" type="Map" optional="true"></attribute>
    </service>
    
    <service name="jqxGetListInterfaceList" engine="interface" >
@@ -60,6 +61,7 @@
    		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
    		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
    		<attribute name="listIterator" mode="OUT" type="List" optional="true"></attribute>
+   		<attribute name="extend" mode="OUT" type="Map" optional="true"></attribute>
    </service>
  
  	<service name="jqxGridGeneralServicer" engine="java"
@@ -68,6 +70,7 @@
         <attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
         <attribute name="results" mode="OUT" type="List" ></attribute>
         <attribute name="totalRows" mode="OUT" type="String"></attribute>
+        <attribute name="extend" mode="OUT" type="Map" optional="true"></attribute>
     </service>
     
     <service name="JQGetListStaffs" engine="java" invoke="JQGetListStaffs" location="org.ofbiz.bkeuniv.staffmanagement.StaffService">
@@ -136,6 +139,10 @@
    	
    	<service name="JQGetListResearchProjectTypeProduct" engine="java" invoke="JQGetListResearchProjectTypeProduct" location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService">
         <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="JQGetPaperDeclarationsDuplicate" engine="java" invoke="JQGetPaperDeclarationsDuplicate" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+        <implements service="jqxGetListInterfaceList"/>
    	</service>
    	
    	<service name="JQGetMembersOfProjectProposal" engine="java" invoke="JQGetMembersOfProjectProposal" location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService">
@@ -657,6 +664,4 @@
     	<attribute name="result" mode="OUT" type="String" optional="true"></attribute>
     </service>
     
-    
-	
 </services>

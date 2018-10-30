@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>BkEuniv Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <service name="noSyntaxError" engine="interface">
+        <description>
+            Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
+        </description>
+    </service> 
+    
+    <service name="jqxGetListInterface" engine="interface" >
+ 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="org.ofbiz.entity.util.EntityListIterator" optional="true"></attribute>
+   </service>
+   
+   <service name="jqxGetListInterfaceList" engine="interface" >
+ 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+   		<attribute name="filter" mode="IN" type="org.ofbiz.entity.condition.EntityCondition" optional="true"></attribute>
+   		<attribute name="sort" mode="IN" type="java.util.List" optional="true"></attribute>
+   		<attribute name="opts" mode="IN" type="org.ofbiz.entity.util.EntityFindOptions" optional="false"></attribute>
+   		<attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+   		<attribute name="totalRows" mode="OUT" type="String" optional="true"></attribute>
+   		<attribute name="listIterator" mode="OUT" type="List" optional="true"></attribute>
+   </service>
+ 
+ 	<service name="jqxGridGeneralServicer" engine="java"
+            location="org.ofbiz.bkeuniv.service.JqxWidgetServices" invoke="gridGeneralServicer" auth="true" transaction-timeout="100000">
+        <attribute name="request" mode="IN" type="javax.servlet.http.HttpServletRequest" optional="true"></attribute>
+        <attribute name="parameters" mode="IN" type="java.util.Map" optional="false"></attribute>
+        <attribute name="results" mode="OUT" type="List" ></attribute>
+        <attribute name="totalRows" mode="OUT" type="String"></attribute>
+    </service>
+    
+    <!-- services cv general information -->
+    
+    <service name="getCVInformation" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="getCVInformation" >
+    	<attribute name="staffId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="staffCVInfo" mode="OUT" type="Map" optional="false"></attribute>
+    </service>
+    
+    <service name="getListAcademicRank" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="getListAcademicRank" >
+    	<attribute name="listAcademicRank" mode="OUT" type="List" optional="false"></attribute>
+    </service>
+    
+    <service name="getListDegree" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="getListDegree" >
+    	<attribute name="listDegree" mode="OUT" type="List" optional="false"></attribute>
+    </service>
+    
+    <service name="updateCVInfo" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="updateCVInfo" >
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="academicRankId" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="degreeId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="academicRankYear" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="degreeYear" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="duty" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchPositionId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="statusCode" mode="OUT" type="String" optional="false"></attribute>
+    </service>
+    
+    <service name="updateStaffAgencyWork" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="updateStaffAgencyWork" >
+    	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="createStaffAgencyWork" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="createStaffAgencyWork" >
+	    <attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <!-- services phd student supervision -->
+    
+    <service name="jqGetListPhdStudentSupervison" engine="java" invoke="JQGetListPhdStudentSupervison" location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
+    
+    <service name="createPhdStudentSupervision" engine="java" 
+    	location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement"
+    	invoke="createPhdStudentSupervision" >
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="studentName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="thesisName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="coSupervion[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="graduateYear" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updatePhdStudentSupervision" engine="java" 
+    	location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement"
+    	invoke="updatePhdStudentSupervision" >
+    	<attribute name="phDSupervisionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="studentName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="thesisName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="coSupervion[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="graduateYear" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="deletePhdStudentSupervision" engine="java" 
+    	location="org.ofbiz.bkeuniv.phdstudentmanagement.PhdStudentManagement"
+    	invoke="deletePhdStudentSupervision" >
+    	<attribute name="phDSupervisionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    
+    <!-- service thesis for student -->
+    
+    <service name="jqGetListThesisSubject" engine="java" invoke="jqGetListThesisSubject" location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="createThesisSubject" engine="java" 
+    	location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService"
+    	invoke="createThesisSubject" >
+    	<attribute name="thesisSubjectPhDMasterName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="educationLevelId[]" mode="IN" type="List" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updateThesisSubject" engine="java" 
+    	location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService"
+    	invoke="updateThesisSubject" >
+    	<attribute name="thesisSubjectPhDMasterId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="thesisSubjectPhDMasterName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="educationLevelId[]" mode="IN" type="List" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteThesisSubject" engine="java" 
+    	location="org.ofbiz.bkeuniv.thesismanagement.ThesisManagementService"
+    	invoke="deleteThesisSubject" >
+    	<attribute name="thesisSubjectPhDMasterId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    
+    <!-- service recent research direction -->
+    
+    <service name="jqGetListRecentResearchDirection" engine="java" invoke="jqGetListRecentResearchDirection" location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
+   	
+   	<service name="createRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="createRecentResearchDirection" >
+    	<attribute name="keywords" mode="IN" type="String" optional="false"></attribute>
+       	<attribute name="startYear" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updateRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="updateRecentResearchDirection" >
+    	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="keywords" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="startYear" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="deleteRecentResearchDirection" >
+    	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
+    </service>
+    
+</services>

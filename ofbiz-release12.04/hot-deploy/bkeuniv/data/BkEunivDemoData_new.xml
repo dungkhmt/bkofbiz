@@ -152,26 +152,26 @@
 
 <Function functionId="RECENT_PUBLICATION" uiLabelId="recent_publication" vnLabel="Các công trình KH và CN chủ yếu được công bố, sách chuyên khảo" enLabel="recent publication" target="recent-publications" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
 
-
-<Function functionId="PATENT_CV" uiLabelId="patent_cv" vnLabel="Số lượng văn bằng độc quyền sáng chế/giải pháp hữu ích/văn bằng bảo hộ giống cây trồng/thiết kế bộ mạch tích hợp đã được cấp" enLabel="patent_cv" target="patent-cv" parentFunctionId="PROFILE_MANAGEMENT" index="6"/>
-
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
 
 <Function functionId="RECENT_PROJECT_CV" uiLabelId="recent_project_cv" vnLabel="Các đề tài, dự án, nhiệm vụ KH và CN đã chủ trì hoặc tham gia trong 5 năm gần đây" enLabel="recent projects" target="recent-projects" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
 
-<Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
+<Function functionId="RECENT_RESEARCH_DIRECTION" uiLabelId="recent_research_direction" vnLabel="Lĩnh vực nghiên cứu trong 5 năm gần đây" enLabel="recent research direction" target="recent-research-direction" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
-<Function functionId="SCIENTIFIC_SERVICES" uiLabelId="scientific_services" vnLabel="Kinh nghiệm quản lý đánh giá khoa học công nghệ" enLabel="scientific services" target="scientificserviceexperience" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
+<Function functionId="AWARD" uiLabelId="award" vnLabel="Quản lý giải thưởng" enLabel="Award" target="award" parentFunctionId="PROFILE_MANAGEMENT" index="10"/>
 
-<Function functionId="STUDENT_SUPERVISION" uiLabelId="student_supervision" vnLabel="Hướng dẫn sau đại học" enLabel="graduate supervion" target="student-supervision" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
+<Function functionId="SCIENTIFIC_SERVICES" uiLabelId="scientific_services" vnLabel="Kinh nghiệm quản lý đánh giá khoa học công nghệ" enLabel="scientific services" target="scientificserviceexperience" parentFunctionId="PROFILE_MANAGEMENT" index="11"/>
 
-<Function functionId="PHD_STUDENT_SUPERVISION" uiLabelId="phd_student_supervision" vnLabel="Hướng dẫn nghiên cứu sinh" enLabel="PhD supervion" target="phd-student-supervision" parentFunctionId="PROFILE_MANAGEMENT" index="12"/>
+<Function functionId="STUDENT_SUPERVISION" uiLabelId="student_supervision" vnLabel="Hướng dẫn sau đại học" enLabel="graduate supervion" target="student-supervision" parentFunctionId="PROFILE_MANAGEMENT" index="12"/>
 
-<Function functionId="THESIS_SUBJECT_FOR_STUDENT" uiLabelId="thesis_subject_for_student" vnLabel="Hướng nghiên cứu dành cho  nghiên cứu sinh và học viên cao học" enLabel="Thesis Subject for Student" target="cv-thesis-subject-for-student" parentFunctionId="PROFILE_MANAGEMENT" index="13"/>
+<Function functionId="PHD_STUDENT_SUPERVISION" uiLabelId="phd_student_supervision" vnLabel="Hướng dẫn nghiên cứu sinh" enLabel="PhD supervion" target="phd-student-supervision" parentFunctionId="PROFILE_MANAGEMENT" index="13"/>
+
+<Function functionId="THESIS_SUBJECT_FOR_STUDENT" uiLabelId="thesis_subject_for_student" vnLabel="Hướng nghiên cứu dành cho  nghiên cứu sinh và học viên cao học" enLabel="Thesis Subject for Student" target="cv-thesis-subject-for-student" parentFunctionId="PROFILE_MANAGEMENT" index="14"/>
 
 <Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="15"/>
 
-<Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="14"/>
+<Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="16"/>
+
 
 <Function functionId="DETAIL_SCIENTIFIC_PROFILE" uiLabelId="detail_scientific_profile" vnLabel="Lí lịch chi tiết" enLabel
 ="detail scientific profile" target="detail-scientific-profile" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
@@ -7125,7 +7125,7 @@
 	<ChucDanhNghienCuu chucDanhNghienCuuName="Nghiên cứu viên"/>
 	<ChucDanhNghienCuu chucDanhNghienCuuName="Thạc sỹ"/>
 	
-	<EducationLevel educationLevelName="Tiến sỹ"/>
-	<EducationLevel educationLevelName="Thạc sỹ"/>
+	<EducationLevel educationLevelId="10000" educationLevelName="Tiến sỹ"/>
+	<EducationLevel educationLevelId="10010" educationLevelName="Thạc sỹ"/>
 
 </entity-engine-xml>

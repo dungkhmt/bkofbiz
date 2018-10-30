@@ -54,7 +54,10 @@
     		location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience" invoke="createScientificServiceExperience">
 		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="description" type="String" mode="IN" optional="true"></attribute>
-		<attribute name="quantity" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="descriptionDetail" type="String" mode="IN" optional="true"></attribute>
+		
+		<!-- <attribute name="quantity" type="String" mode="IN" optional="true"></attribute>
+		 -->
 		<attribute name="object" type="Map" mode="OUT"></attribute>
     </service> 
     
@@ -63,7 +66,11 @@
     	<attribute name="scientificServiceExperienceId" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="staffId" type="String" mode="IN" optional="true"></attribute>
 		<attribute name="description" type="String" mode="IN" optional="true"></attribute>
+		<attribute name="descriptionDetail" type="String" mode="IN" optional="true"></attribute>
+		
+		<!-- 
 		<attribute name="quantity" type="String" mode="IN" optional="true"></attribute>
+		 -->
 		<attribute name="object" type="Map" mode="OUT"></attribute>
     </service>
     

@@ -564,6 +564,27 @@
             <response name="AttachementSuccess" type="view" value="UploadFile"/>
             <!-- <response name="AttachementException" type="view" value="AttachementException"/> -->
     </request-map>    
+    
+    <request-map uri="create-new-paper-declaration">
+            <security https="true" auth="true"/>
+			
+			<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="createNewPaperDeclaration"/>
+			
+			<response name="success" type="request" value="json"></response>
+    		<response name="error" type="request" value="json"></response>
+    </request-map>    
+    
+    <request-map uri="update-paper-declaration">
+            <security https="true" auth="true"/>
+			
+			<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" 
+           invoke="updatePaperDeclaration"/>
+			
+			<response name="success" type="request" value="json"></response>
+    		<response name="error" type="request" value="json"></response>
+    </request-map>  
+    
 	<request-map uri="get-academic-years">
             <security https="true" auth="true"/>
           
@@ -756,6 +777,37 @@
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
 	
+	<request-map uri="foreign-language-staff">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-foreign-language-staff"></response>
+    </request-map>
+    <request-map uri="get-foreign-language-staff">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="getForeignLanguage"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    <request-map uri="create-foreign-language">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="update-foreign-language">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="updateForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	<request-map uri="delete-foreign-language">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="deleteForeignLanguage"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+
 	<request-map uri="work-progress">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-work-progress"></response>
@@ -880,6 +932,19 @@
     	<response name="success" type="request" value="json"></response>
     	<response name="error" type="request" value="json"></response>
     </request-map>
+    <request-map uri="get-project-declaration-of-staff">
+    	<security https="true" auth="false"/>
+    	<event type="service" invoke="getProjectDeclarationOfStaff"></event>
+    	<response name="success" type="request" value="json"></response>
+    	<response name="error" type="request" value="json"></response>
+    </request-map>
+    <request-map uri="create-project-declaration-staff">
+		<security https="false" auth="false"/>
+		<event type="service" invoke="createProjectDeclarationStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     
     <request-map uri="create-project-declaration-new">
 		<security https="false" auth="false"/>
@@ -887,6 +952,7 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+	
 	
 	<request-map uri="update-project-declaration-new">
 		<security https="false" auth="false"/>
@@ -915,6 +981,11 @@
 	<request-map uri="project-participation-declaration">
     	<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-project-participation-declaration"></response>
+    </request-map>
+
+	<request-map uri="paper-declaration-duplicate">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-paper-declaration-duplicate"></response>
     </request-map>
 
     <request-map uri="get-project-working-hour-declaration">
@@ -1084,6 +1155,142 @@
 		<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-list-paper-declaration"/>
 	</request-map>
+
+	<request-map uri="form-add-paper-declaration">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-form-add-paper-declaration"/>
+	</request-map>
+
+	<request-map uri="form-edit-paper-declaration">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-form-edit-paper-declaration"/>
+	</request-map>
+	
+	<request-map uri="cv-general-information">
+		<security https="true" auth="true"/>
+		<response name="success" type="view" value="view-cv-general-information"/>
+	</request-map>
+	
+	<request-map uri="get-cv-general-information">
+		<security auth="true" https="true" />
+		<event type="service" invoke="getCVInformation"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-list-academic-rank">
+		<security auth="true" https="true" />
+		<event type="service" invoke="getListAcademicRank"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="get-list-degree">
+		<security auth="true" https="true" />
+		<event type="service" invoke="getListDegree"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-cv-general-info">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateCVInfo"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="phd-student-supervision">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-phd-student-supervision"/>
+	</request-map>
+	
+	<request-map uri="create-phd-student-supervision">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createPhdStudentSupervision"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-phd-student-supervision">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updatePhdStudentSupervision"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-phd-student-supervision">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deletePhdStudentSupervision"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="cv-thesis-subject-for-student">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-cv-thesis-subject-for-student"/>
+	</request-map>
+	
+	<request-map uri="create-cv-thesis-subject-for-student">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createThesisSubject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-cv-thesis-subject-for-student">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateThesisSubject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-cv-thesis-subject-for-student">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteThesisSubject"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-staff-agency-work">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateStaffAgencyWork"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	
+	<request-map uri="create-staff-agency-work">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createStaffAgencyWork"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="recent-research-direction">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-recent-research-direction"/>
+	</request-map>
+	
+	<request-map uri="create-recent-research-direction">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createRecentResearchDirection"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="update-recent-research-direction">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateRecentResearchDirection"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-recent-research-direction">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteRecentResearchDirection"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 	
 	
     <!-- View Mappings -->
@@ -1125,6 +1332,8 @@
 	 -->
 	<view-map name="view-project-declaration-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageProjectDeclarationNew"/>
 	<view-map name="view-list-update-project-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListUpdateProjectDeclaration"/>
+
+	<view-map name="view-foreign-language-staff" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageForeignLanguageStaff"/>
 	
 	<view-map name="view-work-progress" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageWorkProgress"/>
 	<view-map name="view-staff-research-domain" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffResearchDomain"/>
@@ -1145,5 +1354,12 @@
    <view-map name="view-upload-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageUploadOfficialDocument"/>
    <view-map name="view-list-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListOfficialDocument"/>
    <view-map name="manage-official-document" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageManageOfficialDocument"/>
-      
+   <view-map name="view-cv-general-information" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageGenaralInfomation"/>
+	<view-map name="view-form-add-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormAddPaperDeclaration"/>
+	<view-map name="view-form-edit-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormEditPaperDeclaration"/>
+	<view-map name="view-list-phd-student-supervision" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListPhDStudent"/>
+	<view-map name="view-cv-thesis-subject-for-student" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTheSisSubjectForStudent"/>
+	<view-map name="view-paper-declaration-duplicate" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#PaperDuplicateView"/>
+	
+	<view-map name="view-recent-research-direction" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageRecentResearchDirection"/>
 </site-conf>

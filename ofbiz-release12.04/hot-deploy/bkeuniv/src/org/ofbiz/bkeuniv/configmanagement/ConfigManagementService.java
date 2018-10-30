@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import javolution.util.FastList;
 import javolution.util.FastMap;
 import net.sf.json.JSONArray;
@@ -196,6 +197,44 @@ public class ConfigManagementService {
 		 	listStaffTemp = delegator.findList("StaffTemp", condition, null, Arrays.asList("staffEmail"), opts, false);
 			int iS = 0, iST = 0;
 			listStaff = delegator.findList("StaffView", condition, null, Arrays.asList("staffUserLoginId"), opts, false);
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 1");
+//			String a = "cuong.nguyenquoc1@hust.edu.vn";
+//			String b = "cuong.nguyenquoc@hust.edu.vn";
+//			Debug.log(module + "::JQGetListSynchronizeStaff, test "
+//					+a.compareTo(b));
+			Collections.sort(listStaffTemp, new Comparator<GenericValue>() {
+				@Override
+				public int compare(GenericValue staff1, GenericValue staff2) {
+					if(staff1.get("staffEmail")!= null&&staff2.get("staffEmail")!= null) {
+						String a = staff1.getString("staffEmail").replace("@hust.edu.vn", "");
+						String b = staff2.getString("staffEmail").replace("@hust.edu.vn", "");
+						
+						return a.compareTo(b);						
+					} else {
+						if(staff1.get("staffEmail")== null) {
+							return 1;				
+						} else {
+							return -1;
+						}
+					}
+					
+				}
+			});
+			
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 2");
+			
+			Collections.sort(listStaff, new Comparator<GenericValue>() {
+				@Override
+				public int compare(GenericValue staff1, GenericValue staff2) {
+					String a = staff1.getString("staffUserLoginId").replace("@hust.edu.vn", "");
+					String b = staff2.getString("staffUserLoginId").replace("@hust.edu.vn", "");
+					
+					return a.compareTo(b);
+				}
+			});
+			
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 3");
+			
 			Debug.log("StaffTemp: " + listStaffTemp.size() + " ---- StaffView: " + listStaff.size());
 			while(listStaff.size()>iS&&listStaffTemp.size()>iST) {
 				GenericValue staff1 = listStaff.get(iS);
@@ -286,6 +325,7 @@ public class ConfigManagementService {
 				
 				list.add(staff);
 			}
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 4");
 			Debug.log("StaffTempCurr: " + iST + " ---- StaffViewCurr: " + iS);
 			if(listStaff.size()>iS||listStaff.size()==0) {
 				for(int k = iS; k < listStaff.size(); ++k) {
@@ -302,6 +342,8 @@ public class ConfigManagementService {
 					list.add(staff);
 				}
 			}
+			
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 5");
 			
 			if(listStaffTemp.size()>iST||listStaffTemp.size()==0) {
 				for(int k = iST; k < listStaffTemp.size(); ++k) {
@@ -325,6 +367,7 @@ public class ConfigManagementService {
 					list.add(staff);
 				}
 			}
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 6");
 			
 			JSONArray _sort = new JSONArray();
 			if(parameters.get("sort") != null){
@@ -337,6 +380,8 @@ public class ConfigManagementService {
 					
 				}
 			}
+			
+			Debug.log(module + "::JQGetListSynchronizeStaff check: 7");
 			
 			List<Map<String, Object>> listNew = new ArrayList<Map<String,Object>>();
 			
@@ -386,7 +431,7 @@ public class ConfigManagementService {
 			result.put("listIterator", listNew);
 			
 		} catch (Exception e) {
-			Debug.log(e.getMessage());
+			Debug.log(module + "::JQGetListSynchronizeStaff Exception: " + e.getMessage());
 			return ServiceUtil.returnError("Error JQGetListSynchronizeStaff");
 		}
 		

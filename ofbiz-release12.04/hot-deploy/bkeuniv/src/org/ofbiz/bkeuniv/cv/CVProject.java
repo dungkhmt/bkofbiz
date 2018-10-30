@@ -17,7 +17,9 @@ import org.ofbiz.service.ServiceUtil;
 
 public class CVProject {
 	public static String module = CVProject.class.getName();
-
+	public final static String[] attr = new String[]{"researchProjectProposalName","sequenceInCVProject","cvProjectId",
+		"projectProposalMemberId"};
+	
 	public static Map<String, Object> addCVProject(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -183,8 +185,22 @@ public class CVProject {
 			List<GenericValue> lst = delegator.findList("CVProjectView",
 					EntityCondition.makeCondition(conds), null, orderBy, null,
 					false);
-
-			retSucc.put("projects", lst);
+			Debug.log(module + "::getCVProjects, staffId = " + staffId + ", size = " + lst.size());
+			
+			List<Map> list_cv_projects = FastList.newInstance();
+			for(GenericValue p: lst){
+				//Debug.log(module + "::getCVProjects, staffId = " + staffId + ", project = "
+				//		+ ", project = " + p.getString("researchProjectProposalName") + 
+				//		", seq = " + p.get("sequenceInCVProject"));
+				Map<String, Object> pm = FastMap.newInstance();
+				for(String a: attr){
+					pm.put(a, p.getString(a));
+				}
+				list_cv_projects.add(pm);
+			}
+			
+			//retSucc.put("projects", lst);// might cause exception java.sql.Date getHour() exception
+			retSucc.put("projects", list_cv_projects);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

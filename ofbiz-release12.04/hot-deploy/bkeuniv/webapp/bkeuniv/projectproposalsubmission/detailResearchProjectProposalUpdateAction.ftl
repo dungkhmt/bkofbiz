@@ -34,6 +34,11 @@ projectProposalStatus: ${pResultProjectProposal.projectproposal.statusId}
 					<#assign view_update=1/>
 				</#if>
 			</#if>
+			
+			<#if pResultProjectProposal.projectCallStatusName == "">
+				<#assign view_update=1/>
+			</#if>
+			
 			<#if view_update==1>
 			<tr>
 				<td><a href = "/bkeuniv/control/detail-update-of-project-proposal?researchProjectProposalId=${researchProjectProposalId}">${uiLabel.DetailUpdateInfoProject}</a></td>

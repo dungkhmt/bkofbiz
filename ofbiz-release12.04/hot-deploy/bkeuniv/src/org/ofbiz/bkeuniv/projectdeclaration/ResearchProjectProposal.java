@@ -24,7 +24,9 @@ public class ResearchProjectProposal {
 		"partyId", "createStaffId", "projectCallId", "projectCategoryId", "researchProjectProposalName",
 		"totalBudget", "statusId", "approvedByStaffId", "sourceFileUpload", "facultyId", "startDate",
 		"endDate", "deliverable", "materialBudget", "evaluationOpenFlag", "createStaffName",
-		"projectCallName", "projectCategoryName", "facultyName", "statusName"};
+		"projectCallName", "projectCategoryName", "facultyName", "statusName",
+		"roleTypeId","roleTypeName"
+	};
 	
 	public static Map<String, Object> getProjectsOfStaff(DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -85,6 +87,40 @@ public class ResearchProjectProposal {
 		return retSucc;
 	}
 	
+	public static Map<String, Object> getProjectDeclarationOfStaff(DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+			
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String) userLogin.get("userLoginId");
+		//System.out.println("staff id: "+staffId);
+		Debug.log(module + "::getProjectDeclarationOfStaff, staffId = " + staffId);
+		
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS, staffId));
+			
+			//conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
+			
+			List<GenericValue> listProjectDeclaration = delegator.findList("ProjectProposalMemberView", 
+																EntityCondition.makeCondition(conds), 
+																null, null, null, false);
+			List<Map> projectDeclarations = FastList.newInstance();
+			for(GenericValue gv : listProjectDeclaration){
+				Map<String, Object> map = FastMap.newInstance();
+				for(int i=0; i<arrAtt.length; i++){
+					map.put(arrAtt[i], gv.getString(arrAtt[i]));
+				}
+				projectDeclarations.add(map);
+			}
+			retSucc.put("projectDeclarations", projectDeclarations);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> createProjectDeclaration(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		
@@ -146,6 +182,89 @@ public class ResearchProjectProposal {
 		return retSucc;
 	}
 	
+	public static Map<String, Object> createProjectDeclarationStaff(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		String staffId = (String)userLogin.get("userLoginId");
+		//System.out.println("staffId"+staffId);
+		List<String> projectCategoryId = (List<String>) context.get("projectCategoryId[]");
+		String researchProjectProposalName = (String) context.get("researchProjectProposalName");
+		String researchProjectProposalCode = (String) context.get("researchProjectProposalCode");
+		String totalBudget = (String) context.get("totalBudget");
+		List<String> facultyId = (List<String>) context.get("facultyId[]");
+		String startDate = (String) context.get("startDate");
+		String endDate = (String) context.get("endDate");
+		//System.out.println(endDate);
+		if(researchProjectProposalName == null || researchProjectProposalName.equals(""))
+			researchProjectProposalName = " ";
+		if(researchProjectProposalCode == null || researchProjectProposalCode.equals(""))
+			researchProjectProposalCode = " ";
+		
+		Delegator delegator = ctx.getDelegator();
+		try{
+			GenericValue gv = delegator.makeValue("ResearchProjectProposal");
+			GenericValue gvv = delegator.makeValue("Party");
+			gv.put("researchProjectProposalId", delegator.getNextSeqId("ResearchProjectProposal"));
+			gvv.put("partyId", delegator.getNextSeqId("Party"));
+			delegator.create(gvv);
+			gv.put("partyId", gvv.getString("partyId"));
+			gv.put("partyId", "_NA_");
+			gv.put("createStaffId", staffId);
+			gv.put("projectCategoryId", projectCategoryId.get(0));
+			gv.put("researchProjectProposalName", researchProjectProposalName);
+			gv.put("researchProjectProposalCode", researchProjectProposalCode);
+			BigDecimal totalBudgetl = BigDecimal.ZERO;
+			if(totalBudget != null)
+				totalBudgetl =	new BigDecimal(totalBudget);//Long.valueOf(totalBudget);
+			gv.put("totalBudget", totalBudgetl);
+			gv.put("statusId", ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING);
+			
+			if (startDate != null) {
+				gv.put("startDate", new Date(Long.valueOf(startDate)));
+			}
+			if (endDate != null) {
+				gv.put("endDate", new Date(Long.valueOf(endDate)));		
+			}
+			
+			delegator.create(gv);
+			
+			// create entry of the table ProjectProposalMember
+			GenericValue ppm = delegator.makeValue("ProjectProposalMember");
+			String projectProposalMemberId = delegator.getNextSeqId("ProjectProposalMember");
+			ppm.put("projectProposalMemberId", projectProposalMemberId);
+			ppm.put("researchProjectProposalId", gv.get("researchProjectProposalId"));
+			ppm.put("staffId", staffId);
+			
+			delegator.create(ppm);
+			
+			
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("projectProposalMemberId", EntityOperator.EQUALS, projectProposalMemberId));
+			
+			List<GenericValue> listProjectDeclaration = delegator.findList("ProjectProposalMemberView", 
+																EntityCondition.makeCondition(conds), 
+																null, null, null, false);
+			
+			Debug.log(module + "::createProjectDeclarationStaff, projectProposalMemberId = " + projectProposalMemberId
+					+ ", GOT listProjectDeclaration.sz = " + listProjectDeclaration.size());
+			
+			GenericValue result = listProjectDeclaration.get(0);
+			
+			Map<String,  Object> map = FastMap.newInstance();
+			for(int i=0;i<arrAtt.length;i++){
+				map.put(arrAtt[i], result.getString(arrAtt[i]));
+			}
+			retSucc.put("projectDeclarations", map);
+			retSucc.put("message", "Successfully");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> updateProjectDeclaration(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		

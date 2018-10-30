@@ -72,7 +72,7 @@
 					</fo:table-cell>
 					
 				</fo:table-row>	
-				
+
 				<#assign index = 0>
 				<#list resultCV.cv.scientificExperiences as se>
 					<#assign index = index + 1>
@@ -85,17 +85,28 @@
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${se.description}</fo:block>
+						<fo:block>${se.description?if_exists}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell >
-						<fo:block>${se.quantity}</fo:block>
+						<fo:block>${se.descriptionDetail?if_exists}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
 				</#list>
-				
-				
+
+				<fo:table-row height="20pt" border-top-style="dotted" >
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+					</fo:table-cell>
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+					</fo:table-cell>
+					<fo:table-cell />
+					<fo:table-cell >
+					</fo:table-cell>
+				</fo:table-row>	
+
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>

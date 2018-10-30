@@ -191,4 +191,5 @@
 		titleNew=projectDeclarationUiLabelMap.TitleNewProjectDeclaration?j_string
 		titleDelete=projectDeclarationUiLabelMap.TitleDeleteProjectDeclaration?j_string
 	/>
+	
 </div>

@@ -233,27 +233,30 @@ public class JqxWidgetServices {
 					} else {
 						if (tmpList.size() > 0) {
 							List<Object> list = null;
-							if (iSize != 0 && (tmpList.size() > iSize)) {
-								if (iIndex == 0) {
-									list = tmpList.subList(0, iSize);
-								} else {
-									if(tmpList.size() > ((iIndex + 1) *iSize)){
-										list = tmpList.subList(iIndex * iSize,
-												((iIndex + 1) *iSize));
-									}else{
-										list = tmpList.subList(iIndex * iSize,
-												tmpList.size());
-									}
-								}
-							} else {
-								list = tmpList;
-							}
-							result.put("results", list);
+							
 							if(totalRows != null){
 								result.put("totalRows", totalRows);
+								list = tmpList;
 							}else{
+								if (iSize != 0 && (tmpList.size() > iSize)) {
+									if (iIndex == 0) {
+										list = tmpList.subList(0, iSize);
+									} else {
+										if(tmpList.size() > ((iIndex + 1) *iSize)){
+											list = tmpList.subList(iIndex * iSize,
+													((iIndex + 1) *iSize));
+										}else{
+											list = tmpList.subList(iIndex * iSize,
+													tmpList.size());
+										}
+									}
+								} else {
+									list = tmpList;
+								}
 								result.put("totalRows", String.valueOf(tmpList.size()));
 							}
+							
+							result.put("results", list);
 						} else {
 							result.put("results", tmpList);
 							result.put("totalRows", "0");

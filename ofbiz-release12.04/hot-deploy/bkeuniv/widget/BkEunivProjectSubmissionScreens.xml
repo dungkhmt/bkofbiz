@@ -400,11 +400,11 @@
 				
 			</actions>
 			<widgets>
-			<!-- 
+			
 				<decorator-screen name="bkeuniv-global-decorator"
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<decorator-section name="body">
- -->
+
 						<platform-specific>
 							<html>
 								<html-template
@@ -412,9 +412,9 @@
 							</html>
 						</platform-specific>
 
-	<!-- 				</decorator-section>
+					</decorator-section>
 				</decorator-screen>
-	 -->
+	 
 	
 			</widgets>
 		</section>
@@ -591,9 +591,10 @@
 				
 			</actions>
 			<widgets>
-				<decorator-screen name="bkeuniv-global-decorator"
+				<!-- <decorator-screen name="bkeuniv-global-decorator"
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<decorator-section name="body">
+				 -->	
 	<!-- 				<platform-specific>
 							<html>
 								<html-template
@@ -602,15 +603,16 @@
 						</platform-specific>
  -->
  						<include-screen name="DetailResearchProjectProposal"/>
- 						<platform-specific>
+ 						<!-- <platform-specific>
 							<html>
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailResearchProjectProposalUpdateAction.ftl" />
 							</html>
-						</platform-specific>
+						</platform-specific> -->
+	 		<!-- 
 	 				</decorator-section>
 				</decorator-screen>
-	
+	 -->
 	
 			</widgets>
 		</section>

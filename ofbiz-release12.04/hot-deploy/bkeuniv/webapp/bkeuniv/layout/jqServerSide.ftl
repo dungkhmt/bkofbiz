@@ -104,6 +104,14 @@
 		#${id} .jqDataTable-title {
 			padding: 30px 0px 30px 0px;
 		}
+
+		#jqDataTable-content_processing {
+			padding: 30px 0px 30px 0px;
+			z-index: 2;
+			background-color: transparent;
+			padding: 10px;
+		}
+
 		
 		#${id} .jqDataTable-title .jqDataTable-title-hyperlink {
 			font-size: 24px;
@@ -244,12 +252,17 @@
 			}
 		];
 		<#assign sort=1 />
+		<#assign noSort=true />
 		<#assign index=0 />
 		<#list columns as column>
 			<#assign index=index+1>
 
 			<#if keysId?size gt 0 && column.data==keysId[0]>
 				<#assign sort=index />
+			</#if>
+
+			<#if keysId?size gt 0 && column.orderable?? && column.orderable!="false">
+				<#assign noSort=false />
 			</#if>
 
 			var c${index} = {
@@ -301,7 +314,7 @@
                 "processing": true,
                 "serverSide": true,
 				"scrollX": true,
-				"order": [[ ${sort}, "asc" ]],
+				<#if !noSort>"order": [[ ${sort}, "asc" ]],</#if>
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,
 				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -397,7 +410,7 @@
                             "pagesize": i_size.toString(),
                             <#if getDataFilter!=''>"filter": JSON.stringify(${getDataFilter}),</#if>
 							<#--  "filter": '{"field": "groupId", "value": "SUPER_ADMIN", "operation": "CONTAINS" }',  -->
-                            "sort": JSON.stringify([{"field": s_sort_field, "type": s_sort_type}]),
+                            <#if !noSort>"sort": JSON.stringify([{"field": s_sort_field, "type": s_sort_type}]),</#if>
                         },
                         "success": function (reponse) {
                             <#--  setTimeout(function(){ loader.close();}, 500);  -->
@@ -423,7 +436,11 @@
 											r['${field.name}'] = ${field.generate}(d);
 										</#if>
 									<#else>
-										r['${field}'] = d['${field}']||"";
+										if(d['${field}']==0) {
+											r['${field}'] = d['${field}']
+										} else {
+											r['${field}'] = d['${field}']||"";
+										}
 									</#if>
 								</#list>
 								return r;
