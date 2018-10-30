@@ -6983,28 +6983,435 @@
 	<ResearchDomain researchDomainId="00004" researchDomainName="Khoa học nông nghiệp"/>
 	<ResearchDomain researchDomainId="00005" researchDomainName="Khoa học xã hội"/>
 	<ResearchDomain researchDomainId="00006" researchDomainName="Khoa học nhân văn"/>
-	<!--
-	<ResearchSubDomain  researchDomainId="00001" researchSubDomainSeqId="00001" researchSubDomainName="Toán học và Thống kê" researchSubDomainCode="101"/>
+	
+	<!-- Sub-Domain -->
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00001" researchSubDomainName="Toán học và Thống kê" researchSubDomainCode="101"/>
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00002" researchSubDomainName="Khoa học máy tính và thông tin" researchSubDomainCode="102"/>
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00003" researchSubDomainName="Vật lý" researchSubDomainCode="103" />
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00004" researchSubDomainName="Hoá học" researchSubDomainCode="104" />
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00005" researchSubDomainName="Các khoa học trái đất và môi trường liên quan" researchSubDomainCode="105"/>
 	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00006" researchSubDomainName="Sinh học" researchSubDomainCode="106" />
-	<ResearchSubDomain researchDomainId="00001"  researchSubDomainSeqId="00007" researchSubDomainName="Khoa học tự nhiên khác" researchSubDomainCode="199"mainId="00001"/>
+	<ResearchSubDomain researchDomainId="00001" researchSubDomainSeqId="00007" researchSubDomainName="Khoa học tự nhiên khác" researchSubDomainCode="199" mainId="00001"/>
 	
 	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00001" researchSubDomainName="Kỹ thuật dân dụng" researchSubDomainCode="201" />
 	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00002" researchSubDomainName="Kỹ thuật điện, kỹ thuật điện tử, kỹ thuật thông tin" researchSubDomainCode="202"/>
 	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00003" researchSubDomainName="Kỹ thuật cơ khí chế tạo" researchSubDomainCode="203"/>
 	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00004" researchSubDomainName="Kỹ thuật Hoá học" researchSubDomainCode="204" />
 	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00005" researchSubDomainName="Kỹ thuật vật liệu và luyện kim" researchSubDomainCode="205"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00006" researchSubDomainName="Kỹ thuật y học" researchSubDomainCode="206" />
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00007" researchSubDomainName="Kỹ thuật môi trường" researchSubDomainCode="207"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00008" researchSubDomainName="Công nghệ sinh học môi trường" researchSubDomainCode="208"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00009" researchSubDomainName="Công nghệ sinh học công nghiệp" researchSubDomainCode="209" />
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00010" researchSubDomainName="Công nghệ nano" researchSubDomainCode="210"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00011" researchSubDomainName="Kỹ thuật thực phẩm và đồ uống" researchSubDomainCode="211"/>
+	<ResearchSubDomain researchDomainId="00002" researchSubDomainSeqId="00012" researchSubDomainName="Kỹ thuật và công nghệ khác" researchSubDomainCode="299"/>
 	
-		
+	<ResearchSubDomain researchDomainId="00003" researchSubDomainSeqId="00001" researchSubDomainName="Y học cơ sở" researchSubDomainCode="301" />
+	<ResearchSubDomain researchDomainId="00003" researchSubDomainSeqId="00002" researchSubDomainName="Y học lâm sàng" researchSubDomainCode="302"/>
+	<ResearchSubDomain researchDomainId="00003" researchSubDomainSeqId="00003" researchSubDomainName="Y tế" researchSubDomainCode="303"/>
+	<ResearchSubDomain researchDomainId="00003" researchSubDomainSeqId="00004" researchSubDomainName="Dược học" researchSubDomainCode="304" />
+	<ResearchSubDomain researchDomainId="00003" researchSubDomainSeqId="00005" researchSubDomainName="Công nghệ sinh học trong Y học" researchSubDomainCode="305"/>
+	<ResearchSubDomain researchDomainId="00003" researchSubDomainSeqId="00006" researchSubDomainName="Khoa học Y, Dược khác" researchSubDomainCode="399"/>
+
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00001" researchSubDomainName="Trồng trọt" researchSubDomainCode="401" />
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00002" researchSubDomainName="Chăn nuôi" researchSubDomainCode="402"/>
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00003" researchSubDomainName="Thú y" researchSubDomainCode="403"/>
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00004" researchSubDomainName="Lâm nghiệp" researchSubDomainCode="404"/>
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00005" researchSubDomainName="Thủy sản" researchSubDomainCode="405" />
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00006" researchSubDomainName="Công nghệ sinh học nông nghiệp" researchSubDomainCode="406"/>
+	<ResearchSubDomain researchDomainId="00004" researchSubDomainSeqId="00007" researchSubDomainName="Khoa học nông nghiệp khác" researchSubDomainCode="499"/>
+
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00001" researchSubDomainName="Tâm lý học" researchSubDomainCode="501" />
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00002" researchSubDomainName="Kinh tế và kinh doanh" researchSubDomainCode="502"/>
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00003" researchSubDomainName="Khoa học giáo dục" researchSubDomainCode="503"/>
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00004" researchSubDomainName="Xã hội học" researchSubDomainCode="504" />
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00005" researchSubDomainName="Pháp luật" researchSubDomainCode="505" />
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00006" researchSubDomainName="Khoa học chính trị" researchSubDomainCode="506"/>
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00007" researchSubDomainName="Địa lý kinh tế và xã hội" researchSubDomainCode="507"/>
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00008" researchSubDomainName="Thông tin đại chúng và truyền thông" researchSubDomainCode="507"/>
+	<ResearchSubDomain researchDomainId="00005" researchSubDomainSeqId="00009" researchSubDomainName="Khoa học xã hội khác" researchSubDomainCode="599"/>
+
+	<ResearchSubDomain researchDomainId="00006" researchSubDomainSeqId="00001" researchSubDomainName="Lịch sử và khảo cổ học" researchSubDomainCode="601" />
+	<ResearchSubDomain researchDomainId="00006" researchSubDomainSeqId="00002" researchSubDomainName="Ngôn ngữ học và văn học" researchSubDomainCode="602"/>
+	<ResearchSubDomain researchDomainId="00006" researchSubDomainSeqId="00003" researchSubDomainName="Triết học, đạo đức học và tôn giáo" researchSubDomainCode="603"/>
+	<ResearchSubDomain researchDomainId="00006" researchSubDomainSeqId="00004" researchSubDomainName="Nghệ thuật" researchSubDomainCode="604" />
+	<ResearchSubDomain researchDomainId="00006" researchSubDomainSeqId="00005" researchSubDomainName="Khoa học nhân văn khác" researchSubDomainCode="699" />
+	<!-- End Sub-Domain -->
+
+	<!-- Domain: Khoa học tự nhiên -->
 	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Toán học cơ bản" researchSpecialityCode="10101"/>
 	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Toán học ứng dụng" researchSpecialityCode="10102"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00003" researchSpecialityName="Thống kê" researchSpecialityCode="10103"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00001" researchSpecialitySeqId="00004" researchSpecialityName="Các khoa học toán học khác" researchSpecialityCode="10199"/>
 
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00002" researchSpecialitySeqId="00001" researchSpecialityName="Khoa học máy tính" researchSpecialityCode="10201"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00002" researchSpecialitySeqId="00002" researchSpecialityName="Khoa học thông tin" researchSpecialityCode="10202"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00002" researchSpecialitySeqId="00003" researchSpecialityName="Sinh tin học" researchSpecialityCode="10203"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00002" researchSpecialitySeqId="00004" researchSpecialityName="Khoa học máy tính và khoa học thông tin khác" researchSpecialityCode="10299"/>
+
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00001" researchSpecialityName="Vật lý nguyên tử; vật lý phân tử và vật lý hóa học (vật lý các nguyên tử và các phân tử bao gồm va chạm, tương tác bức xạ, cộng hưởng từ; hiệu ứng Moessabauer)" researchSpecialityCode="10301"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00002" researchSpecialityName="Vật lý các chất cô đặc (bao gồm cả vật lý chất rắn; siêu dẫn)" researchSpecialityCode="10302"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00003" researchSpecialityName="Vật lý hạt và lý thuyết trường" researchSpecialityCode="10303"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00004" researchSpecialityName="Vật lý hạt nhân" researchSpecialityCode="10304"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00005" researchSpecialityName="Vật lý plasma và chất lỏng (bao gồm cả vật lý bề mặt)" researchSpecialityCode="10305"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00006" researchSpecialityName="Quang học (bao gồm cả lade quang học và lade lượng tử)" researchSpecialityCode="10306"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00007" researchSpecialityName="Âm học" researchSpecialityCode="10307"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00008" researchSpecialityName="Thiên văn học" researchSpecialityCode="10308"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00009" researchSpecialityName="Khoa học vũ trụ (bao gồm cả vật lý vũ trụ)" researchSpecialityCode="10309"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00003" researchSpecialitySeqId="00010" researchSpecialityName="Khoa học vật lý khác" researchSpecialityCode="10399"/>
+
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00001" researchSpecialityName="Hoá hữu cơ" researchSpecialityCode="10401"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00002" researchSpecialityName="Hoá vô cơ và hạt nhân" researchSpecialityCode="10402"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00003" researchSpecialityName="Hoá lý" researchSpecialityCode="10403"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00004" researchSpecialityName="Hoá học cao phân tử (polyme)" researchSpecialityCode="10404"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00005" researchSpecialityName="Điện hóa (pin khô, pin, pin nhiên liệu, ăn mòn kim loại, điện phân)" researchSpecialityCode="10405"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00006" researchSpecialityName="Hoá keo" researchSpecialityCode="10406"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00007" researchSpecialityName="Hóa phân tích" researchSpecialityCode="10407"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00004" researchSpecialitySeqId="00008" researchSpecialityName="Khoa học hoá học khác" researchSpecialityCode="10499"/>
+
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00001" researchSpecialityName="Địa chất học" researchSpecialityCode="10501"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00002" researchSpecialityName="Khoáng vật học" researchSpecialityCode="10502"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00003" researchSpecialityName="Cổ sinh học" researchSpecialityCode="10503"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00004" researchSpecialityName="Địa vật lý" researchSpecialityCode="10504"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00005" researchSpecialityName="Địa hóa học" researchSpecialityCode="10505"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00006" researchSpecialityName="Địa lý tự nhiên" researchSpecialityCode="10506"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00007" researchSpecialityName="Núi lửa học" researchSpecialityCode="10507"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00008" researchSpecialityName="Trắc địa học và bản đồ học" researchSpecialityCode="10508"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00009" researchSpecialityName="Các khoa học môi trường" researchSpecialityCode="10509"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00010" researchSpecialityName="Khí tượng học và các khoa học khí quyển" researchSpecialityCode="10510"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00011" researchSpecialityName="Khí hậu học" researchSpecialityCode="10511"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00012" researchSpecialityName="Hải dương học" researchSpecialityCode="10512"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00013" researchSpecialityName="Thuỷ văn; Tài nguyên nước" researchSpecialityCode="10513"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00005" researchSpecialitySeqId="00014" researchSpecialityName="Khoa học trái đất và khoa học môi trường liên quan khác" researchSpecialityCode="10599"/>
+
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00001" researchSpecialityName="Sinh học lý thuyết" researchSpecialityCode="10601"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00002" researchSpecialityName="Tế bào học, Mô - phôi học" researchSpecialityCode="10602"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00003" researchSpecialityName="Vi sinh vật học" researchSpecialityCode="10603"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00004" researchSpecialityName="Vi rút học" researchSpecialityCode="10604"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00005" researchSpecialityName="Hoá sinh; phương pháp nghiên cứu hoá sinh" researchSpecialityCode="10605"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00006" researchSpecialityName="Sinh học phân tử" researchSpecialityCode="10606"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00007" researchSpecialityName="Nấm học" researchSpecialityCode="10607"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00008" researchSpecialityName="Lý sinh" researchSpecialityCode="10608"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00009" researchSpecialityName="Di truyền học" researchSpecialityCode="10609"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00010" researchSpecialityName="Sinh học sinh sản" researchSpecialityCode="10610"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00011" researchSpecialityName="Thực vật học" researchSpecialityCode="10611"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00012" researchSpecialityName="Động vật học" researchSpecialityCode="10612"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00013" researchSpecialityName="Sinh học biển và nước ngọt" researchSpecialityCode="10613"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00014" researchSpecialityName="Sinh thái học" researchSpecialityCode="10614"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00015" researchSpecialityName="Đa dạng sinh học" researchSpecialityCode="10615"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00016" researchSpecialityName="Công nghệ sinh học" researchSpecialityCode="10616"/>
+	<ResearchSpeciality  researchDomainId="00001" researchSubDomainSeqId="00006" researchSpecialitySeqId="00017" researchSpecialityName="Khoa học sinh học khác" researchSpecialityCode="10699"/>
+	
+	<!-- Domain: Khoa học kỹ thuật và công nghệ -->
 	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật kiến trúc" researchSpecialityCode="20101"/>
 	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật xây dựng" researchSpecialityCode="20102"/>
-	-->
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00003" researchSpecialityName="Kỹ thuật kết cấu và đô thị" researchSpecialityCode="20103"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00004" researchSpecialityName="Kỹ thuật giao thông vận tải" researchSpecialityCode="20104"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00005" researchSpecialityName="Kỹ thuật thuỷ lợi" researchSpecialityCode="20105"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00006" researchSpecialityName="Kỹ thuật địa chất công trình" researchSpecialityCode="20106"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00001" researchSpecialitySeqId="00007" researchSpecialityName="Kỹ thuật dân dụng khác" researchSpecialityCode="20199"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật điện và điện tử" researchSpecialityCode="20201"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00002" researchSpecialityName="Người máy và điều khiển tự động" researchSpecialityCode="20202"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00003" researchSpecialityName="Tự động hoá (CAD/CAM, v.v..) và các hệ thống điểu khiển, giám sát; công nghệ điều khiển số bằng máy tính (CNC)" researchSpecialityCode="20203"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00004" researchSpecialityName="Các hệ thống và kỹ thuật truyền thông" researchSpecialityCode="20204"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00005" researchSpecialityName="Viễn thông" researchSpecialityCode="20205"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00006" researchSpecialityName="Phần cứng và kiến trúc máy tính" researchSpecialityCode="20206"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00007" researchSpecialityName="Cơ điện tử; hệ vi cơ điện tử (MEMS)" researchSpecialityCode="20207"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00002" researchSpecialitySeqId="00008" researchSpecialityName="Kỹ thuật điện, kỹ thuật điện tử, kỹ thuật thông tin không xếp vào mục nào khác" researchSpecialityCode="20299"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật cơ khí nói chung" researchSpecialityCode="20301"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00002" researchSpecialityName="Chế tạo máy nói chung" researchSpecialityCode="20302"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00003" researchSpecialityName="Chế tạo máy công cụ" researchSpecialityCode="20303"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00004" researchSpecialityName="Chế tạo máy động lực" researchSpecialityCode="20304"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00005" researchSpecialityName="Kỹ thuật cơ khí và chế tạo máy nông nghiệp (bao gồm cả cơ khí bảo quản chế biến, cơ khí lâm nghiệp, thuỷ sản)" researchSpecialityCode="20305"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00006" researchSpecialityName="Kỹ thuật cơ khí và chế tạo máy thuỷ lợi" researchSpecialityCode="20306"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00007" researchSpecialityName="Kỹ thuật cơ khí và chế tạo ôtô và giao thông" researchSpecialityCode="20307"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00008" researchSpecialityName="Kỹ thuật và công nghệ hàng không, vũ trụ" researchSpecialityCode="20308"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00009" researchSpecialityName="Kỹ thuật và công nghệ âm thanh" researchSpecialityCode="20309"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00010" researchSpecialityName="Kỹ thuật cơ khí và chế tạo máy xây dựng" researchSpecialityCode="20310"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00011" researchSpecialityName="Kỹ thuật cơ khí tàu thuyền" researchSpecialityCode="20311"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00012" researchSpecialityName="Kỹ thuật cơ khí và chế tạo thiết bị khai khoáng" researchSpecialityCode="20312"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00013" researchSpecialityName="Kỹ thuật cơ khí và chế tạo thiết bị năng lượng" researchSpecialityCode="20313"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00014" researchSpecialityName="Kỹ thuật và công nghệ liên quan đến hạt nhân" researchSpecialityCode="20314"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00003" researchSpecialitySeqId="00015" researchSpecialityName="Kỹ thuật cơ khí, chế tạo máy khác" researchSpecialityCode="20399"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00001" researchSpecialityName="Sản xuất hóa học công nghiệp nói chung (nhà máy, sản phẩm)" researchSpecialityCode="20401"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật quá trình hóa học nói chung" researchSpecialityCode="20402"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00003" researchSpecialityName="Kỹ thuật hoá dược" researchSpecialityCode="20403"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00004" researchSpecialityName="Kỹ thuật hoá vô cơ" researchSpecialityCode="20404"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00005" researchSpecialityName="Kỹ thuật hoá hữu cơ" researchSpecialityCode="20405"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00006" researchSpecialityName="Kỹ thuật hoá dầu" researchSpecialityCode="20406"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00004" researchSpecialitySeqId="00007" researchSpecialityName="Kỹ thuật hóa học khác" researchSpecialityCode="20499"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật nhiệt trong luyện kim" researchSpecialityCode="20501"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật và công nghệ sản xuất kim loại và hợp kim đen" researchSpecialityCode="20502"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00003" researchSpecialityName="Kỹ thuật và công nghệ sản xuất kim loại và hợp kim màu" researchSpecialityCode="20503"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00004" researchSpecialityName="Luyện kim bột" researchSpecialityCode="20504"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00005" researchSpecialityName="Cán kim loại; kéo kim loại; sản xuất sản phẩm kim loại; sản xuất ống kim loại" researchSpecialityCode="20505"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00006" researchSpecialityName="Luyện các chất bán dẫn" researchSpecialityCode="20506"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00007" researchSpecialityName="Vật liệu xây dựng" researchSpecialityCode="20507"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00008" researchSpecialityName="Vật liệu điện tử" researchSpecialityCode="20508"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00009" researchSpecialityName="Vật liệu kim loại" researchSpecialityCode="20509"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00010" researchSpecialityName="Gốm" researchSpecialityCode="20510"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00011" researchSpecialityName="Màng mỏng, vật liệu sơn, vật liệu phủ" researchSpecialityCode="20511"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00012" researchSpecialityName="Vật liệu composit (bao gồm cả plastic gia cường, gốm kim loại (cermet), các vật liệu sợi tổng hợp và tự nhiên phối hợp" researchSpecialityCode="20512"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00013" researchSpecialityName="Gỗ, giấy, bột giấy" researchSpecialityCode="20513"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00014" researchSpecialityName="Vải, gồm cả sợi, màu và thuốc nhuộm tổng hợp" researchSpecialityCode="20514"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00015" researchSpecialityName="Vật liệu tiên tiến" researchSpecialityCode="20515"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00005" researchSpecialitySeqId="00016" researchSpecialityName="Kỹ thuật vật liệu và luyện kim khác" researchSpecialityCode="20599"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00006" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật và thiết bị y học" researchSpecialityCode="20601"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00006" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật phân tích mẫu bệnh phẩm" researchSpecialityCode="20602"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00006" researchSpecialitySeqId="00003" researchSpecialityName="Kỹ thuật phân tích mẫu thuốc" researchSpecialityCode="20603"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00006" researchSpecialitySeqId="00004" researchSpecialityName="Kỹ thuật chẩn đoán bệnh" researchSpecialityCode="20604"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00006" researchSpecialitySeqId="00005" researchSpecialityName="Kỹ thuật y học khác" researchSpecialityCode="20699"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật môi trường và địa chất, địa kỹ thuật" researchSpecialityCode="20701"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật dầu khí (dầu mỏ, khí đốt)" researchSpecialityCode="20702"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00003" researchSpecialityName="Kỹ thuật năng lượng và nhiên liệu không phải dầu khí" researchSpecialityCode="20703"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00004" researchSpecialityName="Viễn thám" researchSpecialityCode="20704"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00005" researchSpecialityName="Khai thác mỏ và xử lý khoáng chất" researchSpecialityCode="20705"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00006" researchSpecialityName="Kỹ thuật hàng hải, đóng tàu biển" researchSpecialityCode="20706"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00007" researchSpecialityName="Kỹ thuật đại dương" researchSpecialityCode="20707"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00008" researchSpecialityName="Kỹ thuật bờ biển" researchSpecialityCode="20708"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00007" researchSpecialitySeqId="00009" researchSpecialityName="Kỹ thuật môi trường khác" researchSpecialityCode="20799"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00008" researchSpecialitySeqId="00001" researchSpecialityName="Công nghệ sinh học môi trường nói chung" researchSpecialityCode="20801"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00008" researchSpecialitySeqId="00002" researchSpecialityName="Xử lý môi trường bằng phương pháp sinh học; các công nghệ sinh học chẩn đoán (chip ADN và thiết bị cảm biến sinh học)" researchSpecialityCode="20802"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00008" researchSpecialitySeqId="00003" researchSpecialityName="Đạo đức học trong công nghệ sinh học môi trường" researchSpecialityCode="20803"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00008" researchSpecialitySeqId="00004" researchSpecialityName="Công nghệ sinh học môi trường khác" researchSpecialityCode="20899"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00009" researchSpecialitySeqId="00001" researchSpecialityName="Các công nghệ xử lý sinh học (các quá trình công nghiệp dựa vào các tác nhân sinh học để vận hành quy trình), xúc tác sinh học; lên men" researchSpecialityCode="20901"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00009" researchSpecialitySeqId="00002" researchSpecialityName="Các công nghệ sản phẩm sinh học (các sản phẩm được chế tạo sử dụng vật liệu sinh học làm nguyên liệu), vật liệu sinh học, chất dẻo sinh học, nhiên liệu sinh học, các hóa chất được chiết tách từ sinh học, các vật liệu mới có nguồn gốc sinh học" researchSpecialityCode="20902"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00009" researchSpecialitySeqId="00003" researchSpecialityName="Công nghệ sinh học công nghiệp khác" researchSpecialityCode="20999"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00010" researchSpecialitySeqId="00001" researchSpecialityName="Các vật liệu nano (sản xuất và các tính chất)" researchSpecialityCode="21001"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00010" researchSpecialitySeqId="00002" researchSpecialityName="Các quy trình nano (các ứng dụng ở cấp nano)" researchSpecialityCode="21002"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00010" researchSpecialitySeqId="00003" researchSpecialityName="Công nghệ nano khác" researchSpecialityCode="21099"/>
+
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00011" researchSpecialitySeqId="00001" researchSpecialityName="Kỹ thuật thực phẩm" researchSpecialityCode="21101"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00011" researchSpecialitySeqId="00002" researchSpecialityName="Kỹ thuật đồ uống" researchSpecialityCode="21102"/>
+	<ResearchSpeciality  researchDomainId="00002" researchSubDomainSeqId="00011" researchSpecialitySeqId="00003" researchSpecialityName="Kỹ thuật thực phẩm và đồ uống khác" researchSpecialityCode="21199"/>
+
+	<!-- Domain: Khoa học y dược -->
+
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Giải phẫu học và hình thái học" researchSpecialityCode="30101"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Di truyền học người" researchSpecialityCode="30102"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00003" researchSpecialityName="Miễn dịch học" researchSpecialityCode="30103"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00004" researchSpecialityName="Thần kinh học (bao gồm cả Tâm sinh lý học)" researchSpecialityCode="30104"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00005" researchSpecialityName="Sinh lý học y học" researchSpecialityCode="30105"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00006" researchSpecialityName="Mô học" researchSpecialityCode="30106"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00007" researchSpecialityName="Hóa học lâm sàng và sinh hóa y học" researchSpecialityCode="30107"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00008" researchSpecialityName="Vi sinh vật học y học" researchSpecialityCode="30108"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00009" researchSpecialityName="Bệnh học" researchSpecialityCode="30109"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00001" researchSpecialitySeqId="00010" researchSpecialityName="Y học cơ sở khác" researchSpecialityCode="30199"/>
+
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00001" researchSpecialityName="Nam học" researchSpecialityCode="30201"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00002" researchSpecialityName="Sản khoa và phụ khoa" researchSpecialityCode="30202"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00003" researchSpecialityName="Nhi khoa" researchSpecialityCode="30203"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00004" researchSpecialityName="Hệ tim mạch" researchSpecialityCode="30204"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00005" researchSpecialityName="Bệnh hệ mạch ngoại biên" researchSpecialityCode="30205"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00006" researchSpecialityName="Huyết học và truyền máu" researchSpecialityCode="30206"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00007" researchSpecialityName="Hệ hô hấp và các bệnh liên quan" researchSpecialityCode="30207"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00008" researchSpecialityName="Điều trị tích cực và hồi sức cấp cứu" researchSpecialityCode="30208"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00009" researchSpecialityName="Gây mê" researchSpecialityCode="30209"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00010" researchSpecialityName="Chấn thương, Chỉnh hình" researchSpecialityCode="30210"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00011" researchSpecialityName="Ngoại khoa (Phẫu thuật)" researchSpecialityCode="30211"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00012" researchSpecialityName="Y học hạt nhân và phóng xạ; chụp ảnh y học" researchSpecialityCode="30212"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00013" researchSpecialityName="Ghép mô, tạng" researchSpecialityCode="30213"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00014" researchSpecialityName="Nha khoa và phẫu thuật miệng" researchSpecialityCode="30214"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00015" researchSpecialityName="Da liễu, Hoa liễu" researchSpecialityCode="30215"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00016" researchSpecialityName="Dị ứng" researchSpecialityCode="30216"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00017" researchSpecialityName="Bệnh về khớp" researchSpecialityCode="30217"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00018" researchSpecialityName="Nội tiết và chuyển hoá (bao gồm cả đái tháo đường, rối loạn hoocmon)" researchSpecialityCode="30218"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00019" researchSpecialityName="Tiêu hoá và gan mật học" researchSpecialityCode="30219"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00020" researchSpecialityName="Niệu học và thận học" researchSpecialityCode="30220"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00021" researchSpecialityName="Ung thư học và phát sinh ung thư" researchSpecialityCode="30221"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00022" researchSpecialityName="Nhãn khoa. Bệnh mắt" researchSpecialityCode="30222"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00023" researchSpecialityName="Tai mũi họng" researchSpecialityCode="30223"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00024" researchSpecialityName="Tâm thần học" researchSpecialityCode="30224"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00025" researchSpecialityName="Thần kinh học lâm sàng" researchSpecialityCode="30225"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00026" researchSpecialityName="Lão khoa, Bệnh người già" researchSpecialityCode="30226"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00027" researchSpecialityName="Y học thẩm mỹ, Phẫu thuật thẩm mỹ" researchSpecialityCode="30227"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00028" researchSpecialityName="Y học tổng hợp và nội khoa" researchSpecialityCode="30228"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00029" researchSpecialityName="Y học bổ trợ và kết hợp" researchSpecialityCode="30229"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00030" researchSpecialityName="Y học thể thao, thể dục" researchSpecialityCode="30230"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00031" researchSpecialityName="Y học dân tộc; y học cổ truyền" researchSpecialityCode="30231"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00002" researchSpecialitySeqId="00032" researchSpecialityName="Y học lâm sàng khác" researchSpecialityCode="30299"/>
+
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00001" researchSpecialityName="Khoa học về chăm sóc sức khoẻ và dịch vụ y tế (bao gồm cả quản trị bệnh viện, tài chính y tế,..)" researchSpecialityCode="30301"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00002" researchSpecialityName="Chính sách và dịch vụ y tế" researchSpecialityCode="30302"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00003" researchSpecialityName="Điều dưỡng" researchSpecialityCode="30303"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00004" researchSpecialityName="Dinh dưỡng; Khoa học về ăn kiêng" researchSpecialityCode="30304"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00005" researchSpecialityName="Y tế môi trường và công cộng" researchSpecialityCode="30305"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00006" researchSpecialityName="Y học nhiệt đới" researchSpecialityCode="30306"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00007" researchSpecialityName="Ký sinh trùng học" researchSpecialityCode="30307"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00008" researchSpecialityName="Bệnh truyền nhiễm" researchSpecialityCode="30308"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00009" researchSpecialityName="Dịch tễ học" researchSpecialityCode="30309"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00010" researchSpecialityName="Sức khoẻ nghề nghiệp; tâm lý ung thư học, Hiệu quả chính sách và xã hội của nghiên cứu y sinh học" researchSpecialityCode="30310"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00011" researchSpecialityName="Sức khoẻ sinh sản" researchSpecialityCode="30312"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00012" researchSpecialityName="Đạo đức học trong y học" researchSpecialityCode="30313"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00013" researchSpecialityName="Lạm dụng thuốc; Nghiện và cai nghiện" researchSpecialityCode="30314"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00003" researchSpecialitySeqId="00014" researchSpecialityName="Các vấn đề y tế khác" researchSpecialityCode="30399"/>
+
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00004" researchSpecialitySeqId="00001" researchSpecialityName="Dược lý học" researchSpecialityCode="30401"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00004" researchSpecialitySeqId="00002" researchSpecialityName="Dược học lâm sàng và điều trị" researchSpecialityCode="30402"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00004" researchSpecialitySeqId="00003" researchSpecialityName="Dược liệu học; Cây thuốc; Con thuốc; Thuốc Nam, thuốc dân tộc" researchSpecialityCode="30403"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00004" researchSpecialitySeqId="00004" researchSpecialityName="Hoá dược học" researchSpecialityCode="30404"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00004" researchSpecialitySeqId="00005" researchSpecialityName="Kiểm nghiệm thuốc và Độc chất học (bao gồm cả độc chất học lâm sàng)" researchSpecialityCode="30405"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00004" researchSpecialitySeqId="00006" researchSpecialityName="Dược học khác" researchSpecialityCode="30499"/>
+
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00005" researchSpecialitySeqId="00001" researchSpecialityName="Công nghệ sinh học liên quan đến y học, y tế" researchSpecialityCode="30501"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00005" researchSpecialitySeqId="00002" researchSpecialityName="Công nghệ sinh học liên quan đến thao tác với các tế bào, mô, cơ quan hay toàn bộ cơ thể (hỗ trợ sinh sản); công nghệ tế bào gốc" researchSpecialityCode="30502"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00005" researchSpecialitySeqId="00003" researchSpecialityName="Công nghệ liên quan đến xác định chức năng của ADN, protein, enzym và tác động của chúng tới việc phát bệnh; đảm bảo sức khỏe (bao gồm cả chẩn đoán gen, các can thiệp điều trị trên cơ sở gen (dược phẩm trên cơ sở gen (pharmacogenomics) các liệu pháp điều trị trên cở sở gen)" researchSpecialityCode="30503"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00005" researchSpecialitySeqId="00004" researchSpecialityName="Vật liệu sinh học liên quan đến cấy ghép trong y học, thiết bị, cảm biến y học)" researchSpecialityCode="30504"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00005" researchSpecialitySeqId="00005" researchSpecialityName="Đạo đức học trong công nghệ sinh học y học" researchSpecialityCode="30505"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00005" researchSpecialitySeqId="00006" researchSpecialityName="Công nghệ sinh học y học khác" researchSpecialityCode="30599"/>
+
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00006" researchSpecialitySeqId="00001" researchSpecialityName="Pháp y" researchSpecialityCode="30601"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00006" researchSpecialitySeqId="00002" researchSpecialityName="Y học thảm hoạ" researchSpecialityCode="30602"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00006" researchSpecialitySeqId="00003" researchSpecialityName="Y học hàng không, vũ trụ" researchSpecialityCode="30603"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00006" researchSpecialitySeqId="00004" researchSpecialityName="Quân y; Y tế quốc phòng" researchSpecialityCode="30604"/>
+	<ResearchSpeciality  researchDomainId="00003" researchSubDomainSeqId="00006" researchSpecialitySeqId="00005" researchSpecialityName="Y học, y tế và dược chưa xếp vào mục nào khác" researchSpecialityCode="30699"/>
+
+	<!-- Domain: Khoa học nông nghiệp -->
+
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Nông hoá" researchSpecialityCode="40101"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Thổ nhưỡng học" researchSpecialityCode="40102"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00003" researchSpecialityName="Cây lương thực và cây thực phẩm" researchSpecialityCode="40103"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00004" researchSpecialityName="Cây rau, cây hoa và cây ăn quả" researchSpecialityCode="40104"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00005" researchSpecialityName="Cây công nghiệp và cây thuốc" researchSpecialityCode="40105"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00006" researchSpecialityName="Bảo vệ thực vật" researchSpecialityCode="40106"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00007" researchSpecialityName="Bảo quản và chế biến nông sản" researchSpecialityCode="40107"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00001" researchSpecialitySeqId="00008" researchSpecialityName="Khoa học công nghệ trồng trọt khác" researchSpecialityCode="40199"/>
+
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00001" researchSpecialityName="Sinh lý và hoá sinh động vật nuôi" researchSpecialityCode="40201"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00002" researchSpecialityName="Di truyền và nhân giống động vật nuôi" researchSpecialityCode="40202"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00003" researchSpecialityName="Thức ăn và dinh dưỡng cho động vật nuôi" researchSpecialityCode="40203"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00004" researchSpecialityName="Nuôi dưỡng động vật nuôi" researchSpecialityCode="40204"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00005" researchSpecialityName="Bảo vệ động vật nuôi" researchSpecialityCode="40205"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00006" researchSpecialityName="Sinh trưởng và phát triển của động vật nuôi" researchSpecialityCode="40206"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00002" researchSpecialitySeqId="00007" researchSpecialityName="Khoa học công nghệ chăn nuôi khác" researchSpecialityCode="40299"/>
+
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00001" researchSpecialityName="Y học thú y" researchSpecialityCode="40301"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00002" researchSpecialityName="Gây mê và điều trị tích cực thú y" researchSpecialityCode="40302"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00003" researchSpecialityName="Dịch tễ học thú y" researchSpecialityCode="40303"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00004" researchSpecialityName="Miễn dịch học thú y" researchSpecialityCode="40304"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00005" researchSpecialityName="Giải phẫu học và sinh lý học thú y" researchSpecialityCode="40305"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00006" researchSpecialityName="Bệnh học thú y" researchSpecialityCode="40306"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00007" researchSpecialityName="Vi sinh vật học thú y (trừ vi rút học thú y)" researchSpecialityCode="40307"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00008" researchSpecialityName="Ký sinh trùng học thú y" researchSpecialityCode="40308"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00009" researchSpecialityName="Sinh học phóng xạ và chụp ảnh" researchSpecialityCode="40309"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00010" researchSpecialityName="Vi rút học thú y" researchSpecialityCode="43210"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00011" researchSpecialityName="Phẫu thuật thú y" researchSpecialityCode="40311"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00012" researchSpecialityName="Dược học thú ý" researchSpecialityCode="40312"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00003" researchSpecialitySeqId="00013" researchSpecialityName="Khoa học công nghệ thú y khác" researchSpecialityCode="40399"/>
+
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00001" researchSpecialityName="Lâm sinh" researchSpecialityCode="40401"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00002" researchSpecialityName="Tài nguyên rừng" researchSpecialityCode="40402"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00003" researchSpecialityName="Quản lý và bảo vệ rừng" researchSpecialityCode="40403"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00004" researchSpecialityName="Sinh thái và môi trường rừng" researchSpecialityCode="40404"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00005" researchSpecialityName="Giống cây rừng" researchSpecialityCode="40405"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00006" researchSpecialityName="Nông lâm kết hợp" researchSpecialityCode="40406"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00007" researchSpecialityName="Bảo quản và chế biến lâm sản" researchSpecialityCode="40407"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00004" researchSpecialitySeqId="00008" researchSpecialityName="Khoa học công nghệ lâm nghiệp khác" researchSpecialityCode="40499"/>
+
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00001" researchSpecialityName="Sinh lý và dinh dưỡng thuỷ sản" researchSpecialityCode="40501"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00002" researchSpecialityName="Di truyền học và nhân giống thuỷ sản" researchSpecialityCode="40502"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00003" researchSpecialityName="Bệnh học thuỷ sản" researchSpecialityCode="40503"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00004" researchSpecialityName="Nuôi trồng thuỷ sản" researchSpecialityCode="40504"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00005" researchSpecialityName="Hệ sinh thái và đánh giá nguồn lợi thuỷ sản" researchSpecialityCode="40505"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00006" researchSpecialityName="Quản lý và khai thác thuỷ sản" researchSpecialityCode="40506"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00007" researchSpecialityName="Bảo quản và chế biến thuỷ sản" researchSpecialityCode="40507"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00005" researchSpecialitySeqId="00008" researchSpecialityName="Khoa học công nghệ thuỷ sản khác" researchSpecialityCode="40599"/>
+
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00006" researchSpecialitySeqId="00001" researchSpecialityName="Công nghệ gen (cây trồng và động vật nuôi); nhân dòng vật nuôi" researchSpecialityCode="40601"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00006" researchSpecialitySeqId="00002" researchSpecialityName="Các công nghệ tế bào trong nông nghiệp" researchSpecialityCode="40602"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00006" researchSpecialitySeqId="00003" researchSpecialityName="Các công nghệ enzym và protein trong nông nghiệp" researchSpecialityCode="40603"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00006" researchSpecialitySeqId="00004" researchSpecialityName="Các công nghệ vi sinh vật trong nông nghiệp" researchSpecialityCode="40604"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00006" researchSpecialitySeqId="00005" researchSpecialityName="Đạo đức học trong công nghệ sinh học nông nghiệp" researchSpecialityCode="40605"/>
+	<ResearchSpeciality  researchDomainId="00004" researchSubDomainSeqId="00006" researchSpecialitySeqId="00006" researchSpecialityName="Công nghệ sinh học trong nông nghiệp khác" researchSpecialityCode="40699"/>
+
+	<!-- Domain: Khoa học xã hội -->
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Tâm lý học nói chung (bao gồm cả nghiên cứu quan hệ nguời - máy)" researchSpecialityCode="50101"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Tâm lý học chuyên ngành (bao gồm cả liệu pháp điều trị rối loạn tâm sinh lý và tinh thần trong học tập, ngôn ngữ, nghe, nhìn, nói...)" researchSpecialityCode="50102"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00001" researchSpecialitySeqId="00003" researchSpecialityName="Tâm lý học khác" researchSpecialityCode="50199"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00002" researchSpecialitySeqId="00001" researchSpecialityName="Kinh tế học; Trắc lượng kinh tế học; Quan hệ sản xuất kinh doanh" researchSpecialityCode="50201"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00002" researchSpecialitySeqId="00002" researchSpecialityName="Kinh doanh và quản lý" researchSpecialityCode="50202"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00002" researchSpecialitySeqId="00003" researchSpecialityName="Kinh tế học và kinh doanh khác" researchSpecialityCode="50299"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00003" researchSpecialitySeqId="00001" researchSpecialityName="Khoa học giáo dục học nói chung, bao gồm cả đào tạo, sư phạm học, lý luận giáo dục" researchSpecialityCode="50301"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00003" researchSpecialitySeqId="00002" researchSpecialityName="Giáo dục chuyên biệt (theo đối tượng, cho người khuyết tật,...)" researchSpecialityCode="50302"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00003" researchSpecialitySeqId="00003" researchSpecialityName="Các vấn đề khoa học giáo dục khác" researchSpecialityCode="50399"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00004" researchSpecialitySeqId="00001" researchSpecialityName="Xã hội học nói chung" researchSpecialityCode="50401"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00004" researchSpecialitySeqId="00002" researchSpecialityName="Nhân khẩu học" researchSpecialityCode="50402"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00004" researchSpecialitySeqId="00003" researchSpecialityName="Nhân chủng học" researchSpecialityCode="50403"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00004" researchSpecialitySeqId="00004" researchSpecialityName="Dân tộc học" researchSpecialityCode="50404"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00004" researchSpecialitySeqId="00005" researchSpecialityName="Xã hội học chuyên đề; Khoa học về giới và phụ nữ; Các vấn đề xã hội. Nghiên cứu gia đình và xã hội; Công tác xã hội" researchSpecialityCode="50405"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00004" researchSpecialitySeqId="00006" researchSpecialityName="Xã hội học khác" researchSpecialityCode="50499"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00005" researchSpecialitySeqId="00001" researchSpecialityName="Luật học" researchSpecialityCode="50501"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00005" researchSpecialitySeqId="00002" researchSpecialityName="Tội phạm học" researchSpecialityCode="50502"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00005" researchSpecialitySeqId="00003" researchSpecialityName="Hình phạt học (khoa học về hình phạt)" researchSpecialityCode="50503"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00005" researchSpecialitySeqId="00004" researchSpecialityName="Các vấn để pháp luật khác" researchSpecialityCode="50599"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00006" researchSpecialitySeqId="00001" researchSpecialityName="Khoa học chính trị" researchSpecialityCode="50601"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00006" researchSpecialitySeqId="00002" researchSpecialityName="Hành chính công và quản lý hành chính" researchSpecialityCode="50602"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00006" researchSpecialitySeqId="00003" researchSpecialityName="Lý thuyết tổ chức; Hệ thống chính trị; Đảng chính trị" researchSpecialityCode="50603"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00006" researchSpecialitySeqId="00004" researchSpecialityName="Khoa học chính trị khác" researchSpecialityCode="50699"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00007" researchSpecialitySeqId="00001" researchSpecialityName="Khoa học môi trường - các khía cạnh xã hội" researchSpecialityCode="50701"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00007" researchSpecialitySeqId="00002" researchSpecialityName="Địa lý kinh tế và văn hoá" researchSpecialityCode="50702"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00007" researchSpecialitySeqId="00003" researchSpecialityName="Nghiên cứu quy hoạch, phát triển đô thị" researchSpecialityCode="50703"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00007" researchSpecialitySeqId="00004" researchSpecialityName="Quy hoạch giao thông và các khía cạnh xã hội của giao thông vận tải" researchSpecialityCode="50704"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00007" researchSpecialitySeqId="00005" researchSpecialityName="Địa lý kinh tế và xã hội khác" researchSpecialityCode="50799"/>
+
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00008" researchSpecialitySeqId="00001" researchSpecialityName="Báo chí" researchSpecialityCode="50801"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00008" researchSpecialitySeqId="00002" researchSpecialityName="Thông tin học (Khoa học thông tin - các khía cạnh xã hội)" researchSpecialityCode="50802"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00008" researchSpecialitySeqId="00003" researchSpecialityName="Khoa học thư viện" researchSpecialityCode="50803"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00008" researchSpecialitySeqId="00004" researchSpecialityName="Thông tin đại chúng và truyền thông văn hoá - xã hội" researchSpecialityCode="50804"/>
+	<ResearchSpeciality  researchDomainId="00005" researchSubDomainSeqId="00008" researchSpecialitySeqId="00005" researchSpecialityName="Thông tin đại chúng và truyền thông khác" researchSpecialityCode="50899"/>
+
+	<!-- Domain: Khoa hoc nhan van-->
+
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00001" researchSpecialitySeqId="00001" researchSpecialityName="Lịch sử Việt Nam" researchSpecialityCode="60101"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00001" researchSpecialitySeqId="00002" researchSpecialityName="Lịch sử thế giới; Lịch sử từng nước, từng vùng; từng khu vực" researchSpecialityCode="60102"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00001" researchSpecialitySeqId="00003" researchSpecialityName="Khảo cổ học và tiền sử" researchSpecialityCode="60103"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00001" researchSpecialitySeqId="00004" researchSpecialityName="Các vấn đề lịch sử và khảo cổ học khác" researchSpecialityCode="60199"/>
+
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00001" researchSpecialityName="Nghiên cứu chung về ngôn ngữ" researchSpecialityCode="60201"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00002" researchSpecialityName="Nghiên cứu ngôn ngữ Việt Nam" researchSpecialityCode="60202"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00003" researchSpecialityName="Nghiên cứu ngôn ngữ khác" researchSpecialityCode="60203"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00004" researchSpecialityName="Lý luận văn học; Nghiên cứu văn học nói chung" researchSpecialityCode="60204"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00005" researchSpecialityName="Nghiên cứu văn học Việt Nam, văn học các dân tộc ít người của Việt Nam" researchSpecialityCode="60205"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00006" researchSpecialityName="Nghiên cứu văn học từng dân tộc, từng nước, khu vực khác" researchSpecialityCode="60206"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00007" researchSpecialityName="Lý luận văn hoá; Nghiên cứu văn hoá nói chung" researchSpecialityCode="60207"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00008" researchSpecialityName="Nghiên cứu văn hóa Việt Nam, văn hoá các dân tộc ít người Việt Nam" researchSpecialityCode="60208"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00009" researchSpecialityName="Các nghiên cứu văn hóa từng dân tộc, từng nước, khu vực khác" researchSpecialityCode="60209"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00010" researchSpecialityName="Ngôn ngữ học ứng dụng" researchSpecialityCode="60210"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00002" researchSpecialitySeqId="00011" researchSpecialityName="Nghiên cứu ngôn ngữ và văn hóa khác" researchSpecialityCode="60299"/>
+
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00003" researchSpecialitySeqId="00001" researchSpecialityName="Triết học" researchSpecialityCode="60301"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00003" researchSpecialitySeqId="00002" researchSpecialityName="Lịch sử và triết học của khoa học và công nghệ" researchSpecialityCode="60302"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00003" researchSpecialitySeqId="00003" researchSpecialityName="Đạo đức học" researchSpecialityCode="60303"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00003" researchSpecialitySeqId="00004" researchSpecialityName="Thần học" researchSpecialityCode="60304"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00003" researchSpecialitySeqId="00005" researchSpecialityName="Nghiên cứu tôn giáo" researchSpecialityCode="60305"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00003" researchSpecialitySeqId="00006" researchSpecialityName="Các vấn đề của triết học và tôn giáo khác" researchSpecialityCode="60399"/>
+
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00001" researchSpecialityName="Nghệ thuật và lịch sử nghệ thuật" researchSpecialityCode="60401"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00002" researchSpecialityName="Mỹ thuật" researchSpecialityCode="60402"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00003" researchSpecialityName="Nghệ thuật kiến trúc" researchSpecialityCode="60403"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00004" researchSpecialityName="Nghệ thuật trình diễn (âm nhạc, kịch, múa, hát, xiếc, ...)" researchSpecialityCode="60404"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00005" researchSpecialityName="Nghệ thuật dân gian" researchSpecialityCode="60405"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00006" researchSpecialityName="Nghệ thuật điện ảnh" researchSpecialityCode="60406"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00007" researchSpecialityName="Nghệ thuật truyền thanh, truyền hình" researchSpecialityCode="60407"/>
+	<ResearchSpeciality  researchDomainId="00006" researchSubDomainSeqId="00004" researchSpecialitySeqId="00008" researchSpecialityName="Các vấn đề nghiên cứu nghệ thuật khác" researchSpecialityCode="60499"/>
+
+	
 	<!-- Master-Class-Course-Calendar-->
 	<MasterCourseSlotType masterCourseSlotTypeId="MORNING" masterCourseSlotTypeName="Sáng"/>
 	<MasterCourseSlotType masterCourseSlotTypeId="AFTERNOON" masterCourseSlotTypeName="Chiều"/>
