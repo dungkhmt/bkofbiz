@@ -105,6 +105,27 @@
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+						<fo:block>
+						</fo:block>
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					<fo:table-cell >
+					</fo:table-cell>
+				</fo:table-row>	
+				
+				<fo:table-row height="20pt" border-top-style="solid" >
+				//STT
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
 						<fo:block >${SubTopic2}</fo:block>
 					</fo:table-cell>
 					
@@ -156,6 +177,27 @@
 					</fo:table-cell>
 				</fo:table-row>	
 				</#list>
+				
+				<fo:table-row height="20pt" border-top-style="dotted" >
+				//STT
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+						<fo:block>
+						</fo:block>
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					<fo:table-cell border-right-style="solid">
+					</fo:table-cell>
+					
+					<fo:table-cell />
+					<fo:table-cell >
+					</fo:table-cell>
+				</fo:table-row>	
 					
 			</fo:table-body>
 		</fo:table>

@@ -130,3 +130,18 @@ if(UtilValidate.isNotEmpty(listRecentResearchDirection) && !listRecentResearchDi
 	context.listRecentResearchDirection = listRecentResearchDirection;
 	println(listRecentResearchDirection);
 }
+
+/* get list patent*/
+final String ENABLED = "ENABLED";
+
+List<EntityCondition> listPatentConds = FastList.newInstance(); 
+
+listPatentConds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,ENABLED));
+
+listPatentConds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS, userLoginId));
+
+List<GenericValue> listPatents = delegator.findList("PatentView", EntityCondition.makeCondition(listPatentConds), null,null,null,false);
+
+if(UtilValidate.isNotEmpty(listPatents) && !listPatents.isEmpty()) {
+	context.listPatents = listPatents;
+}
