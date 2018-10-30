@@ -1106,5 +1106,24 @@
 		<value xml:lang="en">Writting</value>
 		<value xml:lang="vi">Viết</value>
 	</property>
-	
+	<property key="BkEunivBefore">
+		<value xml:lang="en">Before</value>
+		<value xml:lang="vi">Trước</value>
+	</property>
+	<property key="BkEunivAfter">
+		<value xml:lang="en">After</value>
+		<value xml:lang="vi">Sau</value>
+	</property>
+	<property key="BkEunivPaper2">
+		<value xml:lang="en">Paper 2</value>
+		<value xml:lang="vi">Bài báo 2</value>
+	</property>
+	<property key="BkEunivPaper1">
+		<value xml:lang="en">Paper 1</value>
+		<value xml:lang="vi">Bài báo 1</value>
+	</property>
+	<property key="BkEunivMatching">
+		<value xml:lang="en">Matching</value>
+		<value xml:lang="vi">Độ trùng khớp</value>
+	</property>
 </resource>

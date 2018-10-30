@@ -70,7 +70,7 @@
 				if(!!dataColumns.old&&!!dataColumns.staffEmail) {
 					var old = dataColumns.old;
 					if(old["staffName"] != dataColumns["staffName"]) {
-						return \'<div class="update-staff">\'+value+\'</div>\';
+						return \'<div class="update-staff" title="'+uiLabelMap.BkEunivBefore+': \'+old["staffName"]+\'&#013;'+uiLabelMap.BkEunivAfter+': \'+dataColumns["staffName"]+\'">\'+value+\'</div>\';
 					}
 				}
 				return value;
@@ -97,7 +97,7 @@
 				if(!!dataColumns.old&&!!dataColumns.staffEmail) {
 					var old = dataColumns.old;
 					if(old["genderName"] != dataColumns["genderName"]) {
-						return \'<div class="update-staff">\'+value+\'</div>\';
+						return \'<div class="update-staff" title="'+uiLabelMap.BkEunivBefore+': \'+old["genderName"]+\'&#013;'+uiLabelMap.BkEunivAfter+': \'+dataColumns["genderName"]+\'">\'+value+\'</div>\';
 					}
 				}
 				return value;
@@ -111,7 +111,7 @@
 				if(!!dataColumns.old&&!!dataColumns.staffEmail) {
 					var old = dataColumns.old;
 					if(old["staffDateOfBirth"] != dataColumns["staffDateOfBirth"]) {
-						return \'<div class="update-staff">\'+parseDate(value)+\'</div>\';
+						return \'<div class="update-staff" title="'+uiLabelMap.BkEunivBefore+': \'+old["staffDateOfBirth"]+\'&#013;'+uiLabelMap.BkEunivAfter+': \'+dataColumns["staffDateOfBirth"]+\'">\'+parseDate(value)+\'</div>\';
 					}
 				}
 				return parseDate(value);
@@ -124,7 +124,7 @@
 				if(!!dataColumns.old&&!!dataColumns.staffEmail) {
 					var old = dataColumns.old;
 					if(old["departmentName"] != dataColumns["departmentName"]) {
-						return \'<div class="update-staff">\'+value+\'</div>\';
+						return \'<div class="update-staff" title="'+uiLabelMap.BkEunivBefore+': \'+old["departmentName"]+\'&#013;'+uiLabelMap.BkEunivAfter+': \'+dataColumns["departmentName"]+\'">\'+value+\'</div>\';
 					}
 				}
 				return value;
@@ -137,7 +137,7 @@
 				if(!!dataColumns.old&&!!dataColumns.staffEmail) {
 					var old = dataColumns.old;
 					if(old["facultyName"] != dataColumns["facultyName"]) {
-						return \'<div class="update-staff">\'+value+\'</div>\';
+						return \'<div class="update-staff" title="'+uiLabelMap.BkEunivBefore+': \'+old["facultyName"]+\'&#013;'+uiLabelMap.BkEunivAfter+': \'+dataColumns["facultyName"]+\'">\'+value+\'</div>\';
 					}
 				}
 				return value;

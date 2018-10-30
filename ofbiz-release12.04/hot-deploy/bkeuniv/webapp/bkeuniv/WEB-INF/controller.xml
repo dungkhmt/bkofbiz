@@ -983,6 +983,11 @@
     	<response name="success" type="view" value="view-project-participation-declaration"></response>
     </request-map>
 
+	<request-map uri="paper-declaration-duplicate">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-paper-declaration-duplicate"></response>
+    </request-map>
+
     <request-map uri="get-project-working-hour-declaration">
     	<security https="true" auth="false"/>
     	<event type="service" invoke="getProjectWorkingHourDeclaration"></event>
@@ -1314,4 +1319,6 @@
 	<view-map name="view-form-edit-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFormEditPaperDeclaration"/>
 	<view-map name="view-list-phd-student-supervision" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListPhDStudent"/>
 	<view-map name="view-cv-thesis-subject-for-student" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageTheSisSubjectForStudent"/>
+	<view-map name="view-paper-declaration-duplicate" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#PaperDuplicateView"/>
+	
 </site-conf>
