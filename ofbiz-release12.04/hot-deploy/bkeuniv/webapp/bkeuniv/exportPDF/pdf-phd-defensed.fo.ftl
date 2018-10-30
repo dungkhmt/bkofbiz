@@ -62,13 +62,13 @@
 					<fo:table-cell />
 					
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${Guide}</fo:block>
+						<fo:block>${StringUtil.wrapString(uiLabelMap.PhDCoSupervision)}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${Unit}</fo:block>
+						<fo:block>${StringUtil.wrapString(uiLabelMap.PhDTheSisName)}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
@@ -79,62 +79,61 @@
 					
 					
 				</fo:table-row>	
-				
-				<fo:table-row height="20pt" border-top-style="dotted" >
-				//STT
+
+				<#assign phdSequenceId = 0 />
+				<#list listPhdStudentSupervision as phdStudentSupervision>
+				<#assign phdSequenceId = phdSequenceId+1 />
+				 <fo:table-row height="20pt" border-top-style="dotted" >
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID1}</fo:block>
+						<fo:block >${phdSequenceId}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<fo:block>${StringUtil.wrapString(phdStudentSupervision.studentName?if_exists)}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+					<#if phdStudentSupervision.coSupervion == "YES">
+						<fo:block>${StringUtil.wrapString(uiLabelMap.CommonYes?if_exists)}</fo:block>
+					<#else>
+						<fo:block>${StringUtil.wrapString(uiLabelMap.CommonNo?if_exists)}</fo:block>
+					</#if>
+						
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
+						<fo:block>${StringUtil.wrapString(phdStudentSupervision.thesisName?if_exists)}</fo:block>
 					</fo:table-cell>
 					
 					<fo:table-cell />
 					<fo:table-cell>
-						<fo:block>${blank}</fo:block>
+						<fo:block>${phdStudentSupervision.graduateYear?if_exists}</fo:block>
 					</fo:table-cell>
 				</fo:table-row>	
+				</#list>
 				
-				<fo:table-row height="20pt" border-top-style="dotted" >
+				<fo:table-row height="20pt" border-top-style="dotted">
 				//STT
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block >${ID2}</fo:block>
 					</fo:table-cell>
-					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
 					</fo:table-cell>
-					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
 					</fo:table-cell>
-					
 					<fo:table-cell />
 					<fo:table-cell border-right-style="solid">
-						<fo:block>${blank}</fo:block>
 					</fo:table-cell>
-					
 					<fo:table-cell />
-					<fo:table-cell >
-						<fo:block>${blank}</fo:block>
-					</fo:table-cell>	
+					<fo:table-cell text-aline = "center"></fo:table-cell>
 				</fo:table-row>	
+				
 			</fo:table-body>
 		</fo:table>
        </fo:table-cell>

@@ -166,6 +166,7 @@ public class ResearchDomainManagement {
 		try {
 			GenericValue userLogin = (GenericValue) context.get("userLogin");
 			String userLoginId = userLogin.getString("userLoginId");
+			String researchDomainId = (String) ((List) context.get("researchDomainId[]")).get(0);
 			
 			Timestamp nowTimestamp = UtilDateTime.nowTimestamp();
 			List<EntityCondition> cond = new ArrayList<EntityCondition>();
@@ -173,8 +174,9 @@ public class ResearchDomainManagement {
 			cond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.EQUALS, null));
 			
 			List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
-			listAllConditions.add(EntityCondition.makeCondition(cond, EntityOperator.OR));
+			listAllConditions.add(EntityCondition.makeCondition("researchDomainId", researchDomainId));
 			
+			listAllConditions.add(EntityCondition.makeCondition(cond, EntityOperator.OR));
 			listAllConditions.add(EntityCondition.makeCondition(EntityFunction.UPPER_FIELD("staffId"), EntityOperator.EQUALS, EntityFunction.UPPER(userLoginId)));
 			
 		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
@@ -188,8 +190,6 @@ public class ResearchDomainManagement {
 				l.put("thruDate", new Date(nowTimestamp.getTime()));
 				delegator.store(l);
 			}
-			
-			String researchDomainId = (String) ((List) context.get("researchDomainId[]")).get(0);
 			
 			GenericValue gvs = delegator.makeValue("StaffResearchDomain");
 			String staffResearchDomainId = delegator.getNextSeqId("StaffResearchDomain");

@@ -42,7 +42,7 @@
     <!-- services cv general information -->
     
     <service name="getCVInformation" engine="java" 
-    	location="org.ofbiz.bkeuniv.scientificserviceexperience.ScientificServiceExperience"
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
     	invoke="getCVInformation" >
     	<attribute name="staffId" mode="IN" type="String" optional="false"></attribute>
     	<attribute name="staffCVInfo" mode="OUT" type="Map" optional="false"></attribute>
@@ -69,7 +69,34 @@
     	<attribute name="academicRankYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="degreeYear" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="duty" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="researchPositionId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
     	<attribute name="statusCode" mode="OUT" type="String" optional="false"></attribute>
+    </service>
+    
+    <service name="updateStaffAgencyWork" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="updateStaffAgencyWork" >
+    	<attribute name="staffAgencyWorkId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="createStaffAgencyWork" engine="java" 
+    	location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService"
+    	invoke="createStaffAgencyWork" >
+	    <attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkLeaderName" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="agencyWorkAddress" mode="IN" type="String" optional="true"></attribute>
+	   	<attribute name="agencyWorkPhone" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="agencyWorkFax" mode="IN" type="String" optional="true"></attribute>
     </service>
     
     <!-- services phd student supervision -->
@@ -136,6 +163,36 @@
     	invoke="deleteThesisSubject" >
     	<attribute name="thesisSubjectPhDMasterId" mode="IN" type="String" optional="false"></attribute>
     	<attribute name="message" mode="OUT" type="String" optional="true"></attribute>
+    </service>
+    
+    <!-- service recent research direction -->
+    
+    <service name="jqGetListRecentResearchDirection" engine="java" invoke="jqGetListRecentResearchDirection" location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
+   	
+   	<service name="createRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="createRecentResearchDirection" >
+    	<attribute name="keywords" mode="IN" type="String" optional="false"></attribute>
+       	<attribute name="startYear" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    
+    <service name="updateRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="updateRecentResearchDirection" >
+    	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="keywords" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="startYear" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteRecentResearchDirection" engine="java" 
+    	location="org.ofbiz.bkeuniv.recentresearchdirection.RecentResearchDirectionService"
+    	invoke="deleteRecentResearchDirection" >
+    	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
     </service>
     
 </services>

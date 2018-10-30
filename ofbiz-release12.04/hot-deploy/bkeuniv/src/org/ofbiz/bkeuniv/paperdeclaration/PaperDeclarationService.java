@@ -1833,7 +1833,8 @@ public class PaperDeclarationService {
 		// Checking for form fields - End
 		if(paperName.equals("") || authors.equals("") || roleId.equals("")
 			|| paperCategoryId.equals("") || paperCategoryKNCId.equals("")
-			|| researchProjectProposalId.equals("") || journalConferenceName.equals("")
+			//|| researchProjectProposalId.equals("") 
+			|| journalConferenceName.equals("")
 			|| academicYearId.equals("") || month.equals("") || year.equals("")
 			|| members.size() < 0
 				) {
@@ -2035,7 +2036,7 @@ public class PaperDeclarationService {
 														
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
-		String staffId = (String) userLogin.getString("userLoginId");
+		//String staffId = (String) userLogin.getString("userLoginId");
 		
 		List lst = null;
 		
@@ -2185,7 +2186,8 @@ public class PaperDeclarationService {
 		// Checking for form fields - End
 		if(paperId.equals("") || paperName.equals("") || authors.equals("") || roleId.equals("")
 			|| paperCategoryId.equals("") || paperCategoryKNCId.equals("")
-			|| researchProjectProposalId.equals("") || journalConferenceName.equals("")
+			//|| researchProjectProposalId.equals("") 
+			|| journalConferenceName.equals("")
 			|| academicYearId.equals("") || month.equals("") || year.equals("")
 			|| members.size() < 0
 				) {
@@ -2213,8 +2215,8 @@ public class PaperDeclarationService {
 						response, 200);
 				return;
 			}
-			
-			p.put("staffId", staffId);
+			String staffId = p.getString("staffId");// do not update staffId
+			//p.put("staffId", staffId);
 			
 			p.put("paperName", paperName);
 			p.put("authors", authors);
