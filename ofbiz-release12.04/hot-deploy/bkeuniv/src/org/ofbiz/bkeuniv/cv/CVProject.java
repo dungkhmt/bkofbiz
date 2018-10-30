@@ -18,7 +18,7 @@ import org.ofbiz.service.ServiceUtil;
 public class CVProject {
 	public static String module = CVProject.class.getName();
 	public final static String[] attr = new String[]{"researchProjectProposalName","sequenceInCVProject","cvProjectId",
-		"projectProposalMemberId"};
+		"projectProposalMemberId","roleTypeId","statusName"};
 	
 	public static Map<String, Object> addCVProject(DispatchContext ctx,
 			Map<String, ? extends Object> context) {

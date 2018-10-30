@@ -616,6 +616,20 @@
 			<key-map field-name="roleTypeId"/>
 		</relation>
 	</entity>
+	
+	
+	<view-entity entity-name="ProjectProposalMemberViewSequenceInCV" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PPMV" entity-name="ProjectProposalMemberView"></member-entity>
+		<member-entity entity-alias="CVP" entity-name="CVProject"></member-entity>
+		<alias-all entity-alias="PPMV"></alias-all>
+		<alias name="sequenceInCVProject" field="sequenceInCVProject" entity-alias="CVP"></alias>
+		
+		<view-link rel-entity-alias="CVP" entity-alias="PPMV" rel-optional="true">
+			<key-map rel-field-name="projectProposalMemberId" field-name="projectProposalMemberId"/>
+		</view-link>
+		
+	</view-entity>
+	
 	<view-entity entity-name="ProjectProposalMemberView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="PPR" entity-name="ProjectProposalMember"></member-entity>
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
@@ -629,6 +643,7 @@
 		<alias name="researchProjectProposalCode" field="researchProjectProposalCode" entity-alias="RPPV"></alias>
 		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPPV"></alias>
 		<alias name="statusName" field="statusName" entity-alias="RPPV"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPPV"></alias>
 		<alias name="startDate" field="startDate" entity-alias="RPPV"></alias>
 		<alias name="endDate" field="endDate" entity-alias="RPPV"></alias>
 		<view-link rel-entity-alias="ST" entity-alias="PPR" rel-optional="true">
@@ -1428,6 +1443,21 @@
 		
 	</view-entity>
 	
+	
+	<view-entity entity-name="PapersStaffViewSequenceInCV" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PSV" entity-name="PapersStaffView"></member-entity>
+		<member-entity entity-alias="CVP" entity-name="CVPaper"></member-entity>
+		
+		<alias-all entity-alias="PSV"></alias-all>
+		<alias name="sequenceInCVPaper" entity-alias="CVP" field="sequenceInCVPaper"></alias>
+		
+		<view-link rel-entity-alias="CVP" entity-alias="PSV" rel-optional="true">
+			<key-map rel-field-name="staffPaperDeclarationId" field-name="staffPaperDeclarationId"/>
+		</view-link>
+		
+	</view-entity>
+
+
 	<view-entity entity-name="PaperView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>

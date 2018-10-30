@@ -34,6 +34,8 @@ import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.bkeuniv.config.ConfigParams;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.DelegatorFactory;
+import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
@@ -92,6 +94,36 @@ public class PaperDeclarationService {
 		return fullname;
 	}
 
+	
+	@SuppressWarnings({ "unchecked" })
+	public static void updateCVPapers(HttpServletRequest request,
+			HttpServletResponse response) {
+		String json = (String)request.getParameter("json");
+		System.out.println(module + "::updateCVPapers, json = " + json);
+		
+		GenericDelegator delegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+		
+		try{
+			JSONArray L = JSONArray.fromObject(json);
+			for(int i = 0; i< L.size(); i++){
+				JSONObject o = (JSONObject)L.get(i);
+				String staffPaperDeclarationId = o.getString("staffPaperDeclarationId");
+				String seq = o.getString("seq");
+				if(seq == null || seq.equals("")){
+					PaperDeclarationUtil.removePaperCV(delegator, staffPaperDeclarationId);
+					Debug.log(module + "::updateCVPapers, remove " + staffPaperDeclarationId + "-----" + seq);
+				}else{
+					PaperDeclarationUtil.addUpdatePaperCV(delegator, staffPaperDeclarationId, Long.valueOf(seq));
+					Debug.log(module + "::updateCVPapers, addUpdate " + staffPaperDeclarationId + "-----" + seq);
+				}
+				
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	
 	@SuppressWarnings({ "unchecked" })
 	public static void exportExcelKV01(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -1005,7 +1037,183 @@ public class PaperDeclarationService {
 		}
 		return retSucc;
 	}
+	
+	public static Map<String, Object> JQGetPapersOfStaff(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 
+			if (parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String) parameters.get("q")[0].trim();
+				System.out.println("1. debug ::::::::::" + q);
+				String[] searchKeys = { "staffName", "researchProjectProposalName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(
+							EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE,
+							EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch,
+						EntityOperator.OR));
+			}
+			if (filter != null) {
+
+				listAllConditions.add(filter);
+			}
+			
+			
+			
+
+			listAllConditions.add(EntityCondition.makeCondition("authorStaffId",
+					EntityOperator.EQUALS, userLoginId));
+			listAllConditions.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			listAllConditions.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			System.out.println("4. debug ::::::::::" + userLoginId);
+			
+			papers = delegator.findList("PapersStaffView", condition, null, sort,
+					opts, false);
+
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for (GenericValue p : papers) {
+				if (p.get("approveStatusId") == null
+						|| !p.getString("approveStatusId").equals(
+								PaperDeclarationUtil.STATUS_CANCELLED)) {
+					ret_papers.add(p);
+				}
+			}
+
+			for (GenericValue gv : ret_papers) {
+				Debug.log(module + "::getPapersOfStaff, paper "
+						+ gv.get("paperName"));
+			}
+			Debug.log(module + "::getPapersOfStaff, papers.sz = "
+					+ ret_papers.size());
+			
+			
+			result.put("listIterator", ret_papers);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+
+	public static Map<String, Object> JQGetPapersOfStaffCV(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+
+			if (parameters.containsKey("q")) {
+				//System.out.println("debug :::::::::: not null");
+				String q = (String) parameters.get("q")[0].trim();
+				//System.out.println("1. debug ::::::::::" + q);
+				String[] searchKeys = { "staffName", "researchProjectProposalName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(
+							EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE,
+							EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch,
+						EntityOperator.OR));
+			}
+			if (filter != null) {
+
+				listAllConditions.add(filter);
+			}
+			
+			
+			
+
+			listAllConditions.add(EntityCondition.makeCondition("authorStaffId",
+					EntityOperator.EQUALS, userLoginId));
+			listAllConditions.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			listAllConditions.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			//System.out.println("4. debug ::::::::::" + userLoginId);
+			
+			papers = delegator.findList("PapersStaffViewSequenceInCV", condition, null, sort,
+					opts, false);
+
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for (GenericValue p : papers) {
+				if (p.get("approveStatusId") == null
+						|| !p.getString("approveStatusId").equals(
+								PaperDeclarationUtil.STATUS_CANCELLED)) {
+					ret_papers.add(p);
+				}
+			}
+
+			//for (GenericValue gv : ret_papers) {
+			//	Debug.log(module + "::getPapersOfStaff, paper "
+			//			+ gv.get("paperName"));
+			//}
+			//Debug.log(module + "::getPapersOfStaff, papers.sz = "
+			//		+ ret_papers.size());
+			
+			
+			result.put("listIterator", ret_papers);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			e.printStackTrace();
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
 
 	public static Map<String, Object> getPapersOfStaff(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
