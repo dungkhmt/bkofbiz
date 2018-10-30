@@ -110,6 +110,41 @@
 		</section>
 	</screen>
 
+	<screen name="PaperDuplicateView">
+		<section>
+			<actions>
+				<service service-name="getFaculties" result-map="listFaculties">
+					<field-map field-name="universityId" value="HUST"/>
+				</service>
+				<service service-name="getListAcademicYears" result-map="listAcademicYears">
+				</service>
+				<service service-name="getPaperCategory" result-map="listPaperCategory">
+				</service>
+				<service service-name="getPaperDeclarationStatus" result-map="listStatus">
+				</service>
+				
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/paper-declaration-duplicate.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="pageListPaperDeclaration">
 		<section>
 			<actions>

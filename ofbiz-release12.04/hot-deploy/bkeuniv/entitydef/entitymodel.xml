@@ -1065,6 +1065,7 @@
 			<condition-list combine="and">
 				<condition-list>
 					<condition-expr field-name="thruDate" entity-alias="ST" value=""/>
+					<condition-expr field-name="staffUserLoginId" entity-alias="ST" value="" operator="not-equals"/>
 				</condition-list>
 			</condition-list>
 		</entity-condition>
