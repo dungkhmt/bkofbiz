@@ -924,9 +924,9 @@
 	<screen name="paperCVRecentProjectsNew">
 		<section>
 			<actions>
-				<!-- 
+				
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
-				 -->
+				
 				<!-- <service service-name="getProjectsOfStaff" result-map="resultProjects">
 				
 				</service> -->

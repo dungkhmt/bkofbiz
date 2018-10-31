@@ -1162,5 +1162,14 @@
 		<value xml:lang="vi">Năm bắt đầu nghiên cứu</value>
 	</property>
 	
+	<property key="BkEunivMatchIntegerFormat">
+		<value xml:lang="en">Please match the integer format</value>
+		<value xml:lang="vi">Hãy nhập số nguyên dương</value>
+	</property>
+	
+	<property key="BkEunivAuthors">
+        <value xml:lang="en">Authors</value>
+        <value xml:lang="vi">Tác giả</value>
+    </property>
 	
 </resource>
