@@ -223,8 +223,17 @@
 <!-- Quan ly budget -->
 <Function functionId="BUDGET_MANAGEMENT" uiLabelId="budget_management" vnLabel="Quản lý ngân sách" enLabel="budget management" parentFunctionId="NULL" index="1"/>
 
-<Function functionId="LIST_BUDGET_IN_OUT" uiLabelId="list_budget_in_out" target="list_budget_in_out" vnLabel="Danh sách ngân sách thu/chi" enLabel="List budget in/out" parentFunctionId="BUDGET_MANAGEMENT" index="1"/>
+<Function functionId="LIST_BUDGET_IN_OUT" uiLabelId="list-budget-in-out" target="list-budget-in-out" vnLabel="Danh sách ngân sách thu/chi" enLabel="List budget in/out" parentFunctionId="BUDGET_MANAGEMENT" index="1"/>
 
+<!-- Quan ly khen thuong KHCN -->
+<Function functionId="AWARD_KHCN_MANAGEMENT" uiLabelId="award_khcn_management" vnLabel="Quản lý khen thưởng KHCN" enLabel="award KHCN management" parentFunctionId="NULL" index="1"/>
+
+<Function functionId="LIST_AWARD_KHCN" uiLabelId="list-award-khcn" target="list-award-khcn" vnLabel="Danh sách khen thưởng KHCN" enLabel="List award KHCN" parentFunctionId="LIST_AWARD_KHCN" index="1"/>
+
+<!-- Quan lý so huu tri tue -->
+<Function functionId="INTELLECTUAL_PROPERTY_MANAGEMENT" uiLabelId="intellectual_property_management" vnLabel="Quản lý sở hữu trí tuệ" enLabel="intellectual property management" parentFunctionId="NULL" index="1"/>
+
+<Function functionId="LIST_INTELLECTUAL_PROPERTY" uiLabelId="list-intellectual-property" target="list-intellectual-property" vnLabel="Danh sách sở hữu trí tuệ" enLabel="List award KHCN" parentFunctionId="INTELLECTUAL_PROPERTY_MANAGEMENT" index="1"/>
 
 <!-- BIZ_MASTER_COURSE -->
 <GroupFunction groupFunctionId="BIZMASTERCOURSE_MASTER_COURSE_CLASS_MANAGEMENT" securityGroupId="BIZMASTERCOURSE" functionId="MASTER_COURSE_CLASS_MANAGEMENT" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
