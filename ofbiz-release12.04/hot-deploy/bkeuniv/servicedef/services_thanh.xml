@@ -195,4 +195,38 @@
     	<attribute name="recentResearchDirectionId" mode="IN" type="String" optional="false"></attribute>
     </service>
     
+    
+    <!-- service intellectual property -->
+    
+    
+    <service name="jqGetListIntellectualProperty" engine="java" invoke="jqGetListIntellectualProperty" location="org.ofbiz.bkeuniv.intellectualproperty.IntellectualPropertyService">
+        <implements service="jqxGetListInterface"/>
+   	</service>
+   	
+   	<service name="createIntellectualProperty" engine="java" 
+    	location="org.ofbiz.bkeuniv.intellectualproperty.IntellectualPropertyService"
+    	invoke="createIntellectualProperty" >
+    	<attribute name="intellectualPropertyName" mode="IN" type="String" optional="false"></attribute>
+       	<attribute name="staffId[]" mode="IN" type="List" optional="false"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="date" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="updateIntellectualProperty" engine="java" 
+    	location="org.ofbiz.bkeuniv.intellectualproperty.IntellectualPropertyService"
+    	invoke="updateIntellectualProperty" >
+    	<attribute name="intellectualPropertyId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="intellectualPropertyName" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="date" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteIntellectualProperty" engine="java" 
+    	location="org.ofbiz.bkeuniv.intellectualproperty.IntellectualPropertyService"
+    	invoke="deleteIntellectualProperty" >
+    	<attribute name="intellectualPropertyId" mode="IN" type="String" optional="false"></attribute>
+    </service>
+    
+    
 </services>

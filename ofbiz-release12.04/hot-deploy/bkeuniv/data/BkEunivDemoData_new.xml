@@ -228,7 +228,7 @@
 <!-- Quan ly khen thuong KHCN -->
 <Function functionId="AWARD_KHCN_MANAGEMENT" uiLabelId="award_khcn_management" vnLabel="Quản lý khen thưởng KHCN" enLabel="award KHCN management" parentFunctionId="NULL" index="1"/>
 
-<Function functionId="LIST_AWARD_KHCN" uiLabelId="list-award-khcn" target="list-award-khcn" vnLabel="Danh sách khen thưởng KHCN" enLabel="List award KHCN" parentFunctionId="LIST_AWARD_KHCN" index="1"/>
+<Function functionId="LIST_AWARD_KHCN" uiLabelId="list-award-khcn" target="list-award-khcn" vnLabel="Danh sách khen thưởng KHCN" enLabel="List award KHCN" parentFunctionId="AWARD_KHCN_MANAGEMENT" index="1"/>
 
 <!-- Quan lý so huu tri tue -->
 <Function functionId="INTELLECTUAL_PROPERTY_MANAGEMENT" uiLabelId="intellectual_property_management" vnLabel="Quản lý sở hữu trí tuệ" enLabel="intellectual property management" parentFunctionId="NULL" index="1"/>

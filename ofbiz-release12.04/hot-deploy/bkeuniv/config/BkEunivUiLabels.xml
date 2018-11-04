@@ -1171,5 +1171,30 @@
         <value xml:lang="en">Authors</value>
         <value xml:lang="vi">Tác giả</value>
     </property>
+    
+    <property key="AddNewIntellectualProperty">
+        <value xml:lang="en">Add new intellectual property</value>
+        <value xml:lang="vi">Thêm mới hoạt động sở hữu trí tuệ</value>
+    </property>
+    
+    <property key="UpdateIntellectualProperty">
+        <value xml:lang="en">Update intellectual property</value>
+        <value xml:lang="vi">Cập nhật hoạt động sở hữu trí tuệ</value>
+    </property>
+    
+    <property key="DeleteIntellectualProperty">
+        <value xml:lang="en">Delete intellectual property</value>
+        <value xml:lang="vi">Xóa hoạt động sở hữu trí tuệ</value>
+    </property>
+    
+    <property key="IntellectualPropertyName">
+        <value xml:lang="en">Intellectual property name</value>
+        <value xml:lang="vi">Tên hoạt động</value>
+    </property>
+    
+    <property key="IntellectualPropertyDate">
+        <value xml:lang="en">Intellectual property date</value>
+        <value xml:lang="vi">Thời điểm chứng nhận</value>
+    </property>
 	
 </resource>

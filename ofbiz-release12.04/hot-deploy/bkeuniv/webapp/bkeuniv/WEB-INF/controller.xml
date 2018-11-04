@@ -1317,6 +1317,32 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="list-intellectual-property">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-intellectual-property"/>
+	</request-map>
+	
+	<request-map uri="update-intellectual-property">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateIntellectualProperty"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-intellectual-property">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createIntellectualProperty"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-intellectual-property">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteIntellectualProperty"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -1390,4 +1416,8 @@
 	<view-map name="view-paper-declaration-duplicate" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#PaperDuplicateView"/>
 	
 	<view-map name="view-recent-research-direction" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageRecentResearchDirection"/>
+	
+	<view-map name="view-list-intellectual-property" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListIntellectualProperty"/>
+	
+	
 </site-conf>

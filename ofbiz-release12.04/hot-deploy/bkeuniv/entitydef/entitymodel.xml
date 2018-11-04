@@ -1796,8 +1796,9 @@
 		<field name="intellectualPropertyId" type="id-ne"></field>
 		<field name="intellectualPropertyName" type="very-long"></field>
 		<field name="staffId" type="id-vlong"></field>
-		<field name="date" type="date"></field>
+		<field name="date" type="date-time"></field>
 		<field name="description" type="very-long"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="intellectualPropertyId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
