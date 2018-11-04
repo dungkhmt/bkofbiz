@@ -1,5 +1,13 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 
+<#assign inOutType =[
+	{ "name": "${uiLabelMap.BudgetIn}" ,"value": "IN" },
+	{ "name": "${uiLabelMap.BudgetOut}" ,"value": "OUT" }
+] >
+
+
+
+
 <body>
 
 <script>
@@ -41,27 +49,36 @@
 			"data": "staffName"
 		},
 		{
-			"name": bkEunivUiLabelMap.IntellectualPropertyName?j_string,
-			"data": "intellectualPropertyName"
-		},
-		{
-			"name": bkEunivUiLabelMap.IntellectualPropertyDate?j_string,
-			"data": "date",
-			"type": "date"
-		},
-		{
 			"name": bkEunivUiLabelMap.CommonDescription?j_string,
 			"data": "description"
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOutAmount?j_string,
+			"data": "amount",
+			"render": 'function(value, name, dataColumns, id) {
+				return value.toLocaleString("en-US", { style: "currency", currency: "USD" }).replace("$", "") + " đ";
+			}'
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOut?j_string,
+			"data": "inOutFlagName"
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOutTime?j_string,
+			"data": "date",
+			"type": "date"
 		}
 	] />
 	
 	<#assign fields=[
 		"staffName",
 		"staffId",
-		"intellectualPropertyId",
-		"intellectualPropertyName",
+		"budgetInOutId",
+		"amount",
 		"date",
-		"description"
+		"description",
+		"inOutFlag",
+		"inOutFlagName"
 	] />
 	
 	<#assign columnsChange=[
@@ -77,17 +94,29 @@
 			}
 		},
 		{
-			"name": bkEunivUiLabelMap.IntellectualPropertyName?j_string,
-			"value": "intellectualPropertyName"
-		},
-		{
-			"name": bkEunivUiLabelMap.IntellectualPropertyDate?j_string,
-			"value": "date",
-			"type": "date"
-		},
-		{
 			"name": bkEunivUiLabelMap.CommonDescription?j_string,
 			"value": "description"
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOutAmount?j_string,
+			"value": "amount",
+			"pattern": "(?=.*?\\d)^\\$?(([1-9]\\d{0,2}(,\\d{3})*)|\\d+)?(\\.\\d{1,2})?",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOut?j_string,
+			"value": "inOutFlag",
+			"type": "select",
+			"option": {
+				"source": inOutType,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOutTime?j_string,
+			"value": "date",
+			"type": "date"
 		}
 	] />
 	
@@ -106,21 +135,33 @@
 			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
-			"name": bkEunivUiLabelMap.IntellectualPropertyName?j_string,
-			"value": "intellectualPropertyName",
+			"name": bkEunivUiLabelMap.CommonDescription?j_string,
+			"value": "description"
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOutAmount?j_string,
+			"value": "amount",
+			"pattern": "(?=.*?\\d)^\\$?(([1-9]\\d{0,2}(,\\d{3})*)|\\d+)?(\\.\\d{1,2})?",
 			"require": "true#JS",
 			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
-			"name": bkEunivUiLabelMap.IntellectualPropertyDate?j_string,
+			"name": bkEunivUiLabelMap.BudgetInOut?j_string,
+			"value": "inOutFlag",
+			"type": "select",
+			"option": {
+				"source": inOutType,
+				"maxItem": 1
+			},
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
+		},
+		{
+			"name": bkEunivUiLabelMap.BudgetInOutTime?j_string,
 			"value": "date",
 			"type": "date",
 			"require": "true#JS",
 			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
-		},
-		{
-			"name": bkEunivUiLabelMap.CommonDescription?j_string,
-			"value": "description"
 		}
 	] />
 	
@@ -128,7 +169,7 @@
 	
 	<@jqDataTable
 		id="jqDataTable"
-		urlData="/bkeuniv/control/jqxGeneralServicer?sname=jqGetListIntellectualProperty" 
+		urlData="/bkeuniv/control/jqxGeneralServicer?sname=jqGetListBudgetInOut" 
 		optionData={
 			"data": {
 				"pagesize": "-1"?j_string
@@ -139,14 +180,14 @@
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="/bkeuniv/control/update-intellectual-property" 
-		urlAdd="/bkeuniv/control/create-intellectual-property" 
-		urlDelete="/bkeuniv/control/delete-intellectual-property" 
-		keysId=["intellectualPropertyId"] 
+		urlUpdate="/bkeuniv/control/update-budget-in-out" 
+		urlAdd="/bkeuniv/control/create-budget-in-out" 
+		urlDelete="/bkeuniv/control/delete-budget-in-out" 
+		keysId=["budgetInOutId"] 
 		fieldDataResult = "results" 
-		titleChange=bkEunivUiLabelMap.UpdateIntellectualProperty?j_string
-		titleNew=bkEunivUiLabelMap.AddNewIntellectualProperty?j_string
-		titleDelete=bkEunivUiLabelMap.DeleteIntellectualProperty?j_string
+		titleChange=bkEunivUiLabelMap.UpdateBudgetInOut?j_string
+		titleNew=bkEunivUiLabelMap.AddNewBudgetInOut?j_string
+		titleDelete=bkEunivUiLabelMap.DeleteBudgetInOut?j_string
 		jqTitle=bkEunivUiLabelMap.TitleWorkProgress?j_string
 		contextmenu=false
 		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'

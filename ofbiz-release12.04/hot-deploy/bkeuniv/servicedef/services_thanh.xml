@@ -198,7 +198,6 @@
     
     <!-- service intellectual property -->
     
-    
     <service name="jqGetListIntellectualProperty" engine="java" invoke="jqGetListIntellectualProperty" location="org.ofbiz.bkeuniv.intellectualproperty.IntellectualPropertyService">
         <implements service="jqxGetListInterface"/>
    	</service>
@@ -228,5 +227,38 @@
     	<attribute name="intellectualPropertyId" mode="IN" type="String" optional="false"></attribute>
     </service>
     
+    
+   <!-- service budget management -->
+    
+    <service name="jqGetListBudgetInOut" engine="java" invoke="jqGetListBudgetInOut" location="org.ofbiz.bkeuniv.budgetmanagement.BudgetManagementService">
+        <implements service="jqxGetListInterfaceList"/>
+   	</service>
+   	
+   	<service name="createBudgetInOut" engine="java" 
+    	location="org.ofbiz.bkeuniv.budgetmanagement.BudgetManagementService"
+    	invoke="createBudgetInOut" >
+    	<attribute name="amount" mode="IN" type="String" optional="false"></attribute>
+       	<attribute name="staffId[]" mode="IN" type="List" optional="false"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="inOutFlag[]" mode="IN" type="List" optional="false"></attribute>
+       	<attribute name="date" mode="IN" type="String" optional="false"></attribute>
+    </service>
+    
+    <service name="updateBudgetInOut" engine="java" 
+    	location="org.ofbiz.bkeuniv.budgetmanagement.BudgetManagementService"
+    	invoke="updateBudgetInOut" >
+    	<attribute name="budgetInOutId" mode="IN" type="String" optional="false"></attribute>
+    	<attribute name="amount" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+       	<attribute name="description" mode="IN" type="String" optional="true"></attribute>
+       	<attribute name="inOutFlag[]" mode="IN" type="List" optional="true"></attribute>
+       	<attribute name="date" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+    <service name="deleteBudgetInOut" engine="java" 
+    	location="org.ofbiz.bkeuniv.budgetmanagement.BudgetManagementService"
+    	invoke="deleteBudgetInOut" >
+    	<attribute name="budgetInOutId" mode="IN" type="String" optional="false"></attribute>
+    </service>
     
 </services>

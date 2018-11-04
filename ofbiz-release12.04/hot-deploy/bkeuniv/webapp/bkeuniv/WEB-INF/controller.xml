@@ -1343,6 +1343,32 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="list-budget-in-out">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-budget-in-out"/>
+	</request-map>
+	
+	<request-map uri="update-budget-in-out">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateBudgetInOut"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-budget-in-out">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createBudgetInOut"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-budget-in-out">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteBudgetInOut"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -1418,6 +1444,8 @@
 	<view-map name="view-recent-research-direction" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageRecentResearchDirection"/>
 	
 	<view-map name="view-list-intellectual-property" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListIntellectualProperty"/>
+	
+	<view-map name="view-list-budget-in-out" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListBudgetInOut"/>
 	
 	
 </site-conf>
