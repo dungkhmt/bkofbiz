@@ -1765,14 +1765,14 @@
 		
 	</entity>
 	
-	
 	<entity entity-name="BudgetInOut" package-name="org.ofbiz.bkeuniv">
 		<field name="budgetInOutId" type="id-ne"></field>
 		<field name="description" type="very-long"></field>
 		<field name="amount" type="currency-amount"></field>
-		<field name="date" type="date"></field>
+		<field name="date" type="date-time"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="inOutFlag" type="indicator"><description>"I: thu, O: chi"</description></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="budgetInOutId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
@@ -1784,8 +1784,9 @@
 		<field name="awardKHCNName" type="very-long"></field>
 		<field name="amount" type="currency-amount"></field>
 		<field name="staffId" type="id-vlong"></field>
-		<field name="date" type="date"></field>
+		<field name="date" type="date-time"></field>
 		<field name="description" type="very-long"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="awardKHCNId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
@@ -1796,8 +1797,9 @@
 		<field name="intellectualPropertyId" type="id-ne"></field>
 		<field name="intellectualPropertyName" type="very-long"></field>
 		<field name="staffId" type="id-vlong"></field>
-		<field name="date" type="date"></field>
+		<field name="date" type="date-time"></field>
 		<field name="description" type="very-long"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="intellectualPropertyId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
