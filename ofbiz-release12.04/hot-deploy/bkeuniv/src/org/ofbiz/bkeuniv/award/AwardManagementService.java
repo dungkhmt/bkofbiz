@@ -1,4 +1,4 @@
-package org.ofbiz.bkeuniv.budgetmanagement;
+package org.ofbiz.bkeuniv.award;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -11,7 +11,6 @@ import java.util.Map;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
-import org.ofbiz.base.util.UtilProperties;
 import org.ofbiz.base.util.UtilValidate;
 import org.ofbiz.bkeuniv.model.budget.BudgetInOut;
 import org.ofbiz.entity.Delegator;
@@ -28,15 +27,13 @@ import org.ofbiz.service.GenericServiceException;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
-import javolution.util.FastList;
 import javolution.util.FastMap;
 
-public class BudgetManagementService {
+public class AwardManagementService {
 
-	public static String module = BudgetManagementService.class.getName();
-	public static final String resource = "BkEunivUiLabels";
+	public static String module = AwardManagementService.class.getName();
 
-	public static Map<String, Object> jqGetListBudgetInOut(DispatchContext dpct, Map<String, ? extends Object> context)
+	public static Map<String, Object> jqGetListAwardKHCN(DispatchContext dpct, Map<String, ? extends Object> context)
 			throws GenericEntityException {
 
 		Delegator delegator = (Delegator) dpct.getDelegator();
@@ -48,10 +45,7 @@ public class BudgetManagementService {
 		Map<String, String[]> parameters = (Map<String, String[]>) context.get("parameters");
 		Map<String, Object> result = FastMap.newInstance();
 
-		String InLabel = UtilProperties.getMessage(resource, "BudgetIn", locale);
-		String OutLabel = UtilProperties.getMessage(resource, "BudgetOut", locale);
-
-		EntityListIterator listBudget = null;
+		EntityListIterator listAward = null;
 		try {
 			GenericValue userLogin = (GenericValue) context.get("userLogin");
 			String userLoginId = userLogin.getString("userLoginId");
@@ -61,7 +55,7 @@ public class BudgetManagementService {
 
 			if (parameters.containsKey("q")) {
 				String q = (String) parameters.get("q")[0].trim();
-				String[] searchKeys = { "staffId", "staffName", "amount", "description", "date", "inOutFlag" };
+				String[] searchKeys = { "staffId", "staffName", "amount", "description", "date", "awardKHCNName" };
 
 				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
 				for (String key : searchKeys) {
@@ -80,41 +74,18 @@ public class BudgetManagementService {
 
 			EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
 
-			listBudget = delegator.find("BudgetInOutView", condition, null, null, sort, opts);
+			listAward = delegator.find("AwardKHCNView", condition, null, null, sort, opts);
 
-			List<GenericValue> listBudgetTmp = listBudget.getCompleteList();
-			listBudget.close();
-
-			List<Map<String, Object>> listBudgetResult = FastList.newInstance();
-			for (GenericValue budget : listBudgetTmp) {
-				Map<String, Object> item = FastMap.newInstance();
-				item.put("staffName", budget.getString("staffName"));
-				item.put("description", budget.getString("description"));
-				item.put("amount", (BigDecimal) budget.get("amount"));
-				item.put("date", budget.getString("date"));
-				item.put("inOutFlag", budget.getString("inOutFlag"));
-				item.put("budgetInOutId", budget.getString("budgetInOutId"));
-				item.put("staffId", budget.getString("staffId"));
-				if (budget.getString("inOutFlag").equals(BudgetInOut.IN.getValue())) {
-					item.put("inOutFlagName", InLabel);
-				} else {
-					item.put("inOutFlagName", OutLabel);;
-				}
-				listBudgetResult.add(item);
-			}
-
-			listBudgetTmp.clear();
-
-			result.put("listIterator", listBudgetResult);
+			result.put("listIterator", listAward);
 
 		} catch (Exception e) {
 			Debug.log(e.getMessage());
-			return ServiceUtil.returnError("Error get list jqGetListBudget");
+			return ServiceUtil.returnError("Error get list jqGetListAwardKHCN");
 		}
 		return result;
 	}
 
-	public static Map<String, Object> createBudgetInOut(DispatchContext dpct, Map<String, ? extends Object> context) {
+	public static Map<String, Object> createAwardKHCN(DispatchContext dpct, Map<String, ? extends Object> context) {
 		LocalDispatcher dispatcher = dpct.getDispatcher();
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		Map<String, Object> result = ServiceUtil.returnSuccess();
@@ -126,7 +97,7 @@ public class BudgetManagementService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Debug.log(e.getMessage());
-			return ServiceUtil.returnError("Error at createBudgetInOut" + e);
+			return ServiceUtil.returnError("Error at createAwardKHCN" + e);
 		}
 
 		String description = (String) context.get("description");
@@ -138,49 +109,39 @@ public class BudgetManagementService {
 		if (listStaffId != null) {
 			staffId = (String) listStaffId.get(0);
 		}
+		String awardKHCNName = (String) context.get("awardKHCNName");
+		
+		GenericValue awardKHCNItem = delegator.makeValue("AwardKHCN");
 
-		String inOutFlag = null;
-
-		List<Object> listInOutFlag = (List<Object>) context.get("inOutFlag[]");
-		if (listInOutFlag != null) {
-			if (String.valueOf(listInOutFlag.get(0)).equals("OUT")) {
-				inOutFlag = BudgetInOut.OUT.getValue();
-			} else {
-				inOutFlag = BudgetInOut.IN.getValue();
-			}
-		}
-
-		GenericValue budgetInOutItem = delegator.makeValue("BudgetInOut");
-
-		budgetInOutItem.set("budgetInOutId", delegator.getNextSeqId("BudgetInOut"));
-		budgetInOutItem.set("staffId", staffId);
-		budgetInOutItem.set("amount", amount);
-		budgetInOutItem.set("description", description);
-		budgetInOutItem.set("inOutFlag", inOutFlag);
-		budgetInOutItem.set("date", new Timestamp(Long.valueOf(date)));
+		awardKHCNItem.set("awardKHCNId", delegator.getNextSeqId("AwardKHCN"));
+		awardKHCNItem.set("staffId", staffId);
+		awardKHCNItem.set("amount", amount);
+		awardKHCNItem.set("description", description);
+		awardKHCNItem.set("awardKHCNName", awardKHCNName);
+		awardKHCNItem.set("date", new Timestamp(Long.valueOf(date)));
 
 		try {
-			delegator.createOrStore(budgetInOutItem);
+			delegator.createOrStore(awardKHCNItem);
 		} catch (GenericEntityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Debug.log(e.getMessage());
-			return ServiceUtil.returnError("Error at createBudgetInOut" + e);
+			return ServiceUtil.returnError("Error at createAwardKHCN" + e);
 		}
 
 		return result;
 	}
 
 	@SuppressWarnings("unused")
-	public static Map<String, Object> updateBudgetInOut(DispatchContext dpct, Map<String, ? extends Object> context) {
+	public static Map<String, Object> updateAwardKHCN(DispatchContext dpct, Map<String, ? extends Object> context) {
 
 		LocalDispatcher dispatcher = dpct.getDispatcher();
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 
-		String budgetInOutId = (String) context.get("budgetInOutId");
-		if (UtilValidate.isEmpty(budgetInOutId)) {
-			return ServiceUtil.returnError("Error at updateBudgetInOut because: budgetInOutId is null");
+		String awardKHCNId = (String) context.get("awardKHCNId");
+		if (UtilValidate.isEmpty(awardKHCNId)) {
+			return ServiceUtil.returnError("Error at updateBudgetInOut because: updateAwardKHCN is null");
 		}
 
 		BigDecimal amount = null;
@@ -202,25 +163,16 @@ public class BudgetManagementService {
 			staffId = (String) listStaffId.get(0);
 		}
 
-		String inOutFlag = null;
-
-		List<Object> listInOutFlag = (List<Object>) context.get("inOutFlag[]");
-		if (listInOutFlag != null) {
-			if (String.valueOf(listInOutFlag.get(0)).equals("OUT")) {
-				inOutFlag = BudgetInOut.OUT.getValue();
-			} else {
-				inOutFlag = BudgetInOut.IN.getValue();
-			}
-		}
+		String awardKHCNName = (String) context.get("awardKHCNName");
 
 		try {
-			GenericValue budgetInOutItem = delegator.findOne("BudgetInOut",
-					UtilMisc.toMap("budgetInOutId", budgetInOutId), false);
+			GenericValue budgetInOutItem = delegator.findOne("AwardKHCN",
+					UtilMisc.toMap("awardKHCNId", awardKHCNId), false);
 
 			if (UtilValidate.isEmpty(budgetInOutItem)) {
 				try {
-					dispatcher.runSync("createBudgetInOut", UtilMisc.toMap("amount", amount, "staffId", staffId, "date",
-							date, "description", description, "inOutFlag", inOutFlag));
+					dispatcher.runSync("createAwardKHCN", UtilMisc.toMap("amount", amount, "staffId", staffId, "date",
+							date, "description", description, "awardKHCNName", awardKHCNName));
 				} catch (GenericServiceException e) {
 					e.printStackTrace();
 				}
@@ -229,7 +181,7 @@ public class BudgetManagementService {
 			budgetInOutItem.set("staffId", staffId);
 			budgetInOutItem.set("amount", amount);
 			budgetInOutItem.set("description", description);
-			budgetInOutItem.set("inOutFlag", inOutFlag);
+			budgetInOutItem.set("awardKHCNName", awardKHCNName);
 			budgetInOutItem.set("date", new Timestamp(Long.valueOf(date)));
 
 			delegator.createOrStore(budgetInOutItem);
@@ -238,35 +190,35 @@ public class BudgetManagementService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Debug.log(e.getMessage());
-			return ServiceUtil.returnError("Error at updateBudgetInOut" + e);
+			return ServiceUtil.returnError("Error at updateAwardKHCN" + e);
 		}
 
 		return result;
 	}
 
 	@SuppressWarnings("unused")
-	public static Map<String, Object> deleteBudgetInOut(DispatchContext dpct, Map<String, ? extends Object> context) {
+	public static Map<String, Object> deleteAwardKHCN(DispatchContext dpct, Map<String, ? extends Object> context) {
 
 		LocalDispatcher dispatcher = dpct.getDispatcher();
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 
-		String budgetInOutId = (String) context.get("budgetInOutId");
-		if (UtilValidate.isEmpty(budgetInOutId)) {
-			return ServiceUtil.returnError("Error at deleteBudgetInOut because: budgetInOutId is null");
+		String awardKHCNId = (String) context.get("awardKHCNId");
+		if (UtilValidate.isEmpty(awardKHCNId)) {
+			return ServiceUtil.returnError("Error at deleteAwardKHCN because: awardKHCNId is null");
 		}
 
 		try {
-			GenericValue budgetInOutItem = delegator.findOne("IntellectualProperty",
-					UtilMisc.toMap("budgetInOutId", budgetInOutId), false);
+			GenericValue awardKHCNItem = delegator.findOne("AwardKHCN",
+					UtilMisc.toMap("awardKHCNId", awardKHCNId), false);
 
-			if (UtilValidate.isEmpty(budgetInOutItem)) {
-				return ServiceUtil.returnError("Error at deleteBudgetInOut");
+			if (UtilValidate.isEmpty(awardKHCNItem)) {
+				return ServiceUtil.returnError("Error at deleteAwardKHCN");
 			}
 
-			budgetInOutItem.set("thruDate", UtilDateTime.nowTimestamp());
+			awardKHCNItem.set("thruDate", UtilDateTime.nowTimestamp());
 
-			delegator.createOrStore(budgetInOutItem);
+			delegator.createOrStore(awardKHCNItem);
 
 		} catch (GenericEntityException e) {
 			// TODO Auto-generated catch block

@@ -1369,6 +1369,32 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="list-award-khcn">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-list-award-khcn"/>
+	</request-map>
+	
+	<request-map uri="update-award-khcn">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateAwardKHCN"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-award-khcn">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createAwardKHCN"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-award-khcn">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteAwardKHCN"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -1447,5 +1473,6 @@
 	
 	<view-map name="view-list-budget-in-out" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListBudgetInOut"/>
 	
+	<view-map name="view-list-award-khcn" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListAwardKHCN"/>
 	
 </site-conf>

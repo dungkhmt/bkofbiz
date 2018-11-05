@@ -1236,5 +1236,36 @@
         <value xml:lang="en">In/Out Time</value>
         <value xml:lang="vi">Thời gian thu/chi</value>
     </property>
+    
+    <property key="BkEunivAwardName">
+		<value xml:lang="en">Award name</value>
+		<value xml:lang="vi">Tên giải thưởng KHCN</value>
+	</property>
+	
+	<property key="BkEunivAwardAmout">
+		<value xml:lang="en">Award amount</value>
+		<value xml:lang="vi">Tiền thưởng KHCN</value>
+	</property>
+	
+	<property key="BkEunivAwardTime">
+		<value xml:lang="en">Award time</value>
+		<value xml:lang="vi">Thời gian thưởng</value>
+	</property>
+	
+	<property key="UpdateAwardKHCN">
+		<value xml:lang="en">Update award</value>
+		<value xml:lang="vi">Cập nhật giải thưởng KHCN</value>
+	</property>
+	
+	<property key="AddNewAwardKHCN">
+		<value xml:lang="en">Add new award</value>
+		<value xml:lang="vi">Thêm mới giải thưởng KHCN</value>
+	</property>
+	
+	<property key="DeleteAwardKHCN">
+		<value xml:lang="en">Delete award</value>
+		<value xml:lang="vi">Xóa giải thưởng KHCN</value>
+	</property>
+	
 	
 </resource>

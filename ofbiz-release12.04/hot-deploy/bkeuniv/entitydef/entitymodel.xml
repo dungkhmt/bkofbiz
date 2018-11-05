@@ -1786,13 +1786,10 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="date" type="date-time"></field>
 		<field name="description" type="very-long"></field>
-		<field name="budgetInOutId" type="id-ne"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="awardKHCNId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
-		</relation>
-		<relation rel-entity-name="BudgetInOut" type="one">
-			<key-map field-name="budgetInOutId"/>
 		</relation>
 	</entity>
 	
