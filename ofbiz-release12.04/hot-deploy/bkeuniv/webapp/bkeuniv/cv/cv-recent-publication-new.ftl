@@ -16,7 +16,7 @@
 			"name": "seq"?j_string,
 			"data": "sequenceInCVPaper",
 			"render": 'function(value, name, dataColumns, id) {
-				return \'<input value="\'+value+\'" onChange="updateListChangeSeq(event)">\';
+				return \'<form action="javascript:void(0);" class="form-input-seq"><input id="input-seq\'+dataColumns.paperId+\'" value="\'+value+\'" pattern="[1-9]([0-9]{0,2})" onBlur="updateListChangeSeq(event)"><button type="submit" id="check-validate-seq" style="display: none"></button></form><script>setCustomValidity("#input-seq\'+dataColumns.paperId+\'","'+StringUtil.wrapString(uiLabelMap.BkEunivMatchIntegerFormat)+'")<\\/script>\';
 			}'
 		}
 	] />
@@ -80,28 +80,50 @@ var list=[];
 	function updateListChangeSeq(e) {
 		//console.log(e)
 		test=e
-		var data = jqDataTable.table.row($(e.target).parent()).data();
-		var seqChange = e.target.value;
+		$(e.target).parent()[0].reportValidity();
+		var data = jqDataTable.table.row($(e.target).parent().parent()).data();
+
+		var buttons = $(e.target.parentElement).find("#check-validate-seq");
+		
+		if(buttons.length > 0) {
+			
+			setTimeout(function(){ buttons[0].click(); }, 150);
+			
+			if(e.target.parentElement.checkValidity()) {
+				
+				var seqChange = e.target.value;
+				addUpdate(data.staffPaperDeclarationId,seqChange);
+			}
+		}
+
 		//console.log(data, seqChange)
-		addUpdate(data.staffPaperDeclarationId,seqChange);
+		<#--  $(e.target).parent()[0].reportValidity()
+		console.log($(e.target).parent()[0].reportValidity())  -->
+		
 	}
 	
 	function submit(){
 		console.log(list);
 		
-		var json = JSON.stringify(list);
-		
-		$.ajax({
-					url: "/bkeuniv/control/update-cv-papers",
-					type: 'POST',
-					data:{"json":json},
-					success: function(rs){
-						setTimeout(function(){ 
-							loader.close();
-							alertify.success("${uiLabelMap.BkEunivSaveSuccess}");
-						}, 500);
-					}
-				})
+		if(list.length > 0) {
+			
+			var json = JSON.stringify(list);
+			
+			
+			$.ajax({
+				url: "/bkeuniv/control/update-cv-papers",
+				type: 'POST',
+				data:{"json":json},
+				success: function(rs){
+					setTimeout(function(){ 
+						loader.close();
+						alertify.success("${uiLabelMap.BkEunivSaveSuccess}");
+						list = [];
+					}, 500);
+				}
+			})
+		}
+
 				
 	}
 </script>
