@@ -1805,7 +1805,7 @@
 			<key-map field-name="staffId"/>
 		</relation>
 	</entity>
-	
+	<!-- 
 	<entity entity-name="IntellectualProperty" package-name="org.ofbiz.bkeuniv">
 		<field name="intellectualPropertyId" type="id-ne"></field>
 		<field name="intellectualPropertyName" type="very-long"></field>
@@ -1817,7 +1817,7 @@
 			<key-map field-name="staffId"/>
 		</relation>
 	</entity>
-	
+	 -->
 	<entity entity-name="RunningBudgetResearchProject" package-name="org.ofbiz.bkeuniv">
 		<field name="runningBudgetResearchProjectId" type="id-ne"></field>
 		<field name="customTimePeriodId" type="id-ne"></field>

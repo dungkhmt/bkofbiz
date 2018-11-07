@@ -150,11 +150,11 @@
 
 <Function functionId="WORK_PROGRESS" uiLabelId="work_progress" vnLabel="Quá trình công tác" enLabel="works" target="work-progress" parentFunctionId="PROFILE_MANAGEMENT" index="4"/>
 
-<Function functionId="RECENT_PUBLICATION" uiLabelId="recent_publication" vnLabel="Các công trình KH và CN chủ yếu được công bố, sách chuyên khảo" enLabel="recent publication" target="recent-publications" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
+<Function functionId="RECENT_PUBLICATION" uiLabelId="recent_publication" vnLabel="Các công trình KH và CN chủ yếu được công bố, sách chuyên khảo" enLabel="recent publication" target="recent-publications-new" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
 
 <Function functionId="APPLIED_PROJECT_DECLARATION_STAFF" uiLabelId="applied_project_declaration_staff" vnLabel="Đề tài đã được ứng dụng thực tế" enLabel="declare applied projects" target="applied-project-declaration-staff" parentFunctionId="PROFILE_MANAGEMENT" index="7"/>
 
-<Function functionId="RECENT_PROJECT_CV" uiLabelId="recent_project_cv" vnLabel="Các đề tài, dự án, nhiệm vụ KH và CN đã chủ trì hoặc tham gia trong 5 năm gần đây" enLabel="recent projects" target="recent-projects" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
+<Function functionId="RECENT_PROJECT_CV" uiLabelId="recent_project_cv" vnLabel="Các đề tài, dự án, nhiệm vụ KH và CN đã chủ trì hoặc tham gia trong 5 năm gần đây" enLabel="recent projects" target="recent-projects-new" parentFunctionId="PROFILE_MANAGEMENT" index="8"/>
 
 <Function functionId="RECENT_RESEARCH_DIRECTION" uiLabelId="recent_research_direction" vnLabel="Lĩnh vực nghiên cứu trong 5 năm gần đây" enLabel="recent research direction" target="recent-research-direction" parentFunctionId="PROFILE_MANAGEMENT" index="9"/>
 
@@ -180,6 +180,8 @@
 
 
 <Function functionId="RESEARCH_DOMAIN_STAFF" uiLabelId="research_domain_staff" vnLabel="Lĩnh vực nghiên cứu" enLabel="research domain" target="research-domain-staff" parentFunctionId="PROFILE_MANAGEMENT" index="5"/>
+
+<Function functionId="FIND_CV" uiLabelId="find CV" vnLabel="Tìm kiếm lí lịch khoa học" enLabel="find CV" target="find-cv" parentFunctionId="PROFILE_MANAGEMENT" index="17"/>
 
 <Function functionId="PATENT_STAFF" uiLabelId="patent_staff" vnLabel="Bằng sáng chế, giải pháp hữu ích" enLabel="Patent" target="patent-staff" parentFunctionId="RESEARCH_DECLARATION_MANAGEMENT" index="7"/>
 
