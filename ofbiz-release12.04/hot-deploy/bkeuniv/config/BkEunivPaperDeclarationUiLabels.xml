@@ -28,6 +28,20 @@
         <value xml:lang="en">Authors</value>
         <value xml:lang="vi">Tác giả</value>
     </property>
+	<property key="BkEunivProjectName">
+        <value xml:lang="en">Project</value>
+        <value xml:lang="vi">Đề tài, dự án</value>
+
+    </property>
+	<property key="BkEunivPublicationName">
+        <value xml:lang="en">Project</value>
+        <value xml:lang="vi">Đề tài, dự án</value>
+    </property>
+
+	<property key="BkEunivCVProjectSeq">
+        <value xml:lang="en">Sequence</value>
+        <value xml:lang="vi">Số thứ tự</value>
+    </property>
 
     <property key="BkEunivPaperCategory">
         <value xml:lang="en">Category</value>
