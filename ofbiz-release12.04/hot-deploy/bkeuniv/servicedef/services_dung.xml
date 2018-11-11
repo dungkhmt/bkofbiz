@@ -81,6 +81,11 @@
 		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
 	</service>
 	
+    <service name="systemUpdateProjectMember" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="systemUpdateProjectMember">
+			
+	</service>
+	
     <service name="getListProjectProposalJuries" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" 
 		invoke="getListProjectProposalJuries">
