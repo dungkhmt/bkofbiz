@@ -84,7 +84,7 @@ var list=[];
 			if(e.target.parentElement.checkValidity()) {
 				
 				var seqChange = e.target.value;
-				addUpdate(data.staffPaperDeclarationId,seqChange);
+				addUpdate(data.projectProposalMemberId,seqChange);
 			}
 		}
 	}
