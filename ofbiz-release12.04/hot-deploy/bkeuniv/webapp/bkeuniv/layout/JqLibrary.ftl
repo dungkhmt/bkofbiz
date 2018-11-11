@@ -333,7 +333,7 @@
 						{
 							"targets": 0,
 							"render": function ( data, type, row, meta ) {
-								
+								//console.log(data, type, row, meta)
 								var row = meta.row;
 								if( Object.prototype.toString.call( row ) === '[object Array]' ) {
 									if(row.length > 0) {
@@ -342,8 +342,9 @@
 										return jqDataTable.data.length
 									}
 								}
-								
-								return meta.row + 1;					      
+								var aiDisplay = meta.settings.aiDisplay;
+								return aiDisplay.indexOf(row)+1
+								//return meta.row + 1;					      
 							}
 						},
 					<#assign index= 1 />
@@ -389,8 +390,15 @@
 					</#list>
 					],
 					"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-					"drawCallback": function( settings ) {
+					"drawCallback": function( oSettings ) {
 						resizeDataTable();
+						if ( oSettings.bSorted || oSettings.bFiltered )
+						{
+							for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
+							{
+								$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
+							}
+						}
 					},
 					<#if fnInfoCallback?has_content>
 						"fnInfoCallback": ${fnInfoCallback?replace("\n|\t", "", "r")},
