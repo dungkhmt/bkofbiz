@@ -34,8 +34,8 @@
 
     </property>
 	<property key="BkEunivPublicationName">
-        <value xml:lang="en">Project</value>
-        <value xml:lang="vi">Đề tài, dự án</value>
+        <value xml:lang="en">Papers</value>
+        <value xml:lang="vi">Tên công trình</value>
     </property>
 
 	<property key="BkEunivCVProjectSeq">
