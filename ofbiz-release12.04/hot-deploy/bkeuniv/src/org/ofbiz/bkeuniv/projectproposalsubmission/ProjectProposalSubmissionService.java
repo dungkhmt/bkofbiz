@@ -2198,6 +2198,50 @@ public class ProjectProposalSubmissionService {
 		return retSucc;
 
 	}
+	public static Map<String, Object> systemUpdateProjectMember(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		try{
+			List<GenericValue> lstPrj = delegator.findList("ResearchProjectProposal",
+					null,null,null,null,false);
+			List<EntityCondition> conds = FastList.newInstance();
+			for(GenericValue p: lstPrj){
+				String staffId = p.getString("createStaffId");
+				String researchProjectProposalId = p.getString("researchProjectProposalId");
+				String researchProjectProposalName = p.getString("researchProjectProposalName");
+				
+				conds.clear();
+				conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+				conds.add(EntityCondition.makeCondition("researchProjectProposalId",EntityOperator.EQUALS,researchProjectProposalId));
+				
+				List<GenericValue> lstPM = delegator.findList("ProjectProposalMember", 
+						EntityCondition.makeCondition(conds), null,null,null, false);
+				if(lstPM.size() == 0){
+					//Debug.log(module + "::systemUpdateProjectMember, project " + researchProjectProposalName
+					//		+ ", does not has member " + staffId);
+					// create project member as DIRECTOR
+					String projectProposalMemberId = delegator.getNextSeqId("ProjectProposalMember");
+					GenericValue pm = delegator.makeValue("ProjectProposalMember");
+					pm.put("projectProposalMemberId", projectProposalMemberId);
+					pm.put("researchProjectProposalId", researchProjectProposalId);
+					pm.put("staffId", staffId);
+					pm.put("roleTypeId", "DIRECTOR");
+					
+					delegator.create(pm);
+					
+					
+				}else{
+					//Debug.log(module + "::systemUpdateProjectMember, project " + researchProjectProposalName
+					//		+ ", has member " + staffId + ", sz = " + lstPM.size());
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return retSucc;
+	}
+	
 
 	public static Map<String, Object> getProjectProposalsOfStaff(
 			DispatchContext ctx, Map<String, ? extends Object> context) {

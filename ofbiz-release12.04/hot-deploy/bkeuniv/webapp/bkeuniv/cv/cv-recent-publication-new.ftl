@@ -5,15 +5,11 @@
 	
 	<#assign columns=[
 		{
-			"name": uiLabelMap.BkEunivStaffId?j_string,
-			"data": "staffName"
+			"name": uiLabelMap.BkEunivPublicationName?j_string,
+			"data": "paperName"
 		},
 		{
-			"name": "Tac gia"?j_string,
-			"data": "authors"
-		},
-		{
-			"name": "seq"?j_string,
+			"name": uiLabelMap.BkEunivCVProjectSeq?j_string,
 			"data": "sequenceInCVPaper",
 			"render": 'function(value, name, dataColumns, id) {
 				return \'<form action="javascript:void(0);" class="form-input-seq"><input id="input-seq\'+dataColumns.paperId+\'" value="\'+value+\'" pattern="[1-9]([0-9]{0,2})" onBlur="updateListChangeSeq(event)"><button type="submit" id="check-validate-seq" style="display: none"></button></form><script>setCustomValidity("#input-seq\'+dataColumns.paperId+\'","'+StringUtil.wrapString(uiLabelMap.BkEunivMatchIntegerFormat)+'")<\\/script>\';

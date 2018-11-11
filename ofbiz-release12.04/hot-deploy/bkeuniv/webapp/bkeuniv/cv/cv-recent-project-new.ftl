@@ -9,11 +9,11 @@
 			"data": "staffName"
 		},
 		{
-			"name": uiLabelMap.BkEunivAuthors?j_string,
+			"name": uiLabelMap.BkEunivProjectName?j_string,
 			"data": "researchProjectProposalName"
 		},
 		{
-			"name": "seq"?j_string,
+			"name": uiLabelMap.BkEunivCVProjectSeq?j_string,
 			"data": "sequenceInCVProject",
 			"title": "So nguyen duong",
 			"render": 'function(value, name, dataColumns, id) {
@@ -84,7 +84,7 @@ var list=[];
 			if(e.target.parentElement.checkValidity()) {
 				
 				var seqChange = e.target.value;
-				addUpdate(data.staffPaperDeclarationId,seqChange);
+				addUpdate(data.projectProposalMemberId,seqChange);
 			}
 		}
 	}

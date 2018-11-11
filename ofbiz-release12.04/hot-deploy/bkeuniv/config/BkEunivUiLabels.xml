@@ -1171,5 +1171,103 @@
         <value xml:lang="en">Authors</value>
         <value xml:lang="vi">Tác giả</value>
     </property>
+    
+    
+
+    <property key="AddNewIntellectualProperty">
+        <value xml:lang="en">Add new intellectual property</value>
+        <value xml:lang="vi">Thêm mới hoạt động sở hữu trí tuệ</value>
+    </property>
+    
+    <property key="UpdateIntellectualProperty">
+        <value xml:lang="en">Update intellectual property</value>
+        <value xml:lang="vi">Cập nhật hoạt động sở hữu trí tuệ</value>
+    </property>
+    
+    <property key="DeleteIntellectualProperty">
+        <value xml:lang="en">Delete intellectual property</value>
+        <value xml:lang="vi">Xóa hoạt động sở hữu trí tuệ</value>
+    </property>
+    
+    <property key="IntellectualPropertyName">
+        <value xml:lang="en">Intellectual property name</value>
+        <value xml:lang="vi">Tên hoạt động</value>
+    </property>
+    
+    <property key="IntellectualPropertyDate">
+        <value xml:lang="en">Intellectual property date</value>
+	    <value xml:lang="vi">Thời điểm chứng nhận</value>
+    </property>
+    
+    <property key="AddNewBudgetInOut">
+        <value xml:lang="en">Add new budget in out</value>
+        <value xml:lang="vi">Thêm mới khoản thu/chi</value>
+    </property>
+    
+    <property key="UpdateBudgetInOut">
+        <value xml:lang="en">Update budget in out</value>
+        <value xml:lang="vi">Cập nhật khoản thu/chi</value>
+    </property>
+    
+    <property key="DeleteBudgetInOut">
+        <value xml:lang="en">Delete budget in out</value>
+        <value xml:lang="vi">Xóa khoản thu/chi</value>
+    </property>
+    
+    <property key="BudgetIn">
+        <value xml:lang="en">In</value>
+        <value xml:lang="vi">Thu vào</value>
+    </property>
+    
+    <property key="BudgetOut">
+        <value xml:lang="en">Out</value>
+        <value xml:lang="vi">Chi ra</value>
+    </property>
+    
+    <property key="BudgetInOut">
+        <value xml:lang="en">In/Out</value>
+        <value xml:lang="vi">Thu vào/Chi ra</value>
+    </property>
+    
+    <property key="BudgetInOutAmount">
+        <value xml:lang="en">Amount</value>
+        <value xml:lang="vi">Số tiền</value>
+    </property>
+    
+    <property key="BudgetInOutTime">
+        <value xml:lang="en">In/Out Time</value>
+        <value xml:lang="vi">Thời gian thu/chi</value>
+    </property>
+    
+    <property key="BkEunivAwardName">
+		<value xml:lang="en">Award name</value>
+		<value xml:lang="vi">Tên giải thưởng KHCN</value>
+	</property>
+	
+	<property key="BkEunivAwardAmout">
+		<value xml:lang="en">Award amount</value>
+		<value xml:lang="vi">Tiền thưởng KHCN</value>
+	</property>
+	
+	<property key="BkEunivAwardTime">
+		<value xml:lang="en">Award time</value>
+		<value xml:lang="vi">Thời gian thưởng</value>
+	</property>
+	
+	<property key="UpdateAwardKHCN">
+		<value xml:lang="en">Update award</value>
+		<value xml:lang="vi">Cập nhật giải thưởng KHCN</value>
+	</property>
+	
+	<property key="AddNewAwardKHCN">
+		<value xml:lang="en">Add new award</value>
+		<value xml:lang="vi">Thêm mới giải thưởng KHCN</value>
+	</property>
+	
+	<property key="DeleteAwardKHCN">
+		<value xml:lang="en">Delete award</value>
+		<value xml:lang="vi">Xóa giải thưởng KHCN</value>
+	</property>
+	
 	
 </resource>
