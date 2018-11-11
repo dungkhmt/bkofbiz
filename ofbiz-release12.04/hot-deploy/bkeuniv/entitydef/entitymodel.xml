@@ -1231,6 +1231,26 @@
         
 	</entity>
 	
+	<entity entity-name="PaperDistance" package-name="org.ofbiz.bkeuniv">
+		<field name="id" type="id-vlong"></field>
+		<field name="paperId1" type="id-vlong"></field>
+		<field name="paperId2" type="id-vlong"></field>
+		<field name="distance" type="floating-point"></field>
+		<field name="cluster" type="numeric"></field>
+		
+		<prim-key field="id"/>
+		
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId1" rel-field-name="paperId"/>
+		</relation>
+		
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId2" rel-field-name="paperId"/>
+		</relation>
+		
+	</entity>
+	
+	
 	<entity entity-name="StaffPaperDeclarationRole" package-name="org.ofbiz.bkeuniv">
 		<field name="roleId" type="id-vlong"></field>
 		<field name="roleName" type="very-long"></field>

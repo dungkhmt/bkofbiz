@@ -175,6 +175,11 @@
    		<attribute name="message" mode="OUT" type="String"></attribute>
    	</service>
    	
+   	<service name="runJobPaperDeclarationsDuplicate" engine="java" invoke="runJobPaperDeclarationsDuplicate" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
+   		<attribute name="statusCode" mode="OUT" type="String"></attribute>
+   		<attribute name="message" mode="OUT" type="String"></attribute>
+   	</service>
+   	
    	<service name="getListPaperCategoryKNC" engine="java" invoke="getListPaperCategoryKNC" location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService">
    		<attribute name="listPaperCategoryKNC" mode="OUT" type="List"></attribute>
    	</service>

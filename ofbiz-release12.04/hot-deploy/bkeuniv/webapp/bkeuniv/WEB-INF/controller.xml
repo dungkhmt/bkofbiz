@@ -1154,6 +1154,13 @@
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
+
+	<request-map uri="run-job-paper-declarations-duplicate">
+		<security auth="true" https="true" />
+		<event type="service" invoke="runJobPaperDeclarationsDuplicate"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
 	
 	<request-map uri="merge-synchronize-staff">
 		<security auth="true" https="true" />
