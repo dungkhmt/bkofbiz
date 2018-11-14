@@ -95,8 +95,8 @@
 					<thead>
 					<tr>
 						<th>STT</th>
-						<th>Noi dung</th>
-						<th>So lan</th>
+						<th>Vi tri danh gia KHCN</th>
+						<th>Chi tiet</th>
 						
 					</tr>
 					</thead>
@@ -109,10 +109,14 @@
 							${index}
 						</td>
 						<td>
+							<#if se.description?exists>
 							${se.description}
+							</#if>
 						</td>
 						<td>
-							${se.quantity}
+							<#if se.descriptionDetail?exists>
+							${se.descriptionDetail}
+							</#if>
 						</td>
 					</tr>
 					</#list>
