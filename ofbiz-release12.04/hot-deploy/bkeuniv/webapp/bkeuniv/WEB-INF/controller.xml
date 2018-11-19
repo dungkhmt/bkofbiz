@@ -1402,6 +1402,15 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="find-cv">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-find-cv"/>
+	</request-map>
+	
+	<request-map uri="find-cv-results">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-find-cv-results"/>
+	</request-map>
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -1481,5 +1490,9 @@
 	<view-map name="view-list-budget-in-out" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListBudgetInOut"/>
 	
 	<view-map name="view-list-award-khcn" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListAwardKHCN"/>
+	
+	<view-map name="view-find-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCV"/>
+	
+	<view-map name="view-find-cv-results" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCVResults"/>
 	
 </site-conf>

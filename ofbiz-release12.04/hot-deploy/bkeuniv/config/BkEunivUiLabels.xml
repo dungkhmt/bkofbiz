@@ -1269,5 +1269,39 @@
 		<value xml:lang="vi">Xóa giải thưởng KHCN</value>
 	</property>
 	
+	<property key="Find">
+		<value xml:lang="en">Find</value>
+		<value xml:lang="vi">Tìm kiếm</value>
+	</property>
+	
+	<property key="FindCV">
+		<value xml:lang="en">Find science curriculum vitae</value>
+		<value xml:lang="vi">Tìm kiếm lý lịch khoa học</value>
+	</property>
+	
+	<property key="ListFindingOption">
+		<value xml:lang="en">List finding option</value>
+		<value xml:lang="vi">Liệt kê thêm (Y/N)</value>
+	</property>
+	
+	<property key="NumberPublicationPaper">
+		<value xml:lang="en">Number publciation paper</value>
+		<value xml:lang="vi">Số lượng công trình khoa học</value>
+	</property>
+	
+	<property key="NumberScienceService">
+		<value xml:lang="en">Number science service</value>
+		<value xml:lang="vi">Số lượng kinh nghiệm quản lý, đánh giá KHCN</value>
+	</property>
+	
+	<property key="NumberRecentProject">
+		<value xml:lang="en">"Number recent project"</value>
+		<value xml:lang="vi">Sô lượng đề tài, dự án, nhiệm vụ KHCN đã chủ trì</value>
+	</property>
+	
+	<property key="NumberAppliedProject">
+		<value xml:lang="en">Number applied project</value>
+		<value xml:lang="vi">Số lượng đề tài, dự án ứng dụng thực tế</value>
+	</property>
 	
 </resource>

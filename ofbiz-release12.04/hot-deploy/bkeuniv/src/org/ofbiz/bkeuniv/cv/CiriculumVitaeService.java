@@ -1,7 +1,10 @@
 package org.ofbiz.bkeuniv.cv;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.ofbiz.base.util.Debug;
@@ -9,11 +12,16 @@ import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.base.util.UtilValidate;
 import org.ofbiz.bkeuniv.cv.CiriculumVitaeService;
+import org.ofbiz.bkeuniv.model.sciencesection.ScienceSection;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityFunction;
+import org.ofbiz.entity.condition.EntityJoinOperator;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.GenericServiceException;
 import org.ofbiz.service.LocalDispatcher;
@@ -25,6 +33,11 @@ import javolution.util.FastMap;
 public class CiriculumVitaeService {
 
 	public static final String module = CiriculumVitaeService.class.getName();
+	
+	public static final String APPLIED_PROJECT = "applied-project-declaration";
+	public static final String SCIENTIFIC_SERVICE = "scientific-service";
+	public static final String RECENT_PUBLICATIONS = "recent-publications";
+	public static final String RECENT_PROJECT = "recent-projects";
 
 	@SuppressWarnings("unused")
 	public static Map<String, Object> getListAcademicRank(DispatchContext dpct, Map<String, ? extends Object> context) {
@@ -276,6 +289,95 @@ public class CiriculumVitaeService {
 		}
 
 		return returnResult;
+	}
+	
+	
+	public static Map<String, Object> jqGetListScienceCV(DispatchContext dpct, Map<String, ? extends Object> context){
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		Locale locale = (Locale) context.get("locale");
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context.get("parameters");
+		Map<String, Object> result = FastMap.newInstance();
+		EntityListIterator listCVIterator = null;
+		String researchSpecialityId = (String) parameters.get("researchSpecialityId")[0];
+		String [] sections = (String[]) parameters.get("sections");
+		
+		
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+
+			if (parameters.containsKey("q")) {
+				String q = (String) parameters.get("q")[0].trim();
+				String[] searchKeys = { "staffId", "staffName", "researchSpecialityName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+
+			if (filter != null) {
+				listAllConditions.add(filter);
+			}
+			
+			listAllConditions.add(EntityCondition.makeCondition("researchSpecialitySeqId", researchSpecialityId));
+
+			EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+
+			listCVIterator = delegator.find("FindCVView", condition, null, null, sort, opts);
+			
+			List<GenericValue> listCV = listCVIterator.getCompleteList();
+			
+			listCVIterator.close();
+			
+			List<Map<String, Object>> listResult = FastList.newInstance();
+			
+			for(GenericValue cv : listCV) {
+				Map<String, Object> item = FastMap.newInstance();
+				item.put("staffName", cv.getString("staffName"));
+				item.put("staffId", cv.getString("staffId"));
+				item.put("researchSpecialityName", cv.getString("researchSpecialityName"));
+				
+				for(String section : sections) {
+					switch(section) {
+						case CiriculumVitaeService.APPLIED_PROJECT:
+							item.put("appliedResearchProjectNumber", cv.getString("appliedResearchProjectNumber"));
+							break;
+						case CiriculumVitaeService.RECENT_PROJECT:
+							item.put("cvProjectNumber", cv.getString("cvProjectNumber"));
+							break;
+						case CiriculumVitaeService.RECENT_PUBLICATIONS:
+							item.put("cvPaperNumber", cv.getString("cvPaperNumber"));
+							break;
+						case CiriculumVitaeService.SCIENTIFIC_SERVICE:
+							item.put("scientificServiceExperienceNumber", cv.getString("scientificServiceExperienceNumber"));
+							break;
+						default:
+							break;
+					}
+				}
+				listResult.add(item);
+			}
+			
+			listCV.clear();
+			
+			result.put("listIterator", listResult);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list jqGetListScienceCV");
+		}
+		return result;
 	}
 
 }
