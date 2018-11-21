@@ -535,6 +535,16 @@
 		<value xml:lang="vi">Năm cấp văn bằng</value>
 	</property>
 
+	<property key="BkEunivNameAndContentAward">
+		<value xml:lang="en">Name And Content</value>
+		<value xml:lang="vi">Tên giải thưởng</value>
+	</property>
+
+	<property key="BkEunivYearAward">
+		<value xml:lang="en">Year </value>
+		<value xml:lang="vi">Năm đạt giải thưởng</value>
+	</property>
+
 	<property key="BkEunivPHDDefensed">
 		<value xml:lang="en">PHD Defensed</value>
 		<value xml:lang="vi">Nghiên cứu sinh đã hướng dẫn bảo vệ thành công

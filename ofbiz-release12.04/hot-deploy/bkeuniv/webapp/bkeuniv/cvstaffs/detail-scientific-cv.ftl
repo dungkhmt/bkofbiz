@@ -62,7 +62,8 @@
 			</div>
 		</td>
 	</tr>
-	
+
+	<#--	
 	<tr>
 		<td>
 			<div class="info-box">
@@ -117,14 +118,14 @@
 		</td>
 	</tr>
 	</#if>
-	
+	-->
 	
 	<#--  education progress  -->
 	<tr>
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivEducationProgress}
+					${uiLabelMap.BkEunivEducationProgress}<a href = "/bkeuniv/control/education-progress">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -170,7 +171,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivForeignLanguageSuggest}
+					${uiLabelMap.BkEunivForeignLanguageSuggest}<a href = "/bkeuniv/control/foreign-language-staff">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -220,7 +221,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivWorkProgress}
+					${uiLabelMap.BkEunivWorkProgress}<a href = "/bkeuniv/control/work-progress">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -281,7 +282,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivNumberOfConstruction}
+					${uiLabelMap.BkEunivNumberOfConstruction}<a href = "/bkeuniv/control/applied-project-declaration-staff">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -335,7 +336,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivScientificService1} ${uiLabelMap.BkEunivScientificService2} 
+					${uiLabelMap.BkEunivScientificService1} ${uiLabelMap.BkEunivScientificService2} <a href = "/bkeuniv/control/scientificserviceexperience">     [Update]</a>
 				</div>
 					
 				<table>
@@ -378,7 +379,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivPublications} ${uiLabelMap.BkEunivPublic}
+					${uiLabelMap.BkEunivPublications} ${uiLabelMap.BkEunivPublic}<a href = "/bkeuniv/control/recent-publications-new">     [Update]</a>
 				</div>
 				<table border="1" rules="rows">
 					<thead>
@@ -440,14 +441,14 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivAward}
+					${uiLabelMap.BkEunivAward}<a href = "/bkeuniv/control/award">     [Update]</a>
 				</div>
 				<table border="1" rules="rows">
 					<thead>
 					<tr>
 						<th>STT</th>
-						<th>${uiLabelMap.ModelAndContent}</th>
-						<th>${uiLabelMap.YearOfAward}</th>
+						<th>${uiLabelMap.BkEunivNameAndContentAward}</th>
+						<th>${uiLabelMap.BkEunivYearAward}</th>
 					</tr>
 					</thead>
 
@@ -487,7 +488,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivPatent1} ${uiLabelMap.BkEunivPatent2}
+					${uiLabelMap.BkEunivPatent1} ${uiLabelMap.BkEunivPatent2}<a href = "/bkeuniv/control/patent-staff">     [Update]</a>
 				</div>
 				<table border="1" rules="rows">
 					<thead>
@@ -536,7 +537,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivPHDDefensed}
+					${uiLabelMap.BkEunivPHDDefensed}<a href = "/bkeuniv/control/phd-student-supervision">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -586,7 +587,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivInformation2}
+					${uiLabelMap.BkEunivInformation2}<a href = "/bkeuniv/control/recent-research-direction">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -611,7 +612,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivInformation3}
+					${uiLabelMap.BkEunivInformation3}<a href = "/bkeuniv/control/cv-thesis-subject-for-student">     [Update]</a>
 				</div>
 				<table>
 					<thead>

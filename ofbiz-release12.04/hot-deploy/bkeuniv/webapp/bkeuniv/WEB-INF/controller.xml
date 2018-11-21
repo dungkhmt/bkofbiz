@@ -1101,6 +1101,11 @@
 		<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-detail-scientific-cv"/>
 	</request-map>
+	
+	<request-map uri="my-detail-scientific-cv">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-my-detail-scientific-cv"/>
+	</request-map>
 
 	<request-map uri="upload-official-document">
 		<security https="true" auth="true"/>
@@ -1423,6 +1428,7 @@
     <view-map name="view-external-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageExternalMembersOfAPaper"/>
 
     <view-map name="view-detail-scientific-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDetailScientificCV"/>
+    <view-map name="view-my-detail-scientific-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageMyDetailScientificCV"/>
 
 
     <view-map name="view-staff-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffManagement"/>
