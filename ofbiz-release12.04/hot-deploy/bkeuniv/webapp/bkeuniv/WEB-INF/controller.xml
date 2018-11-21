@@ -1101,6 +1101,11 @@
 		<security https="true" auth="true"/>
     	<response name="success" type="view" value="view-detail-scientific-cv"/>
 	</request-map>
+	
+	<request-map uri="my-detail-scientific-cv">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-my-detail-scientific-cv"/>
+	</request-map>
 
 	<request-map uri="upload-official-document">
 		<security https="true" auth="true"/>
@@ -1151,6 +1156,13 @@
 	<request-map uri="pull-staff">
 		<security auth="true" https="true" />
 		<event type="service" invoke="pullStaff"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+
+	<request-map uri="run-job-paper-declarations-duplicate">
+		<security auth="true" https="true" />
+		<event type="service" invoke="runJobPaperDeclarationsDuplicate"></event>
 		<response name="success" type="request" value="json"></response>
 		<response name="error" type="request" value="json"></response>
 	</request-map>
@@ -1395,6 +1407,15 @@
 		<response name="error" type="request" value="json"></response>
 	</request-map>
 	
+	<request-map uri="find-cv">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-find-cv"/>
+	</request-map>
+	
+	<request-map uri="find-cv-results">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-find-cv-results"/>
+	</request-map>
 	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
@@ -1407,6 +1428,7 @@
     <view-map name="view-external-members-of-a-paper" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageExternalMembersOfAPaper"/>
 
     <view-map name="view-detail-scientific-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageDetailScientificCV"/>
+    <view-map name="view-my-detail-scientific-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageMyDetailScientificCV"/>
 
 
     <view-map name="view-staff-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStaffManagement"/>
@@ -1474,5 +1496,9 @@
 	<view-map name="view-list-budget-in-out" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListBudgetInOut"/>
 	
 	<view-map name="view-list-award-khcn" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageListAwardKHCN"/>
+	
+	<view-map name="view-find-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCV"/>
+	
+	<view-map name="view-find-cv-results" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCVResults"/>
 	
 </site-conf>

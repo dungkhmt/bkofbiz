@@ -175,6 +175,8 @@
 
 <Function functionId="THESIS_SUBJECT_FOR_STUDENT" uiLabelId="thesis_subject_for_student" vnLabel="Hướng nghiên cứu dành cho  nghiên cứu sinh và học viên cao học" enLabel="Thesis Subject for Student" target="cv-thesis-subject-for-student" parentFunctionId="PROFILE_MANAGEMENT" index="15"/>
 
+<Function functionId="MY_CV_DETAIL" uiLabelId="cv_detail" vnLabel="Lí lịch khoa học tổng thể" enLabel="CV DETAIL" target="my-detail-scientific-cv" parentFunctionId="PROFILE_MANAGEMENT" index="16"/>
+
 <Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="16"/>
 
 <Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="17"/>

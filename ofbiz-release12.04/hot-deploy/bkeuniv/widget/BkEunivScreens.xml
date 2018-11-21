@@ -32,11 +32,44 @@
 	<screen name="pageDetailScientificCV">
 		<section>
 			<actions>
-				
-				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>	
 				<service service-name="getCVProfileOfStaff" result-map="resultCV">
 				 	<field-map field-name="staffId" value="${parameters.staffId}"/>
-				 </service>
+				</service>
+				<script location="component://bkeuniv/webapp/bkeuniv/WEB-INF/groovy-src/profile-science.pdf.groovy"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cvstaffs/detail-scientific-cv.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageMyDetailScientificCV">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>	
+				<service service-name="getCVProfileOfStaff" result-map="resultCV">
+				<!--  	
+				 	<field-map field-name="staffId" value="${parameters.staffId}"/>
+				 -->
+				</service>
+				<script location="component://bkeuniv/webapp/bkeuniv/WEB-INF/groovy-src/profile-science.pdf.groovy"/>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -1832,6 +1865,51 @@
 		</section>
 	</screen>
 	
+	<screen name="pageFindCV">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/find-cv.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
 	
+	<screen name="pageFindCVResults">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="sections" from-field="parameters.sections" type="List"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/find-cv-result.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
 	
 </screens>

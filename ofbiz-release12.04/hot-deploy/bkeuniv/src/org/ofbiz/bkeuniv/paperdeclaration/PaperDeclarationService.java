@@ -1525,6 +1525,78 @@ public class PaperDeclarationService {
 		return result;
 	}
 	
+	public static <E> Map<String, Object> runJobPaperDeclarationsDuplicate (
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		
+
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			
+
+			listAllConditions
+					.add(EntityCondition.makeCondition("statusId",
+							EntityOperator.EQUALS,
+							PaperDeclarationUtil.STATUS_ENABLED));
+
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			System.out.println("4. debug ::::::::::" + userLoginId);
+			papers = delegator.findList("PaperView", condition, null, null,
+					null, false);
+
+			HashSet<String> setStaffId = new HashSet<String>();
+			
+			List<Map<String, Object>> distances = new ArrayList<Map<String, Object>>();
+			
+			Damerau d = new Damerau();
+			
+			for(int i = 0; i < papers.size() - 1; ++i) {
+				for(int j = i+1; j < papers.size(); ++j) {
+					Map<String, Object> p = new HashMap<String, Object>();
+					p.put("edge", new String[]{papers.get(i).getString("paperId"), papers.get(j).getString("paperId")});
+					p.put("distance", d.distance(papers.get(i).getString("paperName"), papers.get(j).getString("paperName")));
+					distances.add(p);
+				}
+			}
+			
+			delegator.removeAll("PaperDistance");
+			
+			for(int i = 0; i < distances.size(); ++i){
+				Map<String, Object> distance = distances.get(i);
+				
+				GenericValue gv = delegator.makeValue("PaperDistance");
+
+				gv.put("id", delegator.getNextSeqId("PaperDistance"));
+
+				gv.put("paperId1", ((String[])distance.get("edge"))[0]);
+				gv.put("paperId2", ((String[])distance.get("edge"))[1]);
+				gv.put("distance", distance.get("distance"));
+				
+				
+				delegator.create(gv);
+			}
+			
+			result.put("statusCode", "200");
+			result.put("message", "Hoàn thành tính " + distances.size() + " độ trùng lặp");
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+	
+	
+	
 	public static <E> Map<String, Object> JQGetPaperDeclarationsDuplicate(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Delegator delegator = (Delegator) ctx.getDelegator();
@@ -1559,6 +1631,7 @@ public class PaperDeclarationService {
 		}
 
 		Map<String, Object> result = FastMap.newInstance();
+		List<String> paperIds = new ArrayList<String>();
 		List<GenericValue> papers = null;
 		try {
 			GenericValue userLogin = (GenericValue) context.get("userLogin");
@@ -1635,43 +1708,37 @@ public class PaperDeclarationService {
 					}
 
 				}
-				if (ok)
+				if (ok) {
 					retList.add(gv);
+					paperIds.add((String) gv.getString("paperId"));
+				}
 
 			}
 			Debug.log(module + "::getPaperDeclarations, papers.sz = "
 					+ papers.size() + ", retList = " + retList.size());
 			
-			List<Map<String, Object>> distances = new ArrayList<Map<String, Object>>();
+			listAllConditions.clear();
 			
-			Damerau d = new Damerau();
 			
-			for(int i = 0; i < retList.size() - 1; ++i) {
-				for(int j = i+1; j < retList.size(); ++j) {
-					Map<String, Object> p = new HashMap<String, Object>();
-					p.put("edge", new int[]{i, j});
-					p.put("distance", d.distance(retList.get(i).getString("paperName"), retList.get(j).getString("paperName")));
-					distances.add(p);
-				}
-			}
 			
-			Collections.sort(distances, new Comparator<Map<String, Object>>() {
-				@Override
-				public int compare(Map<String, Object> edge1, Map<String, Object> edge2) {
-					Double a = (Double)edge1.get("distance");
-					Double b = (Double)edge2.get("distance");
-//					Debug.log(module + "::JQGetPaperDeclarationsDuplicate, distance "
-//							+a + ", " + b);
-					return a < b ? -1
-					         : a > b ? 1
-					         : 0;
-				}
-			});
 			
-//			for(int i = 0; i < 10 ; ++i) {
-//				Debug.log(module + "::JQGetPaperDeclarationsDuplicate, distance "
-//						+ i + ", value = " + distances.get(i).get("distance"));
-//			}
+			List<EntityCondition> condFilterPaper = new ArrayList<EntityCondition>();
+			
+				condFilterPaper.add(EntityCondition.makeCondition(
+						"paperId1",
+						EntityOperator.IN,
+						paperIds));
+				condFilterPaper.add(EntityCondition.makeCondition(
+						"paperId2",
+						EntityOperator.IN,
+						paperIds));
+			
+			listAllConditions.add(EntityCondition.makeCondition(condFilterPaper,
+					EntityOperator.AND));
+			
+			
+			List<GenericValue> distances = delegator.findList("PaperDistance", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, new ArrayList<String>() {{add("distance");}},
+					new EntityFindOptions(), false);
 			
 			result.put("totalRows", String.valueOf(distances.size()));
 			if(iIndex* iSize + iSize > distances.size()) {
@@ -1682,16 +1749,18 @@ public class PaperDeclarationService {
 						* iSize, iIndex
 						* iSize + iSize);
 			}
-			
+			List<Map<String, Object>> list = new ArrayList<Map<String,Object>>(); 
 			for(int i = 0; i < distances.size(); ++i) {
-				Map<String, Object> p = distances.get(i);
-				int[] edge = (int[]) p.get("edge");
-				p.put("data1", retList.get(edge[0]));
-				p.put("data2", retList.get(edge[1]));
-				
+				GenericValue distance = distances.get(i);
+				Map<String, Object> p = new HashMap<String, Object>();
+				p.put("distance", distance.get("distance"));
+				p.put("cluster", distance.get("cluster"));
+				p.put("data1", retList.get(paperIds.indexOf((String)distance.get("paperId1"))));
+				p.put("data2", retList.get(paperIds.indexOf((String)distance.get("paperId2"))));
+				list.add(p);
 			}
 
-			result.put("listIterator", distances);
+			result.put("listIterator", list);
 
 		} catch (Exception e) {
 			Debug.log(e.getMessage());
