@@ -38,7 +38,7 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivBasicInformation}
+					${uiLabelMap.BkEunivBasicInformation}<a href = "/bkeuniv/control/cv-general-information">     [Update]</a>
 				</div>
 				<table>
 					<thead>
@@ -501,6 +501,7 @@
 
 					<tbody class="body-table">
 					<#assign index = 0>
+					<#if listPatents?exists>
 					<#list listPatents as pt>
 						<#assign index = index + 1>
 						<tr>
@@ -524,6 +525,7 @@
 							</td>
 						</tr>
 					</#list>
+					</#if>
 					</tbody>
 				</table>
 			</div>
