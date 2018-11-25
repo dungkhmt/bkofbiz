@@ -1722,6 +1722,9 @@
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>	
 				<property-map resource="CommonUiLabels" map-name="commonUiLabels" global="true"/>	
+				
+				<service service-name="getEducationLevels" result-map="resultEducationLevels">
+				</service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"

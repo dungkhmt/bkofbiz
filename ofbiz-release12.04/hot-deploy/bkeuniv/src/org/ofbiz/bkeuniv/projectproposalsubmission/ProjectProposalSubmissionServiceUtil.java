@@ -49,6 +49,7 @@ public class ProjectProposalSubmissionServiceUtil {
 
 	public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
 
+	public static String PROJECT_ROLE_TYPE_DIRECTOR = "DIRECTOR";
 	//public static String dataFolder = "." + File.separator + "euniv-deploy";
 	//public static String dataFolder = "C:/DungPQ/projects/bkofbiz-github/euniv-deploy";
 	
@@ -288,8 +289,16 @@ public class ProjectProposalSubmissionServiceUtil {
 	}
 	
 	public static GenericValue createAProjectProposalSubmission(
-			Delegator delegator, String projectProposalName, String s_material_budget, String note, String facultyId,
-			String projectCallId, String staffId) {
+			Delegator delegator, String projectProposalName, String s_material_budget, 
+			String s_external_service_budget,
+			String s_domestic_conference_budget,
+			String s_international_conference_budget,
+			String s_publication_budget,
+			String s_management_budget,
+			String note, String facultyId,
+			String projectCallId, String staffId) 
+	{
+		
 		try {
 			String partyId = delegator.getNextSeqId("Party");
 
@@ -303,6 +312,36 @@ public class ProjectProposalSubmissionServiceUtil {
 			else
 				budget = BigDecimal.ZERO;
 			
+			BigDecimal externalServiceBudget = null;
+			if(s_external_service_budget != null && !s_external_service_budget.equals(""))
+				externalServiceBudget = new BigDecimal(s_external_service_budget);
+			else
+				externalServiceBudget = BigDecimal.ZERO;
+			
+			BigDecimal domesticConferenceBudget = null;
+			if(s_domestic_conference_budget != null && !s_domestic_conference_budget.equals(""))
+				domesticConferenceBudget = new BigDecimal(s_domestic_conference_budget);
+			else
+				domesticConferenceBudget = BigDecimal.ZERO;
+			
+			BigDecimal internationalConferenceBudget = null;
+			if(s_international_conference_budget != null && !s_international_conference_budget.equals(""))
+				internationalConferenceBudget = new BigDecimal(s_international_conference_budget);
+			else
+				internationalConferenceBudget = BigDecimal.ZERO;
+			
+			BigDecimal publicationBudget = null;
+			if(s_publication_budget != null && !s_publication_budget.equals(""))
+				publicationBudget = new BigDecimal(s_publication_budget);
+			else
+				publicationBudget = BigDecimal.ZERO;
+			
+			BigDecimal managementBudget = null;
+			if(s_management_budget != null && !s_management_budget.equals(""))
+				managementBudget = new BigDecimal(s_management_budget);
+			else
+				managementBudget = BigDecimal.ZERO;
+			
 			GenericValue pps = delegator.makeValue("ResearchProjectProposal");
 			String researchProjectProposalId = delegator
 					.getNextSeqId("ResearchProjectProposal");
@@ -310,6 +349,12 @@ public class ProjectProposalSubmissionServiceUtil {
 			pps.put("researchProjectProposalName", projectProposalName);
 			//pps.put("totalBudget", budget);
 			pps.put("materialBudget", budget);
+			pps.put("externalServiceBudget", externalServiceBudget);
+			pps.put("domesticConferenceBudget", domesticConferenceBudget);
+			pps.put("internationalConferenceBudget", internationalConferenceBudget);
+			pps.put("publicationBudget", publicationBudget);
+			pps.put("managementBudget", managementBudget);
+			
 			pps.put("note", note);
 			pps.put("createStaffId", staffId);
 			pps.put("partyId", partyId);
@@ -321,6 +366,16 @@ public class ProjectProposalSubmissionServiceUtil {
 
 			delegator.create(pps);
 
+			
+			// add member: staffId as DIRECTOR of the project
+			GenericValue pm = delegator.makeValue("ProjectProposalMember");
+			String projectProposalMemberId = delegator.getNextSeqId("ProjectProposalMember");
+			pm.put("projectProposalMemberId", projectProposalMemberId);
+			pm.put("researchProjectProposalId", researchProjectProposalId);
+			pm.put("staffId", staffId);
+			pm.put("roleTypeId", PROJECT_ROLE_TYPE_DIRECTOR);
+			delegator.create(pm);
+			
 			return pps;
 
 		} catch (Exception ex) {

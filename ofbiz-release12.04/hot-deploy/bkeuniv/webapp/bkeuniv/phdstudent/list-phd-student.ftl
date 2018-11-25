@@ -5,6 +5,11 @@
 	{ "name": "${commonUiLabels.CommonNo}" ,"value": "NO" }] 
 />
 
+<#assign sourceEducationLevels = []>
+<#list resultEducationLevels.educationLevels as el>
+	<#assign op = { "name": el.educationLevelName?j_string ,"value": el.educationLevelId?j_string } />
+						<#assign sourceEducationLevels = sourceEducationLevels + [op] />
+</#list>
 <body>
 
 <script>
@@ -50,9 +55,19 @@
 			"data": "thesisName"
 		},
 		{
+			"name": bkEunivUiLabelMap.EducationLevel?j_string,
+			"data": "educationLevelName"
+		},
+		{
 			"name": bkEunivUiLabelMap.PhDCoSupervision?j_string,
 			"data": "coSupervionName"
 		},
+		
+		{
+			"name": bkEunivUiLabelMap.EducationInstitution?j_string,
+			"data": "educationInstitution"
+		},
+		
 		{
 			"name": bkEunivUiLabelMap.PhDGraduateYear?j_string,
 			"data": "graduateYear",
@@ -70,6 +85,10 @@
 		"thesisName",
 		"coSupervion",
 		"graduateYear",
+		"staffName",
+		"educationLevelName",
+		"educationLevelId",
+		"educationInstitution",
 		"coSupervionName"
 	] />
 	
@@ -82,6 +101,17 @@
 			"name": bkEunivUiLabelMap.PhDTheSisName?j_string,
 			"value": "thesisName"
 		},
+		
+		{
+			"name": bkEunivUiLabelMap.EducationLevel?j_string,
+			"value": "educationLevelId",
+			"type": "select",
+			"option": {
+				"source": sourceEducationLevels,
+				"maxItem": 1
+			}
+		},
+		
 		{
 			"name": bkEunivUiLabelMap.PhDCoSupervision?j_string,
 			"value": "coSupervion",
@@ -90,6 +120,11 @@
 				"source": sourceSelect,
 				"maxItem": 1
 			}
+		},
+		
+		{
+			"name": bkEunivUiLabelMap.EducationInstitution?j_string,
+			"value": "educationInstitution"
 		},
 		{
 			"name": bkEunivUiLabelMap.PhDGraduateYear?j_string,
@@ -110,6 +145,16 @@
 			"name": bkEunivUiLabelMap.PhDTheSisName?j_string,
 			"value": "thesisName"
 		},
+		
+		{
+			"name": bkEunivUiLabelMap.EducationLevel?j_string,
+			"value": "educationLevelId",
+			"type": "select",
+			"option": {
+				"source": sourceEducationLevels,
+				"maxItem": 1
+			}
+		},
 		{
 			"name": bkEunivUiLabelMap.PhDCoSupervision?j_string,
 			"value": "coSupervion",
@@ -118,6 +163,10 @@
 				"source": sourceSelect,
 				"maxItem": 1
 			}
+		},
+		{
+			"name": bkEunivUiLabelMap.EducationInstitution?j_string,
+			"value": "educationInstitution"
 		},
 		{
 			"name": bkEunivUiLabelMap.PhDGraduateYear?j_string,
