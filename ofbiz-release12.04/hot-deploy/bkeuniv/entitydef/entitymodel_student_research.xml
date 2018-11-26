@@ -32,8 +32,15 @@
 		<field name="description" type="very-long"></field>
 		<field name="uploadSourceFilename" type="very-long"></field>
 		<field name="studentId" type="id-ne"></field>
+		<field name="facultyId" type="id-ne"></field>
 		
 		<prim-key field="studentResearchReportSubmissionId"/>
+		<relation rel-entity-name="Student" type="one">
+			<key-map field-name="studentId"/>
+		</relation>
+		<relation rel-entity-name="Faculty" type="one">
+			<key-map field-name="facultyId"/>
+		</relation>
 	</entity>
 	
 	<entity entity-name="JuryStudentResearchConference" package-name="org.ofbiz.bkeuniv">
@@ -41,8 +48,16 @@
 		<field name="studentResearchCallId" type="id-ne"></field>
 		<field name="facultyId" type="id-ne"></field>
 		<prim-key field="juryStudentResearchConferenceId"/>
+		<relation rel-entity-name="Faculty" type="one">
+			<key-map field-name="facultyId"/>
+		</relation>
+		<relation rel-entity-name="StudentResearchConferenceCall" type="one">
+			<key-map field-name="studentResearchCallId"/>
+		</relation>
 	</entity>
-	<!-- 
+	
+	
+	
 	<entity entity-name="JuryStudentResearchConferenceMember" package-name="org.ofbiz.bkeuniv">
 		<field name="juryStudentResearchConferenceId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
@@ -56,9 +71,25 @@
 		<relation rel-entity-name="JuryStudentResearchConference" type="one">
 			<key-map field-name="juryStudentResearchConferenceId"/>
 		</relation>
-		
+		<relation rel-entity-name="JuryRoleType" type="one">
+			<key-map field-name="juryRoleTypeId"/>
+		</relation>
 	</entity>	
-	 -->
+	
+	<entity entity-name="ReviewerStudentResearchConference" package-name="org.ofbiz.bkeuniv">
+		<field name="reviewerStudentResearchConferenceId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="studentResearchReportSubmissionId" type="id-ne"></field>
+		<field name="evaluation" type="numeric"><description>Điểm đánh giá</description></field>
+		<field name="note" type="very-long"></field>		
+		
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>			
+		</relation>
+		<relation rel-entity-name="StudentResearchReportSubmission" type="one">
+			<key-map field-name="studentResearchReportSubmissionId"/>
+		</relation>
+	</entity>
 	 
 	<!-- ket thuc Hoi nghi SV NCKH -->
 

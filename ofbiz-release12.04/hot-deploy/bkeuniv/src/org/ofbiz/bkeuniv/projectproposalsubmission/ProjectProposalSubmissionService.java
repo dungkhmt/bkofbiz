@@ -65,6 +65,15 @@ import org.ofbiz.entity.util.EntityListIterator;
 public class ProjectProposalSubmissionService {
 	private static final Charset UTF_8 = Charset.forName("UTF-8");
 	private static final Charset ISO = Charset.forName("ISO-8859-1");
+
+	
+	private final static String[] arrAtt = new String[] {"researchProjectProposalId", "researchProjectProposalCode",
+		"partyId", "createStaffId", "projectCallId", "projectCategoryId", "researchProjectProposalName",
+		"totalBudget", "statusId", "approvedByStaffId", "sourceFileUpload", "facultyId", "startDate",
+		"endDate", "deliverable", "materialBudget", "evaluationOpenFlag", "createStaffName",
+		"projectCallName", "projectCategoryName", "facultyName", "statusName",
+		"roleTypeId","roleTypeName"
+	};
 	
 	// public static String STATUS_CREATED = "CREATED";
 	// public static String STATUS_CANCELLED = "CANCELLED";
@@ -386,12 +395,31 @@ public class ProjectProposalSubmissionService {
 		// String s_budget = (String)request.getParameter("budget");
 		String s_material_budget = (String) request
 				.getParameter("materialbudget");
+		String s_external_service_budget = (String) request
+				.getParameter("externalServiceBudget");
+		String s_domestic_conference_budget = (String) request
+				.getParameter("domesticConferenceBudget");
+		String s_international_conference_budget = (String) request
+				.getParameter("internationalConferenceBudget");
+		String s_publication_budget = (String) request
+				.getParameter("publicationBudget");
+		String s_management_budget = (String) request
+				.getParameter("managementBudget");
+		
+		
 		String note = (String) request.getParameter("note");
 		String projectCallId = (String) request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
 				.getAttribute("userLogin");
 		String staffId = (String) userLogin.getString("userLoginId");
 
+		Debug.log(module + "::addProjectProposal, materialBudget = " + s_material_budget
+				+ ", externalServiceBudget = " + s_external_service_budget
+				+ ", domesticConferenceBudget = " + s_domestic_conference_budget
+				+ ", internationalConferenceBudget = " + s_international_conference_budget
+				+ ", publicationBudget = " + s_publication_budget
+				+ ", managementBudget = " + s_management_budget
+				);
 		try {
 			/*
 			 * GenericValue gv = delegator.makeValue("ResearchProjectProposal");
@@ -408,7 +436,13 @@ public class ProjectProposalSubmissionService {
 			 */
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							projectProposalName, s_material_budget, note,
+							projectProposalName, s_material_budget, 
+							s_external_service_budget,
+							s_domestic_conference_budget,
+							s_international_conference_budget,
+							s_publication_budget,
+							s_management_budget,
+							note,
 							facultyId, projectCallId, staffId);
 
 			String rs = "{\"result\":\"OK\"}";
@@ -430,7 +464,7 @@ public class ProjectProposalSubmissionService {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String researchProjectProposalId = (String) request
 				.getParameter("researchProjectProposalId");
-		// String facultyId = (String) request.getParameter("facultyId");
+		String facultyId = (String) request.getParameter("facultyId");
 		String projectProposalName = (String) request
 				.getParameter("projectProposalName");
 		String note = (String) request.getParameter("note");
@@ -438,7 +472,18 @@ public class ProjectProposalSubmissionService {
 		// String s_budget = (String)request.getParameter("budget");
 		String s_material_budget = (String) request
 				.getParameter("materialbudget");
-
+		String s_external_service_budget = (String) request
+				.getParameter("externalServiceBudget");
+		String s_domestic_conference_budget = (String) request
+				.getParameter("domesticConferenceBudget");
+		String s_international_conference_budget = (String) request
+				.getParameter("internationalConferenceBudget");
+		String s_publication_budget = (String) request
+				.getParameter("publicationBudget");
+		String s_management_budget = (String) request
+				.getParameter("managementBudget");
+		
+		
 		// String projectCallId = (String)
 		// request.getParameter("projectCallId");
 		GenericValue userLogin = (GenericValue) request.getSession()
@@ -451,6 +496,13 @@ public class ProjectProposalSubmissionService {
 							researchProjectProposalId), false);
 			gv.put("researchProjectProposalName", projectProposalName);
 			gv.put("materialBudget", new BigDecimal(s_material_budget));
+			gv.put("externalServiceBudget", new BigDecimal(s_external_service_budget));
+			gv.put("domesticConferenceBudget", new BigDecimal(s_domestic_conference_budget));
+			gv.put("internationalConferenceBudget", new BigDecimal(s_international_conference_budget));
+			gv.put("publicationBudget", new BigDecimal(s_publication_budget));
+			gv.put("managementBudget", new BigDecimal(s_management_budget));
+			
+			gv.put("facultyId", facultyId);
 			gv.put("note", note);
 			delegator.store(gv);
 
@@ -2241,7 +2293,44 @@ public class ProjectProposalSubmissionService {
 		}
 		return retSucc;
 	}
+
+	public static Map<String, Object> getProjectProposalsAnyRoleOfStaff(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffId = (String) context.get("staffId");
+		Delegator delegator = ctx.getDelegator();
+
+		Map<String, Object> userLogin = (Map<String, Object>) context
+				.get("userLogin");
+
+		if (staffId == null)
+			staffId = (String) userLogin.get("userLoginId");
 	
+		
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId", EntityOperator.EQUALS, staffId));
+			
+			//conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
+			
+			List<GenericValue> listProjectDeclaration = delegator.findList("ProjectProposalMemberView", 
+																EntityCondition.makeCondition(conds), 
+																null, null, null, false);
+			List<Map> projects = FastList.newInstance();
+			for(GenericValue gv : listProjectDeclaration){
+				Map<String, Object> map = FastMap.newInstance();
+				for(int i=0; i<arrAtt.length; i++){
+					map.put(arrAtt[i], gv.getString(arrAtt[i]));
+				}
+				projects.add(map);
+			}
+			retSucc.put("projectproposals", projects);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 
 	public static Map<String, Object> getProjectProposalsOfStaff(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
@@ -2688,8 +2777,19 @@ public class ProjectProposalSubmissionService {
 			listAllConditions.add(EntityCondition.makeCondition("staffId",
 					EntityOperator.EQUALS, userLoginId));
 
+			listAllConditions.add(EntityCondition.makeCondition("projectStatusId",
+					EntityOperator.NOT_EQUAL, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED));
+
 			list = delegator.find("ReviewerResearchProposalView", condition, null, null, sort, opts);
 						
+			//Debug.log(module + "::JQGetListProjectProposalsAssignedForReview, list.sz = " + list.);
+			//while(list.hasNext()){
+			//	GenericValue r = list.next();
+			//	Debug.log(module + "::JQGetListProjectProposalsAssignedForReview, GOT project " + 
+			//	r.getString("researchProjectProposalName") + ", status review = " + r.getString("statusId")
+			//	+ ", projectStatus = " + r.getString("projectStatusId"));
+			//}
+			
 			result.put("listIterator", list);
 			
 		} catch (Exception e) {
@@ -3034,7 +3134,7 @@ public class ProjectProposalSubmissionService {
 
 			GenericValue pps = ProjectProposalSubmissionServiceUtil
 					.createAProjectProposalSubmission(delegator,
-							researchProjectProposalName, "0", "", facultyId,
+							researchProjectProposalName, "0", "0","0","0","0","0","", facultyId,
 							projectCallId, staffId);
 
 			retSucc.put("projectproposals", pps);

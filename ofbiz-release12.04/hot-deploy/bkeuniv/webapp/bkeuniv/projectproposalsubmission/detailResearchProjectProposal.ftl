@@ -162,7 +162,7 @@
 									${uiLabel.ListProducts}
 								</a>
 							<#else>  -->
-							${uiLabel.ListProducts}
+							${uiLabel.ListProductsRegistered}
 						</div>
 						<table>
 							<thead>
@@ -184,121 +184,73 @@
 
 					<div class="row inline-box" style="margin-bottom: 0px; position: relative; padding: 10px 16px 10px 16px;">
 						<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-							${uiLabel.WorkingHourProject}
+							<#--  <#if edit>
+								<a href="/bkeuniv/control/manage-research-project-proposal-product?researchProjectProposalId=${researchProjectProposalId}">
+									${uiLabel.ListProducts}
+								</a>
+							<#else>  -->
+							${uiLabel.Budget}
 						</div>
-						<table>
+						<#assign prj = resultProjectProposal.projectproposal/>
+						<table border="1">
 							<thead>
 								<tr>
-									<th>${uiLabel.MemberProject}</th>
-									<th>${uiLabel.Workinghour}</th>
-									<th>${uiLabel.AcademicYear}</th>
+									<th>${uiLabel.BudgetItem}</th>
+									<th>${uiLabel.BudgetAmount} (VND)</th>
 								</tr>
 							</thead>
 							<tbody>
-							<#list resultProjectWorkingHourDeclaration.projectDeclarations as p>
 								<tr>
-									<#if p.staffName?exists>
-										<td>${p.staffName}</td>
-									</#if>
-									
-									<#if p.workinghours?exists>
-										<td>${p.workinghours}</td>
-									</#if>
-									
-									<#if p.academicYearName?exists>
-										<td>${p.academicYearName}</td>
+									<td>${uiLabel.MaterialBudget}</td>
+									<#if prj.materialBudget?exists>
+										<td>${prj.materialBudget}</td>
 									</#if>
 								</tr>
-							</#list>
+								<tr>
+									<td>${uiLabel.ExternalServiceBudget}</td>
+									<#if prj.externalServiceBudget?exists>
+										<td>${prj.externalServiceBudget}</td>
+									</#if>
+								</tr>
+								<tr>
+									<td>${uiLabel.DomesticConferenceBudget}</td>
+									<#if prj.domesticConferenceBudget?exists>
+										<td>${prj.domesticConferenceBudget}</td>
+									</#if>
+								</tr>
+								<tr>
+									<td>${uiLabel.InternationalConferenceBudget}</td>
+									<#if prj.internationalConferenceBudget?exists>
+										<td>${prj.internationalConferenceBudget}</td>
+									</#if>
+								</tr>
+								<tr>
+									<td>${uiLabel.PublicationBudget}</td>
+									<#if prj.publicationBudget?exists>
+										<td>${prj.publicationBudget}</td>
+									</#if>
+								</tr>
+								<tr>
+									<td>${uiLabel.ManagementBudget}</td>
+									<#if prj.managementBudget?exists>
+										<td>${prj.managementBudget}</td>
+									</#if>
+								</tr>
+								
+							
 							</tbody>
 						</table>
 					</div>
-					
-					
-					<div class="row inline-box" style="margin-bottom: 0px; position: relative; padding: 10px 16px 10px 16px;">
-						<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-							KINH PHI
-						</div>
-						<table>
-							<thead>
-								<tr>
-									<th>Kinh phi thiet bi</th>
-									<th>Kinh phi quan ly</th>
-									<th>Tong kinh phi</th>
-									<th>Tong kinh phi thiet bi & quan ly</th>
-									<th>Chi so khoi luong</th>
-									<th>Nam ke khai</th>
-									
-								</tr>
-							</thead>
-							<tbody>
-							<#list resultBudgetDeclaration.projectDeclarations as p>
-								<tr>
-									<#if p.equipmentBudget?exists>
-										<td>${p.equipmentBudget}</td>
-									</#if>
-									
-									<#if p.managementBudget?exists>
-										<td>${p.managementBudget}</td>
-									</#if>
-									
-									<#if p.allocatedBudgetYear?exists>
-										<td>${p.allocatedBudgetYear}</td>
-									</#if>
 
-									<#if p.budget?exists>
-										<td>${p.budget}</td>
-									</#if>
-									<#if p.rate?exists>
-										<td>${p.rate}</td>
-									</#if>
-										
-									<#if p.academicYearId?exists>
-										<td>${p.academicYearId}</td>
-									</#if>
-								</tr>
-							</#list>
-							</tbody>
-						</table>
-					</div>
-					
 
 					
-<div class="row inline-box" style="margin-bottom: 0px; position: relative; padding: 10px 16px 10px 16px;">
-						<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-							MUC DO DONG GOP CUA THANH VIEN
-						</div>
-						<table>
-							<thead>
-								<tr>
-									<th>Ho ten Thanh vien</th>
-									<th>Muc do dong gop</th>
-									<th>Nam ke khai</th>
-									
-								</tr>
-							</thead>
-							<tbody>
-							<#list resultParticipationDeclaration.projectDeclarations as p>
-								<tr>
-									<#if p.staffName?exists>
-										<td>${p.staffName}</td>
-									</#if>
-									
-									<#if p.staffParticipationPercentage?exists>
-										<td>${p.staffParticipationPercentage}</td>
-									</#if>
-									
-									<#if p.academicYearId?exists>
-										<td>${p.academicYearId}</td>
-									</#if>
-								</tr>
-							</#list>
-							</tbody>
-						</table>
-					</div>
+					<#--
+					<#include "component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detail-runnning-info-of-projects.ftl"/>										
+					-->
 					
-					<#include "component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailResearchProjectProposalUpdateAction.ftl"/>										
-																																			
+					<#if edit==true>
+						<#include "component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailResearchProjectProposalUpdateAction.ftl"/>										
+					</#if>																														
 				</div>
 			</div>
 			

@@ -119,6 +119,52 @@
 		</section>
 	</screen>
 
+	<screen name="ProjectSubmissionManagementNew">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
+				<!-- <service service-name="getListProjectCalls" result-map="projectCalls"></service> -->
+				
+				<!-- 
+				<service service-name="getProjectProposalsOfStaff" result-map="resultProjectProposals"></service>
+				 -->
+				<service service-name="getProjectProposalsAnyRoleOfStaff" result-map="resultProjectProposals"></service>
+				
+				<!-- 
+				<service service-name="getAProjectCall" result-map="projectCalls">
+					<field-map field-name="projectCallId" value="${parameters.projectCallId}"/>
+					<field-map field-name="statusId" value="CREATED"/>
+				</service>
+				<service service-name="getFaculties" result-map="faculties"></service>
+				 -->
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+<!-- 								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listProjectSubmission.ftl" />
+ -->
+<!-- 
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listMyProjectProposalSubmissions.ftl" />
+ -->							
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/listMyProjectProposalSubmissionsNew.ftl" />
+							
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="MembersOfProjectProposal">
 		<section>
 			<actions>
@@ -530,6 +576,8 @@
 				<service service-name="getProjectProposal"
 					result-map="resultProjectProposal">
 					<field-map field-name="researchProjectProposalId"/>
+				</service>
+				<service service-name="getFaculties" result-map="resultFaculties">
 				</service>
 				
 			</actions>

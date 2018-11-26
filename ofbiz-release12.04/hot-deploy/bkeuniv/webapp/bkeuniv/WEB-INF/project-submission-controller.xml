@@ -590,8 +590,11 @@
   <view-map name="view-generate-code-research-project-proposal-filter" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#listProjectProposalUniversityGenerateCodeSetting"/>
 
   <view-map name="view-decision-research-project-proposal-school" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#decisionProjectProposalSchoolSetting"/>
-
+<!-- 
   <view-map name="view-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectSubmissionManagement"/>
+ -->  
+  <view-map name="view-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectSubmissionManagementNew"/>
+
   <view-map name="view-project-call-for-project-submission-management" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ProjectCallForProjectSubmissionManagement"/>
 
   <view-map name="view-create-a-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#createAProjectProposal"/>

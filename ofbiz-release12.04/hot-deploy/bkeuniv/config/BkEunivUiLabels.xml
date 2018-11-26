@@ -1048,7 +1048,17 @@
 		<value xml:lang="en">PhD thesis name</value>
 		<value xml:lang="vi">Tên luận văn</value>
 	</property>
-
+	
+	<property key="EducationLevel">
+		<value xml:lang="en">Education Level</value>
+		<value xml:lang="vi">Trình độ đào tạo</value>
+	</property>
+	
+	<property key="EducationInstitution">
+		<value xml:lang="en">Education Institution</value>
+		<value xml:lang="vi">Cơ sở đào tạo</value>
+	</property>
+	
 	<property key="PhDGraduateYear">
 		<value xml:lang="en">PhD graduate year</value>
 		<value xml:lang="vi">Năm tốt nghiệp</value>

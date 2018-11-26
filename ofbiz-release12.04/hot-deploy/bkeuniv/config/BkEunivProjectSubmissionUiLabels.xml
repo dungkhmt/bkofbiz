@@ -291,9 +291,46 @@
     
     <property key="MaterialBudget">
         <value xml:lang="en">Material Budget</value>
-        <value xml:lang="vi">Kinh phí nguyên vật liệu</value>
+        <value xml:lang="vi">Mua sắm nguyên vật liệu, vật tư, hóa chất, dụng cụ và thiết bị thí nghiệm nhỏ; đề tài mô phỏng, 
+			lý thuyết được mua máy tính để bàn phục vụ nghiên cứu (≤ 70%)</value>
+    </property>
+    <property key="ExternalServiceBudget">
+        <value xml:lang="en">External Service  Budget</value>
+        <value xml:lang="vi">Thuê dịch vụ bao gồm: gia công, đo đạc, phân tích mẫu, phiếu khảo sát điều tra 
+			và các dịch vụ khác… (≤ 70%)</value>
+    </property>
+    
+    <property key="DomesticConferenceBudget">
+        <value xml:lang="en">Domestic Conference Budget</value>
+        <value xml:lang="vi">Hội thảo/Hội nghị trong nước : tiền khách sạn, phí hội nghị/HT, vé tàu xe… (≤ 30%)</value>
     </property>
 
+    <property key="InternationalConferenceBudget">
+        <value xml:lang="en">International Conference Budget</value>
+        <value xml:lang="vi">Hội thảo/Hội nghị quốc tế: phí hội nghị/HT (≤ 50%)</value>
+    </property>
+
+    <property key="PublicationBudget">
+        <value xml:lang="en">Publication Budget</value>
+        <value xml:lang="vi">Chi phí công bố kết quả nghiên cứu: hiệu chỉnh tiếng Anh, phí đăng bài… (≤ 20%)</value>
+    </property>
+
+    <property key="ManagementBudget">
+        <value xml:lang="en">Management Budget</value>
+        <value xml:lang="vi">Quản lý phí: chi phí hoạt động của Hội đồng tuyển chọn và nghiệm thu 
+			(2,5% tổng kinh phí phân cấp đề tài cơ sở của đơn vị)</value>
+    </property>
+
+    <property key="BudgetItem">
+        <value xml:lang="en">Budget Item</value>
+        <value xml:lang="vi">Mục kinh phí</value>
+    </property>
+    
+	<property key="BudgetAmount">
+        <value xml:lang="en">Budget Amount</value>
+        <value xml:lang="vi">Số tiền</value>
+    </property>
+    
     <property key="ListWorkPackages">
         <value xml:lang="en">List of Work packages</value>
         <value xml:lang="vi">Danh sách nội dung công việc</value>
@@ -312,6 +349,11 @@
     <property key="ListProducts">
         <value xml:lang="en">List of Products</value>
         <value xml:lang="vi">Danh sách Sản phẩm</value>
+    </property>
+
+    <property key="ListProductsRegistered">
+        <value xml:lang="en">List of Products registered</value>
+        <value xml:lang="vi">Danh sách Sản phẩm đăng ký</value>
     </property>
 
     <property key="ViewDetail">
