@@ -110,6 +110,9 @@ public class PhdStudentManagement{
 				item.put("thesisName", student.getString("thesisName"));
 				item.put("coSupervion", student.getString("coSupervion"));
 				item.put("graduateYear", student.getString("graduateYear"));
+				item.put("educationInstitution", student.getString("educationInstitution"));
+				item.put("educationLevelId", student.getString("educationLevelId"));
+				item.put("educationLevelName", student.getString("educationLevelName"));
 				
 				String coSupervion = student.getString("coSupervion");
 				if("YES".equals(coSupervion)) {
