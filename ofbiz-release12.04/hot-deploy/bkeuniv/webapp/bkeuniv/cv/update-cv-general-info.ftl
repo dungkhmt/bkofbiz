@@ -82,7 +82,7 @@
                 <div class="row form-group">
                     <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEnuivPhone?if_exists}</label>
                     <div class="col-8 col-md-8">
-                        <input type="text" class="form-control" id="agencyWorkPhone" placeholder=${bkEunivUiLabelMap.BkEnuivPhone?if_exists}">
+                        <input type="text" class="form-control" id="agencyWorkPhone" placeholder="${bkEunivUiLabelMap.BkEnuivPhone?if_exists}">
                     </div>
                 </div>
                 <div class="row form-group">

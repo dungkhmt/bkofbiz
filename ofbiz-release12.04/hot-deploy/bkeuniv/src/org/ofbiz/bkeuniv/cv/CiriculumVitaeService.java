@@ -292,6 +292,59 @@ public class CiriculumVitaeService {
 	}
 	
 	
+	public static Map<String, Object> jqGetListStaffWithResearchSpeciality(DispatchContext dpct, Map<String, ? extends Object> context){
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		Locale locale = (Locale) context.get("locale");
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context.get("parameters");
+		Map<String, Object> result = FastMap.newInstance();
+		EntityListIterator listCVIterator = null;
+		String researchDomainId = (String) parameters.get("researchDomainId")[0];
+		String researchSubDomainSeqId = (String) parameters.get("researchSubDomainSeqId")[0];
+		String researchSpecialitySeqId = (String) parameters.get("researchSpecialitySeqId")[0];
+		
+		if (parameters.containsKey("q")) {
+			String q = (String) parameters.get("q")[0].trim();
+			String[] searchKeys = { "staffId", "staffName", "researchSpecialityName" };
+
+			List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+			for (String key : searchKeys) {
+				EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key),
+						EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+				condSearch.add(condition);
+			}
+			listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+		}
+
+		if (filter != null) {
+			listAllConditions.add(filter);
+		}
+		
+		listAllConditions.add(EntityCondition.makeCondition("researchSpecialitySeqId", researchSpecialitySeqId));
+		
+		listAllConditions.add(EntityCondition.makeCondition("researchSubDomainSeqId", researchSubDomainSeqId));
+		
+		listAllConditions.add(EntityCondition.makeCondition("researchDomainId", researchDomainId));
+
+		EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+		try {
+
+		listCVIterator = delegator.find("StaffResearchSpecialityView2", condition, null, null, sort, opts);
+		
+		result.put("listIterator", listCVIterator);
+		
+		}
+		catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list jqGetListStaffWithResearchSpeciality");
+		}
+		return result; 
+		
+	} 
+	
 	public static Map<String, Object> jqGetListScienceCV(DispatchContext dpct, Map<String, ? extends Object> context){
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
@@ -302,7 +355,7 @@ public class CiriculumVitaeService {
 		Map<String, String[]> parameters = (Map<String, String[]>) context.get("parameters");
 		Map<String, Object> result = FastMap.newInstance();
 		EntityListIterator listCVIterator = null;
-		String researchSpecialityId = (String) parameters.get("researchSpecialityId")[0];
+		String staffId = (String) parameters.get("staffId")[0];
 		String [] sections = (String[]) parameters.get("sections");
 		
 		
@@ -330,7 +383,7 @@ public class CiriculumVitaeService {
 				listAllConditions.add(filter);
 			}
 			
-			listAllConditions.add(EntityCondition.makeCondition("researchSpecialitySeqId", researchSpecialityId));
+			listAllConditions.add(EntityCondition.makeCondition("staffId", staffId));
 
 			EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
 

@@ -323,9 +323,21 @@
 		</view-link>
 	</view-entity>
 	
-	<view-entity entity-name="FindCVView" package-name="org.ofbiz.bkeuniv">
+	<view-entity entity-name="StaffWithResearchSpecialityView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="STF" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="SRS" entity-name="StaffResearchSpecialityView"></member-entity>
+		
+		<alias-all entity-alias="STF"></alias-all>
+		<alias-all entity-alias="SRS"></alias-all>
+		
+		<view-link entity-alias="STF" rel-entity-alias="SRS" rel-optional="true">
+			<key-map field-name="staffId" rel-field-name="staffId" />
+		</view-link>
+		
+	</view-entity>
+	
+	<view-entity entity-name="FindCVView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="STF" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="CPV" entity-name="CVPaperView"></member-entity>
 		<member-entity entity-alias="CPRV" entity-name="CVProjectView"></member-entity>
 		<member-entity entity-alias="SSE" entity-name="ScientificServiceExperience"></member-entity>
@@ -334,16 +346,10 @@
 		
 		<alias name="staffName" entity-alias="STF" group-by="true"></alias>
 		<alias name="staffId" entity-alias="STF" group-by="true"></alias>
-		<alias name="researchSpecialityName" entity-alias="SRS" group-by="true"></alias>
-		<alias name="researchSpecialitySeqId" entity-alias="SRS" group-by="true"></alias>
 		<alias name="cvPaperNumber" field="cvPaperId" entity-alias="CPV" function="count-distinct"></alias>
 		<alias name="cvProjectNumber" field="cvProjectId" entity-alias="CPRV" function="count-distinct"></alias>
 		<alias name="scientificServiceExperienceNumber" field="scientificServiceExperienceId" entity-alias="SSE" function="count-distinct"></alias>
 		<alias name="appliedResearchProjectNumber" field="appliedResearchProjectId" entity-alias="ARP" function="count-distinct"></alias>
-		
-		<view-link entity-alias="STF" rel-entity-alias="SRS" rel-optional="true">
-			<key-map field-name="staffId" rel-field-name="staffId" />
-		</view-link>
 		
 		<view-link entity-alias="STF" rel-entity-alias="CPV" rel-optional="true">
 			<key-map field-name="staffId" rel-field-name="staffId" />
@@ -361,6 +367,25 @@
 			<key-map field-name="staffId" rel-field-name="staffId" />
 		</view-link>
 		
+	</view-entity>
+	
+	<view-entity entity-name="StaffResearchSpecialityView2" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RS" entity-name="ResearchSpeciality"></member-entity>
+		<member-entity entity-alias="SRS" entity-name="StaffResearchSpeciality"></member-entity>
+		<member-entity entity-alias="STF" entity-name="Staff"></member-entity>
+		
+		<alias-all entity-alias="SRS" ></alias-all>
+		<alias-all entity-alias="RS" ></alias-all>
+		<alias-all entity-alias="STF" ></alias-all>
+		
+		<view-link rel-entity-alias="STF" entity-alias="SRS" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		<view-link rel-entity-alias="RS" entity-alias="SRS" rel-optional="true">
+			<key-map rel-field-name="researchSpecialitySeqId" field-name="researchSpecialitySeqId"/>
+			<key-map rel-field-name="researchDomainId" field-name="researchDomainId"/>
+			<key-map rel-field-name="researchSubDomainSeqId" field-name="researchSubDomainSeqId"/>
+		</view-link>
 	</view-entity>
 	
 	

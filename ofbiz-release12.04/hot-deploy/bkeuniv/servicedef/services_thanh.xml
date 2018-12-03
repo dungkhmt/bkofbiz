@@ -304,6 +304,10 @@
     	<attribute name="awardKHCNId" mode="IN" type="String" optional="false"></attribute>
     </service>
     
+    <service name="jqGetListStaffWithResearchSpeciality" engine="java" invoke="jqGetListStaffWithResearchSpeciality" location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService">
+        <implements service="jqxGetListInterface"/>
+    </service>
+    
     <service name="jqGetListScienceCV" engine="java" invoke="jqGetListScienceCV" location="org.ofbiz.bkeuniv.cv.CiriculumVitaeService">
         <implements service="jqxGetListInterfaceList"/>
     </service>

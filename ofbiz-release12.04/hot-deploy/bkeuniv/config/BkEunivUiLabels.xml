@@ -1301,7 +1301,12 @@
 	
 	<property key="ListFindingOption">
 		<value xml:lang="en">List finding option</value>
-		<value xml:lang="vi">Liệt kê thêm (Y/N)</value>
+		<value xml:lang="vi">Liệt kê chi tiết (Y/N)</value>
+	</property>
+	
+	<property key="Listing">
+		<value xml:lang="en">Listing</value>
+		<value xml:lang="vi">Liệt kê</value>
 	</property>
 	
 	<property key="NumberPublicationPaper">

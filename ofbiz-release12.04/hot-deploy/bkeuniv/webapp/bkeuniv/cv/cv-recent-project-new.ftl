@@ -18,7 +18,6 @@
 			"title": "So nguyen duong",
 			"render": 'function(value, name, dataColumns, id) {
 				return \'<form action="javascript:void(0);" class="form-input-seq"><input id="input-seq\'+dataColumns.researchProjectProposalId+\'" value="\'+value+\'" pattern="[1-9]([0-9]{0,2})" onBlur="updateListChangeSeq(event)"><button type="submit" id="check-validate-seq" style="display: none"></button></form><script>setCustomValidity("#input-seq\'+dataColumns.researchProjectProposalId+\'","'+StringUtil.wrapString(uiLabelMap.BkEunivMatchIntegerFormat)+'")<\\/script>\';
-				
 			}'
 		}
 	] />

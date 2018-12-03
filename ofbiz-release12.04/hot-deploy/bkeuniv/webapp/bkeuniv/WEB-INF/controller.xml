@@ -1417,6 +1417,12 @@
     	<response name="success" type="view" value="view-find-cv-results"/>
 	</request-map>
 	
+	<request-map uri="find-staff-cv-results">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-find-staff-cv-results"/>
+	</request-map>
+	
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -1500,5 +1506,7 @@
 	<view-map name="view-find-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCV"/>
 	
 	<view-map name="view-find-cv-results" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCVResults"/>
+	
+	<view-map name="view-find-staff-cv-results" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindStaffCVResults"/>
 	
 </site-conf>

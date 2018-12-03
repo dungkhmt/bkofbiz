@@ -53,32 +53,28 @@
                 ${bkEunivUiLabelMap.BkEunivResearchSpeciality?if_exists}
               </label>
               <div class="col-6 col-md-6">
-                <select id="researchSpeciality" class="js-example-responsive" style="width: 100%"></select>
-                <div class="help-block with-errors">Hey look, this one has feedback icons!</div>
+                <select id="researchDomain" class="js-example-responsive" style="width: 100%"></select>
               </div>
             </div>
             <div class="row form-group">
               <label class="col-6 col-md-6 control-label">
-                ${bkEunivUiLabelMap.ListFindingOption?if_exists}
+                ${bkEunivUiLabelMap.BkEunivResearchSpeciality?if_exists}
               </label>
               <div class="col-6 col-md-6">
-                <div class="checkbox">
-                  <label><input class="checkBox" type="checkbox" value="applied-project-declaration">${bkEunivUiLabelMap.BkEunivProjectsApplied}</label>
-                </div>
-                <div class="checkbox">
-                  <label><input class="checkBox" type="checkbox" value="scientific-service">${bkEunivUiLabelMap.BkEunivScientificService1}</label>
-                </div>
-                <div class="checkbox">
-                  <label><input class="checkBox" type="checkbox" value="recent-publications">${bkEunivUiLabelMap.BkEunivPublications}</label>
-                </div>
-                <div class="checkbox">
-                  <label><input class="checkBox" type="checkbox" value="recent-projects">${bkEunivUiLabelMap.BkEunivRecent5YearProjects}</label>
-                </div>
+                <select disabled id="researchSubDomain" class="js-example-responsive" style="width: 100%"></select>
               </div>
             </div>
-            <div class="row form-group" style="display: flex;">
+            <div class="row form-group">
+              <label class="col-6 col-md-6 control-label">
+                ${bkEunivUiLabelMap.BkEunivResearchSpeciality?if_exists}
+              </label>
+              <div class="col-6 col-md-6">
+                <select disabled id="researchSpeciality" class="js-example-responsive" style="width: 100%"></select>
+              </div>
+            </div>
+            <div class="row form-group" style="display: flex; margin-top: 10px">
               <div style="margin: auto;">
-                <button id="findCVBtn" type="button" class="btn btn-success">	
+                <button disabled id="findCVBtn" type="button" class="btn btn-success">	
                   <span class="glyphicon glyphicon-search"></span>
                   ${bkEunivUiLabelMap.Find?if_exists}
                 </button>
@@ -109,11 +105,13 @@
 		
 	  initSelectBox = () => {
 
-      render = function(r){return {id: r.researchSpecialitySeqId, text: r.researchSpecialityName}};
+      render1 = function(r){return {id: r.researchDomainId, text: r.researchDomainName}};
+      render2 = function(r){return {id: r.researchSubDomainSeqId, text: r.researchSubDomainName}};
+      render3 = function(r){return {id: r.researchSpecialitySeqId, text: r.researchSpecialityName}};
 
-      $("#researchSpeciality").select2({
+      $("#researchDomain").select2({
         ajax: {
-          url: "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSpecialityManagement",
+          url: "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchDomainManagement",
           cache: true,
           data: function (params) {
             var query = {
@@ -125,7 +123,63 @@
           },
           processResults: function (data) {
             return {
-              results: data.results.map(render),
+              results: data.results.map(render1),
+              pagination: {
+                more: !(data.results.length < 10 || data.results.length == data.totalRows),
+              }
+            }
+          }
+        },
+        minimumInputLength: 1,
+      });
+
+      $("#researchSubDomain").select2({
+        ajax: {
+          url: function (params) {
+            return "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSubDomainManagement&researchDomainId="
+            + $('#researchDomain').val();
+          },
+          cache: true,
+          data: function (params) {
+            var query = {
+              q: params.term || "",
+              pagenum: 0,
+              pagesize: 10,
+            };
+            return query;
+          },
+          processResults: function (data) {
+            return {
+              results: data.results.map(render2),
+              pagination: {
+                more: !(data.results.length < 10 || data.results.length == data.totalRows),
+              }
+            }
+          }
+        },
+        minimumInputLength: 1,
+      });
+
+      
+
+      $("#researchSpeciality").select2({
+        ajax: {
+          url: function (params) {
+            return "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListResearchSpecialityManagement&researchDomainId="
+             + $('#researchDomain').val() + "&researchSubDomainSeqId=" + $("#researchSubDomain").val() ;
+          },
+          cache: true,
+          data: function (params) {
+            var query = {
+              q: params.term || "",
+              pagenum: 0,
+              pagesize: 10,
+            };
+            return query;
+          },
+          processResults: function (data) {
+            return {
+              results: data.results.map(render3),
               pagination: {
                 more: !(data.results.length < 10 || data.results.length == data.totalRows),
               }
@@ -139,22 +193,39 @@
 
     initEvents = () => {
 
-      let sections = [];
-      let redirectUrl = 'find-cv-results?';
+      $('#researchDomain').on('select2:select', function (e) {
+        if($('#researchDomain').val()){
+          $("#researchSubDomain").removeAttr('disabled');
+        }else{
+          $("#researchSubDomain").attr('disabled','disabled');
+        }
+      });
+
+      $('#researchSubDomain').on('select2:select', function (e) {
+        if($('#researchSubDomain').val()){
+          $("#researchSpeciality").removeAttr('disabled');
+        }else{
+          $("#researchSpeciality").attr('disabled','disabled');
+        }
+      });
+
+      $('#researchSpeciality').on('select2:select', (e)=>{
+        if($("#researchSpeciality").val()){
+          $("#findCVBtn").removeAttr('disabled');
+        }else{
+          $("#findCVBtn").attr('disabled','disabled');
+        }
+      });
+      
+
+      let redirectUrl = 'find-staff-cv-results?';
 
       $('#findCVBtn').on('click', () => {
-
-        redirectUrl = redirectUrl + '&researchSpecialityId=' + $('#researchSpeciality').val()
-        let checkBoxList = document.getElementsByClassName('checkBox');
-        
-        for(let i=0; checkBoxList[i]; ++i){
-          if(checkBoxList[i].checked){
-            redirectUrl = redirectUrl + "&sections=" + checkBoxList[i].value;
-          }
-        }
-
+        redirectUrl = redirectUrl
+         + 'researchDomainId=' + $('#researchDomain').val()
+         + '&researchSubDomainSeqId=' + $('#researchSubDomain').val()
+         + '&researchSpecialitySeqId=' + $('#researchSpeciality').val()
         location.href = redirectUrl;
-      
       });
 
     }

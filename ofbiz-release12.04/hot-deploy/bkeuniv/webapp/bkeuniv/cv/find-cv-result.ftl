@@ -1,24 +1,23 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 
 <script>
+	
+	<#assign urlGetData = "/bkeuniv/control/jqxGeneralServicer?sname=jqGetListScienceCV" />	
+	
+	
 
-<#if parameters.researchSpecialityId?has_content>
-	
-	<#assign urlGetData = "/bkeuniv/control/jqxGeneralServicer?sname=jqGetListScienceCV&researchSpecialityId=" + parameters.researchSpecialityId />	
-	
 	<#if parameters.sections?has_content>
 		<#assign sections = parameters.sections />
-		<#if sections?size gt 1>
+		<#if sections?has_content>
 			<#list sections as section>
-				<#assign urlGetData = urlGetData + "&sections=" + section />
+				<#assign urlGetData = urlGetData + "&sections=" + "${StringUtil.wrapString(section?if_exists)}" />
 			</#list>
-		<#else>
-			<#assign urlGetData = urlGetData + "&sections=" + sections/>
 		</#if>
-
 	</#if>
 
-</#if>
+	<#if parameters.staffId?has_content>
+		<#assign urlGetData = urlGetData + "&staffId=" + "${StringUtil.wrapString(parameters.staffId)}" />
+	</#if>
 
 </script>
 
@@ -29,10 +28,6 @@
 		{
 			"name": bkEunivUiLabelMap.BkEunivFullName?j_string,
 			"data": "staffName"
-		},
-		{
-			"name": bkEunivUiLabelMap.BkEunivResearchSpeciality?j_string,
-			"data": "researchSpecialityName"
 		},
 		{
 			"name": bkEunivUiLabelMap.NumberPublicationPaper?j_string,
@@ -53,7 +48,6 @@
 	] />
 	
 	<#assign fields=[
-		"researchSpecialityName",
 		"staffId",
 		"staffName",
 		"cvPaperNumber",
