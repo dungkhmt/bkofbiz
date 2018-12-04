@@ -7,9 +7,9 @@
 	
 
 	<#if parameters.sections?has_content>
-		<#assign sections = parameters.sections />
-		<#if sections?has_content>
-			<#list sections as section>
+		<#assign listSections = parameters.sections />
+		<#if listSections?has_content>
+			<#list parameters.sections  as section>
 				<#assign urlGetData = urlGetData + "&sections=" + "${StringUtil.wrapString(section?if_exists)}" />
 			</#list>
 		</#if>

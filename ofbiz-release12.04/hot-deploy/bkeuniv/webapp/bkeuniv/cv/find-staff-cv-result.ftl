@@ -105,7 +105,7 @@
 			</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">${bkEunivUiLabelMap.CVClose}</button>
-                <button type="button" id="sumbitData" class="btn btn-success">${bkEunivUiLabelMap.Listing}</button>
+                <button type="button" disabled id="sumbitData" class="btn btn-success">${bkEunivUiLabelMap.Listing}</button>
             </div>
         </div>
     </div>
@@ -130,6 +130,18 @@
 		}
 
 		initEvent = () => {
+
+			$(".checkBox").on('change', (e)=>{
+				var listSections = document.getElementsByClassName('checkBox');
+				var count = 0;
+				for(let x of listSections){
+					if(x.checked){
+						count++;
+					}
+				}
+				count >= 2 ? $('#sumbitData').removeAttr('disabled') : $('#sumbitData').attr('disabled','disabled');
+			});
+
 			$('#sumbitData').on('click', ()=>{
 				urlRedirect += staffIdQueryString;
 				var listSections = document.getElementsByClassName('checkBox');
@@ -146,8 +158,9 @@
 				listSections = [];
 				urlRedirect = 'find-cv-results';
 				staffIdQueryString = '?staffId=';
-				console.log(urlRedirect);
 			});
+
+
 		}
 
 		openModal = (id) => {
