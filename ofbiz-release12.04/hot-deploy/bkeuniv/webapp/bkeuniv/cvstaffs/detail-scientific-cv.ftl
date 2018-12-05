@@ -350,6 +350,76 @@
 			</div>
 		</td>
 	</tr>
+
+
+	<#--  recent projects  -->
+
+	<tr>
+		<td>
+			<div class="info-box">
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					${uiLabelMap.BkEunivRecentProjects}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/recent-projects-new">     [Update]</a>
+					</#if>
+				</div>
+				<table>
+					<thead>
+					<tr>
+						<th>STT</th>
+						<th>${uiLabelMap.BkEunivTopic}</th>
+						<th>${uiLabelMap.FromTimeToTime}</th>
+						<th>${uiLabelMap.BkEunivProgram}</th>
+						<th>${uiLabelMap.BkEunivStatus1}</th>
+					</tr>
+					</thead>
+					<tbody class="body-table">
+					<#if listRecentProjects?has_content>
+					<#assign index = 0>
+					<#list listRecentProjects as project>
+					<tr>
+						<#assign index = index+1>
+
+						<td>${index}</td>
+						<td>
+							<#if project.researchProjectProposalName?exists>
+								${project.researchProjectProposalName}
+							<#else>
+								
+							</#if>
+						</td>
+						
+						<td>
+							<#if project.startDate?exists>
+								${project.startDate}
+							<#else>
+								
+							</#if>
+						</td>
+					
+						<td>
+							<#if project.projectCategoryName?exists>
+								${project.projectCategoryName}
+							<#else>
+
+							</#if>
+						</td>
+						<td>
+							<#if project.statusName?exists>
+								${project.statusName}
+							<#else>
+
+							</#if>
+						</td>
+					</tr>
+					</#list>
+					</#if>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
 	
 	<#--  science service  -->
 	<tr>
@@ -405,7 +475,7 @@
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
 					${uiLabelMap.BkEunivPublications} ${uiLabelMap.BkEunivPublic}
 					<#if staffId?exists>
-					<#else>
+					<#else>	 	
 					<a href = "/bkeuniv/control/recent-publications-new">     [Update]</a>
 					</#if>
 				</div>

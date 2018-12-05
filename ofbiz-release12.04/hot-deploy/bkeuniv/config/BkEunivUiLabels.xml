@@ -414,6 +414,11 @@
 			gần đây</value>
 	</property>
 
+	<property key="BkEunivTopic">
+		<value xml:lang="en">The topics have been presided over</value>
+		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH-CN đã chủ trì hoặc tham gia</value>
+	</property>
+	
 	<property key="BkEunivTopic1">
 		<value xml:lang="en">The topics have been presided over</value>
 		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH-CN đã chủ trì</value>
@@ -1327,6 +1332,11 @@
 	<property key="NumberAppliedProject">
 		<value xml:lang="en">Number applied project</value>
 		<value xml:lang="vi">Số lượng đề tài, dự án ứng dụng thực tế</value>
+	</property>
+	
+	<property key="BkEunivRecentProjects">
+		<value xml:lang="en">Recent Projects</value>
+		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH và CN đã chủ trì hoặc tham gia trong 5 năm gần đây</value>
 	</property>
 	
 </resource>
