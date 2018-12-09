@@ -145,3 +145,24 @@ List<GenericValue> listPatents = delegator.findList("PatentView", EntityConditio
 if(UtilValidate.isNotEmpty(listPatents) && !listPatents.isEmpty()) {
 	context.listPatents = listPatents;
 }
+
+/* get list recent projects*/
+List<EntityCondition> listRecentProjectConds = FastList.newInstance();
+
+listRecentProjectConds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS, userLoginId));
+
+List<GenericValue> listProjects = delegator.findList("PatentView", EntityCondition.makeCondition(listRecentProjectConds), null,null,null,false);
+
+List<GenericValue> ret_projects = FastList.newInstance();
+for (GenericValue p : listProjects) {
+	if (p.get("statusId") == null
+			|| p.get("statusId").equals("RUNNING")
+			|| p.get("statusId").equals("COMPLETE")
+			) {
+		ret_projects.add(p);
+	}
+}
+
+if(UtilValidate.isNotEmpty(ret_projects) && !ret_projects.isEmpty()) {
+	context.listRecentProjects = ret_projects;
+}

@@ -51,7 +51,7 @@
                 <div class="row form-group">
                     <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.CVDutyPosition?if_exists}</label>
                     <div class="col-8 col-md-8">
-                        <input type="text" class="form-control" id="duty" placeholder="Chức vụ">
+                        <input type="text" class="form-control" id="duty" placeholder="${bkEunivUiLabelMap.CVDutyPosition?if_exists}">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -70,25 +70,25 @@
                 <div class="row form-group">
                     <label for="agencyWorkLeaderName" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEunivNameLeader?if_exists}</label>
                     <div class="col-8 col-md-8">
-                        <input type="text" class="form-control" id="agencyWorkLeaderName" placeholder="Tên thủ trưởng cơ quan">
+                        <input type="text" class="form-control" id="agencyWorkLeaderName" placeholder="${bkEunivUiLabelMap.BkEunivNameLeader?if_exists}">
                     </div>
                 </div>
                 <div class="row form-group">
                     <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEunivCompanyAddress?if_exists}</label>
                     <div class="col-8 col-md-8">
-                        <input type="text" class="form-control" id="agencyWorkAddress" placeholder="Địa chỉ cơ quan">
+                        <input type="text" class="form-control" id="agencyWorkAddress" placeholder="${bkEunivUiLabelMap.BkEunivCompanyAddress?if_exists}">
                     </div>
                 </div>
                 <div class="row form-group">
                     <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEnuivPhone?if_exists}</label>
                     <div class="col-8 col-md-8">
-                        <input type="text" class="form-control" id="agencyWorkPhone" placeholder="Điện thoại cơ quan">
+                        <input type="text" class="form-control" id="agencyWorkPhone" placeholder="${bkEunivUiLabelMap.BkEnuivPhone?if_exists}">
                     </div>
                 </div>
                 <div class="row form-group">
                     <label for="dutyId" class="col-4 col-md-4 control-label">${bkEunivUiLabelMap.BkEnuivFax?if_exists}</label>
                     <div class="col-8 col-md-8">
-                        <input type="text" class="form-control" id="agencyWorkFax" placeholder="Fax cơ quan">
+                        <input type="text" class="form-control" id="agencyWorkFax" placeholder="${bkEunivUiLabelMap.BkEnuivFax?if_exists}">
                     </div>
                 </div>
             </div>

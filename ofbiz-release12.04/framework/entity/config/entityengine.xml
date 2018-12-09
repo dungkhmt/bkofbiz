@@ -46,6 +46,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <group-map datasource-name="localposttenant" group-name="org.ofbiz.tenant"/>
     </delegator>
 
+
     <!-- need to at least define a name for each component to use -->
     <entity-model-reader name="main"/>
     <!-- need to at least define a name for each component to use -->
@@ -98,6 +99,8 @@ access. For a detailed description see the core/docs/entityconfig.html file.
      * Serializable (NOT Recommended)
      * Not set uses database default
     -->
+    
+    
    <datasource
         name="localpostgres"
         add-missing-on-start="true"

@@ -6,7 +6,7 @@
 			"name": uiLabelMap.ProjectProposalName?j_string,
 			"data": "researchProjectProposalName",
 			"render": 'function(value, name, dataColumns, id) {
-        return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.reviewerResearchProposalId+"\\">" + value + "</a>";
+        return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
 			}'
 		},
 		{

@@ -1417,6 +1417,37 @@
     	<response name="success" type="view" value="view-find-cv-results"/>
 	</request-map>
 	
+	<request-map uri="find-staff-cv-results">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-find-staff-cv-results"/>
+	</request-map>
+	
+	<request-map uri="student-research-conference-call-management">
+		<security https="true" auth="true"/>
+    	<response name="success" type="view" value="view-student-research-conference-call-management"/>
+	</request-map>
+	
+	<request-map uri="update-research-conference">
+		<security auth="true" https="true" />
+		<event type="service" invoke="updateResearchConference"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="create-research-conference">
+		<security auth="true" https="true" />
+		<event type="service" invoke="createResearchConference"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
+	<request-map uri="delete-research-conference">
+		<security auth="true" https="true" />
+		<event type="service" invoke="deleteResearchConference"></event>
+		<response name="success" type="request" value="json"></response>
+		<response name="error" type="request" value="json"></response>
+	</request-map>
+	
     <!-- View Mappings -->
     <view-map name="main" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#main"/>
     <view-map name="view-paper-declaration" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pagePaperDeclaration"/>
@@ -1500,5 +1531,9 @@
 	<view-map name="view-find-cv" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCV"/>
 	
 	<view-map name="view-find-cv-results" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindCVResults"/>
+	
+	<view-map name="view-find-staff-cv-results" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageFindStaffCVResults"/>
+	
+	<view-map name="view-student-research-conference-call-management" type="screen" page="component://bkeuniv/widget/BkEunivScreens.xml#pageStudentResearchConferenceCallManagement"/>
 	
 </site-conf>

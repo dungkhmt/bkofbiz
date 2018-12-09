@@ -80,6 +80,11 @@
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
 	</service>
+    <service name="getProjectProposalsAnyRoleOfStaff" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalsAnyRoleOfStaff">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
 	
     <service name="systemUpdateProjectMember" engine="java" 
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="systemUpdateProjectMember">

@@ -38,7 +38,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivBasicInformation}<a href = "/bkeuniv/control/cv-general-information">     [Update]</a>
+					${uiLabelMap.BkEunivBasicInformation}
+					<#if staffId?exists>
+					<#else>
+						<a href = "/bkeuniv/control/cv-general-information">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -125,7 +129,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivEducationProgress}<a href = "/bkeuniv/control/education-progress">     [Update]</a>
+					${uiLabelMap.BkEunivEducationProgress}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/education-progress">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -171,7 +179,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivForeignLanguageSuggest}<a href = "/bkeuniv/control/foreign-language-staff">     [Update]</a>
+					${uiLabelMap.BkEunivForeignLanguageSuggest}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/foreign-language-staff">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -221,7 +233,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivWorkProgress}<a href = "/bkeuniv/control/work-progress">     [Update]</a>
+					${uiLabelMap.BkEunivWorkProgress}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/work-progress">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -282,7 +298,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivNumberOfConstruction}<a href = "/bkeuniv/control/applied-project-declaration-staff">     [Update]</a>
+					${uiLabelMap.BkEunivNumberOfConstruction}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/applied-project-declaration-staff">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -330,13 +350,87 @@
 			</div>
 		</td>
 	</tr>
+
+
+	<#--  recent projects  -->
+
+	<tr>
+		<td>
+			<div class="info-box">
+				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
+					${uiLabelMap.BkEunivRecentProjects}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/recent-projects-new">     [Update]</a>
+					</#if>
+				</div>
+				<table>
+					<thead>
+					<tr>
+						<th>STT</th>
+						<th>${uiLabelMap.BkEunivTopic}</th>
+						<th>${uiLabelMap.FromTimeToTime}</th>
+						<th>${uiLabelMap.BkEunivProgram}</th>
+						<th>${uiLabelMap.BkEunivStatus1}</th>
+					</tr>
+					</thead>
+					<tbody class="body-table">
+					<#if listRecentProjects?has_content>
+					<#assign index = 0>
+					<#list listRecentProjects as project>
+					<tr>
+						<#assign index = index+1>
+
+						<td>${index}</td>
+						<td>
+							<#if project.researchProjectProposalName?exists>
+								${project.researchProjectProposalName}
+							<#else>
+								
+							</#if>
+						</td>
+						
+						<td>
+							<#if project.startDate?exists>
+								${project.startDate}
+							<#else>
+								
+							</#if>
+						</td>
+					
+						<td>
+							<#if project.projectCategoryName?exists>
+								${project.projectCategoryName}
+							<#else>
+
+							</#if>
+						</td>
+						<td>
+							<#if project.statusName?exists>
+								${project.statusName}
+							<#else>
+
+							</#if>
+						</td>
+					</tr>
+					</#list>
+					</#if>
+					</tbody>
+				</table>
+			</div>
+		</td>
+	</tr>
 	
 	<#--  science service  -->
 	<tr>
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivScientificService1} ${uiLabelMap.BkEunivScientificService2} <a href = "/bkeuniv/control/scientificserviceexperience">     [Update]</a>
+					${uiLabelMap.BkEunivScientificService1} ${uiLabelMap.BkEunivScientificService2}
+					<#if staffId?exists>
+					<#else>
+					  <a href = "/bkeuniv/control/scientificserviceexperience">     [Update]</a>
+					  </#if>
 				</div>
 					
 				<table>
@@ -379,7 +473,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivPublications} ${uiLabelMap.BkEunivPublic}<a href = "/bkeuniv/control/recent-publications-new">     [Update]</a>
+					${uiLabelMap.BkEunivPublications} ${uiLabelMap.BkEunivPublic}
+					<#if staffId?exists>
+					<#else>	 	
+					<a href = "/bkeuniv/control/recent-publications-new">     [Update]</a>
+					</#if>
 				</div>
 				<table border="1" rules="rows">
 					<thead>
@@ -441,7 +539,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivAward}<a href = "/bkeuniv/control/award">     [Update]</a>
+					${uiLabelMap.BkEunivAward}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/award">     [Update]</a>
+					</#if>
 				</div>
 				<table border="1" rules="rows">
 					<thead>
@@ -488,7 +590,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivPatent1} ${uiLabelMap.BkEunivPatent2}<a href = "/bkeuniv/control/patent-staff">     [Update]</a>
+					${uiLabelMap.BkEunivPatent1} ${uiLabelMap.BkEunivPatent2}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/patent-staff">     [Update]</a>
+					</#if>
 				</div>
 				<table border="1" rules="rows">
 					<thead>
@@ -539,7 +645,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivPHDDefensed}<a href = "/bkeuniv/control/phd-student-supervision">     [Update]</a>
+					${uiLabelMap.BkEunivPHDDefensed}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/phd-student-supervision">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -589,7 +699,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivInformation2}<a href = "/bkeuniv/control/recent-research-direction">     [Update]</a>
+					${uiLabelMap.BkEunivInformation2}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/recent-research-direction">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>
@@ -614,7 +728,11 @@
 		<td>
 			<div class="info-box">
 				<div style="line-height: 2; font-size: 18px; text-align: center; font-weight: 700;">
-					${uiLabelMap.BkEunivInformation3}<a href = "/bkeuniv/control/cv-thesis-subject-for-student">     [Update]</a>
+					${uiLabelMap.BkEunivInformation3}
+					<#if staffId?exists>
+					<#else>
+					<a href = "/bkeuniv/control/cv-thesis-subject-for-student">     [Update]</a>
+					</#if>
 				</div>
 				<table>
 					<thead>

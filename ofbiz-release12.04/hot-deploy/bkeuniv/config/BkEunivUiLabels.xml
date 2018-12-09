@@ -414,6 +414,11 @@
 			gần đây</value>
 	</property>
 
+	<property key="BkEunivTopic">
+		<value xml:lang="en">The topics have been presided over</value>
+		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH-CN đã chủ trì hoặc tham gia</value>
+	</property>
+	
 	<property key="BkEunivTopic1">
 		<value xml:lang="en">The topics have been presided over</value>
 		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH-CN đã chủ trì</value>
@@ -1048,7 +1053,17 @@
 		<value xml:lang="en">PhD thesis name</value>
 		<value xml:lang="vi">Tên luận văn</value>
 	</property>
-
+	
+	<property key="EducationLevel">
+		<value xml:lang="en">Education Level</value>
+		<value xml:lang="vi">Trình độ đào tạo</value>
+	</property>
+	
+	<property key="EducationInstitution">
+		<value xml:lang="en">Education Institution</value>
+		<value xml:lang="vi">Cơ sở đào tạo</value>
+	</property>
+	
 	<property key="PhDGraduateYear">
 		<value xml:lang="en">PhD graduate year</value>
 		<value xml:lang="vi">Năm tốt nghiệp</value>
@@ -1291,7 +1306,12 @@
 	
 	<property key="ListFindingOption">
 		<value xml:lang="en">List finding option</value>
-		<value xml:lang="vi">Liệt kê thêm (Y/N)</value>
+		<value xml:lang="vi">Liệt kê chi tiết (Y/N)</value>
+	</property>
+	
+	<property key="Listing">
+		<value xml:lang="en">Listing</value>
+		<value xml:lang="vi">Liệt kê</value>
 	</property>
 	
 	<property key="NumberPublicationPaper">
@@ -1312,6 +1332,21 @@
 	<property key="NumberAppliedProject">
 		<value xml:lang="en">Number applied project</value>
 		<value xml:lang="vi">Số lượng đề tài, dự án ứng dụng thực tế</value>
+	</property>
+	
+	<property key="BkEunivRecentProjects">
+		<value xml:lang="en">Recent Projects</value>
+		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH và CN đã chủ trì hoặc tham gia trong 5 năm gần đây</value>
+	</property>
+	
+	<property key="StudentResearchCallId">
+		<value xml:lang="en">Student research call ID</value>
+		<value xml:lang="vi">Mã đợt SV NCKH</value>
+	</property>
+	
+	<property key="StudentResearchCallName">
+		<value xml:lang="en">Student research call name</value>
+		<value xml:lang="vi">Tên đợt SV NCKH</value>
 	</property>
 	
 </resource>

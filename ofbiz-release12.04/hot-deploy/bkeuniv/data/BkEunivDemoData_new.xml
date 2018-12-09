@@ -139,6 +139,12 @@
 <!-- Quan ly li lich khoa hoc -->
 <Function functionId="PROFILE_MANAGEMENT" uiLabelId="profile_management" vnLabel="Lí lịch khoa học" enLabel="profiles" parentFunctionId="NULL" index="1"/>
 
+<Function functionId="MY_CV_DETAIL" uiLabelId="cv_detail" vnLabel="Lí lịch khoa học tổng thể" enLabel="CV DETAIL" target="my-detail-scientific-cv" parentFunctionId="PROFILE_MANAGEMENT" index="-2"/>
+
+<Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="-1"/>
+
+<Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="-1"/>
+
 <Function functionId="GENERAL_INFORMATION" uiLabelId="general information" vnLabel="Thông tin chung" enLabel="general information" target="cv-general-information" parentFunctionId="PROFILE_MANAGEMENT" index="0"/>
 
 <Function functionId="RESEARCH_SPECIALITY_STAFF" uiLabelId="research_speciality_staff" vnLabel="Chuyên ngành nghiên cứu" enLabel="research speciality" target="research-speciality-staff" parentFunctionId="PROFILE_MANAGEMENT" index="1"/>
@@ -175,11 +181,6 @@
 
 <Function functionId="THESIS_SUBJECT_FOR_STUDENT" uiLabelId="thesis_subject_for_student" vnLabel="Hướng nghiên cứu dành cho  nghiên cứu sinh và học viên cao học" enLabel="Thesis Subject for Student" target="cv-thesis-subject-for-student" parentFunctionId="PROFILE_MANAGEMENT" index="15"/>
 
-<Function functionId="MY_CV_DETAIL" uiLabelId="cv_detail" vnLabel="Lí lịch khoa học tổng thể" enLabel="CV DETAIL" target="my-detail-scientific-cv" parentFunctionId="PROFILE_MANAGEMENT" index="16"/>
-
-<Function functionId="CV_PDF" uiLabelId="cv_pdf" vnLabel="Lí lịch khoa học - PDF" enLabel="CV PDF" target="profile-science" parentFunctionId="PROFILE_MANAGEMENT" index="16"/>
-
-<Function functionId="CV_PDF_STAFFS" uiLabelId="cv_pdf_staffs" vnLabel="Danh sách Lí lịch khoa học - PDF" enLabel="CV PDF of Staffs" target="profile-science-staffs-list" parentFunctionId="PROFILE_MANAGEMENT" index="17"/>
 
 
 <Function functionId="DETAIL_SCIENTIFIC_PROFILE" uiLabelId="detail_scientific_profile" vnLabel="Lí lịch chi tiết" enLabel

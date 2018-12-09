@@ -33,6 +33,19 @@ public class PhdStudentManagement{
 	public static String module = PhdStudentManagement.class.getName();
 	public static final String resource = "CommonUiLabels";
 	
+	public static Map<String, Object> getEducationLevels(DispatchContext ctx, Map<String, ? extends Object> context){
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		try{
+			Delegator delegator = ctx.getDelegator();
+			List<GenericValue> lst = delegator.findList("EducationLevel", 
+					null,null,null,null,false);
+			retSucc.put("educationLevels", lst);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
 	public static Map<String,Object> JQGetListPhdStudentSupervison(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
@@ -97,6 +110,9 @@ public class PhdStudentManagement{
 				item.put("thesisName", student.getString("thesisName"));
 				item.put("coSupervion", student.getString("coSupervion"));
 				item.put("graduateYear", student.getString("graduateYear"));
+				item.put("educationInstitution", student.getString("educationInstitution"));
+				item.put("educationLevelId", student.getString("educationLevelId"));
+				item.put("educationLevelName", student.getString("educationLevelName"));
 				
 				String coSupervion = student.getString("coSupervion");
 				if("YES".equals(coSupervion)) {
@@ -132,12 +148,20 @@ public class PhdStudentManagement{
 		String staffId = userLogin.getString("userLoginId");
 		String studentName = (String) context.get("studentName");
 		String thesisName = (String) context.get("thesisName");
+		String educationInstitution = (String)context.get("educationInstitution");
 		List<Object> coSupervions = (List<Object>)context.get("coSupervion[]");
+		List<String> educationLevelIds = (List<String>)context.get("educationLevelId[]");
+		String educationLevelId = null;
+		if(educationLevelIds != null && educationLevelIds.size() > 0)
+			educationLevelId = educationLevelIds.get(0);
 		String coSupervion = "NO";
 		if(coSupervions != null) {
 			coSupervion = (String)coSupervions.get(0);
 		} 
 		Long graduateYear = Long.parseLong(String.valueOf(context.get("graduateYear")));
+		
+		Debug.log(module + "::createPhdStudentSupervision, educationLevelId = " + educationLevelId
+				+ ", institution = " + educationInstitution);
 		
 		GenericValue phdSupervisionItem = delegator.makeValue("PhDSupervision");
 		
@@ -145,7 +169,10 @@ public class PhdStudentManagement{
 		phdSupervisionItem.set("staffId", staffId);
 		phdSupervisionItem.set("studentName", studentName);
 		phdSupervisionItem.set("thesisName", thesisName);
+		phdSupervisionItem.set("educationInstitution", educationInstitution);
 		phdSupervisionItem.set("coSupervion", coSupervion);
+		if(educationLevelId != null)
+			phdSupervisionItem.set("educationLevelId", educationLevelId);
 		phdSupervisionItem.set("graduateYear", graduateYear);
 		phdSupervisionItem.set("startDate", UtilDateTime.nowTimestamp());
 		
@@ -175,13 +202,21 @@ public class PhdStudentManagement{
 		
 		String studentName = (String) context.get("studentName");
 		String thesisName = (String) context.get("thesisName");
+		String educationInstitution = (String)context.get("educationInstitution");
 		List<Object> coSupervions = (List<Object>)context.get("coSupervion[]");
+		List<String> educationLevelIds = (List<String>)context.get("educationLevelId[]");
+		String educationLevelId = null;
+		if(educationLevelIds != null && educationLevelIds.size() > 0)
+			educationLevelId = educationLevelIds.get(0);
+		
 		String coSupervion = "NO";
 		if(coSupervions != null) {
 			coSupervion = (String)coSupervions.get(0);
 		} 
 		Long graduateYear = Long.parseLong(String.valueOf(context.get("graduateYear")));
 		
+		Debug.log(module + "::updatePhdStudentSupervision, educationLevelId = " + educationLevelId
+				+ ", institution = " + educationInstitution);
 		try {
 			GenericValue phdSupervisionItem = delegator.findOne("PhDSupervision", UtilMisc.toMap("phDSupervisionId", phDSupervisionId), false );
 		
@@ -192,7 +227,11 @@ public class PhdStudentManagement{
 			
 			phdSupervisionItem.set("studentName", studentName);
 			phdSupervisionItem.set("thesisName", thesisName);
+			
+			phdSupervisionItem.set("educationInstitution", educationInstitution);
 			phdSupervisionItem.set("coSupervion", coSupervion);
+			if(educationLevelId != null)
+				phdSupervisionItem.set("educationLevelId", educationLevelId);
 			phdSupervisionItem.set("graduateYear", graduateYear);
 		
 			delegator.createOrStore(phdSupervisionItem);

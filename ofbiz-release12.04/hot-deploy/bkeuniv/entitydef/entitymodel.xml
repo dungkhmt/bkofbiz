@@ -170,7 +170,37 @@
 		<field name="startDate" type="date"></field>
 		<field name="endDate" type="date"></field>
 		<field name="deliverable" type="very-long"></field>
-		<field name="materialBudget" type="currency-amount"></field>
+		<field name="materialBudget" type="currency-amount">
+			<description>
+			Mua sắm nguyên vật liệu, vật tư, hóa chất, dụng cụ và thiết bị thí nghiệm nhỏ; đề tài mô phỏng, 
+			lý thuyết được mua máy tính để bàn phục vụ nghiên cứu (≤ 70%).
+			</description>
+		</field>
+		<field name="externalServiceBudget" type="currency-amount">
+			<description>Thuê dịch vụ bao gồm: gia công, đo đạc, phân tích mẫu, phiếu khảo sát điều tra 
+			và các dịch vụ khác… (≤ 70%)
+			</description>
+		</field>
+		<field name="domesticConferenceBudget" type="currency-amount">
+			<description>Hội thảo/Hội nghị trong nước : tiền khách sạn, phí hội nghị/HT, vé tàu xe… (≤ 30%)
+			</description>
+		</field>
+		<field name="internationalConferenceBudget" type="currency-amount">
+			<description>Hội thảo/Hội nghị quốc tế: phí hội nghị/HT (≤ 50%)
+			</description>
+		</field>
+		<field name="publicationBudget" type="currency-amount">
+			<description>Chi phí công bố kết quả nghiên cứu: hiệu chỉnh tiếng Anh, phí đăng bài… (≤ 20%).
+			</description>
+		</field>
+		<field name="managementBudget" type="currency-amount">
+			<description>Quản lý phí: chi phí hoạt động của Hội đồng tuyển chọn và nghiệm thu 
+			(2,5% tổng kinh phí phân cấp đề tài cơ sở của đơn vị).
+			</description>
+		</field>
+		
+		
+		
 		<field name="note" type="very-long"></field>
 		<field name="evaluationOpenFlag" type="indicator"></field>
 		
@@ -744,11 +774,11 @@
 		<field name="researchProjectProposalId" type="id-ne"></field>	
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
-		<field name="evaluationMotivation" type="numeric"></field>
-		<field name="evaluationInnovation" type="numeric"></field>
+		<field name="evaluationMotivation" type="numeric"><description>Mục tiêu (cụ thể, rõ ràng, khả thi) - tối đa 5</description></field>
+		<field name="evaluationInnovation" type="numeric"><description>Tính cấp thiết, tính mới - tối đa 5</description></field>
 		<field name="evaluationApplicability" type="numeric"></field>
-		<field name="evaluationResearchMethod" type="numeric"></field>
-		<field name="evaluationResearchContent" type="numeric"></field>
+		<field name="evaluationResearchMethod" type="numeric"><description>Phương pháp nghiên cứu - tối đa 5</description></field>
+		<field name="evaluationResearchContent" type="numeric"><description>Nội dung nghiên cứu - tối đa 5</description></field>
 		<field name="evaluationPaper" type="numeric"></field>
 		<field name="evaluationProduct" type="numeric"></field>
 		<field name="evaluationPatent" type="numeric"></field>
@@ -790,6 +820,7 @@
 		<alias-all entity-alias="RRP"></alias-all>
 		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
 		<alias name="researchProjectProposalName" entity-alias="RPP" field="researchProjectProposalName"></alias>
+		<alias name="projectStatusId" entity-alias="RPP" field="statusId"></alias>
 		<view-link rel-entity-alias="ST" entity-alias="RRP">
 			<key-map field-name="staffId"/>
 		</view-link>
@@ -1282,6 +1313,12 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="EducationLevel" package-name="org.ofbiz.bkeuniv">
+		<field name="educationLevelId" type="id-ne"></field>
+		<field name="educationLevelName" type="very-long"></field>
+		<prim-key field="educationLevelId"/>
+	</entity>
+	
 	<entity entity-name="PhDSupervision" package-name="org.ofbiz.bkeuniv">
 		<field name="phDSupervisionId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
@@ -1289,20 +1326,39 @@
 		<field name="thesisName" type="very-long"></field>
 		<field name="coSupervion" type="id-ne"><description>Y/N</description></field>
 		<field name="graduateYear" type="numeric"></field>
+		<field name="educationLevelId" type="id-ne"><description>Thạc sỹ, tiến sỹ</description></field>
+		<field name="educationInstitution" type="very-long"><description>Cơ sở đào tạo</description></field>
 		<field name="startDate" type="date-time"></field>
 		<field name="thruDate" type="date-time"></field>
-		
+		<description>Quản lý cả PhD và Master</description>
 		<prim-key field="phDSupervisionId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>
+		<relation rel-entity-name="EducationLevel" type="one">
+			<key-map field-name="educationLevelId"/>
+		</relation>
 	</entity>
+	<view-entity entity-name="PhdStudentView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="STF" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="EL" entity-name="EducationLevel"></member-entity>
+		<member-entity entity-alias="PHDS" entity-name="PhDSupervision"></member-entity>
+		
+		<alias-all entity-alias="PHDS"></alias-all>
+		<alias name="staffName" entity-alias="STF"></alias>
+		<alias name="educationLevelName" field="educationLevelName" entity-alias="EL"></alias>
+		
+		<view-link rel-entity-alias="STF" entity-alias="PHDS" rel-optional="true">
+			<key-map field-name="staffId" rel-field-name="staffId" />
+		</view-link>
+		<view-link rel-entity-alias="EL" entity-alias="PHDS" rel-optional="true">
+			<key-map field-name="educationLevelId" rel-field-name="educationLevelId" />
+		</view-link>
+	</view-entity>
 	
-	<entity entity-name="EducationLevel" package-name="org.ofbiz.bkeuniv">
-		<field name="educationLevelId" type="id-ne"></field>
-		<field name="educationLevelName" type="very-long"></field>
-		<prim-key field="educationLevelId"/>
-	</entity>
+	
+	
+	
 	
 	<entity entity-name="ThesisSubjectPhDMaster" package-name="org.ofbiz.bkeuniv">
 		<field name="thesisSubjectPhDMasterId" type="id-ne"></field>

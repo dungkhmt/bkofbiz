@@ -1,24 +1,45 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/JqLibrary.ftl"/>
 
 <script>
-
-<#if parameters.researchSpecialityId?has_content>
 	
-	<#assign urlGetData = "/bkeuniv/control/jqxGeneralServicer?sname=jqGetListScienceCV&researchSpecialityId=" + parameters.researchSpecialityId />	
+	<#assign urlGetData = "/bkeuniv/control/jqxGeneralServicer?sname=jqGetListScienceCV" />	
 	
-	<#if parameters.sections?has_content>
-		<#assign sections = parameters.sections />
-		<#if sections?size gt 1>
-			<#list sections as section>
-				<#assign urlGetData = urlGetData + "&sections=" + section />
-			</#list>
-		<#else>
-			<#assign urlGetData = urlGetData + "&sections=" + sections/>
-		</#if>
+	
 
+	<<#if parameters.researchDomainId?has_content>
+		<#assign urlGetData = urlGetData + "&researchDomainId="+ parameters.researchDomainId />
+		var researchDomainId = '${parameters.researchDomainId}';
+	</#if>
+	
+	<#if parameters.researchSubDomainSeqId?has_content>
+		<#assign urlGetData =  urlGetData + "&researchSubDomainSeqId="+ parameters.researchSubDomainSeqId />
+		var researchSubDomainSeqId = '${parameters.researchSubDomainSeqId}';
+	</#if>
+	
+	<#if parameters.researchSpecialitySeqId?has_content>
+		<#assign urlGetData =  urlGetData + "&researchSpecialitySeqId="+ parameters.researchSpecialitySeqId />
+		var researchSpecialitySeqId = '${parameters.researchSpecialitySeqId}';
 	</#if>
 
-</#if>
+	<#if parameters.numberProjectApplied?has_content>
+		<#assign urlGetData =  urlGetData + "&numberProjectApplied="+ parameters.numberProjectApplied />
+		var numberProjectApplied = '${parameters.numberProjectApplied}';
+	</#if>
+
+	<#if parameters.numberScientificService?has_content>
+		<#assign urlGetData =  urlGetData + "&numberScientificService="+ parameters.numberScientificService />
+		var numberScientificService = '${parameters.numberScientificService}';
+	</#if>
+
+	<#if parameters.numberPublications?has_content>
+		<#assign urlGetData =  urlGetData + "&numberPublications="+ parameters.numberPublications />
+		var numberPublications = '${parameters.numberPublications}';
+	</#if>
+
+	<#if parameters.numberRecent5YearProjects?has_content>
+		<#assign urlGetData =  urlGetData + "&numberRecent5YearProjects="+ parameters.numberRecent5YearProjects />
+		var numberRecent5YearProjects = '${parameters.numberRecent5YearProjects}';
+	</#if>
 
 </script>
 
@@ -29,10 +50,6 @@
 		{
 			"name": bkEunivUiLabelMap.BkEunivFullName?j_string,
 			"data": "staffName"
-		},
-		{
-			"name": bkEunivUiLabelMap.BkEunivResearchSpeciality?j_string,
-			"data": "researchSpecialityName"
 		},
 		{
 			"name": bkEunivUiLabelMap.NumberPublicationPaper?j_string,
@@ -53,7 +70,6 @@
 	] />
 	
 	<#assign fields=[
-		"researchSpecialityName",
 		"staffId",
 		"staffName",
 		"cvPaperNumber",
