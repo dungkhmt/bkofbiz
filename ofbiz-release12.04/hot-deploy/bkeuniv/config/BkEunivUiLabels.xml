@@ -1339,4 +1339,14 @@
 		<value xml:lang="vi">Các đề tài, dự án, nhiệm vụ KH và CN đã chủ trì hoặc tham gia trong 5 năm gần đây</value>
 	</property>
 	
+	<property key="StudentResearchCallId">
+		<value xml:lang="en">Student research call ID</value>
+		<value xml:lang="vi">Mã đợt SV NCKH</value>
+	</property>
+	
+	<property key="StudentResearchCallName">
+		<value xml:lang="en">Student research call name</value>
+		<value xml:lang="vi">Tên đợt SV NCKH</value>
+	</property>
+	
 </resource>

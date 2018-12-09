@@ -13,7 +13,8 @@
 	<entity entity-name="StudentResearchConferenceCall" package-name="org.ofbiz.bkeuniv">
 		<field name="studentResearchCallId" type="id-ne"></field>
 		<field name="studentResearchCallName" type="very-long"></field>
-		<field name="date" type="date"></field>
+		<field name="date" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="studentResearchCallId"/>
 	</entity>
 	<entity entity-name="Student" package-name="org.ofbiz.bkeuniv">
