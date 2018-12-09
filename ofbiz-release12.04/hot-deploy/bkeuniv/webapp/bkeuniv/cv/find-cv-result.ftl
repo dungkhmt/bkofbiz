@@ -6,17 +6,39 @@
 	
 	
 
-	<#if parameters.sections?has_content>
-		<#assign listSections = parameters.sections />
-		<#if listSections?has_content>
-			<#list parameters.sections  as section>
-				<#assign urlGetData = urlGetData + "&sections=" + "${StringUtil.wrapString(section?if_exists)}" />
-			</#list>
-		</#if>
+	<<#if parameters.researchDomainId?has_content>
+		<#assign urlGetData = urlGetData + "&researchDomainId="+ parameters.researchDomainId />
+		var researchDomainId = '${parameters.researchDomainId}';
+	</#if>
+	
+	<#if parameters.researchSubDomainSeqId?has_content>
+		<#assign urlGetData =  urlGetData + "&researchSubDomainSeqId="+ parameters.researchSubDomainSeqId />
+		var researchSubDomainSeqId = '${parameters.researchSubDomainSeqId}';
+	</#if>
+	
+	<#if parameters.researchSpecialitySeqId?has_content>
+		<#assign urlGetData =  urlGetData + "&researchSpecialitySeqId="+ parameters.researchSpecialitySeqId />
+		var researchSpecialitySeqId = '${parameters.researchSpecialitySeqId}';
 	</#if>
 
-	<#if parameters.staffId?has_content>
-		<#assign urlGetData = urlGetData + "&staffId=" + "${StringUtil.wrapString(parameters.staffId)}" />
+	<#if parameters.numberProjectApplied?has_content>
+		<#assign urlGetData =  urlGetData + "&numberProjectApplied="+ parameters.numberProjectApplied />
+		var numberProjectApplied = '${parameters.numberProjectApplied}';
+	</#if>
+
+	<#if parameters.numberScientificService?has_content>
+		<#assign urlGetData =  urlGetData + "&numberScientificService="+ parameters.numberScientificService />
+		var numberScientificService = '${parameters.numberScientificService}';
+	</#if>
+
+	<#if parameters.numberPublications?has_content>
+		<#assign urlGetData =  urlGetData + "&numberPublications="+ parameters.numberPublications />
+		var numberPublications = '${parameters.numberPublications}';
+	</#if>
+
+	<#if parameters.numberRecent5YearProjects?has_content>
+		<#assign urlGetData =  urlGetData + "&numberRecent5YearProjects="+ parameters.numberRecent5YearProjects />
+		var numberRecent5YearProjects = '${parameters.numberRecent5YearProjects}';
 	</#if>
 
 </script>

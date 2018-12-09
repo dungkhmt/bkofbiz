@@ -50,7 +50,7 @@
             <!-- <form class="form-horizontal">0 -->
             <div class="row form-group">
               <label class="col-6 col-md-6 control-label">
-                ${bkEunivUiLabelMap.BkEunivResearchSpeciality?if_exists}
+                ${bkEunivUiLabelMap.BkEunivResearchDomain?if_exists}
               </label>
               <div class="col-6 col-md-6">
                 <select id="researchDomain" class="js-example-responsive" style="width: 100%"></select>
@@ -58,7 +58,7 @@
             </div>
             <div class="row form-group">
               <label class="col-6 col-md-6 control-label">
-                ${bkEunivUiLabelMap.BkEunivResearchSpeciality?if_exists}
+                ${bkEunivUiLabelMap.BkEunivResearchSubDomain?if_exists}
               </label>
               <div class="col-6 col-md-6">
                 <select disabled id="researchSubDomain" class="js-example-responsive" style="width: 100%"></select>
@@ -72,6 +72,30 @@
                 <select disabled id="researchSpeciality" class="js-example-responsive" style="width: 100%"></select>
               </div>
             </div>
+            <div class="row form-group">
+              <label for="dutyId" class="col-6 col-md-6 control-label">${bkEunivUiLabelMap.BkEunivProjectsApplied}</label>
+                <div class="col-6 col-md-6">
+                  <input type="number" class="form-control" id="numberProjectApplied" value="0">
+                </div>
+            </div>
+            <div class="row form-group">
+              <label for="dutyId" class="col-6 col-md-6 control-label">${bkEunivUiLabelMap.BkEunivScientificService1?if_exists}</label>
+                <div class="col-6 col-md-6">
+                  <input type="number" class="form-control" id="numberScientificService" value="0">
+                </div>
+            </div>
+            <div class="row form-group">
+              <label for="dutyId" class="col-6 col-md-6 control-label">${bkEunivUiLabelMap.BkEunivPublications?if_exists}</label>
+                <div class="col-6 col-md-6">
+                  <input type="number" class="form-control" id="numberPublications" value="0">
+                </div>
+            </div>
+            <div class="row form-group">
+              <label for="dutyId" class="col-6 col-md-6 control-label">${bkEunivUiLabelMap.BkEunivRecent5YearProjects?if_exists}</label>
+                <div class="col-6 col-md-6">
+                  <input type="number" class="form-control" id="numberRecent5YearProjects" value="0">
+                </div>
+            </div>
             <div class="row form-group" style="display: flex; margin-top: 10px">
               <div style="margin: auto;">
                 <button disabled id="findCVBtn" type="button" class="btn btn-success">	
@@ -80,6 +104,7 @@
                 </button>
               </div>
             </div>
+            
           </div>
         </div>
         </form>
@@ -218,13 +243,17 @@
       });
       
 
-      let redirectUrl = 'find-staff-cv-results?';
+      let redirectUrl = 'find-cv-results?';
 
       $('#findCVBtn').on('click', () => {
         redirectUrl = redirectUrl
          + 'researchDomainId=' + $('#researchDomain').val()
          + '&researchSubDomainSeqId=' + $('#researchSubDomain').val()
          + '&researchSpecialitySeqId=' + $('#researchSpeciality').val()
+         + '&numberProjectApplied=' + $('#numberProjectApplied').val()
+         + '&numberScientificService=' + $('#numberScientificService').val()
+         + '&numberPublications=' + $('#numberPublications').val()
+         + '&numberRecent5YearProjects=' + $('#numberRecent5YearProjects').val()
         location.href = redirectUrl;
       });
 

@@ -33,7 +33,7 @@ import javolution.util.FastMap;
 public class CiriculumVitaeService {
 
 	public static final String module = CiriculumVitaeService.class.getName();
-	
+
 	public static final String APPLIED_PROJECT = "applied-project-declaration";
 	public static final String SCIENTIFIC_SERVICE = "scientific-service";
 	public static final String RECENT_PUBLICATIONS = "recent-publications";
@@ -180,7 +180,7 @@ public class CiriculumVitaeService {
 					staff.set("chucVuHienNay", duty);
 				if (researchPositionId != null)
 					staff.set("chucDanhNghienCuuId", researchPositionId);
-				
+
 				delegator.createOrStore(staff);
 				returnResult.put("statusCode", "200");
 			}
@@ -290,9 +290,9 @@ public class CiriculumVitaeService {
 
 		return returnResult;
 	}
-	
-	
-	public static Map<String, Object> jqGetListStaffWithResearchSpeciality(DispatchContext dpct, Map<String, ? extends Object> context){
+
+	public static Map<String, Object> jqGetListStaffWithResearchSpeciality(DispatchContext dpct,
+			Map<String, ? extends Object> context) {
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
 		Locale locale = (Locale) context.get("locale");
@@ -305,7 +305,7 @@ public class CiriculumVitaeService {
 		String researchDomainId = (String) parameters.get("researchDomainId")[0];
 		String researchSubDomainSeqId = (String) parameters.get("researchSubDomainSeqId")[0];
 		String researchSpecialitySeqId = (String) parameters.get("researchSpecialitySeqId")[0];
-		
+
 		if (parameters.containsKey("q")) {
 			String q = (String) parameters.get("q")[0].trim();
 			String[] searchKeys = { "staffId", "staffName", "researchSpecialityName" };
@@ -322,30 +322,29 @@ public class CiriculumVitaeService {
 		if (filter != null) {
 			listAllConditions.add(filter);
 		}
-		
+
 		listAllConditions.add(EntityCondition.makeCondition("researchSpecialitySeqId", researchSpecialitySeqId));
-		
+
 		listAllConditions.add(EntityCondition.makeCondition("researchSubDomainSeqId", researchSubDomainSeqId));
-		
+
 		listAllConditions.add(EntityCondition.makeCondition("researchDomainId", researchDomainId));
 
 		EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
 		try {
 
-		listCVIterator = delegator.find("StaffResearchSpecialityView2", condition, null, null, sort, opts);
-		
-		result.put("listIterator", listCVIterator);
-		
-		}
-		catch (Exception e) {
+			listCVIterator = delegator.find("StaffResearchSpecialityView2", condition, null, null, sort, opts);
+
+			result.put("listIterator", listCVIterator);
+
+		} catch (Exception e) {
 			Debug.log(e.getMessage());
 			return ServiceUtil.returnError("Error get list jqGetListStaffWithResearchSpeciality");
 		}
-		return result; 
-		
-	} 
-	
-	public static Map<String, Object> jqGetListScienceCV(DispatchContext dpct, Map<String, ? extends Object> context){
+		return result;
+
+	}
+
+	public static Map<String, Object> jqGetListScienceCV(DispatchContext dpct, Map<String, ? extends Object> context) {
 		Delegator delegator = (Delegator) dpct.getDelegator();
 		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
 		Locale locale = (Locale) context.get("locale");
@@ -355,10 +354,35 @@ public class CiriculumVitaeService {
 		Map<String, String[]> parameters = (Map<String, String[]>) context.get("parameters");
 		Map<String, Object> result = FastMap.newInstance();
 		EntityListIterator listCVIterator = null;
-		String staffId = (String) parameters.get("staffId")[0];
-		String [] sections = (String[]) parameters.get("sections");
-		
-		
+		String researchDomainId = (String) parameters.get("researchDomainId")[0];
+		String researchSubDomainSeqId = (String) parameters.get("researchSubDomainSeqId")[0];
+		String researchSpecialitySeqId = (String) parameters.get("researchSpecialitySeqId")[0];
+
+		Integer numberProjectApplied = Integer.valueOf((String) parameters.get("numberProjectApplied")[0]);
+		Integer numberScientificService = Integer.valueOf((String) parameters.get("numberScientificService")[0]);
+		Integer numberPublications = Integer.valueOf((String) parameters.get("numberPublications")[0]);
+		Integer numberRecent5YearProjects = Integer.valueOf((String) parameters.get("numberRecent5YearProjects")[0]);
+
+		List<EntityCondition> listStaffConditions = FastList.newInstance();
+
+		listStaffConditions.add(EntityCondition.makeCondition("researchSpecialitySeqId", researchSpecialitySeqId));
+		listStaffConditions.add(EntityCondition.makeCondition("researchSubDomainSeqId", researchSubDomainSeqId));
+		listStaffConditions.add(EntityCondition.makeCondition("researchDomainId", researchDomainId));
+
+		EntityCondition staffCondition = EntityCondition.makeCondition(listStaffConditions, EntityOperator.AND);
+
+		List<GenericValue> listStaffs;
+		List<String> listStaffIds = FastList.newInstance();
+		try {
+			listStaffs = delegator.findList("StaffResearchSpecialityView2", staffCondition, null, null, null, false);
+			for (GenericValue staff : listStaffs) {
+				listStaffIds.add(staff.getString("staffId"));
+			}
+		} catch (GenericEntityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		try {
 			GenericValue userLogin = (GenericValue) context.get("userLogin");
 			String userLoginId = userLogin.getString("userLoginId");
@@ -382,49 +406,42 @@ public class CiriculumVitaeService {
 			if (filter != null) {
 				listAllConditions.add(filter);
 			}
-			
-			listAllConditions.add(EntityCondition.makeCondition("staffId", staffId));
+
+			listAllConditions.add(EntityCondition.makeCondition("staffId", EntityOperator.IN, listStaffIds));
+
+			// listAllConditions.add(EntityCondition.makeCondition("appliedResearchProjectNumber",
+			// EntityOperator.GREATER_THAN_EQUAL_TO , numberProjectApplied));
+			//
+			// listAllConditions.add(EntityCondition.makeCondition("scientificServiceExperienceNumber",
+			// EntityOperator.GREATER_THAN_EQUAL_TO , numberScientificService));
+			//
+			// listAllConditions.add(EntityCondition.makeCondition("cvPaperNumber",
+			// EntityOperator.GREATER_THAN_EQUAL_TO , numberPublications));
+			//
+			// listAllConditions.add(EntityCondition.makeCondition("cvProjectNumber",
+			// EntityOperator.GREATER_THAN_EQUAL_TO , numberRecent5YearProjects));
 
 			EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
 
 			listCVIterator = delegator.find("FindCVView", condition, null, null, sort, opts);
-			
+
 			List<GenericValue> listCV = listCVIterator.getCompleteList();
-			
+
 			listCVIterator.close();
-			
-			List<Map<String, Object>> listResult = FastList.newInstance();
-			
-			for(GenericValue cv : listCV) {
-				Map<String, Object> item = FastMap.newInstance();
-				item.put("staffName", cv.getString("staffName"));
-				item.put("staffId", cv.getString("staffId"));
-				item.put("researchSpecialityName", cv.getString("researchSpecialityName"));
-				
-				for(String section : sections) {
-					switch(section) {
-						case CiriculumVitaeService.APPLIED_PROJECT:
-							item.put("appliedResearchProjectNumber", cv.getString("appliedResearchProjectNumber"));
-							break;
-						case CiriculumVitaeService.RECENT_PROJECT:
-							item.put("cvProjectNumber", cv.getString("cvProjectNumber"));
-							break;
-						case CiriculumVitaeService.RECENT_PUBLICATIONS:
-							item.put("cvPaperNumber", cv.getString("cvPaperNumber"));
-							break;
-						case CiriculumVitaeService.SCIENTIFIC_SERVICE:
-							item.put("scientificServiceExperienceNumber", cv.getString("scientificServiceExperienceNumber"));
-							break;
-						default:
-							break;
-					}
+
+			List<GenericValue> listResults = FastList.newInstance();
+
+			for (GenericValue cv : listCV) {
+				if (Integer.valueOf(cv.getString("cvPaperNumber")) >= numberPublications
+						&& Integer.valueOf(cv.getString("cvProjectNumber")) >= numberRecent5YearProjects
+						&& Integer.valueOf(cv.getString("scientificServiceExperienceNumber")) >= numberScientificService
+						&& Integer.valueOf(cv.getString("appliedResearchProjectNumber")) >= numberProjectApplied) {
+					listResults.add(cv);
 				}
-				listResult.add(item);
+
 			}
-			
-			listCV.clear();
-			
-			result.put("listIterator", listResult);
+
+			result.put("listIterator", listResults);
 
 		} catch (Exception e) {
 			Debug.log(e.getMessage());
