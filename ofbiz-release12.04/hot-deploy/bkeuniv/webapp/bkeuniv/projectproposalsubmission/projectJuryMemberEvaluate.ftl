@@ -14,11 +14,14 @@
 			"data": "reviewerResearchProposalId",
 			"className": "text-center",
 			"render": 'function(value, name, dataColumns, id) {
-				if(!!dataColumns.statusId == "ASSIGNED_REVIEWER") {
-					return \'<a href="/bkeuniv/control/form-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">\'+uiLabelMap.Evaluation+\'</a>\';
-				} else {
-					return \'<a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.ViewEvaluation+'</a>\';'+
-				'}
+				if(!!dataColumns.statusId) {
+					switch(dataColumns.statusId) {
+						case "ASSIGNED_REVIEWER":
+							return \'<a href="/bkeuniv/control/form-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.Evaluation+'</a>\';
+						default:
+							return \'<a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.ViewEvaluation+'</a>\';'+
+					'}
+				}
 			}'
 		}
 	] />
