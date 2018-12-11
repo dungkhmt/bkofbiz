@@ -17,10 +17,12 @@
 				if(!!dataColumns.statusId) {
 					switch(dataColumns.statusId) {
 						case "ASSIGNED_REVIEWER":
-							return \'<a href="/bkeuniv/control/form-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.Evaluation+'</a>\';
-						default:
+							return \'<a href="/bkeuniv/control/form-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.Evaluation+'</a>\';'+
+						'case "CONFIRM":
 							return \'<a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.ViewEvaluation+'</a>\';'+
-					'}
+						'default:
+							return "";
+					}
 				}
 			}'
 		}
