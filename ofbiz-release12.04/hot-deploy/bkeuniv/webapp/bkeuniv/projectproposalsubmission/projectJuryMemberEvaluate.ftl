@@ -18,7 +18,7 @@
 					switch(dataColumns.statusId) {
 						case "ASSIGNED_REVIEWER":
 							return \'<a href="/bkeuniv/control/form-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.Evaluation+'</a>\';'+
-						'case "CONFIRM":
+						'case "CONFIRM_EVALUATION_PROPOSAL":
 							return \'<a href="/bkeuniv/control/detail-current-evaluate-research-project-proposal?reviewerResearchProposalId=\'+dataColumns.reviewerResearchProposalId+\'">'+uiLabelMap.ViewEvaluation+'</a>\';'+
 						'default:
 							return "";

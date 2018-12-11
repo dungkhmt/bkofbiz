@@ -805,11 +805,11 @@
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
 			<key-map field-name="researchProjectProposalId"/>
 		</relation>
-		<!-- 
+		
 		<relation rel-entity-name="ProjectProposalStatus" type="one">
 			<key-map field-name="statusId"/>
 		</relation>
-		 -->
+		
 		 
 	</entity>
 	

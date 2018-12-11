@@ -1072,7 +1072,7 @@ public class ProjectProposalSubmissionService {
 							reviewerResearchProposalId), false);
 
 			gv.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_EVALUATION_CONFIRM);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_PROPOSAL_EVALUATION_CONFIRM);
 
 			delegator.store(gv);
 
