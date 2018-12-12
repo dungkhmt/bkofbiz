@@ -47,7 +47,7 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String STATUS_PROJECT_RUNNING = "RUNNING";
 	public static String STATUS_PROJECT_UNDER_REVIEW = "UNDER_REVIEW";
 
-	public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
+	//public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
 	public static String STATUS_PROJECT_PROPOSAL_EVALUATION_CONFIRM = "CONFIRM_EVALUATION_PROPOSAL";
 
 	public static String PROJECT_ROLE_TYPE_DIRECTOR = "DIRECTOR";

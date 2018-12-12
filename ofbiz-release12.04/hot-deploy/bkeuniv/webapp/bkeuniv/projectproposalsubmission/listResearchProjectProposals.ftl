@@ -42,7 +42,8 @@
 			"pWidth":"150px",
 			"render": 'function(value, name, dataColumns, id) {
                 if(dataColumns.totalEvaluation>0&&(!!value||value===0)) {
-                    return parseFloat(value/dataColumns.totalEvaluation).toFixed(2);
+                   
+                    return parseFloat(dataColumns.totalEvaluation).toFixed(2) + "/" + value;
                 } else {
 					return "N/A"
 				}
