@@ -6948,6 +6948,7 @@
 <ProjectProposalStatus statusId="RUNNING" statusName="Đang thực hiện"/>
 <ProjectProposalStatus statusId="RESULT_ACCEPTANCE" statusName="Nghiệm thu"/>
 <ProjectProposalStatus statusId="RESULT_FAILED" statusName="Nghiệm thu không đạt"/>
+<ProjectProposalStatus statusId="CONFIRM_EVALUATION_PROPOSAL" statusName="Đã xác nhận đánh giá thuyết minh"/>
 
 
 <ProjectCallStatus statusId="CREATED" statusName="Mới tạo"/>

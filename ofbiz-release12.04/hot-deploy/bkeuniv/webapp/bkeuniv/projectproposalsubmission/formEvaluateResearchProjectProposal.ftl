@@ -40,6 +40,7 @@
 		</div>
 	</div>
 	</td>
+	<!--
 	<td>
 	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
 		<div style="display: inline-block;width: 100%;">
@@ -51,6 +52,11 @@
 		</div>
 	</div>
 	</td>
+	-->
+	
+	</tr>
+
+	<tr>
 	<td>
 	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
 		<div style="display: inline-block;width: 100%;">
@@ -62,9 +68,6 @@
 		</div>
 	</div>
 	</td>
-	</tr>
-
-	<tr>
 	<td>
 	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
 		<div style="display: inline-block;width: 100%;">
@@ -76,6 +79,7 @@
 		</div>
 	</div>
 	</td>
+	<!--
 	<td>
 	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
 		<div style="display: inline-block;width: 100%;">
@@ -109,8 +113,73 @@
 		</div>
 	</div>
 	</td>
+	-->
+	</tr>
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Product1}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationProduct1" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct1?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct1}"<#else>"0"</#if>/>
+		</div>
+	</div>
+	</td>
+
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Product2}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationProduct2" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct2?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct2}"<#else>"0"</#if>/>
+		</div>
+	</div>
+	</td>
+
 	</tr>
 
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Promote1}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPromote1" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPromote1?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPromote1}"<#else>"0"</#if>/>
+		</div>
+	</div>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Promote2}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPromote2" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPromote2?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPromote2}"<#else>"0"</#if>/>
+		</div>
+	</div>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Promote3}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPromote3" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPromote3?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPromote3}"<#else>"0"</#if>/>
+		</div>
+	</div>
+	</td>
+		
+	</tr>
+
+	<!--
 	<tr>
 	<td>
 	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
@@ -157,6 +226,9 @@
 	</div>
 	</td>
 	</tr>
+	-->
+	
+	
 	</table>
 	<div class="inline-box" style="width: 90%; padding: 10px 5px;">
 		<div style="display: inline-block;width: 100%;">
@@ -188,17 +260,24 @@
 	function updateReviewProjectProposal(){
 		var evaluationMotivation = document.getElementById("evaluationMotivation").value;
 		var evaluationInnovation = document.getElementById("evaluationInnovation").value;
-		var evaluationApplicability = document.getElementById("evaluationApplicability").value;
+		//var evaluationApplicability = document.getElementById("evaluationApplicability").value;
 		var evaluationResearchMethod = document.getElementById("evaluationResearchMethod").value;
-		
 		var evaluationResearchContent = document.getElementById("evaluationResearchContent").value;
-		var evaluationPaper = document.getElementById("evaluationPaper").value;
-		var evaluationProduct = document.getElementById("evaluationProduct").value;
-		var evaluationPatent = document.getElementById("evaluationPatent").value;
-		var evaluationGraduateStudent = document.getElementById("evaluationGraduateStudent").value;
-		var evaluationYoungResearcher = document.getElementById("evaluationYoungResearcher").value;
-		var evaluationEducation = document.getElementById("evaluationEducation").value;
-		var evaluationReasonableBudget = document.getElementById("evaluationReasonableBudget").value;
+		var evaluationProduct1 = document.getElementById("evaluationProduct1").value;
+		var evaluationProduct2 = document.getElementById("evaluationProduct2").value;
+		
+		var evaluationPromote1 = document.getElementById("evaluationPromote1").value;
+		var evaluationPromote2 = document.getElementById("evaluationPromote2").value;
+		var evaluationPromote3 = document.getElementById("evaluationPromote3").value;
+				
+		
+		//var evaluationPaper = document.getElementById("evaluationPaper").value;
+		//var evaluationProduct = document.getElementById("evaluationProduct").value;
+		//var evaluationPatent = document.getElementById("evaluationPatent").value;
+		//var evaluationGraduateStudent = document.getElementById("evaluationGraduateStudent").value;
+		//var evaluationYoungResearcher = document.getElementById("evaluationYoungResearcher").value;
+		//var evaluationEducation = document.getElementById("evaluationEducation").value;
+		//var evaluationReasonableBudget = document.getElementById("evaluationReasonableBudget").value;
 		
 		var comments = $('textarea#comments').val();
 		
@@ -209,17 +288,22 @@
 					"reviewerResearchProposalId": ${reviewerResearchProposalId},
 					"evaluationInnovation": evaluationInnovation,
 					"evaluationMotivation": evaluationMotivation,
-					"evaluationApplicability": evaluationApplicability,
+					//"evaluationApplicability": evaluationApplicability,
 					"evaluationResearchMethod": evaluationResearchMethod,
-					
 					"evaluationResearchContent": evaluationResearchContent,
-					"evaluationPaper": evaluationPaper,
-					"evaluationProduct": evaluationProduct,
-					"evaluationPatent": evaluationPatent,
-					"evaluationGraduateStudent": evaluationGraduateStudent,
-					"evaluationYoungResearcher": evaluationYoungResearcher,
-					"evaluationEducation": evaluationEducation,
-					"evaluationReasonableBudget": evaluationReasonableBudget,
+					"evaluationProduct1": evaluationProduct1,
+					"evaluationProduct2": evaluationProduct2,
+					"evaluationPromote1": evaluationPromote1,
+					"evaluationPromote2": evaluationPromote2,
+					"evaluationPromote3": evaluationPromote3,
+							
+					//"evaluationPaper": evaluationPaper,
+					//"evaluationProduct": evaluationProduct,
+					//"evaluationPatent": evaluationPatent,
+					//"evaluationGraduateStudent": evaluationGraduateStudent,
+					//"evaluationYoungResearcher": evaluationYoungResearcher,
+					//"evaluationEducation": evaluationEducation,
+					//"evaluationReasonableBudget": evaluationReasonableBudget,
 					"comments": comments
 				},
 				success: function(rs){
