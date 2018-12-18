@@ -152,7 +152,7 @@
                 roleName: "<#if m.roleId?exists><#list roleTypeList as type><#if m.roleId==type.value>${StringUtil.wrapString(type.name)}</#if></#list></#if>",
                 CAId: "${m.correspondingAuthor}",
                 CAName: "<#if m.correspondingAuthor?exists><#list yesnoList as yesno><#if m.correspondingAuthor==yesno.value>${StringUtil.wrapString(yesno.name)}</#if></#list></#if>",
-                affilliation: "${StringUtil.wrapString(m.affilliation)}",
+                affilliation: "<#if m.affilliation?exists>${StringUtil.wrapString(m.affilliation)}<#else></#if>",
                 sequence: "${m.sequence}"
             },
         </#list>

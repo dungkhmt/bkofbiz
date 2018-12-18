@@ -722,6 +722,15 @@
 			}'
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
+			"data": "year"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
+			"data": "month"
+			
+		},
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
 			"data": "researchProjectProposalName"
 		},
@@ -760,15 +769,7 @@
 			"data": "impactFactor"
 		},
 		
-		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"data": "month"
-			
-		},
-		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"data": "year"
-		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
 			"data": "academicYearId"
