@@ -254,7 +254,7 @@
 		$(document).contextmenu({
 			    delegate: "#"+id+"-content td",
 			menu: [
-			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  //{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 			  //{title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
 			  //{title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
