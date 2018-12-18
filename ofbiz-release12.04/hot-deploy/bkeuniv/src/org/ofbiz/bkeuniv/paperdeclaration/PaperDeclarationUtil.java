@@ -486,7 +486,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					}
 				}
 				//if (ok && (paperCategoryId.equals("JINT_SCOPUS")))
-				if (ok && (paperCategoryKNCId.equals("SCOPUS")))
+				if(paperCategoryKNCId != null) if (ok && (paperCategoryKNCId.equals("SCOPUS")))
 					isiPapers.add(p);
 				
 			}
@@ -6364,9 +6364,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 	public static String getFacultyName(Delegator delegator, String facultyId) {
 		try {
+			Debug.log(module + "::getFacultyName, facultyId = " + facultyId);
+			//if(true) return "CNTT - TT";
 			GenericValue faculty = delegator.findByPrimaryKey("Faculty",
 					UtilMisc.toMap("facultyId", facultyId));
-			String facultyName = (String) faculty.get("facultyName");
+			String facultyName = "";
+			if(faculty != null) facultyName = (String) faculty.get("facultyName");
 			return facultyName;
 		} catch (Exception ex) {
 			ex.printStackTrace();
