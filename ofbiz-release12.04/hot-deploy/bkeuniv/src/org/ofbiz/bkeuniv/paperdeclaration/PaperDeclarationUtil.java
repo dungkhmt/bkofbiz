@@ -52,6 +52,12 @@ public class PaperDeclarationUtil extends java.lang.Object {
 	public static final String STATUS_ENABLED = "ENABLED";
 	public static final String STATUS_DISABLED = "DISABLED";
 	public static final String STATUS_CANCELLED = "CANCELLED";
+	
+	public static final String APPROVE_STATUS_CREATED = "CREATED";
+	public static final String APPROVE_STATUS_APPROVED = "APPROVED";
+	public static final String APPROVE_STATUS_REJECTED = "REJECTED";
+	public static final String APPROVE_STATUS_CANCELLED = "CANCELLED";
+	
 
 	public static final String module = PaperDeclarationUtil.class.getName();
 	public static final String[] sSTT = new String[] { "I", "II", "III", "IV",
