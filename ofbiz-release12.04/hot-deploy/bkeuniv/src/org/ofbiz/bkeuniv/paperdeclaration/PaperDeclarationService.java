@@ -1244,8 +1244,14 @@ public class PaperDeclarationService {
 			// EntityOperator.NOT_EQUAL,
 			// PaperDeclarationUtil.STATUS_CANCELLED));
 
+			//delegator.findList(entityName, entityCondition, fieldsToSelect, orderBy, findOptions, useCache)
+			
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("year DESC");
+			orderBy.add("paperId DESC");
+			
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
-					EntityCondition.makeCondition(conds), null, null, null,
+					EntityCondition.makeCondition(conds), null, orderBy, null,
 					false);
 
 			List<GenericValue> ret_papers = FastList.newInstance();
@@ -2224,6 +2230,7 @@ public class PaperDeclarationService {
 				p.put("volumn", volumn);
 			
 			p.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+			p.put("approveStatusId", PaperDeclarationUtil.APPROVE_STATUS_CREATED);
 			
 			delegator.create(p);
 			

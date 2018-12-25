@@ -254,7 +254,7 @@
 		$(document).contextmenu({
 			    delegate: "#"+id+"-content td",
 			menu: [
-			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  //{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
 			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
 			  //{title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
 			  //{title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
@@ -722,6 +722,15 @@
 			}'
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
+			"data": "year"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
+			"data": "month"
+			
+		},
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
 			"data": "researchProjectProposalName"
 		},
@@ -760,15 +769,7 @@
 			"data": "impactFactor"
 		},
 		
-		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"data": "month"
-			
-		},
-		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"data": "year"
-		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
 			"data": "academicYearId"

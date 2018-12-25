@@ -781,6 +781,12 @@
 		<field name="evaluationResearchContent" type="numeric"><description>Nội dung nghiên cứu - tối đa 5</description></field>
 		<field name="evaluationPaper" type="numeric"></field>
 		<field name="evaluationProduct" type="numeric"></field>
+		<field name="evaluationProduct1" type="numeric"><description>Đáp ứng được tại Khoản 3 Điều 2 của Quy định về thực hiện đề tài KH-CN cấp cơ sở - tối đa 50</description></field>
+		<field name="evaluationProduct2" type="numeric"><description>Sản phẩm vượt trội so với quy định - tối đa 10</description></field>
+		<field name="evaluationPromote1" type="numeric"><description>Nội dung nghiên cứu hợp với đề tài luận án NCS - tối đa 15</description></field>
+		<field name="evaluationPromote2" type="numeric"><description>Tiến sĩ, chưa có chức danh PGS - tối đa 10</description></field>
+		<field name="evaluationPromote3" type="numeric"><description>Chủ nhiệm đề tài chưa từng chủ nhiệm đề tài các cấp khác - tối đa 5</description></field>
+		
 		<field name="evaluationPatent" type="numeric"></field>
 		<field name="evaluationGraduateStudent" type="numeric"></field>
 		<field name="evaluationYoungResearcher" type="numeric"></field>
@@ -805,11 +811,11 @@
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
 			<key-map field-name="researchProjectProposalId"/>
 		</relation>
-		<!-- 
+		
 		<relation rel-entity-name="ProjectProposalStatus" type="one">
 			<key-map field-name="statusId"/>
 		</relation>
-		 -->
+		
 		 
 	</entity>
 	
