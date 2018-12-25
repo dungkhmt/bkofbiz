@@ -92,6 +92,9 @@
 		filters=[]
 		JqRefresh="JqRefresh()"
 		backToUrl={}
+		pretreatment=""
+		drawCallback=""
+		lengthMenu='[[10, 25, 50, -1], [10, 25, 50, "All"]]'
 	>
 	<@jqMinimumLib />
 	
@@ -317,9 +320,12 @@
 				<#if !noSort>"order": [[ ${sort}, "asc" ]],</#if>
                 "sAjaxSource": "${urlData}",
 				searchDelay: 350,
-				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"lengthMenu": ${lengthMenu},
 				"drawCallback": function( settings ) {
 					resizeDataTable();
+					<#if drawCallback!="">
+						${drawCallback}(settings);
+					</#if>
 				},
                 columns: jqDataTable.columns,
                 deferRender: true,
@@ -423,6 +429,9 @@
                                 iTotalRecords: reponse.totalRows,
                                 recordsTotal: reponse.totalRows,  -->
                             }
+							<#if pretreatment!="">
+								data.data = ${pretreatment}(data.data);
+							</#if>
 
 
 							data.data = data.data.map(function(d, index) {

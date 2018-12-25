@@ -200,5 +200,10 @@
         <value xml:lang="vi">Tải lên bài báo, sách</value>
     </property>
     
+    <property key="BkEunivStatusPaper">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng thái</value>
+    </property>
+    
    
 </resource>

@@ -1,5 +1,17 @@
 <#include "component://bkeuniv/webapp/bkeuniv/layout/jqServerSide.ftl"/>
 <body>
+
+<style>
+	.no-hover {
+		opacity: unset!important;
+		background: none!important;
+	}
+
+	.no-hover:hover td:first-child {
+		border: none!important;
+	}
+</style>
+
 <script>
 	function updateStyleCell(idTable) {
 		Array.from($("#jqDataTable .distance-success")).forEach(function(el) {
@@ -49,7 +61,7 @@
 
         if(!!paperDeclarationStatus && paperDeclarationStatus!="all") {
             filter.expressions.push({
-				"field": "academicYearId",
+				"field": "approveStatusId",
 				"operation": "EQUAL",
 				"value": paperDeclarationStatus
 			});
@@ -79,57 +91,82 @@
 		})
 	}
 
+	function pretreatmentGroup(data) {
+		var groups = {};
+
+		return data
+	}
+
+	function format ( d ) {
+		// `d` is the original data object for the row
+		return '<table style="transition: max-height 0.25s ease-in;">'+
+			'<thead>'+
+				'<tr style="opacity: unset!important;">'+
+					'<th style="width: 10%">${uiLabelMap.BkEunivStaffId}</th>'+
+					'<th style="width: 50%">${uiLabelMap.BkEunivPaperName}</th>'+
+					'<th style="width: 30%">${uiLabelMap.BkEunivPaperAuthors}</th>'+
+					'<th style="width: 10%">${uiLabelMap.BkEunivPaperAcademicYear}</th>'+
+				'</tr>'+
+			'</thead>'+
+
+			'<tbody>'+
+				d.nodes.map(function(paper) {
+					return '<tr>'+
+						'<td title="'+paper.staffId+'">'+paper.staffName+'</td>'+
+						'<td><a href="/bkeuniv/control/detail-paper?paperId='+paper.paperId+'">'+ paper.paperName+'</td>'+
+						'<td>'+paper.authors+'</td>'+
+						'<td>'+paper.academicYearId+'</td>'+
+					'</tr>';
+				}).join('')+
+			'</tbody>'+
+		'</table>';
+	}
+	function setEventClickRow() {
+		$("td.details-control").parent().map(function() {
+			this.style.cursor="pointer";
+		})
+
+		$('#jqDataTable tbody td.details-control').parent().on('click', function () {
+			
+			var tr = this;
+			var row = jqDataTable.table.row( this  );
+	
+			if ( row.child.isShown() ) {
+				// This row is already open - close it
+				row.child.hide();
+				//tr.classList.remove('shown');
+			}
+			else {
+				// Open this row
+				row.child(format(row.data()), "no-hover").show();
+				//tr.classList.add('shown');
+			}
+		} );
+	}
+
 </script>
 
 <div class="body">
 	
 	<#assign columns=[
 		{
-			"name": uiLabelMap.BkEunivPaper1?j_string,
-			"data": "data1",
-            "orderable": "false",
-			"render": 'function(value, name, dataColumns, meta) {
-
-				return \'<a href="/bkeuniv/control/detail-paper?paperId=\'+value["paperId"]+ \'">\'+value["paperName"]+\'</a>\';
-				
-			}'
+			"name": uiLabelMap.BkEunivPaperName?j_string,
+			"data": "name",
+			"className": "details-control",
+            "orderable": "false"
 		},
 		{
-			"name": uiLabelMap.BkEunivPaper2?j_string,
-			"data": "data2",
-            "orderable": "false",
-			"render": 'function(value, name, dataColumns, meta) {
-				
-				return \'<a href="/bkeuniv/control/detail-paper?paperId=\'+value["paperId"]+ \'">\'+value["paperName"]+\'</a>\';
-
-			}'
-		},
-		{
-			"name": uiLabelMap.BkEunivMatching?j_string,
-			"data": "distance",
-            "orderable": "false",
-			"render": 'function(value, name, dataColumns, meta) {
-				var levelDuplicate="distance-success";
-				if(value > 50) {
-					levelDuplicate="distance-success";
-				} else {
-					if(value > 10) {
-						levelDuplicate="distance-warning";
-					} else {
-						levelDuplicate="distance-danger";
-					}
-				}
-				
-				return \'<div class="\'+levelDuplicate+\'">\'+value+\'</div>\';
-			}'
+			"name": uiLabelMap.BkEunivQuantity?j_string,
+			"data": "number",
+            "orderable": "false"
 		}
 	] />
 	
 	<#assign fields=[
-		"paperId",
-		"data1",
-		"data2",
-		"distance"
+		"cluster",
+		"name",
+		"nodes",
+		"number"
 	] />
 
 	<#assign optionData={ "data": {"facultyId": '$("#faculty").css("display")=="none"&&$("#faculty-input").val()!="all"?$("#faculty-input").val():undefined#JS'}} />
@@ -220,5 +257,8 @@
 		]
 		getDataFilter= "getFilter()"
 		optionData=optionData
+		pretreatment="pretreatmentGroup"
+		drawCallback="setEventClickRow"
 	/>
 </div>
+
