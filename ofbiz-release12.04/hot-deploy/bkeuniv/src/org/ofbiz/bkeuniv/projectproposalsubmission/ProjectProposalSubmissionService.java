@@ -1167,6 +1167,14 @@ public class ProjectProposalSubmissionService {
 				+ staffId + ", juryRoleTypeId = " + juryRoleTypeId
 				+ ", juryId  = " + juryId);
 		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId",EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED));
+			List<GenericValue> list = delegator.findList("JuryMemberView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			
 			GenericValue gv = delegator.makeValue("JuryMember");
 			String juryMemberId = delegator.getNextSeqId("JuryMember");
 
@@ -1177,17 +1185,51 @@ public class ProjectProposalSubmissionService {
 			gv.put("statusId", ProjectProposalSubmissionServiceUtil.JURY_MEMBER_ENABLED);
 
 			delegator.create(gv);
-
+			
 			GenericValue st = delegator.findOne("Staff",
 					UtilMisc.toMap("staffId", staffId), false);
 			GenericValue rl = delegator.findOne("JuryRoleType",
 					UtilMisc.toMap("juryRoleTypeId", juryRoleTypeId), false);
+			/*
 			String rs = "{\"result\":\"OK\"" 
 					+ ",\"staffName\":" + "\""	+ st.getString("staffName") + "\""
 					+ ",\"juryMemberId\":" + "\""	+ juryMemberId + "\""
 					
 					+ ",\"juryRoleTypeName\":" + "\""	+ rl.getString("juryRoleTypeName") + "\"" 
 					+ "}";
+			*/
+			
+			GenericValue gvv = delegator.makeValue("JuryMemberView");
+			
+			gvv.put("staffId", staffId);
+			gvv.put("juryRoleTypeId", juryRoleTypeId);
+			gvv.put("juryId", juryId);
+			gvv.put("juryMemberId", juryMemberId);
+			gvv.put("staffName", st.getString("staffName"));
+			gvv.put("juryRoleTypeName", rl.getString("juryRoleTypeName"));
+			list.add(gvv);
+			
+			
+			String rs = "{\"result\":\"OK\""; 
+			rs += ",\"juryMembers\":[";
+			for(int i = 0; i < list.size(); i++){
+				GenericValue g = list.get(i);
+				String staffName = g.getString("staffName");
+				String juryRoleTypeName= g.getString("juryRoleTypeName");
+				String a_staffId = g.getString("staffId");
+				String a_juryMemberId = g.getString("juryMemberId");
+				rs = rs + "{\"staffName\":\"" + staffName + "\",\"staffId\":\"" + 
+				a_staffId + "\",\"juryRoleTypeName\":\"" + juryRoleTypeName + "\",\"juryMemberId\":\""
+						+ a_juryMemberId + "\"}";
+				if(i < list.size() -1) rs = rs + ",";
+			}
+					//+ ",\"staffName\":" + "\""
+					//+ st.getString("staffName") + "\""
+					//+ ",\"juryRoleTypeName\":" + "\""
+					//+ rl.getString("juryRoleTypeName") + "\"" 
+			rs += "]";		
+			rs += "}";
+			
 			Debug.log(module + "::addProjectProposalJuryMember, return JSON = "
 					+ rs);
 			response.setContentType("application/json");
