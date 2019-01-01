@@ -352,6 +352,13 @@
 		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
 		<response name="AttachementSuccess" type="view" value="ADDPROJECTPROPOSALJURYMEMBER"/>
 	</request-map>
+	<request-map uri="remove-a-member-project-proposal-jury">
+		<security https="true" auth="true"/>
+		<event type="java" invoke="removeProjectProposalJuryMember" 
+		path="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"></event>
+		<response name="AttachementSuccess" type="view" value="REMOVEPROJECTPROPOSALJURYMEMBER"/>
+	</request-map>
+	
 
 	<request-map uri="detail-research-project-proposal-update">
 		 <security https="true" auth="true"/>
@@ -606,8 +613,11 @@
 
  
   <view-map name="view-detail-research-project-proposals-update" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForModify"/>
-   
+
+<!--    
   <view-map name="view-detail-research-project-proposals-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForDecision"/>
+ -->
+  <view-map name="view-detail-research-project-proposals-for-decision" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#DetailResearchProjectProposalForDecisionNew"/>
 
   <view-map name="view-list-research-project-proposal" type="screen" page="component://bkeuniv/widget/BkEunivProjectSubmissionScreens.xml#ListResearchProjectProposals"/>
   

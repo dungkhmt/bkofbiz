@@ -103,7 +103,9 @@
 
 <Function functionId="RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" uiLabelId="research_project_evaluation_result_summary" vnLabel="Danh sách kết quả duyệt đánh giá thuyết mình đề tài" enLabel="Research proposal evaluation results" target="list-research-project-proposal-evaluation-result" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="8"/>
 
-<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài" enLabel="Research proposal decision" target="decision-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="9"/>
+<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài (cấp trường)" enLabel="Research proposal decision" target="decision-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="9"/>
+
+<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION_SCHOOL" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài (cấp khoa/viện)" enLabel="Research proposal decision" target="decision-research-project-proposal-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="10"/>
 
 <Function functionId="RESEARCH_PROJECT_PROPOSAL_GENERATE_CODE" uiLabelId="research_project_decision_code" vnLabel="Sinh mã cho đề tài" enLabel="Research proposal generate code" target="generate-code-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="10"/>
 

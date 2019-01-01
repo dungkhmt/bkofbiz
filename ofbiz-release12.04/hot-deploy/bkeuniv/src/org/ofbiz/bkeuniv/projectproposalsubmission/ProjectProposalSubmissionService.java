@@ -1181,10 +1181,12 @@ public class ProjectProposalSubmissionService {
 					UtilMisc.toMap("staffId", staffId), false);
 			GenericValue rl = delegator.findOne("JuryRoleType",
 					UtilMisc.toMap("juryRoleTypeId", juryRoleTypeId), false);
-			String rs = "{\"result\":\"OK\"" + ",\"staffName\":" + "\""
-					+ st.getString("staffName") + "\""
-					+ ",\"juryRoleTypeName\":" + "\""
-					+ rl.getString("juryRoleTypeName") + "\"" + "}";
+			String rs = "{\"result\":\"OK\"" 
+					+ ",\"staffName\":" + "\""	+ st.getString("staffName") + "\""
+					+ ",\"juryMemberId\":" + "\""	+ juryMemberId + "\""
+					
+					+ ",\"juryRoleTypeName\":" + "\""	+ rl.getString("juryRoleTypeName") + "\"" 
+					+ "}";
 			Debug.log(module + "::addProjectProposalJuryMember, return JSON = "
 					+ rs);
 			response.setContentType("application/json");
@@ -1199,6 +1201,42 @@ public class ProjectProposalSubmissionService {
 
 	}
 
+	public static void removeProjectProposalJuryMember(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+
+		//String staffId = request.getParameter("staffId");
+		//String juryRoleTypeId = request.getParameter("juryRoleTypeId");
+		//String juryId = request.getParameter("juryId");
+		String juryMemberId = request.getParameter("juryMemberId");
+		
+		Debug.log(module + "::removeProjectProposalJuryMember, juryMemberId =  " + juryMemberId);
+		try {
+			GenericValue juryMember = delegator.findOne("JuryMember",UtilMisc.toMap("juryMemberId",juryMemberId),false);
+			
+			delegator.removeValue(juryMember);
+
+			
+			String rs = "{\"result\":\"OK\"" 
+					//+ ",\"staffName\":" + "\""
+					//+ st.getString("staffName") + "\""
+					//+ ",\"juryRoleTypeName\":" + "\""
+					//+ rl.getString("juryRoleTypeName") + "\"" 
+					+ "}";
+			Debug.log(module + "::removeProjectProposalJuryMember --> OK, return JSON = "
+					+ rs);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+	
 	public static void addProjectProposalType(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -1490,6 +1528,7 @@ public class ProjectProposalSubmissionService {
 			for (GenericValue g : list) {
 
 				String staffId = g.getString("staffId");
+				String juryMemberId = g.getString("juryMemberId");
 				in.clear();
 				in.put("juryId", juryId);
 				in.put("staffId", staffId);
@@ -1498,10 +1537,13 @@ public class ProjectProposalSubmissionService {
 
 				Map<String, Object> item = FastMap.newInstance();
 				item.put("staffId", g.getString("staffId"));
+				
 				item.put("staffName", g.getString("staffName"));
 				item.put("juryName", g.getString("juryName"));
 				item.put("juryRoleTypeName", g.getString("juryRoleTypeName"));
 				item.put("projectproposals", rs.get("projectproposals"));
+				item.put("juryMemberId", g.getString("juryMemberId"));
+				
 				retList.add(item);
 			}
 			retSucc.put("members", retList);
