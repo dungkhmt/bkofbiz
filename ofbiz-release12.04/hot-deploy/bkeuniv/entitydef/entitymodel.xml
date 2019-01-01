@@ -731,6 +731,7 @@
 		<field name="juryId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="juryRoleTypeId" type="id-vlong"></field>
+		<field name="statusId" type="id-vlong"></field>
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
 		

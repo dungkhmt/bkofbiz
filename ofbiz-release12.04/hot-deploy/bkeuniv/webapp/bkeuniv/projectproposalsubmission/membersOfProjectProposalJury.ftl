@@ -196,7 +196,7 @@ function addMemberProjectProposalJury(){
 
 }
 function removeMember(juryMemberId){
-	alert('remove ' + juryMemberId);
+	//alert('remove ' + juryMemberId);
 	$.ajax({
 			url: "/bkeuniv/control/remove-a-member-project-proposal-jury",
 			type: 'POST',
@@ -206,7 +206,18 @@ function removeMember(juryMemberId){
 			success: function(rs){
 				//alert(staffId);
 				var tbl = document.getElementById("tbl-jury-members");
-				tbl.innerHTML = 'ABC';
+				var html =  '<table>';
+				for(i = 0; i < rs.juryMembers.length; i++){
+					var staffName = rs.juryMembers[i].staffName;
+					var staffId = rs.juryMembers[i].staffId;
+					var juryRoleTypeName = rs.juryMembers[i].juryRoleTypeName;
+					var juryMemberId = rs.juryMembers[i].juryMemberId;
+					html = html + '<tr><td>' + staffName + '</td><td>' + juryRoleTypeName + 
+				'</td>' 
+				+ '<td><button onClick=\'removeMember("' + juryMemberId + '")\'>Xoa</button></td>'
+				}
+				html = html + '</table>';
+				tbl.innerHTML = html;
 			}
 		})
 }

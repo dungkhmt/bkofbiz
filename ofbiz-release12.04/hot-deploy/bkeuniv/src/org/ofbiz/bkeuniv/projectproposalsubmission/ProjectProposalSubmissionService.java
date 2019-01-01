@@ -1174,6 +1174,7 @@ public class ProjectProposalSubmissionService {
 			gv.put("juryRoleTypeId", juryRoleTypeId);
 			gv.put("juryId", juryId);
 			gv.put("juryMemberId", juryMemberId);
+			gv.put("statusId", ProjectProposalSubmissionServiceUtil.JURY_MEMBER_ENABLED);
 
 			delegator.create(gv);
 
@@ -1213,16 +1214,42 @@ public class ProjectProposalSubmissionService {
 		Debug.log(module + "::removeProjectProposalJuryMember, juryMemberId =  " + juryMemberId);
 		try {
 			GenericValue juryMember = delegator.findOne("JuryMember",UtilMisc.toMap("juryMemberId",juryMemberId),false);
+			String juryId = null;
+			if(juryMember != null){
+				juryMember.put("statusId", ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED);
+				delegator.store(juryMember);
+				juryId = juryMember.getString("juryId");
+			}
 			
-			delegator.removeValue(juryMember);
-
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId",EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED));
+			List<GenericValue> list = delegator.findList("JuryMemberView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
 			
-			String rs = "{\"result\":\"OK\"" 
+			String rs = "{\"result\":\"OK\""; 
+			rs += ",\"juryMembers\":[";
+			for(int i = 0; i < list.size(); i++){
+				GenericValue g = list.get(i);
+				String staffName = g.getString("staffName");
+				String juryRoleTypeName= g.getString("juryRoleTypeName");
+				String staffId = g.getString("staffId");
+				String a_juryMemberId = g.getString("juryMemberId");
+			
+				if(a_juryMemberId.equals(juryMemberId)) continue;
+				rs = rs + "{\"staffName\":\"" + staffName + "\",\"staffId\":\"" + 
+				staffId + "\",\"juryRoleTypeName\":\"" + juryRoleTypeName + "\",\"juryMemberId\":\""
+						+ a_juryMemberId + "\"}";
+				if(i < list.size() -1) rs = rs + ",";
+			}
 					//+ ",\"staffName\":" + "\""
 					//+ st.getString("staffName") + "\""
 					//+ ",\"juryRoleTypeName\":" + "\""
 					//+ rl.getString("juryRoleTypeName") + "\"" 
-					+ "}";
+			rs += "]";		
+			rs += "}";
 			Debug.log(module + "::removeProjectProposalJuryMember --> OK, return JSON = "
 					+ rs);
 			response.setContentType("application/json");
@@ -1516,6 +1543,9 @@ public class ProjectProposalSubmissionService {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("juryId",
 					EntityOperator.EQUALS, juryId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED));
+			
 			List<GenericValue> list = delegator.findList("JuryMemberView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
