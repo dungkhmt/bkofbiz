@@ -246,6 +246,49 @@ public class PaperDeclarationService {
 	}
 
 	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelKNC(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String) request.getParameter("reportyear-kv04");
+		String facultyId = (String) request.getParameter("facultyId-kv04");
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String userLoginId = userLogin.getString("userLoginId");
+		Debug.log(module + "::exportExcelKNC, academic year = " + year
+				+ ", userLoginId = " + userLoginId);
+
+		String filename = "KNC-" + facultyId + "-" + year;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			// HSSFWorkbook wb =
+			// PaperDeclarationUtil.createExcelFormKV04(delegator, year,
+			// facultyId);
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(
+					delegator, year, facultyId, userLoginId);
+
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
 	public static void exportExcelISI(HttpServletRequest request,
 			HttpServletResponse response) {
 
