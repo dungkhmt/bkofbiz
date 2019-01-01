@@ -3107,7 +3107,11 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			if (staffsOfPaper.size() > 0) {
 				GenericValue st = staffsOfPaper.get(0);
-				String staffName = (String) (mId2Staff.get(st.get("staffId"))
+				String staffId = st.getString("staffId");
+				Debug.log(module + "::createSegmentKV04, staffId = " + staffId);
+				String staffName = "";
+				if(staffId != null && mId2Staff.get(staffId) != null) 
+					staffName = (String) (mId2Staff.get(staffId)
 						.get("staffName"));
 				c = r.createCell(11);
 				c.setCellValue(staffName);
@@ -4947,10 +4951,10 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 		createSheetListPapersKV04(wb, papers);
 
-		createSheetKNC(wb, facultyId, academicYearId, delegator, userLoginId);
+		//createSheetKNC(wb, facultyId, academicYearId, delegator, userLoginId);
 
-		createSheetKNCTotal(wb, facultyId, academicYearId, delegator,
-				userLoginId);
+		//createSheetKNCTotal(wb, facultyId, academicYearId, delegator,
+		//		userLoginId);
 
 		/*
 		 * for(GenericValue p: list_paper_international_journals){ i_row += 1;

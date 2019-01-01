@@ -1,7 +1,7 @@
 package org.ofbiz.bkeuniv.paperdeclaration;
 
-import info.debatty.java.stringsimilarity.Damerau;
-import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
+//import info.debatty.java.stringsimilarity.Damerau;
+//import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -215,15 +215,15 @@ public class PaperDeclarationService {
 		Debug.log(module + "::exportExcelKV04, academic year = " + year
 				+ ", userLoginId = " + userLoginId);
 
-		String filename = "KNC-" + facultyId + "-" + year;
+		String filename = "KV04-" + facultyId + "-" + year;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
-			// HSSFWorkbook wb =
-			// PaperDeclarationUtil.createExcelFormKV04(delegator, year,
-			// facultyId);
-			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(
-					delegator, year, facultyId, userLoginId);
+			 HSSFWorkbook wb =
+			 PaperDeclarationUtil.createExcelFormKV04(delegator, year,
+			 facultyId, userLoginId);
+			//HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(
+			//		delegator, year, facultyId, userLoginId);
 
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
