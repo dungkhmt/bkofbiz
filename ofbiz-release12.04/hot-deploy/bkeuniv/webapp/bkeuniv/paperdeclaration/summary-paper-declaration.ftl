@@ -54,7 +54,7 @@
 			"width": "150px"
 		},
 		{
-			"name": "Tac gia"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
 			"data": "authors",
 			"width": "200px"
 		},
@@ -78,33 +78,33 @@
 		},
 		
 		{
-			"name": "Thuoc de tai"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
 			"width": "200px",
 			"data": "researchProjectProposalName"
 		},
 		{
-			"name": "Ten hoi nghi, tap chi"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
 			"width": "150px",
 			"data": "journalConferenceName"
 		},
 		{
-			"name": "Nam"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
 			"data": "year"
 		},
 		{
-			"name": "Vol. number"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"data": "volumn"
 		},
 		{
-			"name": "ISSN"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
 			"data": "ISSN"
 		},
 		{
-			"name": "Nam ke khai"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
 			"data": "academicYearId"
 		},
 		{
-			"name": "Trang thai"?j_string,
+			"name": paperDeclarationUiLabelMap.BkEunivStatusPaper?j_string,
 			"data": "paperDeclarationStatusName"
 		}
 	] />

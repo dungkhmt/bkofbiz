@@ -1336,7 +1336,7 @@
 		<field name="educationInstitution" type="very-long"><description>Cơ sở đào tạo</description></field>
 		<field name="startDate" type="date-time"></field>
 		<field name="thruDate" type="date-time"></field>
-		<description>Quản lý cả PhD và Master</description>
+		
 		<prim-key field="phDSupervisionId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>

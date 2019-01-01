@@ -11,6 +11,7 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -565,6 +567,151 @@ public class BKEunivUtils {
 			value = (String) map.get(key);
 		}
 		return value;
+	}
+	
+	public static double similarString(String string1, String string2) {
+		int maxlengthString = Math.max(string1.length(), string2.length());
+		int distance = editDistance(string1, string2);
+		double similar = ((double)(maxlengthString - distance))/(double)maxlengthString;
+//		if(similar > 0.8D) {
+//			System.out.println("Do tuong dong maxlengthString = " + maxlengthString + ", distance = " + distance + ", similar = "  + similar);			
+//		}
+		return similar;
+	}
+	
+	public static int editDistance(String string1, String string2) {
+		String[] arrayString1 = string1.split("");
+		String[] arrayString2 = string2.split("");
+		
+		int m = string1.length();
+		int n = string2.length();
+		int[][] d = new int[m+1][n+1];
+		
+		for(int i = 0; i <= m; ++i) {
+			d[i][0] = i;
+		}
+		
+		for(int j = 0; j <= n; ++j) {
+			d[0][j] = j;
+		}
+		
+		int cost;
+		for(int i = 1; i <= m; ++i) {
+			for(int j = 1; j <= n; ++j) {
+				cost = 1;
+				if(arrayString1[i].equals(arrayString2[j])) {
+					cost = 0;
+				}
+				
+				d[i][j] = Collections.min(Arrays.asList((d[i-1][j]+1), (d[i][j-1]+1), (d[i-1][j-1]+cost)));
+				
+			}
+		}
+		
+		return d[m][n];
+	}
+	
+	public static List<Map<String, Object>> clusterChord(List<Map<String, Object>> paperdistances) {
+		List<Map<String, Object>> groups = new ArrayList<Map<String, Object>>();
+		if(paperdistances == null || paperdistances.size() == 0) {
+			return groups;
+		}
+		
+		List<Map<String, Object>> clusters =  new ArrayList<Map<String,Object>>();
+		//clusters.add(createCluster(paperdistances.get(0)));
+		
+		int index;
+		int check;
+		for(int i = 0; i < paperdistances.size(); ++i) {
+			Map<String, Object> paperdistance = paperdistances.get(i);
+			int paperId1 = Integer.valueOf((String)paperdistance.get("paperId1"));
+			int paperId2 = Integer.valueOf((String)paperdistance.get("paperId2"));
+			
+			index = findCluster(clusters, paperdistance);
+			if(index==-1) {
+				paperdistance.put("cluster", clusters.size());
+				clusters.add(createCluster(paperdistance));
+			} else {
+				Map<String, Object> cluster = clusters.get(index);
+				List<Integer> nodes = (List<Integer>) cluster.get("nodes");
+				
+				check = nodes.indexOf(paperId1);
+				if(check != -1) {
+					nodes.add(paperId2);
+					int maxKNode = Collections.max(nodes);
+					cluster.put("maxKNode", maxKNode);
+					paperdistance.put("cluster", index);
+					
+				} else {
+					check = nodes.indexOf(paperId2);
+					if(check != -1) {
+						nodes.add(paperId1);
+						int maxKNode = Collections.max(nodes);
+						cluster.put("maxKNode", maxKNode);
+						paperdistance.put("cluster", index);
+						
+					}					
+				}
+				
+				
+			}
+			groups.add(paperdistance);
+		}
+		
+//		for(Map<String, Object> cluster: clusters) {
+//			List<String> group = new ArrayList<String>();
+//			for(Integer paperId: (List<Integer>)cluster.get("nodes")) {
+//				group.add(String.valueOf(paperId));
+//			}
+//			groups.add(group);
+//		}
+		
+		return groups;
+	}
+	
+	private static Map<String, Object> createCluster(Map<String, Object> paperdistance) {
+		int paperId1 = Integer.valueOf((String)paperdistance.get("paperId1"));
+		int paperId2 = Integer.valueOf((String)paperdistance.get("paperId2"));
+		
+		Map<String, Object> cluster = new HashMap<String, Object>();
+		List<Integer> nodes = new ArrayList<Integer>();
+		
+		nodes.add(paperId1);
+		nodes.add(paperId2);
+		
+		cluster.put("successor", paperId1);
+		cluster.put("nodes", nodes);
+		cluster.put("maxKNode", paperId2);
+		
+		return cluster;
+	}
+	
+	private static int findCluster(List<Map<String, Object>> clusters, Map<String, Object> paperdistance) {
+		
+		int paperId1 = Integer.valueOf((String)paperdistance.get("paperId1"));
+		int paperId2 = Integer.valueOf((String)paperdistance.get("paperId2"));
+		int check;
+		for(int i = 0; i < clusters.size(); ++i) {
+			Map<String, Object> cluster = clusters.get(i);
+			int successor = (int) cluster.get("successor");
+			int maxKNode = (int) cluster.get("maxKNode");
+			List<Integer> nodes = (List<Integer>) cluster.get("nodes");
+			if(paperId1 >= successor && paperId1 <= maxKNode) {
+				check = nodes.indexOf(paperId1);
+				if(check != -1) {
+					return i;
+				}
+			}
+			
+			if(paperId2 >= successor && paperId2 <= maxKNode) {
+				check = nodes.indexOf(paperId2);
+				if(check != -1) {
+					return i;
+				}
+			}
+		}
+		
+		return -1;
 	}
 
 }
