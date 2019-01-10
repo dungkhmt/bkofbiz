@@ -4244,6 +4244,10 @@
 <ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
 <ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
 <ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="korean" foreignLanguageCatalogName="Tiếng Hàn Quốc"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="german" foreignLanguageCatalogName="Tiếng Đức"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="italian" foreignLanguageCatalogName="Tiếng Ý"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="holland" foreignLanguageCatalogName="Tiếng Hà Lan"/>
 
 
 <AcademicYear academicYearId="2000-2001" academicYearName="2000-2001"/>
@@ -6973,6 +6977,8 @@
 <ResearchProductType researchProductTypeId="PAPER_DOMCONF" researchProductTypeName="Bài báo hội nghị trong nước"/>
 <ResearchProductType researchProductTypeId="PAPER_DOMJOURNAL" researchProductTypeName="Bài báo tạp chí trong nước"/>
 <ResearchProductType researchProductTypeId="PAPER_INTJOURNAL" researchProductTypeName="Bài báo tạp chí quốc tế khác"/>
+<ResearchProductType researchProductTypeId="PROCESS_EQUIPMENT" researchProductTypeName="Thiết bị, quy trình công nghệ"/>
+
 <ResearchProductType researchProductTypeId="OTHER" researchProductTypeName="Sản phẩm khác"/>
 
 
@@ -7481,6 +7487,21 @@
 	
 	
 	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2018-2019" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2018-2019" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2018-2019" rate="0.6" rateKhoiluong="0.6" rateNangluc="0.6"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2018-2019" rate="0.15" rateKhoiluong="0.3" rateNangluc="0.15"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.2" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_CN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_TN_ISBN_HDGS_CN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2018-2019" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2018-2019" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK" academicYearId="2018-2019" rate="0.0" rateKhoiluong="1.5" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK_CHAP" academicYearId="2018-2019" rate="0.0" rateKhoiluong="0.25" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SYLLABUS" academicYearId="2018-2019" rate="0.0" rateKhoiluong="1.00" rateNangluc="0.0"/>
+
 	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2017-2018" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2017-2018" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>

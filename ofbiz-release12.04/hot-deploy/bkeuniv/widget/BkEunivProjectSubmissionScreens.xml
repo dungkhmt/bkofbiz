@@ -601,7 +601,7 @@
 	<screen name="DetailResearchProjectProposalForModify">
 		<section>
 			<actions>
-				
+				<!-- 
 				<property-map resource="BkEunivProjectSubmissionUiLabels" map-name="uiLabel" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
 				
@@ -611,7 +611,7 @@
 
 				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
 				
-				<!-- 				
+								
 				
 				<set field="researchProjectProposalId" from-field="${parameters.researchProjectProposalId}" global="true"/>
 				
@@ -637,11 +637,23 @@
  -->					
 				
 			</actions>
+		
 			<widgets>
-				<!-- <decorator-screen name="bkeuniv-global-decorator"
+				<!-- 
+				<widgets>
+				
+				<decorator-screen name="bkeuniv-global-decorator"
 					location="component://bkeuniv/widget/CommonScreens.xml">
 					<decorator-section name="body">
-				 -->	
+					<include-screen name="DetailResearchProjectProposal"/>
+	 				</decorator-section>
+				</decorator-screen>
+	  			</widgets>
+				 -->
+				 <decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+					
 	<!-- 				<platform-specific>
 							<html>
 								<html-template
@@ -656,10 +668,10 @@
 									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/detailResearchProjectProposalUpdateAction.ftl" />
 							</html>
 						</platform-specific> -->
-	 		<!-- 
+	 		
 	 				</decorator-section>
 				</decorator-screen>
-	 -->
+	 
 	
 			</widgets>
 		</section>
