@@ -197,7 +197,7 @@ public class ProjectProposalSubmissionService {
 		String projectProposalStatusId = request
 				.getParameter("projectProposalStatusId");
 
-		String filename = "Danh sach thuyet minh de tai";
+		String filename = "Danh_sach_thuyet_minh_de_tai";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 			List<GenericValue> listPrj = ProjectProposalSubmissionServiceUtil
@@ -337,8 +337,8 @@ public class ProjectProposalSubmissionService {
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
 			response.setHeader("content-disposition", "attachment;filename="
-					+ filename + ".xls");
-			response.setContentType("application/vnd.xls");
+					+ filename + ".xlsx");
+			response.setContentType("application/vnd.xlsx");
 			response.getOutputStream().write(bytes);
 		} catch (Exception ex) {
 			ex.printStackTrace();
