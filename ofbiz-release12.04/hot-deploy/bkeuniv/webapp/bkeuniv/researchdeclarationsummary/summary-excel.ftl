@@ -316,6 +316,61 @@
 		})
 	}
 
+		function openModalKNC() {
+
+		var start = Date.now();
+		loader.open();
+
+		$.ajax({
+			url: "/bkeuniv/control/get-academic-years-faculties",
+			type: 'POST',
+			data: {
+				"universityId": "HUST"
+			},
+			success:function(rs){
+				console.log(rs);
+				var millis = Date.now() - start;
+				setTimeout(function(){ loader.close(); }, millis>300?0:millis);
+				var modal_content_eL = $("#modal-body");
+				modal_content_eL.attr('action','/bkeuniv/control/export-excel-knc');
+
+				var els = modal_content_eL.children();
+				for(var i = 0; i < els.length; ++i) {
+					els[i].remove();
+				}
+
+				
+				var faculties = rs.faculties.map(function(faculty) {
+					return {
+						id: faculty.id,
+        				text: faculty.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">${uiLabelMap.FacultyName}</label>'+buildSelect2("facultyId-kv04", faculties)+
+					'</div>'
+				);
+
+				var years = rs.years.map(function(year) {
+					return {
+						id: year.id,
+        				text: year.name
+					};
+				});
+
+				modal_content_eL.append(
+					'<div class="row inline-box">'+
+						'<label id="title-modal-input">${uiLabelMap.BkEunivYearN}</label>'+buildSelect2("reportyear-kv04", years)+
+					'</div>'
+				);
+
+				$("#modal-setting-export").modal("show");
+			}
+		})
+	}
+
 	function openModalISI() {
 
 		var start = Date.now();
@@ -660,6 +715,18 @@
 	</div>
 
 	<div class="card" onClick="openModalKV04()">
+		<div class="card-image">
+		<img src="/resource/bkeuniv/image/Infor.png">
+		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>
+		</div>
+		<div class="card-content" style="padding: 24px 10px 24px 10px;">
+			<span class="card-title" style="font-size: 18px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+				KV04
+			</span>
+		</div>
+	</div>
+	
+	<div class="card" onClick="openModalKNC()">
 		<div class="card-image">
 		<img src="/resource/bkeuniv/image/Infor.png">
 		<a class="btn-floating halfway-fab waves-effect waves-light" style="background-color:rgb(0, 188, 212); width: 30px; height: 30px;"><i class="fa fa-file-excel-o" aria-hidden="true" style="font-size: 1.3rem; line-height: 30px;"></i></a>

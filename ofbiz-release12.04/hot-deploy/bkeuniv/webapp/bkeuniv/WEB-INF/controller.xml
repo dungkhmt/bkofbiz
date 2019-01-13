@@ -733,6 +733,12 @@
 		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKV04"></event>
 		<response name="success" type="view" value="getSynthesisReport" />
 	</request-map>
+    <request-map uri="export-excel-knc">
+		<security auth="true" https="true" />
+		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelKNC"></event>
+		<response name="success" type="view" value="getSynthesisReport" />
+	</request-map>
+	
     <request-map uri="export-excel-isi">
 		<security auth="true" https="true" />
 		<event type="java" path="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="exportExcelISI"></event>

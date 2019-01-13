@@ -103,7 +103,9 @@
 
 <Function functionId="RESEARCH_PROJECT_EVALUATION_RESULT_SUMMARY" uiLabelId="research_project_evaluation_result_summary" vnLabel="Danh sách kết quả duyệt đánh giá thuyết mình đề tài" enLabel="Research proposal evaluation results" target="list-research-project-proposal-evaluation-result" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="8"/>
 
-<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài" enLabel="Research proposal decision" target="decision-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="9"/>
+<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài (cấp trường)" enLabel="Research proposal decision" target="decision-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="9"/>
+
+<Function functionId="RESEARCH_PROJECT_PROPOSAL_DECISION_SCHOOL" uiLabelId="research_project_decision" vnLabel="Phê duyệt thuyết mình đề tài (cấp khoa/viện)" enLabel="Research proposal decision" target="decision-research-project-proposal-school" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="10"/>
 
 <Function functionId="RESEARCH_PROJECT_PROPOSAL_GENERATE_CODE" uiLabelId="research_project_decision_code" vnLabel="Sinh mã cho đề tài" enLabel="Research proposal generate code" target="generate-code-research-project-proposal" parentFunctionId="RESEARCH_PROJECT_MANAGEMENT" index="10"/>
 
@@ -4242,6 +4244,10 @@
 <ForeignLanguageCatalog foreignLanguageCatalogId="russian" foreignLanguageCatalogName="Tiếng Nga"/>
 <ForeignLanguageCatalog foreignLanguageCatalogId="japanese" foreignLanguageCatalogName="Tiếng Nhật"/>
 <ForeignLanguageCatalog foreignLanguageCatalogId="chinese" foreignLanguageCatalogName="Tiếng Trung Quốc"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="korean" foreignLanguageCatalogName="Tiếng Hàn Quốc"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="german" foreignLanguageCatalogName="Tiếng Đức"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="italian" foreignLanguageCatalogName="Tiếng Ý"/>
+<ForeignLanguageCatalog foreignLanguageCatalogId="holland" foreignLanguageCatalogName="Tiếng Hà Lan"/>
 
 
 <AcademicYear academicYearId="2000-2001" academicYearName="2000-2001"/>
@@ -6948,6 +6954,7 @@
 <ProjectProposalStatus statusId="RUNNING" statusName="Đang thực hiện"/>
 <ProjectProposalStatus statusId="RESULT_ACCEPTANCE" statusName="Nghiệm thu"/>
 <ProjectProposalStatus statusId="RESULT_FAILED" statusName="Nghiệm thu không đạt"/>
+<ProjectProposalStatus statusId="CONFIRM_EVALUATION_PROPOSAL" statusName="Đã xác nhận đánh giá thuyết minh"/>
 
 
 <ProjectCallStatus statusId="CREATED" statusName="Mới tạo"/>
@@ -6970,6 +6977,8 @@
 <ResearchProductType researchProductTypeId="PAPER_DOMCONF" researchProductTypeName="Bài báo hội nghị trong nước"/>
 <ResearchProductType researchProductTypeId="PAPER_DOMJOURNAL" researchProductTypeName="Bài báo tạp chí trong nước"/>
 <ResearchProductType researchProductTypeId="PAPER_INTJOURNAL" researchProductTypeName="Bài báo tạp chí quốc tế khác"/>
+<ResearchProductType researchProductTypeId="PROCESS_EQUIPMENT" researchProductTypeName="Thiết bị, quy trình công nghệ"/>
+
 <ResearchProductType researchProductTypeId="OTHER" researchProductTypeName="Sản phẩm khác"/>
 
 
@@ -7478,6 +7487,21 @@
 	
 	
 	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2018-2019" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2018-2019" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SCOPUS" academicYearId="2018-2019" rate="0.6" rateKhoiluong="0.6" rateNangluc="0.6"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HUST" academicYearId="2018-2019" rate="0.15" rateKhoiluong="0.3" rateNangluc="0.15"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_EN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_HDGS_VN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.2" rateNangluc="0.1"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_CN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_TN_ISBN_HDGS_CN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="P_QT_ISBN_HDGS_CN" academicYearId="2018-2019" rate="0.10" rateKhoiluong="0.3" rateNangluc="0.10"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="PAPER_ISBN_HDGS_NCN" academicYearId="2018-2019" rate="0.0" rateKhoiluong="0.15" rateNangluc="0.0"/>	
+	<PaperCategoryKNCRateYear paperCategoryKNCId="JOURNAL_OTHER" academicYearId="2018-2019" rate="0.0" rateKhoiluong="0.0" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK" academicYearId="2018-2019" rate="0.0" rateKhoiluong="1.5" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="BOOK_CHAP" academicYearId="2018-2019" rate="0.0" rateKhoiluong="0.25" rateNangluc="0.0"/>
+	<PaperCategoryKNCRateYear paperCategoryKNCId="SYLLABUS" academicYearId="2018-2019" rate="0.0" rateKhoiluong="1.00" rateNangluc="0.0"/>
+
 	
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_Q1" academicYearId="2017-2018" rate="1.0" rateKhoiluong="1.0" rateNangluc="1.0"/>
 	<PaperCategoryKNCRateYear paperCategoryKNCId="WEB_SCIENCE_OTHER" academicYearId="2017-2018" rate="0.8" rateKhoiluong="0.8" rateNangluc="0.8"/>

@@ -81,6 +81,11 @@
 				<td>${m.staffName}</td>
 				<td>${m.juryRoleTypeName}</td>
 				<!--
+				<td>${m.juryMemberId}</td>
+				-->
+				
+				<td><button onClick='removeMember("${m.juryMemberId}")'>Xoa</button></td>
+				<!--
 				<#if m.juryName?exists>
 					<td>${m.juryName}</td>
 				<#else>
@@ -166,7 +171,7 @@ function addMemberProjectProposalJury(){
 	var staffId = document.getElementById("staffId").value;
 	var juryRoleTypeId = document.getElementById("juryRoleTypeId").value;
 	var juryId = ${juryId};
-	
+	//alert('abc'); return;
 	$.ajax({
 			url: "/bkeuniv/control/add-a-member-project-proposal-jury",
 			type: 'POST',
@@ -176,14 +181,57 @@ function addMemberProjectProposalJury(){
 				"juryId": juryId
 			},
 			success: function(rs){
+				//var tbl = document.getElementById("tbl-jury-members");
+				//$('#tbl-jury-members tr:last').after('<tr><td>' + rs.staffName + '</td><td>' + rs.juryRoleTypeName + 
+				//'</td>' 
+				//+ '<td><button onClick=\'removeMember("' + rs.juryMemberId + '")\'>Xoa</button></td>'
+				
+				// );
+				
+				
 				var tbl = document.getElementById("tbl-jury-members");
-				$('#tbl-jury-members tr:last').after('<tr><td>' + rs.staffName + '</td><td>' + rs.juryRoleTypeName + 
-				'</td>'
-				 //+ '<td>' + juryId + '</td></tr>'
-				 );
+				var html =  '<table>';
+				for(i = 0; i < rs.juryMembers.length; i++){
+					var staffName = rs.juryMembers[i].staffName;
+					var staffId = rs.juryMembers[i].staffId;
+					var juryRoleTypeName = rs.juryMembers[i].juryRoleTypeName;
+					var juryMemberId = rs.juryMembers[i].juryMemberId;
+					html = html + '<tr><td>' + staffName + '</td><td>' + juryRoleTypeName + 
+				'</td>' 
+				+ '<td><button onClick=\'removeMember("' + juryMemberId + '")\'>Xoa</button></td>'
+				}
+				html = html + '</table>';
+				tbl.innerHTML = html;
 			}
 		})
 		
 
 }
+function removeMember(juryMemberId){
+	//alert('remove ' + juryMemberId);
+	$.ajax({
+			url: "/bkeuniv/control/remove-a-member-project-proposal-jury",
+			type: 'POST',
+			data: {
+				"juryMemberId": juryMemberId
+			},
+			success: function(rs){
+				//alert(staffId);
+				var tbl = document.getElementById("tbl-jury-members");
+				var html =  '<table>';
+				for(i = 0; i < rs.juryMembers.length; i++){
+					var staffName = rs.juryMembers[i].staffName;
+					var staffId = rs.juryMembers[i].staffId;
+					var juryRoleTypeName = rs.juryMembers[i].juryRoleTypeName;
+					var juryMemberId = rs.juryMembers[i].juryMemberId;
+					html = html + '<tr><td>' + staffName + '</td><td>' + juryRoleTypeName + 
+				'</td>' 
+				+ '<td><button onClick=\'removeMember("' + juryMemberId + '")\'>Xoa</button></td>'
+				}
+				html = html + '</table>';
+				tbl.innerHTML = html;
+			}
+		})
+}
+
 </script>

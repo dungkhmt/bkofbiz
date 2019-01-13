@@ -1,7 +1,7 @@
 package org.ofbiz.bkeuniv.paperdeclaration;
 
-import info.debatty.java.stringsimilarity.Damerau;
-import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
+//import info.debatty.java.stringsimilarity.Damerau;
+//import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -213,6 +213,49 @@ public class PaperDeclarationService {
 				.getAttribute("userLogin");
 		String userLoginId = userLogin.getString("userLoginId");
 		Debug.log(module + "::exportExcelKV04, academic year = " + year
+				+ ", userLoginId = " + userLoginId);
+
+		String filename = "KV04-" + facultyId + "-" + year;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			 HSSFWorkbook wb =
+			 PaperDeclarationUtil.createExcelFormKV04(delegator, year,
+			 facultyId, userLoginId);
+			//HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(
+			//		delegator, year, facultyId, userLoginId);
+
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelKNC(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String) request.getParameter("reportyear-kv04");
+		String facultyId = (String) request.getParameter("facultyId-kv04");
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String userLoginId = userLogin.getString("userLoginId");
+		Debug.log(module + "::exportExcelKNC, academic year = " + year
 				+ ", userLoginId = " + userLoginId);
 
 		String filename = "KNC-" + facultyId + "-" + year;
@@ -1244,8 +1287,14 @@ public class PaperDeclarationService {
 			// EntityOperator.NOT_EQUAL,
 			// PaperDeclarationUtil.STATUS_CANCELLED));
 
+			//delegator.findList(entityName, entityCondition, fieldsToSelect, orderBy, findOptions, useCache)
+			
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("year DESC");
+			orderBy.add("paperId DESC");
+			
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
-					EntityCondition.makeCondition(conds), null, null, null,
+					EntityCondition.makeCondition(conds), null, orderBy, null,
 					false);
 
 			List<GenericValue> ret_papers = FastList.newInstance();
@@ -1549,23 +1598,38 @@ public class PaperDeclarationService {
 					listAllConditions, EntityOperator.AND);
 
 			System.out.println("4. debug ::::::::::" + userLoginId);
-			papers = delegator.findList("PaperView", condition, null, null,
+			papers = delegator.findList("PaperView", condition, null, Arrays.asList("paperId"),
 					null, false);
 
 			HashSet<String> setStaffId = new HashSet<String>();
 			
 			List<Map<String, Object>> distances = new ArrayList<Map<String, Object>>();
 			
-			Damerau d = new Damerau();
-			
+//			Damerau d = new Damerau();
+//			double distance = BKEunivUtils.similarString("A Java library for Constraint-Based Local Search: Application to the master thesis defense timetabling problem",
+//					"Exact methods for solving the elementary shortest and longest path problems");
+//			
+			double d;
 			for(int i = 0; i < papers.size() - 1; ++i) {
 				for(int j = i+1; j < papers.size(); ++j) {
 					Map<String, Object> p = new HashMap<String, Object>();
-					p.put("edge", new String[]{papers.get(i).getString("paperId"), papers.get(j).getString("paperId")});
-					p.put("distance", d.distance(papers.get(i).getString("paperName"), papers.get(j).getString("paperName")));
-					distances.add(p);
+					d = BKEunivUtils.similarString(papers.get(i).getString("paperName"), papers.get(j).getString("paperName")); 
+					if(d > 0.8D) {
+						//p.put("edge", new String[]{papers.get(i).getString("paperId"), papers.get(j).getString("paperId")});
+						p.put("paperId1", papers.get(i).getString("paperId"));
+						p.put("paperId2", papers.get(j).getString("paperId"));
+						p.put("distance", d);
+						//System.out.println(d + ": " + papers.get(i).getString("paperId") +", " + papers.get(j).getString("paperId"));
+						distances.add(p);
+					}
+					
+//					p.put("edge", new String[]{papers.get(i).getString("paperId"), papers.get(j).getString("paperId")});
+//					p.put("distance", d.distance(papers.get(i).getString("paperName"), papers.get(j).getString("paperName")));
+//					distances.add(p);
 				}
 			}
+			
+			distances = BKEunivUtils.clusterChord(distances);
 			
 			delegator.removeAll("PaperDistance");
 			
@@ -1576,8 +1640,9 @@ public class PaperDeclarationService {
 
 				gv.put("id", delegator.getNextSeqId("PaperDistance"));
 
-				gv.put("paperId1", ((String[])distance.get("edge"))[0]);
-				gv.put("paperId2", ((String[])distance.get("edge"))[1]);
+				gv.put("paperId1", distance.get("paperId1"));
+				gv.put("paperId2", distance.get("paperId2"));
+				gv.put("cluster", (long)(int)distance.get("cluster"));
 				gv.put("distance", distance.get("distance"));
 				
 				
@@ -1641,9 +1706,9 @@ public class PaperDeclarationService {
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 
 			if (parameters.containsKey("q")) {
-				System.out.println("debug :::::::::: not null");
+				//System.out.println("debug :::::::::: not null");
 				String q = (String) parameters.get("q")[0].trim();
-				System.out.println("1. debug ::::::::::" + q);
+				//System.out.println("1. debug ::::::::::" + q);
 				String[] searchKeys = { "staffName", "paperCategoryName",
 						"researchProjectProposalName",
 						"paperDeclarationStatusName",
@@ -1674,7 +1739,7 @@ public class PaperDeclarationService {
 			EntityCondition condition = EntityCondition.makeCondition(
 					listAllConditions, EntityOperator.AND);
 
-			System.out.println("4. debug ::::::::::" + userLoginId);
+			//System.out.println("4. debug ::::::::::" + userLoginId);
 			papers = delegator.findList("PaperView", condition, null, sort,
 					opts, false);
 
@@ -1685,13 +1750,13 @@ public class PaperDeclarationService {
 				for (GenericValue st : staffsOfFaculty)
 					setStaffId.add((String) st.getString("staffId"));
 			}
-			Debug.log(module
-					+ "::getPaperDeclarations, staff of selected faculty = "
-					+ setStaffId.size());
+//			Debug.log(module
+//					+ "::getPaperDeclarations, staff of selected faculty = "
+//					+ setStaffId.size());
 			List<GenericValue> retList = FastList.newInstance();
 			for (GenericValue gv : papers) {
-				Debug.log(module + "::getPaperDeclarations, paper "
-						+ gv.get("paperName"));
+//				Debug.log(module + "::getPaperDeclarations, paper "
+//						+ gv.get("paperName"));
 
 				boolean ok = true;
 				if (facultyId != null) {
@@ -1736,27 +1801,71 @@ public class PaperDeclarationService {
 			listAllConditions.add(EntityCondition.makeCondition(condFilterPaper,
 					EntityOperator.AND));
 			
-			
-			List<GenericValue> distances = delegator.findList("PaperDistance", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, new ArrayList<String>() {{add("distance");}},
+			List<Map<String, Object>> groups = new ArrayList<Map<String,Object>>();
+			List<String> groupsIndex = new ArrayList<String>();
+			List<GenericValue> distances = delegator.findList("PaperDistance", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, Arrays.asList("cluster", "distance", "paperId1", "paperId2"),
 					new EntityFindOptions(), false);
+			System.out.println("JQGetPaperDeclarationsDuplicate::" + 1);
+			for(GenericValue distance: distances) {
+				String cluster = String.valueOf((Long)distance.get("cluster"));
+				//System.out.println("JQGetPaperDeclarationsDuplicate:: cluster = " + cluster);
+				String paperId1 = (String) distance.get("paperId1");
+				String paperId2 = (String) distance.get("paperId2");
+				int index = groupsIndex.indexOf(cluster);
+				//System.out.println("JQGetPaperDeclarationsDuplicate:: index = " + index);
+				Map<String, Object> group = null;
+				if(index==-1) {
+					groupsIndex.add(cluster);
+					group = new HashMap<String, Object>();
+					group.put("cluster", cluster);
+					group.put("nodes", new ArrayList<String>());
+					groups.add(group);
+				} else {
+					group = groups.get(index);
+				}
+				
+				List<String> nodes = (List<String>) group.get("nodes");
+				
+				if(nodes.indexOf(paperId1) == -1) {
+					nodes.add(paperId1);
+				}
+				
+				if(nodes.indexOf(paperId2) == -1) {
+					nodes.add(paperId2);
+				}
+			}
+			System.out.println("JQGetPaperDeclarationsDuplicate::" + 2);
 			
-			result.put("totalRows", String.valueOf(distances.size()));
-			if(iIndex* iSize + iSize > distances.size()) {
-				distances = distances.subList(iIndex
-						* iSize, distances.size());
+			result.put("totalRows", String.valueOf(groups.size()));
+			if(iIndex* iSize + iSize > groups.size()) {
+				groups = groups.subList(iIndex
+						* iSize, groups.size());
 			} else {
-				distances = distances.subList(iIndex
+				groups = groups.subList(iIndex
 						* iSize, iIndex
 						* iSize + iSize);
 			}
+			System.out.println("JQGetPaperDeclarationsDuplicate::" + 3);
 			List<Map<String, Object>> list = new ArrayList<Map<String,Object>>(); 
-			for(int i = 0; i < distances.size(); ++i) {
-				GenericValue distance = distances.get(i);
+			for(int i = 0; i < groups.size(); ++i) {
+				Map<String, Object> group = groups.get(i);
+				List<String> nodes = (List<String>) group.get("nodes");
+				List<GenericValue> nodestoPapers = new ArrayList<GenericValue>();
 				Map<String, Object> p = new HashMap<String, Object>();
-				p.put("distance", distance.get("distance"));
-				p.put("cluster", distance.get("cluster"));
-				p.put("data1", retList.get(paperIds.indexOf((String)distance.get("paperId1"))));
-				p.put("data2", retList.get(paperIds.indexOf((String)distance.get("paperId2"))));
+				
+				p.put("cluster", group.get("cluster"));
+				p.put("number", nodes.size());
+				System.out.print("cluster : " + group.get("cluster") +", size = " + nodes.size());
+				for(String node: nodes) {
+					System.out.print(" paperId = " + node);
+					GenericValue paper = retList.get(paperIds.indexOf(node));
+					if(p.get("name")==null) {
+						p.put("name", paper.get("paperName"));
+					}
+					nodestoPapers.add(paper);
+				}
+				
+				p.put("nodes", nodestoPapers);
 				list.add(p);
 			}
 
@@ -2164,6 +2273,7 @@ public class PaperDeclarationService {
 				p.put("volumn", volumn);
 			
 			p.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+			p.put("approveStatusId", PaperDeclarationUtil.APPROVE_STATUS_CREATED);
 			
 			delegator.create(p);
 			

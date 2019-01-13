@@ -956,7 +956,9 @@ public class ProjectProposalSubmissionService {
 					.makeCondition(
 							"statusId",
 							EntityOperator.EQUALS,
-							ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_EVALUATION_CONFIRM));
+							//ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_EVALUATION_CONFIRM)
+							ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_PROPOSAL_EVALUATION_CONFIRM)		
+					);
 
 			List<GenericValue> list = delegator.findList(
 					"ReviewerResearchProposalView",
@@ -983,60 +985,88 @@ public class ProjectProposalSubmissionService {
 					.getParameter("evaluationInnovation"));
 			Long evaluationMotivation = Long.valueOf(request
 					.getParameter("evaluationMotivation"));
-			Long evaluationApplicability = Long.valueOf(request
-					.getParameter("evaluationApplicability"));
+			//Long evaluationApplicability = Long.valueOf(request
+			//		.getParameter("evaluationApplicability"));
 			Long evaluationResearchMethod = Long.valueOf(request
 					.getParameter("evaluationResearchMethod"));
 
 			Long evaluationResearchContent = Long.valueOf(request
 					.getParameter("evaluationResearchContent"));
-			Long evaluationPaper = Long.valueOf(request
-					.getParameter("evaluationPaper"));
-			Long evaluationProduct = Long.valueOf(request
-					.getParameter("evaluationProduct"));
-			Long evaluationPatent = Long.valueOf(request
-					.getParameter("evaluationPatent"));
-			Long evaluationGraduateStudent = Long.valueOf(request
-					.getParameter("evaluationGraduateStudent"));
-			Long evaluationYoungResearcher = Long.valueOf(request
-					.getParameter("evaluationYoungResearcher"));
-			Long evaluationEducation = Long.valueOf(request
-					.getParameter("evaluationEducation"));
-			Long evaluationReasonableBudget = Long.valueOf(request
-					.getParameter("evaluationReasonableBudget"));
+			
+			Long evaluationProduct1 = Long.valueOf(request
+					.getParameter("evaluationProduct1"));
+			Long evaluationProduct2 = Long.valueOf(request
+					.getParameter("evaluationProduct2"));
+			
+			Long evaluationPromote1 = Long.valueOf(request
+					.getParameter("evaluationPromote1"));
+			Long evaluationPromote2 = Long.valueOf(request
+					.getParameter("evaluationPromote2"));
+			Long evaluationPromote3 = Long.valueOf(request
+					.getParameter("evaluationPromote3"));
+			
+			
+			//Long evaluationPaper = Long.valueOf(request
+			//		.getParameter("evaluationPaper"));
+			//Long evaluationProduct = Long.valueOf(request
+			//		.getParameter("evaluationProduct"));
+			//Long evaluationPatent = Long.valueOf(request
+			//		.getParameter("evaluationPatent"));
+			//Long evaluationGraduateStudent = Long.valueOf(request
+			//		.getParameter("evaluationGraduateStudent"));
+			//Long evaluationYoungResearcher = Long.valueOf(request
+			//		.getParameter("evaluationYoungResearcher"));
+			//Long evaluationEducation = Long.valueOf(request
+			//		.getParameter("evaluationEducation"));
+			//Long evaluationReasonableBudget = Long.valueOf(request
+			//		.getParameter("evaluationReasonableBudget"));
 
 			String comments = (String) request.getParameter("comments");
 
 			Long totalEvaluation = evaluationInnovation + evaluationMotivation
-					+ evaluationApplicability + evaluationResearchMethod
-					+ evaluationResearchContent + evaluationPaper
-					+ evaluationProduct + evaluationPatent
-					+ evaluationGraduateStudent + evaluationYoungResearcher
-					+ evaluationEducation + evaluationReasonableBudget;
-
+					//+ evaluationApplicability 
+					+ evaluationResearchMethod
+					+ evaluationResearchContent 
+					+ evaluationProduct1
+					+ evaluationProduct2
+					+ evaluationPromote1
+					+ evaluationPromote2
+					+ evaluationPromote3
+					//+ evaluationPaper
+					//+ evaluationProduct + evaluationPatent
+					//+ evaluationGraduateStudent + evaluationYoungResearcher
+					//+ evaluationEducation + evaluationReasonableBudget;
+					;	
 			Debug.log(module
 					+ "::updateReviewProjectProposal, reviewerResearchProposalId = "
 					+ reviewerResearchProposalId + ", evaluationInnovation = "
 					+ evaluationInnovation + ", evaluationMotivation = "
 					+ evaluationMotivation + ", evaluationApplicability = "
-					+ evaluationApplicability + ", comments=" + comments);
+					//+ evaluationApplicability 
+					+ ", comments=" + comments);
 
 			GenericValue gv = delegator.findOne("ReviewerResearchProposal",
 					UtilMisc.toMap("reviewerResearchProposalId",
 							reviewerResearchProposalId), false);
 			gv.put("evaluationInnovation", evaluationInnovation);
 			gv.put("evaluationMotivation", evaluationMotivation);
-			gv.put("evaluationApplicability", evaluationApplicability);
+			//gv.put("evaluationApplicability", evaluationApplicability);
 			gv.put("evaluationResearchMethod", evaluationResearchMethod);
-
 			gv.put("evaluationResearchContent", evaluationResearchContent);
-			gv.put("evaluationPaper", evaluationPaper);
-			gv.put("evaluationProduct", evaluationProduct);
-			gv.put("evaluationPatent", evaluationPatent);
-			gv.put("evaluationGraduateStudent", evaluationGraduateStudent);
-			gv.put("evaluationYoungResearcher", evaluationYoungResearcher);
-			gv.put("evaluationEducation", evaluationEducation);
-			gv.put("evaluationReasonableBudget", evaluationReasonableBudget);
+			gv.put("evaluationProduct1", evaluationProduct1);
+			gv.put("evaluationProduct2", evaluationProduct2);
+			gv.put("evaluationPromote1", evaluationPromote1);
+			gv.put("evaluationPromote2", evaluationPromote2);
+			gv.put("evaluationPromote3", evaluationPromote3);
+			
+			
+			//gv.put("evaluationPaper", evaluationPaper);
+			//gv.put("evaluationProduct", evaluationProduct);
+			//gv.put("evaluationPatent", evaluationPatent);
+			//gv.put("evaluationGraduateStudent", evaluationGraduateStudent);
+			//gv.put("evaluationYoungResearcher", evaluationYoungResearcher);
+			//gv.put("evaluationEducation", evaluationEducation);
+			//gv.put("evaluationReasonableBudget", evaluationReasonableBudget);
 
 			gv.put("totalEvaluation", totalEvaluation);
 
@@ -1072,7 +1102,7 @@ public class ProjectProposalSubmissionService {
 							reviewerResearchProposalId), false);
 
 			gv.put("statusId",
-					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_EVALUATION_CONFIRM);
+					ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_PROPOSAL_EVALUATION_CONFIRM);
 
 			delegator.store(gv);
 
@@ -1137,6 +1167,14 @@ public class ProjectProposalSubmissionService {
 				+ staffId + ", juryRoleTypeId = " + juryRoleTypeId
 				+ ", juryId  = " + juryId);
 		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId",EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED));
+			List<GenericValue> list = delegator.findList("JuryMemberView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			
 			GenericValue gv = delegator.makeValue("JuryMember");
 			String juryMemberId = delegator.getNextSeqId("JuryMember");
 
@@ -1144,17 +1182,54 @@ public class ProjectProposalSubmissionService {
 			gv.put("juryRoleTypeId", juryRoleTypeId);
 			gv.put("juryId", juryId);
 			gv.put("juryMemberId", juryMemberId);
+			gv.put("statusId", ProjectProposalSubmissionServiceUtil.JURY_MEMBER_ENABLED);
 
 			delegator.create(gv);
-
+			
 			GenericValue st = delegator.findOne("Staff",
 					UtilMisc.toMap("staffId", staffId), false);
 			GenericValue rl = delegator.findOne("JuryRoleType",
 					UtilMisc.toMap("juryRoleTypeId", juryRoleTypeId), false);
-			String rs = "{\"result\":\"OK\"" + ",\"staffName\":" + "\""
-					+ st.getString("staffName") + "\""
-					+ ",\"juryRoleTypeName\":" + "\""
-					+ rl.getString("juryRoleTypeName") + "\"" + "}";
+			/*
+			String rs = "{\"result\":\"OK\"" 
+					+ ",\"staffName\":" + "\""	+ st.getString("staffName") + "\""
+					+ ",\"juryMemberId\":" + "\""	+ juryMemberId + "\""
+					
+					+ ",\"juryRoleTypeName\":" + "\""	+ rl.getString("juryRoleTypeName") + "\"" 
+					+ "}";
+			*/
+			
+			GenericValue gvv = delegator.makeValue("JuryMemberView");
+			
+			gvv.put("staffId", staffId);
+			gvv.put("juryRoleTypeId", juryRoleTypeId);
+			gvv.put("juryId", juryId);
+			gvv.put("juryMemberId", juryMemberId);
+			gvv.put("staffName", st.getString("staffName"));
+			gvv.put("juryRoleTypeName", rl.getString("juryRoleTypeName"));
+			list.add(gvv);
+			
+			
+			String rs = "{\"result\":\"OK\""; 
+			rs += ",\"juryMembers\":[";
+			for(int i = 0; i < list.size(); i++){
+				GenericValue g = list.get(i);
+				String staffName = g.getString("staffName");
+				String juryRoleTypeName= g.getString("juryRoleTypeName");
+				String a_staffId = g.getString("staffId");
+				String a_juryMemberId = g.getString("juryMemberId");
+				rs = rs + "{\"staffName\":\"" + staffName + "\",\"staffId\":\"" + 
+				a_staffId + "\",\"juryRoleTypeName\":\"" + juryRoleTypeName + "\",\"juryMemberId\":\""
+						+ a_juryMemberId + "\"}";
+				if(i < list.size() -1) rs = rs + ",";
+			}
+					//+ ",\"staffName\":" + "\""
+					//+ st.getString("staffName") + "\""
+					//+ ",\"juryRoleTypeName\":" + "\""
+					//+ rl.getString("juryRoleTypeName") + "\"" 
+			rs += "]";		
+			rs += "}";
+			
 			Debug.log(module + "::addProjectProposalJuryMember, return JSON = "
 					+ rs);
 			response.setContentType("application/json");
@@ -1169,6 +1244,68 @@ public class ProjectProposalSubmissionService {
 
 	}
 
+	public static void removeProjectProposalJuryMember(HttpServletRequest request,
+			HttpServletResponse response) {
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+
+		//String staffId = request.getParameter("staffId");
+		//String juryRoleTypeId = request.getParameter("juryRoleTypeId");
+		//String juryId = request.getParameter("juryId");
+		String juryMemberId = request.getParameter("juryMemberId");
+		
+		Debug.log(module + "::removeProjectProposalJuryMember, juryMemberId =  " + juryMemberId);
+		try {
+			GenericValue juryMember = delegator.findOne("JuryMember",UtilMisc.toMap("juryMemberId",juryMemberId),false);
+			String juryId = null;
+			if(juryMember != null){
+				juryMember.put("statusId", ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED);
+				delegator.store(juryMember);
+				juryId = juryMember.getString("juryId");
+			}
+			
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("juryId",EntityOperator.EQUALS,juryId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED));
+			List<GenericValue> list = delegator.findList("JuryMemberView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			
+			String rs = "{\"result\":\"OK\""; 
+			rs += ",\"juryMembers\":[";
+			for(int i = 0; i < list.size(); i++){
+				GenericValue g = list.get(i);
+				String staffName = g.getString("staffName");
+				String juryRoleTypeName= g.getString("juryRoleTypeName");
+				String staffId = g.getString("staffId");
+				String a_juryMemberId = g.getString("juryMemberId");
+			
+				if(a_juryMemberId.equals(juryMemberId)) continue;
+				rs = rs + "{\"staffName\":\"" + staffName + "\",\"staffId\":\"" + 
+				staffId + "\",\"juryRoleTypeName\":\"" + juryRoleTypeName + "\",\"juryMemberId\":\""
+						+ a_juryMemberId + "\"}";
+				if(i < list.size() -1) rs = rs + ",";
+			}
+					//+ ",\"staffName\":" + "\""
+					//+ st.getString("staffName") + "\""
+					//+ ",\"juryRoleTypeName\":" + "\""
+					//+ rl.getString("juryRoleTypeName") + "\"" 
+			rs += "]";		
+			rs += "}";
+			Debug.log(module + "::removeProjectProposalJuryMember --> OK, return JSON = "
+					+ rs);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter out = response.getWriter();
+			out.write(rs);
+			out.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+	
 	public static void addProjectProposalType(HttpServletRequest request,
 			HttpServletResponse response) {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
@@ -1448,6 +1585,9 @@ public class ProjectProposalSubmissionService {
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("juryId",
 					EntityOperator.EQUALS, juryId));
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.NOT_EQUAL,
+					ProjectProposalSubmissionServiceUtil.JURY_MEMBER_CANCELED));
+			
 			List<GenericValue> list = delegator.findList("JuryMemberView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
@@ -1460,6 +1600,7 @@ public class ProjectProposalSubmissionService {
 			for (GenericValue g : list) {
 
 				String staffId = g.getString("staffId");
+				String juryMemberId = g.getString("juryMemberId");
 				in.clear();
 				in.put("juryId", juryId);
 				in.put("staffId", staffId);
@@ -1468,10 +1609,13 @@ public class ProjectProposalSubmissionService {
 
 				Map<String, Object> item = FastMap.newInstance();
 				item.put("staffId", g.getString("staffId"));
+				
 				item.put("staffName", g.getString("staffName"));
 				item.put("juryName", g.getString("juryName"));
 				item.put("juryRoleTypeName", g.getString("juryRoleTypeName"));
 				item.put("projectproposals", rs.get("projectproposals"));
+				item.put("juryMemberId", g.getString("juryMemberId"));
+				
 				retList.add(item);
 			}
 			retSucc.put("members", retList);
@@ -2459,18 +2603,25 @@ public class ProjectProposalSubmissionService {
 				int count = eval.size();
 				long total = 0;
 				for (GenericValue e : eval) {
-					long point = e.getLong("evaluationMotivation")
-							+ e.getLong("evaluationInnovation")
-							+ e.getLong("evaluationApplicability")
-							+ e.getLong("evaluationResearchMethod")
-							+ e.getLong("evaluationResearchContent")
-							+ e.getLong("evaluationPaper")
-							+ e.getLong("evaluationProduct")
-							+ e.getLong("evaluationPatent")
-							+ e.getLong("evaluationGraduateStudent")
-							+ e.getLong("evaluationYoungResearcher")
-							+ e.getLong("evaluationEducation")
-							+ e.getLong("evaluationReasonableBudget");
+					long point = 0;
+					if(e.getLong("evaluationMotivation") != null) point += e.getLong("evaluationMotivation");
+					if(e.getLong("evaluationInnovation") != null) point+= e.getLong("evaluationInnovation");
+							//+ e.getLong("evaluationApplicability")
+					if(e.getLong("evaluationResearchMethod") != null) point += e.getLong("evaluationResearchMethod");
+					if(e.getLong("evaluationResearchContent") != null) point += e.getLong("evaluationResearchContent");
+					if(e.getLong("evaluationProduct1") != null) point += e.getLong("evaluationProduct1");
+					if(e.getLong("evaluationProduct2") != null) point += e.getLong("evaluationProduct2");
+					if(e.getLong("evaluationPromote1") != null) point += e.getLong("evaluationPromote1");
+					if(e.getLong("evaluationPromote2") != null) point += e.getLong("evaluationPromote2");
+					if(e.getLong("evaluationPromote3") != null) point += e.getLong("evaluationPromote3");
+							//+ e.getLong("evaluationPaper")
+							//+ e.getLong("evaluationProduct")
+							//+ e.getLong("evaluationPatent")
+							//+ e.getLong("evaluationGraduateStudent")
+							//+ e.getLong("evaluationYoungResearcher")
+							//+ e.getLong("evaluationEducation")
+							//+ e.getLong("evaluationReasonableBudget")
+							
 					total += point;
 					Debug.log(module
 							+ "::getListFilteredProjectProposals, getEvaluation for project "

@@ -15,51 +15,91 @@
 	<td>
 		<table border="1">
 			<tr>
-				<td> Thanh vien hoi dong </td>
+				<td> ${uiLabel.JuryMembers} </td>
 				<!--
 				<td>${e.staffName}</td>
 				-->
 				<td>Anonymous</td>
 			</tr>
 			<tr>	
-				<td> Li do de tai </td>
-				<td>${e.evaluationMotivation}</td>
-				<td> Tinh moi </td>
-				<td>${e.evaluationInnovation}</td>
+				<td> ${uiLabel.Motivation} </td>
+				<#if e.evaluationMotivation?exists>
+					<td>${e.evaluationMotivation}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
+				<td> ${uiLabel.Innovation} </td>
+				<#if e.evaluationInnovation?exists>
+					<td>${e.evaluationInnovation}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+			
 			<tr>
-				<td> TInh ung dung </td>
-				<td>${e.evaluationApplicability}</td>
-				<td> Phuong phap nghien cuu </td>
-				<td>${e.evaluationResearchMethod}</td>
+				<td> ${uiLabel.ResearchMethod} </td>
+				<#if e.evaluationResearchMethod?exists>
+					<td>${e.evaluationResearchMethod}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
+				<td> ${uiLabel.ResearchContent} </td>
+				<#if e.evaluationResearchContent?exists>
+					<td>${e.evaluationResearchContent}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
 			</tr>
 			<tr>
-				<td> Noi dung </td>
-				<td>${e.evaluationResearchContent}</td>
-				<td> Bai bao </td>
-				<td>${e.evaluationPaper}</td>
-			</tr>
-			<tr>
-				<td> San pham </td>
-				<td>${e.evaluationProduct}</td>
-				<td> Sang che </td>
-				<td>${e.evaluationPatent}</td>
-			</tr>
-			<tr>
-				<td> Dao tao Sau dai hoc </td>
-				<td>${e.evaluationGraduateStudent}</td>
-				<td> Nhom nghien cuu tre </td>
-				<td>${e.evaluationYoungResearcher}</td>
-			</tr>
-			<tr>
-				<td> Dao tao </td>
-				<td>${e.evaluationEducation}</td>
-				<td> Kinh phi hop li </td>
-				<td>${e.evaluationReasonableBudget}</td>
+				<td> ${uiLabel.Product1} </td>
+				<#if e.evaluationProduct1?exists>
+					<td>${e.evaluationProduct1}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
+				<td> ${uiLabel.Product2} </td>
+				<#if e.evaluationProduct2?exists>
+					<td>${e.evaluationProduct2}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
 			</tr>
 			
 			<tr>
-				<td> Tong diem </td>
-				<td>${e.totalEvaluation}</td>
+				<td> ${uiLabel.Promote1} </td>
+				<#if e.evaluationPromte1?exists>
+					<td>${e.evaluationPromote1}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
+				<td> ${uiLabel.Promote2} </td>
+				<#if e.evaluationPromte2?exists>
+					<td>${e.evaluationPromote2}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+			
+				<td> ${uiLabel.Promote3} </td>
+				<#if e.evaluationPromte3?exists>
+					<td>${e.evaluationPromote3}</td>
+				<#else>
+					<td>0</td>
+				</#if>
+				
+			</tr>
+			
+			<tr>
+				<td> ${uiLabel.TotalEvaluation} </td>
+				<#if e.totalEvaluation?exists>
+					<td>${e.totalEvaluation}</td>
+				<#else>
+					<td>0</td>
+				</#if>
 			</tr>
 			
 		</table>

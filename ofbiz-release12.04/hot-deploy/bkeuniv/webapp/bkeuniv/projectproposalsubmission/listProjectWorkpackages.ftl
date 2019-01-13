@@ -49,7 +49,9 @@
 		{
 			"name": uiLabelMap.BkEunivStaff?j_string,
 			"data": "staffId"
-		},
+		}
+		<#--
+		,
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"data": "workingDays"
@@ -58,6 +60,7 @@
 			"name": uiLabelMap.BkEunivBudget?j_string,
 			"data": "budget"
 		}
+		-->
 	] />
 
 	<#assign fields=[
@@ -106,7 +109,9 @@
 				"source": members,
 				"maxItem": 1
 			}
-		},
+		}
+		<#--
+		,
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"value": "workingDays",
@@ -119,6 +124,7 @@
 			"pattern": "[0-9]([0-9]{0,20})",
 			"title": "So nguyen duong nho hon 20 chu so"
 		}
+		-->
 	] />
 
 	
@@ -137,7 +143,9 @@
 			"name": uiLabelMap.BkEunivContent?j_string,
 			"value": "content",
 			"type": "textarea"
-		},
+		}
+		<#--
+		,
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"value": "workingDays",
@@ -150,6 +158,7 @@
 			"pattern": "[0-9]([0-9]{0,20})",
 			"title": "So nguyen duong nho hon 20 chu so"
 		}
+		-->
 		]
 	 />
 
