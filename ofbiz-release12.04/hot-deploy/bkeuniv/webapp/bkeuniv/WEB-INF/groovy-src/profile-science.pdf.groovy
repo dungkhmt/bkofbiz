@@ -142,8 +142,9 @@ listPatentConds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUAL
 
 List<GenericValue> listPatents = delegator.findList("PatentView", EntityCondition.makeCondition(listPatentConds), null,null,null,false);
 
-if(UtilValidate.isNotEmpty(listPatents) && !listPatents.isEmpty()) {
+if(UtilValidate.isNotEmpty(listPatents) && !listPatents.isEmpty() && listPatents != null) {
 	context.listPatents = listPatents;
+	println(listPatents);
 }
 
 /* get list recent projects*/

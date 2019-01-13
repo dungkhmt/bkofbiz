@@ -67,7 +67,9 @@
 					
 				</fo:table-row>	
 			
+				<#if listPatents?if_exists>
 				<#assign index = 0>
+				
 				<#list listPatents as pt>
 					<#assign index = index + 1>
 					<fo:table-row height="20pt" >
@@ -100,6 +102,7 @@
 						</fo:table-cell>
 					</fo:table-row>
 				</#list>
+				</#if>
 
 					<fo:table-row height="20pt" >
 						<fo:table-cell border-bottom-style="dotted"/>
