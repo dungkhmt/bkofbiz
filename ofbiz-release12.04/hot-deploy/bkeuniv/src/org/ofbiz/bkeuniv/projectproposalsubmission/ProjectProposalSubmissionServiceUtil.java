@@ -312,23 +312,28 @@ public class ProjectProposalSubmissionServiceUtil {
 			GenericValue pty = delegator.makeValue("Party", info);
 			// pty.put("partyId", partyId);
 			delegator.create(pty);
+			BigDecimal totalBudget = BigDecimal.ZERO;
 			BigDecimal budget = null;
 			if(s_material_budget != null && !s_material_budget.equals(""))
 				budget = new BigDecimal(s_material_budget);
 			else
 				budget = BigDecimal.ZERO;
 			
+			totalBudget = totalBudget.add(budget);
+			
 			BigDecimal externalServiceBudget = null;
 			if(s_external_service_budget != null && !s_external_service_budget.equals(""))
 				externalServiceBudget = new BigDecimal(s_external_service_budget);
 			else
 				externalServiceBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(externalServiceBudget);
 			
 			BigDecimal domesticConferenceBudget = null;
 			if(s_domestic_conference_budget != null && !s_domestic_conference_budget.equals(""))
 				domesticConferenceBudget = new BigDecimal(s_domestic_conference_budget);
 			else
 				domesticConferenceBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(domesticConferenceBudget);
 			
 			BigDecimal internationalConferenceBudget = null;
 			if(s_international_conference_budget != null && !s_international_conference_budget.equals(""))
@@ -336,24 +341,28 @@ public class ProjectProposalSubmissionServiceUtil {
 			else
 				internationalConferenceBudget = BigDecimal.ZERO;
 			
+			totalBudget = totalBudget.add(internationalConferenceBudget);
+			
 			BigDecimal publicationBudget = null;
 			if(s_publication_budget != null && !s_publication_budget.equals(""))
 				publicationBudget = new BigDecimal(s_publication_budget);
 			else
 				publicationBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(publicationBudget);
 			
 			BigDecimal managementBudget = null;
 			if(s_management_budget != null && !s_management_budget.equals(""))
 				managementBudget = new BigDecimal(s_management_budget);
 			else
 				managementBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(managementBudget);
 			
 			GenericValue pps = delegator.makeValue("ResearchProjectProposal");
 			String researchProjectProposalId = delegator
 					.getNextSeqId("ResearchProjectProposal");
 			pps.put("researchProjectProposalId", researchProjectProposalId);
 			pps.put("researchProjectProposalName", projectProposalName);
-			//pps.put("totalBudget", budget);
+			pps.put("totalBudget", totalBudget);
 			pps.put("materialBudget", budget);
 			pps.put("externalServiceBudget", externalServiceBudget);
 			pps.put("domesticConferenceBudget", domesticConferenceBudget);

@@ -200,37 +200,37 @@ function updateProjectProposal(){
 	var publicationBudget = 0;
 	var managementBudget = 0;
 	if(document.getElementById("material-budget").checkValidity()){
-		materialbudget = document.getElementById("material-budget").value;
+		materialbudget = Number(document.getElementById("material-budget").value);
 	}else{
 		alert("Kinh phi nhap chua dung dinh dang");
 		return;
 	}
 	if(document.getElementById("external-service-budget").checkValidity()){
-		externalServiceBudget = document.getElementById("external-service-budget").value;
+		externalServiceBudget = Number(document.getElementById("external-service-budget").value);
 	}else{
-		alert("Kinh phi thue dich vuj ngoai nhap chua dung dinh dang");
+		alert("Kinh phi thue dich vu ngoai nhap chua dung dinh dang");
 		return;
 	}
 	if(document.getElementById("domestic-conference-budget").checkValidity()){
-		domesticConferenceBudget = document.getElementById("domestic-conference-budget").value;
+		domesticConferenceBudget = Number(document.getElementById("domestic-conference-budget").value);
 	}else{
 		alert("Kinh phi hoi nghi trong nuoc nhap chua dung dinh dang");
 		return;
 	}
 	if(document.getElementById("international-conference-budget").checkValidity()){
-		internationalConferenceBudget = document.getElementById("international-conference-budget").value;
+		internationalConferenceBudget = Number(document.getElementById("international-conference-budget").value);
 	}else{
 		alert("Kinh phi hoi nghi nuoc ngoai nhap chua dung dinh dang");
 		return;
 	}
 	if(document.getElementById("publication-budget").checkValidity()){
-		publicationBudget = document.getElementById("publication-budget").value;
+		publicationBudget = Number(document.getElementById("publication-budget").value);
 	}else{
 		alert("Kinh phi cong bo bai bao nhap chua dung dinh dang");
 		return;
 	}
 	if(document.getElementById("management-budget").checkValidity()){
-		managementBudget = document.getElementById("management-budget").value;
+		managementBudget = Number(document.getElementById("management-budget").value);
 	}else{
 		alert("Kinh phi quan ly nhap chua dung dinh dang");
 		return;

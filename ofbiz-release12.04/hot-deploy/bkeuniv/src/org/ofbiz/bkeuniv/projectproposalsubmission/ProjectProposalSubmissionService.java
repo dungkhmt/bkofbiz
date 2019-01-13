@@ -281,16 +281,38 @@ public class ProjectProposalSubmissionService {
 						.getProjectProposalRegisteredProducts(delegator, pId);
 				String str_contents = "";
 				BigDecimal totalBudget = BigDecimal.ZERO;
+				
+				/* new policy
 				for (GenericValue c : contents) {
 					str_contents += "-" + c.getString("content") + "\n";
 					if (c.getBigDecimal("budget") != null)
 						totalBudget = totalBudget
 								.add(c.getBigDecimal("budget"));
 				}
+				*/
+				
 				if (p.getBigDecimal("materialBudget") != null)
 					totalBudget = totalBudget.add(p
 							.getBigDecimal("materialBudget"));
-
+				
+				if (p.getBigDecimal("externalServiceBudget") != null)
+					totalBudget = totalBudget.add(p
+							.getBigDecimal("externalServiceBudget"));
+				
+				if (p.getBigDecimal("domesticConferenceBudget") != null)
+					totalBudget = totalBudget.add(p
+							.getBigDecimal("domesticConferenceBudget"));
+				
+				if (p.getBigDecimal("internationalConferenceBudget") != null)
+					totalBudget = totalBudget.add(p
+							.getBigDecimal("internationalConferenceBudget"));
+				if (p.getBigDecimal("publicationBudget") != null)
+					totalBudget = totalBudget.add(p
+							.getBigDecimal("publicationBudget"));
+				if (p.getBigDecimal("managementBudget") != null)
+					totalBudget = totalBudget.add(p
+							.getBigDecimal("managementBudget"));
+				
 				String str_products = "";
 				for (GenericValue pr : products) {
 					str_products += "- " + pr.getLong("quantity") + " "
