@@ -985,8 +985,7 @@
                                 });
                             </script>
                         </div>
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivResearchProjectOfPaper}<span style="color: #db4437;"
-                                    title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivResearchProjectOfPaper}</label>
                                     
                             <div style="width: 70%">
                                 <select class="form-control" style="width: 100%" id="researchprojectproposalid">
@@ -1053,16 +1052,29 @@
                 </div>
                 <div id="swipe-2" class="col s12">
                     <form id="form-detail" action="javascript:void(0);" class="container-fluid">
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperLink}</label><input type="text" class="form-control"
-                                id="link" value="">
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperLink}<span style="color: #db4437;"
+                                    title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
+                        
+                         
+                        <input type="text" class="form-control"
+                                id="link" value="" required>
                             <script type="text/javascript">
-                                $(function () {});
+                                //$(function () {});
+                                $(function () {
+                                    setCustomValidity("#link", "${StringUtil.wrapString(uiLabelMap.BkEunivNotNull)}");
+                                });
                             </script>
                         </div>
-                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperVolumn}</label><input type="text"
-                                class="form-control" id="volumn" value="">
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperVolumn}<span style="color: #db4437;"
+                                    title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
+                        
+                        <input type="text"
+                                class="form-control" id="volumn" value="" required>
                             <script type="text/javascript">
-                                $(function () {});
+                                //$(function () {});
+                                $(function () {
+                                    setCustomValidity("#volumn", "${StringUtil.wrapString(uiLabelMap.BkEunivNotNull)}");
+                                });
                             </script>
                         </div>
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperMonth}<span style="color: #db4437;" title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label><input
