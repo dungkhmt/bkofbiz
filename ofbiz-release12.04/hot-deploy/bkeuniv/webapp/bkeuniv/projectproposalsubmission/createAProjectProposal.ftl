@@ -1,5 +1,6 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
+
   <head>
     <!-- Bootstrap Core CSS -->
     <link href="/resource/bkeuniv/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -18,12 +19,16 @@
     <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
 
     
+    
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="/resource/bkeuniv/js/lib/jquery.dataTables.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     
     
     <script src="https://cdn.jsdelivr.net/jquery.ui-contextmenu/1.7.0/jquery.ui-contextmenu.min.js"></script>
+    
+    <script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
     
     <meta charset="utf-8" />
     
@@ -178,56 +183,80 @@ function addProjectProposal(){
 	if(document.getElementById("material-budget").checkValidity()){
 		materialbudget = Number(document.getElementById("material-budget").value);
 	}else{
-		alert("Kinh phi nhap chua dung dinh dang");
+		//alert("Kinh phi nhap chua dung dinh dang");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectMaterialBudgetInvalidFormat)}');
 		return;
 	}
 	if(document.getElementById("external-service-budget").checkValidity()){
 		externalServiceBudget = Number(document.getElementById("external-service-budget").value);
 	}else{
-		alert("Kinh phi thue dich vuj ngoai nhap chua dung dinh dang");
+		//alert("Kinh phi thue dich vuj ngoai nhap chua dung dinh dang");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectExternalServiceBudgetInvalidFormat)}');
 		return;
 	}
 	if(document.getElementById("domestic-conference-budget").checkValidity()){
 		domesticConferenceBudget = Number(document.getElementById("domestic-conference-budget").value);
 	}else{
-		alert("Kinh phi hoi nghi trong nuoc nhap chua dung dinh dang");
+		//alert("Kinh phi hoi nghi trong nuoc nhap chua dung dinh dang");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectDomesticConferenceBudgetInvalidFormat)}');
 		return;
 	}
 	if(document.getElementById("international-conference-budget").checkValidity()){
 		internationalConferenceBudget = Number(document.getElementById("international-conference-budget").value);
 	}else{
-		alert("Kinh phi hoi nghi nuoc ngoai nhap chua dung dinh dang");
+		//alert("Kinh phi hoi nghi nuoc ngoai nhap chua dung dinh dang");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectInternationalConferenceBudgetInvalidFormat)}');
 		return;
 	}
 	if(document.getElementById("publication-budget").checkValidity()){
 		publicationBudget = Number(document.getElementById("publication-budget").value);
 	}else{
-		alert("Kinh phi cong bo bai bao nhap chua dung dinh dang");
+		//alert("Kinh phi cong bo bai bao nhap chua dung dinh dang");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectInternationalConferenceBudgetInvalidFormat)}');
 		return;
 	}
 	if(document.getElementById("management-budget").checkValidity()){
 		managementBudget = Number(document.getElementById("management-budget").value);
 	}else{
-		alert("Kinh phi quan ly nhap chua dung dinh dang");
+		//alert("Kinh phi quan ly nhap chua dung dinh dang");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectManagementBudgetInvalidFormat)}');
 		return;
 	}
 
 	var totalBudget = 0;
 	totalBudget = materialbudget + externalServiceBudget + domesticConferenceBudget
 	+ internationalConferenceBudget + publicationBudget + managementBudget;
-	alert("total budget  " + totalBudget);
+	//alert("total budget  " + totalBudget);
 	
-	if(materialbudget > 0.7*totalBudget)
-		alert("Kinh phi vat tu nguyen lieu phai nho hon 70% tong kinh phi");
-	if(externalServiceBudget > 0.7*totalBudget)
-		alert("Kinh phi thue dich vu ngoai phai nho hon 70% tong kinh phi");
-	if(domesticConferenceBudget > 0.3*totalBudget)
-		alert("Kinh phi di hoi thao trong nuoc phai nho hon 30% tong kinh phi");
-	if(internationalConferenceBudget > 0.5*totalBudget)
-		alert("Kinh phi tham du hoi thao quoc te phai nho hon 50% tong kinh phi");				
-	if(publicationBudget > 0.2*totalBudget)
-		alert("Kinh phi xuat bai bai bao phai nho hon 20% tong kinh phi");
-	
+	if(materialbudget > 0.7*totalBudget){
+		//alert("Kinh phi vat tu nguyen lieu phai nho hon 70% tong kinh phi");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectMaterialBudgetInvalid)}');
+		return;
+	}
+	if(externalServiceBudget > 0.7*totalBudget){
+		//alert("Kinh phi thue dich vu ngoai phai nho hon 70% tong kinh phi");
+	    alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectExternalServiceBudgetInvalid)}');
+		return;
+	}
+	if(domesticConferenceBudget > 0.3*totalBudget){
+		//alert("Kinh phi di hoi thao trong nuoc phai nho hon 30% tong kinh phi");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectDomesticConferenceBudgetInvalid)}');
+		return;	
+	}	
+	if(internationalConferenceBudget > 0.5*totalBudget){
+		//alert("Kinh phi tham du hoi thao quoc te phai nho hon 50% tong kinh phi");	
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectInternationalConferenceBudgetInvalid)}');
+		return;
+	}				
+	if(publicationBudget > 0.2*totalBudget){
+		//alert("Kinh phi xuat bai bai bao phai nho hon 20% tong kinh phi");
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectPublicationBudgetInvalid)}');
+		return;		
+	}
+	if(managementBudget > 0.025*totalBudget){
+		alertify.alert('${StringUtil.wrapString(uiLabelMap.ProjectManagementBudgetInvalid)}');
+		return;		
+	}
 											
 	//alert('addProposal facultyId = ' + facultyId + ', and projecCallId = ' + projectCallId);
 	

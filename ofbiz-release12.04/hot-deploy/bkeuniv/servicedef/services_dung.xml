@@ -440,4 +440,9 @@
 		<attribute name="result" mode="OUT" type="String"></attribute>
 	</service>
 	
+	<service name="testMongoDB" engine="java"
+		location="org.ofbiz.bkeuniv.statistics.StatisticServices" invoke="testMongoDB">
+		<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
+	
 </services>

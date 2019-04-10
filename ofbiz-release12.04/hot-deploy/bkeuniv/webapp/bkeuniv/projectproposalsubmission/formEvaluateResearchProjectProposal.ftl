@@ -1,12 +1,12 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 <body>
-<div class="body">
+<div class="body" style="overflow-y: scroll;">
 	<style>
 	#form-style {
 		margin-top: 20px;
 		margin-left: 20px;
 		width: 100%;
-		overflow: scroll;
+		overflow-y: scroll;
 	}
 	</style>
 

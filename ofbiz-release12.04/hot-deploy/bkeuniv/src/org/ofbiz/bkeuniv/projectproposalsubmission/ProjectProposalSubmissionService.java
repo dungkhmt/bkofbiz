@@ -42,6 +42,10 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
@@ -108,6 +112,10 @@ public class ProjectProposalSubmissionService {
 			// UtilMisc.toMap("juryId", juryId, "staffId", staffId,
 			// "researchProjectProposalId", researchProjectProposalId),
 			// false);
+			Debug.log(module
+					+ "::enableReviewerProposalAssignment, juryId  = "
+					+ juryId + ", staffId = " + staffId + ", researchProjectProposalId = " + researchProjectProposalId);
+			
 			List<EntityCondition> conds = FastList.newInstance();
 			conds.add(EntityCondition.makeCondition("juryId",
 					EntityOperator.EQUALS, juryId));
@@ -198,14 +206,19 @@ public class ProjectProposalSubmissionService {
 				.getParameter("projectProposalStatusId");
 
 		String filename = "Danh_sach_thuyet_minh_de_tai";
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
 		try {
 			List<GenericValue> listPrj = ProjectProposalSubmissionServiceUtil
 					.getListFilteredProjectProposals(delegator, projectCallId,
 							facultyId, projectProposalStatusId);
+			
 			HSSFWorkbook wb = new HSSFWorkbook();
+			//XSSFWorkbook wb = new XSSFWorkbook();
+			
 			HSSFSheet sh = wb.createSheet(filename);
+			//XSSFSheet sh = wb.createSheet(filename);
 
+			
 			CellStyle styleNormal = wb.createCellStyle();
 			Font fontNormal = wb.createFont();
 			fontNormal.setFontHeightInPoints((short) 12);
@@ -237,11 +250,16 @@ public class ProjectProposalSubmissionService {
 			i_row++;
 			HSSFRow rh = sh.createRow(i_row);
 			HSSFCell ct = rh.createCell(3);
+			//XSSFRow rh = sh.createRow(i_row);
+			//XSSFCell ct = rh.createCell(3);
+			
 			ct.setCellValue("DANH SÁCH ĐỀ TÀI");
 
 			i_row += 4;
 			rh = sh.createRow(i_row);
 			HSSFCell ch = rh.createCell(0);
+			//XSSFCell ch = rh.createCell(0);
+			
 			ch.setCellValue("STT");
 			ch.setCellStyle(styleNormal);
 
@@ -323,7 +341,11 @@ public class ProjectProposalSubmissionService {
 				i_row++;
 				index++;
 				HSSFRow r = sh.createRow(i_row);
+				//XSSFRow r = sh.createRow(i_row);
+				
 				HSSFCell c = r.createCell(0);
+				//XSSFCell c = r.createCell(0);
+				
 				c.setCellValue(index);
 				c.setCellStyle(styleNormal);
 
@@ -356,11 +378,14 @@ public class ProjectProposalSubmissionService {
 				c.setCellStyle(styleNormal);
 
 			}
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
 			response.setHeader("content-disposition", "attachment;filename="
-					+ filename + ".xlsx");
-			response.setContentType("application/vnd.xlsx");
+					//+ filename + ".xlsx");
+					+ filename + ".xls");
+			//response.setContentType("application/vnd.xlsx");
+			response.setContentType("application/vnd.xls");
 			response.getOutputStream().write(bytes);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -373,8 +398,8 @@ public class ProjectProposalSubmissionService {
 
 		String juryId = request.getParameter("juryId");
 		String staffId = request.getParameter("staffId");
-		String sel_proposalIds = request.getParameter("sel_proposalIds");
-		String unsel_proposalIds = request.getParameter("unsel_proposalIds");
+		String sel_proposalIds = request.getParameter("sel_proposalIds").trim();
+		String unsel_proposalIds = request.getParameter("unsel_proposalIds").trim();
 
 		Debug.log(module
 				+ "::storeReviewerProjectProposalsAssignment, staffId = "
@@ -383,18 +408,23 @@ public class ProjectProposalSubmissionService {
 				+ juryId);
 		try {
 			// ENABLE selected porposal
+			if(sel_proposalIds != null && !sel_proposalIds.equals("")){
 			String[] researchProjectProposalId = sel_proposalIds.split(",");
 			for (int i = 0; i < researchProjectProposalId.length; i++) {
 				enableReviewerProposalAssignment(delegator, juryId, staffId,
 						researchProjectProposalId[i]);
 			}
+			}
+			
 			// DISABLE un_selected proposal
-			researchProjectProposalId = unsel_proposalIds.split(",");
+			if(unsel_proposalIds != null && !unsel_proposalIds.equals("")){
+				
+			String[] researchProjectProposalId = unsel_proposalIds.split(",");
 			for (int i = 0; i < researchProjectProposalId.length; i++) {
 				disableReviewerProposalAssignment(delegator, juryId, staffId,
 						researchProjectProposalId[i]);
 			}
-
+			}
 			String rs = "{\"result\":\"OK\"}";
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");

@@ -1348,5 +1348,74 @@
 		<value xml:lang="en">Student research call name</value>
 		<value xml:lang="vi">Tên đợt SV NCKH</value>
 	</property>
+
+	<property key="ProjectMaterialBudgetInvalidFormat">
+		<value xml:lang="en">MaterialBudgetInvalidFormat</value>
+		<value xml:lang="vi">Kinh phí vật tư nguyên liệu chưa đúng định dạng số</value>
+	</property>
 	
+	<property key="ProjectExternalServiceBudgetInvalidFormat">
+		<value xml:lang="en">ProjectExternalServiceBudgetInvalidFormat</value>
+		<value xml:lang="vi">Kinh phí thuê ngoài chưa đúng định dạng số</value>
+	</property>
+
+	
+	<property key="ProjectDomesticConferenceBudgetInvalidFormat">
+		<value xml:lang="en">ProjectDomesticConferenceBudgetInvalidFormat</value>
+		<value xml:lang="vi">Kinh phí hội thảo trong nước chưa đúng định dạng số</value>
+	</property>
+			
+	
+	<property key="ProjectInternationalConferenceBudgetInvalidFormat">
+		<value xml:lang="en">ProjectInternationalConferenceBudgetInvalidFormat</value>
+		<value xml:lang="vi">Kinh phí hội thảo nước ngoài chưa đúng định dạng số</value>
+	</property>
+						
+	<property key="ProjectPublicationBudgetInvalidFormat">
+		<value xml:lang="en">ProjectPublicationBudgetInvalidFormat</value>
+		<value xml:lang="vi">Kinh phí xuất bản bài báo chưa đúng định dạng số</value>
+	</property>
+	
+	<property key="ProjectManagementBudgetInvalidFormat">
+		<value xml:lang="en">ProjectManagementBudgetInvalidFormat</value>
+		<value xml:lang="vi">Kinh phí quản lý chưa đúng định dạng số</value>
+	</property>
+		
+	<property key="ProjectMaterialBudgetInvalid">
+		<value xml:lang="en">MaterialBudgetInvalid</value>
+		<value xml:lang="vi">Kinh phí vật tư nguyên liệu phải nhỏ hơn hoặc bằng 70% tổng kinh phí</value>
+	</property>
+	
+	<property key="ProjectExternalServiceBudgetInvalid">
+		<value xml:lang="en">ProjectExternalServiceBudgetInvalid</value>
+		<value xml:lang="vi">Kinh phí thuê ngoài phải nhỏ hơn hoặc bằng 70% tổng kinh phí</value>
+	</property>
+
+	
+	<property key="ProjectDomesticConferenceBudgetInvalid">
+		<value xml:lang="en">ProjectDomesticConferenceBudgetInvalid</value>
+		<value xml:lang="vi">Kinh phí hội thảo trong nước phải nhỏ hơn hoặc bằng 30% tổng kinh phí</value>
+	</property>
+			
+	
+	<property key="ProjectInternationalConferenceBudgetInvalid">
+		<value xml:lang="en">ProjectInternationalConferenceBudgetInvalid</value>
+		<value xml:lang="vi">Kinh phí hội thảo nước ngoài phải nhỏ hơn hoặc bằng 50% tổng kinh phí</value>
+	</property>
+						
+	<property key="ProjectPublicationBudgetInvalid">
+		<value xml:lang="en">ProjectPublicationBudgetInvalid</value>
+		<value xml:lang="vi">Kinh phí xuất bản bài báo phải nhỏ hơn hoặc bằng 20% tổng kinh phí</value>
+	</property>
+
+	<property key="ProjectManagementBudgetInvalid">
+		<value xml:lang="en">ProjectManagementBudgetInvalid</value>
+		<value xml:lang="vi">Kinh phí quản lý phải nhỏ hơn hoặc bẳng 2.5% tổng kinh phí</value>
+	</property>
+				
+	<property key="StoreSuccessfully">
+		<value xml:lang="en">StoreSuccessfully</value>
+		<value xml:lang="vi">Lưu thành công</value>
+	</property>
+												
 </resource>
