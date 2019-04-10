@@ -2509,6 +2509,8 @@ public class ProjectProposalSubmissionService {
 			
 			//conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_RUNNING));
 			
+			conds.add(EntityCondition.makeCondition("statusId", EntityOperator.EQUALS, ProjectProposalSubmissionServiceUtil.STATUS_PROJECT_CANCELLED));
+			
 			List<GenericValue> listProjectDeclaration = delegator.findList("ProjectProposalMemberView", 
 																EntityCondition.makeCondition(conds), 
 																null, null, null, false);
