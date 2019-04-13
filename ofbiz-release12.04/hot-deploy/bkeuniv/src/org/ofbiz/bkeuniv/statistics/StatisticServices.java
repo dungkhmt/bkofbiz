@@ -35,6 +35,16 @@ import javolution.util.FastSet;
 public class StatisticServices {
 	public static String module = StatisticServices.class.getName();
 
+	
+	public static Map<String, Object> testElasticSearchClient(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		retSucc.put("result", "N/A");
+		
+		
+		
+		return retSucc;
+	}
 	public static Map<String, Object> testMongoDB(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();

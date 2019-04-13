@@ -9,6 +9,8 @@
 	}
 </script>
 <body>
+	
+
 	<div class="body">
 		<div id="information-paper" style="flex: 1 1 0%; padding: 2em 3em 6em 3em; width: 100%;overflow-y: auto; height: 100%;background-color: rgb(237, 236, 236);">
 			<div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; z-index: 1; opacity: 1;padding: 1em;">
@@ -36,8 +38,13 @@
 				</div>
 				<hr class="side-bar-separator">
 				<div class="content" style="position: relative; margin-bottom: 10px; ">
+					<#--
 					<#if userLogin.userLoginId==resultPaper.paper.staffId && 
 					resultPaper.paper.approveStatusId?exists && resultPaper.paper.approveStatusId =="CREATED">
+					-->
+					
+					<#if resultPaper.editable?exists && resultPaper.editable =="Y">
+					
 						<div class="row inline-box" style="float: right; margin-bottom: 0px; position: relative; display: -webkit-box; padding: 10px 16px 10px 16px;">
 							<@FlatButton id="edit-paper" onClick="editpaper()" style="color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
 								<svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">

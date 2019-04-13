@@ -1326,10 +1326,43 @@ public class PaperDeclarationService {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 		String paperId = (String) context.get("paperId");
+		
+		//String userLoginId = (String)context.get("userLoginId");
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String userLoginId = (String)userLogin.get("userLoginId");
+		
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
+		boolean userLoginAdmin = false;
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
+				userLoginAdmin = true;
+		}
+		Debug.log(module + "::getAPaperDeclaration, userLoginId = " + userLoginId + ", userLoginAdmin = " + userLoginAdmin);
+		
 		try {
 			GenericValue p = delegator.findOne("PaperView",
 					UtilMisc.toMap("paperId", paperId), false);
+			
+			String editable = "N";
+			if(userLoginAdmin){
+				editable = "Y";
+			}else{
+				if(p != null){
+					if(p.get("approveStatusId") != null){
+						String status = (String)p.get("approveStatusId");
+						String staffId = (String)p.get("staffId");
+						if(status.equals("CREATED") && staffId.equals(userLoginId)){
+							editable = "Y";
+						}
+					}
+				}
+			}
 			retSucc.put("paper", p);
+			retSucc.put("editable", editable);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());

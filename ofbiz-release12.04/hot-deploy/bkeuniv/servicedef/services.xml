@@ -537,6 +537,7 @@
 		location="org.ofbiz.bkeuniv.paperdeclaration.PaperDeclarationService" invoke="getAPaperDeclaration">
 		<attribute name="paperId" mode="IN" type="String"></attribute>
 		<attribute name="paper" mode="OUT" type="GenericValue"></attribute>		
+		<attribute name="editable" mode="OUT" type="String"></attribute>
 	</service>
 	
 	<service name="getMembersPaperDeclaration" engine="java" 
