@@ -225,6 +225,7 @@ public class ControlServlet extends HttpServlet {
         String errorPage = null;
         try {
             // the ServerHitBin call for the event is done inside the doRequest method
+        	Debug.log(module + "::doGet [PQD], from ControlServlet.doGet, start call requestHandler.doRequest");
             requestHandler.doRequest(request, response, null, userLogin, delegator);
         } catch (RequestHandlerException e) {
             Throwable throwable = e.getNested() != null ? e.getNested() : e;
