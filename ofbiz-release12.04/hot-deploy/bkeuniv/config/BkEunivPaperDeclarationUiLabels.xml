@@ -14,6 +14,10 @@
         <value xml:lang="en">Paper name</value>
         <value xml:lang="vi">Tên bài báo, sách</value>
     </property>
+    <property key="BkEunivAffiliationOutside">
+        <value xml:lang="en">Affiliation Outside</value>
+        <value xml:lang="vi">Affiliation trường ngoài</value>
+    </property>
     <property key="BkEunivRoleName">
         <value xml:lang="en">Role (author/co-author)</value>
         <value xml:lang="vi">Đồng tác giả</value>

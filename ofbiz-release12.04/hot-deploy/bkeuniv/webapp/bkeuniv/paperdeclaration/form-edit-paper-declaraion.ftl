@@ -511,6 +511,7 @@
             var url = "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs";
             var maxItem = 1;
             var id="staff-member-paper-selectize-" + (members.length+1);
+            var idAffiliation="staff-member-paper-selectize-affiliation-" + (members.length+1);
             var idType="staff-member-paper-selectize-type-" + (members.length+1);
             var idYN="staff-member-paper-selectize-yesno-" + (members.length+1);
             var script = '<script type="text/javascript">'+
@@ -551,7 +552,7 @@
             var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveMember(event)"></button>'
             var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
             
-            $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
+            $('#table-members-paper > tbody:last-child').append('<tr><td>'+(members.length+1)+'</td><td><select id="'+id+'" style="width: 100%" ></select></td><td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td><td><select id="'+idAffiliation+'"><option value="N">No</option><option value="Y">Yes</option></select></td><td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td><td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td> </tr>' + script);
             
             addM = true;
         }
@@ -563,8 +564,11 @@
 
         var staffE = row[1]; 
         var role = row[2];
-        var correspondingAuthor = row[3];
-        var action = row[5];
+        var affiliationNoneUniversity = row[3]
+        //var correspondingAuthor = row[3];
+        var correspondingAuthor = row[4];
+        //var action = row[5];
+        var action = row[6];
 
         var remove = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeMember(event)">&#xe014;</button>'
         var staffId = staffE.firstElementChild.value;
@@ -577,6 +581,8 @@
         var staffName = staffE.firstElementChild.textContent.match(/.+?(?=\[[\d\D\w\W]*\])/g)[0]||"";
         var roleName = $(role.firstElementChild).select2('data')[0].text;
         var roleId = role.firstElementChild.value;
+        var affiliationNoneUniversityId = affiliationNoneUniversity.firstElementChild.value;
+        var affiliationNoneUniversityName = $(affiliationNoneUniversity.firstElementChild).select2('data')[0].text; 
         var CAName = $(correspondingAuthor.firstElementChild).select2('data')[0].text;
         var CAId = correspondingAuthor.firstElementChild.value;
 
@@ -594,6 +600,7 @@
         //update row
         staffE.innerHTML=staffName;
         role.innerHTML=roleName;
+        affiliationNoneUniversity.innerHTML = affiliationNoneUniversityId;
         correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
@@ -603,6 +610,8 @@
             staffName: staffName,
             roleId: roleId,
             roleName: roleName,
+            affiliationNoneUniversityId: affiliationNoneUniversityId,
+            affiliationNoneUniversityName: affiliationNoneUniversityName,            
             CAId: CAId,
             CAName: CAName
         }
@@ -898,10 +907,10 @@
                     <nav class="dot">
                         <div class="nav-wrapper">
                         <div style="padding: 0px 2em; background: rgb(0, 188, 212);">
-                            <div class="breadcrumb-materialize">Thông tin cơ bản</div>
-                            <div class="breadcrumb-materialize active">Thành viên trong trường</div>
-                            <div class="breadcrumb-materialize">Thành viên ngoài trường</div>
-                            <div class="breadcrumb-materialize">Xác nhận</div>
+                            <div class="breadcrumb-materialize">ThÃ´ng tin cÆ¡ báº£n</div>
+                            <div class="breadcrumb-materialize active">ThÃ nh viÃªn trong trÆ°á»�ng</div>
+                            <div class="breadcrumb-materialize">ThÃ nh viÃªn ngoÃ i trÆ°á»�ng</div>
+                            <div class="breadcrumb-materialize">XÃ¡c nháº­n</div>
                         </div>
                         </div>
                     </nav>
@@ -943,6 +952,7 @@
                                 });
                             </script>
                         </div>
+                        
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivRoleName}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
@@ -964,6 +974,9 @@
                                 });
                             </script>
                         </div>
+                        
+                        
+                        
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivCorrespondingAuthor}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
@@ -1241,6 +1254,7 @@
                                         <th>${uiLabelMap.BkEunivSTT}</th>
                                         <th style="width: 40%;">${uiLabelMap.BkEunivPaperMembers}</th>
                                         <th>${uiLabelMap.BkEunivRoleName}</th>
+                                        <th>${uiLabelMap.BkEunivAffiliationOutside}</th>
                                         <th title="Corresponding author">CA</th>
                                         <th style="width: 50px;">Sequence</th>
                                         <th></th>
@@ -1251,14 +1265,17 @@
                                     <tbody>
                                         <#if members.staffPaperDeclaration?size gt 0>
                                             <#assign code=random(1, 999999)?string["000000"] />
+                                            
                                             <#list members.staffPaperDeclaration as m>
                                                 <tr>
                                                     <td>${stt}</td>
+                                                    
+                                                    <td>
                                                     <#if m.staffName?exists>
-                                                        <td>${m.staffName}</td>
+                                                        ${m.staffName}
                                                     <#else>
-                                                        <td></td>
                                                     </#if>
+                                                    </td>
 
                                                     <td>
                                                         <#if m.roleId?exists>
@@ -1267,9 +1284,22 @@
                                                                     ${type.name}
                                                                 </#if>  
                                                             </#list>
-                                                        </#if>
+                                                        </#if>                                                    
                                                     </td>
 
+													
+                                                    <td>
+                                                        <#if m.affiliationOutsideUniversity?exists>
+                                                            <#list yesnoList as yesno>
+                                                                <#if m.affiliationOutsideUniversity==yesno.value>
+                                                                    ${yesno.name}
+                                                                </#if>  
+                                                            </#list>
+                                                        <#else>
+                                                        	   
+                                                        </#if>                                                	
+                                                    </td>
+													
                                                     <td>
                                                         <#if m.correspondingAuthor?exists>
                                                             <#list yesnoList as yesno>
@@ -1277,8 +1307,11 @@
                                                                     ${yesno.name}
                                                                 </#if>  
                                                             </#list>
-                                                        </#if>
+                                                        </#if>                                                	
                                                     </td>
+
+
+
 
                                                     <td><select style="width: 50px;" id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
                                                     <#if staff.staff.staffId!=m.staffId>
