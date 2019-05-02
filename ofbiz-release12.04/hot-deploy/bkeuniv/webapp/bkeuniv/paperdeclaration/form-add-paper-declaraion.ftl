@@ -192,7 +192,7 @@
         var cTableExternalMemberPaper = $("#value-table-external-members-paper > tbody")[0].children;
 
         for(var i = 0; i < members.length; ++i) {
-            members[i].sequence = $("#table-members-paper > tbody > tr")[i].children[4].children[0].value;
+            members[i].sequence = $("#table-members-paper > tbody > tr")[i].children[5].children[0].value;
         }
 
         for(var i = 0; i < externalMembers.length; ++i) {
@@ -201,14 +201,14 @@
 
         //remove content table members paper
 
-        for(var i = 0; i < cTableMemberPaper.length; ++i) {
+        for(var i = cTableMemberPaper.length - 1; i >= 0 ; i--) {
             cTableMemberPaper[i].remove();
         }
 
         //add content table members paper
         if(paper.members.length > 0) {
             paper.members.forEach(function (m, index) {
-                $('#value-table-members-paper > tbody:last-child').append('<tr> <td>'+(index+1)+'</td> <td>'+m.staffName+'</td> <td>'+m.roleName+'</td> <td>'+m.CAName+'</td> <td>'+m.sequence+'</td> </tr>');
+                $('#value-table-members-paper > tbody:last-child').append('<tr> <td>'+(index+1)+'</td> <td>'+m.staffName+'</td> <td>'+m.roleName+'</td> <td>'+m.AOUName+'</td> <td>'+m.CAName+'</td> <td>'+m.sequence+'</td> </tr>');
             })
         } else {
             
@@ -219,7 +219,7 @@
         //remove content table members paper
         
 
-        for(var i = 0; i < cTableExternalMemberPaper.length; ++i) {
+        for(var i = cTableExternalMemberPaper.length - 1; i >= 0 ; i--) {
             cTableExternalMemberPaper[i].remove();
         }
 
@@ -244,6 +244,8 @@
             roleName: $("#roleid").select2('data').length>0?$("#roleid").select2('data')[0].text:"",
             CAId: $("#corresponding-author").val(),
             CAName: $("#corresponding-author").select2('data').length>0?$("#corresponding-author").select2('data')[0].text:"",
+            AOUId: "N",
+            AOUName: "Kh&#xF4;ng",
             sequence: 1
         }
 
@@ -315,7 +317,7 @@
                     CR[i].remove();
                 }
                 var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
-                $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
+                $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
 
             } else {
                 for(var i = 0; i < members.length; ++i) {
@@ -325,11 +327,13 @@
                         var row = $("#table-members-paper > tbody > tr")[i].children;
                         var staffE = row[1]; 
                         var role = row[2];
-                        var correspondingAuthor = row[3];
+                        var affiliationOutsideUniversity = row[3];
+                        var correspondingAuthor = row[4];
 
                         staffE.innerHTML=me.staffName;
                         role.innerHTML=me.roleName;
-                        correspondingAuthor.innerHTML=me.CAId;
+                        affiliationOutsideUniversity.innerHTML=me.AOUName;
+                        correspondingAuthor.innerHTML=me.CAName;
                         
                     }
                 }
@@ -366,6 +370,8 @@
             roleName: $("#roleid").select2('data').length>0?$("#roleid").select2('data')[0].text:"",
             CAId: $("#corresponding-author").val(),
             CAName: $("#corresponding-author").select2('data').length>0?$("#corresponding-author").select2('data')[0].text:"",
+            AOUId: "N",
+            AOUName: "Kh&#xF4;ng",
             sequence: 1
         }
 
@@ -423,7 +429,7 @@
                 }
 
                 var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
-                $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
+                $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
 
             } else {
                 for(var i = 0; i < members.length; ++i) {
@@ -433,11 +439,13 @@
                         var row = $("#table-members-paper > tbody > tr")[i].children;
                         var staffE = row[1]; 
                         var role = row[2];
-                        var correspondingAuthor = row[3];
+                        var affiliationOutsideUniversity = row[3];
+                        var correspondingAuthor = row[4];
 
                         staffE.innerHTML=me.staffName;
                         role.innerHTML=me.roleName;
-                        correspondingAuthor.innerHTML=me.CAId;
+                        affiliationOutsideUniversity.innerHTML=me.AOUName;
+                        correspondingAuthor.innerHTML=me.CAName;
                         
                     }
                 }
@@ -483,7 +491,8 @@
             var maxItem = 1;
             var id="staff-member-paper-selectize-" + (members.length+1);
             var idType="staff-member-paper-selectize-type-" + (members.length+1);
-            var idYN="staff-member-paper-selectize-yesno-" + (members.length+1);
+            var idYNCA="staff-member-paper-selectize-yesno-ca-" + (members.length+1);
+            var idYNAOU="staff-member-paper-selectize-yesno-aou-" + (members.length+1);
             var script = '<script type="text/javascript">'+
                         '$(function () {'+
                             '$("#'+id+'").select2({'+
@@ -515,7 +524,8 @@
                                 (maxItem>1?('maximumSelectionLength: ' + maxItem):"")+
                             '});'+
                             '$("#'+idType+'").select2({minimumResultsForSearch: -1});'+
-                            '$("#'+idYN+'").select2({minimumResultsForSearch: -1});'+
+                            '$("#'+idYNCA+'").select2({minimumResultsForSearch: -1});'+
+                            '$("#'+idYNAOU+'").select2({minimumResultsForSearch: -1});'+
                         '});'+
                     '<\/script>';
                     
@@ -524,7 +534,7 @@
             
             var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
             
-            $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
+            $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYNAOU+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td>  <td><select id="'+idYNCA+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
             
             addM = true;
         }
@@ -536,8 +546,9 @@
 
         var staffE = row[1]; 
         var role = row[2];
-        var correspondingAuthor = row[3];
-        var action = row[5];
+        var affiliationOutsideUniversity = row[3];
+        var correspondingAuthor = row[4];
+        var action = row[6];
 
         var remove = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeMember(event)">&#xe014;</button>'
         var staffId = staffE.firstElementChild.value;
@@ -550,6 +561,8 @@
         var staffName = staffE.firstElementChild.textContent.match(/.+?(?=\[[\d\D\w\W]*\])/g)[0]||"";
         var roleName = $(role.firstElementChild).select2('data')[0].text;
         var roleId = role.firstElementChild.value;
+        var AOUName = $(affiliationOutsideUniversity.firstElementChild).select2('data')[0].text;
+        var AOUId = affiliationOutsideUniversity.firstElementChild.value;
         var CAName = $(correspondingAuthor.firstElementChild).select2('data')[0].text;
         var CAId = correspondingAuthor.firstElementChild.value;
 
@@ -567,6 +580,7 @@
         //update row
         staffE.innerHTML=staffName;
         role.innerHTML=roleName;
+        affiliationOutsideUniversity.innerHTML=AOUName;
         correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
@@ -576,6 +590,8 @@
             staffName: staffName,
             roleId: roleId,
             roleName: roleName,
+            AOUId: AOUId,
+            AOUName: AOUName,
             CAId: CAId,
             CAName: CAName
         }
@@ -622,7 +638,7 @@
             for(var i = 0; i < members.length; ++i) {
                 var member = members[i];
 
-                tbody.append('<td>'+(i+1)+'</td> <td>'+member.staffName+'</td> <td>'+member.roleName+'</td> <td>'+member.CAId+'</td> <td> '+remove+' </td>')
+                tbody.append('<td>'+(i+1)+'</td> <td>'+member.staffName+'</td> <td>'+member.roleName+'</td> <td>'+member.AOUName+'</td> <td>'+member.CAName+'</td> <td> '+remove+' </td>')
             }
 
             if(members.length ===0) {
@@ -657,7 +673,7 @@
             
             var idSequence = 'sequence-external-member-'+Math.floor((Math.random() * 1000000));
             
-            $('#table-external-members-paper > tbody:last-child').append('<tr> <td>'+(externalMembers.length+1)+'</td> <td><input type="text" value="" /></td> <td><input type="text" value="" /></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select id="'+idSequence+'" value="'+(externalMembers.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
+            $('#table-external-members-paper > tbody:last-child').append('<tr> <td>'+(externalMembers.length+1)+'</td> <td><input type="text" value="" /></td> <td><input type="text" value="" /></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(externalMembers.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
             addEM = true;
         }
     }
@@ -1183,6 +1199,7 @@
                                         <th>${uiLabelMap.BkEunivSTT}</th>
                                         <th style="width: 40%;">${uiLabelMap.BkEunivPaperMembers}</th>
                                         <th>${uiLabelMap.BkEunivRoleName}</th>
+                                        <th>${uiLabelMap.AffiliationOutsideUniversity}</th>
                                         <th title="Corresponding author">CA</th>
                                         <th>Sequence</th>
                                         <th></th>
@@ -1326,6 +1343,7 @@
                                         <th>${uiLabelMap.BkEunivSTT}</th>
                                         <th style="width: 40%;">${uiLabelMap.BkEunivPaperMembers}</th>
                                         <th>${uiLabelMap.BkEunivRoleName}</th>
+                                        <th>${uiLabelMap.AffiliationOutsideUniversity}</th>
                                         <th title="Corresponding author">CA</th>
                                         <th>Sequence</th>
                                     </tr>
@@ -1364,13 +1382,13 @@
                         </svg>
                         ${uiLabelMap.BkEunivPrevious}
                     </@FlatButton>
-                    <@FlatButton id="save-1" onClick='createNewPaper("/bkeuniv/control/form-add-paper-declaration")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 150px">
+                    <@FlatButton id="save-1" onClick='createNewPaper("/bkeuniv/control/form-add-paper-declaration")' style="left: calc(100% - 600px); color: rgb(0, 188, 212); text-transform: uppercase;width: 150px">
                         <svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
                             <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path>
                         </svg>
                         ${uiLabelMap.BkEunivSave}
                     </@FlatButton>
-                    <@FlatButton id="save-2" onClick='createNewPaper("/bkeuniv/control/paper-declaration-staff")' style="left: calc(100% - 450px); color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
+                    <@FlatButton id="save-2" onClick='createNewPaper("/bkeuniv/control/paper-declaration-staff")' style="left: calc(100% - 600px); color: rgb(0, 188, 212); text-transform: uppercase;width: 250px">
                         <svg viewBox="0 0 24 24" style="display: inline-block; color: rgba(0, 0, 0, 0.87); fill: rgb(0, 188, 212); height: 24px; width: 24px; user-select: none; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; vertical-align: middle; margin-left: 0px; margin-right: 0px;">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
                         </svg>

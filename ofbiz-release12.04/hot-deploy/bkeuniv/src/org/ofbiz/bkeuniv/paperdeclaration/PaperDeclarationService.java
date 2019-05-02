@@ -2399,6 +2399,7 @@ public class PaperDeclarationService {
 				if(member.getString("staffId")==null||member.getString("staffId").equals("")
 						||member.getString("roleId")==null||member.getString("roleId").equals("")
 						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						||member.getString("AOUId")==null||member.getString("AOUId").equals("")
 						) {
 					break;
 				}
@@ -2417,6 +2418,7 @@ public class PaperDeclarationService {
 				}
 				
 				gv.put("correspondingAuthor", member.getString("CAId"));
+				gv.put("affiliationOutsideUniversity", member.getString("AOUId"));
 				
 				delegator.create(gv);
 				
@@ -2781,6 +2783,7 @@ public class PaperDeclarationService {
 				if(member.getString("staffId")==null||member.getString("staffId").equals("")
 						||member.getString("roleId")==null||member.getString("roleId").equals("")
 						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						||member.getString("AOUId")==null||member.getString("AOUId").equals("")
 						) {
 					break;
 				}
@@ -2799,7 +2802,8 @@ public class PaperDeclarationService {
 				}
 				
 				gv.put("correspondingAuthor", member.getString("CAId"));
-				
+				gv.put("affiliationOutsideUniversity", member.getString("AOUId"));
+
 				delegator.create(gv);
 				
 			}
