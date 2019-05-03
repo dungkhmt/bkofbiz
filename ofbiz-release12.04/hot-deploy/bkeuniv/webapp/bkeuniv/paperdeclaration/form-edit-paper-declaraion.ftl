@@ -564,11 +564,7 @@
             var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveMember(event)"></button>'
             var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
             
-<<<<<<< HEAD
-            $('#table-members-paper > tbody:last-child').append('<tr><td>'+(members.length+1)+'</td><td><select id="'+id+'" style="width: 100%" ></select></td><td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td><td><select id="'+idAffiliation+'"><option value="N">No</option><option value="Y">Yes</option></select></td><td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td><td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td> </tr>' + script);
-=======
             $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYNAOU+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td>  <td><select id="'+idYNCA+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
->>>>>>> f2daa2f3e1eadbe53d145bb3a7a42f38650d0175
             
             addM = true;
         }
@@ -580,15 +576,8 @@
 
         var staffE = row[1]; 
         var role = row[2];
-<<<<<<< HEAD
-        var affiliationNoneUniversity = row[3]
-        //var correspondingAuthor = row[3];
-        var correspondingAuthor = row[4];
-        //var action = row[5];
-=======
         var affiliationOutsideUniversity = row[3];
         var correspondingAuthor = row[4];
->>>>>>> f2daa2f3e1eadbe53d145bb3a7a42f38650d0175
         var action = row[6];
 
         var remove = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-danger" onClick="removeMember(event)">&#xe014;</button>'
@@ -602,13 +591,8 @@
         var staffName = staffE.firstElementChild.textContent.match(/.+?(?=\[[\d\D\w\W]*\])/g)[0]||"";
         var roleName = $(role.firstElementChild).select2('data')[0].text;
         var roleId = role.firstElementChild.value;
-<<<<<<< HEAD
-        var affiliationNoneUniversityId = affiliationNoneUniversity.firstElementChild.value;
-        var affiliationNoneUniversityName = $(affiliationNoneUniversity.firstElementChild).select2('data')[0].text; 
-=======
         var AOUName = $(affiliationOutsideUniversity.firstElementChild).select2('data')[0].text;
         var AOUId = affiliationOutsideUniversity.firstElementChild.value;
->>>>>>> f2daa2f3e1eadbe53d145bb3a7a42f38650d0175
         var CAName = $(correspondingAuthor.firstElementChild).select2('data')[0].text;
         var CAId = correspondingAuthor.firstElementChild.value;
 
@@ -626,11 +610,7 @@
         //update row
         staffE.innerHTML=staffName;
         role.innerHTML=roleName;
-<<<<<<< HEAD
-        affiliationNoneUniversity.innerHTML = affiliationNoneUniversityId;
-=======
         affiliationOutsideUniversity.innerHTML=AOUName;
->>>>>>> f2daa2f3e1eadbe53d145bb3a7a42f38650d0175
         correspondingAuthor.innerHTML=CAName;
         action.innerHTML=remove;
 
@@ -640,13 +620,8 @@
             staffName: staffName,
             roleId: roleId,
             roleName: roleName,
-<<<<<<< HEAD
-            affiliationNoneUniversityId: affiliationNoneUniversityId,
-            affiliationNoneUniversityName: affiliationNoneUniversityName,            
-=======
             AOUId: AOUId,
             AOUName: AOUName,
->>>>>>> f2daa2f3e1eadbe53d145bb3a7a42f38650d0175
             CAId: CAId,
             CAName: CAName
         }
