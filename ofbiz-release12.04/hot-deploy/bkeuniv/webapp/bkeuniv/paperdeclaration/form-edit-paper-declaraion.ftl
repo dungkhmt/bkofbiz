@@ -521,7 +521,6 @@
             var url = "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs";
             var maxItem = 1;
             var id="staff-member-paper-selectize-" + (members.length+1);
-            var idAffiliation="staff-member-paper-selectize-affiliation-" + (members.length+1);
             var idType="staff-member-paper-selectize-type-" + (members.length+1);
             var idYNCA="staff-member-paper-selectize-yesno-ca-" + (members.length+1);
             var idYNAOU="staff-member-paper-selectize-yesno-aou-" + (members.length+1);
@@ -917,10 +916,10 @@
                     <nav class="dot">
                         <div class="nav-wrapper">
                         <div style="padding: 0px 2em; background: rgb(0, 188, 212);">
-                            <div class="breadcrumb-materialize">ThÃ´ng tin cÆ¡ báº£n</div>
-                            <div class="breadcrumb-materialize active">ThÃ nh viÃªn trong trÆ°á»�ng</div>
-                            <div class="breadcrumb-materialize">ThÃ nh viÃªn ngoÃ i trÆ°á»�ng</div>
-                            <div class="breadcrumb-materialize">XÃ¡c nháº­n</div>
+                            <div class="breadcrumb-materialize">Thông tin cơ bản</div>
+                            <div class="breadcrumb-materialize active">Thành viên trong trường</div>
+                            <div class="breadcrumb-materialize">Thành viên ngoài trường</div>
+                            <div class="breadcrumb-materialize">Xác nhận</div>
                         </div>
                         </div>
                     </nav>
@@ -962,7 +961,6 @@
                                 });
                             </script>
                         </div>
-                        
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivRoleName}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
@@ -984,9 +982,6 @@
                                 });
                             </script>
                         </div>
-                        
-                        
-                        
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivCorrespondingAuthor}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
@@ -1275,17 +1270,14 @@
                                     <tbody>
                                         <#if members.staffPaperDeclaration?size gt 0>
                                             <#assign code=random(1, 999999)?string["000000"] />
-                                            
                                             <#list members.staffPaperDeclaration as m>
                                                 <tr>
                                                     <td>${stt}</td>
-                                                    
-                                                    <td>
                                                     <#if m.staffName?exists>
-                                                        ${m.staffName}
+                                                        <td>${m.staffName}</td>
                                                     <#else>
+                                                        <td></td>
                                                     </#if>
-                                                    </td>
 
                                                     <td>
                                                         <#if m.roleId?exists>
@@ -1294,22 +1286,9 @@
                                                                     ${type.name}
                                                                 </#if>  
                                                             </#list>
-                                                        </#if>                                                    
+                                                        </#if>
                                                     </td>
 
-													
-                                                    <td>
-                                                        <#if m.affiliationOutsideUniversity?exists>
-                                                            <#list yesnoList as yesno>
-                                                                <#if m.affiliationOutsideUniversity==yesno.value>
-                                                                    ${yesno.name}
-                                                                </#if>  
-                                                            </#list>
-                                                        <#else>
-                                                        	   
-                                                        </#if>                                                	
-                                                    </td>
-													
                                                     <td>
                                                         <#if m.affiliationOutsideUniversity?exists>
                                                             <#list yesnoList as yesno>
@@ -1327,11 +1306,8 @@
                                                                     ${yesno.name}
                                                                 </#if>  
                                                             </#list>
-                                                        </#if>                                                	
+                                                        </#if>
                                                     </td>
-
-
-
 
                                                     <td><select style="width: 50px;" id="sequence-member-${code}-${stt}"> <#list 1..15 as s><option value="${s}" <#if m.sequence??&&m.sequence==s>selected</#if> >${s}</option></#list></select><script>$(function () {$("#sequence-member-${code}-${stt}").select2({minimumResultsForSearch: -1});})</script></td>
                                                     <#if staff.staff.staffId!=m.staffId>
