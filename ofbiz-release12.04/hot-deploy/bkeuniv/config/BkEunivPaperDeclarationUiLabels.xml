@@ -129,6 +129,10 @@
         <value xml:lang="en">Affiliation Outside University</value>
         <value xml:lang="vi">Affiliation Ngoài Trường</value>
     </property>
+    <property key="AuthorSequence">
+        <value xml:lang="en">Author sequence</value>
+        <value xml:lang="vi">Thứ tự tác giả</value>
+    </property>
 
     <property key="Affiliation">
         <value xml:lang="en">Affiliation</value>

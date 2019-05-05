@@ -1395,6 +1395,9 @@ public class PaperDeclarationService {
 					.findList("ExternalMemberPaperDeclaration", EntityCondition
 							.makeCondition(conds, EntityOperator.AND), null,
 							_sort, null, false);
+			for(GenericValue g: staffPaperDeclaration){
+				Debug.log(module + "::getMembersPaperDeclaration, staff = " + g.getString("staffName") + ", affiliation = " + g.getString("affiliationOutsideUniversity"));
+			}
 			retSucc.put("staffPaperDeclaration", staffPaperDeclaration);
 			retSucc.put("externalMemberPaperDeclaration",
 					externalMemberPaperDeclaration);
@@ -2804,6 +2807,8 @@ public class PaperDeclarationService {
 				gv.put("correspondingAuthor", member.getString("CAId"));
 				gv.put("affiliationOutsideUniversity", member.getString("AOUId"));
 
+				Debug.log(module + "::updatePaperDeclaration, AOUId = " + gv.get("affiliationOutsideUniversity"));
+				
 				delegator.create(gv);
 				
 			}

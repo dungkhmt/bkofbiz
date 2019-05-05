@@ -73,6 +73,12 @@
     </#if>
 </#list>
 <script>
+	var globaljsId = Number(0);
+	function getNextJsId(){
+		globaljsId = globaljsId + 2;
+		return globaljsId;
+	}
+
     function setCustomValidity(id, text){
         var element = $(id)[0];
         if(!element) {
@@ -244,9 +250,12 @@
             roleName: $("#roleid").select2('data').length>0?$("#roleid").select2('data')[0].text:"",
             CAId: $("#corresponding-author").val(),
             CAName: $("#corresponding-author").select2('data').length>0?$("#corresponding-author").select2('data')[0].text:"",
-            AOUId: "N",
-            AOUName: "Kh&#xF4;ng",
-            sequence: 1
+            //AOUId: "N",
+            //AOUName: "Kh&#xF4;ng",
+            AOUId: $("#affiliation-outside-university").val(),
+            AOUName: $("#affiliation-outside-university").select2('data').length>0?$("#affiliation-outside-university").select2('data')[0].text:"",
+            //sequence: 1
+            sequence: $("#author-sequence").val()
         }
 
         var tabIndex = 0;
@@ -316,7 +325,9 @@
                 for(var i = 0; i < CR.length; ++i) {
                     CR[i].remove();
                 }
-                var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
+                //var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
+                var idSequence = 'sequence-member-'+getNextJsId();
+                
                 $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
 
             } else {
@@ -370,9 +381,12 @@
             roleName: $("#roleid").select2('data').length>0?$("#roleid").select2('data')[0].text:"",
             CAId: $("#corresponding-author").val(),
             CAName: $("#corresponding-author").select2('data').length>0?$("#corresponding-author").select2('data')[0].text:"",
-            AOUId: "N",
-            AOUName: "Kh&#xF4;ng",
-            sequence: 1
+            //AOUId: "N",
+            //AOUName: "Kh&#xF4;ng",
+            AOUId: $("#affiliation-outside-university").val(),
+            AOUName: $("#affiliation-outside-university").select2('data').length>0?$("#affiliation-outside-university").select2('data')[0].text:"",
+            //sequence: 1
+            sequence: $("#author-sequence").val()
         }
 
         var tabIndexCurr = 0;
@@ -428,8 +442,12 @@
                     CR[i].remove();
                 }
 
-                var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
-                $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
+                //var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
+                var idSequence = 'sequence-member-'+getNextJsId();
+                
+                $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+
+                '</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}"  <#if me.sequence??&&me.sequence==s>selected</#if> >${s}</option></#list></select>' 
+                + '<script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
 
             } else {
                 for(var i = 0; i < members.length; ++i) {
@@ -532,7 +550,8 @@
             //var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveMember(event)">&#xe173;</button>'
             var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveMember(event)"></button>'
             
-            var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
+            //var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
+            var idSequence = 'sequence-member-'+getNextJsId();
             
             $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length+1)+'</td> <td><select id="'+id+'" style="width: 100%" ></select></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYNAOU+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td>  <td><select id="'+idYNCA+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(members.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select>  <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
             
@@ -671,8 +690,8 @@
             //var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon btn-success" onClick="saveExternalMember(event)">&#xe173;</button>'
             var save = '<button type="button" style="height: 22px; border-radius: 2px; outline: none; border: none;" class="glyphicon glyphicon-ok btn-success" onClick="saveExternalMember(event)"></button>'
             
-            var idSequence = 'sequence-external-member-'+Math.floor((Math.random() * 1000000));
-            
+            //var idSequence = 'sequence-external-member-'+Math.floor((Math.random() * 1000000));
+            var idSequence = 'sequence-external-member-'+getNextJsId();
             $('#table-external-members-paper > tbody:last-child').append('<tr> <td>'+(externalMembers.length+1)+'</td> <td><input type="text" value="" /></td> <td><input type="text" value="" /></td> <td><select id="'+idType+'"> <#list roleTypeList as type><option value="${type.value}">${type.name}</option></#list></select></td> <td><select id="'+idYN+'"> <#list yesnoList as yesno><option value="${yesno.value}">${yesno.name}</option></#list></select</td> <td><select style="width: 50px;" id="'+idSequence+'" value="'+(externalMembers.length+1)+'"> <#list 1..15 as s><option value="${s}">${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> <td>'+save+'</td></tr>' + script);
             addEM = true;
         }
@@ -944,6 +963,7 @@
                                 });
                             </script>
                         </div>
+                        
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivCorrespondingAuthor}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
@@ -963,6 +983,38 @@
                                 });
                             </script>
                         </div>
+                        
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.AffiliationOutsideUniversity}<span style="color: #db4437;"
+                                    title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
+                                    
+                            <div style="width: 70%">
+                                <select class="form-control" style="width: 100%" id="affiliation-outside-university" required>
+                                    <#list yesnoList as yesno>
+                                        <#if yesno?has_content>
+                                            <option value="${yesno.value}">${yesno.name}</option>
+                                        </#if>
+                                    </#list>
+                                </select>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    setCustomValidity("#affiliation-outside-university", "${StringUtil.wrapString(uiLabelMap.BkEunivNotNull)}");
+                                    $("#affiliation-outside-university").select2({minimumResultsForSearch: -1});
+                                });
+                            </script>
+                        </div>
+
+                        <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.AuthorSequence}<span style="color: #db4437;" title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label><input
+                                type="number" class="form-control" pattern="[1-9]([0-9]{0,3})" id="author-sequence" value="" required="" min="1" max="100">
+                            <div class="input-validation"></div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    setCustomValidityRequireAndPattern("#jqModalAdd #author-sequence", "${StringUtil.wrapString(uiLabelMap.BkEunivNotNull)}",
+                                        "${StringUtil.wrapString(uiLabelMap.BkEunivInteger)}");
+                                });
+                            </script>
+                        </div>
+
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.BkEunivPaperCategory}<span style="color: #db4437;"
                                     title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label>
                                     
@@ -1201,7 +1253,7 @@
                                         <th>${uiLabelMap.BkEunivRoleName}</th>
                                         <th>${uiLabelMap.AffiliationOutsideUniversity}</th>
                                         <th title="Corresponding author">CA</th>
-                                        <th>Sequence</th>
+                                        <th>${uiLabelMap.AuthorSequence}</th>
                                         <th></th>
                                     </tr>
                                     </thead>

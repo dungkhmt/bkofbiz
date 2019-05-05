@@ -204,7 +204,7 @@
 								<td></td>
 							</#if>
 
-							<td>${uiLabelMap.BkEunivInternally}</td>
+							<td>${m.affiliationOutsideUniversity}</td>
 							<td><#if m.correspondingAuthor??>${m.correspondingAuthor}</#if></td>
 							<#assign stt=stt+1/>
 						</tr>
