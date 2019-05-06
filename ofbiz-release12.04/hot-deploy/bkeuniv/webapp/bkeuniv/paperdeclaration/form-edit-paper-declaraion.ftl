@@ -484,7 +484,9 @@
                 //var idSequence = 'sequence-member-'+Math.floor((Math.random() * 1000000));
                 var idSequence = 'sequence-member-'+ getNextJsId();
                 //alert('nextId = ' + idSequence);
-                /*$('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+'</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}"  <#if me.sequence??&&me.sequence==s>selected</#if> >${s}</option></#list></select> <script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');*/
+                
+                
+                
                 $('#table-members-paper > tbody:last-child').append('<tr> <td>'+(members.length)+'</td> <td>'+me.staffName+'</td> <td>'+me.roleName+'</td> <td>'+me.AOUName+
                 '</td> <td>'+me.CAName+'</td><td><select id="'+idSequence+'" value="'+me.sequence+'"> <#list 1..15 as s><option value="${s}"  '+(me.sequence==${s}?"selected":"")+'>${s}</option></#list></select>' 
                 + '<script>$(function () {$("#'+idSequence+'").select2({minimumResultsForSearch: -1});})<\/script></td> </tr>');
@@ -1056,7 +1058,7 @@
                         </div>
 
                         <div class="row inline-box"><label id="title-modal-input">${uiLabelMap.AuthorSequence}<span style="color: #db4437;" title="${StringUtil.wrapString(uiLabelMap.BkEunivQuestionIsRequired)}"> * </span></label><input
-                                type="number" class="form-control" pattern="[1-9]([0-9]{0,3})" id="author-sequence" value="${me.sequence}" required="" min="1" max="100">
+                                type="number" class="form-control" pattern="[1-9]([0-9]{0,3})" id="author-sequence" value="<#if me.sequence?exists>${me.sequence}<#else>""</#if>" required="" min="1" max="100">
                             <div class="input-validation"></div>
                             <script type="text/javascript">
                                 $(function () {
