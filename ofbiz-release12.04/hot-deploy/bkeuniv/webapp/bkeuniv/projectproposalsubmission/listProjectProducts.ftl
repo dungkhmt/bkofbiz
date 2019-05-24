@@ -42,12 +42,14 @@
 </script>
 
 <div class="body">
-<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
-
 		<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivProductType?j_string,
 			"data": "researchProductTypeName"
+		},
+		{
+			"name": uiLabelMap.BkEunivResearchProductName?j_string,
+			"data": "researchProductName"
 		},
 		{
 			"name": uiLabelMap.BkEunivQuantity?j_string,
@@ -60,19 +62,10 @@
 		"researchProductId",
 		"researchProductTypeId",
 		"researchProductTypeName",
+		"researchProductName",
 		"quantity"
 	] />
-	<#assign columnsChange=[
-		{
-			"name": uiLabelMap.BkEunivProductType?j_string,
-			"value": "researchProductTypeId"
-		},
-		{
-			"name": uiLabelMap.BkEunivQuantity?j_string,
-			"value": "quantity"
-		}
-	] />
-
+	
 	<#assign productTypes=[]/> 
 	<#list resultProjectProductTypes.projectProposalProductTypes as pt> 
 		<#if pt?has_content> 
@@ -80,6 +73,31 @@
 				<#assign productTypes = productTypes + [op] /> 
 		</#if> 
 	</#list>
+	
+	<#assign columnsChange=[
+		{
+			"name": uiLabelMap.BkEunivProductType?j_string,
+			"value": "researchProductTypeId",
+			"type": "select",
+			"option":{
+				"source": productTypes,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": uiLabelMap.BkEunivResearchProductName?j_string,
+			"value": "researchProductName"
+		},
+		
+		{
+			"name": uiLabelMap.BkEunivQuantity?j_string,
+			"value": "quantity",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong"
+		}
+	] />
+
+	
 
 	<#assign columnsNew=[
 		{
@@ -92,8 +110,14 @@
 			}
 		},
 		{
+			"name": uiLabelMap.BkEunivResearchProductName?j_string,
+			"value": "researchProductName"
+		},
+		{
 			"name": uiLabelMap.BkEunivQuantity?j_string,
-			"value": "quantity"
+			"value": "quantity",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong"
 		}		
 		]
 	 />
@@ -114,20 +138,30 @@
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="" 
+		urlUpdate="/bkeuniv/control/update-a-project-proposal-product-type" 
+		optionDataUpdate={
+			"data": {
+				"researchProjectProposalId": projectProposalId?j_string
+			}
+		}
+		
 		urlAdd="/bkeuniv/control/add-a-project-proposal-product-type" 
 		optionDataAdd={
 			"data": {
 				"researchProjectProposalId": projectProposalId?j_string
 			}
 		}
-		urlDelete="" 
-		keysId=["researchProjectProposalId"] 
+		urlDelete="/bkeuniv/control/remove-a-project-proposal-product-type" 
+		keysId=["researchProductId"] 
 		fieldDataResult = "projectProposalProducts" 
 		titleChange=uiLabelMap.BkEunivChange
 		titleNew=uiLabelMap.BkEunivNew
 		titleDelete=uiLabelMap.BkEunivDelete
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
-		contextmenu=false
+		contextmenu=true
+		backToUrl={
+			"href": '/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId='+ projectProposalId,
+			"text": "Quay ve de tai"
+		}
 	/>
 </div>

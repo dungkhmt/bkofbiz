@@ -2,17 +2,14 @@
 <body>
 <div class="body">
 	<#assign columns=[
-		{
-			"name": sseLabels.BkEunivSSESID?j_string,
-			"data": "staffName"
-		},
+		
 		{
 			"name": sseLabels.BkEunivSSESDescription?j_string,
 			"data": "description"
 		},
 		{
 			"name": sseLabels.BkEunivSSESQuantity?j_string,
-			"data": "quantity"
+			"data": "descriptionDetail"
 		}
 	] />
 	
@@ -21,7 +18,7 @@
 		"staffId",
 		"staffName",
 		"description",
-		"quantity"
+		"descriptionDetail"
 	] />
 	
 	<#assign columnsChange=[
@@ -31,9 +28,8 @@
 		},
 		{
 			"name": sseLabels.BkEunivSSESQuantity?j_string,
-			"value": "quantity",
-			"pattern": "[1-9]([0-9]{0,2})",
-			"title": "So nguyen duong nho hon 999"
+			"value": "descriptionDetail"
+			
 		}
 	] />
 	
@@ -44,9 +40,8 @@
 		},
 		{
 			"name": sseLabels.BkEunivSSESQuantity?j_string,
-			"value": "quantity",
-			"pattern": "[1-9]([0-9]{0,2})",
-			"title": "So nguyen duong nho hon 999"
+			"value": "descriptionDetail"
+			
 		}
 	] />
 	

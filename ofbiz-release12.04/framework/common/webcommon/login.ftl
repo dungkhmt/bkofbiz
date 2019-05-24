@@ -1,3 +1,26 @@
+
+<#if requestAttributes.errorMessageList?has_content><#assign errorMessageList=requestAttributes.errorMessageList></#if>
+<#if requestAttributes.eventMessageList?has_content><#assign eventMessageList=requestAttributes.eventMessageList></#if>
+<#if requestAttributes.serviceValidationException?exists><#assign serviceValidationException = requestAttributes.serviceValidationException></#if>
+<#if requestAttributes.uiLabelMap?has_content><#assign uiLabelMap = requestAttributes.uiLabelMap></#if>
+
+<#if !errorMessage?has_content>
+  <#assign errorMessage = requestAttributes._ERROR_MESSAGE_?if_exists>
+</#if>
+<#if !errorMessageList?has_content>
+  <#assign errorMessageList = requestAttributes._ERROR_MESSAGE_LIST_?if_exists>
+</#if>
+<#if !eventMessage?has_content>
+  <#assign eventMessage = requestAttributes._EVENT_MESSAGE_?if_exists>
+</#if>
+<#if !eventMessageList?has_content>
+  <#assign eventMessageList = requestAttributes._EVENT_MESSAGE_LIST_?if_exists>
+</#if>
+
+<#if !errorMessage?has_content>
+	<#assign errorMessage = requestAttributes._ERROR_MESSAGE_?if_exists>
+</#if>
+
 <style>
     .textfield-HintText-FloatingLabelText:focus-within div hr:nth-child(2) {
     	transform: scaleX(1)!important;
@@ -19,6 +42,14 @@
 
     hr {
         height: 0!important;
+    }
+
+    .ajs-message {
+        font-size: 14px;
+        line-height: 1;
+        color: #fff;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
     }
 
 </style>
@@ -57,14 +88,14 @@
                     </svg>
                 </div>
             </div>
-            <form method="post" action="<@ofbizUrl>login</@ofbizUrl>" name="loginform">
+            <form method="post" id="loginform" name="loginform">
                 <div style="padding: 0px 1em 1em;">
-                    <@TextField id="username" name="USERNAME" field="Username" />
-                    <@TextField type="password" id="password" name="PASSWORD" field="Password" />
+                    <@TextField id="username" name="USERNAME" field=uiLabelMap.CommonUsername />
+                    <@TextField type="password" id="password" name="PASSWORD" field=uiLabelMap.CommonPassword />
                 </div>
                 <div style="padding: 8px; position: relative;">
                     <div style="color: rgba(0, 0, 0, 0.87); background-color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px; border-radius: 2px; display: inline-block; min-width: 100%; margin-right: 8px;">
-                        <button tabindex="0" type="submit" value="login" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; height: 36px; line-height: 36px; width: 100%; border-radius: 2px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; background-color: rgb(0, 188, 212); text-align: center;">
+                        <button tabindex="0" onClick="login()" type="submit" value="login" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; height: 36px; line-height: 36px; width: 100%; border-radius: 2px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; background-color: rgb(0, 188, 212); text-align: center;">
                             <div>
                                 <div style="background-color: rgb(0, 188, 212); height: 36px; border-radius: 2px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; top: 0px;">
                                     <span style="text-shadow: none;position: relative; opacity: 1; font-size: 14px; letter-spacing: 0px; text-transform: uppercase; font-weight: 500; margin: 0px; user-select: none; padding-left: 16px; padding-right: 16px; color: rgb(255, 255, 255);">Sign in</span>
@@ -84,3 +115,51 @@
         </div>
     </div>
 </div>
+
+<script>
+    $( document ).ready(function() {
+        <#if (errorMessage?has_content || errorMessageList?has_content)>
+            <#if errorMessage?has_content>
+                alertify.error('${uiLabelMap.CommonFollowingErrorsOccurred} <br> ${errorMessage}');
+            </#if>
+            <#if errorMessageList?has_content>
+                <#list errorMessageList as errorMsg>
+                    alertify.error('${errorMsg}');
+                </#list>
+            </#if>
+        </#if>
+        <#if (eventMessage?has_content || eventMessageList?has_content)>
+            
+			    <#if eventMessage?has_content>
+                    alertify.error('${uiLabelMap.CommonFollowingOccurred} <br> ${eventMessage}');
+			    </#if>
+			    <#if eventMessageList?has_content>
+			      <#list eventMessageList as eventMsg>
+			        alertify.error('${eventMsg}');
+			      </#list>
+			    </#if>
+			  </div>
+		    </li>
+		</#if>
+    });
+    <#--  function login() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        
+        
+        if(document.getElementById("loginform").checkValidity()) {
+            $.ajax({
+                url: "/bkeuniv/control/login",
+                type: 'POST',
+                data: {
+                    "USERNAME": username,
+                    "PASSWORD": password
+                },
+                success: function(rs){
+                    console.log(rs.status);
+                }
+            })
+        }
+    }  -->
+</script>

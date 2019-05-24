@@ -58,11 +58,18 @@
 			</tr>
 		</thead>
 	<tbody>
-	<#list resultProjectProposals.projectproposals as p>
+	<#list resultProjectProposals.projectproposals as pp>
+		<#assign p = pp.project/>
+		
 		<tr>
 			<td style="display: none">${p.researchProjectProposalId}</td>
 			<#if p.researchProjectProposalName?exists>
-				<td><a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				<#if pp.role == "DIRECTOR">
+					<td><a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				<#else>
+					<td><a href="/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId=${p.researchProjectProposalId}">${p.researchProjectProposalName}</a></td>
+				</#if>
+				
 			<#else>
 				<td></td>
 			</#if>
@@ -104,6 +111,21 @@ function addProjectProposal(){
 	alert("add a project proposal");
 }
 
+function deleteProposal(researchProjectProposalId){
+			$.ajax({
+					url: "/bkeuniv/control/delete-a-project-proposal",
+					type: 'POST',
+					data: {
+						"researchProjectProposalId": researchProjectProposalId
+					},
+					success:function(rs){
+						console.log(rs);
+						window.location.href="/bkeuniv/control/my-project-proposal";
+					}
+				})
+	
+}
+
 $(document).ready(function() {
   loader.close();
   var oTable = $('#list').dataTable({
@@ -113,13 +135,15 @@ $(document).ready(function() {
   $(document).contextmenu({
     delegate: ".dataTable td",
     menu: [
-      {title: "Delete", cmd: "delete"},
-      {title: "Edit", cmd: "edit"}
+      {title: "Delete", cmd: "delete"}
     ],
     select: function(event, ui) {
         switch(ui.cmd){
             case "delete":
-                $(ui.target).parent().remove();
+				obj = ui;
+				var el = ui.target.parent();
+				var proposalId = el.children()[0].innerHTML;
+				deleteProposal(proposalId);
                 break;
             case "edit":
 				obj = ui;

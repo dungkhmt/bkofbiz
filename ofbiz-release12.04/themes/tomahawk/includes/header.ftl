@@ -19,10 +19,19 @@
     </#if>
     
     <link rel="shortcut icon" href="/resource/bkeuniv/image/logo_soict2-75x75.png" />
+
+
+
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
     
+    <!-- import js -->
+    <script src="/resource/bkeuniv/js/lib/jquery.min.js"></script>
+    <script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
+    <script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+
     <#if layoutSettings.javaScripts?has_content>
-        <#--layoutSettings.javaScripts is a list of java scripts. -->
-        <#-- use a Set to ma`ke sure each javascript is declared only once, but iterate the list to maintain the correct order -->
         <#assign javaScriptsSet = Static["org.ofbiz.base.util.UtilMisc"].toSet(layoutSettings.javaScripts)/>
         <#list layoutSettings.javaScripts as javaScript>
             <#if javaScriptsSet.contains(javaScript)>
@@ -37,7 +46,6 @@
         </#list>
     </#if>
     <#if layoutSettings.styleSheets?has_content>
-        <#--layoutSettings.styleSheets is a list of style sheets. So, you can have a user-specified "main" style sheet, AND a component style sheet.-->
         <#list layoutSettings.styleSheets as styleSheet>
             <link rel="stylesheet" href="<@ofbizContentUrl>${StringUtil.wrapString(styleSheet)}</@ofbizContentUrl>" type="text/css"/>
         </#list>
@@ -48,11 +56,11 @@
         </#list>
     </#if>
     <#if layoutSettings.rtlStyleSheets?has_content && langDir == "rtl">
-        <#--layoutSettings.rtlStyleSheets is a list of rtl style sheets.-->
         <#list layoutSettings.rtlStyleSheets as styleSheet>
             <link rel="stylesheet" href="<@ofbizContentUrl>${StringUtil.wrapString(styleSheet)}</@ofbizContentUrl>" type="text/css"/>
         </#list>
     </#if>
+
     <#if layoutSettings.VT_RTL_STYLESHEET?has_content && langDir == "rtl">
         <#list layoutSettings.VT_RTL_STYLESHEET as styleSheet>
             <link rel="stylesheet" href="<@ofbizContentUrl>${StringUtil.wrapString(styleSheet)}</@ofbizContentUrl>" type="text/css"/>
@@ -63,6 +71,9 @@
             ${extraHead}
         </#list>
     </#if>
+
+
+
     <#if layoutSettings.WEB_ANALYTICS?has_content>
       <script language="JavaScript" type="text/javascript">
         <#list layoutSettings.WEB_ANALYTICS as webAnalyticsConfig>
@@ -70,14 +81,10 @@
         </#list>
       </script>
     </#if>
+
+    
+
 </head>
-<#if layoutSettings.headerImageLinkUrl?exists>
-  <#assign logoLinkURL = "${layoutSettings.headerImageLinkUrl}">
-<#else>
-  <#assign logoLinkURL = "${layoutSettings.commonHeaderImageLinkUrl}">
-</#if>
-<#assign organizationLogoLinkURL = "${layoutSettings.organizationLogoLinkUrl?if_exists}">
--->
 <body>
   <div class="nav">
 	<div class="app-name">

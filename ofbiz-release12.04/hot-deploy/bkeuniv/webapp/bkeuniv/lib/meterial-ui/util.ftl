@@ -4,8 +4,11 @@
 <#assign m_w="0.${.now?long?string}"?number />
 <#assign m_z="0.${turnoverstr(.now?long?string)}"?number />
 
-
+<#assign globalId=1/>
 <#function random min max >
+	<#assign globalId = globalId + 2/>
+	<#return globalId/>
+	
     <#local h= intdectobin(65535) />
     <#local mzh= fdectobin("0.${turnoverstr(.now?long?string)}"?number) />
     <#local mwh= fdectobin(m_w) />

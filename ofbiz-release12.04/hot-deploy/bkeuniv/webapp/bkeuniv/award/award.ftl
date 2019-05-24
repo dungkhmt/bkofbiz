@@ -7,10 +7,7 @@
 	<#assign source = [] />
 
 	<#assign columns=[
-		{
-			"name": uiAwardLabelMap.BkEunivStaffId?j_string,
-			"data": "staffId"
-		},
+		
 		{
 			"name": uiAwardLabelMap.BkEunivDescription?j_string,
 			"data": "description"

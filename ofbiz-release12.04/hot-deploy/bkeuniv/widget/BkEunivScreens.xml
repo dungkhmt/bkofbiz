@@ -29,6 +29,63 @@
 		</section>
 	</screen>
 
+	<screen name="pageDetailScientificCV">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>	
+				<service service-name="getCVProfileOfStaff" result-map="resultCV">
+				 	<field-map field-name="staffId" value="${parameters.staffId}"/>
+				</service>
+				<set field="staffId" value="${parameters.staffId}"/>
+				<script location="component://bkeuniv/webapp/bkeuniv/WEB-INF/groovy-src/profile-science.pdf.groovy"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cvstaffs/detail-scientific-cv.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageMyDetailScientificCV">
+		<section>
+			<actions>
+				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>	
+				<service service-name="getCVProfileOfStaff" result-map="resultCV"></service>
+				<script location="component://bkeuniv/webapp/bkeuniv/WEB-INF/groovy-src/profile-science.pdf.groovy"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cvstaffs/detail-scientific-cv.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="pageViewUser">
 		<section>
 			<actions>
@@ -56,10 +113,109 @@
 		</section>
 	</screen>
 
-	<screen name="pageEnableSecurityGroupUser">
+
+	<screen name="SynchronizeStaff">
 		<section>
 			<actions>
 				
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/configmanagement/synchronize-staff.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="PaperDuplicateView">
+		<section>
+			<actions>
+				<service service-name="getFaculties" result-map="listFaculties">
+					<field-map field-name="universityId" value="HUST"/>
+				</service>
+				<service service-name="getListAcademicYears" result-map="listAcademicYears">
+				</service>
+				<service service-name="getPaperCategory" result-map="listPaperCategory">
+				</service>
+				<service service-name="getPaperDeclarationStatus" result-map="listStatus">
+				</service>
+				
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/paper-declaration-duplicate.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageListPaperDeclaration">
+		<section>
+			<actions>
+				<service service-name="getFaculties" result-map="listFaculties">
+					<field-map field-name="universityId" value="HUST"/>
+				</service>
+				<service service-name="getListAcademicYears" result-map="listAcademicYears">
+				</service>
+				<service service-name="getPaperCategory" result-map="listPaperCategory">
+				</service>
+				<service service-name="getPaperDeclarationStatus" result-map="listStatus">
+				</service>
+					
+				<service service-name="getUserLogin" result-map="login"></service>
+				
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/list-paper-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageEnableSecurityGroupUser">
+		<section>
+			<actions>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
 				<service service-name="getListSecurityGroups" result-map="securityGroup"></service>
 				<!-- <service service-name="getStaffs" result-map="resultStaffs"> </service> -->
@@ -318,6 +474,8 @@
 				<set field="headerItem" value="main" /><!-- this highlights the selected 
 					menu-item with name "main" -->
 				<service service-name="getPapersStatistic" result-map="papers"></service>
+				 <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/Chart.bundle.js" global="true" />
+				
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -366,6 +524,8 @@
 		<section>
 			<actions>
 				<property-map resource="BkEunivPatentUiLabels" map-name="uiPatentLabelMap" global="true"/>
+				<service service-name="getPatentCategory" result-map="resultPatentCategory"></service>
+				<service service-name="getAcademicYear" result-map="academicYearS"></service>
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -442,8 +602,15 @@
 			<actions>
 				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
 				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				
 				<service service-name="getListAcademicYears" result-map="result"></service>
 				<service service-name="getStaffPaperDeclarationRole" result-map="paperRoles"></service>
+				<!-- 
+				<service service-name="getResearchProjectProposal" result-map="projects"></service>
+				 -->
+				<service service-name="getAllRunningResearchProjectProposal" result-map="projects"></service>
+				
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -464,6 +631,358 @@
 		</section>
 	</screen>
 	
+	
+	<screen name="pageDetailPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getMembersPaperDeclaration" result-map="members">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<set field="paper" from-field="resultPaper" global="true"/>
+			</actions>
+			<widgets>
+<!-- 			
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+ -->
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper.ftl" />
+							</html>
+						</platform-specific>
+<!-- 
+					</decorator-section>
+				</decorator-screen>
+ -->
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageEditApprovePaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getMembersPaperDeclaration" result-map="members">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				<service service-name="getListPaperDeclaration" result-map="paperDeclaration"></service>
+				<set field="paper" from-field="resultPaper" global="true"/>
+
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+
+			</actions>
+
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/edit-approve-paper.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="UpdatePaperSection">
+		<section>
+			<widgets>
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="pageViewDetailPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
+				
+				
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+					<include-screen name="pageDetailPaper"/>
+					<!-- 
+					<include-screen name="UpdatePaperSection"/>
+					 -->
+			<!-- 		
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+			 -->		
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageViewDetailPaperUpdate">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="paperDeclarationUiLabelMap" global="true"/>
+				<property-map resource="BkEunivUiLabels" map-name="uiLabel" global="true"/>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
+				
+				
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+					<include-screen name="pageDetailPaper"/>
+					
+					<include-screen name="UpdatePaperSection"/>
+			<!-- 		
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/detail-paper-update-action.ftl" />
+							</html>
+						</platform-specific>
+			 -->		
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageMembersOfAPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="paperId" value="${parameters.paperId}"/>
+				<service service-name="getStaffPaperDeclarationRole" result-map="resultRole">
+				</service>
+				<service service-name="getYesNo" result-map="resultYesNo">
+				</service>
+				<service service-name="getNoYes" result-map="resultNoYes">
+				</service>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/members-of-a-paper.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageExternalMembersOfAPaper">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<set field="paperId" value="${parameters.paperId}"/>
+				<service service-name="getStaffPaperDeclarationRole" result-map="resultRole">
+				</service>
+				<service service-name="getYesNo" result-map="resultYesNo">
+				</service>
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/external-members-of-a-paper.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+
+	<screen name="paperCVRecentPublication">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				
+				<service service-name="getPapersOfStaff" result-map="resultPapers">
+				
+				</service>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-publication.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="paperCVRecentPublicationNew">
+		<section>
+			<actions>
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<!-- 
+				<service service-name="getPapersOfStaff" result-map="resultPapers">
+				
+				</service>
+				 -->
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-publication-new.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="paperCVRecentProjects">
+		<section>
+			<actions>
+				<!-- 
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				 -->
+				<service service-name="getProjectsOfStaff" result-map="resultProjects">
+				
+				</service>
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-project.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="paperCVRecentProjectsNew">
+		<section>
+			<actions>
+				
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				
+				<!-- <service service-name="getProjectsOfStaff" result-map="resultProjects">
+				
+				</service> -->
+				
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-recent-project-new.ftl" />
+							</html>
+						</platform-specific>
+					
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+
 	<screen name="summaryPaperDeclaration">
 		<section>
 			<actions>
@@ -594,6 +1113,110 @@
 		</section>
 	</screen>
 
+	<screen name="pageFormAddPaperDeclaration">
+		<section>
+			<actions>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/selectize.default.css" global="true" />
+
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/selectize.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+			
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				
+				<service service-name="getListAcademicYears" result-map="result"></service>
+				<service service-name="getStaffPaperDeclarationRole" result-map="paperRoles"></service>
+				<service service-name="getAllRunningResearchProjectProposal" result-map="projects"></service>
+				<service service-name="getStaffPaperDeclarationRole" result-map="resultRole">
+				</service>
+				<service service-name="getYesNo" result-map="resultYesNo">
+				</service>
+				<service service-name="getStaffInfo" result-map="staff"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<actions>
+								<set field="titlePage" from-field="uiLabelMap.BkEunivAddNewPaperDeclaration" global="true" />
+							</actions>
+							<widgets>
+								<platform-specific>
+									<html>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/form-add-paper-declaraion.ftl" />
+									</html>
+								</platform-specific>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageFormEditPaperDeclaration">
+		<section>
+			<actions>
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/selectize.default.css" global="true" />
+
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/selectize.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+			
+				<property-map resource="BkEunivPaperDeclarationUiLabels" map-name="uiLabelMap" global="true"/>
+				<service service-name="getPaperCategory" result-map="paperCategory"></service>
+				<service service-name="getListPaperCategoryKNC" result-map="paperCategoryKNC"></service>
+				
+				<service service-name="getListAcademicYears" result-map="result"></service>
+				<service service-name="getStaffPaperDeclarationRole" result-map="paperRoles"></service>
+				<service service-name="getAllRunningResearchProjectProposal" result-map="projects"></service>
+				<service service-name="getStaffPaperDeclarationRole" result-map="resultRole">
+				</service>
+				<service service-name="getYesNo" result-map="resultYesNo">
+				</service>
+				<service service-name="getStaffInfo" result-map="staff"></service>
+
+
+				<service service-name="getAPaperDeclaration" result-map="resultPaper">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<service service-name="getMembersPaperDeclaration" result-map="members">
+					<field-map field-name="paperId" value="${parameters.paperId}"/>
+				</service>
+				<set field="paper" from-field="resultPaper" global="true"/>
+
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<section>
+							<actions>
+								<set field="titlePage" from-field="uiLabelMap.BkEunivEditPaperDeclaration" global="true" />
+							</actions>
+							<widgets>
+								<platform-specific>
+									<html>
+										<html-template
+											location="component://bkeuniv/webapp/bkeuniv/paperdeclaration/form-edit-paper-declaraion.ftl" />
+									</html>
+								</platform-specific>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
 	<screen name="paperViewResearchSummaryExcel">
 		<section>
 			<actions>
@@ -656,6 +1279,7 @@
 			<actions>
 				<property-map resource="BkEunivProfileLabels" map-name="uiLabelMap" global="true"/>
 				<property-map resource="BkEunivUiLabels" map-name="uiLabelMap" global="true"/>
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>	
 				<set field="sections" from-field="parameters.sections" type="List"/>
 				
 				<!-- <set field="idxEducationProgress" from-field="${parameters.idxEducationProgress}" type="Integer" default-value="-1"/>
@@ -676,6 +1300,7 @@
 				 <service service-name="getCVProfileOfStaff" result-map="resultCV">
 				 	<field-map field-name="staffId"/>
 				 </service>
+				 <script location="component://bkeuniv/webapp/bkeuniv/WEB-INF/groovy-src/profile-science.pdf.groovy"/>
 			</actions>
 			<widgets>
 				<decorator-screen name="FoReportDecorator"
@@ -757,6 +1382,31 @@
 		</section>
 	</screen>
 	
+	<screen name="pageForeignLanguageStaff">
+		<section>
+			<actions>
+			<!-- 
+				<property-map resource="BkEunivWorkProgressUiLabels" map-name="workProgressUiLabelMap" global="true"/>
+			 -->
+			 	<service service-name="getListForeignLanguageCatalog" result-map="resultForeignLanguageCatalog"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/foreignlanguage/foreign-language.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
 	
 	<screen name="pageStaffResearchDomain">
 		<section>
@@ -816,8 +1466,43 @@
 
 						<platform-specific>
 							<html>
+							<!-- 
 								<html-template
 									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-declaration-new.ftl" />
+							 -->
+							 <html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-declaration-staff.ftl" />
+							</html>
+							
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageListUpdateProjectDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProjectProposalUiLables" map-name="projectDeclarationUiLabelMap" global="true"/>
+						
+				<service service-name="getProjectProposalStatus" result-map="projectProposalStatusS"></service>
+				<service service-name="getProjectCall" result-map="projectCallS"></service>
+				<service service-name="getProjectCategory" result-map="projectCategoryS"></service>
+				<service service-name="getFaculty" result-map="facultyS"></service>
+				<service service-name="getStaff" result-map="staffS"></service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectproposalsubmission/list-update-project-declaration.ftl" />
 							</html>
 						</platform-specific>
 
@@ -835,7 +1520,9 @@
 				<service service-name="getAcademicYear" result-map="academicYearS"></service>
 				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
 				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
 				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
 			</actions>
 			<widgets>
 				<decorator-screen name="bkeuniv-global-decorator"
@@ -856,4 +1543,420 @@
 		</section>
 	</screen>
 
+	<screen name="pageProjectBudgetDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProjectProposalUiLables" map-name="projectDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAcademicYear" result-map="academicYearS"></service>
+				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
+				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
+				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-budget-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageProjectParticipationDeclaration">
+		<section>
+			<actions>
+				<property-map resource="BkEunivResearchProjectProposalUiLables" map-name="projectDeclarationUiLabelMap" global="true"/>
+				<service service-name="getAcademicYear" result-map="academicYearS"></service>
+				<service service-name="getResearchProjectProposal" result-map="researchProjectProposalS"></service>
+				<service service-name="getProjectParticipationRole" result-map="projectParticipationRoleS"></service>
+				<!-- 
+				<service service-name="getStaff" result-map="staffS"></service>
+				 -->
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/projectdeclaration/project-participation-declaration.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageUploadOfficialDocument">
+		<section>
+			<actions>
+				<property-map resource="BkEunivOfficialDocumentLabels" map-name="uiLabelMap" global="true"/>
+				
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/selectize.default.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/dropify.min.css" global="true" />
+				<set field="layoutSettings.stylesheets[]" value="/resource/bkeuniv/css/lib/alertify.min.css" global="true" />
+				
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/dropify.min.js" global="true" />
+                <set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/selectize.js" global="true" />
+				<set field="layoutSettings.scripts[]" value="/resource/bkeuniv/js/lib/alertify.min.js" global="true" />
+				
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/officialdocument/upload-official-document.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="pageListOfficialDocument">
+		<section>
+			<actions>
+				<property-map resource="BkEunivOfficialDocumentLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/officialdocument/view-list-official-document.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageManageOfficialDocument">
+		<section>
+			<actions>
+				<property-map resource="BkEunivOfficialDocumentLabels" map-name="uiLabelMap" global="true"/>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/officialdocument/manage-official-document.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageGenaralInfomation">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivProfileLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>
+				<service service-name="getCVInformation" result-map="staffInfo">
+					<field-map field-name="staffId" value="${userLogin.userLoginId}"/>
+				</service>
+				<service service-name="getListAcademicRank" result-map="academicRank"></service>
+				<service service-name="getListDegree" result-map="degree"></service>
+				<entity-condition list="listResearchDuty" entity-name="ChucDanhNghienCuu"></entity-condition>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/cv-general-information.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageListPhDStudent">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="commonUiLabels" global="true"/>	
+				
+				<service service-name="getEducationLevels" result-map="resultEducationLevels">
+				</service>
+			</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/phdstudent/list-phd-student.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageTheSisSubjectForStudent">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="staffManagementUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="commonUiLabels" global="true"/>	
+				<entity-condition entity-name="EducationLevel" list="listEducationLevel"></entity-condition>
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/thesissubject/list-thesis-subject.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageRecentResearchDirection">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/recentresearchdirection/recent-research-direction.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	
+	<screen name="pageListIntellectualProperty">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/intellectual-property/intellectual-property.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageListBudgetInOut">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/budget-management/budget-management.ftl" />
+							</html>
+						</platform-specific>
+
+					</decorator-section>
+				</decorator-screen>
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageListAwardKHCN">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/award-khcn/award-khcn-management.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageFindCV">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/find-cv.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageFindCVResults">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="sections" from-field="parameters.sections" type="List"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/find-cv-result.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageFindStaffCVResults">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<set field="sections" from-field="parameters.sections" type="List"/>	
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/cv/find-staff-cv-result.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="pageStudentResearchConferenceCallManagement">
+		<section>
+			<actions>
+				<property-map resource="BkEunivUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+				<property-map resource="BkEunivStaffManagementUiLabels" map-name="bkEunivUiLabelMap" global="true"/>	
+				<property-map resource="CommonUiLabels" map-name="bkEunivUiLabelMap" global="true"/>
+        	</actions>
+			<widgets>
+				<decorator-screen name="bkeuniv-global-decorator"
+					location="component://bkeuniv/widget/CommonScreens.xml">
+					<decorator-section name="body">
+						<platform-specific>
+							<html>
+								<html-template
+									location="component://bkeuniv/webapp/bkeuniv/student-research-conference/student-research-conference-management.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
 </screens>

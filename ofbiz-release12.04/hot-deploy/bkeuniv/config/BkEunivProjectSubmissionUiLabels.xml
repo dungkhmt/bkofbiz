@@ -11,6 +11,26 @@
         <value xml:lang="vi">Tên đề tài</value>
     </property>
     
+    <property key="WorkingHourProject">
+        <value xml:lang="en">Working hour of research project</value>
+        <value xml:lang="vi">Số giờ thực hiện đề tài</value>
+    </property>
+    <property key="MemberProject">
+        <value xml:lang="en">Member</value>
+        <value xml:lang="vi">Thành viên</value>
+    </property>
+    <property key="Workinghour">
+        <value xml:lang="en">working hour</value>
+        <value xml:lang="vi">Số giờ thực hiện</value>
+    </property>
+    <property key="AcademicYear">
+        <value xml:lang="en">Year</value>
+        <value xml:lang="vi">Năm kê khai</value>
+    </property>
+    
+    
+    
+
     <property key="Status">
         <value xml:lang="en">Status</value>
         <value xml:lang="vi">Trạng thái</value>
@@ -49,6 +69,10 @@
     <property key="MembersOfProject">
         <value xml:lang="en">Members</value>
         <value xml:lang="vi">Thành viên đề tài</value>
+    </property>
+    <property key="DetailUpdateInfoProject">
+        <value xml:lang="en">Update Detail Infos Project</value>
+        <value xml:lang="vi">Cập nhật thông tin chung của đề tài</value>
     </property>
     
     <property key="ListAssignedProposalForEvaluation">
@@ -108,6 +132,11 @@
         <value xml:lang="vi">Đợt gọi đề tài</value>
     </property>
 
+    <property key="AddNew">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm mới</value>
+    </property>
+
     <property key="numberSubmissions">
         <value xml:lang="en">Number of submissions</value>
         <value xml:lang="vi">Số đề tài đã nộp</value>
@@ -162,7 +191,19 @@
         <value xml:lang="en">Faculty</value>
         <value xml:lang="vi">Khoa, viện</value>
     </property>
-    
+    <!-- 
+    <td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Products}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationProduct" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct}"<#else>"0"</#if>/>
+		</div>
+	</div>
+	</td>
+     -->
     <property key="Department">
         <value xml:lang="en">Department</value>
         <value xml:lang="vi">Bộ môn</value>
@@ -206,6 +247,28 @@
     <property key="ResearchContent">
         <value xml:lang="en">ResearchContent</value>
         <value xml:lang="vi">Nội dung nghiên cứu</value>
+    </property>
+    <property key="Product1">
+        <value xml:lang="en">Product1</value>
+        <value xml:lang="vi">Đáp ứng được tại Khoản 3 Điều 2 của Quy định về thực hiện đề tài KH-CN cấp cơ sở</value>
+    </property>
+    
+    <property key="Product2">
+        <value xml:lang="en">Product2</value>
+        <value xml:lang="vi">Sản phẩm vượt trội so với quy định</value>
+    </property>
+    
+    <property key="Promote1">
+        <value xml:lang="en">Promote1</value>
+        <value xml:lang="vi">Nội dung nghiên cứu hợp với đề tài luận án NCS</value>
+    </property>
+    <property key="Promote2">
+        <value xml:lang="en">Promote2</value>
+        <value xml:lang="vi">Tiến sĩ, chưa có chức danh PGS</value>
+    </property>
+    <property key="Promote3">
+        <value xml:lang="en">Promote3</value>
+        <value xml:lang="vi">Chủ nhiệm đề tài chưa từng chủ nhiệm đề tài các cấp khác</value>
     </property>
     
     <property key="Papers">
@@ -259,7 +322,49 @@
         <value xml:lang="en">Budget</value>
         <value xml:lang="vi">Kinh phí</value>
     </property>
+    
+    <property key="MaterialBudget">
+        <value xml:lang="en">Material Budget</value>
+        <value xml:lang="vi">Mua sắm nguyên vật liệu, vật tư, hóa chất, dụng cụ và thiết bị thí nghiệm nhỏ; đề tài mô phỏng, 
+			lý thuyết được mua máy tính để bàn phục vụ nghiên cứu (≤ 70%)</value>
+    </property>
+    <property key="ExternalServiceBudget">
+        <value xml:lang="en">External Service  Budget</value>
+        <value xml:lang="vi">Thuê dịch vụ bao gồm: gia công, đo đạc, phân tích mẫu, phiếu khảo sát điều tra 
+			và các dịch vụ khác… (≤ 70%)</value>
+    </property>
+    
+    <property key="DomesticConferenceBudget">
+        <value xml:lang="en">Domestic Conference Budget</value>
+        <value xml:lang="vi">Hội thảo/Hội nghị trong nước : tiền khách sạn, phí hội nghị/HT, vé tàu xe… (≤ 30%)</value>
+    </property>
 
+    <property key="InternationalConferenceBudget">
+        <value xml:lang="en">International Conference Budget</value>
+        <value xml:lang="vi">Hội thảo/Hội nghị quốc tế: phí hội nghị/HT (≤ 50%)</value>
+    </property>
+
+    <property key="PublicationBudget">
+        <value xml:lang="en">Publication Budget</value>
+        <value xml:lang="vi">Chi phí công bố kết quả nghiên cứu: hiệu chỉnh tiếng Anh, phí đăng bài… (≤ 20%)</value>
+    </property>
+
+    <property key="ManagementBudget">
+        <value xml:lang="en">Management Budget</value>
+        <value xml:lang="vi">Quản lý phí: chi phí hoạt động của Hội đồng tuyển chọn và nghiệm thu 
+			(2,5% tổng kinh phí phân cấp đề tài cơ sở của đơn vị)</value>
+    </property>
+
+    <property key="BudgetItem">
+        <value xml:lang="en">Budget Item</value>
+        <value xml:lang="vi">Mục kinh phí</value>
+    </property>
+    
+	<property key="BudgetAmount">
+        <value xml:lang="en">Budget Amount</value>
+        <value xml:lang="vi">Số tiền</value>
+    </property>
+    
     <property key="ListWorkPackages">
         <value xml:lang="en">List of Work packages</value>
         <value xml:lang="vi">Danh sách nội dung công việc</value>
@@ -278,6 +383,11 @@
     <property key="ListProducts">
         <value xml:lang="en">List of Products</value>
         <value xml:lang="vi">Danh sách Sản phẩm</value>
+    </property>
+
+    <property key="ListProductsRegistered">
+        <value xml:lang="en">List of Products registered</value>
+        <value xml:lang="vi">Danh sách Sản phẩm đăng ký</value>
     </property>
 
     <property key="ViewDetail">
@@ -303,6 +413,26 @@
     <property key="Excel">
         <value xml:lang="en">Excel</value>
         <value xml:lang="vi">Excel</value>
+    </property>
+    
+    <property key="ProductName">
+        <value xml:lang="en">Product name</value>
+        <value xml:lang="vi">Tên sản phẩm</value>
+    </property>
+    
+    <property key="ProductType">
+        <value xml:lang="en">Product type</value>
+        <value xml:lang="vi">Loại sản phẩm</value>
+    </property>
+    
+     <property key="ListOfRegisteredProducts">
+        <value xml:lang="en">List of registered products</value>
+        <value xml:lang="vi">Danh sách sản phẩm đã đăng ký</value>
+    </property>
+    
+    <property key="ListOfFinishedProducts">
+        <value xml:lang="en">List of finished products</value>
+        <value xml:lang="vi">Danh sách sản phẩm đã hoàn thành</value>
     </property>
 
 </resource>

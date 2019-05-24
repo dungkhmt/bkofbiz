@@ -8,3 +8,4 @@
 <#include "icon.ftl"/>
 <#include "loader.ftl"/>
 <#include "button.ftl"/>
+<#include "dropdown.ftl"/>

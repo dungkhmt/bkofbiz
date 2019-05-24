@@ -10,6 +10,7 @@ import java.util.Map;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -22,16 +23,49 @@ import org.ofbiz.service.ServiceUtil;
 
 public class patentStaff {
 	public final static String module = patentStaff.class.getName();
+	public static final String ENABLED = "ENABLED";
+	public static final String DISABLED = "DISABLED";
+	
+	public static Map<String, Object> getPatentCategory(DispatchContext ctx, Map<String, ? extends Object> context){
+		Delegator delegator = ctx.getDelegator();
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		//List<GenericValue> list = FastList.newInstance();
+		try{
+			List<GenericValue> list = delegator.findList("PatentCategory", 
+					null,null,null,null,false);
+			Debug.log(module + "::getPatentCategory, list.sz = " + list.size());
+			retSucc.put("patentCategory", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
 	public static Map<String, Object> getPatent(DispatchContext ctx, Map<String, ? extends Object> context){
 		Delegator delegator = ctx.getDelegator();
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+		String staffId = null;
+		if(userLogin != null)
+			staffId = (String)userLogin.getString("userLoginId");
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",EntityOperator.EQUALS,ENABLED));
+			conds.add(EntityCondition.makeCondition("staffId",EntityOperator.EQUALS,staffId));
+			List<GenericValue> list = delegator.findList("PatentView", 
+					EntityCondition.makeCondition(conds),
+					null,null,null,false);
+			retSucc.put("patent", list);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+		/*
+		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher localDispatcher = ctx.getDispatcher();
-		//System.out.println("1");
 		
-		//String u1 = (String)ctx.getAttribute("userLoginId");
-		//String u2 = (String)context.get("userLoginId");
-		
-		//if(u1 == null) u1 = "NULL";
-		//if(u2 == null) u2 = "NULL";
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		String staffId = null;
 		if(userLogin != null)
@@ -82,7 +116,8 @@ public class patentStaff {
 			System.out.print("Error");
 			Map<String, Object> rs = ServiceUtil.returnError(e.getMessage());
 			return rs;
-		}	
+		}
+		*/	
 	}
 	
 	public static Map<String, Object> createPatent(DispatchContext ctx, Map<String, ? extends Object> context){
@@ -99,6 +134,9 @@ public class patentStaff {
 		if(staffId == null){
 			staffId = (String)userLogin.getString("userLoginId");
 		}
+		List<String> patentCategoryIds = (List<String>) context.get("patentCategoryId[]");
+		List<String> academicYearIds = (List<String>) context.get("academicYearId[]");
+		
 		String year = (String) context.get("year");
 		
 		GenericValue gv = delegator.makeValue("Patent");
@@ -107,10 +145,19 @@ public class patentStaff {
 			gv.put("patentName", patentName);
 			gv.put("year", Long.valueOf(year));
 			gv.put("staffId", staffId);
+			gv.put("statusId", ENABLED);
+			if(patentCategoryIds != null && patentCategoryIds.size() > 0){
+				String patentCategoryId = patentCategoryIds.get(0);
+				gv.put("patentCategoryId", patentCategoryId);
+				
+			}
+			if(academicYearIds != null && academicYearIds.size() > 0){
+				String academicYearId = academicYearIds.get(0);
+				gv.put("academicYearId", academicYearId);
+			}
 			
 			delegator.create(gv);
 		}catch(Exception ex){
-			System.out.println("aaa");
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
@@ -131,13 +178,18 @@ public class patentStaff {
         Map<String,Object> retSucc = ServiceUtil.returnSuccess();
         
         String patentId = (String)context.get("patentId");
+        Debug.log(module + "::deletePatent, patentId = " + patentId);
+        
         try{
         	GenericValue gv = delegator.findOne("Patent", UtilMisc.toMap("patentId",patentId), false);
         	if(gv != null){
-        		delegator.removeValue(gv);
-        		retSucc.put("result", "deleted record with id: " + patentId);
+        		//delegator.removeValue(gv);
+        		gv.put("statusId", DISABLED);
+        		delegator.store(gv);
+        		retSucc.put("message", "deleted record with id: " + patentId);
+        		//retSucc.put("patent", gv);
         	} else {
-        		retSucc.put("result", "not found record with id: " + patentId);
+        		retSucc.put("message", "not found record with id: " + patentId);
         	}
         	
         }catch(Exception ex){
@@ -155,6 +207,9 @@ public class patentStaff {
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		String patentName = (String) context.get("patentName");
 		String year = (String) context.get("year");
+		List<String> patentCategoryIds = (List<String>) context.get("patentCategoryId[]");
+		List<String> academicYearIds = (List<String>) context.get("academicYearId[]");
+		
 		String staffId = (String) context.get("staffId");
 		if(staffId == null){
 			staffId = (String)userLogin.getString("userLoginId");
@@ -167,6 +222,15 @@ public class patentStaff {
 				gv.put("patentName", patentName);
 				gv.put("year", Long.valueOf(year));
 				gv.put("staffId", staffId);
+				if(patentCategoryIds != null && patentCategoryIds.size() > 0){
+					String patentCategoryId = patentCategoryIds.get(0);
+					gv.put("patentCategoryId", patentCategoryId);
+					
+				}
+				if(academicYearIds != null && academicYearIds.size() > 0){
+					String academicYearId = academicYearIds.get(0);
+					gv.put("academicYearId", academicYearId);
+				}
 				
 				delegator.store(gv);
 				

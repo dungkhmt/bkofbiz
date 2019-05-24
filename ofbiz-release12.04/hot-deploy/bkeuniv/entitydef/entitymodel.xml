@@ -162,7 +162,7 @@
 		<field name="projectCallId" type="id-vlong"></field>
 		<field name="projectCategoryId" type="id-vlong"></field>
 		<field name="researchProjectProposalName" type="very-long"></field>
-		<field name="totalBudget" type="numeric"></field>
+		<field name="totalBudget" type="currency-amount"></field>
 		<field name="statusId" type="id-vlong"></field>
 		<field name="approvedByStaffId" type="id-vlong"></field>
 		<field name="sourceFileUpload" type="very-long"></field>
@@ -170,7 +170,38 @@
 		<field name="startDate" type="date"></field>
 		<field name="endDate" type="date"></field>
 		<field name="deliverable" type="very-long"></field>
-		<field name="materialBudget" type="numeric"></field>
+		<field name="materialBudget" type="currency-amount">
+			<description>
+			Mua sắm nguyên vật liệu, vật tư, hóa chất, dụng cụ và thiết bị thí nghiệm nhỏ; đề tài mô phỏng, 
+			lý thuyết được mua máy tính để bàn phục vụ nghiên cứu (≤ 70%).
+			</description>
+		</field>
+		<field name="externalServiceBudget" type="currency-amount">
+			<description>Thuê dịch vụ bao gồm: gia công, đo đạc, phân tích mẫu, phiếu khảo sát điều tra 
+			và các dịch vụ khác… (≤ 70%)
+			</description>
+		</field>
+		<field name="domesticConferenceBudget" type="currency-amount">
+			<description>Hội thảo/Hội nghị trong nước : tiền khách sạn, phí hội nghị/HT, vé tàu xe… (≤ 30%)
+			</description>
+		</field>
+		<field name="internationalConferenceBudget" type="currency-amount">
+			<description>Hội thảo/Hội nghị quốc tế: phí hội nghị/HT (≤ 50%)
+			</description>
+		</field>
+		<field name="publicationBudget" type="currency-amount">
+			<description>Chi phí công bố kết quả nghiên cứu: hiệu chỉnh tiếng Anh, phí đăng bài… (≤ 20%).
+			</description>
+		</field>
+		<field name="managementBudget" type="currency-amount">
+			<description>Quản lý phí: chi phí hoạt động của Hội đồng tuyển chọn và nghiệm thu 
+			(2,5% tổng kinh phí phân cấp đề tài cơ sở của đơn vị).
+			</description>
+		</field>
+		
+		
+		
+		<field name="note" type="very-long"></field>
 		<field name="evaluationOpenFlag" type="indicator"></field>
 		
 		<prim-key field="researchProjectProposalId"/>
@@ -249,7 +280,13 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="projectParticipationRoleId" type="id-vlong"></field>
 		<field name="workingdays" type="numeric"></field>
+		<field name="workinghours" type="numeric"></field>
+		<field name="equipmentBudget" type="currency-amount"></field>
+		<field name="managementBudget" type="currency-amount"></field>
+		<field name="allocatedBudgetYear" type="currency-amount"></field>
+		<field name="staffParticipationPercentage" type="numeric"></field>
 		<field name="academicYearId" type="id-ne"></field>
+		
 		
 		<prim-key field="researchProjectDeclarationYearId"/>
 		
@@ -273,21 +310,40 @@
 		<member-entity entity-alias="RPD" entity-name="ResearchProjectDeclarationYear"></member-entity>
 		<member-entity entity-alias="AY" entity-name="AcademicYear"></member-entity>
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<!-- 
+		<member-entity entity-alias="CBST" entity-name="Staff"></member-entity>
+		 -->
 		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
 		<member-entity entity-alias="PPR" entity-name="ProjectParticipationRole"></member-entity>
 		<alias-all entity-alias="RPD"></alias-all>
+		
 		<alias name="academicYearName" field="academicYearName" entity-alias="AY"></alias>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
+		
+		
+		<!-- 
+		<alias name="createByStaffName" field="staffName" entity-alias="CBST"></alias>
+		 -->
 		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPP"></alias>
 		<alias name="projectParticipationRoleName" field="projectParticipationRoleName" entity-alias="PPR"></alias>
-		
-		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true">
-			<key-map rel-field-name="academicYearId" field-name="academicYearId"/>
+		<alias name="statusId" field="statusId" entity-alias="RPP"></alias>
+		<alias name="createStaffId" field="createStaffId" entity-alias="RPP"></alias>
+		<!-- 
+		<alias name="staffId" field="staffId" entity-alias="CBST"></alias>
+		 -->
+		<!-- 
+		<view-link rel-entity-alias="CBST" entity-alias="RPP" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="createStaffId"/>
+		</view-link>
+		 -->
+		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true" >
+			<key-map rel-field-name="academicYearId" field-name="academicYearId" />
 		</view-link>
 		 
 		<view-link rel-entity-alias="ST" entity-alias="RPD" rel-optional="true">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
+		
 		
 		<view-link rel-entity-alias="RPP" entity-alias="RPD" rel-optional="true">
 			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
@@ -298,6 +354,124 @@
 		</view-link>
 	</view-entity>
 	
+
+	<entity entity-name="ResearchProjectBudgetDeclarationYear" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectDeclarationYearId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="equipmentBudget" type="currency-amount"></field>
+		<field name="managementBudget" type="currency-amount"></field>
+		<field name="allocatedBudgetYear" type="currency-amount"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		
+		
+		<prim-key field="researchProjectDeclarationYearId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one" fk-name="BDY_ACADEMICYEARRPDY">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		 
+		<relation rel-entity-name="ResearchProjectProposal" type="one" fk-name="BDY_RESEARCHPROJECTPROPOSALDECLARATIONYEAR">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		
+	</entity>
+	
+	<view-entity entity-name="ResearchProjectBudgetDeclarationYearView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPD" entity-name="ResearchProjectBudgetDeclarationYear"></member-entity>
+		<member-entity entity-alias="AY" entity-name="AcademicYear"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<alias-all entity-alias="RPD"></alias-all>
+		
+		<alias name="academicYearName" field="academicYearName" entity-alias="AY"></alias>
+		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPP"></alias>
+		<alias name="createStaffId" field="createStaffId" entity-alias="RPP"></alias>
+		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true" >
+			<key-map rel-field-name="academicYearId" field-name="academicYearId" />
+		</view-link>
+		
+		<view-link rel-entity-alias="RPP" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+	</view-entity>
+
+	<entity entity-name="ResearchProjectParticipationDeclarationYear" package-name="org.ofbiz.bkeuniv">
+		<field name="researchProjectDeclarationYearId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="projectParticipationRoleId" type="id-vlong"></field>
+		<field name="workingdays" type="numeric"></field>
+		<field name="workinghours" type="numeric"></field>
+		<field name="staffParticipationPercentage" type="numeric"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		
+		
+		<prim-key field="researchProjectDeclarationYearId"/>
+		
+		<relation rel-entity-name="AcademicYear" type="one" fk-name="PY_ACADEMICYEARRPDY">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one" fk-name="PY_STAFFRPDY">
+			<key-map field-name="staffId"/>
+		</relation>
+		 
+		<relation rel-entity-name="ResearchProjectProposal" type="one" fk-name="PY_RESEARCHPROJECTPROPOSALDECLARATIONYEAR">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		
+		<relation rel-entity-name="ProjectParticipationRole" type="one">
+         	<key-map field-name="projectParticipationRoleId"/>
+         </relation>
+	</entity>
+	
+	<view-entity entity-name="ResearchProjectParticipationDeclarationYearView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="RPD" entity-name="ResearchProjectParticipationDeclarationYear"></member-entity>
+		<member-entity entity-alias="AY" entity-name="AcademicYear"></member-entity>
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<!-- 
+		<member-entity entity-alias="CBST" entity-name="Staff"></member-entity>
+		 -->
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="PPR" entity-name="ProjectParticipationRole"></member-entity>
+		<alias-all entity-alias="RPD"></alias-all>
+		
+		<alias name="academicYearName" field="academicYearName" entity-alias="AY"></alias>
+		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
+		
+		
+		<!-- 
+		<alias name="createByStaffName" field="staffName" entity-alias="CBST"></alias>
+		 -->
+		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="projectParticipationRoleName" field="projectParticipationRoleName" entity-alias="PPR"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPP"></alias>
+		<alias name="createStaffId" field="createStaffId" entity-alias="RPP"></alias>
+		<!-- 
+		<alias name="staffId" field="staffId" entity-alias="CBST"></alias>
+		 -->
+		<!-- 
+		<view-link rel-entity-alias="CBST" entity-alias="RPP" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="createStaffId"/>
+		</view-link>
+		 -->
+		<view-link rel-entity-alias="AY" entity-alias="RPD" rel-optional="true" >
+			<key-map rel-field-name="academicYearId" field-name="academicYearId" />
+		</view-link>
+		 
+		<view-link rel-entity-alias="ST" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="staffId" field-name="staffId"/>
+		</view-link>
+		
+		
+		<view-link rel-entity-alias="RPP" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
+		<view-link rel-entity-alias="PPR" entity-alias="RPD" rel-optional="true">
+			<key-map rel-field-name="projectParticipationRoleId" field-name="projectParticipationRoleId"/>
+		</view-link>
+	</view-entity>
+
 	<entity entity-name="ResearchProjectProposalDomain" package-name="org.ofbiz.bkeuniv">
 		<field name="researchProjectProposalId" type="id-ne"></field>
 		<field name="researchDomainId" type="id-vlong"></field>
@@ -333,7 +507,7 @@
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<alias-all entity-alias="RPCI"></alias-all>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
-		<view-link rel-entity-alias="ST" entity-alias="RPCI">
+		<view-link rel-entity-alias="ST" entity-alias="RPCI" rel-optional="true">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
 	</view-entity>
@@ -352,22 +526,28 @@
 	
 	<entity entity-name="ResearchProduct" package-name="org.ofbiz.bkeuniv">
 		<field name="researchProductId" type="id-ne"></field>
+		<field name="researchProductRegisteredId" type="id-ne"></field>
+		<!-- 
 		<field name="researchProductTypeId" type="id-vlong"></field>
+		 -->
 		<field name="researchProductName" type="very-long"></field>
 		<field name="sourcePathUpload" type="very-long"></field>
-		<field name="researchProjectProposalId" type="id-ne"></field>
+		
+		<!-- <field name="researchProposalProductId" type="id-ne"></field> -->
 		<field name="approvedByStaffId" type="id-vlong"></field>
 		
 		<prim-key field="researchProductId"/>
 		
-		<relation rel-entity-name="ResearchProductType" type="one">
+		<!-- <relation rel-entity-name="ResearchProductType" type="one">
 			<key-map field-name="researchProductTypeId"/>
+		</relation> -->
+		<!-- 
+		<relation rel-entity-name="ResearchProposalProduct" type="one">
+			<key-map field-name="researchProductRegisteredId" rel-field-name="researchProductId"/>
 		</relation>
-		<relation rel-entity-name="Party" type="one">
-			<key-map field-name="researchProductId" rel-field-name="partyId"/>
-		</relation>
-		<relation rel-entity-name="ResearchProjectProposal" type="one">
-			<key-map field-name="researchProjectProposalId"/>
+		 -->
+		<relation rel-entity-name="ResearchProposalProduct" type="one">
+			<key-map field-name="researchProductRegisteredId" rel-field-name="researchProductId" />
 		</relation>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="approvedByStaffId" rel-field-name="staffId"/>
@@ -384,6 +564,10 @@
 		
 		<prim-key field="researchProductId"/>
 		
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		
 		<relation rel-entity-name="ResearchProductType" type="one">
 			<key-map field-name="researchProductTypeId"/>
 		</relation>
@@ -399,10 +583,10 @@
 		<alias-all entity-alias="RPP"></alias-all>
 		<alias name="researchProductTypeName" entity-alias="RPT" field="researchProductTypeName"></alias>
 		<alias name="researchProjectProposalName" entity-alias="RPPR" field="researchProjectProposalName"></alias>
-		<view-link rel-entity-alias="RPT" entity-alias="RPP">
+		<view-link rel-entity-alias="RPT" entity-alias="RPP" rel-optional="true">
 			<key-map rel-field-name="researchProductTypeId" field-name="researchProductTypeId"/>
 		</view-link>
-		<view-link rel-entity-alias="RPPR" entity-alias="RPP">
+		<view-link rel-entity-alias="RPPR" entity-alias="RPP" rel-optional="true">
 			<key-map  rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
 		</view-link>
 	</view-entity>
@@ -446,9 +630,10 @@
 		<field name="researchProjectProposalId" type="id-ne"></field>	
 		 <field name="staffId" type="id-vlong"></field>
 		<field name="roleTypeId" type="id-vlong"></field>
+		<!-- 
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
-		
+		 -->
 		<prim-key field="projectProposalMemberId"/>
 		
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
@@ -461,19 +646,46 @@
 			<key-map field-name="roleTypeId"/>
 		</relation>
 	</entity>
-	<view-entity entity-name="ProjectProposalMemberView" package-name="">
+	
+	
+	<view-entity entity-name="ProjectProposalMemberViewSequenceInCV" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PPMV" entity-name="ProjectProposalMemberView"></member-entity>
+		<member-entity entity-alias="CVP" entity-name="CVProject"></member-entity>
+		<alias-all entity-alias="PPMV"></alias-all>
+		<alias name="sequenceInCVProject" field="sequenceInCVProject" entity-alias="CVP"></alias>
+		
+		<view-link rel-entity-alias="CVP" entity-alias="PPMV" rel-optional="true">
+			<key-map rel-field-name="projectProposalMemberId" field-name="projectProposalMemberId"/>
+		</view-link>
+		
+	</view-entity>
+	
+	<view-entity entity-name="ProjectProposalMemberView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="PPR" entity-name="ProjectProposalMember"></member-entity>
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="RT" entity-name="ProjectProposalRoleType"></member-entity>
+		<member-entity entity-alias="RPPV" entity-name="ResearchProjectProposalView"></member-entity>
 		<alias-all entity-alias="PPR"></alias-all>
 		<alias name="staffName" field="staffName" entity-alias="ST"></alias>
 		<alias name="roleTypeName" field="roleTypeName" entity-alias="RT"></alias>
-		<view-link rel-entity-alias="ST" entity-alias="PPR">
+		<alias name="projectCategoryName" field="projectCategoryName" entity-alias="RPPV"></alias>
+		<alias name="totalBudget" field="totalBudget" entity-alias="RPPV"></alias>
+		<alias name="researchProjectProposalCode" field="researchProjectProposalCode" entity-alias="RPPV"></alias>
+		<alias name="researchProjectProposalName" field="researchProjectProposalName" entity-alias="RPPV"></alias>
+		<alias name="statusName" field="statusName" entity-alias="RPPV"></alias>
+		<alias name="statusId" field="statusId" entity-alias="RPPV"></alias>
+		<alias name="startDate" field="startDate" entity-alias="RPPV"></alias>
+		<alias name="endDate" field="endDate" entity-alias="RPPV"></alias>
+		<view-link rel-entity-alias="ST" entity-alias="PPR" rel-optional="true">
 			<key-map  rel-field-name="staffId" field-name="staffId"/>
 		</view-link>
-		<view-link rel-entity-alias="RT" entity-alias="PPR">
+		<view-link rel-entity-alias="RT" entity-alias="PPR" rel-optional="true">
 			<key-map rel-field-name="roleTypeId" field-name="roleTypeId"/>
 		</view-link>
+		<view-link rel-entity-alias="RPPV" entity-alias="PPR" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
 	</view-entity>
 
 	<entity entity-name="Jury" package-name="org.ofbiz.bkeuniv">
@@ -519,6 +731,7 @@
 		<field name="juryId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="juryRoleTypeId" type="id-vlong"></field>
+		<field name="statusId" type="id-vlong"></field>
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
 		
@@ -562,13 +775,19 @@
 		<field name="researchProjectProposalId" type="id-ne"></field>	
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
-		<field name="evaluationMotivation" type="numeric"></field>
-		<field name="evaluationInnovation" type="numeric"></field>
+		<field name="evaluationMotivation" type="numeric"><description>Mục tiêu (cụ thể, rõ ràng, khả thi) - tối đa 5</description></field>
+		<field name="evaluationInnovation" type="numeric"><description>Tính cấp thiết, tính mới - tối đa 5</description></field>
 		<field name="evaluationApplicability" type="numeric"></field>
-		<field name="evaluationResearchMethod" type="numeric"></field>
-		<field name="evaluationResearchContent" type="numeric"></field>
+		<field name="evaluationResearchMethod" type="numeric"><description>Phương pháp nghiên cứu - tối đa 5</description></field>
+		<field name="evaluationResearchContent" type="numeric"><description>Nội dung nghiên cứu - tối đa 5</description></field>
 		<field name="evaluationPaper" type="numeric"></field>
 		<field name="evaluationProduct" type="numeric"></field>
+		<field name="evaluationProduct1" type="numeric"><description>Đáp ứng được tại Khoản 3 Điều 2 của Quy định về thực hiện đề tài KH-CN cấp cơ sở - tối đa 50</description></field>
+		<field name="evaluationProduct2" type="numeric"><description>Sản phẩm vượt trội so với quy định - tối đa 10</description></field>
+		<field name="evaluationPromote1" type="numeric"><description>Nội dung nghiên cứu hợp với đề tài luận án NCS - tối đa 15</description></field>
+		<field name="evaluationPromote2" type="numeric"><description>Tiến sĩ, chưa có chức danh PGS - tối đa 10</description></field>
+		<field name="evaluationPromote3" type="numeric"><description>Chủ nhiệm đề tài chưa từng chủ nhiệm đề tài các cấp khác - tối đa 5</description></field>
+		
 		<field name="evaluationPatent" type="numeric"></field>
 		<field name="evaluationGraduateStudent" type="numeric"></field>
 		<field name="evaluationYoungResearcher" type="numeric"></field>
@@ -593,11 +812,11 @@
 		<relation rel-entity-name="ResearchProjectProposal" type="one">
 			<key-map field-name="researchProjectProposalId"/>
 		</relation>
-		<!-- 
+		
 		<relation rel-entity-name="ProjectProposalStatus" type="one">
 			<key-map field-name="statusId"/>
 		</relation>
-		 -->
+		
 		 
 	</entity>
 	
@@ -608,6 +827,7 @@
 		<alias-all entity-alias="RRP"></alias-all>
 		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
 		<alias name="researchProjectProposalName" entity-alias="RPP" field="researchProjectProposalName"></alias>
+		<alias name="projectStatusId" entity-alias="RPP" field="statusId"></alias>
 		<view-link rel-entity-alias="ST" entity-alias="RRP">
 			<key-map field-name="staffId"/>
 		</view-link>
@@ -638,14 +858,16 @@
 	</entity>
 	
 	<entity entity-name="ResearchSpeciality" title="Chuyên ngành nghiên cứu" package-name="org.ofbiz.bkeuniv">
-		<field name="researchSpecialityId" type="id-ne"></field>
-		<field name="researchDomainId" type="id-ne"></field>
+		<!-- <field name="researchSpecialityId" type="id-ne"></field>
+		 -->
+		 <field name="researchDomainId" type="id-ne"></field>
 		<field name="researchSubDomainSeqId" type="id"></field>
 		<field name="researchSpecialitySeqId" type="id-ne"></field>
 		<field name="researchSpecialityName" type="very-long"></field>
 		<field name="researchSpecialityCode" type="id-ne"></field>
-		
+		<!-- 
 		<prim-key field="researchSpecialityId"/>
+		 -->
 		<prim-key field="researchSpecialitySeqId"/>
 		<prim-key field="researchSubDomainSeqId"/>
 		<prim-key field="researchDomainId"/>
@@ -729,12 +951,14 @@
 		<prim-key field="securityGroupId"/>
 		<prim-key field="functionId"/>
 		<prim-key field="fromDate"/>
+		
 		<relation type="one" fk-name="MAP_FUNCTION" rel-entity-name="Function">
             <key-map field-name="functionId" rel-field-name="functionId"/>
         </relation>
         <relation type="one" fk-name="MAP_GROUP" rel-entity-name="SecurityGroup">
             <key-map field-name="securityGroupId" rel-field-name="groupId"/>
-        </relation>    
+        </relation>
+            
     </entity>
 	
 	
@@ -748,6 +972,8 @@
 		<field name="facultyId" type="id-ne"></field>
 		<field name="facultyName" type="very-long"></field>
 		<field name="universityId" type="id"></field>
+		<field name="statusId" type="id-ne"></field>
+		
 		<prim-key field="facultyId"/>
 		<relation rel-entity-name="University" type="one">
 			<key-map field-name="universityId"/>
@@ -758,6 +984,7 @@
 		<field name="departmentId" type="id-vlong"></field>
 		<field name="departmentName" type="very-long"></field>
 		<field name="facultyId" type="id"></field>
+		<field name="statusId" type="id-ne"></field>
 		<prim-key field="departmentId"/>
 		<relation rel-entity-name="Faculty" type="one">
 			<key-map field-name="facultyId"/>
@@ -775,10 +1002,27 @@
 		<field name="academicYearName" type="id"></field>
 		<prim-key field="academicYearId"/>
 	</entity>
+
+	<entity entity-name="HocHam" package-name="org.ofbiz.bkeuniv">
+		<field name="hocHamId" type="id-ne"></field>
+		<field name="hocHamName" type="id-vlong"></field>
+		<prim-key field="hocHamId"/>
+	</entity>	
+	<entity entity-name="HocVi" package-name="org.ofbiz.bkeuniv">
+		<field name="hocViId" type="id-ne"></field>
+		<field name="hocViName" type="id-vlong"></field>
+		<prim-key field="hocViId"/>
+	</entity>	
+	<entity entity-name="ChucDanhNghienCuu" package-name="org.ofbiz.bkeuniv">
+		<field name="chucDanhNghienCuuId" type="id-ne"></field>
+		<field name="chucDanhNghienCuuName" type="id-vlong"></field>
+		<prim-key field="chucDanhNghienCuuId"/>
+	</entity>	
 	
 	
 	<entity entity-name="Staff" package-name="org.ofbiz.bkeuniv">
 		<field name="staffId" type="id-vlong"></field>
+		<field name="staffCode" type="id-vlong"></field>
 		<field name="staffUserLoginId" type="id-vlong"></field>
 		<field name="staffName" type="name"></field>
 		<field name="staffEmail" type="email"></field>
@@ -788,6 +1032,19 @@
 		<field name="staffPhone" type="tel-number"></field>
 		<field name="fromDate" type="date"></field>
 		<field name="thruDate" type="date"></field>
+		<field name="statusId" type="id-ne"></field>
+    	
+		<field name="hocHamId" type="id-ne"></field>
+		<field name="yearHocHam" type="numeric"></field>
+		<field name="hocViId" type="id-ne"></field>
+		<field name="yearHocVi" type="numeric"></field>
+		<field name="chucDanhNghienCuuId" type="id-ne"></field>
+		<field name="chucVuHienNay" type="id-vlong"></field>
+		<field name="recentResearchDomain" type="id-vlong"></field>
+		<field name="researchDirection4PhDMaster" type="id-vlong"></field>
+		<field name="researchKeywords" type="id-vlong"></field>
+		
+		
 		<prim-key field="staffId"/>
 		<relation rel-entity-name="Department" type="one">
 			<key-map field-name="departmentId"/>
@@ -796,6 +1053,32 @@
 			<key-map field-name="genderId"/>
 		</relation>
 	</entity>
+	
+	<entity entity-name="StaffTemp" package-name="org.ofbiz.bkeuniv">
+		<field name="id" type="id-vlong"></field>
+		
+		<field name="shcc" type="id-vlong"></field>
+		<field name="sohieuchuan" type="id-vlong"></field>
+		<field name="staffName" type="name"></field>
+		<field name="departmentId" type="id-vlong"></field>
+		<field name="departmentName" type="very-long"></field>
+		<field name="facultyId" type="id-vlong"></field>
+		<field name="facultyName" type="very-long"></field>
+		<field name="staffEmail" type="email"></field>
+		<field name="gt" type="id-ne"></field>
+		<field name="ntns" type="date"></field>
+		
+		<prim-key field="id"/>
+	</entity>
+	
+	<view-entity entity-name="SecurityGroupView"
+            package-name="org.ofbiz.security.securitygroup"
+            title="Security Component - Security Group Entity">
+      <member-entity entity-alias="SG" entity-name="SecurityGroup"></member-entity>
+      <alias name="groupId" entity-alias="SG"></alias>
+      <alias name="description" entity-alias="SG"></alias>
+      <alias name="status" entity-alias="SG"></alias>
+    </view-entity>
 	
 	<view-entity entity-name="StaffView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
@@ -820,6 +1103,46 @@
 			<condition-list combine="and">
 				<condition-list>
 					<condition-expr field-name="thruDate" entity-alias="ST" value=""/>
+					<condition-expr field-name="staffUserLoginId" entity-alias="ST" value="" operator="not-equals"/>
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="StaffSecurityGroupView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="D" entity-name="Department"></member-entity>
+		<member-entity entity-alias="G" entity-name="Gender"></member-entity>
+		<member-entity entity-alias="F" entity-name="Faculty"></member-entity>
+		<member-entity entity-alias="ULSG" entity-name="UserLoginSecurityGroup"></member-entity>
+		
+		<alias-all entity-alias="ST"></alias-all>
+		<alias name="departmentName" entity-alias="D"></alias>
+		<alias name="genderName" entity-alias="G"></alias>
+		<alias name="facultyName" entity-alias="F"></alias>
+		<alias name="facultyId" entity-alias="F"></alias>
+		
+		<alias name="groupId" entity-alias="ULSG"></alias>
+		
+		<view-link rel-entity-alias="D" entity-alias="ST" rel-optional="true">
+			<key-map field-name="departmentId" rel-field-name="departmentId"/>
+		</view-link>
+		<view-link rel-entity-alias="G" entity-alias="ST" rel-optional="true">
+			<key-map field-name="staffGenderId" rel-field-name="genderId"/>
+		</view-link>
+		<view-link rel-entity-alias="F" entity-alias="D" rel-optional="true">
+			<key-map field-name="facultyId" rel-field-name="facultyId"/>
+		</view-link>
+		
+		<view-link rel-entity-alias="ULSG" entity-alias="ST">
+			<key-map field-name="staffUserLoginId" rel-field-name="userLoginId"/>
+		</view-link>
+		
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-list>
+					<condition-expr field-name="thruDate" entity-alias="ST" value=""/>
+					<condition-expr field-name="thruDate" entity-alias="ULSG" value=""/>
 				</condition-list>
 			</condition-list>
 		</entity-condition>
@@ -853,6 +1176,46 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="PaperCategoryKNC" package-name="org.ofbiz.bkeuniv">
+		<field name="paperCategoryKNCId" type="id-ne"></field>
+		<field name="paperCategoryKNCName" type="very-long"></field>
+		<field name="paperCategoryKNCCode" type="id"></field>
+		<field name="statusId" type="id"></field>
+		<prim-key field="paperCategoryKNCId"/>
+	</entity>
+	
+	<entity entity-name="PaperCategoryKNCRateYear" package-name="org.ofbiz.bkeuniv">
+		<field name="paperCategoryKNCRateYearId" type="id-ne"></field>
+		<field name="paperCategoryKNCId" type="id-ne"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="rate" type="floating-point"></field>
+		<field name="rateKhoiluong" type="floating-point"></field>
+		<field name="rateNangluc" type="floating-point"></field>
+		<prim-key field="paperCategoryKNCRateYearId"/>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="PaperCategoryKNC" type="one">
+			<key-map field-name="paperCategoryKNCId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="PatentCategoryKNCRateYear" package-name="org.ofbiz.bkeuniv">
+		<field name="patentCategoryKNCRateYearId" type="id-ne"></field>
+		<field name="patentCategoryId" type="id-ne"></field>
+		<field name="academicYearId" type="id-ne"></field>
+		<field name="rate" type="floating-point"></field>
+		<field name="rateKhoiluong" type="floating-point"></field>
+		<field name="rateNangluc" type="floating-point"></field>
+		<prim-key field="patentCategoryKNCRateYearId"/>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
+		<relation rel-entity-name="PatentCategory" type="one">
+			<key-map field-name="patentCategoryId"/>
+		</relation>
+	</entity>
+
 	<entity entity-name="PaperDeclarationStatus" package-name="org.ofbiz.bkeuniv">
 		<field name="paperDeclarationStatusId" type="id-ne"></field>
 		<field name="paperDeclarationStatusName" type="very-long"></field>
@@ -863,14 +1226,18 @@
 		<field name="paperId" type="id-vlong"></field>
 		<field name="paperCode" type="id-vlong"></field>
 		<field name="paperCategoryId" type="id"></field>
+		<field name="paperCategoryKNCId" type="id"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="paperName" type="very-long"></field>
 		<field name="journalConferenceName" type="very-long"></field>
+		<field name="DOI" type="very-long"></field>
+		<field name="impactFactor" type="floating-point"></field>
 		<field name="volumn" type="value"></field>
 		<field name="year" type="numeric"></field>
 		<field name="month" type="numeric"></field>
 		<field name="sourcePath" type="very-long"></field>
 		<field name="ISSN" type="value"></field>
+		<field name="link" type="very-long"></field>
 		<field name="authors" type="very-long"></field>
 		<field name="academicYearId" type="id"></field>
 		<field name="approverStaffId" type="id-vlong"></field>
@@ -889,6 +1256,10 @@
 		<relation rel-entity-name="PaperCategory" type="one">
 			<key-map field-name="paperCategoryId"/>
 		</relation>
+		<relation rel-entity-name="PaperCategoryKNC" type="one">
+			<key-map field-name="paperCategoryKNCId"/>
+		</relation>
+		
 		<relation type="one" fk-name="APPROVER_STAFF" rel-entity-name="Staff">
             <key-map field-name="approverStaffId" rel-field-name="staffId"/>
         </relation>
@@ -898,11 +1269,32 @@
         
 	</entity>
 	
+	<entity entity-name="PaperDistance" package-name="org.ofbiz.bkeuniv">
+		<field name="id" type="id-vlong"></field>
+		<field name="paperId1" type="id-vlong"></field>
+		<field name="paperId2" type="id-vlong"></field>
+		<field name="distance" type="floating-point"></field>
+		<field name="cluster" type="numeric"></field>
+		
+		<prim-key field="id"/>
+		
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId1" rel-field-name="paperId"/>
+		</relation>
+		
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId2" rel-field-name="paperId"/>
+		</relation>
+		
+	</entity>
+	
+	
 	<entity entity-name="StaffPaperDeclarationRole" package-name="org.ofbiz.bkeuniv">
 		<field name="roleId" type="id-vlong"></field>
 		<field name="roleName" type="very-long"></field>
 		<prim-key field="roleId"/>
 	</entity>
+	
 	
 	<entity entity-name="StaffPaperDeclaration" package-name="org.ofbiz.bkeuniv">
 		<field name="staffPaperDeclarationId" type="id-vlong"></field>
@@ -910,7 +1302,9 @@
 		<field name="paperId" type="id-vlong"></field>
 		<field name="statusId" type="id-vlong"></field>
 		<field name="roleId" type="id-vlong"></field>
-		
+		<field name="sequence" type="numeric"></field>
+		<field name="correspondingAuthor" type="id-vlong"></field>
+		<field name="affiliationOutsideUniversity" type="id-vlong"></field>
 		<prim-key field="staffPaperDeclarationId"/>
 		<!-- 
 		<relation rel-entity-name="StaffPaperDeclarationRole" type="one">
@@ -926,6 +1320,157 @@
 		</relation>
 	</entity>
 	
+	<entity entity-name="EducationLevel" package-name="org.ofbiz.bkeuniv">
+		<field name="educationLevelId" type="id-ne"></field>
+		<field name="educationLevelName" type="very-long"></field>
+		<prim-key field="educationLevelId"/>
+	</entity>
+	
+	<entity entity-name="PhDSupervision" package-name="org.ofbiz.bkeuniv">
+		<field name="phDSupervisionId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="studentName" type="id-vlong"></field>
+		<field name="thesisName" type="very-long"></field>
+		<field name="coSupervion" type="id-ne"><description>Y/N</description></field>
+		<field name="graduateYear" type="numeric"></field>
+		<field name="educationLevelId" type="id-ne"><description>Thạc sỹ, tiến sỹ</description></field>
+		<field name="educationInstitution" type="very-long"><description>Cơ sở đào tạo</description></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
+		
+		<prim-key field="phDSupervisionId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="EducationLevel" type="one">
+			<key-map field-name="educationLevelId"/>
+		</relation>
+	</entity>
+	<view-entity entity-name="PhdStudentView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="STF" entity-name="Staff"></member-entity>
+		<member-entity entity-alias="EL" entity-name="EducationLevel"></member-entity>
+		<member-entity entity-alias="PHDS" entity-name="PhDSupervision"></member-entity>
+		
+		<alias-all entity-alias="PHDS"></alias-all>
+		<alias name="staffName" entity-alias="STF"></alias>
+		<alias name="educationLevelName" field="educationLevelName" entity-alias="EL"></alias>
+		
+		<view-link rel-entity-alias="STF" entity-alias="PHDS" rel-optional="true">
+			<key-map field-name="staffId" rel-field-name="staffId" />
+		</view-link>
+		<view-link rel-entity-alias="EL" entity-alias="PHDS" rel-optional="true">
+			<key-map field-name="educationLevelId" rel-field-name="educationLevelId" />
+		</view-link>
+	</view-entity>
+	
+	
+	
+	
+	
+	<entity entity-name="ThesisSubjectPhDMaster" package-name="org.ofbiz.bkeuniv">
+		<field name="thesisSubjectPhDMasterId" type="id-ne"></field>
+		<field name="thesisSubjectPhDMasterName" type="very-long"></field>
+		<field name="description" type="very-long"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="educationLevelId" type="id-ne"></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="thruDate" type="date-time"></field>
+		<prim-key field="thesisSubjectPhDMasterId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		
+	</entity>
+	
+	<entity entity-name="CVPaper" package-name="org.ofbiz.bkeuniv">
+		<field name="cvPaperId" type="id-ne"></field>
+		<field name="staffPaperDeclarationId" type="id-vlong"></field>
+		<field name="sequenceInCVPaper" type="numeric"></field>
+		<prim-key field="cvPaperId"/>
+		<relation rel-entity-name="StaffPaperDeclaration" type="one">
+			<key-map field-name="staffPaperDeclarationId"/>
+		</relation>	
+	</entity>
+	
+	<view-entity entity-name="CVPaperView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="CVP" entity-name="CVPaper"></member-entity>
+		<member-entity entity-alias="PSV" entity-name="PapersStaffView"></member-entity>
+		<alias-all entity-alias="PSV"></alias-all>
+		<alias name="cvPaperId" entity-alias="CVP" field="cvPaperId"></alias>
+		<alias name="sequenceInCVPaper" entity-alias="CVP"></alias>
+		<view-link rel-entity-alias="PSV" entity-alias="CVP">
+			<key-map field-name="staffPaperDeclarationId" rel-field-name="staffPaperDeclarationId"/>
+		</view-link>
+	</view-entity>
+	
+	
+	<entity entity-name="CVProject" package-name="org.ofbiz.bkeuniv">
+		<field name="cvProjectId" type="id-ne"></field>
+		<field name="projectProposalMemberId" type="id-vlong"></field>
+		<field name="sequenceInCVProject" type="numeric"></field>
+		<prim-key field="cvProjectId"/>
+		<relation rel-entity-name="ProjectProposalMember" type="one">
+			<key-map field-name="projectProposalMemberId"/>
+		</relation>	
+	</entity>
+	
+	<view-entity entity-name="CVProjectView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="CVP" entity-name="CVProject"></member-entity>
+		<member-entity entity-alias="PPMV" entity-name="ProjectProposalMemberView"></member-entity>
+		<alias-all entity-alias="PPMV"></alias-all>
+		<alias name="sequenceInCVProject" entity-alias="CVP"></alias>
+		<alias name="cvProjectId" entity-alias="CVP"></alias>
+		<view-link rel-entity-alias="PPMV" entity-alias="CVP">
+			<key-map field-name="projectProposalMemberId" rel-field-name="projectProposalMemberId"/>
+		</view-link>
+	</view-entity>
+	
+	
+	<entity entity-name="YesNo" package-name="org.ofbiz.bkeuniv">
+		<field name="name" type="id-vlong"></field>
+		<field name="value" type="id-vlong"></field>
+		<prim-key field="name"/>
+	</entity>
+	<entity entity-name="NoYes" package-name="org.ofbiz.bkeuniv">
+		<field name="name" type="id-vlong"></field>
+		<field name="value" type="id-vlong"></field>
+		<prim-key field="name"/>
+	</entity>
+	
+	
+	<entity entity-name="ExternalMemberPaperDeclaration" package-name="org.ofbiz.bkeuniv">
+		<field name="externalMemberPaperDeclarationId" type="id-vlong"></field>
+		<field name="staffName" type="very-long"></field>
+		<field name="affilliation" type="very-long"></field>
+		<field name="paperId" type="id-vlong"></field>
+		<field name="statusId" type="id-vlong"></field>
+		<field name="roleId" type="id-vlong"></field>
+		<field name="sequence" type="numeric"></field>
+		<field name="correspondingAuthor" type="id-vlong"></field>
+		<prim-key field="externalMemberPaperDeclarationId"/>
+		<!-- 
+		<relation rel-entity-name="StaffPaperDeclarationRole" type="one">
+			<key-map field-name="roleId"/>
+		</relation>
+		 -->
+		 
+		<relation rel-entity-name="PaperDeclaration" type="one">
+			<key-map field-name="paperId"/>
+		</relation>
+	</entity>
+	<view-entity entity-name="ExternalMemberPaperDeclarationView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="SPDR" entity-name="StaffPaperDeclarationRole"></member-entity>
+		<member-entity entity-alias="SPD" entity-name="ExternalMemberPaperDeclaration"></member-entity>
+		
+		<alias-all entity-alias="SPD"></alias-all>
+		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
+		
+		<view-link rel-entity-alias="SPDR" entity-alias="SPD" rel-optional="true">
+			<key-map rel-field-name="roleId" field-name="roleId"/>
+		</view-link>
+		
+	</view-entity>
+	
 	<view-entity entity-name="PapersStaffView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="DST" entity-name="Staff"></member-entity>
@@ -933,6 +1478,9 @@
 		<member-entity entity-alias="SPD" entity-name="StaffPaperDeclaration"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
+		<member-entity entity-alias="RPP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="CKNC" entity-name="PaperCategoryKNC"></member-entity>
+		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST" field="staffName"></alias>
 		<alias name="declareStaffName" entity-alias="DST" field="staffName"></alias>
@@ -940,7 +1488,14 @@
 		<alias name="categoryName" entity-alias="PC" field="paperCategoryName"></alias>
 		<alias name="statusStaffPaper" entity-alias="SPD" field="statusId"></alias>
 		<alias name="roleId" entity-alias="SPD" field="roleId"></alias>
+		<alias name="sequence" entity-alias="SPD" field="sequence"></alias>
+		<alias name="correspondingAuthor" entity-alias="SPD" field="correspondingAuthor"></alias>
+		<alias name="affiliationOutsideUniversity" entity-alias="SPD" field="affiliationOutsideUniversity"></alias>
 		<alias name="roleName" entity-alias="SPDR" field="roleName"></alias>
+		<alias name="staffPaperDeclarationId" entity-alias="SPD"></alias>
+		<alias name="staffId" entity-alias="SPD"></alias>
+		<alias name="researchProjectProposalName" entity-alias="RPP"></alias>
+		<alias name="paperCategoryKNCName" entity-alias="CKNC"></alias>
 		
 		
 		<view-link rel-entity-alias="SPDR" entity-alias="SPD" rel-optional="true">
@@ -959,18 +1514,52 @@
 		<view-link rel-entity-alias="PC" entity-alias="PD" rel-optional="true">
 			<key-map field-name="paperCategoryId" rel-field-name="paperCategoryId"/>
 		</view-link>
+		<view-link rel-entity-alias="CKNC" entity-alias="PD" rel-optional="true">
+			<key-map rel-field-name="paperCategoryKNCId" field-name="paperCategoryKNCId"/>
+		</view-link>
+		
+		
+		
+		<view-link rel-entity-alias="RPP" entity-alias="PD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
 	</view-entity>
 	
+	
+	<view-entity entity-name="PapersStaffViewSequenceInCV" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PSV" entity-name="PapersStaffView"></member-entity>
+		<member-entity entity-alias="CVP" entity-name="CVPaper"></member-entity>
+		
+		<alias-all entity-alias="PSV"></alias-all>
+		<alias name="sequenceInCVPaper" entity-alias="CVP" field="sequenceInCVPaper"></alias>
+		
+		<view-link rel-entity-alias="CVP" entity-alias="PSV" rel-optional="true">
+			<key-map rel-field-name="staffPaperDeclarationId" field-name="staffPaperDeclarationId"/>
+		</view-link>
+		
+	</view-entity>
+
+
 	<view-entity entity-name="PaperView" package-name="org.ofbiz.bkeuniv">
 		<member-entity entity-alias="ST" entity-name="Staff"></member-entity>
 		<member-entity entity-alias="PD" entity-name="PaperDeclaration"></member-entity>
 		<member-entity entity-alias="PC" entity-name="PaperCategory"></member-entity>
 		<member-entity entity-alias="PDS" entity-name="PaperDeclarationStatus"></member-entity>
+		<member-entity entity-alias="RP" entity-name="ResearchProjectProposal"></member-entity>
+		<member-entity entity-alias="CKNC" entity-name="PaperCategoryKNC"></member-entity>
 		
 		<alias-all entity-alias="PD"></alias-all>
 		<alias name="staffName" entity-alias="ST"></alias>
 		<alias name="paperCategoryName" entity-alias="PC"></alias>
 		<alias name="paperDeclarationStatusName" entity-alias="PDS"></alias>
+		<alias name="researchProjectProposalName" entity-alias="RP"></alias>
+		<alias name="researchProjectProposalCode" entity-alias="RP"></alias>
+		<alias name="paperCategoryKNCName" entity-alias="CKNC"></alias>
+		
+		<view-link rel-entity-alias="CKNC" entity-alias="PD"  rel-optional="true">
+			<key-map rel-field-name="paperCategoryKNCId" field-name="paperCategoryKNCId"/>
+		</view-link>
 		
 		<view-link rel-entity-alias="ST" entity-alias="PD">
 			<key-map rel-field-name="staffId" field-name="staffId"/>
@@ -981,6 +1570,10 @@
 		<view-link rel-entity-alias="PDS" entity-alias="PD" rel-optional="true">
 			<key-map rel-field-name="paperDeclarationStatusId" field-name="approveStatusId"/>
 		</view-link>
+		<view-link rel-entity-alias="RP" entity-alias="PD" rel-optional="true">
+			<key-map rel-field-name="researchProjectProposalId" field-name="researchProjectProposalId"/>
+		</view-link>
+		
 	</view-entity>
 	
 	
@@ -1125,6 +1718,15 @@
 		<field name="foreignLanguageCatalogName" type="very-long"></field>
 		<prim-key field="foreignLanguageCatalogId"/>
 	</entity>
+	<view-entity entity-name="ForeignLanguageStaffView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="FL" entity-name="ForeignLanguage"></member-entity>
+		<member-entity entity-alias="FLC" entity-name="ForeignLanguageCatalog"></member-entity>
+		<alias-all entity-alias="FL"></alias-all>
+		<alias name="foreignLanguageCatalogName" entity-alias="FLC"></alias>
+		<view-link rel-entity-alias="FLC" entity-alias="FL">
+			<key-map field-name="foreignLanguageCatalogId" rel-field-name="foreignLanguageCatalogId"/>
+		</view-link>
+	</view-entity>
 	
 	<entity entity-name="AppliedResearchProject" package-name="org.ofbiz.bkeuniv">
 		<field name="appliedResearchProjectId" type="id-ne"></field>
@@ -1154,6 +1756,7 @@
 		<field name="staffId" type="id-vlong"></field>
 		<field name="description" type="very-long"></field>
 		<field name="quantity" type="numeric"></field>
+		<field name="descriptionDetail" type="very-long"></field>
 		<prim-key field="scientificServiceExperienceId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
@@ -1172,16 +1775,43 @@
 		
 	</view-entity>
 	
+	<entity entity-name="PatentCategory" package-name="org.ofbiz.bkeuniv">
+		<field name="patentCategoryId" type="id-ne"></field>
+		<field name="patentCategoryName" type="very-long"></field>
+		<prim-key field="patentCategoryId"/>
+		
+	</entity>
+	
 	<entity entity-name="Patent" package-name="org.ofbiz.bkeuniv">
 		<field name="patentId" type="id-ne"></field>
 		<field name="patentName" type="very-long"></field>
+		<field name="patentCategoryId" type="id-ne"></field>
 		<field name="staffId" type="id-vlong"></field>
 		<field name="year" type="numeric"></field>
+		<field name="academicYearId" type="id"></field>
+		<field name="statusId" type="id"></field>
 		<prim-key field="patentId"/>
 		<relation rel-entity-name="Staff" type="one">
 			<key-map field-name="staffId"/>
 		</relation>
+		<relation rel-entity-name="PatentCategory" type="one">
+			<key-map field-name="patentCategoryId"/>
+		</relation>
+		<relation rel-entity-name="AcademicYear" type="one">
+			<key-map field-name="academicYearId"/>
+		</relation>
 	</entity>
+	
+	<view-entity entity-name="PatentView" package-name="org.ofbiz.bkeuniv">
+		<member-entity entity-alias="PT" entity-name="Patent"></member-entity>
+		<member-entity entity-alias="PC" entity-name="PatentCategory"></member-entity>
+		<alias-all entity-alias="PT"></alias-all>
+		<alias name="patentCategoryName" entity-alias="PC" field="patentCategoryName"></alias>
+		<view-link rel-entity-alias="PC" entity-alias="PT" rel-optional="true">
+			<key-map field-name="patentCategoryId"/>
+		</view-link>
+		
+	</view-entity>
 	
 	<entity entity-name="StudentSupervisionType" package-name="org.ofbiz.bkeuniv">
 		<field name="studentSupervisionTypeId" type="id-ne"></field>
@@ -1218,14 +1848,122 @@
 		
 	</entity>
 	
-	
 	<entity entity-name="BudgetInOut" package-name="org.ofbiz.bkeuniv">
 		<field name="budgetInOutId" type="id-ne"></field>
 		<field name="description" type="very-long"></field>
-		<field name="amount" type="numeric"></field>
-		<field name="date" type="date"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="date" type="date-time"></field>
+		<field name="staffId" type="id-vlong"></field>
 		<field name="inOutFlag" type="indicator"><description>"I: thu, O: chi"</description></field>
+		<field name="thruDate" type="date-time"></field>
 		<prim-key field="budgetInOutId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
 	</entity>
 	
+	<entity entity-name="AwardKHCN" package-name="org.ofbiz.bkeuniv">
+		<field name="awardKHCNId" type="id-ne"></field>
+		<field name="awardKHCNName" type="very-long"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="date" type="date-time"></field>
+		<field name="description" type="very-long"></field>
+		<field name="thruDate" type="date-time"></field>
+		<prim-key field="awardKHCNId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	
+	<entity entity-name="IntellectualProperty" package-name="org.ofbiz.bkeuniv">
+		<field name="intellectualPropertyId" type="id-ne"></field>
+		<field name="intellectualPropertyName" type="very-long"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="date" type="date-time"></field>
+		<field name="description" type="very-long"></field>
+		<field name="thruDate" type="date-time"></field>
+		<prim-key field="intellectualPropertyId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	<!-- 
+	<entity entity-name="IntellectualProperty" package-name="org.ofbiz.bkeuniv">
+		<field name="intellectualPropertyId" type="id-ne"></field>
+		<field name="intellectualPropertyName" type="very-long"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="date" type="date"></field>
+		<field name="description" type="very-long"></field>
+		<prim-key field="intellectualPropertyId"/>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+	</entity>
+	 -->
+	<entity entity-name="RunningBudgetResearchProject" package-name="org.ofbiz.bkeuniv">
+		<field name="runningBudgetResearchProjectId" type="id-ne"></field>
+		<field name="customTimePeriodId" type="id-ne"></field>
+		<field name="researchProjectProposalId" type="id-ne"></field>
+		<field name="staffId" type="id-vlong"></field>
+		<field name="accumulateTransferedBudget" type="currency-amount"></field>
+		<field name="transferedBudgetPeriodFacultyAccount" type="currency-amount"></field>
+		<field name="transferedBudgetPeriodUniversityAccount" type="currency-amount"></field>
+		<field name="statusId" type="id-vlong"></field>
+		<field name="description" type="very-long"></field>
+		<prim-key field="runningBudgetResearchProjectId"/>
+		
+		<relation rel-entity-name="ResearchProjectProposal" type="one">
+			<key-map field-name="researchProjectProposalId"/>
+		</relation>
+		<relation rel-entity-name="ProjectProposalStatus" type="one">
+			<key-map field-name="statusId"/>
+		</relation>
+		<relation rel-entity-name="Staff" type="one">
+			<key-map field-name="staffId"/>
+		</relation>
+		<relation rel-entity-name="CustomTimePeriod" type="one">
+			<key-map field-name="customTimePeriodId"/>
+		</relation>
+	</entity>
+	
+	<view-entity entity-name="AcctgTransGlAccountSums"
+            package-name="org.ofbiz.accounting.ledger"
+            title="Sum of AcctgTransEntry entity amounts grouped by glAccountId, debitCreditFlag">
+      <member-entity entity-alias="ATE" entity-name="AcctgTransEntry"/>
+      <member-entity entity-alias="ACT" entity-name="AcctgTrans"/>      
+      <alias entity-alias="ATE" name="glAccountId" group-by="true"/>     
+      <alias entity-alias="ACT" name="acctgTransTypeId" group-by="false"/>
+      <alias entity-alias="ATE" name="debitCreditFlag" group-by="true"/>
+      <alias entity-alias="ATE" name="amount" function="sum"/>
+      <alias entity-alias="ACT" name="isPosted" group-by="false"/>
+      <alias entity-alias="ACT" name="transactionDate" group-by="false"/> <!-- so we can select the sum by date -->
+      <view-link entity-alias="ATE" rel-entity-alias="ACT">
+        <key-map field-name="acctgTransId"/>
+      </view-link>
+    </view-entity>
+    
+    <entity entity-name="StaffAgencyWork" package-name="org.ofbiz.bkeuniv">
+    	<field name="staffAgencyWorkId" type="id-ne"></field>
+    	<field name="staffId" type="id-vlong"></field> 
+    	<field name="leaderName" type="name"></field>
+    	<field name="address" type="id-vlong"></field>
+    	<field name="phone" type="tel-number"></field>
+    	<field name="fax" type="tel-number"></field>
+    	<field name="startDate" type="date-time"></field>
+    	<field name="thruDate" type="date-time"></field>
+    	<prim-key field="staffAgencyWorkId"/>
+    </entity> 
+    
+    <entity entity-name="RecentResearchDirection" package-name="org.ofbiz.bkeuniv">
+    	<field name="recentResearchDirectionId" type="id-ne"></field>
+    	<field name="staffId" type="id-vlong"></field> 
+    	<field name="keywords" type="very-long"></field>
+    	<field name="startYear" type="numeric"></field>
+    	<field name="description" type="very-long"></field>
+    	<field name="startDate" type="date-time"></field>
+    	<field name="thruDate" type="date-time"></field>
+    	<prim-key field="recentResearchDirectionId"/>
+    </entity> 
+    
 </entitymodel>

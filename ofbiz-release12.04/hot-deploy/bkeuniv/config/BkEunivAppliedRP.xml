@@ -17,12 +17,12 @@
     
     <property key="BkEunivARPName">
         <value xml:lang="en">Name</value>
-        <value xml:lang="vi">Tên đề tài</value>
+        <value xml:lang="vi">Tên công trình</value>
     </property>
     
     <property key="BkEunivARPDescription">
         <value xml:lang="en">Description</value>
-        <value xml:lang="vi">Mô tả</value>
+        <value xml:lang="vi">Hình thức, quy mô, địa chỉ áp dung</value>
     </property>
     
     <property key="BkEunivARPPeriod">

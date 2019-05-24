@@ -10,6 +10,10 @@
 	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
 	<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
 
+
+	<script src="/resource/bkeuniv/js/lib/alertify.min.js"></script>
+    <link rel="stylesheet" href="/resource/bkeuniv/css/lib/alertify.min.css">
+    
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
 <style>
@@ -142,6 +146,7 @@ function updateAssignment(){
 			},
 			success: function(rs){
 				//window.location.href="/bkeuniv/control/enable-security-group-function";
+				alertify.alert('${StringUtil.wrapString(uiLabelMap.StoreSuccessfully)}');
 			}
 	})
 	

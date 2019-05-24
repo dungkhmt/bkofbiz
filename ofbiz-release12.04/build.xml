@@ -1152,6 +1152,13 @@ under the License.
         <antcall target="sonar"/>
     </target>
 
+    <target name="build-restart-debug" description="Restart in debugging mode OFBiz">
+		<antcall target="stop"></antcall>
+		<sleep seconds="1"/>
+		<antcall target="build"></antcall>
+		<antcall target="start-debug"></antcall>
+	</target>
+
     <!-- ================================================================== -->
     <!--    Ivy targets, more info at  http://ant.apache.org/ivy/  -->
     <!-- ================================================================== -->

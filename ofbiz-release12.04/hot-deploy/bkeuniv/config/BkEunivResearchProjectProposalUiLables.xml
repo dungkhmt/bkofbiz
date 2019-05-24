@@ -8,7 +8,7 @@
     
     <property key="CreateStaffId">
         <value xml:lang="en">Create staff</value>
-        <value xml:lang="vi">Nhân viên khởi tạo</value>
+        <value xml:lang="vi">Người tạo</value>
     </property>
     
     <property key="ProjectCallId">
@@ -26,9 +26,34 @@
         <value xml:lang="vi">Tên dự án của nghiên cứu</value>
     </property>
     
+    <property key="ProjectParticipationPercentage">
+        <value xml:lang="en">Project Participation Percentage</value>
+        <value xml:lang="vi">Mức độ phần trăm đóng góp vào đề tài (Xét theo kinh phí thiết bị và kinh phí quản lý)</value>
+    </property>
+
+    <property key="EquipmentBudget">
+        <value xml:lang="en">Equipment Budget</value>
+        <value xml:lang="vi">Kinh phí thiết bị (VNĐ)</value>
+    </property>
+    
+    <property key="ManagementBudget">
+        <value xml:lang="en">Management Budget</value>
+        <value xml:lang="vi">Kinh phí quản lý (VNĐ)</value>
+    </property>
+    
+    <property key="AllocatedBudgetYear">
+        <value xml:lang="en">Allocated Budget Year</value>
+        <value xml:lang="vi">Tổng kinh phí được cấp (VNĐ)</value>
+    </property>
+
+    <property key="ResearchProjectProposalCode">
+        <value xml:lang="en">Research Project Proposal Code</value>
+        <value xml:lang="vi">Mã đề tài</value>
+    </property>
+    
     <property key="TotalBudget">
-        <value xml:lang="en">Total Budget</value>
-        <value xml:lang="vi">Tổng ngân sách</value>
+        <value xml:lang="en">Total Budget (VNĐ)</value>
+        <value xml:lang="vi">Tổng ngân sách (VNĐ)</value>
     </property>
     
     <property key="ApprovedByStaffId">
@@ -117,6 +142,10 @@
      <property key="TitleDeleteHour">
         <value xml:lang="en">Delete project working hour declaration</value>
         <value xml:lang="vi">Xóa thời gian thực hiện đề tài</value>
+    </property>
+    <property key="BkEunivWorkingHours">
+        <value xml:lang="en">Working hours</value>
+        <value xml:lang="vi">Số giờ làm việc</value>
     </property>
     
 </resource>

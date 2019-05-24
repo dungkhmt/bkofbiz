@@ -94,6 +94,7 @@ public class RequestHandler {
     }
 
     public ConfigXMLReader.ControllerConfig getControllerConfig() {
+    	//Debug.logInfo("[PQD] this.controllerConfigURL = " + this.controllerConfigURL, module + "::getControllerConfig");
         return ConfigXMLReader.getControllerConfig(this.controllerConfigURL);
     }
 
@@ -109,10 +110,13 @@ public class RequestHandler {
 
         HttpSession session = request.getSession();
 
+        Debug.logInfo("[PQD], start create ConfigXMLReader.ControllerConfig controllerConfig", module + "::doRequest");
         // get the controllerConfig once for this method so we don't have to get it over and over inside the method
         ConfigXMLReader.ControllerConfig controllerConfig = this.getControllerConfig();
         Map<String, ConfigXMLReader.RequestMap> requestMapMap = controllerConfig.getRequestMapMap();
 
+        Debug.logInfo("[PQD], finished create ConfigXMLReader.ControllerConfig controllerConfig", module + "::doRequest");
+        
         // workaround if we are in the root webapp
         String cname = UtilHttp.getApplicationName(request);
 

@@ -371,14 +371,21 @@ public class UtilCache<K, V> implements Serializable, EvictionListener<Object, C
     }
 
     V putInternal(K key, V value, long expireTimeNanos) {
+    	//Debug.logInfo("[PQD] putInternal(" + key + "), expireTimeNanos = " + expireTimeNanos, module);
         Object nulledKey = fromKey(key);
-        CacheLine<V> oldCacheLine = memoryTable.put(nulledKey, createCacheLine(key, value, expireTimeNanos));
+        String s_nulledKey = null;
+        if(nulledKey != null)
+        	s_nulledKey = nulledKey.toString();
+        //CacheLine<V> oldCacheLine = memoryTable.put(nulledKey, createCacheLine(key, value, expireTimeNanos));
+        CacheLine<V> oldCacheLine = memoryTable.put(s_nulledKey, createCacheLine(key, value, expireTimeNanos));
         V oldValue = oldCacheLine == null ? null : cancel(oldCacheLine);
         if (fileTable != null) {
             try {
                 synchronized (this) {
-                    if (oldValue == null) oldValue = fileTable.get(nulledKey);
-                    fileTable.put(nulledKey, value);
+                    //if (oldValue == null) oldValue = fileTable.get(nulledKey);
+                	if (oldValue == null) oldValue = fileTable.get(s_nulledKey);
+                    //fileTable.put(nulledKey, value);
+                	fileTable.put(s_nulledKey, value);
                     jdbmMgr.commit();
                 }
             } catch (IOException e) {
@@ -437,8 +444,12 @@ public class UtilCache<K, V> implements Serializable, EvictionListener<Object, C
         boolean countGet = true;
         Object nulledKey = fromKey(key);
         CacheLine<V> line = memoryTable.get(nulledKey);
+        //String s_key = (String)key;
+        //if(key.equals("file:/D:/projects/bkeuniv/bkofbiz/ofbiz-release12.04/framework/common/webcommon/WEB-INF/common-controller.xml"))
+        
         if (line == null) {
-            if (fileTable != null) {
+        	//Debug.logInfo("[PQD] get(key = " + key + "), line = " + line, module);
+        	if (fileTable != null) {
                 V value;
                 try {
                     synchronized (this) {

@@ -1,14 +1,23 @@
 package org.ofbiz.bkeuniv.paperdeclaration;
 
+//import info.debatty.java.stringsimilarity.Damerau;
+//import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,20 +29,25 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.bkeuniv.config.ConfigParams;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.DelegatorFactory;
+import org.ofbiz.entity.GenericDelegator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.entity.GenericValue;
 import org.ofbiz.entity.condition.EntityCondition;
+import org.ofbiz.entity.condition.EntityFunction;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.util.EntityFindOptions;
 
 //import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.poi.hssf.dev.ReSave;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -50,14 +64,17 @@ import javolution.util.FastMap;
 import javolution.util.FastSet;
 
 public class PaperDeclarationService {
-
+	private static final Charset UTF_8 = Charset.forName("UTF-8");
+	private static final Charset ISO = Charset.forName("ISO-8859-1");
+	
 	public static String module = PaperDeclarationService.class.getName();
-	//public static String dataFolder = "." + File.separator + "euniv-deploy";
+
+	// public static String dataFolder = "." + File.separator + "euniv-deploy";
 
 	public static String establishFullFilename(String staffId, String name) {
-		
-		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
-				+ "papers";
+
+		String path = ConfigParams.dataFolder + File.separator + staffId
+				+ File.separator + "papers";
 		System.out.println("\n\n\t****************************************\n\t"
 				+ path + "+\n\t");
 		String fullname = path + File.separator + name;
@@ -77,6 +94,36 @@ public class PaperDeclarationService {
 		return fullname;
 	}
 
+	
+	@SuppressWarnings({ "unchecked" })
+	public static void updateCVPapers(HttpServletRequest request,
+			HttpServletResponse response) {
+		String json = (String)request.getParameter("json");
+		System.out.println(module + "::updateCVPapers, json = " + json);
+		
+		GenericDelegator delegator = (GenericDelegator) DelegatorFactory.getDelegator("default");
+		
+		try{
+			JSONArray L = JSONArray.fromObject(json);
+			for(int i = 0; i< L.size(); i++){
+				JSONObject o = (JSONObject)L.get(i);
+				String staffPaperDeclarationId = o.getString("staffPaperDeclarationId");
+				String seq = o.getString("seq");
+				if(seq == null || seq.equals("")){
+					PaperDeclarationUtil.removePaperCV(delegator, staffPaperDeclarationId);
+					Debug.log(module + "::updateCVPapers, remove " + staffPaperDeclarationId + "-----" + seq);
+				}else{
+					PaperDeclarationUtil.addUpdatePaperCV(delegator, staffPaperDeclarationId, Long.valueOf(seq));
+					Debug.log(module + "::updateCVPapers, addUpdate " + staffPaperDeclarationId + "-----" + seq);
+				}
+				
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	
 	@SuppressWarnings({ "unchecked" })
 	public static void exportExcelKV01(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -84,6 +131,7 @@ public class PaperDeclarationService {
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String year = (String) request.getParameter("reportyear-kv01");
 		String facultyId = (String) request.getParameter("facultyId-kv01");
+
 		Debug.log(module + "::exportExcelKV01, academic year = " + year);
 
 		String filename = "KV01";
@@ -114,20 +162,111 @@ public class PaperDeclarationService {
 	}
 
 	@SuppressWarnings({ "unchecked" })
+	public static void exportExcel01CN02CN(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String staffId = (String) request.getParameter("staff-01cn-02cn");
+		String academicYearId = (String) request
+				.getParameter("reportyear-bm-01-02-03");
+		// String facultyId = (String) request.getParameter("facultyId-kv01");
+		Debug.log(module + "::exportExcel01CN02CN, academic year = "
+				+ academicYearId + ", userLoginId = " + staffId);
+
+		String filename = staffId + "-01CN-02CN";
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelForm01CN02CN(
+					delegator, academicYearId, staffId);
+
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
 	public static void exportExcelKV04(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String year = (String) request.getParameter("reportyear-kv04");
 		String facultyId = (String) request.getParameter("facultyId-kv04");
-		Debug.log(module + "::exportExcelKV04, academic year = " + year);
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String userLoginId = userLogin.getString("userLoginId");
+		Debug.log(module + "::exportExcelKV04, academic year = " + year
+				+ ", userLoginId = " + userLoginId);
 
-		String filename = "KV04";
+		String filename = "KV04-" + facultyId + "-" + year;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
-			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKV04(
-					delegator, year, facultyId);
+			 HSSFWorkbook wb =
+			 PaperDeclarationUtil.createExcelFormKV04(delegator, year,
+			 facultyId, userLoginId);
+			//HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(
+			//		delegator, year, facultyId, userLoginId);
+
+			wb.write(baos);
+			byte[] bytes = baos.toByteArray();
+			response.setHeader("content-disposition", "attachment;filename="
+					+ filename + ".xls");
+			response.setContentType("application/vnd.xls");
+			response.getOutputStream().write(bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public static void exportExcelKNC(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Delegator delegator = (Delegator) request.getAttribute("delegator");
+		String year = (String) request.getParameter("reportyear-kv04");
+		String facultyId = (String) request.getParameter("facultyId-kv04");
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String userLoginId = userLogin.getString("userLoginId");
+		Debug.log(module + "::exportExcelKNC, academic year = " + year
+				+ ", userLoginId = " + userLoginId);
+
+		String filename = "KNC-" + facultyId + "-" + year;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+
+			// HSSFWorkbook wb =
+			// PaperDeclarationUtil.createExcelFormKV04(delegator, year,
+			// facultyId);
+			HSSFWorkbook wb = PaperDeclarationUtil.createExcelFormKNC(
+					delegator, year, facultyId, userLoginId);
 
 			wb.write(baos);
 			byte[] bytes = baos.toByteArray();
@@ -198,7 +337,13 @@ public class PaperDeclarationService {
 		Debug.log(module + "::exportExcelBM010203, academic year = " + year
 				+ ", faculty = " + facultyId + ", department = " + departmentId);
 
-		String filename = "BM010203";
+		GenericValue dept = PaperDeclarationUtil.getDepartment(delegator,
+				departmentId);
+		String deptName = "";
+		if (dept != null && dept.getString("departmentName") != null)
+			deptName = dept.getString("departmentName");
+
+		String filename = "BM010203-" + deptName;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 
@@ -370,18 +515,20 @@ public class PaperDeclarationService {
 		String paperId = request.getParameter("paperId");
 		Debug.log(module + "::getStaffsOfPaper, paperId = " + paperId);
 		try {
-			
+
 			Map<String, String> mID2Name = FastMap.newInstance();
 			Map<String, String> mRoleID2Name = FastMap.newInstance();
-			
-			List<GenericValue> roles = delegator.findList("StaffPaperDeclarationRole",
-					null, null, null, null, false);
-			for(GenericValue r: roles){
-				mRoleID2Name.put(r.getString("roleId"), r.getString("roleName"));
+
+			List<GenericValue> roles = delegator.findList(
+					"StaffPaperDeclarationRole", null, null, null, null, false);
+			for (GenericValue r : roles) {
+				mRoleID2Name
+						.put(r.getString("roleId"), r.getString("roleName"));
 			}
-			
-			List<GenericValue> faculties = delegator.findList("Faculty",null,null,null,null,false);
-			
+
+			List<GenericValue> faculties = delegator.findList("Faculty", null,
+					null, null, null, false);
+
 			List<GenericValue> staffs = delegator.findList("Staff", null, null,
 					null, null, false);
 
@@ -423,9 +570,10 @@ public class PaperDeclarationService {
 					String id = (String) st.get("staffId");
 					String name = mID2Name.get(id);
 					String role = "";
-					if(st.getString("roleId") != null)
+					if (st.getString("roleId") != null)
 						role = mRoleID2Name.get(st.getString("roleId"));
-					rs += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"role\":\"" + role + "\"}";
+					rs += "{\"id\":\"" + id + "\",\"name\":\"" + name
+							+ "\",\"role\":\"" + role + "\"}";
 
 					if (i < staffsOfPaper.size() - 1)
 						rs += ",";
@@ -434,19 +582,20 @@ public class PaperDeclarationService {
 				}
 			}
 			rs += "]";
-			
+
 			// faculties
 			rs += ",\"faculties\":[";
-			for(int i = 0; i < faculties.size(); i++){
+			for (int i = 0; i < faculties.size(); i++) {
 				GenericValue f = faculties.get(i);
-				rs += "{\"id\":\"" + f.getString("facultyId") + "\",\"name\":\"" + f.getString("facultyName") + "\"}";
+				rs += "{\"id\":\"" + f.getString("facultyId")
+						+ "\",\"name\":\"" + f.getString("facultyName") + "\"}";
 
 				if (i < faculties.size() - 1)
 					rs += ",";
-				
+
 			}
 			rs += "]";
-			
+
 			rs += "}";
 
 			response.setContentType("application/json");
@@ -619,8 +768,11 @@ public class PaperDeclarationService {
 					+ ", staffId = " + staffId);
 			String ext = getExtension(file_name);
 			java.util.Date currentDate = new java.util.Date();
+			// SimpleDateFormat dateformatyyyyMMdd = new
+			// SimpleDateFormat("HHmmssddMMyyyy");
 			SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat(
-					"HHmmssddMMyyyy");
+					"yyyyMMddHHmmssSSS");
+
 			String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
 
 			String filenameDB = sCurrentDate + "." + ext;
@@ -735,6 +887,377 @@ public class PaperDeclarationService {
 	 * ); return ("AttachementSuccess"); // Uploading the file content - End }
 	 */
 
+	public static Map<String, Object> getCVPapers(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffId = (String) context.get("staffId");
+		Delegator delegator = ctx.getDelegator();
+		if (staffId == null) {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			staffId = userLogin.getString("userLoginId");
+		}
+		Debug.log(module + "::getCVPapers, staffId = " + staffId);
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, staffId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, "ENABLED"));
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, "ENABLED"));
+
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("sequenceInCVPaper");
+			
+			List<GenericValue> lst = delegator.findList("CVPaperView",
+					EntityCondition.makeCondition(conds), null, orderBy, null,
+					false);
+			
+			retSucc.put("papers", lst);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> addCVPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffId = (String) context.get("staffId");
+		List<String> lst_staffPaperDeclarationId = (List<String>) context
+				.get("staffPaperDeclarationId[]");
+		String staffPaperDeclarationId = null;
+		if (lst_staffPaperDeclarationId != null
+				&& lst_staffPaperDeclarationId.size() > 0)
+			staffPaperDeclarationId = lst_staffPaperDeclarationId.get(0);
+		String s_seq = (String) context.get("sequenceInCVPaper");
+
+		Delegator delegator = ctx.getDelegator();
+		if (staffId == null) {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			staffId = userLogin.getString("userLoginId");
+		}
+		Debug.log(module + "::addCVPaper, staffId = " + staffId
+				+ ", staffPaperDeclarationId = " + staffPaperDeclarationId);
+
+		try {
+
+			GenericValue gv = delegator.makeValue("CVPaper");
+			String cvPaperId = delegator.getNextSeqId("CVPaper");
+			gv.put("cvPaperId", cvPaperId);
+			gv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+			long sequenceInCVPaper = 0;
+			if (s_seq != null) {
+				sequenceInCVPaper = Long.valueOf(s_seq);
+				gv.put("sequenceInCVPaper", sequenceInCVPaper);
+			}
+			delegator.create(gv);
+
+			Map<String, Object> paper = FastMap.newInstance();
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("staffPaperDeclarationId",
+					EntityOperator.EQUALS, staffPaperDeclarationId));
+			List<GenericValue> lst = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			String paperName = null;
+			if (lst != null && lst.size() > 0) {
+				GenericValue p = lst.get(0);
+				paperName = p.getString("paperName");
+				paper.put("paperName", paperName);
+			}
+
+			paper.put("staffPaperDeclarationId", staffPaperDeclarationId);
+			paper.put("sequenceInCVPaper", sequenceInCVPaper);
+
+			retSucc.put("papers", paper);
+			retSucc.put("message", "Them moi thanh cong");
+
+			Debug.log(module
+					+ "::addCVPaper, create OK, return paper with paperName = "
+					+ paper.get("paperName") + ", staffPaperDeclarationId = "
+					+ paper.get("staffPaperDeclarationId"));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> updateCVPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffId = null;// (String)context.get("staffId");
+		String cvPaperId = (String) context.get("cvPaperId");
+		List<String> lst_staffPaperDeclarationId = (List<String>) context
+				.get("staffPaperDeclarationId[]");
+		String staffPaperDeclarationId = null;
+		if (lst_staffPaperDeclarationId != null
+				&& lst_staffPaperDeclarationId.size() > 0)
+			staffPaperDeclarationId = lst_staffPaperDeclarationId.get(0);
+		String s_seq = (String) context.get("sequenceInCVPaper");
+
+		Delegator delegator = ctx.getDelegator();
+		if (staffId == null) {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			staffId = userLogin.getString("userLoginId");
+		}
+		Debug.log(module + "::updateCVPaper, staffId = " + staffId
+				+ ", cvPaperId = " + cvPaperId);
+
+		try {
+			Map<String, Object> paper = FastMap.newInstance();
+
+			GenericValue gv = delegator.findOne("CVPaper",
+					UtilMisc.toMap("cvPaperId", cvPaperId), false);
+			if (gv != null) {
+				gv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				long sequenceInCVPaper = 0;
+				if (s_seq != null) {
+					sequenceInCVPaper = Long.valueOf(s_seq);
+					gv.put("sequenceInCVPaper", sequenceInCVPaper);
+				}
+				delegator.store(gv);
+
+				List<EntityCondition> conds = FastList.newInstance();
+				conds.add(EntityCondition.makeCondition(
+						"staffPaperDeclarationId", EntityOperator.EQUALS,
+						staffPaperDeclarationId));
+				List<GenericValue> lst = delegator.findList("PapersStaffView",
+						EntityCondition.makeCondition(conds), null, null, null,
+						false);
+				String paperName = null;
+				if (lst != null && lst.size() > 0) {
+					GenericValue p = lst.get(0);
+					paperName = p.getString("paperName");
+					paper.put("paperName", paperName);
+				}
+
+				paper.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				paper.put("sequenceInCVPaper", sequenceInCVPaper);
+			}
+
+			retSucc.put("papers", paper);
+			retSucc.put("message", "Cap nhat thanh cong");
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	public static Map<String, Object> deleteCVPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffId = null;// (String)context.get("staffId");
+		String cvPaperId = (String) context.get("cvPaperId");
+		
+
+		Delegator delegator = ctx.getDelegator();
+		if (staffId == null) {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			staffId = userLogin.getString("userLoginId");
+		}
+		Debug.log(module + "::updateCVPaper, staffId = " + staffId
+				+ ", cvPaperId = " + cvPaperId);
+
+		try {
+			
+			GenericValue gv = delegator.findOne("CVPaper",
+					UtilMisc.toMap("cvPaperId", cvPaperId), false);
+			if (gv != null) {
+				delegator.removeValue(gv);
+			}
+
+			retSucc.put("message", "Xoa thanh cong");
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static Map<String, Object> JQGetPapersOfStaff(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+
+			if (parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String) parameters.get("q")[0].trim();
+				System.out.println("1. debug ::::::::::" + q);
+				String[] searchKeys = { "staffName", "researchProjectProposalName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(
+							EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE,
+							EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch,
+						EntityOperator.OR));
+			}
+			if (filter != null) {
+
+				listAllConditions.add(filter);
+			}
+			
+			
+			
+
+			listAllConditions.add(EntityCondition.makeCondition("authorStaffId",
+					EntityOperator.EQUALS, userLoginId));
+			listAllConditions.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			listAllConditions.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			System.out.println("4. debug ::::::::::" + userLoginId);
+			
+			papers = delegator.findList("PapersStaffView", condition, null, sort,
+					opts, false);
+
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for (GenericValue p : papers) {
+				if (p.get("approveStatusId") == null
+						|| !p.getString("approveStatusId").equals(
+								PaperDeclarationUtil.STATUS_CANCELLED)) {
+					ret_papers.add(p);
+				}
+			}
+
+			for (GenericValue gv : ret_papers) {
+				Debug.log(module + "::getPapersOfStaff, paper "
+						+ gv.get("paperName"));
+			}
+			Debug.log(module + "::getPapersOfStaff, papers.sz = "
+					+ ret_papers.size());
+			
+			
+			result.put("listIterator", ret_papers);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+
+	public static Map<String, Object> JQGetPapersOfStaffCV(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+
+			if (parameters.containsKey("q")) {
+				//System.out.println("debug :::::::::: not null");
+				String q = (String) parameters.get("q")[0].trim();
+				//System.out.println("1. debug ::::::::::" + q);
+				String[] searchKeys = { "staffName", "researchProjectProposalName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(
+							EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE,
+							EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch,
+						EntityOperator.OR));
+			}
+			if (filter != null) {
+
+				listAllConditions.add(filter);
+			}
+			
+			
+			
+
+			listAllConditions.add(EntityCondition.makeCondition("authorStaffId",
+					EntityOperator.EQUALS, userLoginId));
+			listAllConditions.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			listAllConditions.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			
+			
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			//System.out.println("4. debug ::::::::::" + userLoginId);
+			
+			papers = delegator.findList("PapersStaffViewSequenceInCV", condition, null, sort,
+					opts, false);
+
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for (GenericValue p : papers) {
+				if (p.get("approveStatusId") == null
+						|| !p.getString("approveStatusId").equals(
+								PaperDeclarationUtil.STATUS_CANCELLED)) {
+					ret_papers.add(p);
+				}
+			}
+
+			//for (GenericValue gv : ret_papers) {
+			//	Debug.log(module + "::getPapersOfStaff, paper "
+			//			+ gv.get("paperName"));
+			//}
+			//Debug.log(module + "::getPapersOfStaff, papers.sz = "
+			//		+ ret_papers.size());
+			
+			
+			result.put("listIterator", ret_papers);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			e.printStackTrace();
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+
 	public static Map<String, Object> getPapersOfStaff(DispatchContext ctx,
 			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -757,23 +1280,130 @@ public class PaperDeclarationService {
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
-			// conds.add(EntityCondition.makeCondition("statusStaffPaper",
-			// EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
+			// conds.add(EntityCondition.makeCondition("approveStatusId",
+			// EntityOperator.NOT_EQUAL,
+			// PaperDeclarationUtil.STATUS_CANCELLED));
+
+			//delegator.findList(entityName, entityCondition, fieldsToSelect, orderBy, findOptions, useCache)
+			
+			List<String> orderBy = FastList.newInstance();
+			orderBy.add("year DESC");
+			orderBy.add("paperId DESC");
+			
 			List<GenericValue> papers = delegator.findList("PapersStaffView",
-					EntityCondition.makeCondition(conds), null, null, null,
+					EntityCondition.makeCondition(conds), null, orderBy, null,
 					false);
-			for (GenericValue gv : papers) {
+
+			List<GenericValue> ret_papers = FastList.newInstance();
+			for (GenericValue p : papers) {
+				if (p.get("approveStatusId") == null
+						|| !p.getString("approveStatusId").equals(
+								PaperDeclarationUtil.STATUS_CANCELLED)) {
+					ret_papers.add(p);
+				}
+			}
+
+			for (GenericValue gv : ret_papers) {
 				Debug.log(module + "::getPapersOfStaff, paper "
 						+ gv.get("paperName"));
 			}
 			Debug.log(module + "::getPapersOfStaff, papers.sz = "
-					+ papers.size());
-			retSucc.put("papers", papers);
+					+ ret_papers.size());
+			retSucc.put("papers", ret_papers);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> getAPaperDeclaration(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		String paperId = (String) context.get("paperId");
+		
+		//String userLoginId = (String)context.get("userLoginId");
+		
+		Map<String, Object> userLogin = (Map<String, Object>)context.get("userLogin");
+		//String userLoginId = (String)context.get("userId");//(String)userLogin.get("userLoginId");
+		String userLoginId = (String)userLogin.get("userLoginId");
+		
+		List<String> groups = BKEunivUtils.getListSecurityGroupsOfUserLogin(
+				delegator, userLoginId);
+		boolean userLoginAdmin = false;
+		for (String g : groups) {
+			if (g.equals("HUST_KHCN_ADMIN") || g.equals("SCHOOL_KHCN_ADMIN")
+					|| g.equals("SUPER_ADMIN"))
+				userLoginAdmin = true;
+		}
+		Debug.log(module + "::getAPaperDeclaration, userLoginId = " + userLoginId + ", userLoginAdmin = " + userLoginAdmin);
+		
+		try {
+			GenericValue p = delegator.findOne("PaperView",
+					UtilMisc.toMap("paperId", paperId), false);
+			
+			String editable = "N";
+			if(userLoginAdmin){
+				editable = "Y";
+			}else{
+				if(p != null){
+					if(p.get("approveStatusId") != null){
+						String status = (String)p.get("approveStatusId");
+						String staffId = (String)p.get("staffId");
+						if(status.equals("CREATED") && staffId.equals(userLoginId)){
+							editable = "Y";
+						}
+					}
+				}
+			}
+			retSucc.put("paper", p);
+			retSucc.put("editable", editable);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> getMembersPaperDeclaration(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		Delegator delegator = ctx.getDelegator();
+		String paperId = (String) context.get("paperId");
+		try {
+			List<String> _sort = new ArrayList<String>();
+			;
+			_sort.add("sequence");
+
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
+
+			List<GenericValue> staffPaperDeclaration = delegator.findList(
+					"StaffPaperDeclarationView",
+					EntityCondition.makeCondition(conds, EntityOperator.AND),
+					null, _sort, null, false);
+			List<GenericValue> externalMemberPaperDeclaration = delegator
+					.findList("ExternalMemberPaperDeclaration", EntityCondition
+							.makeCondition(conds, EntityOperator.AND), null,
+							_sort, null, false);
+			for(GenericValue g: staffPaperDeclaration){
+				Debug.log(module + "::getMembersPaperDeclaration, staff = " + g.getString("staffName") + ", affiliation = " + g.getString("affiliationOutsideUniversity"));
+			}
+			retSucc.put("staffPaperDeclaration", staffPaperDeclaration);
+			retSucc.put("externalMemberPaperDeclaration",
+					externalMemberPaperDeclaration);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
 		}
 		return retSucc;
 	}
@@ -789,15 +1419,17 @@ public class PaperDeclarationService {
 		// (String)context.get("userId");//(String)userLogin.get("userLoginId");
 		String staffId = (String) userLogin.get("userLoginId");
 
-		String facultyId = (String)context.get("facultyId");
-		String academicYearId = (String)context.get("academicYearId");
-		String paperCategoryId = (String)context.get("paperCategoryId");
-		String paperDeclarationStatusId = (String)context.get("paperDeclarationStatusId");
-		
-		Debug.log(module + "::getPaperDeclarations, authorStaffId = " + staffId + 
-				", facultyId = " + facultyId + ", academicYearId = " + academicYearId + ", paperCategoryId = "
-				+ paperCategoryId + ", paperDeclarationStatusId = " + paperDeclarationStatusId);
-		
+		String facultyId = (String) context.get("facultyId");
+		String academicYearId = (String) context.get("academicYearId");
+		String paperCategoryId = (String) context.get("paperCategoryId");
+		String paperDeclarationStatusId = (String) context
+				.get("paperDeclarationStatusId");
+
+		Debug.log(module + "::getPaperDeclarations, authorStaffId = " + staffId
+				+ ", facultyId = " + facultyId + ", academicYearId = "
+				+ academicYearId + ", paperCategoryId = " + paperCategoryId
+				+ ", paperDeclarationStatusId = " + paperDeclarationStatusId);
+
 		Delegator delegator = ctx.getDelegator();
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
@@ -806,56 +1438,61 @@ public class PaperDeclarationService {
 			conds.add(EntityCondition.makeCondition("statusId",
 					EntityOperator.EQUALS, PaperDeclarationUtil.STATUS_ENABLED));
 
-			if(academicYearId != null && !academicYearId.equals("all"))
+			if (academicYearId != null && !academicYearId.equals("all"))
 				conds.add(EntityCondition.makeCondition("academicYearId",
 						EntityOperator.EQUALS, academicYearId));
 
-			if(paperCategoryId != null && !paperCategoryId.equals("all"))
+			if (paperCategoryId != null && !paperCategoryId.equals("all"))
 				conds.add(EntityCondition.makeCondition("paperCategoryId",
 						EntityOperator.EQUALS, paperCategoryId));
 
-			if(paperDeclarationStatusId != null && !paperDeclarationStatusId.equals("all"))
+			if (paperDeclarationStatusId != null
+					&& !paperDeclarationStatusId.equals("all"))
 				conds.add(EntityCondition.makeCondition("approveStatusId",
 						EntityOperator.EQUALS, paperDeclarationStatusId));
-			
-			
-			
+
 			// List<GenericValue> papers = delegator.findList("PapersStaffView",
 			List<GenericValue> papers = delegator.findList("PaperView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			
+
 			HashSet<String> setStaffId = new HashSet<String>();
-			if(facultyId != null && !facultyId.equals("all")){
-				List<GenericValue> staffsOfFaculty = PaperDeclarationUtil.getListStaffsOfFaculty(delegator, facultyId);
-				for(GenericValue st: staffsOfFaculty)
-					setStaffId.add((String)st.getString("staffId"));
+			if (facultyId != null && !facultyId.equals("all")) {
+				List<GenericValue> staffsOfFaculty = PaperDeclarationUtil
+						.getListStaffsOfFaculty(delegator, facultyId);
+				for (GenericValue st : staffsOfFaculty)
+					setStaffId.add((String) st.getString("staffId"));
 			}
-			Debug.log(module + "::getPaperDeclarations, staff of selected faculty = " + setStaffId.size());	
+			Debug.log(module
+					+ "::getPaperDeclarations, staff of selected faculty = "
+					+ setStaffId.size());
 			List<GenericValue> retList = FastList.newInstance();
 			for (GenericValue gv : papers) {
 				Debug.log(module + "::getPaperDeclarations, paper "
 						+ gv.get("paperName"));
-				
+
 				boolean ok = true;
-				if(facultyId != null && !facultyId.equals("all")){
-					String paperId = (String)gv.getString("paperId");
-					List<GenericValue> ST = PaperDeclarationUtil.getStaffsOfPaper(paperId, delegator);
+				if (facultyId != null && !facultyId.equals("all")) {
+					String paperId = (String) gv.getString("paperId");
+					List<GenericValue> ST = PaperDeclarationUtil
+							.getStaffsOfPaper(paperId, delegator);
 					ok = false;
-					for(GenericValue st: ST){
-						String stId = (String)st.getString("staffId");
-						if(setStaffId.contains(stId)){
-							ok = true; break;
+					for (GenericValue st : ST) {
+						String stId = (String) st.getString("staffId");
+						if (setStaffId.contains(stId)) {
+							ok = true;
+							break;
 						}
 					}
-					
+
 				}
-				if(ok) retList.add(gv);
-				
+				if (ok)
+					retList.add(gv);
+
 			}
 			Debug.log(module + "::getPaperDeclarations, papers.sz = "
 					+ papers.size() + ", retList = " + retList.size());
-			//retSucc.put("papers", papers);
+			// retSucc.put("papers", papers);
 			retSucc.put("papers", retList);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -863,6 +1500,421 @@ public class PaperDeclarationService {
 		}
 		return retSucc;
 	}
+
+	public static Map<String, Object> JQGetPaperDeclarations(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		JSONObject filterJS = null;
+		String facultyId = null;
+		if (parameters.get("facultyId") != null) {
+			facultyId = parameters.get("facultyId")[0];
+		}
+
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+
+			if (parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String) parameters.get("q")[0].trim();
+				System.out.println("1. debug ::::::::::" + q);
+				String[] searchKeys = { "staffName", "paperCategoryName",
+						"researchProjectProposalName",
+						"paperDeclarationStatusName",
+						"researchProjectProposalCode", "paperName",
+						"journalConferenceName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(
+							EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE,
+							EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch,
+						EntityOperator.OR));
+			}
+			if (filter != null) {
+
+				listAllConditions.add(filter);
+			}
+
+			listAllConditions
+					.add(EntityCondition.makeCondition("statusId",
+							EntityOperator.EQUALS,
+							PaperDeclarationUtil.STATUS_ENABLED));
+
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			System.out.println("4. debug ::::::::::" + userLoginId);
+			papers = delegator.findList("PaperView", condition, null, sort,
+					opts, false);
+
+			HashSet<String> setStaffId = new HashSet<String>();
+			if (facultyId != null) {
+				List<GenericValue> staffsOfFaculty = PaperDeclarationUtil
+						.getListStaffsOfFaculty(delegator, facultyId);
+				for (GenericValue st : staffsOfFaculty)
+					setStaffId.add((String) st.getString("staffId"));
+			}
+			Debug.log(module
+					+ "::getPaperDeclarations, staff of selected faculty = "
+					+ setStaffId.size());
+			List<GenericValue> retList = FastList.newInstance();
+			for (GenericValue gv : papers) {
+				Debug.log(module + "::getPaperDeclarations, paper "
+						+ gv.get("paperName"));
+
+				boolean ok = true;
+				if (facultyId != null) {
+					String paperId = (String) gv.getString("paperId");
+					List<GenericValue> ST = PaperDeclarationUtil
+							.getStaffsOfPaper(paperId, delegator);
+					ok = false;
+					for (GenericValue st : ST) {
+						String stId = (String) st.getString("staffId");
+						if (setStaffId.contains(stId)) {
+							ok = true;
+							break;
+						}
+					}
+
+				}
+				if (ok)
+					retList.add(gv);
+
+			}
+			Debug.log(module + "::getPaperDeclarations, papers.sz = "
+					+ papers.size() + ", retList = " + retList.size());
+
+			result.put("listIterator", retList);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+	
+	public static <E> Map<String, Object> runJobPaperDeclarationsDuplicate (
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		
+
+		Map<String, Object> result = FastMap.newInstance();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			
+
+			listAllConditions
+					.add(EntityCondition.makeCondition("statusId",
+							EntityOperator.EQUALS,
+							PaperDeclarationUtil.STATUS_ENABLED));
+
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			System.out.println("4. debug ::::::::::" + userLoginId);
+			papers = delegator.findList("PaperView", condition, null, Arrays.asList("paperId"),
+					null, false);
+
+			HashSet<String> setStaffId = new HashSet<String>();
+			
+			List<Map<String, Object>> distances = new ArrayList<Map<String, Object>>();
+			
+//			Damerau d = new Damerau();
+//			double distance = BKEunivUtils.similarString("A Java library for Constraint-Based Local Search: Application to the master thesis defense timetabling problem",
+//					"Exact methods for solving the elementary shortest and longest path problems");
+//			
+			double d;
+			for(int i = 0; i < papers.size() - 1; ++i) {
+				for(int j = i+1; j < papers.size(); ++j) {
+					Map<String, Object> p = new HashMap<String, Object>();
+					d = BKEunivUtils.similarString(papers.get(i).getString("paperName"), papers.get(j).getString("paperName")); 
+					if(d > 0.8D) {
+						//p.put("edge", new String[]{papers.get(i).getString("paperId"), papers.get(j).getString("paperId")});
+						p.put("paperId1", papers.get(i).getString("paperId"));
+						p.put("paperId2", papers.get(j).getString("paperId"));
+						p.put("distance", d);
+						//System.out.println(d + ": " + papers.get(i).getString("paperId") +", " + papers.get(j).getString("paperId"));
+						distances.add(p);
+					}
+					
+//					p.put("edge", new String[]{papers.get(i).getString("paperId"), papers.get(j).getString("paperId")});
+//					p.put("distance", d.distance(papers.get(i).getString("paperName"), papers.get(j).getString("paperName")));
+//					distances.add(p);
+				}
+			}
+			
+			distances = BKEunivUtils.clusterChord(distances);
+			
+			delegator.removeAll("PaperDistance");
+			
+			for(int i = 0; i < distances.size(); ++i){
+				Map<String, Object> distance = distances.get(i);
+				
+				GenericValue gv = delegator.makeValue("PaperDistance");
+
+				gv.put("id", delegator.getNextSeqId("PaperDistance"));
+
+				gv.put("paperId1", distance.get("paperId1"));
+				gv.put("paperId2", distance.get("paperId2"));
+				gv.put("cluster", (long)(int)distance.get("cluster"));
+				gv.put("distance", distance.get("distance"));
+				
+				
+				delegator.create(gv);
+			}
+			
+			result.put("statusCode", "200");
+			result.put("message", "Hoàn thành tính " + distances.size() + " độ trùng lặp");
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+	
+	
+	
+	public static <E> Map<String, Object> JQGetPaperDeclarationsDuplicate(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Delegator delegator = (Delegator) ctx.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String, String[]> parameters = (Map<String, String[]>) context
+				.get("parameters");
+		JSONObject filterJS = null;
+		String facultyId = null;
+		if (parameters.get("facultyId") != null) {
+			facultyId = parameters.get("facultyId")[0];
+		}
+		
+		String strViewIndex = "0";
+		if(parameters.get("pagenum") != null){
+		    strViewIndex = String.valueOf(parameters.get("pagenum")[0]);
+		}
+		String strViewSize = "10";
+		if(parameters.get("pagesize") != null){
+		    strViewSize = String.valueOf(parameters.get("pagesize")[0]);
+		}
+		
+		Integer iSize = 0;
+		Integer iIndex = 0;
+		if (strViewIndex != null && !strViewIndex.isEmpty()) {
+			iIndex = new Integer(strViewIndex);
+		}
+		if (strViewSize != null && !strViewSize.isEmpty()) {
+			iSize = new Integer(strViewSize);
+		}
+
+		Map<String, Object> result = FastMap.newInstance();
+		List<String> paperIds = new ArrayList<String>();
+		List<GenericValue> papers = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+
+			if (parameters.containsKey("q")) {
+				//System.out.println("debug :::::::::: not null");
+				String q = (String) parameters.get("q")[0].trim();
+				//System.out.println("1. debug ::::::::::" + q);
+				String[] searchKeys = { "staffName", "paperCategoryName",
+						"researchProjectProposalName",
+						"paperDeclarationStatusName",
+						"researchProjectProposalCode", "paperName",
+						"journalConferenceName" };
+
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>();
+				for (String key : searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(
+							EntityFunction.UPPER_FIELD(key),
+							EntityOperator.LIKE,
+							EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch,
+						EntityOperator.OR));
+			}
+			if (filter != null) {
+
+				listAllConditions.add(filter);
+			}
+
+			listAllConditions
+					.add(EntityCondition.makeCondition("statusId",
+							EntityOperator.EQUALS,
+							PaperDeclarationUtil.STATUS_ENABLED));
+
+			EntityCondition condition = EntityCondition.makeCondition(
+					listAllConditions, EntityOperator.AND);
+
+			//System.out.println("4. debug ::::::::::" + userLoginId);
+			papers = delegator.findList("PaperView", condition, null, sort,
+					opts, false);
+
+			HashSet<String> setStaffId = new HashSet<String>();
+			if (facultyId != null) {
+				List<GenericValue> staffsOfFaculty = PaperDeclarationUtil
+						.getListStaffsOfFaculty(delegator, facultyId);
+				for (GenericValue st : staffsOfFaculty)
+					setStaffId.add((String) st.getString("staffId"));
+			}
+//			Debug.log(module
+//					+ "::getPaperDeclarations, staff of selected faculty = "
+//					+ setStaffId.size());
+			List<GenericValue> retList = FastList.newInstance();
+			for (GenericValue gv : papers) {
+//				Debug.log(module + "::getPaperDeclarations, paper "
+//						+ gv.get("paperName"));
+
+				boolean ok = true;
+				if (facultyId != null) {
+					String paperId = (String) gv.getString("paperId");
+					List<GenericValue> ST = PaperDeclarationUtil
+							.getStaffsOfPaper(paperId, delegator);
+					ok = false;
+					for (GenericValue st : ST) {
+						String stId = (String) st.getString("staffId");
+						if (setStaffId.contains(stId)) {
+							ok = true;
+							break;
+						}
+					}
+
+				}
+				if (ok) {
+					retList.add(gv);
+					paperIds.add((String) gv.getString("paperId"));
+				}
+
+			}
+			Debug.log(module + "::getPaperDeclarations, papers.sz = "
+					+ papers.size() + ", retList = " + retList.size());
+			
+			listAllConditions.clear();
+			
+			
+			
+			
+			List<EntityCondition> condFilterPaper = new ArrayList<EntityCondition>();
+			
+				condFilterPaper.add(EntityCondition.makeCondition(
+						"paperId1",
+						EntityOperator.IN,
+						paperIds));
+				condFilterPaper.add(EntityCondition.makeCondition(
+						"paperId2",
+						EntityOperator.IN,
+						paperIds));
+			
+			listAllConditions.add(EntityCondition.makeCondition(condFilterPaper,
+					EntityOperator.AND));
+			
+			List<Map<String, Object>> groups = new ArrayList<Map<String,Object>>();
+			List<String> groupsIndex = new ArrayList<String>();
+			List<GenericValue> distances = delegator.findList("PaperDistance", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, Arrays.asList("cluster", "distance", "paperId1", "paperId2"),
+					new EntityFindOptions(), false);
+			System.out.println("JQGetPaperDeclarationsDuplicate::" + 1);
+			for(GenericValue distance: distances) {
+				String cluster = String.valueOf((Long)distance.get("cluster"));
+				//System.out.println("JQGetPaperDeclarationsDuplicate:: cluster = " + cluster);
+				String paperId1 = (String) distance.get("paperId1");
+				String paperId2 = (String) distance.get("paperId2");
+				int index = groupsIndex.indexOf(cluster);
+				//System.out.println("JQGetPaperDeclarationsDuplicate:: index = " + index);
+				Map<String, Object> group = null;
+				if(index==-1) {
+					groupsIndex.add(cluster);
+					group = new HashMap<String, Object>();
+					group.put("cluster", cluster);
+					group.put("nodes", new ArrayList<String>());
+					groups.add(group);
+				} else {
+					group = groups.get(index);
+				}
+				
+				List<String> nodes = (List<String>) group.get("nodes");
+				
+				if(nodes.indexOf(paperId1) == -1) {
+					nodes.add(paperId1);
+				}
+				
+				if(nodes.indexOf(paperId2) == -1) {
+					nodes.add(paperId2);
+				}
+			}
+			System.out.println("JQGetPaperDeclarationsDuplicate::" + 2);
+			
+			result.put("totalRows", String.valueOf(groups.size()));
+			if(iIndex* iSize + iSize > groups.size()) {
+				groups = groups.subList(iIndex
+						* iSize, groups.size());
+			} else {
+				groups = groups.subList(iIndex
+						* iSize, iIndex
+						* iSize + iSize);
+			}
+			System.out.println("JQGetPaperDeclarationsDuplicate::" + 3);
+			List<Map<String, Object>> list = new ArrayList<Map<String,Object>>(); 
+			for(int i = 0; i < groups.size(); ++i) {
+				Map<String, Object> group = groups.get(i);
+				List<String> nodes = (List<String>) group.get("nodes");
+				List<GenericValue> nodestoPapers = new ArrayList<GenericValue>();
+				Map<String, Object> p = new HashMap<String, Object>();
+				
+				p.put("cluster", group.get("cluster"));
+				p.put("number", nodes.size());
+				System.out.print("cluster : " + group.get("cluster") +", size = " + nodes.size());
+				for(String node: nodes) {
+					System.out.print(" paperId = " + node);
+					GenericValue paper = retList.get(paperIds.indexOf(node));
+					if(p.get("name")==null) {
+						p.put("name", paper.get("paperName"));
+					}
+					nodestoPapers.add(paper);
+				}
+				
+				p.put("nodes", nodestoPapers);
+				list.add(p);
+			}
+
+			result.put("listIterator", list);
+
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list PaperView");
+		}
+
+		return result;
+	}
+
 	@SuppressWarnings({ "unchecked" })
 	public static void removeStaffPaperDeclaration(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -871,20 +1923,21 @@ public class PaperDeclarationService {
 		String staffId = request.getParameter("staffId");
 		Debug.log(module + "::removeStaffPaperDeclaration, staffId = "
 				+ staffId + ", paperId = " + paperId);
-		try{
-			Map<String, Object> rs = PaperDeclarationUtil.removeStaffPaperDeclarationc(paperId, staffId, delegator);
-			
+		try {
+			Map<String, Object> rs = PaperDeclarationUtil
+					.removeStaffPaperDeclarationc(paperId, staffId, delegator);
+
 			String json = "OK";
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
 			out.write(json);
 			out.close();
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings({ "unchecked" })
 	public static void createStaffPaperDeclaration(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -896,18 +1949,19 @@ public class PaperDeclarationService {
 				+ staffId + ", paperId = " + paperId + ", roleId = " + roleId);
 		try {
 			Map<String, String> mRoleID2Name = FastMap.newInstance();
-			
-			List<GenericValue> roles = delegator.findList("StaffPaperDeclarationRole",
-					null, null, null, null, false);
-			for(GenericValue r: roles){
-				mRoleID2Name.put(r.getString("roleId"), r.getString("roleName"));
+
+			List<GenericValue> roles = delegator.findList(
+					"StaffPaperDeclarationRole", null, null, null, null, false);
+			for (GenericValue r : roles) {
+				mRoleID2Name
+						.put(r.getString("roleId"), r.getString("roleName"));
 			}
-			
+
 			List<GenericValue> lst = PaperDeclarationUtil.getStaffsOfPaper(
 					paperId, staffId, delegator);
 			if (lst == null || lst.size() == 0) {
 				Map<String, Object> rs = PaperDeclarationUtil
-						.createStaffPaperDeclarationc(paperId, staffId,roleId,
+						.createStaffPaperDeclarationc(paperId, staffId, roleId,
 								delegator);
 				GenericValue gv = (GenericValue) rs
 						.get("staffPaperDeclaration");
@@ -915,22 +1969,23 @@ public class PaperDeclarationService {
 			} else {
 
 			}
-			lst = PaperDeclarationUtil.getStaffsOfPaper(
-					paperId, delegator);
+			lst = PaperDeclarationUtil.getStaffsOfPaper(paperId, delegator);
 			String json = "{\"staffsofpaper\":[";
 			String id = staffId;// (String) st.get("staffId");
 			String name = id;// mID2Name.get(id);
-			for(int i = 0; i < lst.size(); i++){
+			for (int i = 0; i < lst.size(); i++) {
 				GenericValue stp = lst.get(i);
 				id = stp.getString("staffId");
-				GenericValue st = delegator.findOne("Staff", UtilMisc.toMap("staffId",id), false);
+				GenericValue st = delegator.findOne("Staff",
+						UtilMisc.toMap("staffId", id), false);
 				name = st.getString("staffName");
-				String rId = mRoleID2Name.get(stp.getString("roleId")); 
-				json += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"" + ",\"role\":\"" + rId + "\" }";
-				if(i < lst.size()-1)
+				String rId = mRoleID2Name.get(stp.getString("roleId"));
+				json += "{\"id\":\"" + id + "\",\"name\":\"" + name + "\""
+						+ ",\"role\":\"" + rId + "\" }";
+				if (i < lst.size() - 1)
 					json += ",";
 			}
-			
+
 			json += "]}";
 
 			response.setContentType("application/json");
@@ -942,33 +1997,71 @@ public class PaperDeclarationService {
 			ex.printStackTrace();
 		}
 	}
-	public static Map<String, Object> getStaffPaperDeclarationRole(DispatchContext ctx, Map<String, ? extends Object> context) {
+
+	public static Map<String, Object> getStaffPaperDeclarationRole(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 
-		try{
-			List<GenericValue> list = delegator.findList("StaffPaperDeclarationRole", null, null, null, null, false);
+		try {
+			List<GenericValue> list = delegator.findList(
+					"StaffPaperDeclarationRole", null, null, null, null, false);
 			retSucc.put("roles", list);
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
 		return retSucc;
 	}
-	public static Map<String, Object> getPaperDeclarationStatus(DispatchContext ctx, Map<String, ? extends Object> context) {
+
+	public static Map<String, Object> getYesNo(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 
-		try{
-			List<GenericValue> list = delegator.findList("PaperDeclarationStatus", null, null, null, null, false);
-			retSucc.put("statuses", list);
-		}catch(Exception ex){
+		try {
+			List<GenericValue> list = delegator.findList("YesNo", null, null,
+					null, null, false);
+			retSucc.put("yn", list);
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return ServiceUtil.returnError(ex.getMessage());
 		}
 		return retSucc;
 	}
-	
+
+	public static Map<String, Object> getNoYes(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			List<GenericValue> list = delegator.findList("NoYes", null, null,
+					null, null, false);
+			retSucc.put("ny", list);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> getPaperDeclarationStatus(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			List<GenericValue> list = delegator.findList(
+					"PaperDeclarationStatus", null, null, null, null, false);
+			retSucc.put("statuses", list);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
 	public static Map<String, Object> jcreateStaffPaperDeclaration(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -978,7 +2071,7 @@ public class PaperDeclarationService {
 			String paperId = (String) context.get("paperId");
 			String staffId = (String) context.get("staffId");
 			String roleId = (String) context.get("roleId");
-			
+
 			retSucc = PaperDeclarationUtil.createStaffPaperDeclarationc(
 					paperId, staffId, roleId, delegator);
 
@@ -990,6 +2083,757 @@ public class PaperDeclarationService {
 		return retSucc;
 	}
 
+	public static Map<String, Object> createRecordDB(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		GenericValue g = (GenericValue) context.get("record");
+		try {
+			delegator.create(g);
+			retSucc.put("result", "success");
+			Debug.log(module + "::createRecordDB, CREATE successfully " + g);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+	
+	public static void createNewPaperDeclaration(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> m = FastMap.newInstance();
+
+		System.out
+				.println("\n\n\t****************************************\n\tcreateNewPaperDeclaration - start\n\t");
+		ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory()); // Creation
+																					// of
+																					// servletfileupload
+		
+		
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		String staffId = (String) userLogin.getString("userLoginId");
+		
+		List lst = null;
+		
+		String result = "AttachementException";
+		String file_name = "";
+		
+		String paperName = "";
+		String authors = "";
+        String roleId = "";
+        String paperCategoryId = "";
+        String paperCategoryKNCId = "";
+        String researchProjectProposalId = "";
+        String journalConferenceName = "";
+        String academicYearId = "";
+        String link = "";
+        String volumn = "";
+        String month = "";
+        String year = "";
+        String issn = "";
+        String doi = "";
+        String impactFactor = "";
+        
+
+        JSONArray members = null ;
+        JSONArray externalMembers = null;
+
+		try {
+			lst = fu.parseRequest(request);
+		} catch (FileUploadException fup_ex) {
+			System.out
+					.println("\n\n\t****************************************\n\tException of FileUploadException \n\t");
+			fup_ex.printStackTrace();
+			result = "AttachementException";
+			m.put("result", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+		if (lst.size() == 0) // There is no item in lst
+		{
+			System.out
+					.println("\n\n\t****************************************\n\not found param \n\t");
+			result = "Not found param";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+		FileItem file_item = null;
+		FileItem selected_file_item = null;
+
+		// Checking for form fields - Start
+		for (int i = 0; i < lst.size(); i++) {
+			file_item = (FileItem) lst.get(i);
+			String fieldName = file_item.getFieldName();
+
+			switch (fieldName) {
+			case "file":
+				selected_file_item = file_item;
+
+				file_name = file_item.getName(); // Getting the file name
+				System.out
+						.println("\n\n\t****************************************\n\tThe selected file item's file name is : "
+								+ file_name + "\n\t");
+				break;
+			case "paperName":
+				paperName = file_item.getString();
+				paperName = new String(paperName.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "authors":
+				authors = file_item.getString();
+				authors = new String(authors.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "roleId":
+				roleId = file_item.getString();
+				roleId = new String(roleId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "paperCategoryId":
+				paperCategoryId = file_item.getString();
+				paperCategoryId = new String(paperCategoryId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "paperCategoryKNCId":
+				paperCategoryKNCId = file_item.getString();
+				paperCategoryKNCId = new String(paperCategoryKNCId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "researchProjectProposalId":
+				researchProjectProposalId = file_item.getString();
+				researchProjectProposalId = new String(researchProjectProposalId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "journalConferenceName":
+				journalConferenceName = file_item.getString();
+				journalConferenceName = new String(journalConferenceName.getBytes(ISO), UTF_8).trim();
+				break;
+			case "academicYearId":
+				academicYearId = file_item.getString();
+				academicYearId = new String(academicYearId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "link":
+				link = file_item.getString();
+				link = new String(link.getBytes(ISO), UTF_8).trim();
+				break;
+			case "volumn":
+				volumn = file_item.getString();
+				volumn = new String(volumn.getBytes(ISO), UTF_8).trim();
+				break;
+			case "month":
+				month = file_item.getString();
+				month = new String(month.getBytes(ISO), UTF_8).trim();
+				break;
+			case "year":
+				year = file_item.getString();
+				year = new String(year.getBytes(ISO), UTF_8).trim();
+				break;
+			case "issn":
+				issn = file_item.getString();
+				issn = new String(issn.getBytes(ISO), UTF_8).trim();
+				break;
+			case "doi":
+				doi = file_item.getString();
+				doi = new String(doi.getBytes(ISO), UTF_8).trim();
+				break;
+			case "impactFactor":
+				impactFactor = file_item.getString();
+				impactFactor = new String(impactFactor.getBytes(ISO), UTF_8).trim();
+				break;
+			case "members":
+				members = JSONArray.fromObject(file_item.getString());
+				
+				break;
+			case "externalMembers":
+				externalMembers = JSONArray.fromObject(file_item.getString());
+				break;
+			}
+
+		}
+		// Checking for form fields - End
+		if(paperName.equals("") || authors.equals("") || roleId.equals("")
+			|| paperCategoryId.equals("") || paperCategoryKNCId.equals("")
+			//|| researchProjectProposalId.equals("") 
+			|| journalConferenceName.equals("")
+			|| academicYearId.equals("") || month.equals("") || year.equals("")
+			|| members.size() < 0
+				) {
+			System.out
+				.println("\n\n\t****************************************\n\t Param is missing or the value is empty  \n\t");
+			result = "Param is missing or the value is empty";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+		
+		try {
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			
+			GenericValue p = delegator.makeValue("PaperDeclaration");
+			String paperId = delegator.getNextSeqId("PaperDeclaration");
+			p.put("paperId", paperId);
+			p.put("staffId", staffId);
+			p.put("staffId", staffId);
+			
+			p.put("paperName", paperName);
+			p.put("authors", authors);
+			p.put("paperCategoryId", paperCategoryId);
+			p.put("paperCategoryKNCId", paperCategoryKNCId);
+			p.put("researchProjectProposalId", researchProjectProposalId);
+			p.put("journalConferenceName", journalConferenceName);
+			p.put("academicYearId", academicYearId);
+			p.put("year", Long.valueOf(year));
+			p.put("month", Long.valueOf(month));
+			
+			if (doi != null
+					&& !doi.equals(""))
+				p.put("DOI", doi);
+			
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
+			if (impactFactor != null
+					&& !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+			
+			if (issn != null
+					&& !issn.equals(""))
+				p.put("ISSN", issn);
+			
+			if (volumn != null
+					&& !volumn.equals(""))
+				p.put("volumn", volumn);
+			
+			p.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+			p.put("approveStatusId", PaperDeclarationUtil.APPROVE_STATUS_CREATED);
+			
+			delegator.create(p);
+			
+//			PaperDeclarationUtil.createStaffPaperDeclarationc(
+//					paperId, staffId, roleId, delegator);
+			
+			if (selected_file_item != null) // If selected file item is null
+			{
+				System.out
+						.println("\n\n\t****************************************\n\tThe selected save file item \n\t");
+				
+				byte[] file_bytes = selected_file_item.get();
+				byte[] extract_bytes = new byte[file_bytes.length];
+
+				for (int l = 0; l < file_bytes.length; l++)
+					extract_bytes[l] = file_bytes[l];
+				
+				GenericValue gv = delegator.findOne("PaperDeclaration", false,
+						UtilMisc.toMap("paperId", paperId));
+				
+				Debug.log(module + "::uploadFile, filename = " + file_name
+						+ ", paperName = " + (String) gv.get("paperName")
+						+ ", staffId = " + staffId);
+				
+				String ext = getExtension(file_name);
+				java.util.Date currentDate = new java.util.Date();
+				//SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("HHmmssddMMyyyy");
+				SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				
+				String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+				String filenameDB = sCurrentDate + "." + ext;
+				String fullFileName = establishFullFilename(staffId, filenameDB);
+
+				Debug.log(module + "::uploadFile, filename = " + file_name
+						+ ", paperId = " + paperId + ", extension = " + ext
+						+ ", filenameDB = " + filenameDB + ", fullFileName = "
+						+ fullFileName);
+
+				FileOutputStream fout = new FileOutputStream(fullFileName);
+				System.out
+						.println("\n\n\t****************************************\n\tAfter creating outputstream");
+				fout.flush();
+				fout.write(extract_bytes);
+				fout.flush();
+				fout.close();
+
+				gv.put("sourcePath", filenameDB);
+				delegator.store(gv);
+				
+			}
+			
+
+			for(int i = 0; i < externalMembers.size(); ++i) {
+				JSONObject member = externalMembers.getJSONObject(i);
+				
+				if(member.getString("staffName")==null||member.getString("staffName").equals("")
+						||member.getString("roleId")==null||member.getString("roleId").equals("")
+						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						) {
+					break;
+				}
+				
+				GenericValue gv = delegator.makeValue("ExternalMemberPaperDeclaration");
+				String externalMemberPaperDeclarationId = delegator.getNextSeqId("ExternalMemberPaperDeclaration");
+				
+				gv.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
+				gv.put("staffName", new String(member.getString("staffName").getBytes(ISO), UTF_8).trim());
+
+				if(member.getString("affilliation")!=null&&!member.getString("affilliation").equals("")){
+					gv.put("affilliation", new String(member.getString("affilliation").getBytes(ISO), UTF_8).trim());						
+				}
+				gv.put("paperId", paperId);
+				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+				gv.put("roleId", member.getString("roleId"));
+				
+				if(member.containsKey("sequence")){
+					gv.put("sequence", Long.valueOf(member.getString("sequence")));						
+				}
+				
+				gv.put("correspondingAuthor", member.getString("CAId"));
+				
+				delegator.create(gv);
+				
+			}
+			
+			for(int i = 0; i < members.size(); ++i) {
+				JSONObject member = members.getJSONObject(i);
+				
+				if(member.getString("staffId")==null||member.getString("staffId").equals("")
+						||member.getString("roleId")==null||member.getString("roleId").equals("")
+						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						||member.getString("AOUId")==null||member.getString("AOUId").equals("")
+						) {
+					break;
+				}
+				
+				GenericValue gv = delegator.makeValue("StaffPaperDeclaration");
+				String staffPaperDeclarationId = delegator.getNextSeqId("StaffPaperDeclaration");
+				
+				gv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				gv.put("staffId", StringEscapeUtils.unescapeHtml(member.getString("staffId")));
+				gv.put("paperId", paperId);
+				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+				gv.put("roleId", member.getString("roleId"));
+				
+				if(member.containsKey("sequence")){
+					gv.put("sequence", Long.valueOf(member.getString("sequence")));						
+				}
+				
+				gv.put("correspondingAuthor", member.getString("CAId"));
+				gv.put("affiliationOutsideUniversity", member.getString("AOUId"));
+				
+				delegator.create(gv);
+				
+			}
+			 
+			
+			
+			System.out
+					.println("\n\n\t****************************************\n\tcreateNewPaperDeclaration - end\n\t");
+			m.put("message", "Create a successful paper");
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+
+		} catch (Exception ioe_ex) {
+			System.out
+					.println("\n\n\t****************************************\n\tIOException occured on file writing");
+			ioe_ex.printStackTrace();
+			result = "AttachementException";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+	}
+	
+	public static void updatePaperDeclaration(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, Object> m = FastMap.newInstance();
+
+		System.out
+				.println("\n\n\t****************************************\n\tupdatePaperDeclaration - start\n\t");
+		ServletFileUpload fu = new ServletFileUpload(new DiskFileItemFactory()); // Creation
+																					// of
+																					// servletfileupload
+		
+														
+		GenericValue userLogin = (GenericValue) request.getSession()
+				.getAttribute("userLogin");
+		//String staffId = (String) userLogin.getString("userLoginId");
+		
+		List lst = null;
+		
+		String result = "AttachementException";
+		String file_name = "";
+		
+		String paperId = "";
+		String paperName = "";
+		String authors = "";
+        String roleId = "";
+        String paperCategoryId = "";
+        String paperCategoryKNCId = "";
+        String researchProjectProposalId = "";
+        String journalConferenceName = "";
+        String academicYearId = "";
+        String link = "";
+        String volumn = "";
+        String month = "";
+        String year = "";
+        String issn = "";
+        String doi = "";
+        String impactFactor = "";
+        
+
+        JSONArray members = null ;
+        JSONArray externalMembers = null;
+
+		try {
+			lst = fu.parseRequest(request);
+		} catch (FileUploadException fup_ex) {
+			System.out
+					.println("\n\n\t****************************************\n\tException of FileUploadException \n\t");
+			fup_ex.printStackTrace();
+			result = "AttachementException";
+			m.put("result", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+		if (lst.size() == 0) // There is no item in lst
+		{
+			System.out
+					.println("\n\n\t****************************************\n\not found param \n\t");
+			result = "Not found param";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+		FileItem file_item = null;
+		FileItem selected_file_item = null;
+
+		// Checking for form fields - Start
+		for (int i = 0; i < lst.size(); i++) {
+			file_item = (FileItem) lst.get(i);
+			String fieldName = file_item.getFieldName();
+
+			switch (fieldName) {
+			case "file":
+				selected_file_item = file_item;
+
+				file_name = file_item.getName(); // Getting the file name
+				System.out
+						.println("\n\n\t****************************************\n\tThe selected file item's file name is : "
+								+ file_name + "\n\t");
+				break;
+				
+			case "paperId":
+				paperId = file_item.getString();
+				paperId = new String(paperId.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "paperName":
+				paperName = file_item.getString();
+				paperName = new String(paperName.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "authors":
+				authors = file_item.getString();
+				authors = new String(authors.getBytes(ISO), UTF_8).trim();
+				
+				break;
+			case "roleId":
+				roleId = file_item.getString();
+				roleId = new String(roleId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "paperCategoryId":
+				paperCategoryId = file_item.getString();
+				paperCategoryId = new String(paperCategoryId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "paperCategoryKNCId":
+				paperCategoryKNCId = file_item.getString();
+				paperCategoryKNCId = new String(paperCategoryKNCId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "researchProjectProposalId":
+				researchProjectProposalId = file_item.getString();
+				researchProjectProposalId = new String(researchProjectProposalId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "journalConferenceName":
+				journalConferenceName = file_item.getString();
+				journalConferenceName = new String(journalConferenceName.getBytes(ISO), UTF_8).trim();
+				break;
+			case "academicYearId":
+				academicYearId = file_item.getString();
+				academicYearId = new String(academicYearId.getBytes(ISO), UTF_8).trim();
+				break;
+			case "link":
+				link = file_item.getString();
+				link = new String(link.getBytes(ISO), UTF_8).trim();
+				break;
+			case "volumn":
+				volumn = file_item.getString();
+				volumn = new String(volumn.getBytes(ISO), UTF_8).trim();
+				break;
+			case "month":
+				month = file_item.getString();
+				month = new String(month.getBytes(ISO), UTF_8).trim();
+				break;
+			case "year":
+				year = file_item.getString();
+				year = new String(year.getBytes(ISO), UTF_8).trim();
+				break;
+			case "issn":
+				issn = file_item.getString();
+				issn = new String(issn.getBytes(ISO), UTF_8).trim();
+				break;
+			case "doi":
+				doi = file_item.getString();
+				doi = new String(doi.getBytes(ISO), UTF_8).trim();
+				break;
+			case "impactFactor":
+				impactFactor = file_item.getString();
+				impactFactor = new String(impactFactor.getBytes(ISO), UTF_8).trim();
+				break;
+			case "members":
+				members = JSONArray.fromObject(file_item.getString());
+				
+				break;
+			case "externalMembers":
+				externalMembers = JSONArray.fromObject(file_item.getString());
+				break;
+			}
+
+		}
+		// Checking for form fields - End
+		if(paperId.equals("") || paperName.equals("") || authors.equals("") || roleId.equals("")
+			|| paperCategoryId.equals("") || paperCategoryKNCId.equals("")
+			//|| researchProjectProposalId.equals("") 
+			|| journalConferenceName.equals("")
+			|| academicYearId.equals("") || month.equals("") || year.equals("")
+			|| members.size() < 0
+				) {
+			System.out
+				.println("\n\n\t****************************************\n\t Param is missing or the value is empty  \n\t");
+			result = "Param is missing or the value is empty";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+		
+		try {
+			Delegator delegator = (Delegator) request.getAttribute("delegator");
+			
+			GenericValue p = delegator.findOne("PaperDeclaration", false,
+					UtilMisc.toMap("paperId", paperId));
+			
+			if(p==null) {
+				System.out
+					.println("\n\n\t****************************************\n\t Not found Paper Declaration  \n\t");
+				result = "Not found Paper Declaration";
+				m.put("message", result);
+				BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+						response, 200);
+				return;
+			}
+			String staffId = p.getString("staffId");// do not update staffId
+			//p.put("staffId", staffId);
+			
+			p.put("paperName", paperName);
+			p.put("authors", authors);
+			p.put("paperCategoryId", paperCategoryId);
+			p.put("paperCategoryKNCId", paperCategoryKNCId);
+			p.put("researchProjectProposalId", researchProjectProposalId);
+			p.put("journalConferenceName", journalConferenceName);
+			p.put("academicYearId", academicYearId);
+			p.put("year", Long.valueOf(year));
+			p.put("month", Long.valueOf(month));
+			
+			if (doi != null
+					&& !doi.equals(""))
+				p.put("DOI", doi);
+			
+			if (link != null
+					&& !link.equals(""))
+				p.put("link", link);
+			
+			if (impactFactor != null
+					&& !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+			
+			if (issn != null
+					&& !issn.equals(""))
+				p.put("ISSN", issn);
+			
+			if (volumn != null
+					&& !volumn.equals(""))
+				p.put("volumn", volumn);
+			
+			delegator.store(p);
+			
+//			PaperDeclarationUtil.createStaffPaperDeclarationc(
+//					paperId, staffId, roleId, delegator);
+			
+			if (selected_file_item != null) // If selected file item is null
+			{
+				System.out
+						.println("\n\n\t****************************************\n\tThe selected save file item \n\t");
+				
+				byte[] file_bytes = selected_file_item.get();
+				byte[] extract_bytes = new byte[file_bytes.length];
+
+				for (int l = 0; l < file_bytes.length; l++)
+					extract_bytes[l] = file_bytes[l];
+				
+				GenericValue gv = delegator.findOne("PaperDeclaration", false,
+						UtilMisc.toMap("paperId", paperId));
+				
+				Debug.log(module + "::uploadFile, filename = " + file_name
+						+ ", paperName = " + (String) gv.get("paperName")
+						+ ", staffId = " + staffId);
+				
+				String ext = getExtension(file_name);
+				java.util.Date currentDate = new java.util.Date();
+				//SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("HHmmssddMMyyyy");
+				SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				
+				String sCurrentDate = dateformatyyyyMMdd.format(currentDate);
+
+				String filenameDB = sCurrentDate + "." + ext;
+				String fullFileName = establishFullFilename(staffId, filenameDB);
+
+				Debug.log(module + "::uploadFile, filename = " + file_name
+						+ ", paperId = " + paperId + ", extension = " + ext
+						+ ", filenameDB = " + filenameDB + ", fullFileName = "
+						+ fullFileName);
+
+				FileOutputStream fout = new FileOutputStream(fullFileName);
+				System.out
+						.println("\n\n\t****************************************\n\tAfter creating outputstream");
+				fout.flush();
+				fout.write(extract_bytes);
+				fout.flush();
+				fout.close();
+
+				gv.put("sourcePath", filenameDB);
+				delegator.store(gv);
+				
+			}
+			
+			List<GenericValue> lpv;
+			lpv = delegator.findList("ExternalMemberPaperDeclaration",
+					EntityCondition.makeCondition("paperId",
+							EntityOperator.EQUALS, paperId), null, null, null,
+					false);
+			
+        	if(lpv.size() > 0){
+        		for(GenericValue pv: lpv) {
+        			delegator.removeValue(pv);        			
+        		}
+        	}
+
+			for(int i = 0; i < externalMembers.size(); ++i) {
+				JSONObject member = externalMembers.getJSONObject(i);
+				
+				if(member.getString("staffName")==null||member.getString("staffName").equals("")
+						||member.getString("roleId")==null||member.getString("roleId").equals("")
+						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						) {
+					break;
+				}
+				
+				GenericValue gv = delegator.makeValue("ExternalMemberPaperDeclaration");
+				String externalMemberPaperDeclarationId = delegator.getNextSeqId("ExternalMemberPaperDeclaration");
+				
+				gv.put("externalMemberPaperDeclarationId", externalMemberPaperDeclarationId);
+				gv.put("staffName", new String(member.getString("staffName").getBytes(ISO), UTF_8).trim());
+
+				if(member.getString("affilliation")!=null&&!member.getString("affilliation").equals("")){
+					gv.put("affilliation", new String(member.getString("affilliation").getBytes(ISO), UTF_8).trim());						
+				}
+				gv.put("paperId", paperId);
+				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+				gv.put("roleId", member.getString("roleId"));
+				
+				if(member.containsKey("sequence")){
+					gv.put("sequence", Long.valueOf(member.getString("sequence")));						
+				}
+				
+				gv.put("correspondingAuthor", member.getString("CAId"));
+				
+				delegator.create(gv);
+				
+			}
+			
+			lpv = delegator.findList("StaffPaperDeclaration",
+					EntityCondition.makeCondition("paperId",
+							EntityOperator.EQUALS, paperId), null, null, null,
+					false);
+			
+        	if(lpv.size() > 0){
+        		for(GenericValue pv: lpv) {
+        			delegator.removeValue(pv);        			
+        		}
+        	}
+			
+			for(int i = 0; i < members.size(); ++i) {
+				JSONObject member = members.getJSONObject(i);
+				
+				if(member.getString("staffId")==null||member.getString("staffId").equals("")
+						||member.getString("roleId")==null||member.getString("roleId").equals("")
+						||member.getString("CAId")==null||member.getString("CAId").equals("")
+						||member.getString("AOUId")==null||member.getString("AOUId").equals("")
+						) {
+					break;
+				}
+				
+				GenericValue gv = delegator.makeValue("StaffPaperDeclaration");
+				String staffPaperDeclarationId = delegator.getNextSeqId("StaffPaperDeclaration");
+				
+				gv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				gv.put("staffId", StringEscapeUtils.unescapeHtml(member.getString("staffId")));
+				gv.put("paperId", paperId);
+				gv.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
+				gv.put("roleId", member.getString("roleId"));
+				
+				if(member.containsKey("sequence")){
+					gv.put("sequence", Long.valueOf(member.getString("sequence")));						
+				}
+				
+				gv.put("correspondingAuthor", member.getString("CAId"));
+				gv.put("affiliationOutsideUniversity", member.getString("AOUId"));
+
+				Debug.log(module + "::updatePaperDeclaration, AOUId = " + gv.get("affiliationOutsideUniversity"));
+				
+				delegator.create(gv);
+				
+			}
+			 
+			
+			
+			System.out
+					.println("\n\n\t****************************************\n\tupdateNewPaperDeclaration - end\n\t");
+			m.put("message", "Update a successful paper");
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+
+		} catch (Exception ioe_ex) {
+			System.out
+					.println("\n\n\t****************************************\n\tIOException occured on file writing");
+			ioe_ex.printStackTrace();
+			result = "AttachementException";
+			m.put("message", result);
+			BKEunivUtils.writeJSONtoResponse(BKEunivUtils.parseJSONObject(m),
+					response, 200);
+			return;
+		}
+
+	}
+	
 	public static Map<String, Object> createPaperDeclaration(
 			DispatchContext ctx, Map<String, ? extends Object> context) {
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
@@ -1010,15 +2854,32 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
-		List<Object> roleIds = (List<Object>) context
-				.get("roleId[]");
+		List<Object> paperCategoryKNCIds = (List<Object>) context
+				.get("paperCategoryKNCId[]");
+		String paperCategoryKNCId = "";
+		if (paperCategoryKNCIds != null && paperCategoryKNCIds.size() > 0)
+			paperCategoryKNCId = (String) (paperCategoryKNCIds.get(0));
+
+		List<Object> researchProjectProposalIds = (List<Object>) context
+				.get("researchProjectProposalId[]");
+		String researchProjectProposalId = null;
+		if (researchProjectProposalIds != null
+				&& researchProjectProposalIds.size() > 0)
+			researchProjectProposalId = (String) researchProjectProposalIds
+					.get(0);
+
+		List<Object> roleIds = (List<Object>) context.get("roleId[]");
 		String roleId = null;
 		if (roleIds != null && roleIds.size() > 0)
 			roleId = (String) (roleIds.get(0));
-		
-		
+
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
+		String DOI = (String) context.get("DOI");
+		String link = (String) context.get("link");
+
+		String impactFactor = (String) context.get("impactFactor");
+
 		String volumn = (String) context.get("volumn");
 		String syear = (String) context.get("year");
 		String smonth = (String) context.get("month");
@@ -1050,9 +2911,23 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if (paperCategoryKNCId != null && !paperCategoryKNCId.equals(""))
+				p.put("paperCategoryKNCId", paperCategoryKNCId);
+
+			if (researchProjectProposalId != null)
+				p.put("researchProjectProposalId", researchProjectProposalId);
+
 			if (journalConferenceName != null
 					&& !journalConferenceName.equals(""))
 				p.put("journalConferenceName", journalConferenceName);
+			if (DOI != null && !DOI.equals(""))
+				p.put("DOI", DOI);
+			if (link != null && !link.equals(""))
+				p.put("link", link);
+
+			if (impactFactor != null && !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+
 			if (volumn != null && !volumn.equals(""))
 				p.put("volumn", volumn);
 			if (syear != null && !syear.equals("")) {
@@ -1071,14 +2946,20 @@ public class PaperDeclarationService {
 				p.put("academicYearId", academicYearId);
 			p.put("statusId", PaperDeclarationUtil.STATUS_ENABLED);
 
-			delegator.create(p);
+			// delegator.create(p);
+			Map<String, Object> input = FastMap.newInstance();
+			input.put("record", p);
+			Map<String, Object> rsp = dispatcher.runSync("createRecordDB",
+					input);
+			// if(rsp.get("result").equals("success"))
 
 			// add an item to StaffPaperDeclaration corresponding to the current
 			// staffId
-			Map<String, Object> input = FastMap.newInstance();
+			// Map<String, Object> input = FastMap.newInstance();
+			input.clear();
 			input.put("staffId", staffId);
 			input.put("paperId", paperId);
-			if(roleId != null)
+			if (roleId != null)
 				input.put("roleId", roleId);
 
 			Map<String, Object> rs = dispatcher.runSync(
@@ -1086,7 +2967,15 @@ public class PaperDeclarationService {
 
 			// List<GenericValue> papers = FastList.newInstance();
 			// papers.add(p);
-			retSucc.put("papers", p);
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			List<GenericValue> lpv = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			if (lpv != null && lpv.size() > 0) {
+				retSucc.put("papers", lpv.get(0));
+			}
 			retSucc.put("message", "Successfully");
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1115,14 +3004,32 @@ public class PaperDeclarationService {
 		if (paperCategoryIds != null && paperCategoryIds.size() > 0)
 			paperCategoryId = (String) (paperCategoryIds.get(0));
 
-		List<Object> roleIds = (List<Object>) context
-				.get("roleId[]");
+		List<Object> paperCategoryKNCIds = (List<Object>) context
+				.get("paperCategoryKNCId[]");
+		String paperCategoryKNCId = "";
+		if (paperCategoryKNCIds != null && paperCategoryKNCIds.size() > 0)
+			paperCategoryKNCId = (String) (paperCategoryKNCIds.get(0));
+
+		List<Object> researchProjectProposalIds = (List<Object>) context
+				.get("researchProjectProposalId[]");
+		String researchProjectProposalId = null;
+		if (researchProjectProposalIds != null
+				&& researchProjectProposalIds.size() > 0)
+			researchProjectProposalId = (String) researchProjectProposalIds
+					.get(0);
+
+		List<Object> roleIds = (List<Object>) context.get("roleId[]");
 		String roleId = "";
 		if (roleIds != null && roleIds.size() > 0)
 			roleId = (String) (roleIds.get(0));
 
 		String journalConferenceName = (String) context
 				.get("journalConferenceName");
+		String DOI = (String) context.get("DOI");
+		String link = (String) context.get("link");
+
+		String impactFactor = (String) context.get("impactFactor");
+
 		String volumn = (String) context.get("volumn");
 		String year = (String) context.get("year");
 		String month = (String) context.get("month");
@@ -1137,7 +3044,8 @@ public class PaperDeclarationService {
 
 		Debug.log(module + "::updatePaper, authorStaffId = " + staffId
 				+ ", paperId = " + paperId + ", paperCategoryId = "
-				+ paperCategoryId + ", month = " + month + ", year = " + year + ", role = " + roleId);
+				+ paperCategoryId + ", month = " + month + ", year = " + year
+				+ ", role = " + roleId);
 		Delegator delegator = ctx.getDelegator();
 
 		try {
@@ -1166,9 +3074,22 @@ public class PaperDeclarationService {
 				p.put("paperName", paperName);
 			if (paperCategoryId != null && !paperCategoryId.equals(""))
 				p.put("paperCategoryId", paperCategoryId);
+			if (paperCategoryKNCId != null && !paperCategoryKNCId.equals(""))
+				p.put("paperCategoryKNCId", paperCategoryKNCId);
+			if (researchProjectProposalId != null)
+				p.put("researchProjectProposalId", researchProjectProposalId);
+
 			if (journalConferenceName != null
 					&& !journalConferenceName.equals(""))
 				p.put("journalConferenceName", journalConferenceName);
+			if (DOI != null && !DOI.equals(""))
+				p.put("DOI", DOI);
+			if (link != null && !link.equals(""))
+				p.put("link", link);
+
+			if (impactFactor != null && !impactFactor.equals(""))
+				p.put("impactFactor", Double.valueOf(impactFactor));
+
 			if (volumn != null && !volumn.equals(""))
 				p.put("volumn", volumn);
 			if (year != null && !year.equals("")) {
@@ -1185,22 +3106,21 @@ public class PaperDeclarationService {
 				p.put("authors", authors);
 			if (academicYearId != null && !academicYearId.equals(""))
 				p.put("academicYearId", academicYearId);
-			
-			
-			
+
 			delegator.store(p);
 
 			// update Role to entity StaffPaperDeclaration
-			if(roleId != null && !roleId.equals("")){
+			if (roleId != null && !roleId.equals("")) {
 				List<EntityCondition> conds = FastList.newInstance();
-				conds.add(EntityCondition.makeCondition("paperId",paperId));
-				conds.add(EntityCondition.makeCondition("staffId",staffId));
-				List<GenericValue> spl = delegator.findList("StaffPaperDeclaration",
-						EntityCondition.makeCondition(conds), 
-						null,null,null,false);
-				if(spl != null && spl.size() > 0){
-					//GenericValue sp = spl.get(0);
-					for(GenericValue sp: spl){
+				conds.add(EntityCondition.makeCondition("paperId", paperId));
+				conds.add(EntityCondition.makeCondition("staffId", staffId));
+				List<GenericValue> spl = delegator.findList(
+						"StaffPaperDeclaration",
+						EntityCondition.makeCondition(conds), null, null, null,
+						false);
+				if (spl != null && spl.size() > 0) {
+					// GenericValue sp = spl.get(0);
+					for (GenericValue sp : spl) {
 						Debug.log(module + "::updatePaper, START update role");
 						sp.put("roleId", roleId);
 						delegator.store(sp);
@@ -1366,10 +3286,655 @@ public class PaperDeclarationService {
 		return retSucc;
 	}
 
-	public static void main(String[] args) {
-		String s = "aaa.pdf";
-		String[] ss = s.split("\\.");
-		System.out.println("s.lengt = " + ss.length + ", ss[0] = " + ss[0]
-				+ ", ss[1] = " + ss[1]);
+	public static Map<String, Object> getMembersOfAPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String) context.get("paperId");
+		Delegator delegator = ctx.getDelegator();
+		Debug.log(module + "::getMembersOfAPaper, paperId = " + paperId);
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("statusStaffPaper",
+					EntityOperator.EQUALS, "ENABLED"));
+			List<GenericValue> lst = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+
+			Debug.log(module + "::getMembersOfAPaper, lst.sz = " + lst.size());
+			for (GenericValue g : lst) {
+				Debug.log(g.getString("staffPaperDeclarationId") + ","
+						+ g.getString("paperId") + ","
+						+ g.getString("staffName") + ","
+						+ g.getString("staffId") + "," + g.getLong("sequence")
+						+ "," + g.getString("correspondingAuthor") + ","
+						+ g.getString("roleId") + "," + g.getString("roleName"));
+			}
+			retSucc.put("staffs", lst);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> getExternalMembersOfAPaper(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String) context.get("paperId");
+		Delegator delegator = ctx.getDelegator();
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, "ENABLED"));
+			List<GenericValue> lst = delegator.findList(
+					"ExternalMemberPaperDeclarationView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+
+			retSucc.put("staffs", lst);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> createMemberOfAPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String) context.get("paperId");
+		List<String> list_staffId = (List<String>) context.get("staffId[]");
+		List<String> list_roleId = (List<String>) context.get("roleId[]");
+		String s_sequence = (String) context.get("sequence");
+		List<String> list_correspondingAuthors = (List<String>) context
+				.get("correspondingAuthor[]");
+		List<String> list_affiliationOutsideUniversity = (List<String>) context
+				.get("affiliationOutsideUniversity[]");
+
+		String correspondingAuthor = null;
+		if (list_correspondingAuthors != null
+				&& list_correspondingAuthors.size() > 0)
+			correspondingAuthor = list_correspondingAuthors.get(0);
+
+		String affiliationOutsideUniversity = null;
+		if (list_affiliationOutsideUniversity != null
+				&& list_affiliationOutsideUniversity.size() > 0)
+			affiliationOutsideUniversity = list_affiliationOutsideUniversity
+					.get(0);
+		Delegator delegator = ctx.getDelegator();
+		String staffId = null;
+		if (list_staffId != null && list_staffId.size() > 0)
+			staffId = list_staffId.get(0);
+		String roleId = null;
+		if (list_roleId != null && list_roleId.size() > 0)
+			roleId = list_roleId.get(0);
+		Debug.log(module + "::createMemberOfAPaper, paperId = " + paperId
+				+ ", staffId = " + staffId + ", roleId = " + roleId);
+		long sequence = 0;
+		try {
+			sequence = Long.valueOf(s_sequence);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("paperId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("staffId",
+					EntityOperator.EQUALS, paperId));
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, "ENABLED"));
+			List<GenericValue> lst = delegator.findList("PapersStaffView",
+					EntityCondition.makeCondition(conds), null, null, null,
+					false);
+			if (lst.size() > 0) {
+				return ServiceUtil.returnError("Thanh vien bai bao da ton tai");
+			}
+
+			String staffPaperDeclarationId = delegator
+					.getNextSeqId("StaffPaperDeclaration");
+			GenericValue sp = delegator.makeValue("StaffPaperDeclaration");
+			sp.put("staffPaperDeclarationId", staffPaperDeclarationId);
+			if (paperId != null)
+				sp.put("paperId", paperId);
+			if (staffId != null)
+				sp.put("staffId", staffId);
+			if (correspondingAuthor != null)
+				sp.put("correspondingAuthor", correspondingAuthor);
+			if (affiliationOutsideUniversity != null)
+				sp.put("affiliationOutsideUniversity",
+						affiliationOutsideUniversity);
+
+			sp.put("sequence", sequence);
+			if (roleId != null)
+				sp.put("roleId", roleId);
+			sp.put("statusId", "ENABLED");
+			delegator.create(sp);
+
+			Debug.log(module + "::createMemberOfAPaper, paperId = " + paperId
+					+ ", staffId = " + staffId + ", roleId = " + roleId
+					+ ", CREATED");
+
+			GenericValue role = delegator.findOne("StaffPaperDeclarationRole",
+					UtilMisc.toMap("roleId", roleId), false);
+
+			GenericValue staff = delegator.findOne("Staff",
+					UtilMisc.toMap("staffId", staffId), false);
+
+			GenericValue spv = delegator.makeValue("PapersStaffView");
+
+			spv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+			if (sp.get("staffId") != null)
+				spv.put("staffId", (String) sp.get("staffId"));
+			else
+				spv.put("staffId", "");
+			if (sp.get("paperId") != null)
+				spv.put("paperId", (String) sp.get("paperId"));
+			else
+				spv.put("paperId", "");
+			if (sp.get("roleId") != null)
+				spv.put("roleId", (String) sp.get("roleId"));
+			else
+				spv.put("roleId", "");
+			if (staff != null && staff.getString("staffName") != null)
+				spv.put("staffName", staff.getString("staffName"));
+			else
+				spv.put("staffName", "");
+			if (staff != null && staff.getString("staffName") != null)
+				spv.put("roleName", role.getString("roleName"));
+			else
+				spv.put("roleName", "");
+			spv.put("sequence", sequence);
+			spv.put("correspondingAuthor", correspondingAuthor);
+			spv.put("affiliationOutsideUniversity",
+					affiliationOutsideUniversity);
+
+			retSucc.put("staffs", spv);
+			retSucc.put("message", "successfully");
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> createExternalMemberOfAPaper(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String paperId = (String) context.get("paperId");
+
+		List<String> list_roleId = (List<String>) context.get("roleId[]");
+		String s_sequence = (String) context.get("sequence");
+		List<String> list_correspondingAuthors = (List<String>) context
+				.get("correspondingAuthor[]");
+		String affilliation = (String) context.get("affilliation");
+		String staffName = (String) context.get("staffName");
+		Delegator delegator = ctx.getDelegator();
+		String correspondingAuthor = " ";
+		if (list_correspondingAuthors != null
+				&& list_correspondingAuthors.size() > 0)
+			correspondingAuthor = list_correspondingAuthors.get(0);
+		String roleId = "";
+		if (list_roleId != null && list_roleId.size() > 0)
+			roleId = list_roleId.get(0);
+		if (staffName == null)
+			staffName = " ";
+		if (affilliation == null)
+			affilliation = " ";
+
+		Debug.log(module + "::createExternalMemberOfAPaper, paperId = "
+				+ paperId + ", correspondingAuthor = " + correspondingAuthor
+				+ ", roleId = " + roleId);
+		long sequence = 0;
+		try {
+			sequence = Long.valueOf(s_sequence);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		try {
+
+			String externalMemberPaperDeclarationId = delegator
+					.getNextSeqId("ExternalMemberPaperDeclaration");
+			GenericValue sp = delegator
+					.makeValue("ExternalMemberPaperDeclaration");
+			sp.put("externalMemberPaperDeclarationId",
+					externalMemberPaperDeclarationId);
+			sp.put("paperId", paperId);
+			sp.put("correspondingAuthor", correspondingAuthor);
+			sp.put("roleId", roleId);
+			if (staffName != null && !staffName.equals(""))
+				sp.put("staffName", staffName);
+			if (affilliation != null && !affilliation.equals(""))
+				sp.put("affilliation", affilliation);
+
+			sp.put("sequence", sequence);
+			sp.put("statusId", "ENABLED");
+			delegator.create(sp);
+
+			Debug.log(module + "::createExternalMemberOfAPaper, paperId = "
+					+ paperId + ", staffName = " + staffName + ", roleId = "
+					+ roleId + ", CREATED");
+
+			GenericValue role = delegator.findOne("StaffPaperDeclarationRole",
+					UtilMisc.toMap("roleId", roleId), false);
+
+			GenericValue spv = delegator
+					.makeValue("ExternalMemberPaperDeclarationView");
+
+			spv.put("externalMemberPaperDeclarationId",
+					externalMemberPaperDeclarationId);
+			if (sp.get("staffName") != null)
+				spv.put("staffName", (String) sp.get("staffName"));
+			else
+				spv.put("staffName", "");
+
+			spv.put("paperId", (String) sp.get("paperId"));
+			spv.put("roleId", (String) sp.get("roleId"));
+			if (sp.get("affilliation") != null)
+				spv.put("affilliation", (String) sp.get("affilliation"));
+			else
+				spv.put("affilliation", "");
+
+			spv.put("sequence", sp.getLong("sequence"));
+
+			spv.put("correspondingAuthor",
+					(String) sp.get("correspondingAuthor"));
+			if (role.getString("roleName") != null)
+				spv.put("roleName", role.getString("roleName"));
+			else
+				spv.put("roleName", "");
+
+			retSucc.put("staffs", spv);
+			retSucc.put("message", "successfully");
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> updateExternalMemberOfAPaper(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String externalMemberPaperDeclarationId = (String) context
+				.get("externalMemberPaperDeclarationId");
+
+		String paperId = (String) context.get("paperId");
+		List<String> list_correspondingAuthors = (List<String>) context
+				.get("correspondingAuthor[]");
+		List<String> list_roleId = (List<String>) context.get("roleId[]");
+		String s_sequence = (String) context.get("sequence");
+		String affilliation = (String) context.get("affilliation");
+		String staffName = (String) context.get("staffName");
+		Delegator delegator = ctx.getDelegator();
+		String correspondingAuthor = " ";
+		if (list_correspondingAuthors != null
+				&& list_correspondingAuthors.size() > 0)
+			correspondingAuthor = list_correspondingAuthors.get(0);
+		if (affilliation == null)
+			affilliation = " ";
+		if (staffName == null)
+			staffName = " ";
+
+		String roleId = " ";
+		if (list_roleId != null && list_roleId.size() > 0)
+			roleId = list_roleId.get(0);
+
+		Debug.log(module
+				+ "::updateExternalMemberOfAPaper, externalMemberPaperDeclarationId = "
+				+ externalMemberPaperDeclarationId + ", staffName = "
+				+ staffName + ", roleId = " + roleId);
+		long sequence = 0;
+		try {
+			sequence = Long.valueOf(s_sequence);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		try {
+			GenericValue sp = delegator.findOne(
+					"ExternalMemberPaperDeclaration", UtilMisc.toMap(
+							"externalMemberPaperDeclarationId",
+							externalMemberPaperDeclarationId), false);
+			if (sp != null) {
+				sp.put("paperId", paperId);
+				sp.put("correspondingAuthor", correspondingAuthor);
+				sp.put("roleId", roleId);
+				if (staffName != null && !staffName.equals(""))
+					sp.put("staffName", staffName);
+				if (affilliation != null && !affilliation.equals(""))
+					sp.put("affilliation", affilliation);
+
+				sp.put("sequence", sequence);
+				sp.put("statusId", "ENABLED");
+
+				delegator.store(sp);
+
+				GenericValue role = delegator.findOne(
+						"StaffPaperDeclarationRole",
+						UtilMisc.toMap("roleId", roleId), false);
+
+				GenericValue spv = delegator
+						.makeValue("ExternalMemberPaperDeclarationView");
+
+				spv.put("externalMemberPaperDeclarationId",
+						externalMemberPaperDeclarationId);
+				if (sp.get("staffName") != null)
+					spv.put("staffName", (String) sp.get("staffName"));
+				else
+					spv.put("staffName", "");
+				spv.put("paperId", (String) sp.get("paperId"));
+				spv.put("roleId", (String) sp.get("roleId"));
+				if (sp.get("affilliation") != null)
+					spv.put("affilliation", (String) sp.get("affilliation"));
+				else
+					spv.put("affilliation", "");
+				spv.put("sequence", sp.getLong("sequence"));
+
+				spv.put("correspondingAuthor",
+						(String) sp.get("correspondingAuthor"));
+				if (role != null && role.getString("roleName") != null)
+					spv.put("roleName", role.getString("roleName"));
+				else
+					spv.put("roleName", "");
+
+				retSucc.put("staffs", spv);
+				retSucc.put("message", "successfully");
+			} else {
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> updateMemberOfAPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffPaperDeclarationId = (String) context
+				.get("staffPaperDeclarationId");
+		List<String> list_staffId = (List<String>) context.get("staffId[]");
+		List<String> list_roleId = (List<String>) context.get("roleId[]");
+		String s_sequence = (String) context.get("sequence");
+		List<String> list_correspondingAuthors = (List<String>) context
+				.get("correspondingAuthor[]");
+		List<String> list_affiliationOutsideUniversity = (List<String>) context
+				.get("affiliationOutsideUniversity[]");
+
+		String correspondingAuthor = null;
+		if (list_correspondingAuthors != null
+				&& list_correspondingAuthors.size() > 0)
+			correspondingAuthor = list_correspondingAuthors.get(0);
+
+		String affiliationOutsideUniversity = null;
+		if (list_affiliationOutsideUniversity != null
+				&& list_affiliationOutsideUniversity.size() > 0)
+			affiliationOutsideUniversity = list_affiliationOutsideUniversity
+					.get(0);
+
+		Delegator delegator = ctx.getDelegator();
+		String staffId = null;
+		if (list_staffId != null && list_staffId.size() > 0)
+			staffId = list_staffId.get(0);
+		String roleId = null;
+		if (list_roleId != null && list_roleId.size() > 0)
+			roleId = list_roleId.get(0);
+		Debug.log(module + "::updateMemberOfAPaper, staffPaperDeclarationId = "
+				+ staffPaperDeclarationId + ", staffId = " + staffId
+				+ ", roleId = " + roleId);
+		long sequence = 0;
+		try {
+			sequence = Long.valueOf(s_sequence);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		try {
+			GenericValue sp = delegator.findOne("StaffPaperDeclaration",
+					UtilMisc.toMap("staffPaperDeclarationId",
+							staffPaperDeclarationId), false);
+			if (sp != null) {
+				if (staffId != null)
+					sp.put("staffId", staffId);
+				// else sp.put("staffId", "");
+				if (roleId != null)
+					sp.put("roleId", roleId);
+				// else sp.put("roleId", "");
+
+				if (correspondingAuthor != null)
+					sp.put("correspondingAuthor", correspondingAuthor);
+				if (affiliationOutsideUniversity != null)
+					sp.put("affiliationOutsideUniversity",
+							affiliationOutsideUniversity);
+
+				// else sp.put("correspondingAuthor", "");
+				sp.put("sequence", sequence);
+				sp.put("statusId", "ENABLED");
+				delegator.store(sp);
+
+				GenericValue role = delegator.findOne(
+						"StaffPaperDeclarationRole",
+						UtilMisc.toMap("roleId", roleId), false);
+
+				GenericValue staff = delegator.findOne("Staff",
+						UtilMisc.toMap("staffId", staffId), false);
+
+				GenericValue spv = delegator.makeValue("PapersStaffView");
+
+				spv.put("staffPaperDeclarationId", staffPaperDeclarationId);
+				if (sp.get("staffId") != null)
+					spv.put("staffId", (String) sp.get("staffId"));
+				else
+					spv.put("staffId", "");
+				spv.put("paperId", (String) sp.get("paperId"));
+				if (sp.get("roleId") != null)
+					spv.put("roleId", (String) sp.get("roleId"));
+				else
+					spv.put("roleId", "");
+				if (staff != null && staff.getString("staffName") != null)
+					spv.put("staffName", staff.getString("staffName"));
+				else
+					spv.put("staffName", "");
+				if (role != null && role.getString("roleName") != null)
+					spv.put("roleName", role.getString("roleName"));
+				else
+					spv.put("roleName", "");
+
+				if (correspondingAuthor != null)
+					spv.put("correspondingAuthor", correspondingAuthor);
+				if (affiliationOutsideUniversity != null)
+					spv.put("affiliationOutsideUniversity",
+							affiliationOutsideUniversity);
+
+				retSucc.put("staffs", spv);
+				retSucc.put("message", "successfully");
+			} else {
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> removeMemberOfAPaper(DispatchContext ctx,
+			Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String staffPaperDeclarationId = (String) context
+				.get("staffPaperDeclarationId");
+		Delegator delegator = ctx.getDelegator();
+		Debug.log(module + "::removeMemberOfAPaper, staffPaperDeclarationId = "
+				+ staffPaperDeclarationId);
+		try {
+			GenericValue sp = delegator.findOne("StaffPaperDeclaration",
+					UtilMisc.toMap("staffPaperDeclarationId",
+							staffPaperDeclarationId), false);
+			if (sp != null) {
+				// delegator.removeValue(sp);
+				sp.put("statusId", "DISABLED");
+				delegator.store(sp);
+				retSucc.put("message", "successfully");
+			} else {
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> removeExternalMemberOfAPaper(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		String externalMemberPaperDeclarationId = (String) context
+				.get("externalMemberPaperDeclarationId");
+		Delegator delegator = ctx.getDelegator();
+		Debug.log(module
+				+ "::removeExternalMemberOfAPaper, externalMemberPaperDeclarationId = "
+				+ externalMemberPaperDeclarationId);
+		try {
+			GenericValue sp = delegator.findOne(
+					"ExternalMemberPaperDeclaration", UtilMisc.toMap(
+							"externalMemberPaperDeclarationId",
+							externalMemberPaperDeclarationId), false);
+			if (sp != null) {
+
+				sp.put("statusId", "DISABLED");
+				delegator.store(sp);
+				// delegator.removeValue(sp);
+
+				retSucc.put("message", "successfully");
+			} else {
+				retSucc.put("message", "ban ghi khong ton tai");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+
+	}
+
+	public static Map<String, Object> getListPaperCategoryKNC(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.EQUALS, "ENABLED"));
+
+			List<GenericValue> listPaperCategoryKNC = delegator.findList(
+					"PaperCategoryKNC", EntityCondition.makeCondition(conds),
+					null, null, null, false);
+
+			retSucc.put("listPaperCategoryKNC", listPaperCategoryKNC);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> getListPaperDeclaration(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+
+		try {
+
+			List<GenericValue> listPaperDeclaration = delegator.findList(
+					"PaperDeclarationStatus", null, null, null, null, false);
+
+			retSucc.put("listPaperDeclaration", listPaperDeclaration);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			ServiceUtil.returnError(ex.getMessage());
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> updatePaperDeclarationStatus(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatch = ctx.getDispatcher();
+
+		String paperId = (String) context.get("paperId");
+		String statusId = (String) context.get("statusId");
+
+		try {
+			GenericValue gv = delegator.findOne("PaperDeclaration", false,
+					UtilMisc.toMap("paperId", paperId));
+			if (gv != null) {
+				gv.put("approveStatusId", statusId);
+
+				delegator.store(gv);
+
+				retSucc.put("message", "Thay đổi trạng thái thành công");
+			} else {
+				retSucc.put("message", "Không tìm thấy bài báo");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+
+		}
+		return retSucc;
+	}
+
+	public static Map<String, Object> updatePaperCategoryKNC(
+			DispatchContext ctx, Map<String, ? extends Object> context) {
+		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
+
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatch = ctx.getDispatcher();
+
+		String paperId = (String) context.get("paperId");
+		String paperCategoryKNCId = (String) context.get("paperCategoryKNCId");
+
+		try {
+			GenericValue gv = delegator.findOne("PaperDeclaration", false,
+					UtilMisc.toMap("paperId", paperId));
+			if (gv != null) {
+				gv.put("paperCategoryKNCId", paperCategoryKNCId);
+
+				delegator.store(gv);
+
+				retSucc.put("message", "Thay đổi thành công");
+			} else {
+				retSucc.put("message", "Không tìm thấy bài báo");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ServiceUtil.returnError(ex.getMessage());
+
+		}
+		return retSucc;
 	}
 }

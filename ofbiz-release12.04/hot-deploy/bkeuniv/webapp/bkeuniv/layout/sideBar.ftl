@@ -11,9 +11,11 @@
 		<#else>
 			<#assign styleMain="" />
 		</#if>
+		<#assign autoURLTitlePage=false />
 		<#if "user"?index_of(targetCurr)!= -1 || targetCurr?index_of("user")!= -1>
 			<#assign styleUser="background-color: rgba(0, 0, 0, 0.1);" />
 			<#if !titlePage??>
+				<#assign autoURLTitlePage=true />
 				<#assign titlePage=uiLabelMap.BkEunivPersonalInformation />
 			</#if>
 		<#else>
@@ -24,11 +26,11 @@
 		<hr class="side-bar-separator" />
 
 		<#list functions.permissionFunctions as f>
-			<#if f.function.target??>
-				<#if f.function.target?index_of(targetCurr)!= -1 || targetCurr?index_of(f.function.target)!= -1>
+			<#if f.target??>
+				<#if f.target?index_of(targetCurr)!= -1 || targetCurr?index_of(f.target)!= -1>
 					<#assign styleItem="background-color: rgba(0, 0, 0, 0.1);" />
-					<#if !titlePage??>
-						<#assign titlePage=f.function.vnLabel />
+					<#if !titlePage?? || autoURLTitlePage>
+						<#assign titlePage=f.vnLabel />
 					</#if>
 				<#else>
 					<#assign styleItem="" />
@@ -36,7 +38,7 @@
 			<#else>
 				<#assign styleItem="" />
 			</#if>
-			<@ListItem id=f.function.functionId style=styleItem primaryText=f.function.vnLabel leftIcon=f.function.icon linkTo=f.function.target open=isOpen(f, Request.targetRequestUri)>
+			<@ListItem id=f.functionId style=styleItem primaryText=f.vnLabel leftIcon=f.icon linkTo=f.target open=isOpen(f, Request.targetRequestUri)>
 				<#if f.children??>
 					<#list f.children as cf>
 						<#if cf.target??>
@@ -44,7 +46,7 @@
 							<#assign pathCFT = cf.target?split("/", "r") />
 							<#if (cf.target?index_of(targetCurr)!= -1 || targetCurr?index_of(cf.target)!= -1)&&(pathT[pathT?size - 1]==pathCFT[pathCFT?size - 1])>
 								<#assign styleItem="background-color: rgba(0, 0, 0, 0.1);" />
-								<#if !titlePage??>
+								<#if !titlePage?? || autoURLTitlePage>
 									<#assign titlePage=cf.vnLabel />
 								</#if>
 							<#else>
@@ -65,7 +67,7 @@
 
 <#function isOpen parent target=Request.targetRequestUri>
 	<#if parent??&&parent?is_hash_ex>
-		<#if parent.children??&&parent.children?is_hash_ex>
+		<#if parent.children??&&parent.children?is_sequence>
 			<#list parent.children as cf>
 				<#if cf.target??>
 					<#assign pathT = target?split("/", "r") />

@@ -2,6 +2,18 @@
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
   <head>
+    <!-- Bootstrap Core CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resource/bkeuniv/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resource/bkeuniv/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/south-street/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/resource/bkeuniv/css/lib/dataTables.bootstrap.min.css">
@@ -32,7 +44,7 @@
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 ${uiLabel.Faculty}
 <#assign LF = listFaculties.faculties?size>
-<select id="faculty" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
+<select id="faculty" class="form-control" style="width: 100%" type="text" width="1000" onChange='changeFaculty()'>
 		 	
 		 	<#if 1 < LF>
 		 		<option value="all" selected>${uiLabel.All}</option>
@@ -50,7 +62,10 @@ ${uiLabel.Faculty}
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
 ${uiLabel.ProjectCallName}
+<!--
 <select id="projectCallId" style="width: 100%" type="text" width="1000" onChange='changeProjectCall()'>
+-->
+<select id="projectCallId" class="form-control" onChange='changeProjectCall()'>
 		 	<option value="all" selected>${uiLabel.All}</option>
 		 	<#list resultProjectCalls.projectCalls as pc>
 		 		<option value="${pc.projectCallId}">${pc.projectCallName}</option>
@@ -61,7 +76,7 @@ ${uiLabel.ProjectCallName}
 <div class="inline-box" style="width: 50%; padding: 10px 0px;">
 
 ${uiLabel.Status}
-<select id="projectProposalStatusId" style="width: 100%" type="text" width="1000">
+<select id="projectProposalStatusId" class="form-control">
 		 	<option value="all" selected>${uiLabel.All}</option>
 		 	<#list resultProjectProposalStatus.projectProposalStatus as pps>
 		 		<option value="${pps.statusId}">${pps.statusName}</option>
@@ -74,6 +89,7 @@ ${uiLabel.Status}
 <@buttonExportExcel text="${uiLabel.Excel}" action="exportProposalsExcel"/>
 
 </div>
+
 
 <script>
 function exportProposalsExcel(){

@@ -1,4 +1,124 @@
-<#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
+<#include "component://bkeuniv/webapp/bkeuniv/layout/jqServerSide.ftl"/>
+<body>
+
+<script>
+
+	function createContextMenu(id) {
+		$(document).contextmenu({
+			delegate: '#'+id+ ' td',
+		menu: [
+		<#--  {title: "${uiLabelMap.BkEunivEdit}", cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},  -->
+		{title: "${uiLabelMap.BkEunivResearchProjectJuryMembers}", cmd: "members", uiIcon: "glyphicon glyphicon-user"},
+		{title: "${uiLabelMap.BkEunivResearchProjectJuryAssginReviewer}", cmd: "asignreviewer", uiIcon: "glyphicon glyphicon-list-alt"},
+		<#--  {title: "${uiLabelMap.BkEunivRemove}", cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}  -->
+		],
+		select: function(event, ui) {
+			var el = ui.target.parent();
+            var data = jqDataTable.table.row( el ).data();
+			switch(ui.cmd){
+				case "delete":
+					jqDelete(data);
+					break;
+				case "edit":
+					jqChange(data);
+					break;
+				case "members":
+					window.location.href="/bkeuniv/control/research-project-jury-members?juryId=" + data.juryId;
+					break;
+				case "asignreviewer":
+					window.location.href="/bkeuniv/control/research-project-jury-assgin-reviewer?juryId=" + data.juryId;
+					break;
+			}
+		},
+			beforeOpen: function(event, ui) {
+				var $menu = ui.menu,
+					$target = ui.target,
+					extraData = ui.extraData;
+				ui.menu.zIndex(9999);
+			}
+		});
+	}
+	
+</script> 
+
+<div class="body">
+	<#assign columns=[
+		{
+			"name": uiLabelMap.JuryName?j_string,
+			"data": "juryName"
+		},
+		{
+			"name": uiLabelMap.FacultyName?j_string,
+			"data": "facultyName"
+		},
+		{
+			"name": uiLabelMap.ProjectCallName?j_string,
+			"data": "projectCallName"
+		}
+	] />	
+
+	<#assign fields=[
+		"juryId",
+		"juryName",
+		"facultyName",
+		"projectCallName"
+		
+	] />
+<#--  
+	<#assign columnsChange=[
+		{
+			"name": staffManagementUiLabelMap.BkEunivFullName?j_string,
+			"value": "staffName"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivEmail?j_string,
+			"value": "staffEmail"
+		}
+	] />
+
+	<#assign columnsNew=[
+		{
+			"name": staffManagementUiLabelMap.BkEunivStaffId?j_string,
+			"value": "staffId"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivStaffPassword?j_string,
+			"value": "password"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivStaffPermissionGroup?j_string,
+			"value": "groupId"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivFullName?j_string,
+			"value": "staffName"
+		},
+		{
+			"name": staffManagementUiLabelMap.BkEunivEmail?j_string,
+			"value": "staffEmail"
+		}
+	] />
+	  -->
+	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
+	
+	<@jqDataTable
+		id="jqDataTable"
+		urlData="/bkeuniv/control/jqxGeneralServicer?sname=JQGetListProjectProposalJuries" 
+		columns=columns 
+		dataFields=fields
+		sizeTable=sizeTable
+		keysId=["juryId"]
+		<#--  titleChange=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		titleNew=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		titleDelete=staffManagementUiLabelMap.BkEunivStaffHeaderScreen
+		jqTitle=staffManagementUiLabelMap.BkEunivStaffHeaderScreen  -->
+		contextmenu=false
+		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
+	/>
+</div>
+
+
+<#--  <#include "component://bkeuniv/webapp/bkeuniv/lib/meterial-ui/index.ftl"/>
 
   <head>
 
@@ -119,4 +239,4 @@ $(document).ready(function() {
   });
     
 } );
-</script>
+</script>  -->

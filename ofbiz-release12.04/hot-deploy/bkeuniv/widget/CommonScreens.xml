@@ -35,7 +35,7 @@
 					</html>
 				</platform-specific>
 				
-				<decorator-section-include name="body"/>
+				<decorator-section-include name="body" />
 				
 				<platform-specific>
 					<html>

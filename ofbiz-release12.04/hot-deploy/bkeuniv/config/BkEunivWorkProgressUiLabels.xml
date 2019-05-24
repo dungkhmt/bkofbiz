@@ -23,17 +23,17 @@
     
     <property key="Position">
         <value xml:lang="en">Position</value>
-        <value xml:lang="vi">Chức vụ</value>
+        <value xml:lang="vi">Vị trí công tác</value>
     </property>
     
     <property key="Specialization">
         <value xml:lang="en">Specialization</value>
-        <value xml:lang="vi">Chuyên ngành</value>
+        <value xml:lang="vi">Lĩnh vực chuyên môn</value>
     </property>
     
     <property key="Institution">
         <value xml:lang="en">Institution</value>
-        <value xml:lang="vi">Tổ chức</value>
+        <value xml:lang="vi">Cơ quan công tác</value>
     </property>
     
     <property key="TitleNewWorkProgress">

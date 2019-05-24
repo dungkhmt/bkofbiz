@@ -3,21 +3,33 @@
 <div class="body">
 	<#assign columns=[
 		{
-			"name": projectDeclarationUiLabelMap.partyId?j_string,
-			"data": "partyId"
-		},
-		{
 			"name": projectDeclarationUiLabelMap.ProjectCategoryId?j_string,
 			"data": "projectCategoryName"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
-			"data": "researchProjectProposalName"
+			"width": "300px",
+			"data": "researchProjectProposalName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+			}'
+		},
+		{
+			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
+			"data": "researchProjectProposalCode"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
+			"width": "120px",
 			"data": "startDate"
+		},
+		{
+			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
+			"width": "200px",
+			"type": "currency",
+			"data": "totalBudget"
 		}
+		
 	] />
 	
 	<#assign fields=[
@@ -28,6 +40,7 @@
 		"projectCallId",
 		"projectCategoryId",
 		"researchProjectProposalName",
+		"researchProjectProposalCode",
 		"totalBudget",
 		"statusId",
 		"approvedByStaffId",
@@ -97,11 +110,20 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
-			"value": "researchProjectProposalName"
+			"value": "researchProjectProposalName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
+			"value": "researchProjectProposalCode"
+		},
+
+		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
-			"value": "totalBudget"
+			"value": "totalBudget",
+			"pattern": "[1-9]([0-9]{0,20})",
+			"title": "So nguyen duong"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
@@ -130,8 +152,14 @@
 			"value": "researchProjectProposalName"
 		},
 		{
+			"name": projectDeclarationUiLabelMap.ResearchProjectProposalCode?j_string,
+			"value": "researchProjectProposalCode"
+		},
+		{
 			"name": projectDeclarationUiLabelMap.TotalBudget?j_string,
-			"value": "totalBudget"
+			"value": "totalBudget",
+			"pattern": "[1-9]([0-9]{0,20})",
+			"title": "So nguyen duong"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,
@@ -163,4 +191,5 @@
 		titleNew=projectDeclarationUiLabelMap.TitleNewProjectDeclaration?j_string
 		titleDelete=projectDeclarationUiLabelMap.TitleDeleteProjectDeclaration?j_string
 	/>
+	
 </div>

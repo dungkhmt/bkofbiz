@@ -4,7 +4,14 @@
 	<#assign columns=[
 		{
 			"name": projectDeclarationUiLabelMap.ResearchProjectProposalName?j_string,
-			"data": "researchProjectProposalName"
+			"data": "researchProjectProposalName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal?researchProjectProposalId="+dataColumns.researchProjectProposalId+"\\">" + value + "</a>";
+			}'
+		},
+		{
+			"name": projectDeclarationUiLabelMap.CreateStaffId?j_string,
+			"data": "createStaffId"
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
@@ -19,8 +26,10 @@
 			"data": "academicYearName"
 		},
 		{
-			"name": projectDeclarationUiLabelMap.WorkingDays?j_string,
-			"data": "workingdays"
+			"name": projectDeclarationUiLabelMap.BkEunivWorkingHours?j_string,
+			"data": "workinghours",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		}
 	] />
 	
@@ -28,8 +37,9 @@
 		"researchProjectDeclarationYearId",
 		"researchProjectProposalId",
 		"staffId",
+		"createStaffId",
 		"projectParticipationRoleId",
-		"workingdays",
+		"workinghours",
 		"academicYearId",
 		"academicYearName",
 		"staffName",
@@ -61,13 +71,6 @@
 		</#if>
 	</#list>
 	
-	<#assign listStaff = [] />
-	<#list staffS.staffs as project>
-		<#if project?has_content>
-             <#assign op = { "name": project.staffName?j_string ,"value": project.staffId?j_string } />
-						<#assign listStaff = listStaff + [op] />
-		</#if>
-	</#list>
 	
 	<#assign columnsNew=[
 		{
@@ -79,6 +82,7 @@
 				"maxItem": 1
 			}
 		},
+		<!--
 		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
 			"value": "staffId",
@@ -86,6 +90,17 @@
 			"option": {
 				"source": listStaff,
 				"maxItem": 1
+			}
+		},
+		-->
+		{
+			"name": projectDeclarationUiLabelMap.StaffId?j_string,
+			"value": "staffId",
+			"type":"select_server_side",
+			"option":{
+				"maxItem": 1,
+				"render": 'function(r){return {title:"[" + r.staffId +"] " + r.staffName, id: r.staffId, text: r.staffName + " ["+ r.facultyName +" - "+r.departmentName+"]"}}',
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
 		{
@@ -107,8 +122,10 @@
 			}
 		},
 		{
-			"name": projectDeclarationUiLabelMap.WorkingDays?j_string,
-			"value": "workingdays"
+			"name": projectDeclarationUiLabelMap.BkEunivWorkingHours?j_string,
+			"value": "workinghours",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		}
 	] />
 	
@@ -122,10 +139,28 @@
 				"maxItem": 1
 			}
 		},
+		<!--
 		{
 			"name": projectDeclarationUiLabelMap.StaffId?j_string,
-			"value": "staffId"
+			"value": "staffId",
+			"type": "select",
+			"option": {
+				"source": listStaff,
+				"maxItem": 1
+			}
 		},
+		-->
+		{
+			"name": projectDeclarationUiLabelMap.StaffId?j_string,
+			"value": "staffId",
+			"type":"select_server_side",
+			"option":{
+				"maxItem": 1,
+				"render": 'function(r){return {title:"[" + r.staffId +"] " + r.staffName, id: r.staffId, text: r.staffName + " ["+ r.facultyName +" - "+r.departmentName+"]"}}',
+				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
+			}
+		},
+
 		{
 			"name": projectDeclarationUiLabelMap.ProjectParticipationRoleId?j_string,
 			"value": "projectParticipationRoleId",
@@ -145,8 +180,10 @@
 			}
 		},
 		{
-			"name": projectDeclarationUiLabelMap.WorkingDays?j_string,
-			"value": "workingdays"
+			"name": projectDeclarationUiLabelMap.BkEunivWorkingHours?j_string,
+			"value": "workinghours",
+			"pattern": "[1-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		}
 	] />
 	
@@ -159,7 +196,7 @@
 		columnsChange=columnsChange 
 		dataFields=fields 
 		sizeTable=sizeTable
-		keysId=["researchProjectProposalId"] 
+		keysId=["researchProjectDeclarationYearId"] 
 		fieldDataResult = "projectDeclarations"
 		urlAdd="/bkeuniv/control/create-project-working-hour-declaration" 
 		urlUpdate="/bkeuniv/control/update-project-working-hour-declaration" 

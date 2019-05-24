@@ -12,7 +12,11 @@
     
     <property key="BkEunivPaperName">
         <value xml:lang="en">Paper name</value>
-        <value xml:lang="vi">Tên bài báo</value>
+        <value xml:lang="vi">Tên bài báo, sách</value>
+    </property>
+    <property key="BkEunivAffiliationOutside">
+        <value xml:lang="en">Affiliation Outside</value>
+        <value xml:lang="vi">Affiliation trường ngoài</value>
     </property>
     <property key="BkEunivRoleName">
         <value xml:lang="en">Role (author/co-author)</value>
@@ -24,16 +28,63 @@
         <value xml:lang="vi">Tác giả (cách nhau bởi dấu phảy)</value>
     </property>
     
+    <property key="BkEunivAuthors">
+        <value xml:lang="en">Authors</value>
+        <value xml:lang="vi">Tác giả</value>
+    </property>
+	<property key="BkEunivProjectName">
+        <value xml:lang="en">Project</value>
+        <value xml:lang="vi">Đề tài, dự án</value>
+
+    </property>
+	<property key="BkEunivPublicationName">
+        <value xml:lang="en">Papers</value>
+        <value xml:lang="vi">Tên công trình</value>
+    </property>
+
+	<property key="BkEunivCVProjectSeq">
+        <value xml:lang="en">Sequence</value>
+        <value xml:lang="vi">Số thứ tự</value>
+    </property>
+
     <property key="BkEunivPaperCategory">
         <value xml:lang="en">Category</value>
         <value xml:lang="vi">Loại bài báo</value>
     </property>
+    <property key="BkEunivPaperCategoryKNC">
+        <value xml:lang="en">Category KNC</value>
+        <value xml:lang="vi">Loại bài báo KNC</value>
+    </property>
+
+    <property key="BkEunivResearchProjectOfPaper">
+        <value xml:lang="en">Research Project</value>
+        <value xml:lang="vi">Thuộc đề tài</value>
+    </property>
     
     <property key="BkEunivPaperJournalConference">
         <value xml:lang="en">Journal/Conference</value>
-        <value xml:lang="vi">Tên tại chí, hội nghị</value>
+        <value xml:lang="vi">Tên tạp chí, hội nghị</value>
     </property>
    
+    <property key="BkEunivPaperDOI">
+        <value xml:lang="en">DOI</value>
+        <value xml:lang="vi">DOI</value>
+    </property>
+    
+    <property key="BkEunivPaperLink">
+        <value xml:lang="en">Link</value>
+        <value xml:lang="vi">Đường Link bài báo</value>
+    </property>
+    <property key="BkEunivApproveStatus">
+        <value xml:lang="en">Approve Status</value>
+        <value xml:lang="vi">Tình trạng phê duyệt</value>
+    </property>
+
+    <property key="BkEunivPaperIF">
+        <value xml:lang="en">Impact Factor</value>
+        <value xml:lang="vi">Impact Factor</value>
+    </property>
+
     <property key="BkEunivPaperVolumn">
         <value xml:lang="en">Volumn</value>
         <value xml:lang="vi">Số, Trang (ví dụ: vol. 21, pp 13-25)</value>
@@ -61,14 +112,78 @@
 
     <property key="BkEunivDownloadPaper">
         <value xml:lang="en">Download</value>
-        <value xml:lang="vi">Tải bài báo</value>
+        <value xml:lang="vi">Tải File bài báo</value>
     </property>
    
+    <property key="BkEunivSequenceMembers">
+        <value xml:lang="en">Sequence Member of papers</value>
+        <value xml:lang="vi">Số thứ tự (trong danh sách tác giả)</value>
+    </property>
+
+    <property key="BkEunivCorrespondingAuthor">
+        <value xml:lang="en">Corresponding author</value>
+        <value xml:lang="vi">Corresponding author</value>
+    </property>
+    
+    <property key="AffiliationOutsideUniversity">
+        <value xml:lang="en">Affiliation Outside University</value>
+        <value xml:lang="vi">Affiliation Ngoài Trường</value>
+    </property>
+    <property key="AuthorSequence">
+        <value xml:lang="en">Author sequence</value>
+        <value xml:lang="vi">Thứ tự tác giả</value>
+    </property>
+
+    <property key="Affiliation">
+        <value xml:lang="en">Affiliation</value>
+        <value xml:lang="vi">Cơ quan</value>
+    </property>
+
     <property key="BkEunivPaperMembers">
         <value xml:lang="en">Member of papers</value>
         <value xml:lang="vi">Thành viên bài báo</value>
     </property>
    
+    <property key="BkEunivPaperMembersHUST">
+        <value xml:lang="en">Member of papers</value>
+        <value xml:lang="vi">Thành viên bài báo là cán bộ trường</value>
+    </property>
+
+    <property key="BkEunivPaperExternalMembersHUST">
+        <value xml:lang="en">External member of papers</value>
+        <value xml:lang="vi">Thành viên khác của bài báo</value>
+    </property>
+
+    <property key="BkEunivSelectFaculty">
+        <value xml:lang="en">Faculty</value>
+        <value xml:lang="vi">Khoa, viện</value>
+    </property>
+
+    <property key="BkEunivSelectDepartment">
+        <value xml:lang="en">Department</value>
+        <value xml:lang="vi">Bộ môn</value>
+    </property>
+    
+    <property key="BkEunivSelectStaff">
+        <value xml:lang="en">Staff</value>
+        <value xml:lang="vi">Cán bộ</value>
+    </property>
+    
+    <property key="BkEunivSelectRole">
+        <value xml:lang="en">Role</value>
+        <value xml:lang="vi">Vai trò</value>
+    </property>
+
+    <property key="BkEunivAdd">
+        <value xml:lang="en">Add</value>
+        <value xml:lang="vi">Thêm</value>
+    </property>
+    
+    <property key="BkEunivRemove">
+        <value xml:lang="en">Remove</value>
+        <value xml:lang="vi">Loại bỏ</value>
+    </property>
+
     <property key="BkEunivUpdatePaper">
         <value xml:lang="en">Update information of the paper</value>
         <value xml:lang="vi">Chỉnh sửa thông tin bài báo</value>
@@ -86,6 +201,16 @@
     <property key="BkEunivRejectPaper">
         <value xml:lang="en">Reject</value>
         <value xml:lang="vi">Không Phê duyệt</value>
+    </property>
+    
+    <property key="BkEunivUploadFilePaper">
+        <value xml:lang="en">Upload file paper</value>
+        <value xml:lang="vi">Tải lên bài báo, sách</value>
+    </property>
+    
+    <property key="BkEunivStatusPaper">
+        <value xml:lang="en">Status</value>
+        <value xml:lang="vi">Trạng thái</value>
     </property>
     
    

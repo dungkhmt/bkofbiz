@@ -164,27 +164,50 @@
     
     <div class="modal-body">
       	<div class="inline-box" style="width: 100%; padding: 10px 0px;">	
+      		<table>
+      		<tr>
+      		<td>
       		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon Khoa/vien 
+				${paperDeclarationUiLabelMap.BkEunivSelectFaculty}
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id="facultyId" style="width: 100%" onchange="changeFaculty()"></select>
         	</div>
+        	</td>
+        	</tr>
+        	<tr>
+        	<td>
         	<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon Bo mon 
+				${paperDeclarationUiLabelMap.BkEunivSelectDepartment} 
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id="departmentId" width=50px" onchange="changeDepartment()"></select>
       		</div>
+      		</td>
+      		</tr>
+      		<tr>
+      		<td>
       		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon giang vien 
+				${paperDeclarationUiLabelMap.BkEunivSelectStaff}
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id = "staffs" width="30px"></select>
       		</div>
+      		</td>
+      		</tr>
+      		<tr>
+      		<td>
       		<div style="display: inline-block;width: 30%; padding: 10px 0px;">
-				Chon vai tro
+				${paperDeclarationUiLabelMap.BkEunivSelectRole}
 			</div>
+			</td>
+			<td>
 			<div style="display: inline-block;width: 100%; padding: 10px 0px;">
       			<select id = "roleId" width="30px">
       				<#list paperRoles.roles as r>
@@ -192,7 +215,15 @@
       				</#list>
       			</select>
       		</div>
-      		<@buttonStore text="Them" action="addMemberPaper"/>
+      		</td>
+      		</tr>
+      		<tr>
+      		<td>
+      		<@buttonStore text="${paperDeclarationUiLabelMap.BkEunivAdd}" action="addMemberPaper"/>
+      		</td>
+      		<td></td>
+      		</tr>
+      		</table>
       	</div>
       <table id="staffs-of-paper" border = "1"></table>
       
@@ -211,16 +242,24 @@
 	var modal;
 	var span;
 	var selectedEntry;
+
+	function gotoAddPaper() {
+		setTimeout(function(){
+			window.location.href="/bkeuniv/control/form-add-paper-declaration";
+		}, 200);
+	}
+
 	function createContextMenu(id) {
 		
 		$(document).contextmenu({
 			    delegate: "#"+id+"-content td",
 			menu: [
-			  {title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
-			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"},
-			  {title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
-			  {title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
-			  {title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
+			  //{title: '${uiLabelMap.BkEunivEdit}', cmd: "edit", uiIcon: "glyphicon glyphicon-edit"},
+			  {title: '${uiLabelMap.BkEunivRemove}', cmd: "delete", uiIcon: "glyphicon glyphicon-trash"}
+			  //{title: 'Thanh vien bai bao', cmd: "papermember", uiIcon: "glyphicon glyphicon-user"},
+			  //{title: 'Chi bai bao', cmd: "detailpaper", uiIcon: "glyphicon glyphicon-user"},
+			  //{title: 'Upload PDF', cmd: "upload", uiIcon: "glyphicon glyphicon-open"},
+			  //{title: 'Tai PDF', cmd: "pdf", uiIcon: "glyphicon glyphicon-save"}
 			
 			],
 			select: function(event, ui) {
@@ -228,7 +267,10 @@
 				var data = jqDataTable.table.row( el ).data();
 				switch(ui.cmd){
 					case "edit":
-						jqChange(data)
+						setTimeout(function(){
+							window.location.href="/bkeuniv/control/form-edit-paper-declaration?paperId="+data.paperId;
+						}, 200);
+						//jqChange(data)
 						break;
 					case "delete":
 						jqDelete(data);
@@ -238,6 +280,9 @@
 						break;
 					case "upload":
 						jqUploadFile(data);
+						break;
+					case "detailpaper":
+						jqDetailPaper(data);
 						break;
 					case "papermember":
 						jqPaperMember(data);
@@ -386,7 +431,7 @@
 						
 						var cell_action = row.insertCell(2);
 						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
-						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
+						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>${paperDeclarationUiLabelMap.BkEunivRemove}</button>';
 						cell_action.innerHTML = btn;
 					}
 
@@ -417,6 +462,10 @@
 		//form.submit();
 		
 	}			
+	
+	function jqDetailPaper(data){
+		window.location.href="/bkeuniv/control/detail-paper?paperId=" + data.paperId;
+	}
 	
 	function jqPaperMember(data){
 		/*
@@ -491,7 +540,7 @@
 						
 						var cell_action = row.insertCell(2);
 						var btn = '<button id="jqDataTable-button-remove" onclick=\'removeStaffPaper(' +
-						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>Xoa</button>';
+						selectedEntry.paperId + ',"' + lst_staffs.staffsofpaper[i].id + '", this)\'>${paperDeclarationUiLabelMap.BkEunivRemove}</button>';
 						cell_action.innerHTML = btn;
 					}
 					
@@ -667,7 +716,23 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"data": "paperName"
+			"data": "paperName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-paper?paperId="+dataColumns.paperId+"\\">" + value + "</a>";
+			}'
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
+			"data": "year"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
+			"data": "month"
+			
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
+			"data": "researchProjectProposalName"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
@@ -682,6 +747,12 @@
 			"data": "categoryName"
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"data": "paperCategoryKNCName"
+		},
+		
+		
+		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
 			"data": "authors"
 		},
@@ -690,14 +761,15 @@
 			"data": "journalConferenceName"
 		},
 		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"data": "month"
-			
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"data": "DOI"
 		},
 		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"data": "year"
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"data": "impactFactor"
 		},
+		
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAcademicYear?j_string,
 			"data": "academicYearId"
@@ -709,6 +781,27 @@
 		<#if paper?has_content>
              <#assign op = { "name": paper.paperCategoryName?j_string ,"value": paper.paperCategoryCode?j_string } />
 						<#assign source = source + [op] />
+		</#if>
+	</#list>
+	
+	<#assign sourceKNC = [] />
+	<#list paperCategoryKNC.listPaperCategoryKNC as knc>
+		<#if knc?has_content>
+             <#assign op = { "name": knc.paperCategoryKNCName?j_string ,"value": knc.paperCategoryKNCId?j_string } />
+						<#assign sourceKNC = sourceKNC + [op] />
+		</#if>
+	</#list>
+	
+	<#assign sourceResearchProjects = [] />
+	<#assign op={"name":"","value":""}/>
+	<#assign sourceResearchProjects = sourceResearchProjects + [op] />
+	
+	<#list projects.researchProjectProposals as prj>
+		<#if prj?has_content>
+			<#if prj.researchProjectProposalName?exists>
+             <#assign op = { "name": prj.researchProjectProposalName?j_string ,"value": prj.researchProjectProposalId?j_string } />
+						<#assign sourceResearchProjects = sourceResearchProjects + [op] />
+			</#if>
 		</#if>
 	</#list>
 	
@@ -737,8 +830,16 @@
 		"volumn",
 		"authors",
 		"journalConferenceName",
+		"DOI",
+		"ISSN",
+		"link"
+		"impactFactor"
 		"paperCategoryId",
+		"researchProjectProposalId",
+		"researchProjectProposalName",
 		"categoryName",
+		"paperCategoryKNCName",
+		"paperCategoryKNCId",
 		"paperName",
 		"month",
 		"year",
@@ -749,7 +850,9 @@
 	<#assign columnsChange=[
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"value": "paperName"
+			"value": "paperName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
@@ -762,7 +865,9 @@
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
-			"value": "authors"
+			"value": "authors",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperCategory?j_string,
@@ -773,23 +878,65 @@
 				"maxItem": 1
 			}
 		},
-		
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"value": "paperCategoryKNCId",
+			"type": "select",
+			"option": {
+				"source": sourceKNC,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
+			"value": "researchProjectProposalId",
+			"type": "select",
+			"option": {
+				"source": sourceResearchProjects,
+				"maxItem": 1
+			}
+		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
-			"value": "journalConferenceName"
+			"value": "journalConferenceName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperLink?j_string,
+			"value": "link"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"value": "impactFactor",
+			"pattern": "([0-9]{0,3}).([0-9]{0,9})",
+			"title": "So thuc"
+		},
+		
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"value": "month"
+			"value": "month",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 			
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
@@ -810,11 +957,15 @@
 	<#assign columnsNew=[
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperName?j_string,
-			"value": "paperName"
+			"value": "paperName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperAuthors?j_string,
-			"value": "authors"
+			"value": "authors",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivRoleName?j_string,
@@ -834,23 +985,66 @@
 				"maxItem": 1
 			}
 		},
-		
 		{
-			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
-			"value": "journalConferenceName"
+			"name": paperDeclarationUiLabelMap.BkEunivPaperCategoryKNC?j_string,
+			"value": "paperCategoryKNCId",
+			"type": "select",
+			"option": {
+				"source": sourceKNC,
+				"maxItem": 1
+			}
 		},
 		{
+			"name": paperDeclarationUiLabelMap.BkEunivResearchProjectOfPaper?j_string,
+			"value": "researchProjectProposalId",
+			"type": "select",
+			"option": {
+				"source": sourceResearchProjects,
+				"maxItem": 1
+			}
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperJournalConference?j_string,
+			"value": "journalConferenceName",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperDOI?j_string,
+			"value": "DOI"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperLink?j_string,
+			"value": "link"
+		},
+		{
+			"name": paperDeclarationUiLabelMap.BkEunivPaperIF?j_string,
+			"value": "impactFactor",
+			"pattern": "([0-9]*[.])?[0-9]+",
+			"title": "So thuc"
+		},
+		
+		{
+
 			"name": paperDeclarationUiLabelMap.BkEunivPaperVolumn?j_string,
 			"value": "volumn"
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperMonth?j_string,
-			"value": "month"
+			"value": "month",
+			"pattern": "[1-9]([0-9]{0,2})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 			
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperYear?j_string,
-			"value": "year"
+			"value": "year",
+			"pattern": "[1-9]([0-9]{0,4})",
+			"title": "So nguyen duong",
+			"require": "true#JS",
+			"customValidity": StringUtil.wrapString(uiLabelMap.BkEunivNotNull)?j_string
 		},
 		{
 			"name": paperDeclarationUiLabelMap.BkEunivPaperISSN?j_string,
@@ -882,7 +1076,7 @@
 	] />
 	
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
-	
+	<#--  urlAdd="/bkeuniv/control/create-paper-declaration"   -->
 	<@jqDataTable
 		urlData="/bkeuniv/control/get-papers-of-staff" 
 		columns=columns 
@@ -891,7 +1085,15 @@
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
 		urlUpdate="/bkeuniv/control/update-paper" 
-		urlAdd="/bkeuniv/control/create-paper-declaration" 
+		advanceActionButton=[
+			{
+				"id": "synchronize-staff",
+				"onClick": "gotoAddPaper()",
+				"width": "120px",
+				"dImage": "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+				"text": uiLabelMap.BkEunivAdd
+			}
+		]
 		urlDelete="/bkeuniv/control/delete-paper-declaration" 
 		keysId=["paperId"] 
 		fieldDataResult = "papers" 

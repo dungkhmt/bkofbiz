@@ -10,6 +10,7 @@ import java.util.Map;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
+import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
@@ -158,13 +159,15 @@ public class AppliedResearchProject {
 		
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
 		Locale locale = (Locale) context.get("locale");
-		
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		String appliedResearchProjectId = (String) context.get("appliedResearchProjectId");
+		Debug.log(module + "::deleteProject, appliedResearchProjectId = " + appliedResearchProjectId);
+		
 		try{
 			GenericValue gv = delegator.findOne("AppliedResearchProject", UtilMisc.toMap("appliedResearchProjectId", appliedResearchProjectId), false);
 			if(gv != null){
 				delegator.removeValue(gv);
+				Debug.log(module + "::deleteProject, appliedResearchProjectId = " + appliedResearchProjectId + " DELETED");
 				retSucc.put("result", "deleted record with id: " +appliedResearchProjectId);
 			} else {
 				retSucc.put("result", "not found record with id: "+appliedResearchProjectId);

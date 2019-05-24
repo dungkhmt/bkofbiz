@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-engine-xml>
+
+
+<Function functionId="VEHICLE_SCHEDULING" uiLabelId="vehicle scheduling" vnLabel="Lập lịch cho các xe" enLabel="vehicle scheduling" parentFunctionId="NULL" index="1"/>
+
+<Function functionId="VEHICLE_SCHEDULING_DELIVERY" uiLabelId="vehicle scheduling for deliverying" target="vehicle-scheduling-for-deliverying" vnLabel="Lập lộ trình giao hàng từ các kho" enLabel="Vehicle scheduling for deliverying" parentFunctionId="VEHICLE_SCHEDULING" index="1"/>
+
+<GroupFunction groupFunctionId="BIZSTAFF_VEHICLE_SCHEDULING" securityGroupId="BIZSTAFF" functionId="VEHICLE_SCHEDULING" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+
+<GroupFunction groupFunctionId="BIZSTAFF_VEHICLE_SCHEDULING_DELIVERY" securityGroupId="BIZSTAFF" functionId="VEHICLE_SCHEDULING_DELIVERY" fromDate="2000-01-01 00:00:00.0" lastUpdatedStamp="2017-08-13 18:06:03.935" lastUpdatedTxStamp="2017-08-13 18:06:03.916" createdStamp="2017-08-13 18:06:03.935" createdTxStamp="2017-08-13 18:06:03.916"/>
+
+<UserLoginSecurityGroup groupId="BIZSTAFF" userLoginId="dung.phamquang@hust.edu.vn" fromDate="2001-01-01 12:00:00.0"/>
+
 	<Vehicle vehicleId="34A-04703" vehicleCode="34A-04703" description="toyota fortuner" weight="1.7 tan"/>
 	<Vehicle vehicleId="34A-43256" vehicleCode="34A-43256" description="toyota camry" weight="1.5 tan"/>
 	<Vehicle vehicleId="34A-04209" vehicleCode="34A-04209" description="ford ranger" weight="1.8 tan"/>

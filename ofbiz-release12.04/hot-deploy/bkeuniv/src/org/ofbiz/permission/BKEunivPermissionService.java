@@ -1,25 +1,32 @@
 package org.ofbiz.permission;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilDateTime;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
+import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityExpr;
+import org.ofbiz.entity.condition.EntityFunction;
 import org.ofbiz.entity.condition.EntityOperator;
+import org.ofbiz.entity.util.EntityFindOptions;
+import org.ofbiz.entity.util.EntityListIterator;
 import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.ServiceUtil;
 import org.ofbiz.entity.GenericValue;
@@ -43,6 +50,7 @@ public class BKEunivPermissionService {
 			return null;
 		}
 	}
+	
 	public static List<GenericValue> getStaffsOfASecurityGroup(Delegator delegator, String groupId){
 		try{
 			List<EntityCondition> conds = FastList.newInstance();
@@ -95,6 +103,7 @@ public class BKEunivPermissionService {
 
 	public static void createGroupFunction(Delegator delegator, String groupId, String functionId){
 		try{
+			Debug.log(module + "::createGroupFunction, groupId = " + groupId + ", functionId = " + functionId);
 			GenericValue gv = delegator.makeValue("GroupFunction");
 			String id = delegator.getNextSeqId("GroupFunction");
 			Timestamp now = UtilDateTime.nowTimestamp();
@@ -103,8 +112,10 @@ public class BKEunivPermissionService {
 			gv.put("functionId", functionId);
 			gv.put("fromDate", now);
 			delegator.create(gv);
+			Debug.log(module + "::createGroupFunction, groupId = " + groupId + ", functionId = " + functionId + " --> OK");
 		}catch(Exception ex){
 			ex.printStackTrace();
+			Debug.log(module + "::createGroupFunction, groupId = " + groupId + ", functionId = " + functionId + " --> FAILED");
 		}
 	}
 	public static void createGroupUser(Delegator delegator, String groupId, String staffId){
@@ -176,6 +187,9 @@ public class BKEunivPermissionService {
 					null, 
 					null, 
 					false);
+			
+			functions = sortGroupParent(functions);
+			
 			for(GenericValue gv: functions){
 				mFunction2Checked.put((String)gv.get("functionId"), 0);
 			}
@@ -188,8 +202,16 @@ public class BKEunivPermissionService {
 			String json = "{\"functions\":[";
 			for(int i = 0; i < functions.size(); i++){
 				GenericValue gv = functions.get(i);
-				json += "{\"functionId\":\"" + gv.get("functionId") + "\",\"vnLabel\":\"" + gv.get("vnLabel") + "\","
-						+ "\"checked\":" + mFunction2Checked.get((String)gv.get("functionId")) + "}";
+				String parentFunctionId = "-";
+				if(gv.getString("parentFunctionId") != null)
+					parentFunctionId = gv.getString("parentFunctionId");
+				json += "{\"functionId\":\"" + gv.get("functionId") 
+						+ "\",\"vnLabel\":\"" + gv.get("vnLabel") 
+						+ "\","
+						+ "\"checked\":" + mFunction2Checked.get((String)gv.get("functionId"))
+						+ ","
+						+ "\"parentFunctionId\":\"" + parentFunctionId + "\""
+						+ "}";
 				if(i < functions.size() - 1)
 					json += ",\n";
 			}
@@ -203,6 +225,93 @@ public class BKEunivPermissionService {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	public static Map<String,Object> JQGetStaffsOfASecurityGroup(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		List<GenericValue> staffs = null;
+		List<GenericValue> staffsOfASecurityGroup = null;
+		
+		
+		
+		
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String)parameters.get("q")[0].trim();
+				System.out.println("1. debug ::::::::::" +q);
+				String[] searchKeys = {"staffId", "staffEmail", "staffName", "facultyName", "departmentName", "genderName", "facultyName"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+//							EntityCondition.makeCondition(, EntityOperator.LIKE, "%" + q + "%");
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			
+			
+		 	staffs = delegator.findList("StaffView", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, sort, opts, false);
+		 	
+		 	if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			System.out.println("4. debug ::::::::::"  + userLoginId);
+			staffsOfASecurityGroup = delegator.findList("StaffSecurityGroupView", EntityCondition.makeCondition(listAllConditions, EntityOperator.AND), null, sort, opts, false);
+			
+			//int total = staffs.getResultsSizeAfterPartialList();
+			//System.out.println("Size Staff ::::::::" + staffs.getCompleteList().size());
+			
+			List<GenericValue> rsf = new ArrayList<GenericValue>();
+			
+			int i = 0, j = 0;
+			
+			while (i < staffs.size()) {
+				GenericValue s = staffs.get(i);
+				
+				if(j >= staffsOfASecurityGroup.size()) {
+					rsf.add(s);
+					i++;
+					continue;
+				}
+				
+				GenericValue sf = staffsOfASecurityGroup.get(j);
+				
+				if(s.getString("staffId").equals(sf.getString("staffId"))) {
+					rsf.add(sf);
+					j++;
+				} else {
+					rsf.add(s);
+				}
+				i++;
+			}
+			
+			Debug.log("tesssst staffsOfASecurityGroup" + staffsOfASecurityGroup.size());
+			result.put("listIterator", rsf);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get list staffs");
+		} finally {
+//			if(staffs != null){
+//				staffs.close();
+//			}
+		}
+		return result;
 	}
 	
 	@SuppressWarnings({ "unchecked" })
@@ -261,7 +370,8 @@ public class BKEunivPermissionService {
 		String functions = request.getParameter("functions");
 		Debug.log(module + "::storeSecurityGroupFunctions, groupId = " + groupId + ", functions = " + functions);
 		String[] lst_function_id = functions.split(",");
-		
+		for(int i = 0; i < lst_function_id.length; i++)
+			lst_function_id[i] = lst_function_id[i].trim();
 		
 		
 		try{
@@ -307,11 +417,12 @@ public class BKEunivPermissionService {
 			HttpServletResponse response){
 		Delegator delegator = (Delegator) request.getAttribute("delegator");
 		String groupId = request.getParameter("groupId");
-		String staffs = request.getParameter("staffs");
-		Debug.log(module + "::storeSecurityGroupUsers, groupId = " + groupId + ", staffs = " + staffs);
-		String[] lst_staff_id = staffs.split(",");
+		String staff_id_insert = request.getParameter("staffsInsert");
+		String staff_id_remove = request.getParameter("staffsRemove");
+		Debug.log(module + "::storeSecurityGroupUsers, groupId = " + groupId + ", staffs = " + staff_id_insert + staff_id_remove);
 		
-		
+		String[] lst_staff_id_insert = staff_id_insert.split(",");
+		String[] lst_staff_id_remove = staff_id_remove.split(",");
 		
 		try{
 			List<GenericValue> all_staffs = delegator.findList("Staff", 
@@ -326,19 +437,19 @@ public class BKEunivPermissionService {
 				U.add((String)gv.get("staffId"));
 			}
 			
-			for(int i = 0; i < lst_staff_id.length; i++){
-				String staffId = lst_staff_id[i];
+			for(int i = 0; i < lst_staff_id_insert.length; i++){
+				String staffId = lst_staff_id_insert[i];
 				if(!groupUserEnabled(delegator, groupId, staffId)){
 					createGroupUser(delegator, groupId, staffId);
 				}
-				
-				U.remove(staffId);
 			}
-			for(String uId: U){
-				if(groupUserEnabled(delegator, groupId, uId)){
-					disableGroupUser(delegator, groupId, uId);
+			
+			for(String staffId: lst_staff_id_remove){
+				if(groupUserEnabled(delegator, groupId, staffId)){
+					disableGroupUser(delegator, groupId, staffId);
 				}
 			}
+			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
@@ -400,6 +511,86 @@ public class BKEunivPermissionService {
 		return retSucc;
 		
 	}
+	
+	
+	public static Map<String,Object> JQGetListSecurityGroups(DispatchContext dpct,Map<String,?extends Object> context) throws GenericEntityException{
+		Delegator delegator = (Delegator) dpct.getDelegator();
+		List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
+		EntityCondition filter = (EntityCondition) context.get("filter");
+		List<String> sort = (List<String>) context.get("sort");
+		EntityFindOptions opts = (EntityFindOptions) context.get("opts");
+		Map<String,String[]> parameters = (Map<String,String[]>) context.get("parameters");
+		Map<String,Object> result = FastMap.newInstance();
+		EntityListIterator securityGroups = null;
+		try {
+			GenericValue userLogin = (GenericValue) context.get("userLogin");
+			String userLoginId = userLogin.getString("userLoginId");
+			opts = opts != null  ? opts : new EntityFindOptions();
+			opts.setDistinct(true);
+			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
+			
+			if(parameters.containsKey("q")) {
+				System.out.println("debug :::::::::: not null");
+				String q = (String)parameters.get("q")[0].trim();
+				System.out.println("1. debug ::::::::::" +q);
+				String[] searchKeys = {"groupId", "description"}; 
+				
+				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+				for(String key: searchKeys) {
+					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+					condSearch.add(condition);
+				}
+				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
+			}
+			
+			if(filter != null) {
+				
+				listAllConditions.add(filter);				
+			}
+			
+			
+		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
+			
+			System.out.println("4. debug ::::::::::"  + userLoginId);
+			securityGroups = delegator.find("SecurityGroupView", condition, null, null, sort, opts);
+			
+			result.put("listIterator", securityGroups);
+			
+		} catch (Exception e) {
+			Debug.log(e.getMessage());
+			return ServiceUtil.returnError("Error get securityGroups");
+		}
+		
+		return result;
+	}
+	
+	
+	public static List<GenericValue> sortGroupParent(List<GenericValue> functions){
+		GenericValue[] a = new GenericValue[functions.size()];
+		for(int i = 0; i < functions.size(); i++){
+			a[i] = functions.get(i);
+		}
+		for(int i = 0; i < a.length-1; i++){
+			String pi = a[i].getString("parentFunctionId");
+			if(pi.equals("NULL")) pi = a[i].getString("functionId");
+			for(int j = i+1; j < a.length; j++){
+				String pj = a[j].getString("parentFunctionId");
+				if(pj.equals("NULL")) pj = a[j].getString("functionId");
+				if(pi.compareTo(pj) > 0){
+					GenericValue tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+					Debug.log(module + "::sortGroupParent, pi = " + pi + ", pj = " + pj + ", SWAP " + i + "," + j);
+				}
+			}
+		}
+		for(int i = 0; i < a.length; i++){
+			Debug.log(module + "::sortGroupParent, AFTER SORT -> " + a[i].getString("parentFunctionId"));
+		}
+		List<GenericValue> retL = FastList.newInstance();
+		for(int i = 0; i < a.length; i++){
+			retL.add(a[i]);
+		}
+		return retL;
+	}
 	public static Map<String, Object> getListFunctions(DispatchContext ctx, Map<String, ? extends Object> context){
 		Map<String, Object> retSucc = ServiceUtil.returnSuccess();
 		try{
@@ -410,7 +601,9 @@ public class BKEunivPermissionService {
 					null, 
 					null, 
 					false);
-			Debug.logInfo("functions.sz = " + functions.size(), module);
+			
+			//Debug.logInfo("functions.sz = " + functions.size(), module);
+			
 			retSucc.put("functions", functions);
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -420,15 +613,15 @@ public class BKEunivPermissionService {
 		
 	}
 
-	public static List<GenericValue> sort(List<GenericValue> L){
-		GenericValue[] a = new GenericValue[L.size()];
+	public static List<Map<String, Object>> sort(List<Map<String, Object>> L){
+		Map<String, Object>[] a = new Map[L.size()];
 		for(int i = 0; i < a.length; i++) a[i] = L.get(i);
 		for(int i = 0; i < a.length - 1; i++)
 			for(int j = i+1; j < a.length; j++)
 				if((long)a[i].get("index") > (long)a[j].get("index")){
-					GenericValue tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+					Map<String, Object> tmp = a[i]; a[i] = a[j]; a[j] = tmp;
 				}
-		List<GenericValue> sL = new ArrayList<GenericValue>();
+		List<Map<String, Object>> sL = new ArrayList<Map<String, Object>>();
 		for(int i = 0; i < a.length; i++) sL.add(a[i]);
 		return sL;
 	}
@@ -481,49 +674,45 @@ public class BKEunivPermissionService {
 			//	Debug.log(module + "::getPermissionFunctions, get functions " + f.get("functionId"));
 			//}
 			
-			List<GenericValue> parent_functions = new ArrayList<GenericValue>();
-			HashMap<String, GenericValue> mId2Function = new HashMap<String, GenericValue>();
-			HashMap<GenericValue, List<GenericValue>> mFunction2ChildrenFunctions = new HashMap<GenericValue, List<GenericValue>>();
+			List<Map<String, Object>> parent_functions = new ArrayList<Map<String, Object>>();
+			Map<String, ArrayList<Map<String, Object>>> mFunction2ChildrenFunctions = new HashMap<String, ArrayList<Map<String, Object>>>();
+			List<String> parentIds = new ArrayList<String>();
+			//HashMap<String, Map<String, Object>> mId2Function = new HashMap<String, Map<String, Object>>();
+			//HashMap<String, List<Map<String, Object>>> mFunction2ChildrenFunctions = new HashMap<String, List<Map<String, Object>>>();
 			
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
 				String functionId = (String)f.get("functionId");
-				Debug.log(module + "::getPermissionFunctions, function " + functionId + ", parentFunction = " + parentFunctionId);
+				//Debug.log(module + "::getPermissionFunctions, function " + functionId + ", parentFunction = " + parentFunctionId);
 				if(parentFunctionId.equals("NULL")){// collect parent functions
-					parent_functions.add(f);
-					mId2Function.put(functionId, f);
-					mFunction2ChildrenFunctions.put(f, new ArrayList<GenericValue>());
-				}else{
-					
-					
+					parent_functions.add(convertFunctionsToMap(f));
+					parentIds.add(functionId);
+					mFunction2ChildrenFunctions.put(functionId, new ArrayList<Map<String, Object>>());
 				}
 			}
-			parent_functions = sort(parent_functions);
 			
 			for(GenericValue f: tmp_functions){
 				String parentFunctionId = (String)f.get("parentFunctionId");
 				if(!parentFunctionId.equals("NULL")){
-					GenericValue pf = mId2Function.get(parentFunctionId);
-					if(pf == null){
-						pf = delegator.findOne("Function", false, 
+					int check = parentIds.indexOf(parentFunctionId);
+					if(check == -1){
+						GenericValue pf = delegator.findOne("Function", false, 
 								UtilMisc.toMap("functionId",parentFunctionId));
-						mId2Function.put(parentFunctionId, pf);
-						mFunction2ChildrenFunctions.put(pf, new ArrayList<GenericValue>());
+						parentIds.add(parentFunctionId);
+						parent_functions.add(convertFunctionsToMap(pf));
+						mFunction2ChildrenFunctions.put(parentFunctionId, new ArrayList<Map<String, Object>>());
 					}
-					mFunction2ChildrenFunctions.get(pf).add(f);
+					mFunction2ChildrenFunctions.get(parentFunctionId).add(convertFunctionsToMap(f));
 				}
 			}
-			List<Map<String, Object>> functions = new ArrayList<Map<String, Object>>();
-			//List<GenericValue> functions = new ArrayList<GenericValue>();
 			
-			for(GenericValue f: parent_functions){
-				Map<String, Object> o = new HashMap<String, Object>();
-				o.put("function", f);
-				o.put("children", sort(mFunction2ChildrenFunctions.get(f)));
-				functions.add(o);
+			parent_functions = sort(parent_functions);
+			
+			for(Map<String, Object> f: parent_functions){
+				f.put("children", sort(mFunction2ChildrenFunctions.get(f.get("functionId"))));
 			}
 			
-			retSucc.put("permissionFunctions", functions);
+			retSucc.put("permissionFunctions", parent_functions);
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -531,5 +720,14 @@ public class BKEunivPermissionService {
 		}
 		return retSucc;
 		
+	}
+	
+	public static Map<String, Object> convertFunctionsToMap(GenericValue f) {
+			Map<String, Object> fs = new HashMap<String, Object>();
+			String[] fields = {"functionId", "uiLabelId", "vnLabel", "enLabel", "target", "icon", "parentFunctionId", "index", "status"};
+			for(String field: fields) {
+				fs.put(field, f.get(field));				
+			}
+		return fs;
 	}
 }

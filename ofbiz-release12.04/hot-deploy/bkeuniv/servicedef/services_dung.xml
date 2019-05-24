@@ -15,7 +15,8 @@
     	location="org.ofbiz.bkeuniv.statistics.StatisticServices" 
 		invoke="getPapersStatistic">
 		<attribute name="years" mode="OUT" type="List"></attribute>
-		<attribute name="count" mode="OUT" type="List"></attribute>
+		<attribute name="countPapers" mode="OUT" type="List"></attribute>
+		<attribute name="countPapersISI" mode="OUT" type="List"></attribute>
     </service>
     
     <service name="createAProjectCall" engine="java" 
@@ -78,6 +79,16 @@
 		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalsOfStaff">
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+    <service name="getProjectProposalsAnyRoleOfStaff" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="getProjectProposalsAnyRoleOfStaff">
+		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="projectproposals" mode="OUT" type="List"></attribute>	
+	</service>
+	
+    <service name="systemUpdateProjectMember" engine="java" 
+		location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="systemUpdateProjectMember">
+			
 	</service>
 	
     <service name="getListProjectProposalJuries" engine="java" 
@@ -265,7 +276,27 @@
 		<attribute name="message" mode="OUT" type="String"></attribute>	
 	</service>
 
+    <service name="updateMemberOfProjectProposal" engine="java"
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"
+    	 invoke="updateMemberOfProjectProposal">
+    	
+    	<attribute name="projectProposalMemberId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="staffId[]" mode="IN" type="List" optional="true"></attribute>
+    	<attribute name="roleTypeId[]" mode="IN" type="List" optional="true"></attribute>
+
+    	<attribute name="members" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+		<attribute name="message" mode="OUT" type="String"></attribute>	
+	</service>
 	
+    <service name="deleteMemberOfProjectProposal" engine="java"
+    	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService"
+    	 invoke="deleteMemberOfProjectProposal">
+    	
+    	<attribute name="projectProposalMemberId" mode="IN" type="String"></attribute>
+   	
+    	<attribute name="members" mode="OUT" type="org.ofbiz.entity.GenericValue"></attribute>	
+ 		<attribute name="message" mode="OUT" type="String"></attribute>	
+	</service>
 	
     <service name="createAProjectProposalSubmission" engine="java"
     	location="org.ofbiz.bkeuniv.projectproposalsubmission.ProjectProposalSubmissionService" invoke="createAProjectProposalSubmission">
@@ -406,6 +437,11 @@
 		location="org.ofbiz.common.login.LoginServices" invoke="directUpdatePassword">
 		<attribute name="staffId" mode="IN" type="String" optional="true"></attribute>
 		<attribute name="password" mode="IN" type="String"></attribute>
+		<attribute name="result" mode="OUT" type="String"></attribute>
+	</service>
+	
+	<service name="testMongoDB" engine="java"
+		location="org.ofbiz.bkeuniv.statistics.StatisticServices" invoke="testMongoDB">
 		<attribute name="result" mode="OUT" type="String"></attribute>
 	</service>
 	

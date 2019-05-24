@@ -4,45 +4,9 @@
 <#--  Project Proposal ID = ${projectProposalId}  -->
 
 <script>
-	var modal;
-	var span;
-	var selectedEntry;
-	function createContextMenu(id) {
-		
-		$(document).contextmenu({
-			    delegate: "#"+id+"-content td",
-			menu: [
-			  {title: '${uiLabel.ViewDetail}', cmd: "viewdetail", uiIcon: "glyphicon glyphicon-list-alt"},
-			],
-			select: function(event, ui) {
-				var el = ui.target.parent();
-				var data = jqDataTable.table.row( el ).data();
-				switch(ui.cmd){
-					case "viewdetail":
-						jqViewDetail(data);
-						break;
-						
-					}		
-				},
-				beforeOpen: function(event, ui) {
-					var $menu = ui.menu,
-						$target = ui.target,
-						extraData = ui.extraData;
-					ui.menu.zIndex(9999);
-			    }
-			  });
-	}
-				
-	function 	jqViewDetail(data){
-		alert(data.researchProjectProposalId);
-		//window.location.href = "/bkeuniv/control/members-of-project-proposals?researchProjectProposalId=" + data.researchProjectProposalId;
-	}
-
 </script>
 
 <div class="body">
-<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
-
 	<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivStaffName?j_string,
@@ -55,6 +19,7 @@
 	] />
 	
 	<#assign fields=[
+		"projectProposalMemberId",
 		"researchProjectProposalId",
 		"staffName",
 		"staffId",
@@ -94,7 +59,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
-				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"render": 'function(r){return {title:"[" + r.staffId +"] " + r.staffName, id: r.staffId, text: r.staffName + " ["+ r.facultyName +" - "+r.departmentName+"]"}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
@@ -118,7 +83,7 @@
 			"type":"select_server_side",
 			"option":{
 				"maxItem": 1,
-				"render": 'function(r){return {id: r.staffId, text: "[" + r.staffId + "] "+ r.staffName}}',
+				"render": 'function(r){return {title:"[" + r.staffId +"] " + r.staffName, id: r.staffId, text: r.staffName + " ["+ r.facultyName +" - "+r.departmentName+"]"}}',
 				"url": "/bkeuniv/control/jqxGeneralServicer?sname=JQGetListStaffs"
 			}
 		},
@@ -137,23 +102,34 @@
 	<#assign sizeTable="$(window).innerHeight() - $(\".nav\").innerHeight() - $(\".footer\").innerHeight()" />
 	
 	<@jqDataTable
+		<!--
 		urlData="/bkeuniv/control/get-members-of-project-proposals?researchProjectProposalId=${projectProposalId}"
+		-->
+		urlData="/bkeuniv/control/get-members-of-project-proposals"
+		optionData={
+			"data": {
+				"researchProjectProposalId": projectProposalId?j_string
+			}
+		}
 		columns=columns 
 		dataFields=fields 
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="" 
+		urlUpdate="/bkeuniv/control/update-member-of-project-proposal" 
 		urlAdd="/bkeuniv/control/create-a-member-of-project-proposal?researchProjectProposalId=${projectProposalId}" 
-		urlDelete="" 
-		keysId=["researchProjectProposalId","staffId"] 
+		urlDelete="/bkeuniv/control/delete-member-of-project-proposal" 
+		keysId=["projectProposalMemberId"] 
 		fieldDataResult = "members" 
 		titleChange=uiLabelMap.BkEunivChange
 		titleNew=uiLabelMap.BkEunivNew
 		titleDelete=uiLabelMap.BkEunivDelete
 		jqTitle=uiLabelMap.BkEunivManage
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
-		contextmenu=false
-		fnInfoCallback = 'function() {createContextMenu("jqDataTable")}'
+		contextmenu=true
+		backToUrl={
+			"href": '/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId='+ projectProposalId,
+			"text": "Quay ve de tai"
+		}
 	/>
 </div>

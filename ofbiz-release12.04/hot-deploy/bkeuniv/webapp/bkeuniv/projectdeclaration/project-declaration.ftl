@@ -265,7 +265,10 @@
 		},
 		{
 			"name": projectDeclarationUiLabelMap.ProjectName?j_string,
-			"data": "projectName"
+			"data": "projectName",
+			"render": 'function(value, name, dataColumns, id) {
+                return "<a href=\\"/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId="+dataColumns.projectDeclarationId+"\\">" + value + "</a>";
+			}'
 		},
 		{
 			"name": projectDeclarationUiLabelMap.StartDate?j_string,

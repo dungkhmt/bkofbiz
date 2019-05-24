@@ -61,16 +61,18 @@ public class ResearchDomainManagement {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
-				System.out.println("1. debug ::::::::::" +q);
-				String[] searchKeys = {"researchDomainName"}; 
-				
-				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
-				for(String key: searchKeys) {
-					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
-					condSearch.add(condition);
+				String q = (String)parameters.get("q")[0].trim();
+				if(q != null) {
+					System.out.println("1. debug ::::::::::" +q);
+					String[] searchKeys = {"researchDomainName"}; 
+					
+					List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+					for(String key: searchKeys) {
+						EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+						condSearch.add(condition);
+					}
+					listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
 				}
-				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
 			}
 			
 			if(filter != null) {
@@ -120,7 +122,7 @@ public class ResearchDomainManagement {
 			
 			if(parameters.containsKey("q")) {
 				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
+				String q = (String)parameters.get("q")[0].trim();
 				System.out.println("1. debug ::::::::::" +q);
 				String[] searchKeys = {"researchDomainName"}; 
 				
@@ -166,6 +168,7 @@ public class ResearchDomainManagement {
 		try {
 			GenericValue userLogin = (GenericValue) context.get("userLogin");
 			String userLoginId = userLogin.getString("userLoginId");
+			String researchDomainId = (String) ((List) context.get("researchDomainId[]")).get(0);
 			
 			Timestamp nowTimestamp = UtilDateTime.nowTimestamp();
 			List<EntityCondition> cond = new ArrayList<EntityCondition>();
@@ -173,8 +176,9 @@ public class ResearchDomainManagement {
 			cond.add(EntityCondition.makeCondition("thruDate", EntityJoinOperator.EQUALS, null));
 			
 			List<EntityCondition> listAllConditions = new ArrayList<EntityCondition>();
-			listAllConditions.add(EntityCondition.makeCondition(cond, EntityOperator.OR));
+			listAllConditions.add(EntityCondition.makeCondition("researchDomainId", researchDomainId));
 			
+			listAllConditions.add(EntityCondition.makeCondition(cond, EntityOperator.OR));
 			listAllConditions.add(EntityCondition.makeCondition(EntityFunction.UPPER_FIELD("staffId"), EntityOperator.EQUALS, EntityFunction.UPPER(userLoginId)));
 			
 		 	EntityCondition condition = EntityCondition.makeCondition(listAllConditions, EntityOperator.AND);
@@ -188,8 +192,6 @@ public class ResearchDomainManagement {
 				l.put("thruDate", new Date(nowTimestamp.getTime()));
 				delegator.store(l);
 			}
-			
-			String researchDomainId = (String) ((List) context.get("researchDomainId[]")).get(0);
 			
 			GenericValue gvs = delegator.makeValue("StaffResearchDomain");
 			String staffResearchDomainId = delegator.getNextSeqId("StaffResearchDomain");
@@ -307,18 +309,25 @@ public class ResearchDomainManagement {
 			opts.setDistinct(true);
 			opts.setResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE);
 			
+			if(parameters.containsKey("researchDomainId")) {
+				listAllConditions.add(EntityCondition.makeCondition("researchDomainId", String.valueOf(parameters.get("researchDomainId")[0])));
+			}
+			
 			if(parameters.containsKey("q")) {
-				System.out.println("debug :::::::::: not null");
-				String q = (String)parameters.get("q")[0];
-				System.out.println("1. debug ::::::::::" +q);
-				String[] searchKeys = {"researchSubDomainName", "researchSubDomainCode"}; 
 				
-				List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
-				for(String key: searchKeys) {
-					EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
-					condSearch.add(condition);
+				System.out.println("debug :::::::::: not null");
+				String q = (String)parameters.get("q")[0].trim();
+				if(q != null) {
+					System.out.println("1. debug ::::::::::" +q);
+					String[] searchKeys = {"researchSubDomainName", "researchSubDomainCode"}; 
+					
+					List<EntityCondition> condSearch = new ArrayList<EntityCondition>(); 
+					for(String key: searchKeys) {
+						EntityCondition condition = EntityCondition.makeCondition(EntityFunction.UPPER_FIELD(key), EntityOperator.LIKE, EntityFunction.UPPER("%" + q + "%"));
+						condSearch.add(condition);
+					}
+					listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
 				}
-				listAllConditions.add(EntityCondition.makeCondition(condSearch, EntityOperator.OR));
 			}
 			
 			if(filter != null) {

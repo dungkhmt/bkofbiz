@@ -41,8 +41,6 @@
 </script>
 
 <div class="body">
-<a href="/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId=${projectProposalId}">Quay ve de tai</a>
-
 	<#assign columns=[
 		{
 			"name": uiLabelMap.BkEunivContent?j_string,
@@ -51,7 +49,9 @@
 		{
 			"name": uiLabelMap.BkEunivStaff?j_string,
 			"data": "staffId"
-		},
+		}
+		<#--
+		,
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
 			"data": "workingDays"
@@ -60,6 +60,7 @@
 			"name": uiLabelMap.BkEunivBudget?j_string,
 			"data": "budget"
 		}
+		-->
 	] />
 
 	<#assign fields=[
@@ -87,25 +88,6 @@
 		</#if>
 	</#list>  -->
 
-	<#assign columnsChange=[
-		{
-			"name": uiLabelMap.BkEunivContent?j_string,
-			"value": "content"
-		},
-		{
-			"name": uiLabelMap.BkEunivStaff?j_string,
-			"value": "staffId"
-		},
-		{
-			"name": uiLabelMap.BkEunivWorkingDays?j_string,
-			"value": "workingDays"
-		},
-		{
-			"name": uiLabelMap.BkEunivBudget?j_string,
-			"value": "budget"
-		}
-	] />
-
 	<#assign members=[]/> 
 	<#list resultMembers.members as m> 
 		<#if m?has_content> 
@@ -113,6 +95,39 @@
 				<#assign members = members + [op] /> 
 		</#if> 
 	</#list>
+	<#assign columnsChange=[
+		{
+			"name": uiLabelMap.BkEunivContent?j_string,
+			"value": "content",
+			"type": "textarea"
+		},
+		{
+			"name": uiLabelMap.BkEunivStaff?j_string,
+			"value": "staffId",
+			"type": "select",
+			"option":{
+				"source": members,
+				"maxItem": 1
+			}
+		}
+		<#--
+		,
+		{
+			"name": uiLabelMap.BkEunivWorkingDays?j_string,
+			"value": "workingDays",
+			"pattern": "[0-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
+		},
+		{
+			"name": uiLabelMap.BkEunivBudget?j_string,
+			"value": "budget",
+			"pattern": "[0-9]([0-9]{0,20})",
+			"title": "So nguyen duong nho hon 20 chu so"
+		}
+		-->
+	] />
+
+	
 
 	<#assign columnsNew=[
 		{
@@ -128,15 +143,22 @@
 			"name": uiLabelMap.BkEunivContent?j_string,
 			"value": "content",
 			"type": "textarea"
-		},
+		}
+		<#--
+		,
 		{
 			"name": uiLabelMap.BkEunivWorkingDays?j_string,
-			"value": "workingdays"
+			"value": "workingDays",
+			"pattern": "[0-9]([0-9]{0,3})",
+			"title": "So nguyen duong nho hon 9999"
 		},
 		{
 			"name": uiLabelMap.BkEunivBudget?j_string,
-			"value": "budget"
+			"value": "budget",
+			"pattern": "[0-9]([0-9]{0,20})",
+			"title": "So nguyen duong nho hon 20 chu so"
 		}
+		-->
 		]
 	 />
 
@@ -172,20 +194,24 @@
 		sizeTable=sizeTable
 		columnsChange=columnsChange 
 		columnsNew=columnsNew 
-		urlUpdate="" 
+		urlUpdate="/bkeuniv/control/update-a-workpackage-project-proposal" 
 		urlAdd="/bkeuniv/control/add-a-workpackage-project-proposal" 
 		optionDataAdd={
 			"data": {
 				"researchProjectProposalId": projectProposalId?j_string
 			}
 		}
-		urlDelete="" 
-		keysId=["researchProjectProposalId"] 
+		urlDelete="/bkeuniv/control/delete-a-workpackage-project-proposal" 
+		keysId=["researchProjectProposalId","contentItemSeq"] 
 		fieldDataResult = "projectProposalContentItems" 
 		titleChange=uiLabelMap.BkEunivChange
 		titleNew=uiLabelMap.BkEunivNew
 		titleDelete=uiLabelMap.BkEunivDelete
 		jqTitle=uiLabel.TitleProjectSubmissionManagement?j_string
-		contextmenu=false
+		contextmenu=true
+		backToUrl={
+			"href": '/bkeuniv/control/detail-research-project-proposal-update?researchProjectProposalId='+ projectProposalId,
+			"text": "Quay ve de tai"
+		}
 	/>
 </div>

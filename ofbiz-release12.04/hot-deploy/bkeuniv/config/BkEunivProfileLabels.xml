@@ -35,6 +35,11 @@
         <value xml:lang="vi">Năm đạt học vị</value>
     </property>
     
+    <property key="BkEunivYearPatent">
+        <value xml:lang="en">Year patent</value>
+        <value xml:lang="vi">Năm cấp văn bằng</value>
+    </property>
+
     <property key="BkEunivName">
         <value xml:lang="en">Name</value>
         <value xml:lang="vi">Tên gọi</value>
@@ -68,37 +73,37 @@
     
     <property key="BkEunivEmail">
     	<value xml:lang="en">Email</value>
-    	<Value xml:lang="vi">Email</Value>
+    	<value xml:lang="vi">Email</value>
     </property>
     
-     <property key="BkEunivCompanyName">
+    <property key="BkEunivCompanyName">
     	<value xml:lang="en">Company Name</value>
-    	<Value xml:lang="vi">Tên cơ quan</Value>
+    	<value xml:lang="vi">Tên cơ quan</value>
     </property>
     
     <property key="BkEunivNameLeader">
     	<value xml:lang="en">Name Leader</value>
-    	<Value xml:lang="vi">Tên người đứng đầu</Value>
+    	<value xml:lang="vi">Tên người đứng đầu</value>
     </property>
     
     <property key="BkEunivCompanyAddress">
     	<value xml:lang="en">Company Address</value>
-    	<Value xml:lang="vi">Địa chỉ cơ quan</Value>
+    	<value xml:lang="vi">Địa chỉ cơ quan</value>
     </property>
     
     <property key="BkEnuivPhone">
     	<value xml:lang="en">Phone</value>
-    	<Value xml:lang="vi">Điện thoại</Value>
+    	<value xml:lang="vi">Điện thoại</value>
     </property>
     
     <property key="BkEnuivFax">
     	<value xml:lang="en">Fax</value>
-    	<Value xml:lang="vi">Fax</Value>
+    	<value xml:lang="vi">Fax</value>
     </property>
     
     <property key="ViewPDF">
     	<value xml:lang="en">View PDF</value>
-    	<Value xml:lang="vi">Xem PDF</Value>
+    	<value xml:lang="vi">Xem PDF</value>
     </property>
     
 </resource>

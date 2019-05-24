@@ -89,6 +89,7 @@
     <property key="loginevents.following_error_occurred_during_login">
         <value xml:lang="de">${errorMessage}</value>
         <value xml:lang="en">following error occurred during login: ${errorMessage}</value>
+        <value xml:lang="vi">Xảy ra lỗi khi đăng nhập: ${errorMessage}</value>
         <value xml:lang="es">Error al conectar: ${errorMessage}</value>
         <value xml:lang="fr">${errorMessage}</value>
         <value xml:lang="it">${errorMessage}</value>
@@ -343,6 +344,7 @@
     <property key="loginservices.account_for_user_login_id_disabled">
         <value xml:lang="de">Das Konto mit dem Benutzernamen "${username}" wurde gesperrt</value>
         <value xml:lang="en">The account for user login id "${username}" has been disabled.</value>
+        <value xml:lang="vi">Tài khoản người dùng có tên đăng nhập "${username}" đã bị vô hiệu hóa</value>
         <value xml:lang="es">La cuenta "${username}" ha sido deshabilitada.</value>
         <value xml:lang="fr">Le compte de l'utilisateur "${username}" a été neutralisé.</value>
         <value xml:lang="it">L'utente "${username}" è stato disabilitato</value>
@@ -617,7 +619,7 @@
     </property>
     <property key="loginservices.password_incorrect">
         <value xml:lang="de">Das Passwort ist falsch</value>
-        <value xml:lang="en">Password incorrect.</value>
+        <value xml:lang="en">Mật khẩu không đúng.</value>
         <value xml:lang="es">Clave incorrecta.</value>
         <value xml:lang="fr">Mot de passe incorrect.</value>
         <value xml:lang="it">Password non corretta.</value>
@@ -704,6 +706,7 @@
     <property key="loginservices.since_datetime">
         <value xml:lang="de">(seit ${disabledDateTime})</value>
         <value xml:lang="en">since ${disabledDateTime}.</value>
+        <value xml:lang="vi">kể từ ${disabledDateTime}.</value>
         <value xml:lang="es">A partir de la fecha ${disabledDateTime}.</value>
         <value xml:lang="fr">depuis ${disabledDateTime}.</value>
         <value xml:lang="it">dal ${disabledDateTime}.</value>
@@ -718,6 +721,7 @@
     <property key="loginservices.user_not_found">
         <value xml:lang="de">Benutzer konnte nicht gefunden werden</value>
         <value xml:lang="en">User not found.</value>
+        <value xml:lang="vi">Không tìm thấy tên đăng nhập</value>
         <value xml:lang="es">Usuario no encontrado.</value>
         <value xml:lang="fr">Utilisateur non trouvé.</value>
         <value xml:lang="it">Utente non trovato.</value>
@@ -746,6 +750,7 @@
     <property key="loginservices.will_be_reenabled">
         <value xml:lang="de">Es wird am/um ${reEnableTime} wieder freigegeben.</value>
         <value xml:lang="en">It will be re-enabled ${reEnableTime}.</value>
+        <value xml:lang="vi">Nó sẽ được kích hoạt lại ${reEnableTime}.</value>
         <value xml:lang="es">Será reactivado en ${reEnableTime}.</value>
         <value xml:lang="fr">Il sera renouvellé : ${reEnableTime}.</value>
         <value xml:lang="it">Sarà riabilitato il ${reEnableTime}.</value>

@@ -65,14 +65,21 @@ public class ConfigXMLReader {
     }
 
     public static ControllerConfig getControllerConfig(URL url) {
-        ControllerConfig controllerConfig = controllerCache.get(url);
+    	//Debug.logInfo("[PQD], getControllerConfig(" + url.toString() + ")", module);
+    	String s_url = url.toString();
+        //ControllerConfig controllerConfig = controllerCache.get(url);
+    	ControllerConfig controllerConfig = controllerCache.get(s_url);
         if (controllerConfig == null) { // don't want to block here
+        	//Debug.logInfo("[PQD], getControllerConfig(" + url + ") BUT controllerConfig from cache = NULL --> create new", module);
             synchronized (ConfigXMLReader.class) {
                 // must check if null again as one of the blocked threads can still enter
-                controllerConfig = controllerCache.get(url);
+                //controllerConfig = controllerCache.get(url);
+            	controllerConfig = controllerCache.get(s_url);
                 if (controllerConfig == null) {
                     controllerConfig = new ControllerConfig(url);
                     controllerCache.put(url, controllerConfig);
+                    //controllerCache.put(s_url, controllerConfig);
+                    //Debug.logInfo("[PQD], controllerCache.put(" + url + ", controllerCache.put " + controllerConfig.owner + ")", module  + "::getControllerConfig");
                 }
             }
         }

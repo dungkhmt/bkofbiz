@@ -7,8 +7,11 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
+import javolution.util.FastSet;
 
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
@@ -41,10 +44,18 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String STATUS_PROJECT_ASSIGNED_REVIEWER = "ASSIGNED_REVIEWER";
 	public static String STATUS_PROJECT_SUBMITTED = "SUBMITTED";
 	public static String STATUS_PROJECT_CREATED = "CREATED";
+	public static String STATUS_PROJECT_RUNNING = "RUNNING";
 	public static String STATUS_PROJECT_UNDER_REVIEW = "UNDER_REVIEW";
 
-	public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
+	//public static String STATUS_PROJECT_EVALUATION_CONFIRM = "CONFIRM";
+	public static String STATUS_PROJECT_PROPOSAL_EVALUATION_CONFIRM = "CONFIRM_EVALUATION_PROPOSAL";
 
+	public static String PROJECT_ROLE_TYPE_DIRECTOR = "DIRECTOR";
+	
+	public static String JURY_MEMBER_CANCELED = "CANCELLED";
+	public static String JURY_MEMBER_ENABLED = "ENABLED";
+	
+	
 	//public static String dataFolder = "." + File.separator + "euniv-deploy";
 	//public static String dataFolder = "C:/DungPQ/projects/bkofbiz-github/euniv-deploy";
 	
@@ -66,6 +77,27 @@ public class ProjectProposalSubmissionServiceUtil {
 	public static String establishFullFilename(String staffId, String name) {
 		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
 				+ "projects";
+		Debug.log(module + "::establishFullFilename, path = " + path);
+		String fullname = path + File.separator + name;
+
+		File file = new File(path);
+
+		if (!file.exists()) {
+
+			file.mkdirs();
+			Debug.log(module
+					+ "::establishFullFilename, folder NOT exist --> Create folder\n\t");
+			// If you require it to make the entire directory path including
+			// parents,
+			// use directory.mkdirs(); here instead.
+		}
+
+		return fullname;
+	}
+	
+	public static String establishFullFilename(String staffId, String name, String folder) {
+		String path = ConfigParams.dataFolder + File.separator + staffId + File.separator
+				+ folder;
 		Debug.log(module + "::establishFullFilename, path = " + path);
 		String fullname = path + File.separator + name;
 
@@ -234,9 +266,45 @@ public class ProjectProposalSubmissionServiceUtil {
 		return retSucc;
 	}
 
+	public static List<GenericValue> getProjectProposalContents(Delegator delegator, String researchProjectProposalId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId",EntityOperator.EQUALS,researchProjectProposalId));
+			List<GenericValue> lst = delegator.findList("ResearchProposalContentItem", 
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			return lst;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+		
+	}
+	public static List<GenericValue> getProjectProposalRegisteredProducts(Delegator delegator, String researchProjectProposalId){
+		try{
+			List<EntityCondition> conds = FastList.newInstance();
+			conds.add(EntityCondition.makeCondition("researchProjectProposalId",
+					EntityOperator.EQUALS,researchProjectProposalId));
+			List<GenericValue> lst = delegator.findList("ResearchProposalProductView", 
+					EntityCondition.makeCondition(conds), null,null,null,false);
+			return lst;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 	public static GenericValue createAProjectProposalSubmission(
-			Delegator delegator, String projectProposalName, String facultyId,
-			String projectCallId, String staffId) {
+			Delegator delegator, String projectProposalName, String s_material_budget, 
+			String s_external_service_budget,
+			String s_domestic_conference_budget,
+			String s_international_conference_budget,
+			String s_publication_budget,
+			String s_management_budget,
+			String note, String facultyId,
+			String projectCallId, String staffId) 
+	{
+		
 		try {
 			String partyId = delegator.getNextSeqId("Party");
 
@@ -244,12 +312,65 @@ public class ProjectProposalSubmissionServiceUtil {
 			GenericValue pty = delegator.makeValue("Party", info);
 			// pty.put("partyId", partyId);
 			delegator.create(pty);
-
+			BigDecimal totalBudget = BigDecimal.ZERO;
+			BigDecimal budget = null;
+			if(s_material_budget != null && !s_material_budget.equals(""))
+				budget = new BigDecimal(s_material_budget);
+			else
+				budget = BigDecimal.ZERO;
+			
+			totalBudget = totalBudget.add(budget);
+			
+			BigDecimal externalServiceBudget = null;
+			if(s_external_service_budget != null && !s_external_service_budget.equals(""))
+				externalServiceBudget = new BigDecimal(s_external_service_budget);
+			else
+				externalServiceBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(externalServiceBudget);
+			
+			BigDecimal domesticConferenceBudget = null;
+			if(s_domestic_conference_budget != null && !s_domestic_conference_budget.equals(""))
+				domesticConferenceBudget = new BigDecimal(s_domestic_conference_budget);
+			else
+				domesticConferenceBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(domesticConferenceBudget);
+			
+			BigDecimal internationalConferenceBudget = null;
+			if(s_international_conference_budget != null && !s_international_conference_budget.equals(""))
+				internationalConferenceBudget = new BigDecimal(s_international_conference_budget);
+			else
+				internationalConferenceBudget = BigDecimal.ZERO;
+			
+			totalBudget = totalBudget.add(internationalConferenceBudget);
+			
+			BigDecimal publicationBudget = null;
+			if(s_publication_budget != null && !s_publication_budget.equals(""))
+				publicationBudget = new BigDecimal(s_publication_budget);
+			else
+				publicationBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(publicationBudget);
+			
+			BigDecimal managementBudget = null;
+			if(s_management_budget != null && !s_management_budget.equals(""))
+				managementBudget = new BigDecimal(s_management_budget);
+			else
+				managementBudget = BigDecimal.ZERO;
+			totalBudget = totalBudget.add(managementBudget);
+			
 			GenericValue pps = delegator.makeValue("ResearchProjectProposal");
 			String researchProjectProposalId = delegator
 					.getNextSeqId("ResearchProjectProposal");
 			pps.put("researchProjectProposalId", researchProjectProposalId);
 			pps.put("researchProjectProposalName", projectProposalName);
+			pps.put("totalBudget", totalBudget);
+			pps.put("materialBudget", budget);
+			pps.put("externalServiceBudget", externalServiceBudget);
+			pps.put("domesticConferenceBudget", domesticConferenceBudget);
+			pps.put("internationalConferenceBudget", internationalConferenceBudget);
+			pps.put("publicationBudget", publicationBudget);
+			pps.put("managementBudget", managementBudget);
+			
+			pps.put("note", note);
 			pps.put("createStaffId", staffId);
 			pps.put("partyId", partyId);
 			pps.put("statusId",
@@ -260,6 +381,16 @@ public class ProjectProposalSubmissionServiceUtil {
 
 			delegator.create(pps);
 
+			
+			// add member: staffId as DIRECTOR of the project
+			GenericValue pm = delegator.makeValue("ProjectProposalMember");
+			String projectProposalMemberId = delegator.getNextSeqId("ProjectProposalMember");
+			pm.put("projectProposalMemberId", projectProposalMemberId);
+			pm.put("researchProjectProposalId", researchProjectProposalId);
+			pm.put("staffId", staffId);
+			pm.put("roleTypeId", PROJECT_ROLE_TYPE_DIRECTOR);
+			delegator.create(pm);
+			
 			return pps;
 
 		} catch (Exception ex) {
@@ -268,6 +399,31 @@ public class ProjectProposalSubmissionServiceUtil {
 		}
 	}
 
+	public static List<GenericValue> filterActiveProjectProposal(List<GenericValue> prj){
+		Map<String, Boolean> hasChildProposal = FastMap.newInstance();
+		//Set<String> partyIdSet = FastSet.newInstance();
+		for(GenericValue p: prj){
+			String proposalId = p.getString("researchProjectProposalId");
+			String parentProposalId = p.getString("parentResearchProjectProposalId");
+			if(parentProposalId != null && !parentProposalId.equals("")){
+				hasChildProposal.put(parentProposalId, true);
+				Debug.log(module + "::getListFilteredProjectProposals, proposal " + parentProposalId + " has child proposal " + proposalId);
+			}else{
+				
+			}
+			//partyIdSet.add(partyId);
+		}
+		List<GenericValue> retList = FastList.newInstance();
+		for(GenericValue p: prj){
+			String proposalId = p.getString("researchProjectProposalId");
+			if(hasChildProposal.get(proposalId) == null){
+				retList.add(p);
+			}else{
+				Debug.log(module + "::getListFilteredProjectProposals, proposalId " + proposalId + " has child");
+			}
+		}
+		return retList;
+	}
 	public static List<GenericValue> getListFilteredProjectProposals(
 			Delegator delegator, String projectCallId, String facultyId,
 			String projectProposalStatusId) {
@@ -276,7 +432,7 @@ public class ProjectProposalSubmissionServiceUtil {
 				+ ", projectProposalStatusId = " + projectProposalStatusId);
 		try {
 			List<EntityCondition> conds = FastList.newInstance();
-			if (facultyId != null && !facultyId.equals("all")) {
+			if (facultyId != null && !facultyId.equals("all") && !facultyId.equals("UNIVERSITY")) {
 				conds.add(EntityCondition.makeCondition("facultyId",
 						EntityOperator.EQUALS, facultyId));
 			}
@@ -289,13 +445,44 @@ public class ProjectProposalSubmissionServiceUtil {
 				conds.add(EntityCondition.makeCondition("statusId",
 						EntityOperator.EQUALS, projectProposalStatusId));
 			}
-
+			conds.add(EntityCondition.makeCondition("statusId",
+					EntityOperator.NOT_EQUAL, STATUS_PROJECT_CANCELLED));
+			
 			List<GenericValue> prj = delegator.findList(
 					"ResearchProjectProposalView",
 					EntityCondition.makeCondition(conds), null, null, null,
 					false);
-			return prj;
-
+			Debug.log(module + "::getListFilteredProjectProposals, facultyId = "
+					+ facultyId + ", projectCallId = " + projectCallId
+					+ ", projectProposalStatusId = " + projectProposalStatusId + ", GOT list prj size = " + prj.size());
+			/*
+			Map<String, Boolean> hasChildProposal = FastMap.newInstance();
+			//Set<String> partyIdSet = FastSet.newInstance();
+			for(GenericValue p: prj){
+				String proposalId = p.getString("researchProjectProposalId");
+				String parentProposalId = p.getString("parentResearchProjectProposalId");
+				if(parentProposalId != null && !parentProposalId.equals("")){
+					hasChildProposal.put(parentProposalId, true);
+					Debug.log(module + "::getListFilteredProjectProposals, proposal " + parentProposalId + " has child proposal " + proposalId);
+				}else{
+					
+				}
+				//partyIdSet.add(partyId);
+			}
+			List<GenericValue> retList = FastList.newInstance();
+			for(GenericValue p: prj){
+				String proposalId = p.getString("researchProjectProposalId");
+				if(hasChildProposal.get(proposalId) == null){
+					retList.add(p);
+				}else{
+					Debug.log(module + "::getListFilteredProjectProposals, proposalId " + proposalId + " has child");
+				}
+			}
+			*/
+			List<GenericValue> retList = filterActiveProjectProposal(prj);
+			//return prj;
+			
+			return retList;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
@@ -356,7 +543,9 @@ public class ProjectProposalSubmissionServiceUtil {
 
 			// conds.add(EntityCondition.makeCondition("statusId",
 			// EntityOperator.EQUALS,"ASSIGNED_REVIEWER"));
-
+			conds.add(EntityCondition.makeCondition("statusId",
+					 EntityOperator.NOT_EQUAL,"CANCELLED"));
+					
 			List<GenericValue> list = delegator.findList(
 					"ReviewerResearchProposalView",
 					EntityCondition.makeCondition(conds), null, null, null,

@@ -1,15 +1,3 @@
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Datepicker - Default functionality</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resource/bkeuniv/css/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<link rel="stylesheet" href="/resource/bkeuniv/css/lib/bootstrap-datepicker.css">
-		<link rel="stylesheet" href="/resource/bkeuniv/css/lib/font-awesome.min.css">
-	<script src="/resource/bkeuniv/js/lib/bootstrap-datepicker.js"></script>
-	<script src="/resource/bkeuniv/js/lib/bootstrap.min.js"></script>
-
 <#include "component://bkeuniv/webapp/bkeuniv/uitemplate/button.ftl">
 
 <style>
@@ -26,148 +14,218 @@
 ${reviewerResearchProposalId}<br>
 -->
 
-<div id="form-style">
-<table>
-<tr>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Motivation}
+	<div id="form-style">
+	<table>
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Motivation}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationMotivation" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationMotivation?exists>"${resultReviewProposal.reviewprojectproposal.evaluationMotivation}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationMotivation" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationMotivation?exists>"${resultReviewProposal.reviewprojectproposal.evaluationMotivation}"<#else>"0"</#if>/>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Innovation}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationInnovation" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationInnovation?exists>"${resultReviewProposal.reviewprojectproposal.evaluationInnovation}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Innovation}
+	</td>
+	<!--
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Applicability}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationApplicability" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationApplicability?exists>"${resultReviewProposal.reviewprojectproposal.evaluationApplicability}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationInnovation" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationInnovation?exists>"${resultReviewProposal.reviewprojectproposal.evaluationInnovation}"<#else>"0"</#if>/>
-	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Applicability}
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationApplicability" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationApplicability?exists>"${resultReviewProposal.reviewprojectproposal.evaluationApplicability}"<#else>"0"</#if>/>
-	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.ResearchMethod}
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationResearchMethod" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationResearchMethod?exists>"${resultReviewProposal.reviewprojectproposal.evaluationResearchMethod}"<#else>"0"</#if>/>
-	</div>
-</div>
-</td>
-</tr>
+	</td>
+	-->
+	
+	</tr>
 
-<tr>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.ResearchContent}
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.ResearchMethod}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationResearchMethod" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationResearchMethod?exists>"${resultReviewProposal.reviewprojectproposal.evaluationResearchMethod}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationResearchContent" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationResearchContent?exists>"${resultReviewProposal.reviewprojectproposal.evaluationResearchContent}"<#else>"0"</#if>/>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.ResearchContent}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationResearchContent" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationResearchContent?exists>"${resultReviewProposal.reviewprojectproposal.evaluationResearchContent}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Papers}
+	</td>
+	<!--
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Papers}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPaper" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPaper?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPaper}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationPaper" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationPaper?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPaper}"<#else>"0"</#if>/>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Products}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationProduct" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Products}
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Patent}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPatent" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPatent?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPatent}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationProduct" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct}"<#else>"0"</#if>/>
+	</td>
+	-->
+	</tr>
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Product1}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationProduct1" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct1?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct1}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Patent}
-	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationPatent" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationPatent?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPatent}"<#else>"0"</#if>/>
-	</div>
-</div>
-</td>
-</tr>
+	</td>
 
-<tr>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.GraduateStudentTraining}
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Product2}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationProduct2" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationProduct2?exists>"${resultReviewProposal.reviewprojectproposal.evaluationProduct2}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationGraduateStudent" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationGraduateStudent?exists>"${resultReviewProposal.reviewprojectproposal.evaluationGraduateStudent}"<#else>"0"</#if>/>
+	</td>
+
+	</tr>
+
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Promote1}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPromote1" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPromote1?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPromote1}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.YoungResearcher}
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Promote2}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPromote2" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPromote2?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPromote2}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationYoungResearcher" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationYoungResearcher?exists>"${resultReviewProposal.reviewprojectproposal.evaluationYoungResearcher}"<#else>"0"</#if>/>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Promote3}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationPromote3" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationPromote3?exists>"${resultReviewProposal.reviewprojectproposal.evaluationPromote3}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.Training}
+	</td>
+		
+	</tr>
+
+	<!--
+	<tr>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.GraduateStudentTraining}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationGraduateStudent" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationGraduateStudent?exists>"${resultReviewProposal.reviewprojectproposal.evaluationGraduateStudent}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationEducation" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationEducation?exists>"${resultReviewProposal.reviewprojectproposal.evaluationEducation}"<#else>"0"</#if>/>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.YoungResearcher}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationYoungResearcher" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationYoungResearcher?exists>"${resultReviewProposal.reviewprojectproposal.evaluationYoungResearcher}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-<td>
-<div class="inline-box" style="width: 50%; padding: 10px 0px;">
-	<div style="display: inline-block;width: 100%;">
-	${uiLabel.ReasonableBudget}
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.Training}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationEducation" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationEducation?exists>"${resultReviewProposal.reviewprojectproposal.evaluationEducation}"<#else>"0"</#if>/>
+		</div>
 	</div>
-	<div style="display: inline-block;width: 69%;">
-		<input id="evaluationReasonableBudget" style="width: 100%" type="text" width="1000" 
-		value=<#if resultReviewProposal.reviewprojectproposal.evaluationReasonableBudget?exists>"${resultReviewProposal.reviewprojectproposal.evaluationReasonableBudget}"<#else>"0"</#if>/>
+	</td>
+	<td>
+	<div class="inline-box" style="width: 50%; padding: 10px 0px;">
+		<div style="display: inline-block;width: 100%;">
+		${uiLabel.ReasonableBudget}
+		</div>
+		<div style="display: inline-block;width: 69%;">
+			<input id="evaluationReasonableBudget" style="width: 100%" type="text" width="1000" 
+			value=<#if resultReviewProposal.reviewprojectproposal.evaluationReasonableBudget?exists>"${resultReviewProposal.reviewprojectproposal.evaluationReasonableBudget}"<#else>"0"</#if>/>
+		</div>
 	</div>
-</div>
-</td>
-</tr>
+	</td>
+	</tr>
+	-->
 <tr>
 	<td>
 		<div class="inline-box" style="width: 200%; padding: 10px 0px;">
@@ -175,14 +233,19 @@ ${reviewerResearchProposalId}<br>
 			${uiLabel.Comments}
 			</div>
 			<div style="display: inline-block;width: 100%;">
-				<textarea id="comments">
-					<#if resultReviewProposal.reviewprojectproposal.comments?exists>
-					${resultReviewProposal.reviewprojectproposal.comments}
-					<#else>
-					
-					</#if>	
-				</textarea>
+				<textarea id="comments"><#if resultReviewProposal.reviewprojectproposal.comments??>${resultReviewProposal.reviewprojectproposal.comments}</#if></textarea>
 			</div>
+			<script>
+				$( document ).ready(function() {
+					$(function() {
+							$('textarea#comments').bkeunivEditor({
+								charCounterCount : false,
+								language: 'vi',
+								height: 200,
+							});
+						});
+					});
+				</script>
 		</div>		
 	</td>
 	

@@ -3,7 +3,7 @@
 <#--  backgroundColor id href disableTouchRipple disabled width hoverColor icon label labelPosition labelStyle rippleColor style  -->
 
 
-<#macro FlatButton onClick="" action="" style="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="">
+<#macro FlatButton onBlur="" onClick="" action="" style="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="" title="">
     <#local code=random(1, 999999)?string["000000"] />
 	<#if id!="">
 		<#local code=id />
@@ -70,7 +70,7 @@
     </#if>
     </style>
 
-    <button onClick="${onClick}" id="${id}" tabindex="0" class="flat-button-${code}" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; line-height: 36px; height: 36px; min-width: 88px; color: ${color}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; user-select: none; overflow: hidden; background-color: ${backgroundColor}; text-align: center;${style}">
+    <button  onBlur='${onBlur}' onClick='${onClick}' id="${id}" tabindex="0" class="flat-button-${code}" type="button" style="margin: auto; border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; line-height: 36px; height: 36px; min-width: 88px; color: ${color}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; user-select: none; overflow: hidden; background-color: ${backgroundColor}; text-align: center;${style}" <#if title!="">title="${title}"</#if> >
         <div id="ripple-${code}" style=" height: 100%; width: 100%; position: absolute; top: 0px; left: 0px;">
             <span id="ripple-container-${code}" style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
             <span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; font-weight: 500; font-size: 14px;">
@@ -205,7 +205,7 @@
             }
         </#if>
     </style>
-    <div id="floating-action-button-${code}" style="color: ${color}; background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); <#if !disabled>box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; </#if>border-radius: 50%; display: inline-block;">
+    <div id="floating-action-button-${code}" style="margin: auto; color: ${color}; background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); <#if !disabled>box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px; </#if>border-radius: 50%; display: inline-block;">
         <button id="${id}" tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; vertical-align: bottom; background-color: ${backgroundColor}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; height: ${size}; width: ${size}; overflow: hidden; border-radius: 50%; text-align: center;${style}">
             <div>
                 <span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>
@@ -229,7 +229,7 @@
 </#macro>
 
 
-<#macro IconButton icon styleIcon="" style="" styleIcon="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="" size="56px" colorTouchRipple="rgba(0, 0, 0, 0.25)">
+<#macro IconButton icon styleIcon=""  onClick="" style=""  title="" styleParent="" styleIcon="" id="" type="" color="rgba(0, 0, 0, 0.87)" backgroundColor="rgba(0, 0, 0, 0)" disableTouchRipple=false disabled=false hoverColor="rgba(153,153,153,0.2)" href="" size="56px" colorTouchRipple="rgba(0, 0, 0, 0.25)">
     <#local code=random(1, 999999)?string["000000"] />
     <#if id!="">
 		<#local code=id />
@@ -289,7 +289,7 @@
             }
         }
     </style>
-    <div id="icon-button-${code}" style="color: ${color}; background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); border-radius: 50%; display: inline-block;">
+    <div onClick='${onClick}' id="icon-button-${code}" title="${title}" style="margin: auto; ${styleParent}; color: ${color}; background-color: transparent; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); border-radius: 50%; display: inline-block;">
         <button id="${id}" tabindex="0" type="button" style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: <#if disabled>default<#else>pointer</#if>; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; vertical-align: bottom; background-color: ${backgroundColor}; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; height: ${size}; width: ${size}; overflow: hidden; border-radius: 50%; text-align: center;${style}">
             <div id="icon-button-ripple-${code}">
                 <span id="icon-button-ripple-container-${code}" style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden; pointer-events: none; z-index: 1;"></span>

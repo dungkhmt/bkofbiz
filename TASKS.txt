@@ -1,0 +1,46 @@
+
+Tiệp: Van ban phap quy
+-request-map: upload-official-document, view-official-document, official-document-type
+-entity: OfficialDocuments, OfficialDocumentTypes
+---------------------------------------
+
+Quỳnh Hương: 
+-Vẽ biểu đồ thể hiện số đề tài các cấp được phê duyệt
+
+
+-request-map: main
+-entity: ResearchProjectProposal
+---------------------------------------
+Huyền: Vẽ biểu đồ thể hiện tổng số giờ NCKH của cán bộ toàn trường theo từng năm học
+
+-entity: ResearchProjectDeclarationYear
+
+---------------------------------------
+Quang: Hiển thị thông tin chi tiết lí lịch khoa học
+-request-map: detail-scientific-profile
+-entity: Staff, PaperDeclaration, ResearchProjectProposal, 
+
+
+---------------------------------------
+Nam: Quản lí lĩnh vực nghiên cứu, chuyên ngành đào tạo
+
+-entity: ResearchDomain, ResearchSubDomain, ResearchSpeciality
+
+---------------------------------------
+Đức: 
+-báo lỗi đăng nhập
+-fixbug: thanh vien cua bai bao: nhap lan thu nhat thanh cong, form van hien thi, chon de nhap tiep lan thu 2 thi failed
+-Co the dua href vao jqLibrary khong?
+
+---------------------------------------
+DungPQ:
+Hiển thị chi tiết bài báo
+-request-map: detail_paper
+-entity: PaperDeclaration
+
+
+Thành viên bài báo: thêm, xoá thành viên của bài báo, vai trò
+-request-map:  /member-of-paper?paperId=10010
+-entity: StaffPaperDeclaration
+
+Thanh vien de tai + noi dung nghien cuu (them phan xoa/sua)

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>BkEuniv Services</description>
+    <vendor></vendor>
+    <version>1.0</version>
+
+    <!-- PQD services for testing -->
+<!-- 
+    <service name="createRandomAcctgTransAndEntriesForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createRandomAcctgTransAndEntriesForTesting" transaction-timeout="10000000">
+    </service>
+ -->    
+ 
+    <service name="createRandomAcctgTransAndEntriesSalesInvoiceForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createRandomAcctgTransAndEntriesSalesInvoiceForTesting" transaction-timeout="10000000">
+    	<attribute name="nbAcctgTrans" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute>
+    	<attribute name="amount" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    <service name="createRandomAcctgTransAndEntriesPurchaseInvoiceForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createRandomAcctgTransAndEntriesPurchaseInvoiceForTesting" transaction-timeout="10000000">
+    	<attribute name="nbAcctgTrans" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute>
+    	<attribute name="amount" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    
+
+    <service name="createRandomAcctgTransAndEntriesSalesOrderInvoiceForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createRandomAcctgTransAndEntriesSalesOrderInvoiceForTesting" transaction-timeout="10000000">
+    	<attribute name="nbAcctgTrans" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<!-- <attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute> -->
+    	<attribute name="amount" mode="IN" type="String"></attribute>
+    </service>
+    <service name="createRandomAcctgTransAndEntriesPurchaseOrderInvoiceForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createRandomAcctgTransAndEntriesPurchaseOrderInvoiceForTesting" transaction-timeout="10000000">
+    	<attribute name="nbAcctgTrans" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<!-- <attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute> -->
+    	<attribute name="amount" mode="IN" type="String"></attribute>
+    </service>
+    
+    <service name="createAcctgTransAndEntriesKetchuyenLoinhuanForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createAcctgTransAndEntriesKetchuyenLoinhuanForTesting" transaction-timeout="10000000">
+    	<attribute name="creditGlAccountId" mode="IN" type="String"></attribute>
+    	<attribute name="debitGlAccountId" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<!-- <attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute> -->
+    	<attribute name="amount" mode="IN" type="String"></attribute>
+    </service>
+   
+    <service name="createAcctgTransAndEntriesKetchuyenDongkyketoanForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting"
+    	invoke="createAcctgTransAndEntriesKetchuyenDongkyketoanForTesting" transaction-timeout="10000000">
+    	<attribute name="creditGlAccountId" mode="IN" type="String"></attribute>
+    	<attribute name="debitGlAccountId" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<!-- <attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute> -->
+    	<attribute name="amount" mode="IN" type="String"></attribute>
+    </service>
+
+    <service name="createAcctgTransAndEntriesPhatsinhchiphiForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createAcctgTransAndEntriesPhatsinhchiphiForTesting" transaction-timeout="10000000">
+    	<attribute name="creditGlAccountId" mode="IN" type="String"></attribute>
+    	<attribute name="debitGlAccountId" mode="IN" type="String"></attribute>
+    	<attribute name="month" mode="IN" type="String"></attribute>
+    	<attribute name="year" mode="IN" type="String"></attribute>
+    	<!-- <attribute name="nbAcctgTransEntry" mode="IN" type="String"></attribute> -->
+    	<attribute name="amount" mode="IN" type="String"></attribute>
+    </service>
+
+    <service name="createCustomTimePeriodForTesting" engine="java"
+    	location="org.ofbiz.bkeuniv.test.CreateRandomDataForTesting" 
+    	invoke="createCustomTimePeriodForTesting"  transaction-timeout="10000000">
+    </service>
+	
+</services>
