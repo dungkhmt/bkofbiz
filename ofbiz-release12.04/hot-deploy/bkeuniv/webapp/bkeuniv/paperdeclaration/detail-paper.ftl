@@ -186,7 +186,7 @@
 					<tr>
 						<th style="width: 50px;">${uiLabelMap.BkEunivSTT}</th>
 						<th style="min-width: 200px;">${uiLabelMap.BkEunivFirstAndLastName}</th>
-						<th>${uiLabelMap.BkEunivInternally}/${uiLabelMap.BkEunivExternal}</th>
+						<th>${uiLabelMap.AffiliationOutsideUniversity}</th>
 						<th>Corresponding author</th>
 					</tr>
 					</thead>
