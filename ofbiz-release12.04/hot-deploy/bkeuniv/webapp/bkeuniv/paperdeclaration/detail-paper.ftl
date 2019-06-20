@@ -204,7 +204,12 @@
 								<td></td>
 							</#if>
 
-							<td>${m.affiliationOutsideUniversity}</td>
+							<#if m.affiliationOutsideUniversity?exists>
+								<td>${m.affiliationOutsideUniversity}</td>
+							<#else>
+								<td></td>
+							</#if>
+							
 							<td><#if m.correspondingAuthor??>${m.correspondingAuthor}</#if></td>
 							<#assign stt=stt+1/>
 						</tr>
