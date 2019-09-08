@@ -2491,7 +2491,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 			Debug.log(module + "::createExcelForm01CN02CN, staffId = "
 					+ staffId + ", year = " + academicYearId
-					+ ", all_papers = " + all_papers.size());
+					+ ", all_papers = " + all_papers.size() + ", user = " + user.size());
 
 			for (GenericValue p : all_papers) {
 				String category = p.getString("paperCategoryId");
@@ -3609,7 +3609,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 
 				if (paperCategoryKNCId != null && sp != null) {
 					Double x = mCategory2Rate.get(paperCategoryKNCId);
-
+					
+					// [PQD 2019-09-08: temporary used, and be recovered later]
+					String paperCategoryId = (String)p.get("paperCategoryId");
+					if(paperCategoryId.equals("CINT_other") || paperCategoryId.equals("CDOM_other")) x = 0.1;
+					
+					
+					
 					System.out.println(name() + "::createSheetKNC paper "
 							+ p.getString("paperName") + ", categoryKNC = "
 							+ paperCategoryKNCId + ", sequence = "
