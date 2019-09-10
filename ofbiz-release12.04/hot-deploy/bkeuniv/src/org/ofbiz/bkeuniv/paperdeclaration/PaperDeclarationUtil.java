@@ -3610,6 +3610,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				if (paperCategoryKNCId != null && sp != null) {
 					Double x = mCategory2Rate.get(paperCategoryKNCId);
 					
+					/*
 					// [PQD 2019-09-08: temporary used, and be recovered later]
 					String paperCategoryId = (String)p.get("paperCategoryId");
 					//if(paperCategoryId.equals("CINT_other") || paperCategoryId.equals("CDOM_other")) x = 0.1;
@@ -3618,6 +3619,14 @@ public class PaperDeclarationUtil extends java.lang.Object {
 						if(!paperCategoryId.equals("JINT_SCI") && !paperCategoryId.equals("JINT_SCIE")) x = 0.1;
 					}else if(paperCategoryKNCId.equals("SCOPUS")){
 						if(!paperCategoryId.equals("JINT_SCOPUS")) x = 0.1;						
+					}
+					*/
+					
+					String paperCategoryId = (String)p.get("paperCategoryId");					
+					if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1") || paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")){
+						if(!paperCategoryId.equals("JINT_SCI") && !paperCategoryId.equals("JINT_SCIE")) x = 0.4;
+					}else if(paperCategoryKNCId.equals("SCOPUS")){
+						if(!paperCategoryId.equals("JINT_SCOPUS")) x = 0.3;						
 					}
 					
 					
@@ -4316,6 +4325,7 @@ public class PaperDeclarationUtil extends java.lang.Object {
 			if (paperCategoryKNCId != null && sp != null) {
 				Double x = mCategory2Rate.get(paperCategoryKNCId);
 
+				/*
 				// [PQD 2019-09-08: temporary used, and be recovered later]
 				String paperCategoryId = (String)p.get("paperCategoryId");
 				//if(paperCategoryId.equals("CINT_other") || paperCategoryId.equals("CDOM_other")) x = 0.1;
@@ -4325,7 +4335,15 @@ public class PaperDeclarationUtil extends java.lang.Object {
 				}else if(paperCategoryKNCId.equals("SCOPUS")){
 					if(!paperCategoryId.equals("JINT_SCOPUS")) x = 0.1;						
 				}
-				
+				*/
+
+				String paperCategoryId = (String)p.get("paperCategoryId");					
+				if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1") || paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")){
+					if(!paperCategoryId.equals("JINT_SCI") && !paperCategoryId.equals("JINT_SCIE")) x = 0.4;
+				}else if(paperCategoryKNCId.equals("SCOPUS")){
+					if(!paperCategoryId.equals("JINT_SCOPUS")) x = 0.3;						
+				}
+
 				
 				System.out.println(name() + "::createSheetKNC paper "
 						+ p.getString("paperName") + ", categoryKNC = "
