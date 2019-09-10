@@ -3612,8 +3612,13 @@ public class PaperDeclarationUtil extends java.lang.Object {
 					
 					// [PQD 2019-09-08: temporary used, and be recovered later]
 					String paperCategoryId = (String)p.get("paperCategoryId");
-					if(paperCategoryId.equals("CINT_other") || paperCategoryId.equals("CDOM_other")) x = 0.1;
+					//if(paperCategoryId.equals("CINT_other") || paperCategoryId.equals("CDOM_other")) x = 0.1;
 					
+					if(paperCategoryKNCId.equals("WEB_SCIENCE_Q1") || paperCategoryKNCId.equals("WEB_SCIENCE_OTHER")){
+						if(!paperCategoryId.equals("JINT_SCI") && !paperCategoryId.equals("JINT_SCIE")) x = 0.1;
+					}else if(paperCategoryKNCId.equals("SCOPUS")){
+						if(!paperCategoryId.equals("JINT_SCOPUS")) x = 0.1;						
+					}
 					
 					
 					System.out.println(name() + "::createSheetKNC paper "
